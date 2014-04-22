@@ -10,7 +10,7 @@
 	
     <TextView 
         android:id="@+id/tagText"
-        android:text="#wwwwwwwww"
+        android:text="#notfound"
         android:textSize="30sp"
         android:textColor="@color/darkgray"
         android:layout_width="match_parent"

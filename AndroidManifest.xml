@@ -26,6 +26,9 @@
         <activity
             android:name="com.appuccino.postfeed.PostCommentsActivity">
         </activity>
+        <activity
+            android:name="com.appuccino.postfeed.TagListActivity">
+        </activity>
     </application>
 
 </manifest>

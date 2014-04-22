@@ -2,6 +2,7 @@ package com.appuccino.postfeed.listadapters;
 
 import java.util.List;
 
+import com.appuccino.postfeed.MainActivity.TagFragment;
 import com.appuccino.postfeed.R;
 import com.appuccino.postfeed.R.id;
 import com.appuccino.postfeed.objects.Tag;
@@ -25,6 +26,7 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
@@ -69,10 +71,20 @@ public class TagListAdapter extends ArrayAdapter<Tag>{
         else
         	tagHolder = (TagHolder)row.getTag();
         
-        Tag thisTag = tagList.get(position);
+        final Tag thisTag = tagList.get(position);
         tagHolder.text.setText(thisTag.getText());
         tagHolder.text.setSelected(true);
         
+        row.setClickable(true);
+        row.setFocusable(true);
+        row.setOnClickListener(new OnClickListener()
+        {
+			@Override
+			public void onClick(View arg0) 
+			{
+				TagFragment.tagClicked(thisTag);
+			}
+        });
         
         return row;
     }

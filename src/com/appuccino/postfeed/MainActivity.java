@@ -25,6 +25,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -129,7 +130,8 @@ public class MainActivity extends FragmentActivity implements
     	builder.setView(postDialogLayout)
     	.setPositiveButton("Post", new DialogInterface.OnClickListener() {
     		public void onClick(DialogInterface dialog, int id) {
-    			SectionFragment.postList.add(new Post(postMessage.getText().toString()));
+    			SectionFragment.newPostList.add(new Post(postMessage.getText().toString()));
+    			SectionFragment.topPostList.add(new Post(postMessage.getText().toString()));
     		}
     	});
     	
@@ -198,10 +200,13 @@ public class MainActivity extends FragmentActivity implements
 			// Return a SectionFragment (defined as a static inner class
 			// below) with the page number as its lone argument.
 			Fragment fragment;
-			if(position != 2)	//third section is tags
-				fragment = new SectionFragment(mainActivity);
+			if(position == 0)
+				fragment = new SectionFragment(mainActivity, 0);
+			else if (position == 1)
+				fragment = new SectionFragment(mainActivity, 1);
 			else
 				fragment = new TagFragment(mainActivity);
+			
 			Bundle args = new Bundle();
 			args.putInt(SectionFragment.ARG_SECTION_NUMBER, position + 1);
 			fragment.setArguments(args);
@@ -231,17 +236,22 @@ public class MainActivity extends FragmentActivity implements
 
 	public static class SectionFragment extends Fragment {
 		
-		MainActivity mainActivity;
+		static MainActivity mainActivity;
 		public static final String ARG_SECTION_NUMBER = "section_number";
-		static ArrayList<Post> postList;
+		static ArrayList<Post> topPostList;
+		static ArrayList<Post> newPostList;
+		static PostListAdapter topListAdapter;
+		static PostListAdapter newListAdapter;
+		int sectionNumber;
 
 		public SectionFragment()
 		{
 		}
 		
-		public SectionFragment(MainActivity m) 
+		public SectionFragment(MainActivity m, int section) 
 		{
 			mainActivity = m;
+			sectionNumber = section;
 		}
 
 		@Override
@@ -250,17 +260,7 @@ public class MainActivity extends FragmentActivity implements
 			View rootView = inflater.inflate(R.layout.fragment_layout,
 					container, false);
 			ListView fragList = (ListView)rootView.findViewById(R.id.fragmentListView);
-			
-			if(postList == null)
-			{
-				postList = new ArrayList<Post>();
-				postList.add(new Post(100, "Test message 1 test message 1 test message 1 test message 1 test message 1", 5));
-				postList.add(new Post(70, "Test message 2 test message 2 test message", 10));
-				postList.add(new Post(15, "Test message 3 test message 3 test message 3 test message 3 test message 3", 1));
-			}			
-			
-			PostListAdapter adapter = new PostListAdapter(getActivity(), R.layout.list_row_card, postList);
-			
+						
 			//if doesnt have header and footer, add them
 			if(fragList.getHeaderViewsCount() == 0)
 			{
@@ -270,14 +270,43 @@ public class MainActivity extends FragmentActivity implements
 				fragList.addFooterView(headerFooter, null, false);
 				fragList.addHeaderView(headerFooter, null, false);
 			}
-		    fragList.setAdapter(adapter);
+			
+			if(sectionNumber == 0)
+			{
+				if(topPostList == null)
+				{
+					topPostList = new ArrayList<Post>();
+					topPostList.add(new Post(100, "Test message 1 test message 1 test message 1 test message 1 test message 1", 5));
+					topPostList.add(new Post(70, "Test message 2 test message 2 test message", 10));
+					topPostList.add(new Post(15, "Test message 3 test message 3 test message 3 test message 3 test message 3", 1));
+				}		
+				topListAdapter = new PostListAdapter(getActivity(), R.layout.list_row_card, topPostList);
+				fragList.setAdapter(topListAdapter);
+			}
+			else
+			{
+				if(newPostList == null)
+				{
+					newPostList = new ArrayList<Post>();
+					newPostList.add(new Post(100, "Test message 1 test message 1 test message 1 test message 1 test message 1", 5));
+					newPostList.add(new Post(70, "Test message 2 test message 2 test message", 10));
+					newPostList.add(new Post(15, "Test message 3 test message 3 test message 3 test message 3 test message 3", 1));
+				}
+				newListAdapter = new PostListAdapter(getActivity(), R.layout.list_row_card, newPostList);
+				fragList.setAdapter(newListAdapter);
+			}
+			
 
 		    fragList.setOnItemClickListener(new OnItemClickListener(){
 
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View arg1,
-						int position, long arg3) {
-					postClicked(postList.get(position - 1));
+						int position, long arg3) 
+				{
+					if(sectionNumber == 0)
+						postClicked(topPostList.get(position - 1));
+					else
+						postClicked(newPostList.get(position - 1));
 				}
 				
 			});
@@ -289,30 +318,64 @@ public class MainActivity extends FragmentActivity implements
 		{
 			Intent intent = new Intent(getActivity(), PostCommentsActivity.class);
 			intent.putExtra("POST_ID", post.getID());
+			intent.putExtra("SECTION_NUMBER", sectionNumber);
+			
 			startActivity(intent);
+			getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 		}
 		
-		static Post getPostByID(int id)
+		static Post getPostByID(int id, int sectionNumber)
 		{
-			if(postList != null)
+			if(sectionNumber == 0)
 			{
-				for(int i = 0; i < postList.size(); i++)
+				if(topPostList != null)
 				{
-					if(postList.get(i).getID() == id)
+					for(int i = 0; i < topPostList.size(); i++)
 					{
-						return postList.get(i);
+						if(topPostList.get(i).getID() == id)
+						{
+							return topPostList.get(i);
+						}
+					}
+				}
+			}
+			else
+			{
+				if(newPostList != null)
+				{
+					for(int i = 0; i < newPostList.size(); i++)
+					{
+						if(newPostList.get(i).getID() == id)
+						{
+							return newPostList.get(i);
+						}
 					}
 				}
 			}
 			
+			
 			return null;
+		}
+
+		public static void updateList() {
+			if(topListAdapter != null)
+			{
+				topListAdapter.notifyDataSetChanged();
+			}
+			
+			if(newListAdapter != null)
+			{
+				newListAdapter.notifyDataSetChanged();
+			}
+			
 		}
 	}
 
 public static class TagFragment extends Fragment {
 		
-		MainActivity mainActivity;
+		static MainActivity mainActivity;
 		public static final String ARG_SECTION_NUMBER = "section_number";
+		static ArrayList<Tag> tagList;
 
 		public TagFragment()
 		{
@@ -330,12 +393,12 @@ public static class TagFragment extends Fragment {
 					container, false);
 			ListView fragList = (ListView)rootView.findViewById(R.id.fragmentListView);
 			
-			ArrayList<Tag> testList = new ArrayList<Tag>();
-			testList.add(new Tag("#wwwwww", 5));
-			testList.add(new Tag("#wwwwwwwwwwwwwwwwwwwwwwwwwww", 5));
-			testList.add(new Tag("#wwwwwwww", 5));
+			tagList = new ArrayList<Tag>();
+			tagList.add(new Tag("#wwwwww", 5));
+			tagList.add(new Tag("#wwwwwwwwwwwwwwwwwwwwwwwwwww", 5));
+			tagList.add(new Tag("#wwwwwwww", 5));
 			
-			TagListAdapter adapter = new TagListAdapter(getActivity(), R.layout.list_row_card_tag, testList);
+			TagListAdapter adapter = new TagListAdapter(getActivity(), R.layout.list_row_card_tag, tagList);
 			
 			//if doesnt have header and footer, add them
 			if(fragList.getHeaderViewsCount() == 0)
@@ -347,8 +410,18 @@ public static class TagFragment extends Fragment {
 				fragList.addHeaderView(headerFooter, null, false);
 			}
 		    fragList.setAdapter(adapter);
-
+		    fragList.setItemsCanFocus(true);
+		    
 			return rootView;
+		}
+
+		public static void tagClicked(Tag tag) 
+		{
+			Intent intent = new Intent(mainActivity, TagListActivity.class);
+			intent.putExtra("TAG_ID", tag.getText());
+			
+			mainActivity.startActivity(intent);
+			mainActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);			
 		}
 	}
 }
