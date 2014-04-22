@@ -1,6 +1,10 @@
-package com.appuccino.postfeed;
+package com.appuccino.postfeed.listadapters;
 
 import java.util.List;
+
+import com.appuccino.postfeed.R;
+import com.appuccino.postfeed.R.id;
+import com.appuccino.postfeed.objects.Tag;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,13 +33,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class CustomTagListAdapter extends ArrayAdapter<Tag>{
+public class TagListAdapter extends ArrayAdapter<Tag>{
 
 	Context context; 
     int layoutResourceId;    
     List<Tag> tagList = null;
     
-    public CustomTagListAdapter(Context context, int layoutResourceId, List<Tag> list) {
+    public TagListAdapter(Context context, int layoutResourceId, List<Tag> list) {
         super(context, layoutResourceId, list);
         this.layoutResourceId = layoutResourceId;
         this.context = context;

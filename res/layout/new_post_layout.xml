@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/newPostTitle"
+        android:text="New Post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp" 
+        android:textColor="@color/blue"
+        android:layout_marginTop="6dp"
+        android:gravity="center_horizontal"
+        />
+    
+    <com.appuccino.postfeed.MyEditText
+        android:id="@+id/newPostMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="false"
+        android:layout_marginBottom="0dp"
+        android:textSize="22sp"		android:inputType="textMultiLine"
+		android:maxLength="100"
+        /> 
+
+</LinearLayout>

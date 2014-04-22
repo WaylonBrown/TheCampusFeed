@@ -14,8 +14,9 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int blue=0x7f040000;
-        public static final int darkgray=0x7f040001;
+        public static final int blue=0x7f040001;
+        public static final int darkgray=0x7f040002;
+        public static final int lightblue=0x7f040000;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -33,27 +34,37 @@ public final class R {
         public static final int card=0x7f020002;
         public static final int ic_launcher=0x7f020003;
         public static final int logofake=0x7f020004;
-        public static final int postfeedlogosmall=0x7f020005;
+        public static final int newpost=0x7f020005;
+        public static final int postbuttonclick=0x7f020006;
+        public static final int postfeedlogosmall=0x7f020007;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a000a;
+        public static final int action_settings=0x7f0a0010;
         public static final int arrowDown=0x7f0a0006;
         public static final int arrowUp=0x7f0a0004;
-        public static final int card=0x7f0a0003;
-        public static final int fragmentListView=0x7f0a0002;
+        public static final int card=0x7f0a000c;
+        public static final int commentsList=0x7f0a000a;
+        public static final int commentsText=0x7f0a0009;
+        public static final int fragmentListView=0x7f0a000b;
         public static final int messageText=0x7f0a0007;
-        public static final int pager=0x7f0a0001;
+        public static final int newPostButton=0x7f0a0001;
+        public static final int newPostMessage=0x7f0a000f;
+        public static final int newPostTitle=0x7f0a000e;
+        public static final int pager=0x7f0a0002;
+        public static final int postCard=0x7f0a0003;
         public static final int scoreText=0x7f0a0005;
         public static final int spinner=0x7f0a0000;
-        public static final int tagText=0x7f0a0009;
+        public static final int tagText=0x7f0a000d;
         public static final int timeText=0x7f0a0008;
     }
     public static final class layout {
         public static final int actionbar_layout=0x7f030000;
         public static final int activity_main=0x7f030001;
-        public static final int fragment_layout=0x7f030002;
-        public static final int list_row_card=0x7f030003;
-        public static final int list_row_card_tag=0x7f030004;
+        public static final int comment_layout=0x7f030002;
+        public static final int fragment_layout=0x7f030003;
+        public static final int list_row_card=0x7f030004;
+        public static final int list_row_card_tag=0x7f030005;
+        public static final int new_post_layout=0x7f030006;
     }
     public static final class menu {
         public static final int main=0x7f090000;

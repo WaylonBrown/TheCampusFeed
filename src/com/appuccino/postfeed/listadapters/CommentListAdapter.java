@@ -1,6 +1,9 @@
-package com.appuccino.postfeed;
+package com.appuccino.postfeed.listadapters;
 
 import java.util.List;
+
+import com.appuccino.postfeed.R;
+import com.appuccino.postfeed.objects.Comment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,23 +32,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class CustomListAdapter extends ArrayAdapter<Post>{
+public class CommentListAdapter extends ArrayAdapter<Comment>{
 
 	Context context; 
     int layoutResourceId;    
-    List<Post> postList = null;
+    List<Comment> commentList = null;
     
-    public CustomListAdapter(Context context, int layoutResourceId, List<Post> list) {
+    public CommentListAdapter(Context context, int layoutResourceId, List<Comment> list) {
         super(context, layoutResourceId, list);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
-        postList = list;
+        commentList = list;
     }
     
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;	//this is listview_item_row
-        PostHolder postHolder = null;
+        commentHolder commentHolder = null;
         
         //first pass
         if(row == null)
@@ -53,34 +56,34 @@ public class CustomListAdapter extends ArrayAdapter<Post>{
         	LayoutInflater inflater = ((Activity)context).getLayoutInflater();
         	row = inflater.inflate(layoutResourceId, parent, false);        	
         	
-        	postHolder = new PostHolder();
-        	postHolder.scoreText = (TextView)row.findViewById(R.id.scoreText);
-        	postHolder.messageText = (TextView)row.findViewById(R.id.messageText);
-        	postHolder.timeText = (TextView)row.findViewById(R.id.timeText);
+        	commentHolder = new commentHolder();
+        	commentHolder.scoreText = (TextView)row.findViewById(R.id.scoreText);
+        	commentHolder.messageText = (TextView)row.findViewById(R.id.messageText);
+        	commentHolder.timeText = (TextView)row.findViewById(R.id.timeText);
             		
             Typeface light = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
             Typeface lightItalic = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-LightItalic.ttf");
             Typeface bold = Typeface.createFromAsset(context.getAssets(), "fonts/mplus-2c-bold.ttf");
             
-            postHolder.scoreText.setTypeface(bold);
-            postHolder.messageText.setTypeface(light);
-            postHolder.timeText.setTypeface(lightItalic);
+            commentHolder.scoreText.setTypeface(bold);
+            commentHolder.messageText.setTypeface(light);
+            commentHolder.timeText.setTypeface(lightItalic);
             
-            row.setTag(postHolder);
+            row.setTag(commentHolder);
         }
         else
-        	postHolder = (PostHolder)row.getTag();
+        	commentHolder = (commentHolder)row.getTag();
         
-        Post thisPost = postList.get(position);
-        postHolder.scoreText.setText(String.valueOf(thisPost.getScore()));
-        postHolder.messageText.setText(thisPost.getMessage());
-        postHolder.timeText.setText(String.valueOf(thisPost.getHoursAgo()) + " hours ago");
+        Comment thiscomment = commentList.get(position);
+        commentHolder.scoreText.setText(String.valueOf(thiscomment.getScore()));
+        commentHolder.messageText.setText(thiscomment.getMessage());
+        commentHolder.timeText.setText(String.valueOf(thiscomment.getHoursAgo()) + " hours ago");
         
         
         return row;
     }
         
-    static class PostHolder
+    static class commentHolder
     {
     	TextView scoreText;
     	TextView messageText;

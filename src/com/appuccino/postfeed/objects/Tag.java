@@ -1,4 +1,4 @@
-package com.appuccino.postfeed;
+package com.appuccino.postfeed.objects;
 
 public class Tag {
 	String name;
@@ -16,7 +16,7 @@ public class Tag {
 		score = s;
 	}
 	
-	String getText()
+	public String getText()
 	{
 		return name;
 	}

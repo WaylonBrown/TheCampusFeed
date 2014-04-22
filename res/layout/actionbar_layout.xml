@@ -21,8 +21,16 @@
 		    android:id="@+id/spinner"
 		    android:entries="@array/spinnerArray"
 		    android:layout_width="130dp"
-		    android:layout_height="match_parent"
-		    android:layout_gravity="right"/>
+		    android:layout_height="match_parent"/>
+	    
+	    <ImageView
+	        android:id="@+id/newPostButton"
+	        android:layout_width="50dp"
+	        android:layout_height="40dp"
+	        android:src="@drawable/newpost"
+	        android:background="@drawable/postbuttonclick"
+	        android:layout_gravity="center_vertical"
+	        android:clickable="true"/>
 	    
 	</LinearLayout>
 	

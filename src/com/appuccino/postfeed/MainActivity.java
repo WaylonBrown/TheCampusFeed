@@ -2,10 +2,22 @@ package com.appuccino.postfeed;
 
 import java.util.ArrayList;
 import java.util.Locale;
+
+import com.appuccino.postfeed.listadapters.PostListAdapter;
+import com.appuccino.postfeed.listadapters.TagListAdapter;
+import com.appuccino.postfeed.objects.Post;
+import com.appuccino.postfeed.objects.Tag;
+
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -18,11 +30,19 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -36,7 +56,8 @@ public class MainActivity extends FragmentActivity implements
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
 	SectionsPagerAdapter pagerAdapter;
-
+	ImageView newPostButton;
+	
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
@@ -56,6 +77,14 @@ public class MainActivity extends FragmentActivity implements
 		actionBar.setDisplayUseLogoEnabled(false);
 		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
 		actionBar.setIcon(R.drawable.logofake);
+		
+		newPostButton = (ImageView)findViewById(R.id.newPostButton);
+		newPostButton.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				newPostClicked();
+			}
+		});
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
@@ -87,6 +116,43 @@ public class MainActivity extends FragmentActivity implements
 					.setText(pagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
+	}
+	
+	public void newPostClicked() 
+	{
+		LayoutInflater inflater = getLayoutInflater();
+		View postDialogLayout = inflater.inflate(R.layout.new_post_layout, null);
+		final EditText postMessage = (EditText)postDialogLayout.findViewById(R.id.newPostMessage);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	builder.setCancelable(true);
+    	builder.setView(postDialogLayout)
+    	.setPositiveButton("Post", new DialogInterface.OnClickListener() {
+    		public void onClick(DialogInterface dialog, int id) {
+    			SectionFragment.postList.add(new Post(postMessage.getText().toString()));
+    		}
+    	});
+    	
+    	final AlertDialog dialog = builder.create();
+    	dialog.show();
+    	
+    	Typeface customfont = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
+    	TextView title = (TextView)postDialogLayout.findViewById(R.id.newPostTitle);
+    	postMessage.setTypeface(customfont);
+    	title.setTypeface(customfont);
+    	
+    	//ensure keyboard is brought up when dialog shows
+    	postMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+    	    @Override
+    	    public void onFocusChange(View v, boolean hasFocus) {
+    	        if (hasFocus) {
+    	            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+    	        }
+    	    }
+    	});
+   
+//    	TextView messagetext = (TextView)dialog.findViewById(android.R.id.message);
+//    	messagetext.setTypeface(customfont);		
 	}
 
 	@Override
@@ -167,6 +233,7 @@ public class MainActivity extends FragmentActivity implements
 		
 		MainActivity mainActivity;
 		public static final String ARG_SECTION_NUMBER = "section_number";
+		static ArrayList<Post> postList;
 
 		public SectionFragment()
 		{
@@ -184,12 +251,15 @@ public class MainActivity extends FragmentActivity implements
 					container, false);
 			ListView fragList = (ListView)rootView.findViewById(R.id.fragmentListView);
 			
-			ArrayList<Post> testList = new ArrayList<Post>();
-			testList.add(new Post(100, "Test message 1 test message 1 test message 1 test message 1 test message 1", 5));
-			testList.add(new Post(70, "Test message 2 test message 2 test message", 10));
-			testList.add(new Post(15, "Test message 3 test message 3 test message 3 test message 3 test message 3", 1));
+			if(postList == null)
+			{
+				postList = new ArrayList<Post>();
+				postList.add(new Post(100, "Test message 1 test message 1 test message 1 test message 1 test message 1", 5));
+				postList.add(new Post(70, "Test message 2 test message 2 test message", 10));
+				postList.add(new Post(15, "Test message 3 test message 3 test message 3 test message 3 test message 3", 1));
+			}			
 			
-			CustomListAdapter adapter = new CustomListAdapter(getActivity(), R.layout.list_row_card, testList);
+			PostListAdapter adapter = new PostListAdapter(getActivity(), R.layout.list_row_card, postList);
 			
 			//if doesnt have header and footer, add them
 			if(fragList.getHeaderViewsCount() == 0)
@@ -202,7 +272,40 @@ public class MainActivity extends FragmentActivity implements
 			}
 		    fragList.setAdapter(adapter);
 
+		    fragList.setOnItemClickListener(new OnItemClickListener(){
+
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int position, long arg3) {
+					postClicked(postList.get(position - 1));
+				}
+				
+			});
+		    
 			return rootView;
+		}
+
+		protected void postClicked(Post post) 
+		{
+			Intent intent = new Intent(getActivity(), PostCommentsActivity.class);
+			intent.putExtra("POST_ID", post.getID());
+			startActivity(intent);
+		}
+		
+		static Post getPostByID(int id)
+		{
+			if(postList != null)
+			{
+				for(int i = 0; i < postList.size(); i++)
+				{
+					if(postList.get(i).getID() == id)
+					{
+						return postList.get(i);
+					}
+				}
+			}
+			
+			return null;
 		}
 	}
 
@@ -232,7 +335,7 @@ public static class TagFragment extends Fragment {
 			testList.add(new Tag("#wwwwwwwwwwwwwwwwwwwwwwwwwww", 5));
 			testList.add(new Tag("#wwwwwwww", 5));
 			
-			CustomTagListAdapter adapter = new CustomTagListAdapter(getActivity(), R.layout.list_row_card_tag, testList);
+			TagListAdapter adapter = new TagListAdapter(getActivity(), R.layout.list_row_card_tag, testList);
 			
 			//if doesnt have header and footer, add them
 			if(fragList.getHeaderViewsCount() == 0)
