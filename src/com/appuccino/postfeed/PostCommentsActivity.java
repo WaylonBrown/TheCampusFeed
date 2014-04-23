@@ -1,6 +1,7 @@
 package com.appuccino.postfeed;
 
-import com.appuccino.postfeed.MainActivity.SectionFragment;
+import com.appuccino.postfeed.MainActivity.NewPostFragment;
+import com.appuccino.postfeed.MainActivity.TopPostFragment;
 import com.appuccino.postfeed.listadapters.CommentListAdapter;
 import com.appuccino.postfeed.objects.Post;
 
@@ -17,6 +18,8 @@ import android.widget.TextView;
 
 public class PostCommentsActivity extends Activity{
 
+	static CommentListAdapter listAdapter;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,7 +35,11 @@ public class PostCommentsActivity extends Activity{
 		actionBar.setIcon(R.drawable.logofake);
 		
 		int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);
-		Post post = SectionFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
+		Post post;
+		if(sectionNumber == 0)
+			post = TopPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
+		else
+			post = NewPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
 		
 		Typeface light = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
         Typeface lightItalic = Typeface.createFromAsset(getAssets(), "fonts/Roboto-LightItalic.ttf");
@@ -56,7 +63,7 @@ public class PostCommentsActivity extends Activity{
 			messageText.setText(post.getMessage());
 			timeText.setText(String.valueOf(post.getHoursAgo()) + " hours ago");
 			
-			CommentListAdapter listAdapter = new CommentListAdapter(this, R.layout.list_row_card, post.getCommentList());
+			listAdapter = new CommentListAdapter(this, R.layout.list_row_card, post.getCommentList());
 			
 			//if doesnt havefooter, add it
 			if(commentsListView.getFooterViewsCount() == 0)
@@ -74,6 +81,11 @@ public class PostCommentsActivity extends Activity{
 	public void onBackPressed() {
 		super.onBackPressed();
 		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+	}
+
+	public static void updateList() {
+		if(listAdapter != null)
+			listAdapter.notifyDataSetChanged();		
 	}
 
 }

@@ -2,9 +2,11 @@ package com.appuccino.postfeed.listadapters;
 
 import java.util.List;
 
-import com.appuccino.postfeed.MainActivity.SectionFragment;
+import com.appuccino.postfeed.MainActivity.NewPostFragment;
+import com.appuccino.postfeed.MainActivity.TopPostFragment;
 import com.appuccino.postfeed.R;
 import com.appuccino.postfeed.R.id;
+import com.appuccino.postfeed.TagListActivity;
 import com.appuccino.postfeed.objects.Post;
 
 import android.app.Activity;
@@ -42,12 +44,14 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 	Context context; 
     int layoutResourceId;    
     List<Post> postList = null;
+    int whichlist = -1;
     
-    public PostListAdapter(Context context, int layoutResourceId, List<Post> list) {
+    public PostListAdapter(Context context, int layoutResourceId, List<Post> list, int whichList) {
         super(context, layoutResourceId, list);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         postList = list;
+        this.whichlist = whichList;
     }
     
     @Override
@@ -96,7 +100,9 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 					thisPost.setVote(1);
 				else
 					thisPost.setVote(0);
-				SectionFragment.updateList();
+				TopPostFragment.updateList();
+				NewPostFragment.updateList();
+				TagListActivity.updateList();
 			}        	
         });
         postHolder.arrowDown.setOnClickListener(new OnClickListener(){
@@ -108,7 +114,9 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 					thisPost.setVote(-1);
 				else
 					thisPost.setVote(0);
-				SectionFragment.updateList();
+				TopPostFragment.updateList();
+				NewPostFragment.updateList();
+				TagListActivity.updateList();
 			}        	
         });
         

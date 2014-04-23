@@ -2,6 +2,7 @@ package com.appuccino.postfeed.listadapters;
 
 import java.util.List;
 
+import com.appuccino.postfeed.PostCommentsActivity;
 import com.appuccino.postfeed.R;
 import com.appuccino.postfeed.objects.Comment;
 
@@ -25,6 +26,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -60,6 +62,8 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         	commentHolder.scoreText = (TextView)row.findViewById(R.id.scoreText);
         	commentHolder.messageText = (TextView)row.findViewById(R.id.messageText);
         	commentHolder.timeText = (TextView)row.findViewById(R.id.timeText);
+        	commentHolder.arrowUp = (ImageView)row.findViewById(R.id.arrowUp);
+        	commentHolder.arrowDown = (ImageView)row.findViewById(R.id.arrowDown);
             		
             Typeface light = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
             Typeface lightItalic = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-LightItalic.ttf");
@@ -74,11 +78,53 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         else
         	commentHolder = (commentHolder)row.getTag();
         
-        Comment thiscomment = commentList.get(position);
+        final Comment thiscomment = commentList.get(position);
         commentHolder.scoreText.setText(String.valueOf(thiscomment.getScore()));
         commentHolder.messageText.setText(thiscomment.getMessage());
         commentHolder.timeText.setText(String.valueOf(thiscomment.getHoursAgo()) + " hours ago");
         
+      //arrow click listeners
+        commentHolder.arrowUp.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				//if already upvoted, un-upvote
+				if(thiscomment.getVote() != 1)
+					thiscomment.setVote(1);
+				else
+					thiscomment.setVote(0);
+				PostCommentsActivity.updateList();
+			}        	
+        });
+        commentHolder.arrowDown.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				//if already downvoted, un-downvote
+				if(thiscomment.getVote() != -1)
+					thiscomment.setVote(-1);
+				else
+					thiscomment.setVote(0);
+				PostCommentsActivity.updateList();
+			}        	
+        });
+        
+        int vote = thiscomment.getVote();
+        if(vote == -1)
+        {
+        	commentHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdownred));
+        	commentHolder.arrowUp.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowup));
+        }
+        else if (vote == 1)
+        {
+        	commentHolder.arrowUp.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowupblue));
+        	commentHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdown));
+        }
+        else	//no votes
+        {
+        	commentHolder.arrowUp.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowup));
+        	commentHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdown));
+        }
         
         return row;
     }
@@ -88,5 +134,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
     	TextView scoreText;
     	TextView messageText;
     	TextView timeText;
+    	ImageView arrowUp;
+    	ImageView arrowDown;
     }
 }

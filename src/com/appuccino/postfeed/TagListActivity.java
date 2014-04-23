@@ -2,7 +2,6 @@ package com.appuccino.postfeed;
 
 import java.util.ArrayList;
 
-import com.appuccino.postfeed.MainActivity.SectionFragment;
 import com.appuccino.postfeed.listadapters.CommentListAdapter;
 import com.appuccino.postfeed.listadapters.PostListAdapter;
 import com.appuccino.postfeed.objects.Post;
@@ -19,7 +18,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class TagListActivity extends Activity{
-
+	static PostListAdapter listAdapter;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,7 +58,7 @@ public class TagListActivity extends Activity{
 			postList.add(new Post("Post with tag 6"));
 			postList.add(new Post("Post with tag 7"));
 			postList.add(new Post("Post with tag 8"));
-			PostListAdapter listAdapter = new PostListAdapter(this, R.layout.list_row_card, postList);
+			listAdapter = new PostListAdapter(this, R.layout.list_row_card, postList, 0);
 			
 			//if doesnt havefooter, add it
 			if(listView.getFooterViewsCount() == 0)
@@ -76,6 +76,11 @@ public class TagListActivity extends Activity{
 	public void onBackPressed() {
 		super.onBackPressed();
 		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+	}
+
+	public static void updateList() {
+		if(listAdapter != null)
+			listAdapter.notifyDataSetChanged();
 	}
 
 }

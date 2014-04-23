@@ -130,8 +130,8 @@ public class MainActivity extends FragmentActivity implements
     	builder.setView(postDialogLayout)
     	.setPositiveButton("Post", new DialogInterface.OnClickListener() {
     		public void onClick(DialogInterface dialog, int id) {
-    			SectionFragment.newPostList.add(new Post(postMessage.getText().toString()));
-    			SectionFragment.topPostList.add(new Post(postMessage.getText().toString()));
+    			NewPostFragment.newPostList.add(new Post(postMessage.getText().toString()));
+    			TopPostFragment.topPostList.add(new Post(postMessage.getText().toString()));
     		}
     	});
     	
@@ -201,14 +201,14 @@ public class MainActivity extends FragmentActivity implements
 			// below) with the page number as its lone argument.
 			Fragment fragment;
 			if(position == 0)
-				fragment = new SectionFragment(mainActivity, 0);
+				fragment = new TopPostFragment(mainActivity);
 			else if (position == 1)
-				fragment = new SectionFragment(mainActivity, 1);
+				fragment = new NewPostFragment(mainActivity);
 			else
 				fragment = new TagFragment(mainActivity);
 			
 			Bundle args = new Bundle();
-			args.putInt(SectionFragment.ARG_SECTION_NUMBER, position + 1);
+			args.putInt(TopPostFragment.ARG_SECTION_NUMBER, position);
 			fragment.setArguments(args);
 			return fragment;
 		}
@@ -234,24 +234,21 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	public static class SectionFragment extends Fragment {
-		
+	public static class TopPostFragment extends Fragment 
+	{		
 		static MainActivity mainActivity;
 		public static final String ARG_SECTION_NUMBER = "section_number";
 		static ArrayList<Post> topPostList;
-		static ArrayList<Post> newPostList;
 		static PostListAdapter topListAdapter;
-		static PostListAdapter newListAdapter;
-		int sectionNumber;
+		final static int sectionNumber = 0;
 
-		public SectionFragment()
+		public TopPostFragment()
 		{
 		}
 		
-		public SectionFragment(MainActivity m, int section) 
+		public TopPostFragment(MainActivity m) 
 		{
 			mainActivity = m;
-			sectionNumber = section;
 		}
 
 		@Override
@@ -271,30 +268,16 @@ public class MainActivity extends FragmentActivity implements
 				fragList.addHeaderView(headerFooter, null, false);
 			}
 			
-			if(sectionNumber == 0)
+			if(topPostList == null)
 			{
-				if(topPostList == null)
-				{
-					topPostList = new ArrayList<Post>();
-					topPostList.add(new Post(100, "Test message 1 test message 1 test message 1 test message 1 test message 1", 5));
-					topPostList.add(new Post(70, "Test message 2 test message 2 test message", 10));
-					topPostList.add(new Post(15, "Test message 3 test message 3 test message 3 test message 3 test message 3", 1));
-				}		
-				topListAdapter = new PostListAdapter(getActivity(), R.layout.list_row_card, topPostList);
-				fragList.setAdapter(topListAdapter);
-			}
-			else
-			{
-				if(newPostList == null)
-				{
-					newPostList = new ArrayList<Post>();
-					newPostList.add(new Post(100, "Test message 1 test message 1 test message 1 test message 1 test message 1", 5));
-					newPostList.add(new Post(70, "Test message 2 test message 2 test message", 10));
-					newPostList.add(new Post(15, "Test message 3 test message 3 test message 3 test message 3 test message 3", 1));
-				}
-				newListAdapter = new PostListAdapter(getActivity(), R.layout.list_row_card, newPostList);
-				fragList.setAdapter(newListAdapter);
-			}
+				topPostList = new ArrayList<Post>();
+				topPostList.add(new Post(100, "Top message 1 test message 1 test message 1 test message 1 test message 1", 5));
+				topPostList.add(new Post(70, "Top message 2 test message 2 test message", 10));
+				topPostList.add(new Post(15, "Top message 3 test message 3 test message 3 test message 3 test message 3", 1));
+			}		
+			topListAdapter = new PostListAdapter(getActivity(), R.layout.list_row_card, topPostList, 0);
+			fragList.setAdapter(topListAdapter);
+			
 			
 
 		    fragList.setOnItemClickListener(new OnItemClickListener(){
@@ -303,10 +286,7 @@ public class MainActivity extends FragmentActivity implements
 				public void onItemClick(AdapterView<?> arg0, View arg1,
 						int position, long arg3) 
 				{
-					if(sectionNumber == 0)
-						postClicked(topPostList.get(position - 1));
-					else
-						postClicked(newPostList.get(position - 1));
+					postClicked(topPostList.get(position - 1));
 				}
 				
 			});
@@ -326,41 +306,120 @@ public class MainActivity extends FragmentActivity implements
 		
 		static Post getPostByID(int id, int sectionNumber)
 		{
-			if(sectionNumber == 0)
+			if(topPostList != null)
 			{
-				if(topPostList != null)
+				for(int i = 0; i < topPostList.size(); i++)
 				{
-					for(int i = 0; i < topPostList.size(); i++)
+					if(topPostList.get(i).getID() == id)
 					{
-						if(topPostList.get(i).getID() == id)
-						{
-							return topPostList.get(i);
-						}
+						return topPostList.get(i);
 					}
 				}
 			}
-			else
-			{
-				if(newPostList != null)
-				{
-					for(int i = 0; i < newPostList.size(); i++)
-					{
-						if(newPostList.get(i).getID() == id)
-						{
-							return newPostList.get(i);
-						}
-					}
-				}
-			}
-			
-			
+		
 			return null;
 		}
 
-		public static void updateList() {
+		public static void updateList() 
+		{
 			if(topListAdapter != null)
 			{
 				topListAdapter.notifyDataSetChanged();
+			}			
+		}
+	}
+	
+	public static class NewPostFragment extends Fragment 
+	{		
+		static MainActivity mainActivity;
+		public static final String ARG_SECTION_NUMBER = "section_number";
+		static ArrayList<Post> newPostList;
+		static PostListAdapter newListAdapter;
+		final static int sectionNumber = 1;
+
+		public NewPostFragment()
+		{
+		}
+		
+		public NewPostFragment(MainActivity m) 
+		{
+			mainActivity = m;
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.fragment_layout,
+					container, false);
+			ListView fragList = (ListView)rootView.findViewById(R.id.fragmentListView);
+						
+			//if doesnt have header and footer, add them
+			if(fragList.getHeaderViewsCount() == 0)
+			{
+				//for card UI
+				View headerFooter = new View(getActivity());
+				headerFooter.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
+				fragList.addFooterView(headerFooter, null, false);
+				fragList.addHeaderView(headerFooter, null, false);
+			}
+			
+			if(newPostList == null)
+			{
+				newPostList = new ArrayList<Post>();
+				newPostList.add(new Post(100, "New message 1 test message 1 test message 1 test message 1 test message 1", 5));
+				newPostList.add(new Post(70, "New message 2 test message 2 test message", 10));
+				newPostList.add(new Post(15, "New message 3 test message 3 test message 3 test message 3 test message 3", 1));
+			}		
+			newListAdapter = new PostListAdapter(getActivity(), R.layout.list_row_card, newPostList, 1);
+			fragList.setAdapter(newListAdapter);
+			
+			
+
+		    fragList.setOnItemClickListener(new OnItemClickListener(){
+
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int position, long arg3) 
+				{
+					postClicked(newPostList.get(position - 1));
+				}
+				
+			});
+		    
+			return rootView;
+		}
+
+		protected void postClicked(Post post) 
+		{
+			Intent intent = new Intent(getActivity(), PostCommentsActivity.class);
+			intent.putExtra("POST_ID", post.getID());
+			intent.putExtra("SECTION_NUMBER", sectionNumber);
+			
+			startActivity(intent);
+			getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+		}
+		
+		static Post getPostByID(int id, int sectionNumber)
+		{
+			if(newPostList != null)
+			{
+				for(int i = 0; i < newPostList.size(); i++)
+				{
+					if(newPostList.get(i).getID() == id)
+					{
+						return newPostList.get(i);
+					}
+				}
+			}
+		
+			return null;
+		}
+
+		public static void updateList() 
+		{
+			if(newListAdapter != null)
+			{
+				newListAdapter.notifyDataSetChanged();
 			}
 			
 			if(newListAdapter != null)

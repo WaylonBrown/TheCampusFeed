@@ -5,6 +5,7 @@ public class Comment {
 	int id;
 	String message;
 	int hoursAgo;
+	int vote = 0;	//-1 = downvote, 0 = nothing, 1 = upvote
 	
 	public Comment()
 	{
@@ -21,6 +22,11 @@ public class Comment {
 		message = m;
 		hoursAgo = 0;
 	}
+	
+	public void setVote(int vote)
+	{
+		this.vote = vote;
+	}
 
 	public int getScore() {
 		return score;
@@ -36,5 +42,10 @@ public class Comment {
 
 	public int getHoursAgo() {
 		return hoursAgo;
+	}
+	
+	public int getVote()
+	{
+		return vote;
 	}
 }
