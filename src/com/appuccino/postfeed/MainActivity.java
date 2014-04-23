@@ -25,6 +25,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -153,8 +156,44 @@ public class MainActivity extends FragmentActivity implements
     	    }
     	});
    
-//    	TextView messagetext = (TextView)dialog.findViewById(android.R.id.message);
-//    	messagetext.setTypeface(customfont);		
+    	final TextView tagsText = (TextView)postDialogLayout.findViewById(R.id.newPostTagsText);
+    	tagsText.setTypeface(customfont);
+    	//set listener for tags
+    	postMessage.addTextChangedListener(new TextWatcher(){
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				String message = postMessage.getText().toString();
+				String currentTags = "Tags: <font color='#33B5E5'>";
+				
+				String[] wordArray = message.split(" ");
+				for(int i = 0; i < wordArray.length; i++)
+				{
+					if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
+					{
+						currentTags += wordArray[i] + " ";
+					}
+				}
+				
+				currentTags += "</font>";
+				tagsText.setText(Html.fromHtml((currentTags)));
+			}
+    		
+    	});
 	}
 
 	@Override
