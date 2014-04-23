@@ -22,6 +22,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.Shader;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -87,8 +88,8 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         
         final Post thisPost = postList.get(position);
         postHolder.scoreText.setText(String.valueOf(thisPost.getScore()));
-        postHolder.messageText.setText(thisPost.getMessage());
         postHolder.timeText.setText(String.valueOf(thisPost.getHoursAgo()) + " hours ago");
+        setMessageAndColorizeTags(thisPost.getMessage(), postHolder);
         
         //arrow click listeners
         postHolder.arrowUp.setOnClickListener(new OnClickListener(){
@@ -140,7 +141,33 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         return row;
     }
         
-    static class PostHolder
+    private void setMessageAndColorizeTags(String msg, PostHolder postHolder) 
+    {
+    	String tagColor = "#33B5E5";
+    	String message = msg;
+    	
+    	String[] wordArray = message.split(" ");
+    	//check for tags, colorize them
+    	for(int i = 0; i < wordArray.length; i++)
+    	{
+    		if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
+    		{
+    			wordArray[i] = "<font color='" + tagColor + "'>" + wordArray[i] + "</font>";
+    		}
+    	}
+    	
+    	message = "";
+    	//combine back to string
+    	for(int i = 0; i < wordArray.length; i++)
+    	{
+    		message += wordArray[i] + " ";
+    	}
+    	
+    	postHolder.messageText.setText(Html.fromHtml(message));
+		
+	}
+
+	static class PostHolder
     {
     	TextView scoreText;
     	TextView messageText;

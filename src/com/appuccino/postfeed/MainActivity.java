@@ -271,9 +271,9 @@ public class MainActivity extends FragmentActivity implements
 			if(topPostList == null)
 			{
 				topPostList = new ArrayList<Post>();
-				topPostList.add(new Post(100, "Top message 1 test message 1 test message 1 test message 1 test message 1", 5));
-				topPostList.add(new Post(70, "Top message 2 test message 2 test message", 10));
-				topPostList.add(new Post(15, "Top message 3 test message 3 test message 3 test message 3 test message 3", 1));
+				topPostList.add(new Post(100, "Top message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
+				topPostList.add(new Post(70, "Top message 2 test message 2 test message #onetag #twotag", 10));
+				topPostList.add(new Post(15, "Top message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));
 			}		
 			topListAdapter = new PostListAdapter(getActivity(), R.layout.list_row_card, topPostList, 0);
 			fragList.setAdapter(topListAdapter);
@@ -366,9 +366,9 @@ public class MainActivity extends FragmentActivity implements
 			if(newPostList == null)
 			{
 				newPostList = new ArrayList<Post>();
-				newPostList.add(new Post(100, "New message 1 test message 1 test message 1 test message 1 test message 1", 5));
-				newPostList.add(new Post(70, "New message 2 test message 2 test message", 10));
-				newPostList.add(new Post(15, "New message 3 test message 3 test message 3 test message 3 test message 3", 1));
+				newPostList.add(new Post(100, "New message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
+				newPostList.add(new Post(70, "New message 2 test message 2 test message #onetag #twotag", 10));
+				newPostList.add(new Post(15, "New message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));
 			}		
 			newListAdapter = new PostListAdapter(getActivity(), R.layout.list_row_card, newPostList, 1);
 			fragList.setAdapter(newListAdapter);
