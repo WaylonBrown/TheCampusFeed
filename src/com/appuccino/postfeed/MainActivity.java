@@ -39,11 +39,13 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
@@ -59,8 +61,11 @@ public class MainActivity extends FragmentActivity implements
 	 * intensive, it may be best to switch to a
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
-	SectionsPagerAdapter pagerAdapter;
+	OneCollegeSectionsPagerAdapter oneCollegePagerAdapter;
+	AllCollegesSectionsPagerAdapter allCollegesPagerAdapter;
+	ActionBar actionBar;
 	ImageView newPostButton;
+	Spinner spinner;
 	
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -73,7 +78,7 @@ public class MainActivity extends FragmentActivity implements
 		setContentView(R.layout.activity_main);
 
 		// Set up the action bar.
-		final ActionBar actionBar = getActionBar();
+		actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setCustomView(R.layout.actionbar_layout);
 		actionBar.setDisplayShowTitleEnabled(false);
@@ -90,38 +95,96 @@ public class MainActivity extends FragmentActivity implements
 			}
 		});
 
-		// Create the adapter that will return a fragment for each of the three
-		// primary sections of the app.
-		pagerAdapter = new SectionsPagerAdapter(this, 
-				getSupportFragmentManager());
+		spinner = (Spinner)findViewById(R.id.spinner);
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener(){
 
-		// Set up the ViewPager with the sections adapter.
-		viewPager = (ViewPager) findViewById(R.id.pager);
-		viewPager.setAdapter(pagerAdapter);
-		viewPager.setOffscreenPageLimit(3);
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				spinnerChanged(arg2);
+			}
 
-		// When swiping between different sections, select the corresponding
-		// tab. We can also use ActionBar.Tab#select() to do this if we have
-		// a reference to the Tab.
-		viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-					@Override
-					public void onPageSelected(int position) {
-						actionBar.setSelectedNavigationItem(position);
-					}
-				});
-
-		// For each of the sections in the app, add a tab to the action bar.
-		for (int i = 0; i < pagerAdapter.getCount(); i++) {
-			// Create a tab with text corresponding to the page title defined by
-			// the adapter. Also specify this Activity object, which implements
-			// the TabListener interface, as the callback (listener) for when
-			// this tab is selected.
-			actionBar.addTab(actionBar.newTab()
-					.setText(pagerAdapter.getPageTitle(i))
-					.setTabListener(this));
-		}
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	}
 	
+	protected void spinnerChanged(int which) 
+	{
+		if(which == 0)
+		{
+			// Create the adapter that will return a fragment for each of the three
+			// primary sections of the app.
+			if(oneCollegePagerAdapter == null)
+				oneCollegePagerAdapter = new OneCollegeSectionsPagerAdapter(this, getSupportFragmentManager());
+
+			// Set up the ViewPager with the sections adapter.
+			viewPager = (ViewPager) findViewById(R.id.pager);
+			viewPager.setAdapter(oneCollegePagerAdapter);
+			viewPager.setOffscreenPageLimit(4);
+
+			// When swiping between different sections, select the corresponding
+			// tab. We can also use ActionBar.Tab#select() to do this if we have
+			// a reference to the Tab.
+			viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+						@Override
+						public void onPageSelected(int position) {
+							actionBar.setSelectedNavigationItem(position);
+						}
+					});
+
+			actionBar.removeAllTabs();
+			// For each of the sections in the app, add a tab to the action bar.
+			for (int i = 0; i < oneCollegePagerAdapter.getCount(); i++) {
+				// Create a tab with text corresponding to the page title defined by
+				// the adapter. Also specify this Activity object, which implements
+				// the TabListener interface, as the callback (listener) for when
+				// this tab is selected.
+				actionBar.addTab(actionBar.newTab()
+						.setText(oneCollegePagerAdapter.getPageTitle(i))
+						.setTabListener(this));
+			}
+		}
+		else 
+		{
+			// Create the adapter that will return a fragment for each of the three
+			// primary sections of the app.
+			if(allCollegesPagerAdapter == null)
+				allCollegesPagerAdapter = new AllCollegesSectionsPagerAdapter(this, getSupportFragmentManager());
+
+			// Set up the ViewPager with the sections adapter.
+			viewPager = (ViewPager) findViewById(R.id.pager);
+			viewPager.setAdapter(allCollegesPagerAdapter);
+			viewPager.setOffscreenPageLimit(4);
+
+			// When swiping between different sections, select the corresponding
+			// tab. We can also use ActionBar.Tab#select() to do this if we have
+			// a reference to the Tab.
+			viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+						@Override
+						public void onPageSelected(int position) {
+							actionBar.setSelectedNavigationItem(position);
+						}
+					});
+
+			actionBar.removeAllTabs();
+			// For each of the sections in the app, add a tab to the action bar.
+			for (int i = 0; i < allCollegesPagerAdapter.getCount(); i++) {
+				// Create a tab with text corresponding to the page title defined by
+				// the adapter. Also specify this Activity object, which implements
+				// the TabListener interface, as the callback (listener) for when
+				// this tab is selected.
+				actionBar.addTab(actionBar.newTab()
+						.setText(allCollegesPagerAdapter.getPageTitle(i))
+						.setTabListener(this));
+			}
+		}
+	}
+
 	public void newPostClicked() 
 	{
 		LayoutInflater inflater = getLayoutInflater();
@@ -181,11 +244,14 @@ public class MainActivity extends FragmentActivity implements
 				String currentTags = "Tags: <font color='#33B5E5'>";
 				
 				String[] wordArray = message.split(" ");
-				for(int i = 0; i < wordArray.length; i++)
+				if(wordArray.length > 0)
 				{
-					if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
+					for(int i = 0; i < wordArray.length; i++)
 					{
-						currentTags += wordArray[i] + " ";
+						if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
+						{
+							currentTags += wordArray[i] + " ";
+						}
 					}
 				}
 				
@@ -225,10 +291,10 @@ public class MainActivity extends FragmentActivity implements
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
 	 */
-	public class SectionsPagerAdapter extends FragmentPagerAdapter {
+	public class OneCollegeSectionsPagerAdapter extends FragmentPagerAdapter {
 		MainActivity mainActivity;
 		
-		public SectionsPagerAdapter(MainActivity m, FragmentManager fm) {
+		public OneCollegeSectionsPagerAdapter(MainActivity m, FragmentManager fm) {
 			super(fm);
 			mainActivity = m;
 		}
@@ -254,8 +320,7 @@ public class MainActivity extends FragmentActivity implements
 
 		@Override
 		public int getCount() {
-			// Show 3 total pages.
-			return 3;
+			return 5;
 		}
 
 		@Override
@@ -263,11 +328,68 @@ public class MainActivity extends FragmentActivity implements
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-				return getString(R.string.title_section1).toUpperCase(l);
+				return getString(R.string.onecollege_section1).toUpperCase(l);
 			case 1:
-				return getString(R.string.title_section2).toUpperCase(l);
+				return getString(R.string.onecollege_section2).toUpperCase(l);
 			case 2:
-				return getString(R.string.title_section3).toUpperCase(l);
+				return getString(R.string.onecollege_section3).toUpperCase(l);
+			case 3:
+				return getString(R.string.onecollege_section4).toUpperCase(l);
+			case 4:
+				return getString(R.string.onecollege_section5).toUpperCase(l);
+			}
+			return null;
+		}
+	}
+	
+	public class AllCollegesSectionsPagerAdapter extends FragmentPagerAdapter {
+		MainActivity mainActivity;
+		
+		public AllCollegesSectionsPagerAdapter(MainActivity m, FragmentManager fm) {
+			super(fm);
+			mainActivity = m;
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			// getItem is called to instantiate the fragment for the given page.
+			// Return a SectionFragment (defined as a static inner class
+			// below) with the page number as its lone argument.
+			Fragment fragment;
+			if(position == 0)
+				fragment = new TopPostFragment(mainActivity);
+			else if (position == 1)
+				fragment = new NewPostFragment(mainActivity);
+			else
+				fragment = new TagFragment(mainActivity);
+			
+			Bundle args = new Bundle();
+			args.putInt(TopPostFragment.ARG_SECTION_NUMBER, position);
+			fragment.setArguments(args);
+			return fragment;
+		}
+
+		@Override
+		public int getCount() {
+			return 6;
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			Locale l = Locale.getDefault();
+			switch (position) {
+			case 0:
+				return getString(R.string.allcollege_section1).toUpperCase(l);
+			case 1:
+				return getString(R.string.allcollege_section2).toUpperCase(l);
+			case 2:
+				return getString(R.string.allcollege_section3).toUpperCase(l);
+			case 3:
+				return getString(R.string.allcollege_section4).toUpperCase(l);
+			case 4:
+				return getString(R.string.allcollege_section5).toUpperCase(l);
+			case 5:
+				return getString(R.string.allcollege_section6).toUpperCase(l);
 			}
 			return null;
 		}

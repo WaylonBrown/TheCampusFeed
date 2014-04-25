@@ -3,13 +3,24 @@
 
     <string name="app_name">Postfeed</string>
     <string name="action_settings">Settings</string>
-    <string name="title_section1">Top Posts</string>
-    <string name="title_section2">New Posts</string>
-    <string name="title_section3">Trending Tags</string>
+    
+    <string name="onecollege_section1">Top Posts</string>
+    <string name="onecollege_section2">New Posts</string>
+    <string name="onecollege_section3">Trending Tags</string>
+    <string name="onecollege_section4">My Posts</string>
+    <string name="onecollege_section5">My Comments</string>
+    
+    <string name="allcollege_section1">Top Posts</string>
+    <string name="allcollege_section2">New Posts</string>
+    <string name="allcollege_section3">Trending Tags</string>
+    <string name="allcollege_section4">Most Active Colleges</string>
+    <string name="allcollege_section5">My Posts</string>
+    <string name="allcollege_section6">My Comments</string>
     
     <string-array name="spinnerArray">
-        <item>Near You</item>
-        <item>Everywhere</item>
+        <item>Texas A&amp;M University</item>
+        <item>Choose college...</item>
+        <item>All Colleges</item>
     </string-array>
 
 </resources>
