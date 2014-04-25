@@ -2,43 +2,26 @@ package com.appuccino.postfeed.listadapters;
 
 import java.util.List;
 
-import com.appuccino.postfeed.MainActivity.NewPostFragment;
-import com.appuccino.postfeed.MainActivity.TopPostFragment;
-import com.appuccino.postfeed.R;
-import com.appuccino.postfeed.R.id;
-import com.appuccino.postfeed.TagListActivity;
-import com.appuccino.postfeed.objects.Post;
-
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.graphics.Shader;
-import android.preference.PreferenceManager;
 import android.text.Html;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
+
+import com.appuccino.postfeed.MainActivity.NewPostFragment;
+import com.appuccino.postfeed.MainActivity.TopPostFragment;
+import com.appuccino.postfeed.R;
+import com.appuccino.postfeed.TagListActivity;
+import com.appuccino.postfeed.objects.NetWorker;
+import com.appuccino.postfeed.objects.Post;
+import com.appuccino.postfeed.objects.Vote;
 
 public class PostListAdapter extends ArrayAdapter<Post>{
 
@@ -104,6 +87,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 				TopPostFragment.updateList();
 				NewPostFragment.updateList();
 				TagListActivity.updateList();
+				new NetWorker.VoteTask().execute(new Vote(thisPost.getID(), true));
 			}        	
         });
         postHolder.arrowDown.setOnClickListener(new OnClickListener(){
