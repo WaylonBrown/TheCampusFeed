@@ -2,9 +2,7 @@ package com.appuccino.postfeed.objects;
 
 import java.util.ArrayList;
 
-import android.util.Log;
-
-public class Post {
+public class Post implements Votable{
 	int score;
 	String message;
 	int hoursAgo;
@@ -80,6 +78,7 @@ public class Post {
 		return hoursAgo;
 	}
 	
+	@Override
 	public int getID()
 	{
 		return id;

@@ -1,8 +1,9 @@
 package com.appuccino.postfeed.objects;
 
-public class Tag {
+public class Tag implements Votable{
 	String name;
 	int score;
+	int id;
 	
 	public Tag()
 	{
@@ -24,5 +25,10 @@ public class Tag {
 	int getScore()
 	{
 		return score;
+	}
+	
+	@Override
+	public int getID(){
+		return id;
 	}
 }
