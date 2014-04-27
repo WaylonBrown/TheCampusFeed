@@ -23,6 +23,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
@@ -119,8 +120,7 @@ public class MainActivity extends FragmentActivity implements
 		{
 			// Create the adapter that will return a fragment for each of the three
 			// primary sections of the app.
-			if(oneCollegePagerAdapter == null)
-				oneCollegePagerAdapter = new OneCollegeSectionsPagerAdapter(this, getSupportFragmentManager());
+			oneCollegePagerAdapter = new OneCollegeSectionsPagerAdapter(this, getSupportFragmentManager());
 
 			// Set up the ViewPager with the sections adapter.
 			viewPager = (ViewPager) findViewById(R.id.pager);
@@ -153,8 +153,7 @@ public class MainActivity extends FragmentActivity implements
 		{
 			// Create the adapter that will return a fragment for each of the three
 			// primary sections of the app.
-			if(allCollegesPagerAdapter == null)
-				allCollegesPagerAdapter = new AllCollegesSectionsPagerAdapter(this, getSupportFragmentManager());
+			allCollegesPagerAdapter = new AllCollegesSectionsPagerAdapter(this, getSupportFragmentManager());
 
 			// Set up the ViewPager with the sections adapter.
 			viewPager = (ViewPager) findViewById(R.id.pager);
@@ -291,14 +290,14 @@ public class MainActivity extends FragmentActivity implements
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
 	 */
-	public class OneCollegeSectionsPagerAdapter extends FragmentPagerAdapter {
+	public class OneCollegeSectionsPagerAdapter extends FragmentStatePagerAdapter {
 		MainActivity mainActivity;
 		
 		public OneCollegeSectionsPagerAdapter(MainActivity m, FragmentManager fm) {
 			super(fm);
 			mainActivity = m;
 		}
-
+		
 		@Override
 		public Fragment getItem(int position) {
 			// getItem is called to instantiate the fragment for the given page.
@@ -340,16 +339,17 @@ public class MainActivity extends FragmentActivity implements
 			}
 			return null;
 		}
+		
 	}
 	
-	public class AllCollegesSectionsPagerAdapter extends FragmentPagerAdapter {
+	public class AllCollegesSectionsPagerAdapter extends FragmentStatePagerAdapter {
 		MainActivity mainActivity;
 		
 		public AllCollegesSectionsPagerAdapter(MainActivity m, FragmentManager fm) {
 			super(fm);
 			mainActivity = m;
 		}
-
+		
 		@Override
 		public Fragment getItem(int position) {
 			// getItem is called to instantiate the fragment for the given page.

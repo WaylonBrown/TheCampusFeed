@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Postfeed</string>
+    <string name="app_name">CollegeFeed</string>
     <string name="action_settings">Settings</string>
     
     <string name="onecollege_section1">Top Posts</string>
