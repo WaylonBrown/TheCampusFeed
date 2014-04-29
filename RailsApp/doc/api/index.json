@@ -1,0 +1,44 @@
+{
+  "resources": [
+    {
+      "name": "Comments",
+      "examples": [
+        {
+          "description": "Creating a comment",
+          "link": "comments/creating_a_comment.json",
+          "groups": "all"
+        },
+        {
+          "description": "Listing comments",
+          "link": "comments/listing_comments.json",
+          "groups": "all"
+        }
+      ]
+    },
+    {
+      "name": "Posts",
+      "examples": [
+        {
+          "description": "Creating a post",
+          "link": "posts/creating_a_post.json",
+          "groups": "all"
+        },
+        {
+          "description": "Listing posts",
+          "link": "posts/listing_posts.json",
+          "groups": "all"
+        }
+      ]
+    },
+    {
+      "name": "Votes",
+      "examples": [
+        {
+          "description": "Casting a vote on an item",
+          "link": "votes/casting_a_vote_on_an_item.json",
+          "groups": "all"
+        }
+      ]
+    }
+  ]
+}

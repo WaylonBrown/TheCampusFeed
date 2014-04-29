@@ -1,0 +1,37 @@
+{
+  "resource": "Comments",
+  "http_method": "GET",
+  "route": "/comments",
+  "description": "Listing comments",
+  "explanation": null,
+  "parameters": [
+    {
+      "required": true,
+      "name": "postid",
+      "description": "The post id you are getting comments from."
+    }
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/comments?format=json&postid=1",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+        "format": "json",
+        "postid": "1"
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "[{\"id\":1,\"text\":\"Test comment.\",\"score\":null,\"url\":\"http://example.org/comments/1.json\"},{\"id\":2,\"text\":\"Test comment number 2.\",\"score\":null,\"url\":\"http://example.org/comments/2.json\"}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"32adf73e0ee97ba761c22e9408277ab6\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"65214794-d19d-4643-8e46-cd9eaf2a0f13","X-Runtime":"0.055602","Content-Length":"186"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

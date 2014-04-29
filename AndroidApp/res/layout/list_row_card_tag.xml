@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:orientation="horizontal"
+    android:layout_marginLeft="8dp"
+	android:layout_marginRight="8dp"
+	android:background="@drawable/card">
+	
+    <TextView 
+        android:id="@+id/tagText"
+        android:text="#notfound"
+        android:textSize="30sp"
+        android:textColor="@color/darkgray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="8dp"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+
+</LinearLayout>
+    

@@ -1,0 +1,39 @@
+{
+  "resource": "Posts",
+  "http_method": "GET",
+  "route": "/posts",
+  "description": "Listing posts",
+  "explanation": null,
+  "parameters": [
+    {
+      "name": "lat",
+      "description": "Your current latitude."
+    },
+    {
+      "name": "lon",
+      "description": "Your current longitude."
+    }
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/posts?format=json",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+        "format": "json"
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "[{\"id\":1,\"text\":\"Test post.\",\"score\":null,\"lat\":null,\"lon\":null,\"url\":\"http://example.org/posts/1.json\"}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"fac5aee360fb833bbe1d6d5a29717343\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"1ff94d57-f535-4ad1-8617-9c5199eb3990","X-Runtime":"0.013594","Content-Length":"105"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}
