@@ -3,53 +3,44 @@ package com.appuccino.postfeed;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import com.appuccino.postfeed.listadapters.PostListAdapter;
-import com.appuccino.postfeed.listadapters.TagListAdapter;
-import com.appuccino.postfeed.objects.Post;
-import com.appuccino.postfeed.objects.Tag;
-
 import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.appuccino.postfeed.listadapters.PostListAdapter;
+import com.appuccino.postfeed.listadapters.TagListAdapter;
+import com.appuccino.postfeed.objects.Post;
+import com.appuccino.postfeed.objects.Tag;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -225,15 +216,11 @@ public class MainActivity extends FragmentActivity implements
 
 			@Override
 			public void afterTextChanged(Editable s) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
@@ -247,14 +234,22 @@ public class MainActivity extends FragmentActivity implements
 				{
 					for(int i = 0; i < wordArray.length; i++)
 					{
-						if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
+						//prevent indexoutofboundsexception
+						if(wordArray[i].length() > 0)
 						{
-							currentTags += wordArray[i] + " ";
+							if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
+							{
+								currentTags += wordArray[i] + " ";
+							}
 						}
 					}
 				}
 				
 				currentTags += "</font>";
+				//if there aren't any tags and view is shown, remove view
+				if(currentTags.equals("Tags: <font color='#33B5E5'></font>") && tagsText.isShown())
+					((LinearLayout)tagsText.getParent()).removeView(tagsText);
+				else if(currentTags)
 				tagsText.setText(Html.fromHtml((currentTags)));
 			}
     		

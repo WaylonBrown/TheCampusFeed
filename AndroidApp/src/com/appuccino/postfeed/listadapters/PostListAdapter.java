@@ -53,16 +53,19 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         	postHolder.scoreText = (TextView)row.findViewById(R.id.scoreText);
         	postHolder.messageText = (TextView)row.findViewById(R.id.messageText);
         	postHolder.timeText = (TextView)row.findViewById(R.id.timeText);
+        	postHolder.commentText = (TextView)row.findViewById(R.id.commentText);
         	postHolder.arrowUp = (ImageView)row.findViewById(R.id.arrowUp);
         	postHolder.arrowDown = (ImageView)row.findViewById(R.id.arrowDown);
             		
-            Typeface light = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
+        	Typeface light = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
+        	Typeface medium = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Medium.ttf");
             Typeface lightItalic = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-LightItalic.ttf");
             Typeface bold = Typeface.createFromAsset(context.getAssets(), "fonts/mplus-2c-bold.ttf");
             
             postHolder.scoreText.setTypeface(bold);
             postHolder.messageText.setTypeface(light);
             postHolder.timeText.setTypeface(lightItalic);
+            postHolder.commentText.setTypeface(lightItalic);
             
             row.setTag(postHolder);
         }
@@ -72,6 +75,11 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         final Post thisPost = postList.get(position);
         postHolder.scoreText.setText(String.valueOf(thisPost.getScore()));
         postHolder.timeText.setText(String.valueOf(thisPost.getHoursAgo()) + " hours ago");
+        
+        String commentString = thisPost.getCommentList().size() + " comment";
+        if(thisPost.getCommentList().size() != 1)
+        	commentString += "s";
+        postHolder.commentText.setText(commentString);
         setMessageAndColorizeTags(thisPost.getMessage(), postHolder);
         
         //arrow click listeners
@@ -156,6 +164,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
     	TextView scoreText;
     	TextView messageText;
     	TextView timeText;
+    	TextView commentText;
     	ImageView arrowUp;
     	ImageView arrowDown;
     }
