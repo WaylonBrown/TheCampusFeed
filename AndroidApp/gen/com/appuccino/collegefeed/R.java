@@ -21,10 +21,11 @@ public final class R {
     }
     public static final class color {
         public static final int blue=0x7f050001;
-        public static final int darkgray=0x7f050003;
+        public static final int darkgray=0x7f050004;
+        public static final int gray=0x7f050003;
         public static final int lightblue=0x7f050000;
         public static final int lightgray=0x7f050002;
-        public static final int white=0x7f050004;
+        public static final int white=0x7f050005;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -50,8 +51,7 @@ public final class R {
         public static final int postfeedlogosmall=0x7f02000a;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b0013;
-        public static final int actionbarTag=0x7f0b0012;
+        public static final int action_settings=0x7f0b0014;
         public static final int arrowDown=0x7f0b0006;
         public static final int arrowUp=0x7f0b0004;
         public static final int card=0x7f0b000c;
@@ -68,8 +68,10 @@ public final class R {
         public static final int postCard=0x7f0b0003;
         public static final int scoreText=0x7f0b0005;
         public static final int spinner=0x7f0b0000;
+        public static final int tagSearchText=0x7f0b0013;
         public static final int tagText=0x7f0b000e;
         public static final int timeText=0x7f0b0008;
+        public static final int topTagText=0x7f0b0012;
     }
     public static final class layout {
         public static final int actionbar_comment_layout=0x7f030000;
@@ -81,7 +83,8 @@ public final class R {
         public static final int list_row_card=0x7f030006;
         public static final int list_row_card_tag=0x7f030007;
         public static final int new_post_layout=0x7f030008;
-        public static final int tag_fragment_layout=0x7f030009;
+        public static final int tag_activity_layout=0x7f030009;
+        public static final int tag_fragment_layout=0x7f03000a;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;

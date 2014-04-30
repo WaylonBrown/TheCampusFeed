@@ -3,6 +3,7 @@ package com.appuccino.collegefeed.fragments;
 import java.util.ArrayList;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
@@ -35,7 +37,7 @@ public class TagFragment extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_layout,
+		View rootView = inflater.inflate(R.layout.tag_fragment_layout,
 				container, false);
 		ListView fragList = (ListView)rootView.findViewById(R.id.fragmentListView);
 		
@@ -57,6 +59,11 @@ public class TagFragment extends Fragment
 		}
 	    fragList.setAdapter(adapter);
 	    fragList.setItemsCanFocus(true);
+	    
+	    //set bottom text typeface
+	    Typeface light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
+	    TextView tagSearchText = (TextView)rootView.findViewById(R.id.tagSearchText);
+	    tagSearchText.setTypeface(light);
 	    
 		return rootView;
 	}
