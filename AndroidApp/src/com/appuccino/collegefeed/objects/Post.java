@@ -17,13 +17,9 @@ public class Post implements Votable{
 		hoursAgo = 0;
 		id = (int)(Math.random() * Integer.MAX_VALUE);
 		
-		commentList.add(new Comment("test comment 1"));
-		commentList.add(new Comment("test comment 2"));
-		commentList.add(new Comment("test comment 3"));
-		commentList.add(new Comment("test comment 3"));
-		commentList.add(new Comment("test comment 3"));
-		commentList.add(new Comment("test comment 3"));
-		commentList.add(new Comment("test comment 3"));
+		int numberOfComments = (int)(Math.random() * 15);
+		for(int i = 0; i < numberOfComments; i++)
+			commentList.add(new Comment("test comment test comment test comment test comment test comment"));
 	}
 	
 	public Post(String m)
@@ -33,13 +29,9 @@ public class Post implements Votable{
 		hoursAgo = 0;
 		id = (int)(Math.random() * Integer.MAX_VALUE);
 		
-		commentList.add(new Comment("test comment 1"));
-		commentList.add(new Comment("test comment 2"));
-		commentList.add(new Comment("test comment 3"));
-		commentList.add(new Comment("test comment 3"));
-		commentList.add(new Comment("test comment 3"));
-		commentList.add(new Comment("test comment 3"));
-		commentList.add(new Comment("test comment 3"));
+		int numberOfComments = (int)(Math.random() * 15);
+		for(int i = 0; i < numberOfComments; i++)
+			commentList.add(new Comment("test comment test comment test comment test comment test comment"));
 	}
 	
 	public Post(int s, String m, int h)
@@ -49,13 +41,9 @@ public class Post implements Votable{
 		hoursAgo = h;
 		id = (int)(Math.random() * Integer.MAX_VALUE);
 		
-		commentList.add(new Comment("test comment 1"));
-		commentList.add(new Comment("test comment 2"));
-		commentList.add(new Comment("test comment 3"));
-		commentList.add(new Comment("test comment 3"));
-		commentList.add(new Comment("test comment 3"));
-		commentList.add(new Comment("test comment 3"));
-		commentList.add(new Comment("test comment 3"));
+		int numberOfComments = (int)(Math.random() * 15);
+		for(int i = 0; i < numberOfComments; i++)
+			commentList.add(new Comment("test comment test comment test comment test comment test comment"));
 	}
 	
 	public void setVote(int vote)

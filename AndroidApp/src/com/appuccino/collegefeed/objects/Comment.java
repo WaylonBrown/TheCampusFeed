@@ -17,7 +17,7 @@ public class Comment {
 	
 	public Comment(String m)
 	{
-		score = 0;
+		score = (int)(Math.random() * 100);;
 		id = (int)(Math.random() * Integer.MAX_VALUE);
 		message = m;
 		hoursAgo = 0;

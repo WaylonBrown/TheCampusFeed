@@ -14,6 +14,7 @@
 	    android:divider="@android:color/transparent"
 		android:dividerHeight="6dp"
 		android:listSelector="@android:color/transparent" 
-		android:scrollbars="none"/>
+		android:scrollbars="none"
+		android:background="@color/lightgray"/>
 
 </RelativeLayout>
