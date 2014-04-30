@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -27,6 +29,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AbsListView;
+import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -36,6 +39,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.appuccino.postfeed.listadapters.PostListAdapter;
 import com.appuccino.postfeed.listadapters.TagListAdapter;
@@ -211,6 +215,7 @@ public class MainActivity extends FragmentActivity implements
    
     	final TextView tagsText = (TextView)postDialogLayout.findViewById(R.id.newPostTagsText);
     	tagsText.setTypeface(customfont);
+    	
     	//set listener for tags
     	postMessage.addTextChangedListener(new TextWatcher(){
 
@@ -248,8 +253,20 @@ public class MainActivity extends FragmentActivity implements
 				currentTags += "</font>";
 				//if there aren't any tags and view is shown, remove view
 				if(currentTags.equals("Tags: <font color='#33B5E5'></font>") && tagsText.isShown())
-					((LinearLayout)tagsText.getParent()).removeView(tagsText);
-				else if(currentTags)
+				{
+					tagsText.setVisibility(View.GONE);
+					//tagsText.setLayoutParams(new android.widget.LinearLayout.LayoutParams(0, 0));
+					//tagsText.setHeight(0);
+				}					
+				else if(!currentTags.equals("Tags: <font color='#33B5E5'></font>") && !tagsText.isShown())
+				{
+					tagsText.setVisibility(View.VISIBLE);
+//					//tagsText.setLayoutParams(new android.widget.LinearLayout.LayoutParams(android.widget.LinearLayout.LayoutParams.MATCH_PARENT, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT));
+//					Resources r = getApplicationContext().getResources();
+//					Toast.makeText(getApplicationContext(), Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, r.getDisplayMetrics())), Toast.LENGTH_LONG).show();
+//					tagsText.setHeight(100);
+				}
+					
 				tagsText.setText(Html.fromHtml((currentTags)));
 			}
     		

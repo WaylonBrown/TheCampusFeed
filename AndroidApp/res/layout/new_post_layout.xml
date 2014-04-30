@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"
         android:textSize="22sp"
         android:layout_margin="8dp"
+        android:visibility="gone"
         />
 
 </LinearLayout>
