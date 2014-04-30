@@ -1,4 +1,4 @@
-package com.appuccino.postfeed;
+package com.appuccino.collegefeed;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -41,10 +41,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appuccino.postfeed.listadapters.PostListAdapter;
-import com.appuccino.postfeed.listadapters.TagListAdapter;
-import com.appuccino.postfeed.objects.Post;
-import com.appuccino.postfeed.objects.Tag;
+import com.appuccino.collegefeed.listadapters.PostListAdapter;
+import com.appuccino.collegefeed.listadapters.TagListAdapter;
+import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.objects.Tag;
+import com.appuccino.postfeed.R;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {

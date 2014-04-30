@@ -1,4 +1,4 @@
-package com.appuccino.postfeed.listadapters;
+package com.appuccino.collegefeed.listadapters;
 
 import java.util.List;
 
@@ -15,13 +15,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.appuccino.postfeed.MainActivity.NewPostFragment;
-import com.appuccino.postfeed.MainActivity.TopPostFragment;
+import com.appuccino.collegefeed.TagListActivity;
+import com.appuccino.collegefeed.MainActivity.NewPostFragment;
+import com.appuccino.collegefeed.MainActivity.TopPostFragment;
+import com.appuccino.collegefeed.objects.NetWorker;
+import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.objects.Vote;
 import com.appuccino.postfeed.R;
-import com.appuccino.postfeed.TagListActivity;
-import com.appuccino.postfeed.objects.NetWorker;
-import com.appuccino.postfeed.objects.Post;
-import com.appuccino.postfeed.objects.Vote;
 
 public class PostListAdapter extends ArrayAdapter<Post>{
 

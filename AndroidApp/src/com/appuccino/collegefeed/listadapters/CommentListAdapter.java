@@ -1,10 +1,10 @@
-package com.appuccino.postfeed.listadapters;
+package com.appuccino.collegefeed.listadapters;
 
 import java.util.List;
 
-import com.appuccino.postfeed.PostCommentsActivity;
+import com.appuccino.collegefeed.PostCommentsActivity;
+import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.postfeed.R;
-import com.appuccino.postfeed.objects.Comment;
 
 import android.app.Activity;
 import android.content.Context;

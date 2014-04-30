@@ -1,4 +1,4 @@
-package com.appuccino.postfeed;
+package com.appuccino.collegefeed;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -13,12 +13,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.appuccino.postfeed.MainActivity.NewPostFragment;
-import com.appuccino.postfeed.MainActivity.TopPostFragment;
-import com.appuccino.postfeed.listadapters.CommentListAdapter;
-import com.appuccino.postfeed.objects.NetWorker;
-import com.appuccino.postfeed.objects.Post;
-import com.appuccino.postfeed.objects.Vote;
+import com.appuccino.collegefeed.MainActivity.NewPostFragment;
+import com.appuccino.collegefeed.MainActivity.TopPostFragment;
+import com.appuccino.collegefeed.listadapters.CommentListAdapter;
+import com.appuccino.collegefeed.objects.NetWorker;
+import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.objects.Vote;
+import com.appuccino.postfeed.R;
 
 public class PostCommentsActivity extends Activity{
 

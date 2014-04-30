@@ -1,4 +1,4 @@
-package com.appuccino.postfeed.objects;
+package com.appuccino.collegefeed.objects;
 
 import java.util.ArrayList;
 

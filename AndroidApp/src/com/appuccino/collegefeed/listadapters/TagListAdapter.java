@@ -1,11 +1,11 @@
-package com.appuccino.postfeed.listadapters;
+package com.appuccino.collegefeed.listadapters;
 
 import java.util.List;
 
-import com.appuccino.postfeed.MainActivity.TagFragment;
+import com.appuccino.collegefeed.MainActivity.TagFragment;
+import com.appuccino.collegefeed.objects.Tag;
 import com.appuccino.postfeed.R;
 import com.appuccino.postfeed.R.id;
-import com.appuccino.postfeed.objects.Tag;
 
 import android.app.Activity;
 import android.content.Context;
