@@ -16,7 +16,7 @@
         />
     
     <!-- custom so that it cant do a carriage return -->
-    <com.appuccino.collegefeed.MyEditText
+    <com.appuccino.collegefeed.extra.MyEditText
         android:id="@+id/newPostMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

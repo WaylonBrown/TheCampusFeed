@@ -18,9 +18,9 @@
     <string name="allcollege_section6">My Comments</string>
     
     <string-array name="spinnerArray">
-        <item>Texas A&amp;M University</item>
-        <item>Choose college...</item>
         <item>All Colleges</item>
+        <item>Choose college...</item>
+        <item>Texas A&amp;M University</item>
     </string-array>
 
 </resources>

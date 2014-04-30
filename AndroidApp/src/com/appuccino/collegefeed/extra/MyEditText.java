@@ -1,4 +1,4 @@
-package com.appuccino.collegefeed;
+package com.appuccino.collegefeed.extra;
 
 import android.content.Context;
 import android.util.AttributeSet;

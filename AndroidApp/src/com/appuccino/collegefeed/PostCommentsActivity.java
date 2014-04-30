@@ -16,14 +16,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.appuccino.collegefeed.MainActivity.NewPostFragment;
-import com.appuccino.collegefeed.MainActivity.TopPostFragment;
+import com.appuccino.collegefeed.fragments.NewPostFragment;
+import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.listadapters.CommentListAdapter;
 import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.NetWorker;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
-import com.appuccino.collegefeed.R;
 
 public class PostCommentsActivity extends Activity{
 
@@ -71,6 +70,10 @@ public class PostCommentsActivity extends Activity{
 			scoreText.setText(String.valueOf(post.getScore()));
 			timeText.setText(String.valueOf(post.getHoursAgo()) + " hours ago");
 			
+			//change text if no comments from post
+			if(post.getCommentList().size() == 0)
+				commentsText.setText("No Comments");
+				
 			sortCommentsList(post);
 			listAdapter = new CommentListAdapter(this, R.layout.list_row_card, post.getCommentList());
 			

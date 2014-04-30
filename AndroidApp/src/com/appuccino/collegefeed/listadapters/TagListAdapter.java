@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.appuccino.collegefeed.MainActivity.TagFragment;
 import com.appuccino.collegefeed.R;
+import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.objects.Tag;
 
 public class TagListAdapter extends ArrayAdapter<Tag>{

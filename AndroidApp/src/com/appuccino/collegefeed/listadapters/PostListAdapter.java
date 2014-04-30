@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,13 +14,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
-import com.appuccino.collegefeed.MainActivity.NewPostFragment;
-import com.appuccino.collegefeed.MainActivity.TopPostFragment;
+import com.appuccino.collegefeed.fragments.NewPostFragment;
+import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.NetWorker;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
-import com.appuccino.collegefeed.R;
 
 public class PostListAdapter extends ArrayAdapter<Post>{
 
