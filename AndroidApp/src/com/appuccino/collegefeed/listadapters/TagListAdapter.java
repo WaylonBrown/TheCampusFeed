@@ -2,38 +2,19 @@ package com.appuccino.collegefeed.listadapters;
 
 import java.util.List;
 
-import com.appuccino.collegefeed.MainActivity.TagFragment;
-import com.appuccino.collegefeed.objects.Tag;
-import com.appuccino.postfeed.R;
-import com.appuccino.postfeed.R.id;
-
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.graphics.Shader;
-import android.preference.PreferenceManager;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
+
+import com.appuccino.collegefeed.MainActivity.TagFragment;
+import com.appuccino.collegefeed.R;
+import com.appuccino.collegefeed.objects.Tag;
 
 public class TagListAdapter extends ArrayAdapter<Tag>{
 

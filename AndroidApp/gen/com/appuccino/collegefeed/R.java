@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.appuccino.postfeed;
+package com.appuccino.collegefeed;
 
 public final class R {
     public static final class anim {

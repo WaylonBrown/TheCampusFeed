@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.appuccino.collegefeed.listadapters.CommentListAdapter;
 import com.appuccino.collegefeed.listadapters.PostListAdapter;
 import com.appuccino.collegefeed.objects.Post;
-import com.appuccino.postfeed.R;
+import com.appuccino.collegefeed.R;
 
 import android.app.ActionBar;
 import android.app.Activity;

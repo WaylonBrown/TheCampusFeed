@@ -21,7 +21,7 @@ import com.appuccino.collegefeed.MainActivity.TopPostFragment;
 import com.appuccino.collegefeed.objects.NetWorker;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
-import com.appuccino.postfeed.R;
+import com.appuccino.collegefeed.R;
 
 public class PostListAdapter extends ArrayAdapter<Post>{
 

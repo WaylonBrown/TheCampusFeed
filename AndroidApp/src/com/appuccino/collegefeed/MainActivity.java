@@ -8,7 +8,6 @@ import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -21,7 +20,6 @@ import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -29,23 +27,19 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AbsListView;
-import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.appuccino.collegefeed.listadapters.PostListAdapter;
 import com.appuccino.collegefeed.listadapters.TagListAdapter;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Tag;
-import com.appuccino.postfeed.R;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {

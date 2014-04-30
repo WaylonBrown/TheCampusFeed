@@ -19,7 +19,7 @@ import com.appuccino.collegefeed.listadapters.CommentListAdapter;
 import com.appuccino.collegefeed.objects.NetWorker;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
-import com.appuccino.postfeed.R;
+import com.appuccino.collegefeed.R;
 
 public class PostCommentsActivity extends Activity{
 

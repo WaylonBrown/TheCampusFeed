@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.appuccino.collegefeed.PostCommentsActivity;
 import com.appuccino.collegefeed.objects.Comment;
-import com.appuccino.postfeed.R;
+import com.appuccino.collegefeed.R;
 
 import android.app.Activity;
 import android.content.Context;
