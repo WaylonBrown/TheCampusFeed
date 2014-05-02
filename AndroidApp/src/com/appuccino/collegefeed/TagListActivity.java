@@ -44,10 +44,8 @@ public class TagListActivity extends Activity{
         Typeface medium = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Medium.ttf");
         
         TextView topTagText = (TextView)findViewById(R.id.topTagText);
-        TextView tagSearchText = (TextView)findViewById(R.id.tagSearchText);
         topTagText.setText("Posts with " + tagText);
         topTagText.setTypeface(light);
-        tagSearchText.setTypeface(light);
 		
 		ListView listView = (ListView)findViewById(R.id.fragmentListView);
 		if(!tagText.equals("") && tagText != null)

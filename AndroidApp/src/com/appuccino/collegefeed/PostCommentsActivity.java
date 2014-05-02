@@ -28,6 +28,7 @@ public class PostCommentsActivity extends Activity{
 
 	static CommentListAdapter listAdapter;
 	Post post;
+	ImageView newCommentButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +37,18 @@ public class PostCommentsActivity extends Activity{
 		setContentView(R.layout.comment_layout);
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
-		actionBar.setCustomView(R.layout.actionbar_comment_layout);
+		actionBar.setCustomView(R.layout.actionbar_comment);
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setDisplayShowCustomEnabled(true);
 		actionBar.setDisplayUseLogoEnabled(false);
 		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
 		actionBar.setIcon(R.drawable.logofake);
+		
+		if(MainActivity.fullPermissions)
+		{
+			newCommentButton = (ImageView)findViewById(R.id.newCommentButton);
+			newCommentButton.setVisibility(View.VISIBLE);
+		}
 		
 		int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);
 		if(sectionNumber == 0)
