@@ -105,6 +105,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		{
 			fullPermissions = false;
 			newPostButton.setVisibility(View.GONE);
+			Toast.makeText(this, "You can only downvote and comment on colleges you are near to", Toast.LENGTH_LONG).show();
 			
 			// Create the adapter that will return a fragment for each of the three
 			// primary sections of the app.

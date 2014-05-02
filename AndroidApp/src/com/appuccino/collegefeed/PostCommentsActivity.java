@@ -15,6 +15,7 @@ import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
@@ -117,16 +118,24 @@ public class PostCommentsActivity extends Activity{
 	        arrowDown.setOnClickListener(new OnClickListener(){
 
 				@Override
-				public void onClick(View v) {
-					//if already downvoted, un-downvote
-					if(post.getVote() != -1)
-						post.setVote(-1);
+				public void onClick(View v) 
+				{					
+					if(MainActivity.fullPermissions)
+					{
+						//if already downvoted, un-downvote
+						if(post.getVote() != -1)
+							post.setVote(-1);
+						else
+							post.setVote(0);
+						TopPostFragment.updateList();
+						NewPostFragment.updateList();
+						TagListActivity.updateList();
+						updateArrows(arrowUp, arrowDown);
+					}
 					else
-						post.setVote(0);
-					TopPostFragment.updateList();
-					NewPostFragment.updateList();
-					TagListActivity.updateList();
-					updateArrows(arrowUp, arrowDown);
+					{
+						Toast.makeText(getApplicationContext(), "You need to be near the college to downvote", Toast.LENGTH_LONG).show();
+					}
 				}        	
 	        });
 	        
