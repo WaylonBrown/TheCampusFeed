@@ -1,6 +1,6 @@
 Postfeed::Application.routes.draw do
-  namespace :api do
-    namespace :v1 do
+  namespace :api do 
+    namespace :v1, defaults: {format: :json} do
       resources :colleges
       get '/colleges/:id/within' => 'colleges#within'
 
