@@ -66,10 +66,10 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         else
         	commentHolder = (commentHolder)row.getTag();
         
-        final Comment thiscomment = commentList.get(position);
-        commentHolder.scoreText.setText(String.valueOf(thiscomment.getScore()));
-        commentHolder.messageText.setText(thiscomment.getMessage());
-        commentHolder.timeText.setText(String.valueOf(thiscomment.getHoursAgo()) + " hours ago");
+        final Comment thisComment = commentList.get(position);
+        commentHolder.scoreText.setText(String.valueOf(thisComment.getScore()));
+        commentHolder.messageText.setText(thisComment.getMessage());
+        commentHolder.timeText.setText(String.valueOf(thisComment.getHoursAgo()) + " hours ago");
         
       //arrow click listeners
         commentHolder.arrowUp.setOnClickListener(new OnClickListener(){
@@ -77,10 +77,10 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 			@Override
 			public void onClick(View v) {
 				//if already upvoted, un-upvote
-				if(thiscomment.getVote() != 1)
-					thiscomment.setVote(1);
+				if(thisComment.getVote() != 1)
+					thisComment.setVote(1);
 				else
-					thiscomment.setVote(0);
+					thisComment.setVote(0);
 				PostCommentsActivity.updateList();
 			}        	
         });
@@ -88,13 +88,13 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 
 			@Override
 			public void onClick(View v) {
-				if(MainActivity.fullPermissions)
+				if(MainActivity.permissions == thisComment.getCollegeID())
 				{
 					//if already downvoted, un-downvote
-					if(thiscomment.getVote() != -1)
-						thiscomment.setVote(-1);
+					if(thisComment.getVote() != -1)
+						thisComment.setVote(-1);
 					else
-						thiscomment.setVote(0);
+						thisComment.setVote(0);
 					PostCommentsActivity.updateList();
 				}
 				else
@@ -104,7 +104,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 			}        	
         });
         
-        int vote = thiscomment.getVote();
+        int vote = thisComment.getVote();
         if(vote == -1)
         {
         	commentHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdownred));

@@ -46,7 +46,7 @@ public class TagFragment extends Fragment
 		tagList.add(new Tag("#wwwwwwwwwwwwwwwwwwwwwwwwwww", 5));
 		tagList.add(new Tag("#wwwwwwww", 5));
 		
-		TagListAdapter adapter = new TagListAdapter(getActivity(), R.layout.list_row_card_tag, tagList);
+		TagListAdapter adapter = new TagListAdapter(getActivity(), R.layout.list_row_tag, tagList);
 		
 		//if doesnt have header and footer, add them
 		if(fragList.getHeaderViewsCount() == 0)

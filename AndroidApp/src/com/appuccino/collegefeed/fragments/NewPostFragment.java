@@ -60,7 +60,19 @@ public class NewPostFragment extends Fragment
 			postList.add(new Post(70, "New message 2 test message 2 test message #onetag #twotag", 10));
 			postList.add(new Post(15, "New message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));
 		}		
-		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_card, postList, 1);
+		
+		//if not in specific college feed, use layout with college name
+		if(MainActivity.spinner.getSelectedItemPosition() == 2)
+		{
+			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row, postList, 0);
+		}
+		else
+		{
+			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_college, postList, 0);
+		}
+		fragList.setAdapter(listAdapter);
+				
+		
 		fragList.setAdapter(listAdapter);
 		
 		

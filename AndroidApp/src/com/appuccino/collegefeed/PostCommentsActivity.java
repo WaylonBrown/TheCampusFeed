@@ -15,6 +15,7 @@ import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
@@ -44,11 +45,6 @@ public class PostCommentsActivity extends Activity{
 		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
 		actionBar.setIcon(R.drawable.logofake);
 		
-		if(MainActivity.fullPermissions)
-		{
-			newCommentButton = (ImageView)findViewById(R.id.newCommentButton);
-			newCommentButton.setVisibility(View.VISIBLE);
-		}
 		
 		int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);
 		if(sectionNumber == 0)
@@ -82,7 +78,7 @@ public class PostCommentsActivity extends Activity{
 				commentsText.setText("No Comments");
 				
 			sortCommentsList(post);
-			listAdapter = new CommentListAdapter(this, R.layout.list_row_card, post.getCommentList());
+			listAdapter = new CommentListAdapter(this, R.layout.list_row, post.getCommentList());
 			
 			//if doesnt havefooter, add it
 			if(commentsListView.getFooterViewsCount() == 0)
@@ -117,16 +113,24 @@ public class PostCommentsActivity extends Activity{
 	        arrowDown.setOnClickListener(new OnClickListener(){
 
 				@Override
-				public void onClick(View v) {
-					//if already downvoted, un-downvote
-					if(post.getVote() != -1)
-						post.setVote(-1);
+				public void onClick(View v) 
+				{					
+					if(MainActivity.permissions == post.getCollegeID())
+					{
+						//if already downvoted, un-downvote
+						if(post.getVote() != -1)
+							post.setVote(-1);
+						else
+							post.setVote(0);
+						TopPostFragment.updateList();
+						NewPostFragment.updateList();
+						TagListActivity.updateList();
+						updateArrows(arrowUp, arrowDown);
+					}
 					else
-						post.setVote(0);
-					TopPostFragment.updateList();
-					NewPostFragment.updateList();
-					TagListActivity.updateList();
-					updateArrows(arrowUp, arrowDown);
+					{
+						Toast.makeText(getApplicationContext(), "You need to be near the college to downvote", Toast.LENGTH_LONG).show();
+					}
 				}        	
 	        });
 	        

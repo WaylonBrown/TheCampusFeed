@@ -47,10 +47,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	AllCollegesSectionsPagerAdapter allCollegesPagerAdapter;
 	ActionBar actionBar;
 	ImageView newPostButton;
-	Spinner spinner;
+	public static Spinner spinner;
 	ViewPager viewPager;
 	ArrayList<Fragment> fragmentList;
-	public static boolean fullPermissions = false;
+	public static int permissions = 0;	//0 = no perms, otherwise the college ID is the perm IDs
+	public static int currentFeedCollegeID;	//0 if viewing all colleges
 	static final double milesForPermissions = 15.0;
 	
 	/**
@@ -61,7 +62,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		
 		// Set up the action bar.
 		actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -96,6 +97,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			}
 			
 		});
+		
+		determinePermissions();
 	}
 	
 	protected void spinnerChanged(int which) 
@@ -103,8 +106,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		//all colleges section
 		if(which == 0)
 		{
-			fullPermissions = false;
-			newPostButton.setVisibility(View.GONE);
+			currentFeedCollegeID = 0;
+			newPostButton.setVisibility(View.GONE);	
 			
 			// Create the adapter that will return a fragment for each of the three
 			// primary sections of the app.
@@ -141,6 +144,26 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		}
 		else //specific college
 		{
+			currentFeedCollegeID = 234234;
+			//change permissions UI
+			if(permissions != 0)
+			{
+				newPostButton.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				newPostButton.setVisibility(View.GONE);
+			}
+			
+			if(permissions == currentFeedCollegeID)
+			{
+				Toast.makeText(this, "Since you are near Texas A&M University, you can upvote, downvote, post, and comment", Toast.LENGTH_LONG).show();
+			}
+			else
+			{
+				Toast.makeText(this, "Since you aren't near Texas A&M University, you can only downvote", Toast.LENGTH_LONG).show();
+			}
+			
 			// Create the adapter that will return a fragment for each of the three
 			// primary sections of the app.
 			oneCollegePagerAdapter = new OneCollegeSectionsPagerAdapter(this, getSupportFragmentManager());
@@ -173,8 +196,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 						.setText(oneCollegePagerAdapter.getPageTitle(i))
 						.setTabListener(this));
 			}
-			
-			determinePermissions();
 		}
 	}
 
@@ -185,7 +206,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		//if gps is turned off
 		if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
 		{
-			fullPermissions = false;
+			permissions = 0;
 			Toast.makeText(this, "GPS is turned off", Toast.LENGTH_LONG).show();
 			Toast.makeText(this, "You can upvote, but nothing else", Toast.LENGTH_LONG).show();
 		}
@@ -196,28 +217,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			double degreesForPermissions = milesForPermissions / 50.0;	//roughly 50 miles per degree
 			double tamuLatitude = 30.614942;
 			double tamuLongitude = -96.342316;
+			int tamuID = 234234;
 			
 			double degreesAway = Math.sqrt(Math.pow((thisLoc.getLatitude() - tamuLatitude), 2) + Math.pow((thisLoc.getLongitude() - tamuLongitude), 2));
 			if(degreesAway < degreesForPermissions)
 			{
-				fullPermissions = true;
-				Toast.makeText(this, "You're near the college, you can upvote,  downvote, post, and comment", Toast.LENGTH_LONG).show();
+				permissions = tamuID;
+				Toast.makeText(this, "You're near Texas A&M University, you can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
 			}
 			else
 			{
-				fullPermissions = false;
-				Toast.makeText(this, "You aren't near the college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
+				permissions = 0;
+				Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
 			}
-		}
-		
-		//change permissions UI
-		if(fullPermissions)
-		{
-			newPostButton.setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			newPostButton.setVisibility(View.GONE);
 		}
 	}
 

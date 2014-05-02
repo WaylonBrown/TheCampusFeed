@@ -57,6 +57,8 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         	postHolder.commentText = (TextView)row.findViewById(R.id.commentText);
         	postHolder.arrowUp = (ImageView)row.findViewById(R.id.arrowUp);
         	postHolder.arrowDown = (ImageView)row.findViewById(R.id.arrowDown);
+        	if(MainActivity.spinner.getSelectedItemPosition() != 2)
+        		postHolder.collegeName = (TextView)row.findViewById(R.id.collegeNameText);
             		
         	Typeface light = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
         	Typeface medium = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Medium.ttf");
@@ -67,6 +69,8 @@ public class PostListAdapter extends ArrayAdapter<Post>{
             postHolder.messageText.setTypeface(light);
             postHolder.timeText.setTypeface(lightItalic);
             postHolder.commentText.setTypeface(lightItalic);
+            if(postHolder.collegeName != null)
+            	postHolder.collegeName.setTypeface(lightItalic);
             
             row.setTag(postHolder);
         }
@@ -76,6 +80,8 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         final Post thisPost = postList.get(position);
         postHolder.scoreText.setText(String.valueOf(thisPost.getScore()));
         postHolder.timeText.setText(String.valueOf(thisPost.getHoursAgo()) + " hours ago");
+        if(postHolder.collegeName != null)
+        	postHolder.collegeName.setText(thisPost.getCollegeName());
         
         String commentString = thisPost.getCommentList().size() + " comment";
         if(thisPost.getCommentList().size() != 1)
@@ -102,8 +108,9 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         postHolder.arrowDown.setOnClickListener(new OnClickListener(){
 
 			@Override
-			public void onClick(View v) {
-				if(MainActivity.fullPermissions)
+			public void onClick(View v) 
+			{
+				if(MainActivity.permissions == thisPost.getCollegeID())
 				{
 					//if already downvoted, un-downvote
 					if(thisPost.getVote() != -1)
@@ -173,6 +180,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
     	TextView messageText;
     	TextView timeText;
     	TextView commentText;
+    	TextView collegeName;
     	ImageView arrowUp;
     	ImageView arrowDown;
     }
