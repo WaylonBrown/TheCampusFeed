@@ -12,9 +12,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.PostCommentsActivity;
 import com.appuccino.collegefeed.R;
+import com.appuccino.collegefeed.TagListActivity;
+import com.appuccino.collegefeed.fragments.NewPostFragment;
+import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Comment;
 
 public class CommentListAdapter extends ArrayAdapter<Comment>{
@@ -83,12 +88,19 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 
 			@Override
 			public void onClick(View v) {
-				//if already downvoted, un-downvote
-				if(thiscomment.getVote() != -1)
-					thiscomment.setVote(-1);
+				if(MainActivity.fullPermissions)
+				{
+					//if already downvoted, un-downvote
+					if(thiscomment.getVote() != -1)
+						thiscomment.setVote(-1);
+					else
+						thiscomment.setVote(0);
+					PostCommentsActivity.updateList();
+				}
 				else
-					thiscomment.setVote(0);
-				PostCommentsActivity.updateList();
+				{
+					Toast.makeText(context, "You need to be near the college to downvote", Toast.LENGTH_LONG).show();
+				}
 			}        	
         });
         

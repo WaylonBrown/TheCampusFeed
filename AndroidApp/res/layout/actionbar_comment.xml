@@ -12,4 +12,20 @@
 	    android:layout_marginTop="3dp"
 	    android:src="@drawable/collegefeedlogosmall" />
 	
+	<!-- push comment button to right -->
+	<View
+	    android:layout_width="0dp"
+	    android:layout_weight="1"
+	    android:layout_height="0dp"/>
+	
+	<ImageView
+        android:id="@+id/newCommentButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:src="@drawable/newpost"
+        android:background="@drawable/postbuttonclick"
+        android:layout_gravity="center_vertical|right"
+        android:clickable="true"
+        android:visibility="gone"/>
+	
 </LinearLayout>

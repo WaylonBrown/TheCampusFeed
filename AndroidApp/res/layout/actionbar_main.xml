@@ -32,7 +32,8 @@
 	        android:src="@drawable/newpost"
 	        android:background="@drawable/postbuttonclick"
 	        android:layout_gravity="center_vertical"
-	        android:clickable="true"/>
+	        android:clickable="true"
+	        android:visibility="gone"/>
 	    
 	</LinearLayout>
 	

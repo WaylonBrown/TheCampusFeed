@@ -51,31 +51,32 @@ public final class R {
         public static final int postfeedlogosmall=0x7f02000a;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b0014;
-        public static final int arrowDown=0x7f0b0006;
-        public static final int arrowUp=0x7f0b0004;
-        public static final int card=0x7f0b000c;
-        public static final int commentText=0x7f0b000d;
-        public static final int commentsList=0x7f0b000a;
-        public static final int commentsText=0x7f0b0009;
-        public static final int fragmentListView=0x7f0b000b;
-        public static final int messageText=0x7f0b0007;
-        public static final int newPostButton=0x7f0b0001;
-        public static final int newPostMessage=0x7f0b0010;
-        public static final int newPostTagsText=0x7f0b0011;
-        public static final int newPostTitle=0x7f0b000f;
-        public static final int pager=0x7f0b0002;
-        public static final int postCard=0x7f0b0003;
-        public static final int scoreText=0x7f0b0005;
-        public static final int spinner=0x7f0b0000;
-        public static final int tagSearchText=0x7f0b0013;
-        public static final int tagText=0x7f0b000e;
-        public static final int timeText=0x7f0b0008;
-        public static final int topTagText=0x7f0b0012;
+        public static final int action_settings=0x7f0b0015;
+        public static final int arrowDown=0x7f0b0007;
+        public static final int arrowUp=0x7f0b0005;
+        public static final int card=0x7f0b000d;
+        public static final int commentText=0x7f0b000e;
+        public static final int commentsList=0x7f0b000b;
+        public static final int commentsText=0x7f0b000a;
+        public static final int fragmentListView=0x7f0b000c;
+        public static final int messageText=0x7f0b0008;
+        public static final int newCommentButton=0x7f0b0000;
+        public static final int newPostButton=0x7f0b0002;
+        public static final int newPostMessage=0x7f0b0011;
+        public static final int newPostTagsText=0x7f0b0012;
+        public static final int newPostTitle=0x7f0b0010;
+        public static final int pager=0x7f0b0003;
+        public static final int postCard=0x7f0b0004;
+        public static final int scoreText=0x7f0b0006;
+        public static final int spinner=0x7f0b0001;
+        public static final int tagSearchText=0x7f0b0014;
+        public static final int tagText=0x7f0b000f;
+        public static final int timeText=0x7f0b0009;
+        public static final int topTagText=0x7f0b0013;
     }
     public static final class layout {
-        public static final int actionbar_comment_layout=0x7f030000;
-        public static final int actionbar_layout=0x7f030001;
+        public static final int actionbar_comment=0x7f030000;
+        public static final int actionbar_main=0x7f030001;
         public static final int actionbar_tag_layout=0x7f030002;
         public static final int activity_main=0x7f030003;
         public static final int comment_layout=0x7f030004;

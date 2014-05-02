@@ -6,9 +6,12 @@ import java.util.Locale;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -30,23 +33,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Post;
 
-public class MainActivity extends FragmentActivity implements
-		ActionBar.TabListener {
+public class MainActivity extends FragmentActivity implements ActionBar.TabListener 
+{
 
-	/**
-	 * The {@link android.support.v4.view.PagerAdapter} that will provide
-	 * fragments for each of the sections. We use a
-	 * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which
-	 * will keep every loaded fragment in memory. If this becomes too memory
-	 * intensive, it may be best to switch to a
-	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-	 */
 	OneCollegeSectionsPagerAdapter oneCollegePagerAdapter;
 	AllCollegesSectionsPagerAdapter allCollegesPagerAdapter;
 	ActionBar actionBar;
@@ -54,6 +50,8 @@ public class MainActivity extends FragmentActivity implements
 	Spinner spinner;
 	ViewPager viewPager;
 	ArrayList<Fragment> fragmentList;
+	public static boolean fullPermissions = false;
+	static final double milesForPermissions = 15.0;
 	
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -67,7 +65,7 @@ public class MainActivity extends FragmentActivity implements
 		// Set up the action bar.
 		actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		actionBar.setCustomView(R.layout.actionbar_layout);
+		actionBar.setCustomView(R.layout.actionbar_main);
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setDisplayShowCustomEnabled(true);
 		actionBar.setDisplayUseLogoEnabled(false);
@@ -102,8 +100,12 @@ public class MainActivity extends FragmentActivity implements
 	
 	protected void spinnerChanged(int which) 
 	{
+		//all colleges section
 		if(which == 0)
 		{
+			fullPermissions = false;
+			newPostButton.setVisibility(View.GONE);
+			
 			// Create the adapter that will return a fragment for each of the three
 			// primary sections of the app.
 			allCollegesPagerAdapter = new AllCollegesSectionsPagerAdapter(this, getSupportFragmentManager());
@@ -137,7 +139,7 @@ public class MainActivity extends FragmentActivity implements
 						.setTabListener(this));
 			}
 		}
-		else 
+		else //specific college
 		{
 			// Create the adapter that will return a fragment for each of the three
 			// primary sections of the app.
@@ -171,6 +173,51 @@ public class MainActivity extends FragmentActivity implements
 						.setText(oneCollegePagerAdapter.getPageTitle(i))
 						.setTabListener(this));
 			}
+			
+			determinePermissions();
+		}
+	}
+
+	private void determinePermissions() 
+	{
+		LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+		
+		//if gps is turned off
+		if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+		{
+			fullPermissions = false;
+			Toast.makeText(this, "GPS is turned off", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "You can upvote, but nothing else", Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			Location thisLoc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+			
+			double degreesForPermissions = milesForPermissions / 50.0;	//roughly 50 miles per degree
+			double tamuLatitude = 30.614942;
+			double tamuLongitude = -96.342316;
+			
+			double degreesAway = Math.sqrt(Math.pow((thisLoc.getLatitude() - tamuLatitude), 2) + Math.pow((thisLoc.getLongitude() - tamuLongitude), 2));
+			if(degreesAway < degreesForPermissions)
+			{
+				fullPermissions = true;
+				Toast.makeText(this, "You're near the college, you can upvote,  downvote, post, and comment", Toast.LENGTH_LONG).show();
+			}
+			else
+			{
+				fullPermissions = false;
+				Toast.makeText(this, "You aren't near the college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
+			}
+		}
+		
+		//change permissions UI
+		if(fullPermissions)
+		{
+			newPostButton.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			newPostButton.setVisibility(View.GONE);
 		}
 	}
 
@@ -191,7 +238,8 @@ public class MainActivity extends FragmentActivity implements
     	});
     	
     	final AlertDialog dialog = builder.create();
-    	dialog.show();
+    	if(spinner.getSelectedItemPosition() == 2)
+    		dialog.show();
     	
     	Typeface customfont = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
     	TextView title = (TextView)postDialogLayout.findViewById(R.id.newPostTitle);

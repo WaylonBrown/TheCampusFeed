@@ -30,33 +30,5 @@
 		android:listSelector="@android:color/transparent" 
 		android:scrollbars="none"
 		android:background="@color/lightgray"/>
-    
-    <LinearLayout 
-        android:background="?android:attr/selectableItemBackground"
-        android:layout_height="50dp"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:clickable="true"
-        >
-        
-        <View
-            android:layout_height="1dp"
-            android:layout_width="match_parent"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/gray"/>
-        
-        <TextView
-            android:id="@+id/tagSearchText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Search for a Tag"
-            android:textColor="@color/darkgray"
-            android:textSize="20sp"
-            />
-        
-        
-    </LinearLayout>
 
 </LinearLayout>
