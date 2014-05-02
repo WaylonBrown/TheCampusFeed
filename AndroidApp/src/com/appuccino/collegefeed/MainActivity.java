@@ -54,9 +54,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
 	static final double milesForPermissions = 15.0;
 	
-	/**
-	 * The {@link ViewPager} that will host the section contents.
-	 */
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
