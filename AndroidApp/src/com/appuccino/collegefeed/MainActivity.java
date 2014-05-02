@@ -6,7 +6,6 @@ import java.util.Locale;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -24,7 +23,6 @@ import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -210,6 +208,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	private void getLocation(){
 		mgr = (LocationManager) getSystemService(LOCATION_SERVICE);
 		Criteria criteria = new Criteria();
+		criteria.setAccuracy(Criteria.ACCURACY_FINE);
 		String best = mgr.getBestProvider(criteria, true);
 		if (best == null) {
 		    //ask user to enable at least one of the Location Providers
@@ -217,15 +216,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			Toast.makeText(this, "Location Services are turned off.", Toast.LENGTH_LONG).show();
 			Toast.makeText(this, "You can upvote, but nothing else.", Toast.LENGTH_LONG).show();
 		} else {
-		    Location lastKnownLoc = mgr.getLastKnownLocation(best);
-		    //But sometimes it returns null
-		    if(lastKnownLoc == null){
-		    	Toast.makeText(this, "Getting your location...", Toast.LENGTH_LONG).show();
-		    	mgr.requestLocationUpdates(best, 0, 0, this);
-			}
-		    else{
-		    	determinePermissions(lastKnownLoc);
-		    }
+//		    Location lastKnownLoc = mgr.getLastKnownLocation(best);
+//		    //But sometimes it returns null
+//		    if(lastKnownLoc == null){
+//		    	Toast.makeText(this, "Getting your location...", Toast.LENGTH_LONG).show();
+		    	//mgr.requestLocationUpdates(best, 0, 0, this);
+		    	mgr.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, this, null);
+//			}
+//		    else{
+//		    	determinePermissions(lastKnownLoc);
+//		    }
 		}
 	}
 
@@ -240,7 +240,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		if(degreesAway < degreesForPermissions)
 		{
 			permissions = tamuID;
-			Toast.makeText(this, "You're near Texas A&M University, you can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "You're near Texas A&M University", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "You can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
 		}
 		else
 		{
@@ -509,7 +510,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	@Override
 	public void onLocationChanged(Location loc) {
 		determinePermissions(loc);
-		mgr.removeUpdates(this);
+		Toast.makeText(this, "Lat: " + loc.getLatitude() + " Lon: " + loc.getLongitude(), Toast.LENGTH_LONG).show();
+		//mgr.removeUpdates(this);
 	}
 
 	@Override
