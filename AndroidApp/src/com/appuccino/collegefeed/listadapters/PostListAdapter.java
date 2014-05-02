@@ -20,7 +20,9 @@ import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
-import com.appuccino.collegefeed.objects.NetWorker;
+import com.appuccino.collegefeed.objects.NetWorker.GetPostsTask;
+import com.appuccino.collegefeed.objects.NetWorker.MakeVoteTask;
+import com.appuccino.collegefeed.objects.NetWorker.PostSelector;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
 
@@ -102,7 +104,8 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 				TopPostFragment.updateList();
 				NewPostFragment.updateList();
 				TagListActivity.updateList();
-				new NetWorker.VoteTask().execute(new Vote(thisPost.getID(), true));
+				new MakeVoteTask().execute(new Vote(thisPost.getID(), true));
+				//new GetPostsTask().execute(new PostSelector());
 			}        	
         });
         postHolder.arrowDown.setOnClickListener(new OnClickListener(){

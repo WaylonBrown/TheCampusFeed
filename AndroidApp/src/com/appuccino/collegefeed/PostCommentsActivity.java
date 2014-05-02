@@ -22,6 +22,7 @@ import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.listadapters.CommentListAdapter;
 import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.NetWorker;
+import com.appuccino.collegefeed.objects.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
 
@@ -107,7 +108,7 @@ public class PostCommentsActivity extends Activity{
 					NewPostFragment.updateList();
 					TagListActivity.updateList();
 					updateArrows(arrowUp, arrowDown);
-					new NetWorker.VoteTask().execute(new Vote(post.getID(), true));
+					new MakeVoteTask().execute(new Vote(post.getID(), true));
 				}        	
 	        });
 	        arrowDown.setOnClickListener(new OnClickListener(){
