@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		532706DD1913745E00F5EAB9 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706DC1913745E00F5EAB9 /* Post.m */; };
+		532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706E1191378EF00F5EAB9 /* PostDataController.m */; };
+		532706E5191384A600F5EAB9 /* PostsMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706E4191384A600F5EAB9 /* PostsMasterViewController.m */; };
 		53F8789119133F60002A578B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789019133F60002A578B /* Foundation.framework */; };
 		53F8789319133F60002A578B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789219133F60002A578B /* CoreGraphics.framework */; };
 		53F8789519133F60002A578B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789419133F60002A578B /* UIKit.framework */; };
@@ -15,8 +18,6 @@
 		53F878A119133F60002A578B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F878A019133F60002A578B /* AppDelegate.m */; };
 		53F878A419133F60002A578B /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53F878A219133F60002A578B /* Main_iPhone.storyboard */; };
 		53F878A719133F60002A578B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53F878A519133F60002A578B /* Main_iPad.storyboard */; };
-		53F878AA19133F60002A578B /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F878A919133F60002A578B /* FirstViewController.m */; };
-		53F878AD19133F60002A578B /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F878AC19133F60002A578B /* SecondViewController.m */; };
 		53F878AF19133F60002A578B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53F878AE19133F60002A578B /* Images.xcassets */; };
 		53F878B619133F60002A578B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F878B519133F60002A578B /* XCTest.framework */; };
 		53F878B719133F60002A578B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789019133F60002A578B /* Foundation.framework */; };
@@ -36,6 +37,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		532706DB1913745E00F5EAB9 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
+		532706DC1913745E00F5EAB9 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
+		532706E0191378EF00F5EAB9 /* PostDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDataController.h; sourceTree = "<group>"; };
+		532706E1191378EF00F5EAB9 /* PostDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostDataController.m; sourceTree = "<group>"; };
+		532706E3191384A600F5EAB9 /* PostsMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostsMasterViewController.h; sourceTree = "<group>"; };
+		532706E4191384A600F5EAB9 /* PostsMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostsMasterViewController.m; sourceTree = "<group>"; };
 		53F8788D19133F60002A578B /* Collegefeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collegefeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53F8789019133F60002A578B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		53F8789219133F60002A578B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -48,10 +55,6 @@
 		53F878A019133F60002A578B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		53F878A319133F60002A578B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		53F878A619133F60002A578B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		53F878A819133F60002A578B /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		53F878A919133F60002A578B /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		53F878AB19133F60002A578B /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		53F878AC19133F60002A578B /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		53F878AE19133F60002A578B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		53F878B419133F60002A578B /* CollegefeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CollegefeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		53F878B519133F60002A578B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -84,6 +87,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		532706DE1913777300F5EAB9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				532706DB1913745E00F5EAB9 /* Post.h */,
+				532706DC1913745E00F5EAB9 /* Post.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		532706DF191378A500F5EAB9 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				532706E0191378EF00F5EAB9 /* PostDataController.h */,
+				532706E1191378EF00F5EAB9 /* PostDataController.m */,
+				532706E3191384A600F5EAB9 /* PostsMasterViewController.h */,
+				532706E4191384A600F5EAB9 /* PostsMasterViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		53F8788419133F60002A578B = {
 			isa = PBXGroup;
 			children = (
@@ -117,14 +140,12 @@
 		53F8789619133F60002A578B /* Collegefeed */ = {
 			isa = PBXGroup;
 			children = (
+				532706DE1913777300F5EAB9 /* Models */,
+				532706DF191378A500F5EAB9 /* Controllers */,
 				53F8789F19133F60002A578B /* AppDelegate.h */,
 				53F878A019133F60002A578B /* AppDelegate.m */,
 				53F878A219133F60002A578B /* Main_iPhone.storyboard */,
 				53F878A519133F60002A578B /* Main_iPad.storyboard */,
-				53F878A819133F60002A578B /* FirstViewController.h */,
-				53F878A919133F60002A578B /* FirstViewController.m */,
-				53F878AB19133F60002A578B /* SecondViewController.h */,
-				53F878AC19133F60002A578B /* SecondViewController.m */,
 				53F878AE19133F60002A578B /* Images.xcassets */,
 				53F8789719133F60002A578B /* Supporting Files */,
 			);
@@ -258,9 +279,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53F878AD19133F60002A578B /* SecondViewController.m in Sources */,
+				532706DD1913745E00F5EAB9 /* Post.m in Sources */,
+				532706E5191384A600F5EAB9 /* PostsMasterViewController.m in Sources */,
 				53F878A119133F60002A578B /* AppDelegate.m in Sources */,
-				53F878AA19133F60002A578B /* FirstViewController.m in Sources */,
+				532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */,
 				53F8789D19133F60002A578B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -476,6 +498,7 @@
 				53F878C719133F60002A578B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		53F878C819133F60002A578B /* Build configuration list for PBXNativeTarget "CollegefeedTests" */ = {
 			isa = XCConfigurationList;
@@ -484,6 +507,7 @@
 				53F878CA19133F60002A578B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
