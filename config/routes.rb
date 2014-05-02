@@ -1,12 +1,16 @@
 Postfeed::Application.routes.draw do
-  resources :colleges
-  get '/colleges/:id/within' => 'colleges#within'
+  namespace :api do
+    namespace :v1 do
+      resources :colleges
+      get '/colleges/:id/within' => 'colleges#within'
 
-  resources :votes
+      resources :votes
 
-  resources :comments
+      resources :comments
 
-  resources :posts
+      resources :posts
+    end
+  end
 
 
   # The priority is based upon order of creation: first created -> highest priority.
