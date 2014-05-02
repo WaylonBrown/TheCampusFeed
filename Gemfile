@@ -34,6 +34,8 @@ gem 'rspec_api_documentation'
 #gem 'raddocs'
 gem 'apitome'
 
+gem 'rails_12factor'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
