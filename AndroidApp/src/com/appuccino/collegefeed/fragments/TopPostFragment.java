@@ -62,7 +62,16 @@ public class TopPostFragment extends Fragment
 			postList.add(new Post(70, "Top message 2 test message 2 test message #onetag #twotag", 10));
 			postList.add(new Post(15, "Top message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));
 		}		
-		topListAdapter = new PostListAdapter(getActivity(), R.layout.list_row_card, postList, 0);
+		
+		//if not in specific college feed, use layout with college name
+		if(MainActivity.spinner.getSelectedItemPosition() == 2)
+		{
+			topListAdapter = new PostListAdapter(getActivity(), R.layout.list_row, postList, 0);
+		}
+		else
+		{
+			topListAdapter = new PostListAdapter(getActivity(), R.layout.list_row_college, postList, 0);
+		}
 		fragList.setAdapter(topListAdapter);
 		
 		

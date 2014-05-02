@@ -47,7 +47,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	AllCollegesSectionsPagerAdapter allCollegesPagerAdapter;
 	ActionBar actionBar;
 	ImageView newPostButton;
-	Spinner spinner;
+	public static Spinner spinner;
 	ViewPager viewPager;
 	ArrayList<Fragment> fragmentList;
 	public static boolean fullPermissions = false;

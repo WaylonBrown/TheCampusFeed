@@ -51,10 +51,11 @@ public final class R {
         public static final int postfeedlogosmall=0x7f02000a;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b0015;
+        public static final int action_settings=0x7f0b0016;
         public static final int arrowDown=0x7f0b0007;
         public static final int arrowUp=0x7f0b0005;
         public static final int card=0x7f0b000d;
+        public static final int collegeNameText=0x7f0b000f;
         public static final int commentText=0x7f0b000e;
         public static final int commentsList=0x7f0b000b;
         public static final int commentsText=0x7f0b000a;
@@ -62,17 +63,17 @@ public final class R {
         public static final int messageText=0x7f0b0008;
         public static final int newCommentButton=0x7f0b0000;
         public static final int newPostButton=0x7f0b0002;
-        public static final int newPostMessage=0x7f0b0011;
-        public static final int newPostTagsText=0x7f0b0012;
-        public static final int newPostTitle=0x7f0b0010;
+        public static final int newPostMessage=0x7f0b0012;
+        public static final int newPostTagsText=0x7f0b0013;
+        public static final int newPostTitle=0x7f0b0011;
         public static final int pager=0x7f0b0003;
         public static final int postCard=0x7f0b0004;
         public static final int scoreText=0x7f0b0006;
         public static final int spinner=0x7f0b0001;
-        public static final int tagSearchText=0x7f0b0014;
-        public static final int tagText=0x7f0b000f;
+        public static final int tagSearchText=0x7f0b0015;
+        public static final int tagText=0x7f0b0010;
         public static final int timeText=0x7f0b0009;
-        public static final int topTagText=0x7f0b0013;
+        public static final int topTagText=0x7f0b0014;
     }
     public static final class layout {
         public static final int actionbar_comment=0x7f030000;
@@ -81,11 +82,12 @@ public final class R {
         public static final int activity_main=0x7f030003;
         public static final int comment_layout=0x7f030004;
         public static final int fragment_layout=0x7f030005;
-        public static final int list_row_card=0x7f030006;
-        public static final int list_row_card_tag=0x7f030007;
-        public static final int new_post_layout=0x7f030008;
-        public static final int tag_activity_layout=0x7f030009;
-        public static final int tag_fragment_layout=0x7f03000a;
+        public static final int list_row=0x7f030006;
+        public static final int list_row_college=0x7f030007;
+        public static final int list_row_tag=0x7f030008;
+        public static final int new_post_layout=0x7f030009;
+        public static final int tag_activity_layout=0x7f03000a;
+        public static final int tag_fragment_layout=0x7f03000b;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;

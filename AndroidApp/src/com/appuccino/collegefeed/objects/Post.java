@@ -9,6 +9,8 @@ public class Post implements Votable{
 	int id;
 	ArrayList<Comment> commentList = new ArrayList<Comment>();
 	int vote = 0;		//-1 = downvote, 0 = nothing, 1 = upvote
+	int collegeID;
+	String collegeName;
 	
 	public Post()
 	{
@@ -16,6 +18,8 @@ public class Post implements Votable{
 		message = "";
 		hoursAgo = 0;
 		id = (int)(Math.random() * Integer.MAX_VALUE);
+		collegeID = 0;
+		collegeName = "Texas A&M University";
 		
 		int numberOfComments = (int)(Math.random() * 15);
 		for(int i = 0; i < numberOfComments; i++)
@@ -28,6 +32,8 @@ public class Post implements Votable{
 		score = 0;
 		hoursAgo = 0;
 		id = (int)(Math.random() * Integer.MAX_VALUE);
+		collegeID = 0;
+		collegeName = "Texas A&M University";
 		
 		int numberOfComments = (int)(Math.random() * 15);
 		for(int i = 0; i < numberOfComments; i++)
@@ -40,6 +46,8 @@ public class Post implements Votable{
 		message = m;
 		hoursAgo = h;
 		id = (int)(Math.random() * Integer.MAX_VALUE);
+		collegeID = 0;
+		collegeName = "Texas A&M University";
 		
 		int numberOfComments = (int)(Math.random() * 15);
 		for(int i = 0; i < numberOfComments; i++)
@@ -59,6 +67,11 @@ public class Post implements Votable{
 	public String getMessage()
 	{
 		return message;
+	}
+	
+	public String getCollegeName()
+	{
+		return collegeName;
 	}
 	
 	public int getHoursAgo()
