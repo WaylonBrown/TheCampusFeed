@@ -1,4 +1,4 @@
-project.properties
+*.properties
 build.config
 
 #################
