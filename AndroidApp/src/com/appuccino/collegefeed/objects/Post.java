@@ -18,7 +18,7 @@ public class Post implements Votable{
 		message = "";
 		hoursAgo = 0;
 		id = (int)(Math.random() * Integer.MAX_VALUE);
-		collegeID = 0;
+		collegeID = 234234;
 		collegeName = "Texas A&M University";
 		
 		int numberOfComments = (int)(Math.random() * 15);
@@ -32,7 +32,7 @@ public class Post implements Votable{
 		score = 0;
 		hoursAgo = 0;
 		id = (int)(Math.random() * Integer.MAX_VALUE);
-		collegeID = 0;
+		collegeID = 234234;
 		collegeName = "Texas A&M University";
 		
 		int numberOfComments = (int)(Math.random() * 15);
@@ -46,7 +46,7 @@ public class Post implements Votable{
 		message = m;
 		hoursAgo = h;
 		id = (int)(Math.random() * Integer.MAX_VALUE);
-		collegeID = 0;
+		collegeID = 234234;
 		collegeName = "Texas A&M University";
 		
 		int numberOfComments = (int)(Math.random() * 15);
@@ -72,6 +72,11 @@ public class Post implements Votable{
 	public String getCollegeName()
 	{
 		return collegeName;
+	}
+	
+	public int getCollegeID()
+	{
+		return collegeID;
 	}
 	
 	public int getHoursAgo()

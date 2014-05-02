@@ -108,8 +108,9 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         postHolder.arrowDown.setOnClickListener(new OnClickListener(){
 
 			@Override
-			public void onClick(View v) {
-				if(MainActivity.fullPermissions)
+			public void onClick(View v) 
+			{
+				if(MainActivity.permissions == thisPost.getCollegeID())
 				{
 					//if already downvoted, un-downvote
 					if(thisPost.getVote() != -1)
