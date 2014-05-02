@@ -2,6 +2,8 @@ package com.appuccino.collegefeed;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
@@ -51,11 +53,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public static Spinner spinner;
 	ViewPager viewPager;
 	ArrayList<Fragment> fragmentList;
-	
+	boolean locationFound = false;
 	public static LocationManager mgr;
 	public static int permissions = 0;	//0 = no perms, otherwise the college ID is the perm IDs
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
 	static final double milesForPermissions = 15.0;
+	final int locationTimeoutSeconds = 10;
+	
 	/*
 	 * TODO:
 	 * Implement Haversine function to calculate shortest distance between two spherical points.
@@ -77,6 +81,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		actionBar.setDisplayUseLogoEnabled(false);
 		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
 		actionBar.setIcon(R.drawable.logofake);
+		
+		locationFound = false;
 		
 		newPostButton = (ImageView)findViewById(R.id.newPostButton);
 		newPostButton.setOnClickListener(new OnClickListener(){
@@ -222,6 +228,28 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 //		    	Toast.makeText(this, "Getting your location...", Toast.LENGTH_LONG).show();
 		    	//mgr.requestLocationUpdates(best, 0, 0, this);
 		    	mgr.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, this, null);
+		    	Timer timeout = new Timer();
+		    	final MainActivity that = this;
+		    	timeout.schedule(new TimerTask()
+		    	{
+					@Override
+					public void run() 
+					{						
+						if(!locationFound)
+						{
+							that.runOnUiThread(new Runnable(){
+
+								@Override
+								public void run() {
+									Toast.makeText(getApplicationContext(), "Couldn't find location. You can upvote, but nothing else.", Toast.LENGTH_LONG).show();
+
+								}
+								
+							});
+							mgr.removeUpdates(that);
+						}							
+					}		    		
+		    	}, locationTimeoutSeconds * 1000);
 //			}
 //		    else{
 //		    	determinePermissions(lastKnownLoc);
@@ -509,8 +537,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 	@Override
 	public void onLocationChanged(Location loc) {
+		locationFound = true;
 		determinePermissions(loc);
-		Toast.makeText(this, "Lat: " + loc.getLatitude() + " Lon: " + loc.getLongitude(), Toast.LENGTH_LONG).show();
 		//mgr.removeUpdates(this);
 	}
 
