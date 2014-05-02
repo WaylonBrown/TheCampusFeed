@@ -21,7 +21,7 @@
         <td><%= college.lat %></td>
         <td><%= college.lon %></td>
         <td><%= link_to 'Show', college %></td>
-        <td><%= link_to 'Edit', edit_college_path(college) %></td>
+        <td><%= link_to 'Edit', edit_api_v1_college_path(college) %></td>
         <td><%= link_to 'Destroy', college, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -30,4 +30,4 @@
 
 <br>
 
-<%= link_to 'New College', new_college_path %>
+<%= link_to 'New College', new_api_v1_college_path %>

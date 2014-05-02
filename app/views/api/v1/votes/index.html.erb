@@ -19,7 +19,7 @@
         <td><%= vote.votable_id %></td>
         <td><%= vote.votable_type %></td>
         <td><%= link_to 'Show', vote %></td>
-        <td><%= link_to 'Edit', edit_vote_path(vote) %></td>
+        <td><%= link_to 'Edit', edit_api_v1_vote_path(vote) %></td>
         <td><%= link_to 'Destroy', vote, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -28,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Vote', new_vote_path %>
+<%= link_to 'New Vote', new_api_v1_vote_path %>

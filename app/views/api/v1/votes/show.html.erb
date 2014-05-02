@@ -15,5 +15,5 @@
   <%= @vote.votable_type %>
 </p>
 
-<%= link_to 'Edit', edit_vote_path(@vote) %> |
-<%= link_to 'Back', votes_path %>
+<%= link_to 'Edit', api_v1_edit_vote_path(@vote) %> |
+<%= link_to 'Back', api_v1_votes_path %>
