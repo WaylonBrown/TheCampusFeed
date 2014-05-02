@@ -1,6 +1,7 @@
 package com.appuccino.collegefeed.objects;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -11,6 +12,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.appuccino.collegefeed.fragments.TopPostFragment;
 
 public class NetWorker {
 	
@@ -24,9 +27,13 @@ public class NetWorker {
 		
 	}
 	
-	public static class GetPostsTask extends AsyncTask<PostSelector, Void, Post>{
+	public static class GetPostsTask extends AsyncTask<PostSelector, Void, ArrayList<Post> >{
+		/*Activity activityContext;
+		public GetPostsTask(Activity activityContext){
+			this.activityContext = activityContext;
+		}*/
 		@Override
-		protected Post doInBackground(PostSelector... arg0) {
+		protected ArrayList<Post> doInBackground(PostSelector... arg0) {
 			HttpGet request = new HttpGet(requestUrl + "posts");
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String response = null;
@@ -41,12 +48,21 @@ public class NetWorker {
 			}
 			
 			Log.d("http", response);
-			return null;
+			ArrayList<Post> ret = null;
+			try {
+				ret = Post.postsFromJson(response);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ret;
 		}
 		
 		@Override
-		protected void onPostExecute(Post result) {
-			//Log.d("http", "success: " + result);
+		protected void onPostExecute(ArrayList<Post> result) {
+			//activityContext.getFragment
+			TopPostFragment.postList.addAll(result);
+			TopPostFragment.updateList();
 		}
 
 		

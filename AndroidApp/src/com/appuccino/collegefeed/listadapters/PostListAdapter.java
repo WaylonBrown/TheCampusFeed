@@ -105,7 +105,6 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 				NewPostFragment.updateList();
 				TagListActivity.updateList();
 				new MakeVoteTask().execute(new Vote(thisPost.getID(), true));
-				//new GetPostsTask().execute(new PostSelector());
 			}        	
         });
         postHolder.arrowDown.setOnClickListener(new OnClickListener(){

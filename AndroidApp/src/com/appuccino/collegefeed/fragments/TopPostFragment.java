@@ -18,6 +18,8 @@ import com.appuccino.collegefeed.PostCommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.listadapters.PostListAdapter;
 import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.objects.NetWorker.GetPostsTask;
+import com.appuccino.collegefeed.objects.NetWorker.PostSelector;
 
 public class TopPostFragment extends Fragment
 {
@@ -58,9 +60,11 @@ public class TopPostFragment extends Fragment
 		if(postList == null)
 		{
 			postList = new ArrayList<Post>();
-			postList.add(new Post(100, "Top message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
+			new GetPostsTask().execute(new PostSelector());
+			//postList.add()
+			/*postList.add(new Post(100, "Top message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
 			postList.add(new Post(70, "Top message 2 test message 2 test message #onetag #twotag", 10));
-			postList.add(new Post(15, "Top message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));
+			postList.add(new Post(15, "Top message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));*/
 		}		
 		
 		//if not in specific college feed, use layout with college name
