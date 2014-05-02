@@ -1,55 +1,40 @@
-package com.appuccino.postfeed;
+package com.appuccino.collegefeed;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
-import com.appuccino.postfeed.listadapters.PostListAdapter;
-import com.appuccino.postfeed.listadapters.TagListAdapter;
-import com.appuccino.postfeed.objects.Post;
-import com.appuccino.postfeed.objects.Tag;
-
 import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.appuccino.collegefeed.fragments.NewPostFragment;
+import com.appuccino.collegefeed.fragments.TagFragment;
+import com.appuccino.collegefeed.fragments.TopPostFragment;
+import com.appuccino.collegefeed.objects.Post;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -67,11 +52,12 @@ public class MainActivity extends FragmentActivity implements
 	ActionBar actionBar;
 	ImageView newPostButton;
 	Spinner spinner;
+	ViewPager viewPager;
+	ArrayList<Fragment> fragmentList;
 	
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
-	ViewPager viewPager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -120,32 +106,34 @@ public class MainActivity extends FragmentActivity implements
 		{
 			// Create the adapter that will return a fragment for each of the three
 			// primary sections of the app.
-			oneCollegePagerAdapter = new OneCollegeSectionsPagerAdapter(this, getSupportFragmentManager());
+			allCollegesPagerAdapter = new AllCollegesSectionsPagerAdapter(this, getSupportFragmentManager());
 
 			// Set up the ViewPager with the sections adapter.
 			viewPager = (ViewPager) findViewById(R.id.pager);
-			viewPager.setAdapter(oneCollegePagerAdapter);
-			viewPager.setOffscreenPageLimit(4);
+			viewPager.setAdapter(allCollegesPagerAdapter);
+			viewPager.setOffscreenPageLimit(5);
 
 			// When swiping between different sections, select the corresponding
 			// tab. We can also use ActionBar.Tab#select() to do this if we have
 			// a reference to the Tab.
-			viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-						@Override
-						public void onPageSelected(int position) {
-							actionBar.setSelectedNavigationItem(position);
-						}
-					});
+			viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() 
+			{
+				@Override
+				public void onPageSelected(int position) {
+					actionBar.setSelectedNavigationItem(position);
+				}
+			});
 
 			actionBar.removeAllTabs();
 			// For each of the sections in the app, add a tab to the action bar.
-			for (int i = 0; i < oneCollegePagerAdapter.getCount(); i++) {
+			for (int i = 0; i < allCollegesPagerAdapter.getCount(); i++) 
+			{
 				// Create a tab with text corresponding to the page title defined by
 				// the adapter. Also specify this Activity object, which implements
 				// the TabListener interface, as the callback (listener) for when
 				// this tab is selected.
 				actionBar.addTab(actionBar.newTab()
-						.setText(oneCollegePagerAdapter.getPageTitle(i))
+						.setText(allCollegesPagerAdapter.getPageTitle(i))
 						.setTabListener(this));
 			}
 		}
@@ -153,17 +141,18 @@ public class MainActivity extends FragmentActivity implements
 		{
 			// Create the adapter that will return a fragment for each of the three
 			// primary sections of the app.
-			allCollegesPagerAdapter = new AllCollegesSectionsPagerAdapter(this, getSupportFragmentManager());
+			oneCollegePagerAdapter = new OneCollegeSectionsPagerAdapter(this, getSupportFragmentManager());
 
 			// Set up the ViewPager with the sections adapter.
 			viewPager = (ViewPager) findViewById(R.id.pager);
-			viewPager.setAdapter(allCollegesPagerAdapter);
-			viewPager.setOffscreenPageLimit(4);
+			viewPager.setAdapter(oneCollegePagerAdapter);
+			viewPager.setOffscreenPageLimit(5);
 
 			// When swiping between different sections, select the corresponding
 			// tab. We can also use ActionBar.Tab#select() to do this if we have
 			// a reference to the Tab.
-			viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+			viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() 
+			{
 						@Override
 						public void onPageSelected(int position) {
 							actionBar.setSelectedNavigationItem(position);
@@ -172,13 +161,14 @@ public class MainActivity extends FragmentActivity implements
 
 			actionBar.removeAllTabs();
 			// For each of the sections in the app, add a tab to the action bar.
-			for (int i = 0; i < allCollegesPagerAdapter.getCount(); i++) {
+			for (int i = 0; i < oneCollegePagerAdapter.getCount(); i++) 
+			{
 				// Create a tab with text corresponding to the page title defined by
 				// the adapter. Also specify this Activity object, which implements
 				// the TabListener interface, as the callback (listener) for when
 				// this tab is selected.
 				actionBar.addTab(actionBar.newTab()
-						.setText(allCollegesPagerAdapter.getPageTitle(i))
+						.setText(oneCollegePagerAdapter.getPageTitle(i))
 						.setTabListener(this));
 			}
 		}
@@ -195,8 +185,8 @@ public class MainActivity extends FragmentActivity implements
     	builder.setView(postDialogLayout)
     	.setPositiveButton("Post", new DialogInterface.OnClickListener() {
     		public void onClick(DialogInterface dialog, int id) {
-    			NewPostFragment.newPostList.add(new Post(postMessage.getText().toString()));
-    			TopPostFragment.topPostList.add(new Post(postMessage.getText().toString()));
+    			NewPostFragment.postList.add(new Post(postMessage.getText().toString()));
+    			TopPostFragment.postList.add(new Post(postMessage.getText().toString()));
     		}
     	});
     	
@@ -220,20 +210,17 @@ public class MainActivity extends FragmentActivity implements
    
     	final TextView tagsText = (TextView)postDialogLayout.findViewById(R.id.newPostTagsText);
     	tagsText.setTypeface(customfont);
+    	
     	//set listener for tags
     	postMessage.addTextChangedListener(new TextWatcher(){
 
 			@Override
 			public void afterTextChanged(Editable s) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
@@ -247,14 +234,34 @@ public class MainActivity extends FragmentActivity implements
 				{
 					for(int i = 0; i < wordArray.length; i++)
 					{
-						if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
+						//prevent indexoutofboundsexception
+						if(wordArray[i].length() > 0)
 						{
-							currentTags += wordArray[i] + " ";
+							if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
+							{
+								currentTags += wordArray[i] + " ";
+							}
 						}
 					}
 				}
 				
 				currentTags += "</font>";
+				//if there aren't any tags and view is shown, remove view
+				if(currentTags.equals("Tags: <font color='#33B5E5'></font>") && tagsText.isShown())
+				{
+					tagsText.setVisibility(View.GONE);
+					//tagsText.setLayoutParams(new android.widget.LinearLayout.LayoutParams(0, 0));
+					//tagsText.setHeight(0);
+				}					
+				else if(!currentTags.equals("Tags: <font color='#33B5E5'></font>") && !tagsText.isShown())
+				{
+					tagsText.setVisibility(View.VISIBLE);
+//					//tagsText.setLayoutParams(new android.widget.LinearLayout.LayoutParams(android.widget.LinearLayout.LayoutParams.MATCH_PARENT, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT));
+//					Resources r = getApplicationContext().getResources();
+//					Toast.makeText(getApplicationContext(), Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, r.getDisplayMetrics())), Toast.LENGTH_LONG).show();
+//					tagsText.setHeight(100);
+				}
+					
 				tagsText.setText(Html.fromHtml((currentTags)));
 			}
     		
@@ -303,16 +310,28 @@ public class MainActivity extends FragmentActivity implements
 			// getItem is called to instantiate the fragment for the given page.
 			// Return a SectionFragment (defined as a static inner class
 			// below) with the page number as its lone argument.
-			Fragment fragment;
-			if(position == 0)
+			Fragment fragment = null;
+			switch(position)
+			{
+			case 0:	//top posts
 				fragment = new TopPostFragment(mainActivity);
-			else if (position == 1)
+				break;
+			case 1:	//new posts
 				fragment = new NewPostFragment(mainActivity);
-			else
+				break;
+			case 2:	//trending tags
 				fragment = new TagFragment(mainActivity);
+				break;
+			case 3:	//my posts
+				fragment = new NewPostFragment(mainActivity);
+				break;
+			case 4:	//my comments
+				fragment = new NewPostFragment(mainActivity);
+				break;
+			}
 			
 			Bundle args = new Bundle();
-			args.putInt(TopPostFragment.ARG_SECTION_NUMBER, position);
+			args.putInt(TopPostFragment.ARG_TAB_NUMBER, position);
 			fragment.setArguments(args);
 			return fragment;
 		}
@@ -355,16 +374,32 @@ public class MainActivity extends FragmentActivity implements
 			// getItem is called to instantiate the fragment for the given page.
 			// Return a SectionFragment (defined as a static inner class
 			// below) with the page number as its lone argument.
-			Fragment fragment;
-			if(position == 0)
-				fragment = new TopPostFragment(mainActivity);
-			else if (position == 1)
-				fragment = new NewPostFragment(mainActivity);
-			else
-				fragment = new TagFragment(mainActivity);
-			
 			Bundle args = new Bundle();
-			args.putInt(TopPostFragment.ARG_SECTION_NUMBER, position);
+			args.putInt(TopPostFragment.ARG_TAB_NUMBER, position);
+			
+			Fragment fragment = null;
+			switch(position)
+			{
+			case 0:	//top posts
+				fragment = new TopPostFragment(mainActivity);
+				break;
+			case 1:	//new posts
+				fragment = new NewPostFragment(mainActivity);
+				break;
+			case 2:	//trending tags
+				fragment = new TagFragment(mainActivity);
+				break;
+			case 3:	//most active colleges
+				fragment = new TagFragment(mainActivity);
+				break;
+			case 4:	//my posts
+				fragment = new NewPostFragment(mainActivity);
+				break;
+			case 5:	//my comments
+				fragment = new NewPostFragment(mainActivity);
+				break;
+			}
+			
 			fragment.setArguments(args);
 			return fragment;
 		}
@@ -392,256 +427,6 @@ public class MainActivity extends FragmentActivity implements
 				return getString(R.string.allcollege_section6).toUpperCase(l);
 			}
 			return null;
-		}
-	}
-
-	public static class TopPostFragment extends Fragment 
-	{		
-		static MainActivity mainActivity;
-		public static final String ARG_SECTION_NUMBER = "section_number";
-		static ArrayList<Post> topPostList;
-		static PostListAdapter topListAdapter;
-		final static int sectionNumber = 0;
-
-		public TopPostFragment()
-		{
-		}
-		
-		public TopPostFragment(MainActivity m) 
-		{
-			mainActivity = m;
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_layout,
-					container, false);
-			ListView fragList = (ListView)rootView.findViewById(R.id.fragmentListView);
-						
-			//if doesnt have header and footer, add them
-			if(fragList.getHeaderViewsCount() == 0)
-			{
-				//for card UI
-				View headerFooter = new View(getActivity());
-				headerFooter.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
-				fragList.addFooterView(headerFooter, null, false);
-				fragList.addHeaderView(headerFooter, null, false);
-			}
-			
-			if(topPostList == null)
-			{
-				topPostList = new ArrayList<Post>();
-				topPostList.add(new Post(100, "Top message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
-				topPostList.add(new Post(70, "Top message 2 test message 2 test message #onetag #twotag", 10));
-				topPostList.add(new Post(15, "Top message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));
-			}		
-			topListAdapter = new PostListAdapter(getActivity(), R.layout.list_row_card, topPostList, 0);
-			fragList.setAdapter(topListAdapter);
-			
-			
-
-		    fragList.setOnItemClickListener(new OnItemClickListener(){
-
-				@Override
-				public void onItemClick(AdapterView<?> arg0, View arg1,
-						int position, long arg3) 
-				{
-					postClicked(topPostList.get(position - 1));
-				}
-				
-			});
-		    
-			return rootView;
-		}
-
-		protected void postClicked(Post post) 
-		{
-			Intent intent = new Intent(getActivity(), PostCommentsActivity.class);
-			intent.putExtra("POST_ID", post.getID());
-			intent.putExtra("SECTION_NUMBER", sectionNumber);
-			
-			startActivity(intent);
-			getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-		}
-		
-		static Post getPostByID(int id, int sectionNumber)
-		{
-			if(topPostList != null)
-			{
-				for(int i = 0; i < topPostList.size(); i++)
-				{
-					if(topPostList.get(i).getID() == id)
-					{
-						return topPostList.get(i);
-					}
-				}
-			}
-		
-			return null;
-		}
-
-		public static void updateList() 
-		{
-			if(topListAdapter != null)
-			{
-				topListAdapter.notifyDataSetChanged();
-			}			
-		}
-	}
-	
-	public static class NewPostFragment extends Fragment 
-	{		
-		static MainActivity mainActivity;
-		public static final String ARG_SECTION_NUMBER = "section_number";
-		static ArrayList<Post> newPostList;
-		static PostListAdapter newListAdapter;
-		final static int sectionNumber = 1;
-
-		public NewPostFragment()
-		{
-		}
-		
-		public NewPostFragment(MainActivity m) 
-		{
-			mainActivity = m;
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_layout,
-					container, false);
-			ListView fragList = (ListView)rootView.findViewById(R.id.fragmentListView);
-						
-			//if doesnt have header and footer, add them
-			if(fragList.getHeaderViewsCount() == 0)
-			{
-				//for card UI
-				View headerFooter = new View(getActivity());
-				headerFooter.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
-				fragList.addFooterView(headerFooter, null, false);
-				fragList.addHeaderView(headerFooter, null, false);
-			}
-			
-			if(newPostList == null)
-			{
-				newPostList = new ArrayList<Post>();
-				newPostList.add(new Post(100, "New message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
-				newPostList.add(new Post(70, "New message 2 test message 2 test message #onetag #twotag", 10));
-				newPostList.add(new Post(15, "New message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));
-			}		
-			newListAdapter = new PostListAdapter(getActivity(), R.layout.list_row_card, newPostList, 1);
-			fragList.setAdapter(newListAdapter);
-			
-			
-
-		    fragList.setOnItemClickListener(new OnItemClickListener(){
-
-				@Override
-				public void onItemClick(AdapterView<?> arg0, View arg1,
-						int position, long arg3) 
-				{
-					postClicked(newPostList.get(position - 1));
-				}
-				
-			});
-		    
-			return rootView;
-		}
-
-		protected void postClicked(Post post) 
-		{
-			Intent intent = new Intent(getActivity(), PostCommentsActivity.class);
-			intent.putExtra("POST_ID", post.getID());
-			intent.putExtra("SECTION_NUMBER", sectionNumber);
-			
-			startActivity(intent);
-			getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-		}
-		
-		static Post getPostByID(int id, int sectionNumber)
-		{
-			if(newPostList != null)
-			{
-				for(int i = 0; i < newPostList.size(); i++)
-				{
-					if(newPostList.get(i).getID() == id)
-					{
-						return newPostList.get(i);
-					}
-				}
-			}
-		
-			return null;
-		}
-
-		public static void updateList() 
-		{
-			if(newListAdapter != null)
-			{
-				newListAdapter.notifyDataSetChanged();
-			}
-			
-			if(newListAdapter != null)
-			{
-				newListAdapter.notifyDataSetChanged();
-			}
-			
-		}
-	}
-
-public static class TagFragment extends Fragment {
-		
-		static MainActivity mainActivity;
-		public static final String ARG_SECTION_NUMBER = "section_number";
-		static ArrayList<Tag> tagList;
-
-		public TagFragment()
-		{
-		}
-		
-		public TagFragment(MainActivity m) 
-		{
-			mainActivity = m;
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_layout,
-					container, false);
-			ListView fragList = (ListView)rootView.findViewById(R.id.fragmentListView);
-			
-			tagList = new ArrayList<Tag>();
-			tagList.add(new Tag("#wwwwww", 5));
-			tagList.add(new Tag("#wwwwwwwwwwwwwwwwwwwwwwwwwww", 5));
-			tagList.add(new Tag("#wwwwwwww", 5));
-			
-			TagListAdapter adapter = new TagListAdapter(getActivity(), R.layout.list_row_card_tag, tagList);
-			
-			//if doesnt have header and footer, add them
-			if(fragList.getHeaderViewsCount() == 0)
-			{
-				//for card UI
-				View headerFooter = new View(getActivity());
-				headerFooter.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
-				fragList.addFooterView(headerFooter, null, false);
-				fragList.addHeaderView(headerFooter, null, false);
-			}
-		    fragList.setAdapter(adapter);
-		    fragList.setItemsCanFocus(true);
-		    
-			return rootView;
-		}
-
-		public static void tagClicked(Tag tag) 
-		{
-			Intent intent = new Intent(mainActivity, TagListActivity.class);
-			intent.putExtra("TAG_ID", tag.getText());
-			
-			mainActivity.startActivity(intent);
-			mainActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);			
 		}
 	}
 }

@@ -1,4 +1,4 @@
-package com.appuccino.postfeed.objects;
+package com.appuccino.collegefeed.objects;
 
 public interface Votable {
 	public int getID();

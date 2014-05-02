@@ -16,7 +16,7 @@
         />
     
     <!-- custom so that it cant do a carriage return -->
-    <com.appuccino.postfeed.MyEditText
+    <com.appuccino.collegefeed.extra.MyEditText
         android:id="@+id/newPostMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"
         android:textSize="22sp"
         android:layout_margin="8dp"
+        android:visibility="gone"
         />
 
 </LinearLayout>

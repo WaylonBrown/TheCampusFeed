@@ -1,10 +1,11 @@
-package com.appuccino.postfeed;
+package com.appuccino.collegefeed;
 
 import java.util.ArrayList;
 
-import com.appuccino.postfeed.listadapters.CommentListAdapter;
-import com.appuccino.postfeed.listadapters.PostListAdapter;
-import com.appuccino.postfeed.objects.Post;
+import com.appuccino.collegefeed.listadapters.CommentListAdapter;
+import com.appuccino.collegefeed.listadapters.PostListAdapter;
+import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.R;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -24,7 +25,7 @@ public class TagListActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.tag_fragment_layout);		
+		setContentView(R.layout.tag_activity_layout);		
 		
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
@@ -42,9 +43,11 @@ public class TagListActivity extends Activity{
         Typeface bold = Typeface.createFromAsset(getAssets(), "fonts/mplus-2c-bold.ttf");
         Typeface medium = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Medium.ttf");
         
-        TextView actionBarTag = (TextView)findViewById(R.id.actionbarTag);
-		actionBarTag.setText("Posts with " + tagText);
-		actionBarTag.setTypeface(light);
+        TextView topTagText = (TextView)findViewById(R.id.topTagText);
+        TextView tagSearchText = (TextView)findViewById(R.id.tagSearchText);
+        topTagText.setText("Posts with " + tagText);
+        topTagText.setTypeface(light);
+        tagSearchText.setTypeface(light);
 		
 		ListView listView = (ListView)findViewById(R.id.fragmentListView);
 		if(!tagText.equals("") && tagText != null)

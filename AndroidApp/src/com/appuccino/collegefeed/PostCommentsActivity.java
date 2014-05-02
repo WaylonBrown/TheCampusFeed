@@ -1,4 +1,7 @@
-package com.appuccino.postfeed;
+package com.appuccino.collegefeed;
+
+import java.util.Collections;
+import java.util.Comparator;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -13,12 +16,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.appuccino.postfeed.MainActivity.NewPostFragment;
-import com.appuccino.postfeed.MainActivity.TopPostFragment;
-import com.appuccino.postfeed.listadapters.CommentListAdapter;
-import com.appuccino.postfeed.objects.NetWorker;
-import com.appuccino.postfeed.objects.Post;
-import com.appuccino.postfeed.objects.Vote;
+import com.appuccino.collegefeed.fragments.NewPostFragment;
+import com.appuccino.collegefeed.fragments.TopPostFragment;
+import com.appuccino.collegefeed.listadapters.CommentListAdapter;
+import com.appuccino.collegefeed.objects.Comment;
+import com.appuccino.collegefeed.objects.NetWorker;
+import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.objects.Vote;
 
 public class PostCommentsActivity extends Activity{
 
@@ -66,6 +70,11 @@ public class PostCommentsActivity extends Activity{
 			scoreText.setText(String.valueOf(post.getScore()));
 			timeText.setText(String.valueOf(post.getHoursAgo()) + " hours ago");
 			
+			//change text if no comments from post
+			if(post.getCommentList().size() == 0)
+				commentsText.setText("No Comments");
+				
+			sortCommentsList(post);
 			listAdapter = new CommentListAdapter(this, R.layout.list_row_card, post.getCommentList());
 			
 			//if doesnt havefooter, add it
@@ -118,6 +127,23 @@ public class PostCommentsActivity extends Activity{
 		}
 	}
 	
+	private void sortCommentsList(Post post) 
+	{
+		Collections.sort(post.getCommentList(), new Comparator<Comment>()
+		{
+			@Override
+			public int compare(Comment lhs, Comment rhs) 
+			{
+				if(lhs.getScore() > rhs.getScore())
+					return -1;
+				else if(lhs.getScore() == rhs.getScore())
+					return 0;
+				else
+					return 1;
+			}
+		});
+	}
+
 	protected void updateArrows(ImageView arrowUp, ImageView arrowDown) 
 	{
 		int vote = post.getVote();
