@@ -1,4 +1,7 @@
 Postfeed::Application.routes.draw do
+  resources :colleges
+  get '/colleges/:id/within' => 'colleges#within'
+
   resources :votes
 
   resources :comments

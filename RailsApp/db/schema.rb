@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140422024919) do
+ActiveRecord::Schema.define(version: 20140502011703) do
+
+  create_table "colleges", force: true do |t|
+    t.string   "name"
+    t.string   "state"
+    t.float    "lat"
+    t.float    "lon"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "comments", force: true do |t|
     t.string   "text"
