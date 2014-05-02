@@ -26,8 +26,8 @@
       "request_content_type": "application/json",
       "response_status": 201,
       "response_status_text": "Created",
-      "response_body": "{\"id\":3,\"text\":\"I find this highly offensive.\",\"score\":null,\"created_at\":\"2014-04-22T02:59:49.596Z\",\"updated_at\":\"2014-04-22T02:59:49.596Z\"}",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/comments/3","Content-Type":"application/json; charset=utf-8","ETag":"\"9a6d81a3861f2b7bc6c22ec986c1e372\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"10b55cb8-fddb-43cb-b8c1-911da104576a","X-Runtime":"0.010155","Content-Length":"140"},
+      "response_body": "{\"id\":3,\"text\":\"I find this highly offensive.\",\"score\":null,\"created_at\":\"2014-05-02T01:30:26.160Z\",\"updated_at\":\"2014-05-02T01:30:26.160Z\"}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/comments/3","Content-Type":"application/json; charset=utf-8","ETag":"\"66b1a783ac1ff9426bdc6b84d14826f2\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"75fbfef6-5332-44e1-be03-1f1ac73d9b30","X-Runtime":"0.010190","Content-Length":"140"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }
