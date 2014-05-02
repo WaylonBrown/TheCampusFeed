@@ -2,7 +2,7 @@ package com.appuccino.collegefeed.objects;
 
 import java.io.IOException;
 
-import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
@@ -14,19 +14,50 @@ import android.util.Log;
 
 public class NetWorker {
 	
-	public static String serverUrl = "http://vm-0.bowmessage.kd.io:3000/";
+	public static String serverUrl = "http://cfeed.herokuapp.com/api/";
+	public static String apiVersion = "v1/";
+	public static String requestUrl = serverUrl + apiVersion;
 	
-	public static class VoteTask extends AsyncTask<Vote, Void, Boolean>{
+	public static HttpClient client = new DefaultHttpClient();
+	
+	public static class PostSelector{
+		
+	}
+	
+	public static class GetPostsTask extends AsyncTask<PostSelector, Void, Post>{
+		@Override
+		protected Post doInBackground(PostSelector... arg0) {
+			HttpGet request = new HttpGet(requestUrl + "posts");
+			ResponseHandler<String> responseHandler = new BasicResponseHandler();
+			String response = null;
+			try {
+				response = client.execute(request, responseHandler);
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			Log.d("http", response);
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Post result) {
+			//Log.d("http", "success: " + result);
+		}
+
+		
+		
+	}
+	
+	public static class MakeVoteTask extends AsyncTask<Vote, Void, Boolean>{
 		public Boolean doInBackground(Vote... votes){
 			try{
-				
-				//int TIMEOUT_MILLISEC = 10000;  // = 10 seconds
-				//HttpParams httpParams = new BasicHttpParams();
-				//HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
-				//HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
-				HttpClient client = new DefaultHttpClient();
 
-				HttpGet request = new HttpGet(serverUrl);
+				HttpGet request = new HttpGet(requestUrl + "votes");
 				//request.setEntity(new ByteArrayEntity(
 				  //  votes[0].toString().getBytes("UTF8")));
 				ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -34,7 +65,13 @@ public class NetWorker {
 				
 				Log.d("http", response);
 				return true;
-			} catch(IOException e){
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 				return false;
 			}
 		}

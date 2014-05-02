@@ -10,7 +10,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,6 +24,7 @@ import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -40,7 +43,7 @@ import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Post;
 
-public class MainActivity extends FragmentActivity implements ActionBar.TabListener 
+public class MainActivity extends FragmentActivity implements ActionBar.TabListener, LocationListener 
 {
 
 	OneCollegeSectionsPagerAdapter oneCollegePagerAdapter;
@@ -50,13 +53,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public static Spinner spinner;
 	ViewPager viewPager;
 	ArrayList<Fragment> fragmentList;
+	
+	public static LocationManager mgr;
 	public static int permissions = 0;	//0 = no perms, otherwise the college ID is the perm IDs
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
 	static final double milesForPermissions = 15.0;
-	
-	/**
-	 * The {@link ViewPager} that will host the section contents.
+	/*
+	 * TODO:
+	 * Implement Haversine function to calculate shortest distance between two spherical points.
+	 * http://www.movable-type.co.uk/scripts/latlong.html
 	 */
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +105,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			
 		});
 		
-		determinePermissions();
+		//determinePermissions();
+		getLocation(); //This calls determine permissions now.
 	}
 	
 	protected void spinnerChanged(int which) 
@@ -198,38 +206,46 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			}
 		}
 	}
-
-	private void determinePermissions() 
-	{
-		LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-		
-		//if gps is turned off
-		if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
-		{
+	
+	private void getLocation(){
+		mgr = (LocationManager) getSystemService(LOCATION_SERVICE);
+		Criteria criteria = new Criteria();
+		String best = mgr.getBestProvider(criteria, true);
+		if (best == null) {
+		    //ask user to enable at least one of the Location Providers
 			permissions = 0;
-			Toast.makeText(this, "GPS is turned off", Toast.LENGTH_LONG).show();
-			Toast.makeText(this, "You can upvote, but nothing else", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Location Services are turned off.", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "You can upvote, but nothing else.", Toast.LENGTH_LONG).show();
+		} else {
+		    Location lastKnownLoc = mgr.getLastKnownLocation(best);
+		    //But sometimes it returns null
+		    if(lastKnownLoc == null){
+		    	Toast.makeText(this, "Getting your location...", Toast.LENGTH_LONG).show();
+		    	mgr.requestLocationUpdates(best, 0, 0, this);
+			}
+		    else{
+		    	determinePermissions(lastKnownLoc);
+		    }
+		}
+	}
+
+	private void determinePermissions(Location loc) 
+	{
+		double degreesForPermissions = milesForPermissions / 50.0;	//roughly 50 miles per degree
+		double tamuLatitude = 30.614942;
+		double tamuLongitude = -96.342316;
+		int tamuID = 234234;
+		
+		double degreesAway = Math.sqrt(Math.pow((loc.getLatitude() - tamuLatitude), 2) + Math.pow((loc.getLongitude() - tamuLongitude), 2));
+		if(degreesAway < degreesForPermissions)
+		{
+			permissions = tamuID;
+			Toast.makeText(this, "You're near Texas A&M University, you can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
 		}
 		else
 		{
-			Location thisLoc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-			
-			double degreesForPermissions = milesForPermissions / 50.0;	//roughly 50 miles per degree
-			double tamuLatitude = 30.614942;
-			double tamuLongitude = -96.342316;
-			int tamuID = 234234;
-			
-			double degreesAway = Math.sqrt(Math.pow((thisLoc.getLatitude() - tamuLatitude), 2) + Math.pow((thisLoc.getLongitude() - tamuLongitude), 2));
-			if(degreesAway < degreesForPermissions)
-			{
-				permissions = tamuID;
-				Toast.makeText(this, "You're near Texas A&M University, you can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
-			}
-			else
-			{
-				permissions = 0;
-				Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
-			}
+			permissions = 0;
+			Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -488,5 +504,29 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			}
 			return null;
 		}
+	}
+
+	@Override
+	public void onLocationChanged(Location loc) {
+		determinePermissions(loc);
+		mgr.removeUpdates(this);
+	}
+
+	@Override
+	public void onProviderDisabled(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+		// TODO Auto-generated method stub
+		
 	}
 }
