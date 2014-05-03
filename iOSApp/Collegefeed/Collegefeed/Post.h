@@ -10,16 +10,20 @@
 
 @interface Post : NSObject
 
-// tutorial properties were: name, location, date
-@property (nonatomic, copy) NSString *content;
+@property (nonatomic) NSInteger *postID;
+@property (nonatomic) NSInteger *collegeID;
 @property (nonatomic) NSInteger *score;
-@property (nonatomic) NSInteger *commentCount;
+@property (nonatomic) NSInteger *vote; //-1 = downvote, 0 = nothing, 1 = upvote
+
+@property (nonatomic, copy) NSString *message;
+@property (nonatomic, copy) NSString *collegeName;
+
 @property (nonatomic, strong) NSDate *date;
 
-// TODO: array of comments?
-// DB looks like comments maintain post ID instead
+@property (nonatomic, copy) NSMutableArray *commentList;
 
 
--(id)initWithContent:(NSString *)content;
+-(id)initWithPostID:(NSInteger *)postID withMessage:(NSString *)message;
+-(id)initDummy;
 
 @end

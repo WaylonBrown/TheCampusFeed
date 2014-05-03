@@ -11,7 +11,7 @@
 
 @interface PostTableCell : UITableViewCell
 
-@property (nonatomic, weak) IBOutlet UILabel *contentLabel;
+@property (nonatomic, weak) IBOutlet UILabel *messageLabel;
 @property (nonatomic, weak) IBOutlet UILabel *scoreLabel;
 @property (nonatomic, weak) IBOutlet UILabel *commentCountLabel;
 @property (nonatomic, weak) IBOutlet UILabel *ageLabel;

@@ -12,7 +12,7 @@
 @implementation PostTableCell
 
 // sythesize properties to automatically generate accessor code
-@synthesize contentLabel = _contentLabel;
+@synthesize messageLabel = _messageLabel;
 @synthesize scoreLabel = _scoreLabel;
 @synthesize commentCountLabel = _commentCountLabel;
 @synthesize ageLabel = _ageLabel;
@@ -31,10 +31,9 @@
     return self;
 }
 
-// called when user upvotes a comment
+// called when user upvotes a comment; just change arrow colors
 - (IBAction)handleUpVote:(id)sender
 {
-    // TODO: change score of corresponding post
     if ([_upVoteButton isSelected])
     {   // deselect upvote
         [_upVoteButton setImage:[UIImage imageNamed:@"arrowup.png"] forState:UIControlStateNormal];
@@ -49,10 +48,9 @@
         [_downVoteButton setSelected:NO];
     }
 }
-// called when user downvotes a comment
+// called when user downvotes a comment; just change arrow colors
 - (IBAction)handleDownVote:(id)sender
 {
-    // TODO: change score of corresponding post
     if ([_downVoteButton isSelected])
     {   // deselect downvote
         [_downVoteButton setImage:[UIImage imageNamed:@"arrowdown.png"] forState:UIControlStateNormal];

@@ -38,6 +38,17 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)handleUpvote:(id)sender
+{
+    UIButton *upVoteButton = (UIButton *)sender;
+    
+    NSLog(@"howdy bitch");
+
+}
+- (IBAction)handleDownvote:(id)sender
+{
+    NSLog(@"peace bitch");
+}
 
 #pragma mark - Table view data source
 
@@ -62,8 +73,6 @@
         formatter = [[NSDateFormatter alloc] init];
         [formatter setDateStyle:NSDateFormatterMediumStyle];
     }
-
-    // UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     PostTableCell *cell = (PostTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
@@ -74,9 +83,9 @@
     
     Post *postAtIndex = [self.dataController objectInListAtIndex:indexPath.row];
     
-    [[cell contentLabel] setText:postAtIndex.content];
+    [[cell messageLabel] setText:postAtIndex.message];
     [[cell scoreLabel] setText:[NSString stringWithFormat:@"%d", (int)postAtIndex.score]];
-    [[cell commentCountLabel] setText:[NSString stringWithFormat:@"%d comments", (int)postAtIndex.commentCount]];
+    [[cell commentCountLabel] setText:[NSString stringWithFormat:@"%d comments", (int)postAtIndex.commentList.count]];
     
     return cell;
 }

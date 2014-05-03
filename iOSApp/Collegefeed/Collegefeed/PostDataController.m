@@ -35,13 +35,12 @@
 {
     NSMutableArray *postList = [[NSMutableArray alloc] init];
     self.masterPostList = postList;
-    Post *post1, *post2, *post3;
-    post1 = [[Post alloc] initWithContent:@"Gig 'em Aggies! Whoop!!"];
-    post2 = [[Post alloc] initWithContent:@"Hullabaloo, Caneck, Caneck!"];
-    post3 = [[Post alloc] initWithContent:@"Ay Whoop!"];
-    [self addPostWithContent:post1];
-    [self addPostWithContent:post2];
-    [self addPostWithContent:post3];
+    for (int i = 0; i < 14; i++)
+    {
+        Post *post;
+        post = [[Post alloc] initDummy];
+        [self addPostWithMessage:post];
+    }
 }
 
 // override its default setter method to ensure new array remains mutable
@@ -63,7 +62,7 @@
     return [self.masterPostList objectAtIndex:theIndex];
 }
 
-- (void)addPostWithContent:(Post *)post
+- (void)addPostWithMessage:(Post *)post
 {
     [self.masterPostList addObject:post];
 }
