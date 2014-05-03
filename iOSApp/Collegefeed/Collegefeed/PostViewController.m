@@ -178,6 +178,13 @@
     return [NSString stringWithFormat:@"%d seconds ago", postAgeSeconds];
 }
 
+// set selected cell and post message of the selected cell
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.selectedPostIndexPath = indexPath;
+    self.selectedPostMessage = ((Post *)[self.dataController objectInListAtIndex:indexPath.row]).message;
+
+}
 - (BOOL)prefersStatusBarHidden {
     return YES;
 }

@@ -14,5 +14,7 @@
 @interface PostViewController : UITableViewController
 
 @property (strong, nonatomic) PostDataController *dataController;
+@property (strong, nonatomic) NSIndexPath* selectedPostIndexPath;
+@property (strong, nonatomic) NSString* selectedPostMessage;
 
 @end

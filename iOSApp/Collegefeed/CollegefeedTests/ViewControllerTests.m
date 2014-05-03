@@ -6,7 +6,15 @@
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
+// Assemble
+
+// Act
+
+// Assert
+
 #import <XCTest/XCTest.h>
+#import "PostViewController.h"
+#import "CommentViewController.h"
 
 @interface ViewControllerTests : XCTestCase
 
@@ -17,7 +25,6 @@
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
 - (void)tearDown

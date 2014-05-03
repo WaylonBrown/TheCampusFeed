@@ -38,7 +38,7 @@
     if (self)
     {
         _postID = post.postID;
-        _collegeID = post.postID;
+        _collegeID = post.collegeID;
         _postMessage = post.message;
         
         return self;

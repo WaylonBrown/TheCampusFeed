@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
+#import "PostViewController.h"
 #import "CommentViewController.h"
 #import "CommentTableCell.h"
 #import "CommentDataController.h"
@@ -15,11 +16,23 @@
 
 - (NSString *)getAgeOfCommentAsString:(NSDate *)commentDate;
 - (void) updateVoteButtons:(CommentTableCell *)cell withVoteValue:(int)vote;
+- (UIViewController *)backViewController;
+
 
 @end
 
 @implementation CommentViewController
 
+// return the previous view controller
+- (UIViewController *)backViewController
+{
+    NSInteger numberOfViewControllers = self.navigationController.viewControllers.count;
+    
+    if (numberOfViewControllers < 2)
+        return nil;
+    else
+        return [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
+}
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -32,7 +45,18 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
-    [[self postMessage] setText:self.dataController.getPostMessage];
+    UIViewController *previousController = (UIViewController *) [self backViewController];
+    
+    if ([previousController class] == [PostViewController class])
+    {   // invoked if comments view was opened from a posts view
+        
+        // set text to be post that was selected
+        [[self postMessage] setText:((PostViewController *)previousController).selectedPostMessage];
+    }
+    else
+    {
+        [[self postMessage] setText:@"[Post unknown, not called from PostViewController]"];
+    }
 }
 - (void)awakeFromNib
 {
