@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		531107A919147B07006F7DAF /* PostTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531107A819147B07006F7DAF /* PostTableCell.m */; };
-		531107B61914976B006F7DAF /* PostTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 531107B51914976B006F7DAF /* PostTableCell.xib */; };
 		532706DD1913745E00F5EAB9 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706DC1913745E00F5EAB9 /* Post.m */; };
 		532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706E1191378EF00F5EAB9 /* PostDataController.m */; };
 		532706E5191384A600F5EAB9 /* PostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706E4191384A600F5EAB9 /* PostViewController.m */; };
@@ -28,7 +27,6 @@
 		53F8789D19133F60002A578B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F8789C19133F60002A578B /* main.m */; };
 		53F878A119133F60002A578B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F878A019133F60002A578B /* AppDelegate.m */; };
 		53F878A419133F60002A578B /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53F878A219133F60002A578B /* Main_iPhone.storyboard */; };
-		53F878A719133F60002A578B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53F878A519133F60002A578B /* Main_iPad.storyboard */; };
 		53F878AF19133F60002A578B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53F878AE19133F60002A578B /* Images.xcassets */; };
 		53F878B619133F60002A578B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F878B519133F60002A578B /* XCTest.framework */; };
 		53F878B719133F60002A578B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789019133F60002A578B /* Foundation.framework */; };
@@ -50,7 +48,6 @@
 /* Begin PBXFileReference section */
 		531107A719147B07006F7DAF /* PostTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostTableCell.h; sourceTree = "<group>"; };
 		531107A819147B07006F7DAF /* PostTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostTableCell.m; sourceTree = "<group>"; };
-		531107B51914976B006F7DAF /* PostTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTableCell.xib; sourceTree = "<group>"; };
 		532706DB1913745E00F5EAB9 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
 		532706DC1913745E00F5EAB9 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		532706E0191378EF00F5EAB9 /* PostDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDataController.h; sourceTree = "<group>"; };
@@ -77,7 +74,6 @@
 		53F8789F19133F60002A578B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		53F878A019133F60002A578B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		53F878A319133F60002A578B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		53F878A619133F60002A578B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		53F878AE19133F60002A578B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		53F878B419133F60002A578B /* CollegefeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CollegefeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		53F878B519133F60002A578B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -114,8 +110,6 @@
 			isa = PBXGroup;
 			children = (
 				53F878A219133F60002A578B /* Main_iPhone.storyboard */,
-				53F878A519133F60002A578B /* Main_iPad.storyboard */,
-				531107B51914976B006F7DAF /* PostTableCell.xib */,
 				531107A719147B07006F7DAF /* PostTableCell.h */,
 				531107A819147B07006F7DAF /* PostTableCell.m */,
 			);
@@ -310,12 +304,10 @@
 			files = (
 				5390A9251914B76800ACD082 /* postfeedlogosmall.png in Resources */,
 				5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */,
-				531107B61914976B006F7DAF /* PostTableCell.xib in Resources */,
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				5390A9231914B76800ACD082 /* logofake.png in Resources */,
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,
 				5390A9201914B76800ACD082 /* arrowupblue.png in Resources */,
-				53F878A719133F60002A578B /* Main_iPad.storyboard in Resources */,
 				5390A9241914B76800ACD082 /* postbuttonclick.xml in Resources */,
 				53F878AF19133F60002A578B /* Images.xcassets in Resources */,
 				53F878A419133F60002A578B /* Main_iPhone.storyboard in Resources */,
@@ -382,14 +374,6 @@
 				53F878A319133F60002A578B /* Base */,
 			);
 			name = Main_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		53F878A519133F60002A578B /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				53F878A619133F60002A578B /* Base */,
-			);
-			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 		53F878BE19133F60002A578B /* InfoPlist.strings */ = {

@@ -35,10 +35,11 @@
 {
     NSMutableArray *postList = [[NSMutableArray alloc] init];
     self.masterPostList = postList;
-    for (int i = 0; i < 14; i++)
+    for (int i = 0; i < 30; i++)
     {
         Post *post;
         post = [[Post alloc] initDummy];
+        post.postID = i;
         [self addPostWithMessage:post];
     }
 }
@@ -66,6 +67,5 @@
 {
     [self.masterPostList addObject:post];
 }
-
 
 @end

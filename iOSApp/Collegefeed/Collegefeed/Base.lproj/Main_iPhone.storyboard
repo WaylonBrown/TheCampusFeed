@@ -33,10 +33,10 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wBQ-qV-jgf">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="message" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumFontSize="7" preferredMaxLayoutWidth="262" translatesAutoresizingMaskIntoConstraints="NO" id="wBQ-qV-jgf">
                                             <rect key="frame" x="48" y="6" width="262" height="59"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -49,13 +49,13 @@
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="commentCount" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aIM-kM-tey">
                                             <rect key="frame" x="48" y="73" width="119" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="italicSystem" pointSize="13"/>
+                                            <fontDescription key="fontDescription" type="italicSystem" pointSize="12"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="age" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHs-zo-a9B">
-                                            <rect key="frame" x="219" y="73" width="91" height="21"/>
+                                            <rect key="frame" x="191" y="73" width="119" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="italicSystem" pointSize="13"/>
+                                            <fontDescription key="fontDescription" type="italicSystem" pointSize="11"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G58-PI-BEN">
@@ -65,7 +65,6 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <action selector="handleUpVote:" destination="EXI-S0-Zdo" eventType="touchUpInside" id="O5b-5f-ln5"/>
                                                 <action selector="handleUpvote:" destination="j6k-ek-EFB" eventType="touchUpInside" id="8d1-z1-Mkg"/>
                                             </connections>
                                         </button>
@@ -76,7 +75,6 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <action selector="handleDownVote:" destination="EXI-S0-Zdo" eventType="touchUpInside" id="MxQ-Cu-bra"/>
                                                 <action selector="handleDownvote:" destination="j6k-ek-EFB" eventType="touchUpInside" id="Rmb-5z-pPo"/>
                                             </connections>
                                         </button>

@@ -31,41 +31,6 @@
     return self;
 }
 
-// called when user upvotes a comment; just change arrow colors
-- (IBAction)handleUpVote:(id)sender
-{
-    if ([_upVoteButton isSelected])
-    {   // deselect upvote
-        [_upVoteButton setImage:[UIImage imageNamed:@"arrowup.png"] forState:UIControlStateNormal];
-        [_upVoteButton setSelected:NO];
-    }
-    else
-    {   // select upvote, deselect downvote
-        [_upVoteButton setImage:[UIImage imageNamed:@"arrowupblue.png"] forState:UIControlStateSelected];
-        [_upVoteButton setSelected:YES];
-        
-        [_downVoteButton setImage:[UIImage imageNamed:@"arrowdown.png"] forState:UIControlStateNormal];
-        [_downVoteButton setSelected:NO];
-    }
-}
-// called when user downvotes a comment; just change arrow colors
-- (IBAction)handleDownVote:(id)sender
-{
-    if ([_downVoteButton isSelected])
-    {   // deselect downvote
-        [_downVoteButton setImage:[UIImage imageNamed:@"arrowdown.png"] forState:UIControlStateNormal];
-        [_downVoteButton setSelected:NO];
-    }
-    else
-    {   // select downvote, deselect upvote
-        [_downVoteButton setImage:[UIImage imageNamed:@"arrowdownred.png"] forState:UIControlStateSelected];
-        [_downVoteButton setSelected:YES];
-        
-        [_upVoteButton setImage:[UIImage imageNamed:@"arrowup.png"] forState:UIControlStateNormal];
-        [_upVoteButton setSelected:NO];
-    }
-}
-
 - (void)awakeFromNib
 {
     // Initialization code

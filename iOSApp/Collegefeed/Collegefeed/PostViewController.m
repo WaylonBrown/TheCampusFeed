@@ -11,6 +11,12 @@
 #import "PostDataController.h"
 #import "Post.h"
 
+@interface PostViewController()
+
+- (NSString *)getAgeOfPostAsString:(NSDate *)postDate;
+- (void) updateVoteButtons:(PostTableCell *)cell withVoteValue:(int)vote;
+
+@end
 
 @implementation PostViewController
 
@@ -23,7 +29,7 @@
     return self;
 }
 
--(void)awakeFromNib
+- (void)awakeFromNib
 {
     [super awakeFromNib];
     self.dataController = [[PostDataController alloc] init];
@@ -42,12 +48,32 @@
 {
     UIButton *upVoteButton = (UIButton *)sender;
     
-    NSLog(@"howdy bitch");
+    //TODO: ya this sucks... add tests to ensure proper casting etc
+    PostTableCell *tableCell = (PostTableCell *)upVoteButton.superview.superview.superview;
+    UITableView *tableView = (UITableView *)tableCell.superview.superview;
+    NSIndexPath *indexPath = [tableView indexPathForCell:tableCell];
+    
+    Post *post = [self.dataController objectInListAtIndex:indexPath.row];
+    
+    post.vote = post.vote == 1 ? 0 : 1;
+    
+    [self updateVoteButtons:tableCell withVoteValue:post.vote];
 
 }
 - (IBAction)handleDownvote:(id)sender
 {
-    NSLog(@"peace bitch");
+    UIButton *downVoteButton = (UIButton *)sender;
+    
+    //TODO: ya this sucks... add tests to ensure proper casting etc
+    PostTableCell *tableCell = (PostTableCell *)downVoteButton.superview.superview.superview;
+    UITableView *tableView = (UITableView *)tableCell.superview.superview;
+    NSIndexPath *indexPath = [tableView indexPathForCell:tableCell];
+    
+    Post *post = [self.dataController objectInListAtIndex:indexPath.row];
+    
+    post.vote = post.vote == -1 ? 0 : -1;
+    
+    [self updateVoteButtons:tableCell withVoteValue:post.vote];
 }
 
 #pragma mark - Table view data source
@@ -81,13 +107,44 @@
         cell = [nib objectAtIndex:0];
     }
     
+    // get the post to be displayed in this cell
     Post *postAtIndex = [self.dataController objectInListAtIndex:indexPath.row];
     
+    NSDate *d = (NSDate*)[postAtIndex date];
+    NSString *myAgeLabel = [self getAgeOfPostAsString:d];
+    
+    // assign cell's text labels
+    [[cell ageLabel] setText: myAgeLabel];
     [[cell messageLabel] setText:postAtIndex.message];
     [[cell scoreLabel] setText:[NSString stringWithFormat:@"%d", (int)postAtIndex.score]];
     [[cell commentCountLabel] setText:[NSString stringWithFormat:@"%d comments", (int)postAtIndex.commentList.count]];
     
+    // assign arrow colors according to user's vote
+    [self updateVoteButtons:cell withVoteValue:postAtIndex.vote];
+    
     return cell;
+}
+
+- (void) updateVoteButtons:(PostTableCell *)cell withVoteValue:(int)vote
+{
+    // assign appropriate arrow colors (based on user's vote)
+    switch (vote)
+    {
+        case -1:
+            [[cell upVoteButton] setImage:[UIImage imageNamed:@"arrowup.png"] forState:UIControlStateNormal];
+            [[cell downVoteButton] setImage:[UIImage imageNamed:@"arrowdownred.png"] forState:UIControlStateNormal];
+            break;
+        case 1:
+            [[cell upVoteButton] setImage:[UIImage imageNamed:@"arrowupblue.png"] forState:UIControlStateNormal];
+            [[cell downVoteButton] setImage:[UIImage imageNamed:@"arrowdown.png"] forState:UIControlStateNormal];
+            break;
+        default:
+            [[cell upVoteButton] setImage:[UIImage imageNamed:@"arrowup.png"] forState:UIControlStateNormal];
+            [[cell downVoteButton] setImage:[UIImage imageNamed:@"arrowdown.png"] forState:UIControlStateNormal];
+            break;
+    }
+    
+    [cell setNeedsDisplay];
 }
 
 // User should not directly modify a PostTableCell
@@ -100,6 +157,24 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 100;
+}
+
+// return string indicating how long ago the post was created
+- (NSString *)getAgeOfPostAsString:(NSDate *)postDate
+{
+    int postAgeSeconds = [[NSDate date] timeIntervalSinceDate:postDate];
+    int postAgeMinutes = postAgeSeconds / 60;
+    int postAgeHours = postAgeMinutes / 60;
+    
+    if (postAgeHours >= 1)
+    {
+        return [NSString stringWithFormat:@"%d hours ago", postAgeHours];
+    }
+    else if (postAgeMinutes >= 1)
+    {
+        return [NSString stringWithFormat:@"%d minutes ago", postAgeMinutes];
+    }
+    return [NSString stringWithFormat:@"%d seconds ago", postAgeSeconds];
 }
 
 @end

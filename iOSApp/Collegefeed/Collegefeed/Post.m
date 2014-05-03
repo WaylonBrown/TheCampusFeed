@@ -11,13 +11,13 @@
 @implementation Post
 
 // initializer to create a new post
--(id)initWithPostID:(NSInteger *)postID withMessage:(NSString *)message
+-(id)initWithPostID:(NSInteger)postID withMessage:(NSString *)message
 {
     self = [super init];
     if (self)
     {
         _postID = postID;
-        _collegeID = nil;
+        _collegeID = 0;
         _score = 0;
         _vote = 0;
         
@@ -39,10 +39,10 @@
     self = [super init];
     if (self)
     {
-        _postID = (NSInteger *) (arc4random() % 999);
-        _collegeID = (NSInteger *) (arc4random() % 999);
-        _score = (NSInteger *) (arc4random() % 99);
-        _vote = (NSInteger *) (arc4random() % 2) - 1;
+        _postID = arc4random() % 999;
+        _collegeID = arc4random() % 999;
+        _score = arc4random() % 99;
+        _vote = 0;
         
         _message = @"If you're hungry for a hunk of fat and juicy meat; eat my buddy Pumba here because he is a treat";
         _collegeName = @"University of America, Bitch";

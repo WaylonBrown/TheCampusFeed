@@ -18,8 +18,5 @@
 - (NSUInteger)countOfList;
 - (Post *)objectInListAtIndex:(NSUInteger)theIndex;
 - (void)addPostWithMessage:(Post *)post;
-- (NSString*)getAgeString;
-- (void)upVote;
-- (void)downVote;
 
 @end
