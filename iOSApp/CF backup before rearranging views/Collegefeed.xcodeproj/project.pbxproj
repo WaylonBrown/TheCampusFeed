@@ -21,10 +21,9 @@
 		5390A9241914B76800ACD082 /* postbuttonclick.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5390A91B1914B76800ACD082 /* postbuttonclick.xml */; };
 		5390A9251914B76800ACD082 /* postfeedlogosmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A91C1914B76800ACD082 /* postfeedlogosmall.png */; };
 		5390A92C19153EBE00ACD082 /* CommentDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A92B19153EBE00ACD082 /* CommentDataController.m */; };
+		5390A92F19153ED500ACD082 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A92E19153ED500ACD082 /* CommentViewController.m */; };
 		5390A93519153F7A00ACD082 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A93419153F7A00ACD082 /* Comment.m */; };
 		5390A9381915407100ACD082 /* CommentTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A9371915407100ACD082 /* CommentTableCell.m */; };
-		5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A93A191552AE00ACD082 /* CommentViewController.m */; };
-		5390A93F1915635E00ACD082 /* Header.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5390A93E1915635E00ACD082 /* Header.xib */; };
 		53F8789119133F60002A578B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789019133F60002A578B /* Foundation.framework */; };
 		53F8789319133F60002A578B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789219133F60002A578B /* CoreGraphics.framework */; };
 		53F8789519133F60002A578B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789419133F60002A578B /* UIKit.framework */; };
@@ -70,13 +69,12 @@
 		5390A91C1914B76800ACD082 /* postfeedlogosmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = postfeedlogosmall.png; sourceTree = "<group>"; };
 		5390A92A19153EBE00ACD082 /* CommentDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentDataController.h; sourceTree = "<group>"; };
 		5390A92B19153EBE00ACD082 /* CommentDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentDataController.m; sourceTree = "<group>"; };
+		5390A92D19153ED500ACD082 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
+		5390A92E19153ED500ACD082 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
 		5390A93319153F7A00ACD082 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
 		5390A93419153F7A00ACD082 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		5390A9361915407100ACD082 /* CommentTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableCell.h; sourceTree = "<group>"; };
 		5390A9371915407100ACD082 /* CommentTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableCell.m; sourceTree = "<group>"; };
-		5390A939191552AE00ACD082 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
-		5390A93A191552AE00ACD082 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
-		5390A93E1915635E00ACD082 /* Header.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Header.xib; sourceTree = "<group>"; };
 		53F8788D19133F60002A578B /* Collegefeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collegefeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53F8789019133F60002A578B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		53F8789219133F60002A578B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -128,7 +126,6 @@
 				531107A819147B07006F7DAF /* PostTableCell.m */,
 				5390A9361915407100ACD082 /* CommentTableCell.h */,
 				5390A9371915407100ACD082 /* CommentTableCell.m */,
-				5390A93E1915635E00ACD082 /* Header.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -176,8 +173,8 @@
 			children = (
 				532706E3191384A600F5EAB9 /* PostViewController.h */,
 				532706E4191384A600F5EAB9 /* PostViewController.m */,
-				5390A939191552AE00ACD082 /* CommentViewController.h */,
-				5390A93A191552AE00ACD082 /* CommentViewController.m */,
+				5390A92D19153ED500ACD082 /* CommentViewController.h */,
+				5390A92E19153ED500ACD082 /* CommentViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -335,7 +332,6 @@
 			files = (
 				5390A9251914B76800ACD082 /* postfeedlogosmall.png in Resources */,
 				5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */,
-				5390A93F1915635E00ACD082 /* Header.xib in Resources */,
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				5390A9231914B76800ACD082 /* logofake.png in Resources */,
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,
@@ -368,9 +364,9 @@
 				532706DD1913745E00F5EAB9 /* Post.m in Sources */,
 				5390A9381915407100ACD082 /* CommentTableCell.m in Sources */,
 				532706E5191384A600F5EAB9 /* PostViewController.m in Sources */,
-				5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */,
 				5390A93519153F7A00ACD082 /* Comment.m in Sources */,
 				53F878A119133F60002A578B /* AppDelegate.m in Sources */,
+				5390A92F19153ED500ACD082 /* CommentViewController.m in Sources */,
 				532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */,
 				5390A92C19153EBE00ACD082 /* CommentDataController.m in Sources */,
 				53F8789D19133F60002A578B /* main.m in Sources */,
