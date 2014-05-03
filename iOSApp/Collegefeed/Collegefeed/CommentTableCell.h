@@ -10,4 +10,11 @@
 
 @interface CommentTableCell : UITableViewCell
 
+@property (nonatomic, weak) IBOutlet UILabel *messageLabel;
+@property (nonatomic, weak) IBOutlet UILabel *scoreLabel;
+@property (nonatomic, weak) IBOutlet UILabel *ageLabel;
+
+@property (strong, nonatomic) IBOutlet UIButton *upVoteButton;
+@property (strong, nonatomic) IBOutlet UIButton *downVoteButton;
+
 @end

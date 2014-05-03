@@ -12,7 +12,7 @@
 // class extension to add a private method
 @interface PostDataController()
 
--(void) initializeDefaultList;
+- (void) initializeDefaultList;
 
 @end
 
@@ -20,7 +20,7 @@
 @implementation PostDataController
 
 // initialize this data controller
--(id) init
+- (id) init
 {
     if (self = [super init])
     {
@@ -30,7 +30,7 @@
     return nil;
 }
 
-// initialize the post array with a placeholder element
+// initialize the post array with placeholder elements
 - (void)initializeDefaultList
 {
     NSMutableArray *postList = [[NSMutableArray alloc] init];

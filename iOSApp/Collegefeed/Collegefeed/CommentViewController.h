@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class CommentDataController;
+
 @interface CommentViewController : UITableViewController
+
+@property (strong, nonatomic) CommentDataController *dataController;
+@property (weak, nonatomic) IBOutlet UILabel *postMessage;
 
 @end

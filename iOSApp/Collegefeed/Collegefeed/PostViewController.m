@@ -28,7 +28,7 @@
     }
     return self;
 }
-- (void) viewDidAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
     [[self navigationController] setNavigationBarHidden:YES animated:NO];
 
@@ -37,26 +37,12 @@
 {
     [super awakeFromNib];
     self.dataController = [[PostDataController alloc] init];
-//    [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    [[self navigationController] setNavigationBarHidden:YES animated:YES];
-//    self.edgesForExtendedLayout = UIRectEdgeAll;
-//    self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
 
-    
-//    // hide status bar
-//    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)])
-//    {   // iOS 7
-//        [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
-//    }
-//    else
-//    {   // iOS 6
-//        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-//    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -114,11 +100,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"PostTableCell";
-    static NSDateFormatter *formatter = nil;
-    if (formatter == nil) {
-        formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateStyle:NSDateFormatterMediumStyle];
-    }
     
     PostTableCell *cell = (PostTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)

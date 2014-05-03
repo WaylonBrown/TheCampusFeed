@@ -11,7 +11,7 @@
 @implementation Post
 
 // initializer to create a new post
--(id)initWithPostID:(NSInteger)postID withMessage:(NSString *)message
+- (id)initWithPostID:(NSInteger)postID withMessage:(NSString *)message
 {
     self = [super init];
     if (self)
@@ -34,7 +34,7 @@
 }
 
 // dummy initializer for dev/testing
--(id)initDummy
+- (id)initDummy
 {
     self = [super init];
     if (self)
@@ -44,7 +44,15 @@
         _score = arc4random() % 99;
         _vote = 0;
         
-        _message = @"If you're hungry for a hunk of fat and juicy meat; eat my buddy Pumba here because he is a treat";
+        switch (_postID % 5)
+        {
+            case 0: _message = @"If you're hungry for a hunk of fat and juicy meat"; break;
+            case 1: _message = @"Eat my buddy Pumba here because he is a treat"; break;
+            case 2: _message = @"Come on down and dine"; break;
+            case 3: _message = @"On this tasty swine"; break;
+            case 4: _message = @"All you have to do is get in line"; break;
+            default: _message = @"LUAU!"; break;
+        }
         _collegeName = @"University of America, Bitch";
         
         _date = [NSDate date];

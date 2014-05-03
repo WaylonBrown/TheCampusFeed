@@ -10,6 +10,13 @@
 
 @implementation CommentTableCell
 
+// sythesize properties to automatically generate accessor code
+@synthesize messageLabel = _messageLabel;
+@synthesize scoreLabel = _scoreLabel;
+@synthesize ageLabel = _ageLabel;
+@synthesize upVoteButton = _upVoteButton;
+@synthesize downVoteButton = _downVoteButton;
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
