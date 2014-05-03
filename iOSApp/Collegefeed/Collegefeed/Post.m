@@ -18,6 +18,7 @@
     {
         _content = content;
         _score = 0;
+        _commentCount = 0;
         _date = [NSDate date];
         return self;
     }

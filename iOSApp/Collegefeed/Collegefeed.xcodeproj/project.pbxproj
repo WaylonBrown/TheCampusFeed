@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		531107A6191478E3006F7DAF /* PostTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 531107A5191478E3006F7DAF /* PostTableCell.xib */; };
+		531107A919147B07006F7DAF /* PostTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531107A819147B07006F7DAF /* PostTableCell.m */; };
 		532706DD1913745E00F5EAB9 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706DC1913745E00F5EAB9 /* Post.m */; };
 		532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706E1191378EF00F5EAB9 /* PostDataController.m */; };
 		532706E5191384A600F5EAB9 /* PostsMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706E4191384A600F5EAB9 /* PostsMasterViewController.m */; };
@@ -37,6 +39,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		531107A5191478E3006F7DAF /* PostTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostTableCell.xib; path = ../PostTableCell.xib; sourceTree = "<group>"; };
+		531107A719147B07006F7DAF /* PostTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostTableCell.h; sourceTree = "<group>"; };
+		531107A819147B07006F7DAF /* PostTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostTableCell.m; sourceTree = "<group>"; };
 		532706DB1913745E00F5EAB9 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
 		532706DC1913745E00F5EAB9 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		532706E0191378EF00F5EAB9 /* PostDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDataController.h; sourceTree = "<group>"; };
@@ -87,6 +92,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		531107AA19147CBF006F7DAF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				531107A5191478E3006F7DAF /* PostTableCell.xib */,
+				531107A719147B07006F7DAF /* PostTableCell.h */,
+				531107A819147B07006F7DAF /* PostTableCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		532706DE1913777300F5EAB9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,11 +155,12 @@
 		53F8789619133F60002A578B /* Collegefeed */ = {
 			isa = PBXGroup;
 			children = (
+				53F878A219133F60002A578B /* Main_iPhone.storyboard */,
+				531107AA19147CBF006F7DAF /* Views */,
 				532706DE1913777300F5EAB9 /* Models */,
 				532706DF191378A500F5EAB9 /* Controllers */,
 				53F8789F19133F60002A578B /* AppDelegate.h */,
 				53F878A019133F60002A578B /* AppDelegate.m */,
-				53F878A219133F60002A578B /* Main_iPhone.storyboard */,
 				53F878A519133F60002A578B /* Main_iPad.storyboard */,
 				53F878AE19133F60002A578B /* Images.xcassets */,
 				53F8789719133F60002A578B /* Supporting Files */,
@@ -261,6 +277,7 @@
 				53F878AF19133F60002A578B /* Images.xcassets in Resources */,
 				53F878A419133F60002A578B /* Main_iPhone.storyboard in Resources */,
 				53F8789B19133F60002A578B /* InfoPlist.strings in Resources */,
+				531107A6191478E3006F7DAF /* PostTableCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +296,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				531107A919147B07006F7DAF /* PostTableCell.m in Sources */,
 				532706DD1913745E00F5EAB9 /* Post.m in Sources */,
 				532706E5191384A600F5EAB9 /* PostsMasterViewController.m in Sources */,
 				53F878A119133F60002A578B /* AppDelegate.m in Sources */,

@@ -7,6 +7,7 @@
 //
 
 #import "PostsMasterViewController.h"
+#import "PostTableCell.h"
 #import "PostDataController.h"
 #import "Post.h"
 
@@ -63,25 +64,26 @@
     return [self.dataController countOfList];
 }
 
-
+// invoked every time a table row needs to be shown.
+// this specifies the prototype (PostTableCell) and assigns its labels
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"PostCell";
+    static NSString *CellIdentifier = @"PostTableCell";
     static NSDateFormatter *formatter = nil;
     if (formatter == nil) {
         formatter = [[NSDateFormatter alloc] init];
         [formatter setDateStyle:NSDateFormatterMediumStyle];
     }
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    // originally UITableViewCell
+    PostTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
     Post *postAtIndex = [self.dataController objectInListAtIndex:indexPath.row];
 
-// TODO: make separate properties for each label in cell.
-//      Then set those appropriately to finish the code below
-//
-//    UILabel *contentLabel = [cell viewWithTag:@"ContentLabel"];
-//    
-//    [[cell textLabel] setText:postAtIndex.content];
-//    [[cell detailTextLabel] setText:[formatter stringFromDate:(NSDate *)postAtIndex.date]];
+    [[cell contentLabel] setText:postAtIndex.content];
+    [[cell scoreLabel] setText:[NSString stringWithFormat:@"%d", (int)postAtIndex.score]];
+    [[cell commentCountLabel] setText:[NSString stringWithFormat:@"%d comments", (int)postAtIndex.commentCount]];
+    
     return cell;
 }
 

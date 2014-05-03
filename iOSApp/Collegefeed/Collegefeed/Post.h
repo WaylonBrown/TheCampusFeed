@@ -12,8 +12,10 @@
 
 // tutorial properties were: name, location, date
 @property (nonatomic, copy) NSString *content;
-@property (nonatomic, copy) NSString *score;
+@property (nonatomic, assign) NSInteger *score;
+@property (nonatomic, assign) NSInteger *commentCount;
 @property (nonatomic, strong) NSDate *date;
+
 //TODO: array of comments for this post
 
 
