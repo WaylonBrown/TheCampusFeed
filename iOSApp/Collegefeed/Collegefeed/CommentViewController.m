@@ -7,6 +7,7 @@
 //
 
 #import "PostViewController.h"
+#import "PostTableCell.h"
 #import "CommentViewController.h"
 #import "CommentTableCell.h"
 #import "CommentDataController.h"
@@ -17,7 +18,6 @@
 - (NSString *)getAgeOfCommentAsString:(NSDate *)commentDate;
 - (void) updateVoteButtons:(CommentTableCell *)cell withVoteValue:(int)vote;
 - (UIViewController *)backViewController;
-
 
 @end
 
@@ -47,15 +47,20 @@
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     UIViewController *previousController = (UIViewController *) [self backViewController];
     
+    
     if ([previousController class] == [PostViewController class])
     {   // invoked if comments view was opened from a posts view
+        PostViewController *PVC = (PostViewController *)previousController;
+        Post* selectedPost = PVC.selectedPost;
         
-        // set text to be post that was selected
-        [[self postMessage] setText:((PostViewController *)previousController).selectedPostMessage];
-    }
-    else
-    {
-        [[self postMessage] setText:@"[Post unknown, not called from PostViewController]"];
+        if (selectedPost != nil)
+        {
+            // assign post cell attributes based on post that was selected
+            [[self originalPostCell] assignPropertiesWithPost:selectedPost];
+            
+            [[self originalPostCell] setNeedsDisplay];
+            return;
+        }
     }
 }
 - (void)awakeFromNib
@@ -68,7 +73,6 @@
 {
     [super viewDidLoad];
     
-    // postMessage =
 }
 
 - (void)didReceiveMemoryWarning

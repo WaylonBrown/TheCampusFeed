@@ -9,6 +9,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class Post;
+
 @interface PostTableCell : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UILabel *messageLabel;
@@ -18,6 +20,14 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *upVoteButton;
 @property (strong, nonatomic) IBOutlet UIButton *downVoteButton;
+@property (nonatomic, weak) IBOutlet UILabel *collegeLabel;
+
+- (NSString *)getAgeOfPostAsString:(NSDate *)postDate;
+- (void) assignPropertiesWithPost:(Post *)post;
+- (void) updateVoteButtonsWithVoteValue:(int)vote;
 
 @end
 
+@interface PostTableCellWithCollege : PostTableCell
+
+@end

@@ -24,7 +24,6 @@
 		5390A93519153F7A00ACD082 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A93419153F7A00ACD082 /* Comment.m */; };
 		5390A9381915407100ACD082 /* CommentTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A9371915407100ACD082 /* CommentTableCell.m */; };
 		5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A93A191552AE00ACD082 /* CommentViewController.m */; };
-		5390A93F1915635E00ACD082 /* Header.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5390A93E1915635E00ACD082 /* Header.xib */; };
 		5390A94119158E0E00ACD082 /* ViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A94019158E0E00ACD082 /* ViewControllerTests.m */; };
 		5390A94319158E1A00ACD082 /* DataControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A94219158E1A00ACD082 /* DataControllerTests.m */; };
 		53F8789119133F60002A578B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789019133F60002A578B /* Foundation.framework */; };
@@ -78,7 +77,6 @@
 		5390A9371915407100ACD082 /* CommentTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableCell.m; sourceTree = "<group>"; };
 		5390A939191552AE00ACD082 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
 		5390A93A191552AE00ACD082 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
-		5390A93E1915635E00ACD082 /* Header.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Header.xib; sourceTree = "<group>"; };
 		5390A94019158E0E00ACD082 /* ViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerTests.m; sourceTree = "<group>"; };
 		5390A94219158E1A00ACD082 /* DataControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataControllerTests.m; sourceTree = "<group>"; };
 		53F8788D19133F60002A578B /* Collegefeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collegefeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,7 +130,6 @@
 				531107A819147B07006F7DAF /* PostTableCell.m */,
 				5390A9361915407100ACD082 /* CommentTableCell.h */,
 				5390A9371915407100ACD082 /* CommentTableCell.m */,
-				5390A93E1915635E00ACD082 /* Header.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -341,7 +338,6 @@
 			files = (
 				5390A9251914B76800ACD082 /* postfeedlogosmall.png in Resources */,
 				5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */,
-				5390A93F1915635E00ACD082 /* Header.xib in Resources */,
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				5390A9231914B76800ACD082 /* logofake.png in Resources */,
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,

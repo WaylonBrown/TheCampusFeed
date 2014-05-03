@@ -10,11 +10,11 @@
 
 // forward declaration that the data controller exists
 @class PostDataController;
+@class Post;
 
 @interface PostViewController : UITableViewController
 
 @property (strong, nonatomic) PostDataController *dataController;
-@property (strong, nonatomic) NSIndexPath* selectedPostIndexPath;
-@property (strong, nonatomic) NSString* selectedPostMessage;
+@property (strong, nonatomic) Post* selectedPost;
 
 @end

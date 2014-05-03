@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @class CommentDataController;
+@class PostTableCell;
 
 @interface CommentViewController : UITableViewController
 
 @property (strong, nonatomic) CommentDataController *dataController;
-@property (weak, nonatomic) IBOutlet UILabel *postMessage;
+@property (weak, nonatomic) IBOutlet PostTableCell *originalPostCell;
+
 
 @end
