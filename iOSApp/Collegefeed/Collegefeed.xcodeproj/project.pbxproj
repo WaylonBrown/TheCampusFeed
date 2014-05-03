@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		531107A6191478E3006F7DAF /* PostTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 531107A5191478E3006F7DAF /* PostTableCell.xib */; };
 		531107A919147B07006F7DAF /* PostTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531107A819147B07006F7DAF /* PostTableCell.m */; };
+		531107B41914921E006F7DAF /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 531107B31914921E006F7DAF /* Images */; };
+		531107B61914976B006F7DAF /* PostTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 531107B51914976B006F7DAF /* PostTableCell.xib */; };
 		532706DD1913745E00F5EAB9 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706DC1913745E00F5EAB9 /* Post.m */; };
 		532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706E1191378EF00F5EAB9 /* PostDataController.m */; };
-		532706E5191384A600F5EAB9 /* PostsMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706E4191384A600F5EAB9 /* PostsMasterViewController.m */; };
+		532706E5191384A600F5EAB9 /* PostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706E4191384A600F5EAB9 /* PostViewController.m */; };
 		53F8789119133F60002A578B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789019133F60002A578B /* Foundation.framework */; };
 		53F8789319133F60002A578B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789219133F60002A578B /* CoreGraphics.framework */; };
 		53F8789519133F60002A578B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789419133F60002A578B /* UIKit.framework */; };
@@ -39,15 +40,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		531107A5191478E3006F7DAF /* PostTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostTableCell.xib; path = ../PostTableCell.xib; sourceTree = "<group>"; };
 		531107A719147B07006F7DAF /* PostTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostTableCell.h; sourceTree = "<group>"; };
 		531107A819147B07006F7DAF /* PostTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostTableCell.m; sourceTree = "<group>"; };
+		531107B31914921E006F7DAF /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
+		531107B51914976B006F7DAF /* PostTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTableCell.xib; sourceTree = "<group>"; };
 		532706DB1913745E00F5EAB9 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
 		532706DC1913745E00F5EAB9 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		532706E0191378EF00F5EAB9 /* PostDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDataController.h; sourceTree = "<group>"; };
 		532706E1191378EF00F5EAB9 /* PostDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostDataController.m; sourceTree = "<group>"; };
-		532706E3191384A600F5EAB9 /* PostsMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostsMasterViewController.h; sourceTree = "<group>"; };
-		532706E4191384A600F5EAB9 /* PostsMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostsMasterViewController.m; sourceTree = "<group>"; };
+		532706E3191384A600F5EAB9 /* PostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostViewController.h; sourceTree = "<group>"; };
+		532706E4191384A600F5EAB9 /* PostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostViewController.m; sourceTree = "<group>"; };
 		53F8788D19133F60002A578B /* Collegefeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collegefeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53F8789019133F60002A578B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		53F8789219133F60002A578B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -95,9 +97,11 @@
 		531107AA19147CBF006F7DAF /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				531107A5191478E3006F7DAF /* PostTableCell.xib */,
+				531107B51914976B006F7DAF /* PostTableCell.xib */,
+				53F878A219133F60002A578B /* Main_iPhone.storyboard */,
 				531107A719147B07006F7DAF /* PostTableCell.h */,
 				531107A819147B07006F7DAF /* PostTableCell.m */,
+				53F878A519133F60002A578B /* Main_iPad.storyboard */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -116,8 +120,8 @@
 			children = (
 				532706E0191378EF00F5EAB9 /* PostDataController.h */,
 				532706E1191378EF00F5EAB9 /* PostDataController.m */,
-				532706E3191384A600F5EAB9 /* PostsMasterViewController.h */,
-				532706E4191384A600F5EAB9 /* PostsMasterViewController.m */,
+				532706E3191384A600F5EAB9 /* PostViewController.h */,
+				532706E4191384A600F5EAB9 /* PostViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -155,14 +159,13 @@
 		53F8789619133F60002A578B /* Collegefeed */ = {
 			isa = PBXGroup;
 			children = (
-				53F878A219133F60002A578B /* Main_iPhone.storyboard */,
 				531107AA19147CBF006F7DAF /* Views */,
 				532706DE1913777300F5EAB9 /* Models */,
 				532706DF191378A500F5EAB9 /* Controllers */,
 				53F8789F19133F60002A578B /* AppDelegate.h */,
 				53F878A019133F60002A578B /* AppDelegate.m */,
-				53F878A519133F60002A578B /* Main_iPad.storyboard */,
 				53F878AE19133F60002A578B /* Images.xcassets */,
+				531107B31914921E006F7DAF /* Images */,
 				53F8789719133F60002A578B /* Supporting Files */,
 			);
 			path = Collegefeed;
@@ -273,11 +276,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				531107B61914976B006F7DAF /* PostTableCell.xib in Resources */,
 				53F878A719133F60002A578B /* Main_iPad.storyboard in Resources */,
 				53F878AF19133F60002A578B /* Images.xcassets in Resources */,
 				53F878A419133F60002A578B /* Main_iPhone.storyboard in Resources */,
 				53F8789B19133F60002A578B /* InfoPlist.strings in Resources */,
-				531107A6191478E3006F7DAF /* PostTableCell.xib in Resources */,
+				531107B41914921E006F7DAF /* Images in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,7 +302,7 @@
 			files = (
 				531107A919147B07006F7DAF /* PostTableCell.m in Sources */,
 				532706DD1913745E00F5EAB9 /* Post.m in Sources */,
-				532706E5191384A600F5EAB9 /* PostsMasterViewController.m in Sources */,
+				532706E5191384A600F5EAB9 /* PostViewController.m in Sources */,
 				53F878A119133F60002A578B /* AppDelegate.m in Sources */,
 				532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */,
 				53F8789D19133F60002A578B /* main.m in Sources */,

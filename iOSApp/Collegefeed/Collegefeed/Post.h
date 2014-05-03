@@ -12,11 +12,12 @@
 
 // tutorial properties were: name, location, date
 @property (nonatomic, copy) NSString *content;
-@property (nonatomic, assign) NSInteger *score;
-@property (nonatomic, assign) NSInteger *commentCount;
+@property (nonatomic) NSInteger *score;
+@property (nonatomic) NSInteger *commentCount;
 @property (nonatomic, strong) NSDate *date;
 
-//TODO: array of comments for this post
+// TODO: array of comments?
+// DB looks like comments maintain post ID instead
 
 
 -(id)initWithContent:(NSString *)content;

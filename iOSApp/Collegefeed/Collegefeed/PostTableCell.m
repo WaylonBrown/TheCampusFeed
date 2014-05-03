@@ -5,6 +5,7 @@
 //  Created by Patrick Sheehan on 5/2/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
+// a subclass of UITableViewCell to enable custom properties
 
 #import "PostTableCell.h"
 
@@ -14,15 +15,57 @@
 @synthesize contentLabel = _contentLabel;
 @synthesize scoreLabel = _scoreLabel;
 @synthesize commentCountLabel = _commentCountLabel;
-// TODO: up/down arrow buttons, collegeLabel
+@synthesize ageLabel = _ageLabel;
+@synthesize upVoteButton = _upVoteButton;
+@synthesize downVoteButton = _downVoteButton;
+
+// TODO: collegeLabel
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
+    if (self)
+    {
         // Initialization code
     }
     return self;
+}
+
+// called when user upvotes a comment
+- (IBAction)handleUpVote:(id)sender
+{
+    // TODO: change score of corresponding post
+    if ([_upVoteButton isSelected])
+    {   // deselect upvote
+        [_upVoteButton setImage:[UIImage imageNamed:@"arrowup.png"] forState:UIControlStateNormal];
+        [_upVoteButton setSelected:NO];
+    }
+    else
+    {   // select upvote, deselect downvote
+        [_upVoteButton setImage:[UIImage imageNamed:@"arrowupblue.png"] forState:UIControlStateSelected];
+        [_upVoteButton setSelected:YES];
+        
+        [_downVoteButton setImage:[UIImage imageNamed:@"arrowdown.png"] forState:UIControlStateNormal];
+        [_downVoteButton setSelected:NO];
+    }
+}
+// called when user downvotes a comment
+- (IBAction)handleDownVote:(id)sender
+{
+    // TODO: change score of corresponding post
+    if ([_downVoteButton isSelected])
+    {   // deselect downvote
+        [_downVoteButton setImage:[UIImage imageNamed:@"arrowdown.png"] forState:UIControlStateNormal];
+        [_downVoteButton setSelected:NO];
+    }
+    else
+    {   // select downvote, deselect upvote
+        [_downVoteButton setImage:[UIImage imageNamed:@"arrowdownred.png"] forState:UIControlStateSelected];
+        [_downVoteButton setSelected:YES];
+        
+        [_upVoteButton setImage:[UIImage imageNamed:@"arrowup.png"] forState:UIControlStateNormal];
+        [_upVoteButton setSelected:NO];
+    }
 }
 
 - (void)awakeFromNib

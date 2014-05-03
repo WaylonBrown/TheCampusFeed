@@ -1,5 +1,5 @@
 //
-//  PostsMasterViewController.h
+//  PostViewController.h
 //  Collegefeed
 //
 //  Created by Patrick Sheehan on 5/2/14.
@@ -11,7 +11,7 @@
 // forward declaration that the data controller exists
 @class PostDataController;
 
-@interface PostsMasterViewController : UITableViewController
+@interface PostViewController : UITableViewController
 
 @property (strong, nonatomic) PostDataController *dataController;
 
