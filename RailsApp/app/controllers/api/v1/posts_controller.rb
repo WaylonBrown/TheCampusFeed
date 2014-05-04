@@ -26,6 +26,8 @@ module Api
       # POST /posts
       # POST /posts.json
       def create
+        logger.debug params.inspect
+
         @post = Post.new(post_params)
 
         respond_to do |format|
