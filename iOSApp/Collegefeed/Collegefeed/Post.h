@@ -23,7 +23,7 @@
 @property (nonatomic, copy) NSMutableArray *commentList;
 
 
--(id)initWithPostID:(NSInteger)postID withMessage:(NSString *)message;
--(id)initDummy;
+- (id)initWithPostID:(NSInteger)postID withMessage:(NSString *)message;
+- (id)initDummy;
 
 @end

@@ -11,13 +11,6 @@
 #import "PostDataController.h"
 #import "Post.h"
 
-@interface PostViewController()
-
-- (NSString *)getAgeOfPostAsString:(NSDate *)postDate;
-- (void) updateVoteButtons:(PostTableCell *)cell withVoteValue:(int)vote;
-
-@end
-
 @implementation PostViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -28,7 +21,7 @@
     }
     return self;
 }
-- (void) viewDidAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
     [[self navigationController] setNavigationBarHidden:YES animated:NO];
 
@@ -37,26 +30,12 @@
 {
     [super awakeFromNib];
     self.dataController = [[PostDataController alloc] init];
-//    [[self navigationController] setNavigationBarHidden:YES animated:YES];
 
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    [[self navigationController] setNavigationBarHidden:YES animated:YES];
-//    self.edgesForExtendedLayout = UIRectEdgeAll;
-//    self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
 
-    
-//    // hide status bar
-//    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)])
-//    {   // iOS 7
-//        [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
-//    }
-//    else
-//    {   // iOS 6
-//        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-//    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,9 +55,7 @@
     Post *post = [self.dataController objectInListAtIndex:indexPath.row];
     
     post.vote = post.vote == 1 ? 0 : 1;
-    
-    [self updateVoteButtons:tableCell withVoteValue:post.vote];
-
+    [tableCell updateVoteButtonsWithVoteValue:post.vote];
 }
 - (IBAction)handleDownvote:(id)sender
 {
@@ -92,8 +69,8 @@
     Post *post = [self.dataController objectInListAtIndex:indexPath.row];
     
     post.vote = post.vote == -1 ? 0 : -1;
-    
-    [self updateVoteButtons:tableCell withVoteValue:post.vote];
+
+    [tableCell updateVoteButtonsWithVoteValue:post.vote];
 }
 
 #pragma mark - Table view data source
@@ -114,11 +91,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"PostTableCell";
-    static NSDateFormatter *formatter = nil;
-    if (formatter == nil) {
-        formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateStyle:NSDateFormatterMediumStyle];
-    }
     
     PostTableCell *cell = (PostTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
@@ -129,42 +101,9 @@
     
     // get the post to be displayed in this cell
     Post *postAtIndex = [self.dataController objectInListAtIndex:indexPath.row];
-    
-    NSDate *d = (NSDate*)[postAtIndex date];
-    NSString *myAgeLabel = [self getAgeOfPostAsString:d];
-    
-    // assign cell's text labels
-    [[cell ageLabel] setText: myAgeLabel];
-    [[cell messageLabel] setText:postAtIndex.message];
-    [[cell scoreLabel] setText:[NSString stringWithFormat:@"%d", (int)postAtIndex.score]];
-    [[cell commentCountLabel] setText:[NSString stringWithFormat:@"%d comments", (int)postAtIndex.commentList.count]];
-    
-    // assign arrow colors according to user's vote
-    [self updateVoteButtons:cell withVoteValue:postAtIndex.vote];
+    [cell assignPropertiesWithPost:postAtIndex];
     
     return cell;
-}
-
-- (void) updateVoteButtons:(PostTableCell *)cell withVoteValue:(int)vote
-{
-    // assign appropriate arrow colors (based on user's vote)
-    switch (vote)
-    {
-        case -1:
-            [[cell upVoteButton] setImage:[UIImage imageNamed:@"arrowup.png"] forState:UIControlStateNormal];
-            [[cell downVoteButton] setImage:[UIImage imageNamed:@"arrowdownred.png"] forState:UIControlStateNormal];
-            break;
-        case 1:
-            [[cell upVoteButton] setImage:[UIImage imageNamed:@"arrowupblue.png"] forState:UIControlStateNormal];
-            [[cell downVoteButton] setImage:[UIImage imageNamed:@"arrowdown.png"] forState:UIControlStateNormal];
-            break;
-        default:
-            [[cell upVoteButton] setImage:[UIImage imageNamed:@"arrowup.png"] forState:UIControlStateNormal];
-            [[cell downVoteButton] setImage:[UIImage imageNamed:@"arrowdown.png"] forState:UIControlStateNormal];
-            break;
-    }
-    
-    [cell setNeedsDisplay];
 }
 
 // User should not directly modify a PostTableCell
@@ -179,24 +118,12 @@
     return 100;
 }
 
-// return string indicating how long ago the post was created
-- (NSString *)getAgeOfPostAsString:(NSDate *)postDate
-{
-    int postAgeSeconds = [[NSDate date] timeIntervalSinceDate:postDate];
-    int postAgeMinutes = postAgeSeconds / 60;
-    int postAgeHours = postAgeMinutes / 60;
-    
-    if (postAgeHours >= 1)
-    {
-        return [NSString stringWithFormat:@"%d hours ago", postAgeHours];
-    }
-    else if (postAgeMinutes >= 1)
-    {
-        return [NSString stringWithFormat:@"%d minutes ago", postAgeMinutes];
-    }
-    return [NSString stringWithFormat:@"%d seconds ago", postAgeSeconds];
-}
 
+// set selected cell and post message of the selected cell
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.selectedPost = (Post *)[self.dataController objectInListAtIndex:indexPath.row];
+}
 - (BOOL)prefersStatusBarHidden {
     return YES;
 }
