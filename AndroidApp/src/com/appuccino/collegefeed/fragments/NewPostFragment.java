@@ -18,7 +18,6 @@ import com.appuccino.collegefeed.PostCommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.listadapters.PostListAdapter;
 import com.appuccino.collegefeed.objects.Post;
-import com.nirhart.parallaxscroll.views.ParallaxListView;
 
 public class NewPostFragment extends Fragment
 {
@@ -42,7 +41,7 @@ public class NewPostFragment extends Fragment
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_layout,
 				container, false);
-		ParallaxListView fragList = (ParallaxListView)rootView.findViewById(R.id.fragmentListView);
+		ListView fragList = (ListView)rootView.findViewById(R.id.fragmentListView);
 					
 		//if doesnt have header and footer, add them
 		if(fragList.getHeaderViewsCount() == 0)
