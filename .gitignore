@@ -1,5 +1,5 @@
 *.properties
-**/build.config
+**/BuildConfig.java
 
 #################
 ## Eclipse
