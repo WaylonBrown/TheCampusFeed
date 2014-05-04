@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_marginLeft="8dp"
 	android:layout_marginRight="8dp"
@@ -29,7 +29,7 @@
             android:id="@+id/scoreText"
             android:layout_width = "wrap_content"
             android:layout_height="wrap_content"
-            android:text="492"
+            android:text="0"
             android:textColor="@color/darkgray"
             android:layout_gravity="center_horizontal"
             />
@@ -42,6 +42,7 @@
 	        android:layout_marginLeft="4dp"
 	        android:layout_marginTop="0dp"
 	        android:layout_marginRight="4dp"
+	        android:layout_marginBottom="8dp"
 	        android:layout_gravity="center_horizontal"
 	        android:clickable="true"
 	        />
@@ -56,7 +57,7 @@
 		        
 	    <TextView 
 	        android:id="@+id/messageText"
-	        android:text="Test"
+	        android:text="This is me testing a large message This is me testing a large message This is me testing a large message This is me testing a large message "
 	        android:textSize="18sp"
 	        android:textColor="@color/darkgray"
 	        android:layout_width="match_parent"
@@ -71,7 +72,7 @@
 	        
 	        <TextView 
 	            android:id="@+id/commentText"
-	            android:text=""
+	            android:text="0 comments"
 	            android:textSize="15sp"
 	            android:textColor="@color/darkgray"
 	            android:layout_width="wrap_content"
