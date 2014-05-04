@@ -26,8 +26,6 @@ module Api
       # POST /posts
       # POST /posts.json
       def create
-        #puts params.inspect
-        #puts params[:DATA]
 
         @post = Post.new(post_params)
 

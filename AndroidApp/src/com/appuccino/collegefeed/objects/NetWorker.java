@@ -3,6 +3,7 @@ package com.appuccino.collegefeed.objects;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.apache.http.Header;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -78,6 +79,7 @@ public class NetWorker {
 			try{
 
 				HttpPost request = new HttpPost(requestUrl + "posts");
+				request.setHeader("Content-Type", "application/json");
 				request.setEntity(new ByteArrayEntity(posts[0].toJSONString().toByteArray()));
 				ResponseHandler<String> responseHandler = new BasicResponseHandler();
 				String response = client.execute(request, responseHandler);
