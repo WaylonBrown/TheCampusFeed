@@ -1,10 +1,13 @@
 package com.appuccino.collegefeed.objects;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.util.ArrayList;
 
 import android.util.JsonReader;
+import android.util.JsonWriter;
 
 public class Post implements Votable{
 	int score;
@@ -56,6 +59,33 @@ public class Post implements Votable{
 		int numberOfComments = (int)(Math.random() * 15);
 		for(int i = 0; i < numberOfComments; i++)
 			commentList.add(new Comment("test comment test comment test comment test comment test comment"));
+	}
+	
+	public ByteArrayOutputStream toJSONString() throws IOException{
+		ByteArrayOutputStream ret = new ByteArrayOutputStream();
+		JsonWriter writer = new JsonWriter(new OutputStreamWriter(ret, "UTF-8"));
+		writer.setIndent("  ");
+		
+		/*{
+		  "id": 2,
+		  "text": "#YOLO SWAG!",
+		  "score": null,
+		  "lat": null,
+		  "lon": null,
+		  "created_at": "2014-05-02T01:30:26.238Z",
+		  "updated_at": "2014-05-02T01:30:26.238Z"
+		}*/
+		
+		writer.beginObject();
+		
+		writer.name("post");
+		writer.beginObject();
+		writer.name("text"); writer.value(message);
+		writer.endObject();
+		
+		writer.endObject();
+		writer.close();
+		return ret;
 	}
 	
 	public static ArrayList<Post> postsFromJson(String json) throws IOException{

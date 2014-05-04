@@ -42,6 +42,7 @@ import android.widget.Toast;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
+import com.appuccino.collegefeed.objects.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.objects.Post;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener, LocationListener 
@@ -298,8 +299,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     	builder.setView(postDialogLayout)
     	.setPositiveButton("Post", new DialogInterface.OnClickListener() {
     		public void onClick(DialogInterface dialog, int id) {
-    			NewPostFragment.postList.add(new Post(postMessage.getText().toString()));
-    			TopPostFragment.postList.add(new Post(postMessage.getText().toString()));
+    			Post newPost = new Post(postMessage.getText().toString());
+    			NewPostFragment.postList.add(newPost);
+    			TopPostFragment.postList.add(newPost);
+    			new MakePostTask().execute(newPost);
     		}
     	});
     	
