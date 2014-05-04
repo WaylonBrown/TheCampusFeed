@@ -12,6 +12,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.PostCommentsActivity;
@@ -30,6 +31,8 @@ public class TopPostFragment extends Fragment
 	static PostListAdapter topListAdapter;
 	final int tabNumber = 0;
 	int spinnerNumber = 0;
+	static ListView list;
+	static ProgressBar loadingIndicator;
 
 	public TopPostFragment()
 	{
@@ -45,16 +48,17 @@ public class TopPostFragment extends Fragment
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_layout,
 				container, false);
-		ListView fragList = (ListView)rootView.findViewById(R.id.fragmentListView);
+		list = (ListView)rootView.findViewById(R.id.fragmentListView);
+		loadingIndicator = (ProgressBar)rootView.findViewById(R.id.loadingIndicator);
 					
 		//if doesnt have header and footer, add them
-		if(fragList.getHeaderViewsCount() == 0)
+		if(list.getHeaderViewsCount() == 0)
 		{
 			//for card UI
 			View headerFooter = new View(getActivity());
 			headerFooter.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
-			fragList.addFooterView(headerFooter, null, false);
-			fragList.addHeaderView(headerFooter, null, false);
+			list.addFooterView(headerFooter, null, false);
+			list.addHeaderView(headerFooter, null, false);
 		}
 		
 		if(postList == null)
@@ -76,11 +80,11 @@ public class TopPostFragment extends Fragment
 		{
 			topListAdapter = new PostListAdapter(getActivity(), R.layout.list_row_college, postList, 0);
 		}
-		fragList.setAdapter(topListAdapter);
+		list.setAdapter(topListAdapter);
 		
 		
 
-	    fragList.setOnItemClickListener(new OnItemClickListener()
+		list.setOnItemClickListener(new OnItemClickListener()
 	    {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
@@ -125,5 +129,19 @@ public class TopPostFragment extends Fragment
 		{
 			topListAdapter.notifyDataSetChanged();
 		}			
+	}
+
+	public static void makeLoadingIndicator(boolean makeLoading) 
+	{
+		if(makeLoading)
+		{
+			list.setVisibility(View.INVISIBLE);
+			loadingIndicator.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			list.setVisibility(View.VISIBLE);
+			loadingIndicator.setVisibility(View.INVISIBLE);
+		}
 	}
 }

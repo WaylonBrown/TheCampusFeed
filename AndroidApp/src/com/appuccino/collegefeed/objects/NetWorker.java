@@ -31,10 +31,12 @@ public class NetWorker {
 	}
 	
 	public static class GetPostsTask extends AsyncTask<PostSelector, Void, ArrayList<Post> >{
-		/*Activity activityContext;
-		public GetPostsTask(Activity activityContext){
-			this.activityContext = activityContext;
-		}*/
+		@Override
+		protected void onPreExecute() {
+			TopPostFragment.makeLoadingIndicator(true);
+			super.onPreExecute();
+		}
+
 		@Override
 		protected ArrayList<Post> doInBackground(PostSelector... arg0) {
 			HttpGet request = new HttpGet(requestUrl + "posts");
@@ -66,6 +68,7 @@ public class NetWorker {
 			//activityContext.getFragment
 			TopPostFragment.postList.addAll(result);
 			TopPostFragment.updateList();
+			TopPostFragment.makeLoadingIndicator(false);
 		}
 
 		
