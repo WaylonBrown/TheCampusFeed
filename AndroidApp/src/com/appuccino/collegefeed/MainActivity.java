@@ -25,6 +25,7 @@ import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -214,8 +215,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	private void getLocation(){
 		mgr = (LocationManager) getSystemService(LOCATION_SERVICE);
 		Criteria criteria = new Criteria();
-		criteria.setAccuracy(Criteria.ACCURACY_FINE);
+		criteria.setAccuracy(Criteria.ACCURACY_COARSE);
 		String best = mgr.getBestProvider(criteria, true);
+		Log.d("location", best);
 		if (best == null) {
 		    //ask user to enable at least one of the Location Providers
 			permissions = 0;
@@ -227,7 +229,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 //		    if(lastKnownLoc == null){
 //		    	Toast.makeText(this, "Getting your location...", Toast.LENGTH_LONG).show();
 		    	//mgr.requestLocationUpdates(best, 0, 0, this);
-		    	mgr.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, this, null);
+		    	//mgr.requestSingleUpdate(best, this, null);
+				if(mgr.getProvider(LocationManager.NETWORK_PROVIDER) != null){
+					mgr.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, this, null);
+				}
+				else if(mgr.getProvider(LocationManager.GPS_PROVIDER) != null){
+					mgr.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, null);
+				}
 		    	Timer timeout = new Timer();
 		    	final MainActivity that = this;
 		    	timeout.schedule(new TimerTask()
@@ -237,6 +245,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					{						
 						if(!locationFound)
 						{
+							mgr.removeUpdates(that);
 							that.runOnUiThread(new Runnable(){
 
 								@Override
@@ -246,7 +255,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 								}
 								
 							});
-							mgr.removeUpdates(that);
+							
 						}							
 					}		    		
 		    	}, locationTimeoutSeconds * 1000);
