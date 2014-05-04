@@ -18,6 +18,7 @@ import com.appuccino.collegefeed.PostCommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.listadapters.PostListAdapter;
 import com.appuccino.collegefeed.objects.Post;
+import com.nirhart.parallaxscroll.views.ParallaxListView;
 
 public class NewPostFragment extends Fragment
 {
@@ -41,7 +42,7 @@ public class NewPostFragment extends Fragment
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_layout,
 				container, false);
-		ListView fragList = (ListView)rootView.findViewById(R.id.fragmentListView);
+		ParallaxListView fragList = (ParallaxListView)rootView.findViewById(R.id.fragmentListView);
 					
 		//if doesnt have header and footer, add them
 		if(fragList.getHeaderViewsCount() == 0)
@@ -59,6 +60,15 @@ public class NewPostFragment extends Fragment
 			postList.add(new Post(100, "New message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
 			postList.add(new Post(70, "New message 2 test message 2 test message #onetag #twotag", 10));
 			postList.add(new Post(15, "New message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));
+			postList.add(new Post(100, "New message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
+			postList.add(new Post(70, "New message 2 test message 2 test message #onetag #twotag", 10));
+			postList.add(new Post(15, "New message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));
+			postList.add(new Post(100, "New message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
+			postList.add(new Post(70, "New message 2 test message 2 test message #onetag #twotag", 10));
+			postList.add(new Post(15, "New message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));
+			postList.add(new Post(100, "New message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
+			postList.add(new Post(70, "New message 2 test message 2 test message #onetag #twotag", 10));
+			postList.add(new Post(15, "New message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));
 		}		
 		
 		//if not in specific college feed, use layout with college name
@@ -70,9 +80,6 @@ public class NewPostFragment extends Fragment
 		{
 			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_college, postList, 0);
 		}
-		fragList.setAdapter(listAdapter);
-				
-		
 		fragList.setAdapter(listAdapter);
 		
 		
