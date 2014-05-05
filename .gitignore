@@ -1,5 +1,6 @@
 *.properties
-**/build.config
+**/BuildConfig.java
+AndroidApp/gen/com/appuccino/collegefeed/BuildConfig.java
 
 #################
 ## Eclipse
@@ -216,3 +217,4 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+

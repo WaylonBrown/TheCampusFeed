@@ -3,6 +3,7 @@ package com.appuccino.collegefeed.fragments;
 import java.util.ArrayList;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,14 +13,17 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.PostCommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.listadapters.PostListAdapter;
-import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.objects.NetWorker.PostSelector;
+import com.appuccino.collegefeed.objects.Post;
+import com.romainpiel.shimmer.Shimmer;
+import com.romainpiel.shimmer.ShimmerTextView;
 
 public class TopPostFragment extends Fragment
 {
@@ -30,6 +34,9 @@ public class TopPostFragment extends Fragment
 	static PostListAdapter topListAdapter;
 	final int tabNumber = 0;
 	int spinnerNumber = 0;
+	static ListView list;
+	static ShimmerTextView loadingText;
+	static Shimmer shimmer;
 
 	public TopPostFragment()
 	{
@@ -45,16 +52,20 @@ public class TopPostFragment extends Fragment
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_layout,
 				container, false);
-		ListView fragList = (ListView)rootView.findViewById(R.id.fragmentListView);
+		list = (ListView)rootView.findViewById(R.id.fragmentListView);
+		loadingText = (ShimmerTextView)rootView.findViewById(R.id.loadingText);
+		
+		Typeface customfont = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/Roboto-Light.ttf");
+		loadingText.setTypeface(customfont);
 					
 		//if doesnt have header and footer, add them
-		if(fragList.getHeaderViewsCount() == 0)
+		if(list.getHeaderViewsCount() == 0)
 		{
 			//for card UI
 			View headerFooter = new View(getActivity());
 			headerFooter.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
-			fragList.addFooterView(headerFooter, null, false);
-			fragList.addHeaderView(headerFooter, null, false);
+			list.addFooterView(headerFooter, null, false);
+			list.addHeaderView(headerFooter, null, false);
 		}
 		
 		if(postList == null)
@@ -76,11 +87,11 @@ public class TopPostFragment extends Fragment
 		{
 			topListAdapter = new PostListAdapter(getActivity(), R.layout.list_row_college, postList, 0);
 		}
-		fragList.setAdapter(topListAdapter);
+		list.setAdapter(topListAdapter);
 		
 		
 
-	    fragList.setOnItemClickListener(new OnItemClickListener()
+		list.setOnItemClickListener(new OnItemClickListener()
 	    {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
@@ -125,5 +136,26 @@ public class TopPostFragment extends Fragment
 		{
 			topListAdapter.notifyDataSetChanged();
 		}			
+	}
+
+	public static void makeLoadingIndicator(boolean makeLoading) 
+	{
+		if(makeLoading)
+		{
+			list.setVisibility(View.INVISIBLE);
+			loadingText.setVisibility(View.VISIBLE);
+			
+			shimmer = new Shimmer();
+			shimmer.setDuration(600);
+			shimmer.start(loadingText);
+		}
+		else
+		{
+			list.setVisibility(View.VISIBLE);
+			loadingText.setVisibility(View.INVISIBLE);
+			
+			if (shimmer != null && shimmer.isAnimating()) 
+	            shimmer.cancel();
+		}
 	}
 }

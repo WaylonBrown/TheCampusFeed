@@ -3,10 +3,13 @@ package com.appuccino.collegefeed.objects;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.apache.http.Header;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -28,10 +31,12 @@ public class NetWorker {
 	}
 	
 	public static class GetPostsTask extends AsyncTask<PostSelector, Void, ArrayList<Post> >{
-		/*Activity activityContext;
-		public GetPostsTask(Activity activityContext){
-			this.activityContext = activityContext;
-		}*/
+		@Override
+		protected void onPreExecute() {
+			TopPostFragment.makeLoadingIndicator(true);
+			super.onPreExecute();
+		}
+
 		@Override
 		protected ArrayList<Post> doInBackground(PostSelector... arg0) {
 			HttpGet request = new HttpGet(requestUrl + "posts");
@@ -63,9 +68,43 @@ public class NetWorker {
 			//activityContext.getFragment
 			TopPostFragment.postList.addAll(result);
 			TopPostFragment.updateList();
+			TopPostFragment.makeLoadingIndicator(false);
 		}
 
 		
+		
+	}
+	
+	public static class MakePostTask extends AsyncTask<Post, Void, Boolean>{
+
+		@Override
+		protected Boolean doInBackground(Post... posts) {
+			try{
+
+				HttpPost request = new HttpPost(requestUrl + "posts");
+				request.setHeader("Content-Type", "application/json");
+				request.setEntity(new ByteArrayEntity(posts[0].toJSONString().toByteArray()));
+				ResponseHandler<String> responseHandler = new BasicResponseHandler();
+				String response = client.execute(request, responseHandler);
+				
+				Log.d("http", response);
+				return true;
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+		}
 		
 	}
 	

@@ -25,6 +25,7 @@ import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -41,6 +42,7 @@ import android.widget.Toast;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
+import com.appuccino.collegefeed.objects.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.objects.Post;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener, LocationListener 
@@ -119,7 +121,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		if(which == 0)
 		{
 			currentFeedCollegeID = 0;
-			newPostButton.setVisibility(View.GONE);	
 			
 			// Create the adapter that will return a fragment for each of the three
 			// primary sections of the app.
@@ -157,15 +158,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		else //specific college
 		{
 			currentFeedCollegeID = 234234;
-			//change permissions UI
-			if(permissions != 0)
-			{
-				newPostButton.setVisibility(View.VISIBLE);
-			}
-			else
-			{
-				newPostButton.setVisibility(View.GONE);
-			}
 			
 			if(permissions == currentFeedCollegeID)
 			{
@@ -214,11 +206,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	private void getLocation(){
 		mgr = (LocationManager) getSystemService(LOCATION_SERVICE);
 		Criteria criteria = new Criteria();
-		criteria.setAccuracy(Criteria.ACCURACY_FINE);
+		criteria.setAccuracy(Criteria.ACCURACY_COARSE);
 		String best = mgr.getBestProvider(criteria, true);
+		Log.d("location", best);
 		if (best == null) {
 		    //ask user to enable at least one of the Location Providers
 			permissions = 0;
+			newPostButton.setVisibility(View.INVISIBLE);
 			Toast.makeText(this, "Location Services are turned off.", Toast.LENGTH_LONG).show();
 			Toast.makeText(this, "You can upvote, but nothing else.", Toast.LENGTH_LONG).show();
 		} else {
@@ -227,7 +221,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 //		    if(lastKnownLoc == null){
 //		    	Toast.makeText(this, "Getting your location...", Toast.LENGTH_LONG).show();
 		    	//mgr.requestLocationUpdates(best, 0, 0, this);
-		    	mgr.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, this, null);
+		    	//mgr.requestSingleUpdate(best, this, null);
+				if(mgr.getProvider(LocationManager.NETWORK_PROVIDER) != null){
+					mgr.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, this, null);
+				}
+				else if(mgr.getProvider(LocationManager.GPS_PROVIDER) != null){
+					mgr.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, null);
+				}
 		    	Timer timeout = new Timer();
 		    	final MainActivity that = this;
 		    	timeout.schedule(new TimerTask()
@@ -237,6 +237,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					{						
 						if(!locationFound)
 						{
+							mgr.removeUpdates(that);
 							that.runOnUiThread(new Runnable(){
 
 								@Override
@@ -246,7 +247,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 								}
 								
 							});
-							mgr.removeUpdates(that);
+							
 						}							
 					}		    		
 		    	}, locationTimeoutSeconds * 1000);
@@ -268,12 +269,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		if(degreesAway < degreesForPermissions)
 		{
 			permissions = tamuID;
+			newPostButton.setVisibility(View.VISIBLE);
 			Toast.makeText(this, "You're near Texas A&M University", Toast.LENGTH_LONG).show();
 			Toast.makeText(this, "You can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
 		}
 		else
 		{
 			permissions = 0;
+			newPostButton.setVisibility(View.INVISIBLE);
 			Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
 		}
 	}
@@ -289,8 +292,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     	builder.setView(postDialogLayout)
     	.setPositiveButton("Post", new DialogInterface.OnClickListener() {
     		public void onClick(DialogInterface dialog, int id) {
-    			NewPostFragment.postList.add(new Post(postMessage.getText().toString()));
-    			TopPostFragment.postList.add(new Post(postMessage.getText().toString()));
+    			Post newPost = new Post(postMessage.getText().toString());
+    			NewPostFragment.postList.add(newPost);
+    			TopPostFragment.postList.add(newPost);
+    			new MakePostTask().execute(newPost);
     		}
     	});
     	

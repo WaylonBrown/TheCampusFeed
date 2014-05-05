@@ -3,6 +3,7 @@ package com.appuccino.collegefeed.fragments;
 import java.util.ArrayList;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,15 +18,24 @@ import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.PostCommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.listadapters.PostListAdapter;
+import com.appuccino.collegefeed.objects.NetWorker.GetPostsTask;
+import com.appuccino.collegefeed.objects.NetWorker.PostSelector;
 import com.appuccino.collegefeed.objects.Post;
+import com.romainpiel.shimmer.Shimmer;
+import com.romainpiel.shimmer.ShimmerTextView;
 
 public class NewPostFragment extends Fragment
 {
 	static MainActivity mainActivity;
-	public static final String ARG_SECTION_NUMBER = "section_number";
+	public static final String ARG_TAB_NUMBER = "section_number";
+	public static final String ARG_SPINNER_NUMBER = "tab_number";
 	public static ArrayList<Post> postList;
 	static PostListAdapter listAdapter;
-	final static int sectionNumber = 1;
+	final int tabNumber = 1;
+	int spinnerNumber = 0;
+	static ListView list;
+	static ShimmerTextView loadingText;
+	static Shimmer shimmer;
 
 	public NewPostFragment()
 	{
@@ -41,24 +51,30 @@ public class NewPostFragment extends Fragment
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_layout,
 				container, false);
-		ListView fragList = (ListView)rootView.findViewById(R.id.fragmentListView);
+		list = (ListView)rootView.findViewById(R.id.fragmentListView);
+		loadingText = (ShimmerTextView)rootView.findViewById(R.id.loadingText);
+		
+		Typeface customfont = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/Roboto-Light.ttf");
+		loadingText.setTypeface(customfont);
 					
 		//if doesnt have header and footer, add them
-		if(fragList.getHeaderViewsCount() == 0)
+		if(list.getHeaderViewsCount() == 0)
 		{
 			//for card UI
 			View headerFooter = new View(getActivity());
 			headerFooter.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
-			fragList.addFooterView(headerFooter, null, false);
-			fragList.addHeaderView(headerFooter, null, false);
+			list.addFooterView(headerFooter, null, false);
+			list.addHeaderView(headerFooter, null, false);
 		}
 		
 		if(postList == null)
 		{
 			postList = new ArrayList<Post>();
-			postList.add(new Post(100, "New message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
-			postList.add(new Post(70, "New message 2 test message 2 test message #onetag #twotag", 10));
-			postList.add(new Post(15, "New message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));
+			new GetPostsTask().execute(new PostSelector());
+			//postList.add()
+			/*postList.add(new Post(100, "Top message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
+			postList.add(new Post(70, "Top message 2 test message 2 test message #onetag #twotag", 10));
+			postList.add(new Post(15, "Top message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));*/
 		}		
 		
 		//if not in specific college feed, use layout with college name
@@ -70,22 +86,18 @@ public class NewPostFragment extends Fragment
 		{
 			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_college, postList, 0);
 		}
-		fragList.setAdapter(listAdapter);
-				
-		
-		fragList.setAdapter(listAdapter);
+		list.setAdapter(listAdapter);
 		
 		
 
-	    fragList.setOnItemClickListener(new OnItemClickListener(){
-
+		list.setOnItemClickListener(new OnItemClickListener()
+	    {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) 
 			{
 				postClicked(postList.get(position - 1));
-			}
-			
+			}			
 		});
 	    
 		return rootView;
@@ -95,7 +107,7 @@ public class NewPostFragment extends Fragment
 	{
 		Intent intent = new Intent(getActivity(), PostCommentsActivity.class);
 		intent.putExtra("POST_ID", post.getID());
-		intent.putExtra("SECTION_NUMBER", sectionNumber);
+		intent.putExtra("SECTION_NUMBER", tabNumber);
 		
 		startActivity(intent);
 		getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -124,10 +136,26 @@ public class NewPostFragment extends Fragment
 			listAdapter.notifyDataSetChanged();
 		}
 		
-		if(listAdapter != null)
+	}
+	
+	public static void makeLoadingIndicator(boolean makeLoading) 
+	{
+		if(makeLoading)
 		{
-			listAdapter.notifyDataSetChanged();
+			list.setVisibility(View.INVISIBLE);
+			loadingText.setVisibility(View.VISIBLE);
+			
+			shimmer = new Shimmer();
+			shimmer.setDuration(600);
+			shimmer.start(loadingText);
 		}
-		
+		else
+		{
+			list.setVisibility(View.VISIBLE);
+			loadingText.setVisibility(View.INVISIBLE);
+			
+			if (shimmer != null && shimmer.isAnimating()) 
+	            shimmer.cancel();
+		}
 	}
 }
