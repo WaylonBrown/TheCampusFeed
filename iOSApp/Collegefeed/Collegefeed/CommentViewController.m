@@ -5,8 +5,10 @@
 //  Created by Patrick Sheehan on 5/3/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
-
-#import "PostViewController.h"
+#import "PostsViewController.h"
+#import "PostDataController.h"
+#import "Post.h"
+#import "PostsViewController.h"
 #import "PostTableCell.h"
 #import "CommentViewController.h"
 #import "CommentTableCell.h"
@@ -23,6 +25,16 @@
 
 @implementation CommentViewController
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self)
+    {
+        // Custom initialization
+    }
+    return self;
+}
+
 // return the previous view controller
 - (UIViewController *)backViewController
 {
@@ -33,45 +45,65 @@
     else
         return [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
 }
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self)
-    {
-        // Custom initialization
-    }
-    return self;
-}
-- (void)viewDidAppear:(BOOL)animated
-{
-    [[self navigationController] setNavigationBarHidden:NO animated:NO];
-    UIViewController *previousController = (UIViewController *) [self backViewController];
-    
-    
-    if ([previousController class] == [PostViewController class])
-    {   // invoked if comments view was opened from a posts view
-        PostViewController *PVC = (PostViewController *)previousController;
-        Post* selectedPost = PVC.selectedPost;
-        
-        if (selectedPost != nil)
-        {
-            // assign post cell attributes based on post that was selected
-            [[self originalPostCell] assignPropertiesWithPost:selectedPost];
-            
-            [[self originalPostCell] setNeedsDisplay];
-            return;
-        }
-    }
-}
-- (void)awakeFromNib
-{
-    [super awakeFromNib];
-    self.dataController = [[CommentDataController alloc] init];
-    
-}
+//- (void)viewDidAppear:(BOOL)animated
+//{
+//    [[self navigationController] setNavigationBarHidden:NO animated:NO];
+//    UIViewController *previousController = (UIViewController *) [self backViewController];
+//    
+//    
+//    if ([previousController class] == [PostsViewController
+//                                       
+//                                       class])
+//    {   // invoked if comments view was opened from a posts view
+//        PostsViewController *PVC = (PostsViewController *)previousController;
+//        Post* selectedPost = PVC.selectedPost;
+//        
+//        if (selectedPost != nil)
+//        {
+//            // assign post cell attributes based on post that was selected
+//            [[self originalPostCell] assignPropertiesWithPost:selectedPost];
+//            
+//            [[self originalPostCell] setNeedsDisplay];
+//            return;
+//        }
+//    }
+//}
+//- (void)awakeFromNib
+//{
+//    [super awakeFromNib];
+//    self.dataController = [[CommentDataController alloc] init];
+//    
+//}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.dataController = [[CommentDataController alloc] initWithPost:_originalPost];
+//    NSArray *array = [NSArray arrayWithObject:@"foo"];
+//    [self.originalPostTable insertRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationAutomatic]
+//    [self.originalPostTable setDataSource:array];
+    
+//    UIImage *image = [UIImage imageNamed:@"collegefeedlogosmall.png"];
+//    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:image];
+    
+//    UIViewController *previousController = (UIViewController *) [self backViewController];
+//    
+//    if ([previousController class] == [PostsViewController
+//                                       
+//                                       class])
+//    {   // invoked if comments view was opened from a posts view
+//        PostsViewController *PVC = (PostsViewController *)previousController;
+//        Post* selectedPost = PVC.selectedPost;
+//        
+//        if (selectedPost != nil)
+//        {
+//            // assign post cell attributes based on post that was selected
+//            [[self originalPostCell] assignPropertiesWithPost:selectedPost];
+//            
+//            [[self originalPostCell] setNeedsDisplay];
+//            return;
+//        }
+//    }
     
 }
 
@@ -90,34 +122,54 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.dataController countOfList];
-
+    if ([tableView.restorationIdentifier compare:@"CommentTableView"] == NSOrderedSame)
+    {
+        return [self.dataController countOfList];
+    }
+    else // if ([tableView.restorationIdentifier compare:@"OriginalPostTableView"] == NSOrderedSame)
+    {
+        return 1;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if ([tableView.restorationIdentifier compare:@"OriginalPostTableView"] == NSOrderedSame)
+    {
+        static NSString *PostCellIdentifier = @"PostTableCell";
+
+        PostTableCell *cell = (PostTableCell *)[tableView dequeueReusableCellWithIdentifier:PostCellIdentifier];
+        if (cell == nil)
+        {
+            NSArray *nib1 = [[NSBundle mainBundle] loadNibNamed:PostCellIdentifier owner:self options:nil];
+            cell = [nib1 objectAtIndex:0];
+        }
+        [cell setPost:(self.originalPost)];
+        return cell;
+    }
     static NSString *CellIdentifier = @"CommentTableCell";
     
     CommentTableCell *cell = (CommentTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
     if (cell == nil)
     {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentTableCell" owner:self options:nil];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
     
     // get the comment to be displayed in this cell
-    Comment *commenAtIndex = [self.dataController objectInListAtIndex:indexPath.row];
+    Comment *commentAtIndex = [self.dataController objectInListAtIndex:indexPath.row];
     
-    NSDate *d = (NSDate*)[commenAtIndex date];
+    NSDate *d = (NSDate*)[commentAtIndex date];
     NSString *myAgeLabel = [self getAgeOfCommentAsString:d];
     
     // assign cell's text labels
     [[cell ageLabel] setText: myAgeLabel];
-    [[cell messageLabel] setText:commenAtIndex.message];
-    [[cell scoreLabel] setText:[NSString stringWithFormat:@"%d", (int)commenAtIndex.score]];
+    [[cell messageLabel] setText:commentAtIndex.message];
+    [[cell scoreLabel] setText:[NSString stringWithFormat:@"%d", (int)commentAtIndex.score]];
     
     // assign arrow colors according to user's vote
-    [self updateVoteButtons:cell withVoteValue:commenAtIndex.vote];
+    [self updateVoteButtons:cell withVoteValue:commentAtIndex.vote];
     
     return cell;
 }
@@ -160,7 +212,7 @@
 }
 
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -169,7 +221,11 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-*/
+
+- (IBAction) Done:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 // return string indicating how long ago the comment was created
 - (NSString *)getAgeOfCommentAsString:(NSDate *)commentDate
@@ -239,5 +295,9 @@
     }
     
     [cell setNeedsDisplay];
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
 }
 @end

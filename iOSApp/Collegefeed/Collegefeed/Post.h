@@ -10,6 +10,7 @@
 
 @interface Post : NSObject
 
+
 @property (nonatomic) NSInteger postID;
 @property (nonatomic) NSInteger collegeID;
 @property (nonatomic) NSInteger score;
@@ -20,7 +21,7 @@
 
 @property (nonatomic, strong) NSDate *date;
 
-@property (nonatomic, copy) NSMutableArray *commentList;
+@property (nonatomic) NSMutableArray *commentList;
 
 
 - (id)initWithPostID:(NSInteger)postID withMessage:(NSString *)message;

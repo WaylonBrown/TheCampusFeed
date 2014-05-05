@@ -24,6 +24,7 @@
 {
     if (self = [super init])
     {
+        //TODO: initialize a list using a database
         [self initializeDefaultList];
         return self;
     }
@@ -35,7 +36,7 @@
 {
     NSMutableArray *postList = [[NSMutableArray alloc] init];
     self.masterPostList = postList;
-    for (int i = 0; i < 30; i++)
+    for (int i = 0; i < 6; i++)
     {
         Post *post;
         post = [[Post alloc] initDummy];

@@ -56,14 +56,12 @@
         _score = arc4random() % 99;
         _vote = 0;
         
-        switch (_commentID % 5)
+        switch (_commentID % 4)
         {
-            case 0: _message = @"If you're hungry for a hunk of fat and juicy meat"; break;
-            case 1: _message = @"Eat my buddy Pumba here because he is a treat"; break;
-            case 2: _message = @"Come on down and dine"; break;
-            case 3: _message = @"On this tasty swine"; break;
-            case 4: _message = @"All you have to do is get in line"; break;
-            default: _message = @"LUAU!"; break;
+            case 0: _message = @"Comment: Are you achin?"; break;
+            case 1: _message = @"Comment: Yup yup yup"; break;
+            case 2: _message = @"Comment: For some bacon?"; break;
+            default: _message = @"Comment: LUAU!"; break;
         }
         
         _date = [NSDate date];

@@ -7,6 +7,7 @@
 //
 
 #import "Post.h"
+#import "Comment.h"
 
 @implementation Post
 
@@ -44,20 +45,25 @@
         _score = arc4random() % 99;
         _vote = 0;
         
-        switch (_postID % 5)
+        switch (_postID % 6)
         {
-            case 0: _message = @"If you're hungry for a hunk of fat and juicy meat"; break;
-            case 1: _message = @"Eat my buddy Pumba here because he is a treat"; break;
-            case 2: _message = @"Come on down and dine"; break;
-            case 3: _message = @"On this tasty swine"; break;
-            case 4: _message = @"All you have to do is get in line"; break;
-            default: _message = @"LUAU!"; break;
+            case 0: _message = @"Post: If you're hungry for a hunk of fat and juicy meat"; break;
+            case 1: _message = @"Post: Eat my buddy Pumba here because he is a treat"; break;
+            case 2: _message = @"Post: Come on down and dine"; break;
+            case 3: _message = @"Post: On this tasty swine"; break;
+            case 4: _message = @"Post: All you have to do is get in line"; break;
+            default: _message = @"Post: LUAU!"; break;
         }
         _collegeName = @"University of America, Bitch";
         
         _date = [NSDate date];
         
-        // need to initialize commentList?
+        self.commentList = [[NSMutableArray alloc] init];
+        for (int i = 0; i < 3; i++)
+        {   // initialize commentList?
+            Comment *comment = [[Comment alloc] initDummy];
+            [self.commentList addObject:comment];
+        }
         
         return self;
     }

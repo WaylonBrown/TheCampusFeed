@@ -13,21 +13,21 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Assign tab bar item with titles
-    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-    UITabBar *tabBar = tabBarController.tabBar;
-    UITabBarItem *tabBarItem1 = [tabBar.items objectAtIndex:0];
-    UITabBarItem *tabBarItem2 = [tabBar.items objectAtIndex:1];
-    UITabBarItem *tabBarItem3 = [tabBar.items objectAtIndex:2];
-    UITabBarItem *tabBarItem4 = [tabBar.items objectAtIndex:3];
-    UITabBarItem *tabBarItem5 = [tabBar.items objectAtIndex:4];
-    UITabBarItem *tabBarItem6 = [tabBar.items objectAtIndex:5];
+//    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+//    UITabBar *tabBar = tabBarController.tabBar;
+//    UITabBarItem *tabBarItem1 = [tabBar.items objectAtIndex:0];
+//    UITabBarItem *tabBarItem2 = [tabBar.items objectAtIndex:1];
+//    UITabBarItem *tabBarItem3 = [tabBar.items objectAtIndex:2];
+//    UITabBarItem *tabBarItem4 = [tabBar.items objectAtIndex:3];
+//    UITabBarItem *tabBarItem5 = [tabBar.items objectAtIndex:4];
+//    UITabBarItem *tabBarItem6 = [tabBar.items objectAtIndex:5];
     
-    tabBarItem1.title = @"Top Posts";
-    tabBarItem2.title = @"New Posts";
-    tabBarItem3.title = @"Trending Tags";
-    tabBarItem4.title = @"Top Colleges";
-    tabBarItem5.title = @"My Posts";
-    tabBarItem6.title = @"My Comments";
+//    tabBarItem1.title = @"Posts";
+//    tabBarItem2.title = @"Posts";
+//    tabBarItem3.title = @"Posts";
+//    tabBarItem4.title = @"Comment";
+//    tabBarItem5.title = @"iOS 7 View";
+//    tabBarItem6.title = @"My Comments";
     
     
     // Override point for customization after application launch.

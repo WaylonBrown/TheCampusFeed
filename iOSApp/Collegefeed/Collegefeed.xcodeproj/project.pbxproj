@@ -10,22 +10,19 @@
 		531107A919147B07006F7DAF /* PostTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531107A819147B07006F7DAF /* PostTableCell.m */; };
 		532706DD1913745E00F5EAB9 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706DC1913745E00F5EAB9 /* Post.m */; };
 		532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706E1191378EF00F5EAB9 /* PostDataController.m */; };
-		532706E5191384A600F5EAB9 /* PostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706E4191384A600F5EAB9 /* PostViewController.m */; };
 		5390A91D1914B76800ACD082 /* arrowdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9141914B76800ACD082 /* arrowdown.png */; };
 		5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9151914B76800ACD082 /* arrowdownred.png */; };
 		5390A91F1914B76800ACD082 /* arrowup.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9161914B76800ACD082 /* arrowup.png */; };
 		5390A9201914B76800ACD082 /* arrowupblue.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9171914B76800ACD082 /* arrowupblue.png */; };
-		5390A9211914B76800ACD082 /* card.9.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9181914B76800ACD082 /* card.9.png */; };
 		5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9191914B76800ACD082 /* collegefeedlogosmall.png */; };
-		5390A9231914B76800ACD082 /* logofake.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A91A1914B76800ACD082 /* logofake.png */; };
 		5390A9241914B76800ACD082 /* postbuttonclick.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5390A91B1914B76800ACD082 /* postbuttonclick.xml */; };
-		5390A9251914B76800ACD082 /* postfeedlogosmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A91C1914B76800ACD082 /* postfeedlogosmall.png */; };
 		5390A92C19153EBE00ACD082 /* CommentDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A92B19153EBE00ACD082 /* CommentDataController.m */; };
 		5390A93519153F7A00ACD082 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A93419153F7A00ACD082 /* Comment.m */; };
 		5390A9381915407100ACD082 /* CommentTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A9371915407100ACD082 /* CommentTableCell.m */; };
 		5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A93A191552AE00ACD082 /* CommentViewController.m */; };
 		5390A94119158E0E00ACD082 /* ViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A94019158E0E00ACD082 /* ViewControllerTests.m */; };
 		5390A94319158E1A00ACD082 /* DataControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A94219158E1A00ACD082 /* DataControllerTests.m */; };
+		53963DE71916E5F50084E646 /* PostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53963DE61916E5F50084E646 /* PostsViewController.m */; };
 		53F8789119133F60002A578B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789019133F60002A578B /* Foundation.framework */; };
 		53F8789319133F60002A578B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789219133F60002A578B /* CoreGraphics.framework */; };
 		53F8789519133F60002A578B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789419133F60002A578B /* UIKit.framework */; };
@@ -58,17 +55,12 @@
 		532706DC1913745E00F5EAB9 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Post.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		532706E0191378EF00F5EAB9 /* PostDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDataController.h; sourceTree = "<group>"; };
 		532706E1191378EF00F5EAB9 /* PostDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PostDataController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		532706E3191384A600F5EAB9 /* PostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostViewController.h; sourceTree = "<group>"; };
-		532706E4191384A600F5EAB9 /* PostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostViewController.m; sourceTree = "<group>"; };
 		5390A9141914B76800ACD082 /* arrowdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdown.png; sourceTree = "<group>"; };
 		5390A9151914B76800ACD082 /* arrowdownred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdownred.png; sourceTree = "<group>"; };
 		5390A9161914B76800ACD082 /* arrowup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowup.png; sourceTree = "<group>"; };
 		5390A9171914B76800ACD082 /* arrowupblue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowupblue.png; sourceTree = "<group>"; };
-		5390A9181914B76800ACD082 /* card.9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card.9.png; sourceTree = "<group>"; };
 		5390A9191914B76800ACD082 /* collegefeedlogosmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collegefeedlogosmall.png; sourceTree = "<group>"; };
-		5390A91A1914B76800ACD082 /* logofake.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logofake.png; sourceTree = "<group>"; };
 		5390A91B1914B76800ACD082 /* postbuttonclick.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = postbuttonclick.xml; sourceTree = "<group>"; };
-		5390A91C1914B76800ACD082 /* postfeedlogosmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = postfeedlogosmall.png; sourceTree = "<group>"; };
 		5390A92A19153EBE00ACD082 /* CommentDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentDataController.h; sourceTree = "<group>"; };
 		5390A92B19153EBE00ACD082 /* CommentDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentDataController.m; sourceTree = "<group>"; };
 		5390A93319153F7A00ACD082 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Comment.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -79,6 +71,8 @@
 		5390A93A191552AE00ACD082 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
 		5390A94019158E0E00ACD082 /* ViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerTests.m; sourceTree = "<group>"; };
 		5390A94219158E1A00ACD082 /* DataControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataControllerTests.m; sourceTree = "<group>"; };
+		53963DE51916E5F50084E646 /* PostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostsViewController.h; sourceTree = "<group>"; };
+		53963DE61916E5F50084E646 /* PostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostsViewController.m; sourceTree = "<group>"; };
 		53F8788D19133F60002A578B /* Collegefeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collegefeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53F8789019133F60002A578B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		53F8789219133F60002A578B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -163,11 +157,8 @@
 				5390A9151914B76800ACD082 /* arrowdownred.png */,
 				5390A9161914B76800ACD082 /* arrowup.png */,
 				5390A9171914B76800ACD082 /* arrowupblue.png */,
-				5390A9181914B76800ACD082 /* card.9.png */,
 				5390A9191914B76800ACD082 /* collegefeedlogosmall.png */,
-				5390A91A1914B76800ACD082 /* logofake.png */,
 				5390A91B1914B76800ACD082 /* postbuttonclick.xml */,
-				5390A91C1914B76800ACD082 /* postfeedlogosmall.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -175,12 +166,31 @@
 		5390A92919153E5200ACD082 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				532706E3191384A600F5EAB9 /* PostViewController.h */,
-				532706E4191384A600F5EAB9 /* PostViewController.m */,
+				53963DE51916E5F50084E646 /* PostsViewController.h */,
+				53963DE61916E5F50084E646 /* PostsViewController.m */,
 				5390A939191552AE00ACD082 /* CommentViewController.h */,
 				5390A93A191552AE00ACD082 /* CommentViewController.m */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		53963DDD1916C8DC0084E646 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				53F8789F19133F60002A578B /* AppDelegate.h */,
+				53F878A019133F60002A578B /* AppDelegate.m */,
+			);
+			name = Delegates;
+			sourceTree = "<group>";
+		};
+		53963DDE1916C8EB0084E646 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				53963DDD1916C8DC0084E646 /* Delegates */,
+				5390A92919153E5200ACD082 /* View Controllers */,
+				532706DF191378A500F5EAB9 /* Data Controllers */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		53F8788419133F60002A578B = {
@@ -217,14 +227,11 @@
 			isa = PBXGroup;
 			children = (
 				531107AA19147CBF006F7DAF /* Views */,
-				5390A92919153E5200ACD082 /* View Controllers */,
-				532706DF191378A500F5EAB9 /* Data Controllers */,
+				53963DDE1916C8EB0084E646 /* Controllers */,
 				532706DE1913777300F5EAB9 /* Models */,
-				53F8789F19133F60002A578B /* AppDelegate.h */,
-				53F878A019133F60002A578B /* AppDelegate.m */,
-				53F878AE19133F60002A578B /* Images.xcassets */,
 				5390A9131914B76800ACD082 /* Images */,
 				53F8789719133F60002A578B /* Supporting Files */,
+				53F878AE19133F60002A578B /* Images.xcassets */,
 			);
 			path = Collegefeed;
 			sourceTree = "<group>";
@@ -336,17 +343,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5390A9251914B76800ACD082 /* postfeedlogosmall.png in Resources */,
 				5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */,
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
-				5390A9231914B76800ACD082 /* logofake.png in Resources */,
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,
 				5390A9201914B76800ACD082 /* arrowupblue.png in Resources */,
 				5390A9241914B76800ACD082 /* postbuttonclick.xml in Resources */,
 				53F878AF19133F60002A578B /* Images.xcassets in Resources */,
 				53F878A419133F60002A578B /* Main_iPhone.storyboard in Resources */,
 				5390A91F1914B76800ACD082 /* arrowup.png in Resources */,
-				5390A9211914B76800ACD082 /* card.9.png in Resources */,
 				53F8789B19133F60002A578B /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -369,12 +373,12 @@
 				531107A919147B07006F7DAF /* PostTableCell.m in Sources */,
 				532706DD1913745E00F5EAB9 /* Post.m in Sources */,
 				5390A9381915407100ACD082 /* CommentTableCell.m in Sources */,
-				532706E5191384A600F5EAB9 /* PostViewController.m in Sources */,
 				5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */,
 				5390A93519153F7A00ACD082 /* Comment.m in Sources */,
 				53F878A119133F60002A578B /* AppDelegate.m in Sources */,
 				532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */,
 				5390A92C19153EBE00ACD082 /* CommentDataController.m in Sources */,
+				53963DE71916E5F50084E646 /* PostsViewController.m in Sources */,
 				53F8789D19133F60002A578B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

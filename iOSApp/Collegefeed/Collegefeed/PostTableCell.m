@@ -13,6 +13,8 @@
 @implementation PostTableCell
 
 // sythesize properties to automatically generate accessor code
+//@synthesize post = _post;
+
 @synthesize messageLabel = _messageLabel;
 @synthesize scoreLabel = _scoreLabel;
 @synthesize commentCountLabel = _commentCountLabel;
@@ -30,19 +32,21 @@
     }
     return self;
 }
-
 - (void)awakeFromNib
 {
     // Initialization code
 }
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
 }
-
+- (void) setPost:(Post *)post
+{
+    _post = post;
+    [self assignProperties];
+}
 // configure view of the cell according to a post
 - (void) assignPropertiesWithPost:(Post *)post
 {
@@ -59,6 +63,27 @@
     
     // assign arrow colors according to user's vote
     [self updateVoteButtonsWithVoteValue:post.vote];
+}
+
+// configure view of the cell according to the post's delegate ID
+- (void) assignProperties
+{
+    if (self.post == nil) return;
+    
+    Post *post = self.post;
+    
+    NSDate *d = (NSDate*)[post date];
+    NSString *myAgeLabel = [self getAgeOfPostAsString:d];
+    
+    // assign cell's text labels
+    [_ageLabel setText: myAgeLabel];
+    [_messageLabel setText:post.message];
+    [_scoreLabel setText:[NSString stringWithFormat:@"%d", (int)post.score]];
+    [_commentCountLabel setText:[NSString stringWithFormat:@"%d comments", (int)post.commentList.count]];
+    
+    // assign arrow colors according to user's vote
+    [self updateVoteButtonsWithVoteValue:post.vote];
+    
 }
 
 // return string indicating how long ago the post was created
@@ -99,6 +124,36 @@
     }
     
     [self setNeedsDisplay];
+}
+
+- (IBAction)upVotePressed:(id)sender
+{
+    if (self.post != nil)
+    {
+        Post *post = self.post;
+        [post setVote:(post.vote == 1 ? 0 : 1)];
+        [self updateVoteButtonsWithVoteValue:post.vote];
+    }
+    else
+    {
+        self.dummyVoteValue = self.dummyVoteValue == 1 ? 0 : 1;
+        [self updateVoteButtonsWithVoteValue:self.dummyVoteValue];
+    }
+}
+
+- (IBAction)downVotePresed:(id)sender
+{
+    if (self.post != nil)
+    {
+        Post *post = self.post;
+        post.vote = post.vote == -1 ? 0 : -1;
+        [self updateVoteButtonsWithVoteValue:post.vote];
+    }
+    else
+    {
+        self.dummyVoteValue = self.dummyVoteValue == -1 ? 0 : -1;
+        [self updateVoteButtonsWithVoteValue:self.dummyVoteValue];
+    }
 }
 
 @end

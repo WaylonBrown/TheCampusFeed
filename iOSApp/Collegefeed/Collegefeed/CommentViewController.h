@@ -10,11 +10,14 @@
 
 @class CommentDataController;
 @class PostTableCell;
+@class Post;
 
-@interface CommentViewController : UITableViewController
+@interface CommentViewController : UIViewController
 
 @property (strong, nonatomic) CommentDataController *dataController;
-@property (weak, nonatomic) IBOutlet PostTableCell *originalPostCell;
+@property (strong, nonatomic) Post *originalPost;
+
+- (IBAction) Done:(id)sender;
 
 
 @end

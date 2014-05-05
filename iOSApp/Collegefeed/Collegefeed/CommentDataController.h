@@ -9,11 +9,14 @@
 #import <Foundation/Foundation.h>
 
 @class Comment;
+@class Post;
 
 @interface CommentDataController : NSObject
 
 @property (nonatomic, copy) NSMutableArray *masterCommentList;
+@property (nonatomic, strong) Post* post;
 
+- (id) initWithPost:(Post*)post;
 - (NSString *)getPostMessage;
 - (NSUInteger)countOfList;
 - (Comment *)objectInListAtIndex:(NSUInteger)theIndex;

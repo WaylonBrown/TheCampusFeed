@@ -13,6 +13,10 @@
 
 @interface PostTableCell : UITableViewCell
 
+@property (strong, nonatomic) Post* post;
+
+@property (nonatomic) int dummyVoteValue;
+
 @property (nonatomic, weak) IBOutlet UILabel *messageLabel;
 @property (nonatomic, weak) IBOutlet UILabel *scoreLabel;
 @property (nonatomic, weak) IBOutlet UILabel *commentCountLabel;
@@ -22,9 +26,12 @@
 @property (strong, nonatomic) IBOutlet UIButton *downVoteButton;
 @property (nonatomic, weak) IBOutlet UILabel *collegeLabel;
 
-- (NSString *)getAgeOfPostAsString:(NSDate *)postDate;
+- (NSString *) getAgeOfPostAsString:(NSDate *)postDate;
 - (void) assignPropertiesWithPost:(Post *)post;
+- (void) assignProperties;
 - (void) updateVoteButtonsWithVoteValue:(int)vote;
+- (IBAction) upVotePressed:(id)sender;
+- (IBAction) downVotePresed:(id)sender;
 
 @end
 

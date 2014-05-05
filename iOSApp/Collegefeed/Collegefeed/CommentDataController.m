@@ -21,6 +21,17 @@
     }
     return nil;
 }
+- (id) initWithPost:(Post*)post
+{
+    if (self = [super init])
+    {
+        [self setPost:post];
+        self.masterCommentList = post.commentList;
+        
+        return self;
+    }
+    return nil;
+}
 
 // initialize the comment array with a placeholder element
 - (void)initializeDefaultList
@@ -29,7 +40,7 @@
     self.masterCommentList = commentList;
     Post *post = [[Post alloc] initDummy];
 
-    for (int i = 0; i < 30; i++)
+    for (int i = 0; i < 4; i++)
     {
         Comment *comment;
         comment = [[Comment alloc] initWithPost:post];
