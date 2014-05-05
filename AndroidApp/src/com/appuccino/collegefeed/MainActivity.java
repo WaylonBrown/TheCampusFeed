@@ -5,16 +5,21 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -154,6 +159,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 						.setText(allCollegesPagerAdapter.getPageTitle(i))
 						.setTabListener(this));
 			}
+						
 		}
 		else //specific college
 		{
@@ -201,6 +207,37 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 						.setTabListener(this));
 			}
 		}
+	}
+	
+	private void fadeActionBarColor(ColorDrawable to){
+		ColorDrawable[] colors = {new ColorDrawable(getResources().getColor(R.color.blue)), to};
+	    
+		if (android.os.Build.VERSION.SDK_INT >= 16){
+			fadeActionBarColorCurrent(colors);
+        }
+		else{
+			fadeActionBarColorDeprecated(colors);
+		}
+	}
+	
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+	private void fadeActionBarColorCurrent(ColorDrawable[] colors){
+		TransitionDrawable trans = new TransitionDrawable(colors); //ok so this doesn't work yet its so weird.
+		TransitionDrawable trans2 = new TransitionDrawable(colors); //so ridiculous that i have to make two transitions
+	    actionBar.setBackgroundDrawable(trans);						//must be doing something wrong lol.
+	    actionBar.getCustomView().setBackground(trans2);
+	    trans.startTransition(1000);
+	    trans2.startTransition(2000);
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void fadeActionBarColorDeprecated(ColorDrawable[] colors){
+		TransitionDrawable trans = new TransitionDrawable(colors);
+		TransitionDrawable trans2 = new TransitionDrawable(colors);
+	    actionBar.setBackgroundDrawable(trans);
+	    actionBar.getCustomView().setBackgroundDrawable(trans2);
+	    trans.startTransition(1000);
+	    trans2.startTransition(1000);
 	}
 	
 	private void getLocation(){
