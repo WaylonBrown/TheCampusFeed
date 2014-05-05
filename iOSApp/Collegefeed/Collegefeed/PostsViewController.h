@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CreatePostViewController.h"
 
 @class PostDataController;
 @class Post;
 
-// protocol to handle events in subviews
+// protocol to handle events in subviews: createView(post) and commentView(commented on this post)
 @protocol PostSubViewDelegate <NSObject>
 
 - (void)votedOnPost;

@@ -15,9 +15,10 @@
 
 @property (nonatomic, weak) id<PostSubViewDelegate> delegate;
 
-@property (weak, nonatomic) IBOutlet UITextField *postTextField;
+@property (weak, nonatomic) IBOutlet UITextField *TextField;
 
 - (IBAction)cancel;
 - (IBAction)createPost;
+- (IBAction)createComment;
 
 @end

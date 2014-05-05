@@ -9,6 +9,7 @@
 #import "CreatePostViewController.h"
 #import "Post.h"
 #import "PostsViewController.h"
+#import "Comment.h"
 
 @interface CreatePostViewController ()
 
@@ -60,10 +61,22 @@
 - (IBAction)createPost
 {
     Post *post = [[Post alloc] initDummy];
-//    [post setMessage:@"Post: I was created in CPVController!"];
+    //    [post setMessage:@"Post: I was created in CPVController!"];
     [post setMessage:self.postTextField.text];
     
     id<PostSubViewDelegate> strongDelegate = self.delegate;
     [strongDelegate createdNewPost:post];
 }
+
+// create a new comment that is sent back up to the commentView
+- (IBAction)createComment
+{
+    Comment *comment = [[Comment alloc] initDummy];
+    //    [post setMessage:@"Post: I was created in CPVController!"];
+    [comment setMessage:self.textField.text];
+    
+    id<PostSubViewDelegate> strongDelegate = self.delegate;
+    [strongDelegate createdNewPost:post];
+}
+
 @end
