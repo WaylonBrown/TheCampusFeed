@@ -36,7 +36,7 @@
 {
     NSMutableArray *postList = [[NSMutableArray alloc] init];
     self.masterPostList = postList;
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < 3; i++)
     {
         Post *post;
         post = [[Post alloc] initDummy];

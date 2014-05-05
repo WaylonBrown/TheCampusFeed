@@ -49,7 +49,9 @@
     if ([vc class] == [CommentViewController class] && [sender class] == [PostTableCell class])
     {   // When switching to comment view
         PostTableCell *cell = sender;
-        [((CommentViewController *) vc) setOriginalPost:cell.post];
+        CommentViewController * cvc = (CommentViewController *) vc;
+        [cvc setDelegate:self];
+        [cvc setOriginalPost:cell.post];
         return;
     }
     
@@ -57,6 +59,7 @@
     {   // When creating a new post
         CreatePostViewController *cpvc = (CreatePostViewController *)vc;
         cpvc.delegate = self;
+        return;
     }
 }
  
@@ -104,20 +107,26 @@
     return 100;
 }
 // set selected cell and post message of the selected cell
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    self.selectedPost = (Post *)[self.dataController objectInListAtIndex:indexPath.row];
-//}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.selectedPost = (Post *)[self.dataController objectInListAtIndex:indexPath.row];
+}
 
 #pragma mark - Child view delegate methods
 
 // User created a new post
-- (void)createPostViewController:(CreatePostViewController *)viewController createdNewPost:(Post *)post
+- (void)createdNewPost:(Post *)post
 {
     [self.dataController addPostWithMessage:post];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     
     // reload the table
+    [self.postTableView reloadData];
+}
+
+// User voted on post (usually in subview)
+- (void)votedOnPost
+{
     [self.postTableView reloadData];
 }
 

@@ -9,24 +9,15 @@
 #import <UIKit/UIKit.h>
 
 @class Post;
-
-@protocol CreatePostViewControllerDelegate;
-
+@protocol PostSubViewDelegate;
 
 @interface CreatePostViewController : UIViewController
 
-@property (nonatomic, weak) id<CreatePostViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<PostSubViewDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UITextField *postTextField;
 
 - (IBAction)cancel;
 - (IBAction)createPost;
-
-@end
-
-
-@protocol CreatePostViewControllerDelegate <NSObject>
-
-- (void)createPostViewController:(CreatePostViewController *)viewController createdNewPost:(Post *)post;
 
 @end

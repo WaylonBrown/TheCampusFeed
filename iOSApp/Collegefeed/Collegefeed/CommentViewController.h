@@ -11,13 +11,15 @@
 @class CommentDataController;
 @class PostTableCell;
 @class Post;
+@protocol PostSubViewDelegate;
 
 @interface CommentViewController : UIViewController
+
+@property (nonatomic, assign) id<PostSubViewDelegate> delegate;
 
 @property (strong, nonatomic) CommentDataController *dataController;
 @property (strong, nonatomic) Post *originalPost;
 
 - (IBAction) Done:(id)sender;
-
 
 @end

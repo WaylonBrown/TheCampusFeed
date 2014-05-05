@@ -9,19 +9,21 @@
 
 #import "PostTableCell.h"
 #import "Post.h"
+#import "PostsViewController.h"
 
 @implementation PostTableCell
 
 // sythesize properties to automatically generate accessor code
 //@synthesize post = _post;
 
-@synthesize messageLabel = _messageLabel;
-@synthesize scoreLabel = _scoreLabel;
-@synthesize commentCountLabel = _commentCountLabel;
-@synthesize ageLabel = _ageLabel;
-@synthesize upVoteButton = _upVoteButton;
-@synthesize downVoteButton = _downVoteButton;
-@synthesize collegeLabel = _collegeLabel;
+@synthesize messageLabel;
+@synthesize scoreLabel;
+@synthesize commentCountLabel;
+@synthesize ageLabel;
+@synthesize upVoteButton;
+@synthesize downVoteButton;
+@synthesize collegeLabel;
+@synthesize dummyVoteValue;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -56,10 +58,10 @@
     NSString *myAgeLabel = [self getAgeOfPostAsString:d];
     
     // assign cell's text labels
-    [_ageLabel setText: myAgeLabel];
-    [_messageLabel setText:post.message];
-    [_scoreLabel setText:[NSString stringWithFormat:@"%d", (int)post.score]];
-    [_commentCountLabel setText:[NSString stringWithFormat:@"%d comments", (int)post.commentList.count]];
+    [ageLabel setText: myAgeLabel];
+    [messageLabel setText:post.message];
+    [scoreLabel setText:[NSString stringWithFormat:@"%d", (int)post.score]];
+    [commentCountLabel setText:[NSString stringWithFormat:@"%d comments", (int)post.commentList.count]];
     
     // assign arrow colors according to user's vote
     [self updateVoteButtonsWithVoteValue:post.vote];
@@ -76,10 +78,10 @@
     NSString *myAgeLabel = [self getAgeOfPostAsString:d];
     
     // assign cell's text labels
-    [_ageLabel setText: myAgeLabel];
-    [_messageLabel setText:post.message];
-    [_scoreLabel setText:[NSString stringWithFormat:@"%d", (int)post.score]];
-    [_commentCountLabel setText:[NSString stringWithFormat:@"%d comments", (int)post.commentList.count]];
+    [ageLabel setText: myAgeLabel];
+    [messageLabel setText:post.message];
+    [scoreLabel setText:[NSString stringWithFormat:@"%d", (int)post.score]];
+    [commentCountLabel setText:[NSString stringWithFormat:@"%d comments", (int)post.commentList.count]];
     
     // assign arrow colors according to user's vote
     [self updateVoteButtonsWithVoteValue:post.vote];
@@ -123,9 +125,8 @@
             break;
     }
     
-    [self setNeedsDisplay];
+//    [self setNeedsDisplay];
 }
-
 - (IBAction)upVotePressed:(id)sender
 {
     if (self.post != nil)

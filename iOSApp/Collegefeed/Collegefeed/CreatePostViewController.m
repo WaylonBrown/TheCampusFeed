@@ -8,6 +8,7 @@
 
 #import "CreatePostViewController.h"
 #import "Post.h"
+#import "PostsViewController.h"
 
 @interface CreatePostViewController ()
 
@@ -49,8 +50,10 @@
 
 - (IBAction)cancel
 {
-    [self.postTextField setText: nil];
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+//    [self.postTextField setText: nil];
+//    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+//    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 // create a new post using current user's credentials (somehow)
@@ -60,7 +63,7 @@
 //    [post setMessage:@"Post: I was created in CPVController!"];
     [post setMessage:self.postTextField.text];
     
-    id<CreatePostViewControllerDelegate> strongDelegate = self.delegate;
-    [strongDelegate createPostViewController:self createdNewPost:post];
+    id<PostSubViewDelegate> strongDelegate = self.delegate;
+    [strongDelegate createdNewPost:post];
 }
 @end

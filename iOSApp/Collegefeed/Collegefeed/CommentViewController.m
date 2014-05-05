@@ -225,6 +225,8 @@
 - (IBAction) Done:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
+    id<PostSubViewDelegate> strongDelegate = self.delegate;
+    [strongDelegate votedOnPost];
 }
 
 // return string indicating how long ago the comment was created
