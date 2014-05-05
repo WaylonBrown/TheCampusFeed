@@ -18,11 +18,11 @@ import android.widget.Toast;
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
+import com.appuccino.collegefeed.extra.NetWorker.GetPostsTask;
+import com.appuccino.collegefeed.extra.NetWorker.MakeVoteTask;
+import com.appuccino.collegefeed.extra.NetWorker.PostSelector;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
-import com.appuccino.collegefeed.objects.NetWorker.GetPostsTask;
-import com.appuccino.collegefeed.objects.NetWorker.MakeVoteTask;
-import com.appuccino.collegefeed.objects.NetWorker.PostSelector;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
 

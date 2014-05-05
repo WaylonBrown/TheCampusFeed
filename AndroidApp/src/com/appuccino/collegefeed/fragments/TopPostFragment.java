@@ -2,8 +2,10 @@ package com.appuccino.collegefeed.fragments;
 
 import java.util.ArrayList;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,16 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.PostCommentsActivity;
 import com.appuccino.collegefeed.R;
+import com.appuccino.collegefeed.extra.NetWorker.GetPostsTask;
+import com.appuccino.collegefeed.extra.NetWorker.PostSelector;
 import com.appuccino.collegefeed.listadapters.PostListAdapter;
-import com.appuccino.collegefeed.objects.NetWorker.GetPostsTask;
-import com.appuccino.collegefeed.objects.NetWorker.PostSelector;
 import com.appuccino.collegefeed.objects.Post;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
@@ -31,7 +33,7 @@ public class TopPostFragment extends Fragment
 	public static final String ARG_TAB_NUMBER = "section_number";
 	public static final String ARG_SPINNER_NUMBER = "tab_number";
 	public static ArrayList<Post> postList;
-	static PostListAdapter topListAdapter;
+	static PostListAdapter listAdapter;
 	final int tabNumber = 0;
 	int spinnerNumber = 0;
 	static ListView list;
@@ -71,7 +73,11 @@ public class TopPostFragment extends Fragment
 		if(postList == null)
 		{
 			postList = new ArrayList<Post>();
-			new GetPostsTask().execute(new PostSelector());
+			ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+			if(cm.getActiveNetworkInfo() != null)
+				new GetPostsTask(0).execute(new PostSelector());
+			else
+				Toast.makeText(getActivity(), "You have no internet connection. Pull down to refresh and try again.", Toast.LENGTH_LONG).show();
 			//postList.add()
 			/*postList.add(new Post(100, "Top message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
 			postList.add(new Post(70, "Top message 2 test message 2 test message #onetag #twotag", 10));
@@ -81,13 +87,13 @@ public class TopPostFragment extends Fragment
 		//if not in specific college feed, use layout with college name
 		if(MainActivity.spinner.getSelectedItemPosition() == 2)
 		{
-			topListAdapter = new PostListAdapter(getActivity(), R.layout.list_row, postList, 0);
+			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row, postList, 0);
 		}
 		else
 		{
-			topListAdapter = new PostListAdapter(getActivity(), R.layout.list_row_college, postList, 0);
+			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 0);
 		}
-		list.setAdapter(topListAdapter);
+		list.setAdapter(listAdapter);
 		
 		
 
@@ -132,9 +138,9 @@ public class TopPostFragment extends Fragment
 
 	public static void updateList() 
 	{
-		if(topListAdapter != null)
+		if(listAdapter != null)
 		{
-			topListAdapter.notifyDataSetChanged();
+			listAdapter.notifyDataSetChanged();
 		}			
 	}
 

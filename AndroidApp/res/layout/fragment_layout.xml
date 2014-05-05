@@ -22,7 +22,7 @@
     <com.romainpiel.shimmer.ShimmerTextView
         android:id="@+id/loadingText"
         android:text="Loading..."
-        android:textSize="35sp"
+        android:textSize="30sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

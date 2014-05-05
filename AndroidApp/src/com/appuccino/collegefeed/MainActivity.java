@@ -44,10 +44,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
+import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
-import com.appuccino.collegefeed.objects.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.objects.Post;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener, LocationListener 
@@ -470,10 +471,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				fragment = new TagFragment(mainActivity);
 				break;
 			case 3:	//my posts
-				fragment = new NewPostFragment(mainActivity);
+				fragment = new TagFragment(mainActivity);
 				break;
 			case 4:	//my comments
-				fragment = new NewPostFragment(mainActivity);
+				fragment = new TagFragment(mainActivity);
 				break;
 			}
 			
@@ -537,17 +538,18 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				fragment = new TagFragment(mainActivity);
 				break;
 			case 3:	//most active colleges
-				fragment = new TagFragment(mainActivity);
+				fragment = new MostActiveCollegesFragment(mainActivity);
 				break;
 			case 4:	//my posts
-				fragment = new NewPostFragment(mainActivity);
+				fragment = new TagFragment(mainActivity);
 				break;
 			case 5:	//my comments
-				fragment = new NewPostFragment(mainActivity);
+				fragment = new TagFragment(mainActivity);
 				break;
 			}
 			
-			fragment.setArguments(args);
+			if(fragment != null)
+				fragment.setArguments(args);
 			return fragment;
 		}
 

@@ -74,7 +74,7 @@
 	        
 	        <TextView 
 	            android:id="@+id/commentText"
-	            android:text="0 comments"
+	            android:text=""
 	            android:textSize="15sp"
 	            android:textColor="@color/darkgray"
 	            android:layout_width="wrap_content"

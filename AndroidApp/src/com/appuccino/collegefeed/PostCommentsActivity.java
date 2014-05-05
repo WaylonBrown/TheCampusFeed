@@ -17,12 +17,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appuccino.collegefeed.extra.NetWorker;
+import com.appuccino.collegefeed.extra.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.listadapters.CommentListAdapter;
 import com.appuccino.collegefeed.objects.Comment;
-import com.appuccino.collegefeed.objects.NetWorker;
-import com.appuccino.collegefeed.objects.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
 
@@ -185,10 +185,13 @@ public class PostCommentsActivity extends Activity{
     	//check for tags, colorize them
     	for(int i = 0; i < wordArray.length; i++)
     	{
-    		if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
+    		if(wordArray[i].length() > 0)	//in case empty, doesn't throw nullpointer
     		{
-    			wordArray[i] = "<font color='" + tagColor + "'>" + wordArray[i] + "</font>";
-    		}
+    			if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
+        		{
+        			wordArray[i] = "<font color='" + tagColor + "'>" + wordArray[i] + "</font>";
+        		}
+    		}    		
     	}
     	
     	message = "";

@@ -1,4 +1,4 @@
-package com.appuccino.collegefeed.objects;
+package com.appuccino.collegefeed.extra;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +16,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
+import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.objects.Vote;
 
 public class NetWorker {
 	
@@ -30,10 +33,25 @@ public class NetWorker {
 		
 	}
 	
-	public static class GetPostsTask extends AsyncTask<PostSelector, Void, ArrayList<Post> >{
+	public static class GetPostsTask extends AsyncTask<PostSelector, Void, ArrayList<Post> >
+	{
+		int whichFrag = 0;
+		
+		public GetPostsTask()
+		{
+		}
+		
+		public GetPostsTask(int whichFrag)
+		{
+			this.whichFrag = whichFrag;
+		}
+		
 		@Override
 		protected void onPreExecute() {
-			TopPostFragment.makeLoadingIndicator(true);
+			if(whichFrag == 0)
+				TopPostFragment.makeLoadingIndicator(true);
+			else
+				NewPostFragment.makeLoadingIndicator(true);
 			super.onPreExecute();
 		}
 
@@ -52,7 +70,8 @@ public class NetWorker {
 				e.printStackTrace();
 			}
 			
-			Log.d("http", response);
+			if(response != null)
+				Log.d("http", response);
 			ArrayList<Post> ret = null;
 			try {
 				ret = Post.postsFromJson(response);
@@ -65,10 +84,20 @@ public class NetWorker {
 		
 		@Override
 		protected void onPostExecute(ArrayList<Post> result) {
-			//activityContext.getFragment
-			TopPostFragment.postList.addAll(result);
-			TopPostFragment.updateList();
-			TopPostFragment.makeLoadingIndicator(false);
+			if(whichFrag == 0)
+			{
+				//activityContext.getFragment
+				TopPostFragment.postList.addAll(result);
+				TopPostFragment.updateList();
+				TopPostFragment.makeLoadingIndicator(false);
+			}
+			else
+			{
+				NewPostFragment.postList.addAll(result);
+				NewPostFragment.updateList();
+				NewPostFragment.makeLoadingIndicator(false);
+			}
+			
 		}
 
 		
