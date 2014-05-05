@@ -16,6 +16,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.appuccino.collegefeed.fragments.MyCommentsFragment;
+import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Post;
@@ -48,10 +50,14 @@ public class NetWorker {
 		
 		@Override
 		protected void onPreExecute() {
-			if(whichFrag == 0)
+			if(whichFrag == 0)			//top posts
 				TopPostFragment.makeLoadingIndicator(true);
-			else
+			else if (whichFrag == 1)	//new posts
 				NewPostFragment.makeLoadingIndicator(true);
+			else if (whichFrag == 2)	//my posts
+				MyPostsFragment.makeLoadingIndicator(true);
+			else if (whichFrag == 2)	//my comments
+				MyCommentsFragment.makeLoadingIndicator(true);
 			super.onPreExecute();
 		}
 
@@ -84,20 +90,36 @@ public class NetWorker {
 		
 		@Override
 		protected void onPostExecute(ArrayList<Post> result) {
-			if(whichFrag == 0)
+			if(whichFrag == 0)		//top posts
 			{
 				//activityContext.getFragment
+				TopPostFragment.postList.clear();
 				TopPostFragment.postList.addAll(result);
 				TopPostFragment.updateList();
 				TopPostFragment.makeLoadingIndicator(false);
 			}
-			else
+			else if(whichFrag == 1)	//new posts
 			{
+				NewPostFragment.postList.clear();
 				NewPostFragment.postList.addAll(result);
 				NewPostFragment.updateList();
 				NewPostFragment.makeLoadingIndicator(false);
 			}
-			
+			else if(whichFrag == 2)	//my posts
+			{
+				MyPostsFragment.postList.clear();
+				MyPostsFragment.postList.addAll(result);
+				MyPostsFragment.updateList();
+				MyPostsFragment.makeLoadingIndicator(false);
+			}
+			//IMPLEMENT WHEN SERVER IS SET UP
+//			else if(whichFrag == 2)	//my comments
+//			{
+//				MyCommentsFragment.commentList.clear();
+//				MyCommentsFragment.commentList.addAll(result);
+//				MyPostsFragment.updateList();
+//				MyPostsFragment.makeLoadingIndicator(false);
+//			}
 		}
 
 		

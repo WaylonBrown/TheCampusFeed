@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.appuccino.collegefeed.extra.NetWorker;
 import com.appuccino.collegefeed.extra.NetWorker.MakeVoteTask;
+import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.listadapters.CommentListAdapter;
@@ -50,8 +51,10 @@ public class PostCommentsActivity extends Activity{
 		int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);
 		if(sectionNumber == 0)
 			post = TopPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
-		else
+		else if(sectionNumber == 1)
 			post = NewPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
+		else if(sectionNumber == 2)
+			post = MyPostsFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
 		
 		Typeface light = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
         Typeface lightItalic = Typeface.createFromAsset(getAssets(), "fonts/Roboto-LightItalic.ttf");

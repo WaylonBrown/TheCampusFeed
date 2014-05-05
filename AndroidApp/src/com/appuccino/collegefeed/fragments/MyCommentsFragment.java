@@ -22,29 +22,30 @@ import com.appuccino.collegefeed.PostCommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.extra.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.extra.NetWorker.PostSelector;
-import com.appuccino.collegefeed.listadapters.PostListAdapter;
+import com.appuccino.collegefeed.listadapters.CommentListAdapter;
+import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
 
-public class NewPostFragment extends Fragment
+public class MyCommentsFragment extends Fragment
 {
 	static MainActivity mainActivity;
 	public static final String ARG_TAB_NUMBER = "section_number";
 	public static final String ARG_SPINNER_NUMBER = "tab_number";
-	public static ArrayList<Post> postList;
-	static PostListAdapter listAdapter;
-	final int tabNumber = 1;
+	public static ArrayList<Comment> commentList;
+	static CommentListAdapter listAdapter;
+	final int tabNumber = 2;
 	int spinnerNumber = 0;
 	static ListView list;
 	static ShimmerTextView loadingText;
 	static Shimmer shimmer;
 
-	public NewPostFragment()
+	public MyCommentsFragment()
 	{
 	}
 	
-	public NewPostFragment(MainActivity m) 
+	public MyCommentsFragment(MainActivity m) 
 	{
 		mainActivity = m;
 	}
@@ -70,27 +71,19 @@ public class NewPostFragment extends Fragment
 			list.addHeaderView(headerFooter, null, false);
 		}
 		
-		if(postList == null)
+		if(commentList == null)
 		{
-			postList = new ArrayList<Post>();
+			commentList = new ArrayList<Comment>();
 			ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
 			if(cm.getActiveNetworkInfo() != null)
-				new GetPostsTask(1).execute(new PostSelector());
-			//postList.add()
-			/*postList.add(new Post(100, "Top message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
-			postList.add(new Post(70, "Top message 2 test message 2 test message #onetag #twotag", 10));
-			postList.add(new Post(15, "Top message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));*/
+				new GetPostsTask(3).execute(new PostSelector());
+			//commentList.add()
+			/*commentList.add(new Post(100, "Top message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
+			commentList.add(new Post(70, "Top message 2 test message 2 test message #onetag #twotag", 10));
+			commentList.add(new Post(15, "Top message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));*/
 		}		
 		
-		//if not in specific college feed, use layout with college name
-		if(MainActivity.spinner.getSelectedItemPosition() == 2)
-		{
-			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row, postList, 0);
-		}
-		else
-		{
-			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 0);
-		}
+		listAdapter = new CommentListAdapter(getActivity(), R.layout.list_row, commentList);
 		list.setAdapter(listAdapter);
 		
 		
@@ -101,32 +94,33 @@ public class NewPostFragment extends Fragment
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) 
 			{
-				postClicked(postList.get(position - 1));
+				commentClicked(commentList.get(position - 1));
 			}			
 		});
 	    
 		return rootView;
 	}
 
-	protected void postClicked(Post post) 
+	protected void commentClicked(Comment comment) 
 	{
 		Intent intent = new Intent(getActivity(), PostCommentsActivity.class);
-		intent.putExtra("POST_ID", post.getID());
+		intent.putExtra("POST_ID", comment.getParentID());
 		intent.putExtra("SECTION_NUMBER", tabNumber);
 		
 		startActivity(intent);
 		getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 	}
 	
+	//TODO: implement
 	public static Post getPostByID(int id, int sectionNumber)
 	{
-		if(postList != null)
+		if(commentList != null)
 		{
-			for(int i = 0; i < postList.size(); i++)
+			for(int i = 0; i < commentList.size(); i++)
 			{
-				if(postList.get(i).getID() == id)
+				if(commentList.get(i).getParentID() == id)
 				{
-					return postList.get(i);
+					//return commentList.get(i).getParentID();
 				}
 			}
 		}
@@ -141,7 +135,7 @@ public class NewPostFragment extends Fragment
 			listAdapter.notifyDataSetChanged();
 		}			
 	}
-	
+
 	public static void makeLoadingIndicator(boolean makeLoading) 
 	{
 		if(makeLoading)

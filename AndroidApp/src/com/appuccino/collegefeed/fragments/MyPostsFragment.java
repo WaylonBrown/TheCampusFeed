@@ -27,24 +27,24 @@ import com.appuccino.collegefeed.objects.Post;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
 
-public class NewPostFragment extends Fragment
+public class MyPostsFragment extends Fragment
 {
 	static MainActivity mainActivity;
 	public static final String ARG_TAB_NUMBER = "section_number";
 	public static final String ARG_SPINNER_NUMBER = "tab_number";
 	public static ArrayList<Post> postList;
 	static PostListAdapter listAdapter;
-	final int tabNumber = 1;
+	final int tabNumber = 2;
 	int spinnerNumber = 0;
 	static ListView list;
 	static ShimmerTextView loadingText;
 	static Shimmer shimmer;
 
-	public NewPostFragment()
+	public MyPostsFragment()
 	{
 	}
 	
-	public NewPostFragment(MainActivity m) 
+	public MyPostsFragment(MainActivity m) 
 	{
 		mainActivity = m;
 	}
@@ -75,22 +75,14 @@ public class NewPostFragment extends Fragment
 			postList = new ArrayList<Post>();
 			ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
 			if(cm.getActiveNetworkInfo() != null)
-				new GetPostsTask(1).execute(new PostSelector());
+				new GetPostsTask(2).execute(new PostSelector());
 			//postList.add()
 			/*postList.add(new Post(100, "Top message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
 			postList.add(new Post(70, "Top message 2 test message 2 test message #onetag #twotag", 10));
 			postList.add(new Post(15, "Top message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));*/
 		}		
 		
-		//if not in specific college feed, use layout with college name
-		if(MainActivity.spinner.getSelectedItemPosition() == 2)
-		{
-			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row, postList, 0);
-		}
-		else
-		{
-			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 0);
-		}
+		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row, postList, 0);
 		list.setAdapter(listAdapter);
 		
 		
@@ -141,7 +133,7 @@ public class NewPostFragment extends Fragment
 			listAdapter.notifyDataSetChanged();
 		}			
 	}
-	
+
 	public static void makeLoadingIndicator(boolean makeLoading) 
 	{
 		if(makeLoading)

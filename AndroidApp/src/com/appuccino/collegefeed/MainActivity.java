@@ -47,6 +47,8 @@ import android.widget.Toast;
 
 import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
+import com.appuccino.collegefeed.fragments.MyCommentsFragment;
+import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
@@ -493,10 +495,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				fragment = new TagFragment(mainActivity);
 				break;
 			case 3:	//my posts
-				fragment = new TagFragment(mainActivity);
+				fragment = new MyPostsFragment(mainActivity);
 				break;
 			case 4:	//my comments
-				fragment = new TagFragment(mainActivity);
+				fragment = new MyCommentsFragment(mainActivity);
 				break;
 			}
 			
@@ -563,10 +565,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				fragment = new MostActiveCollegesFragment(mainActivity);
 				break;
 			case 4:	//my posts
-				fragment = new TagFragment(mainActivity);
+				fragment = new MyPostsFragment(mainActivity);
 				break;
 			case 5:	//my comments
-				fragment = new TagFragment(mainActivity);
+				fragment = new MyCommentsFragment(mainActivity);
 				break;
 			}
 			
