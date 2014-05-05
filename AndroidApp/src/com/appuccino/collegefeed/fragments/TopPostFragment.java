@@ -3,6 +3,7 @@ package com.appuccino.collegefeed.fragments;
 import java.util.ArrayList;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,6 +22,8 @@ import com.appuccino.collegefeed.listadapters.PostListAdapter;
 import com.appuccino.collegefeed.objects.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.objects.NetWorker.PostSelector;
 import com.appuccino.collegefeed.objects.Post;
+import com.romainpiel.shimmer.Shimmer;
+import com.romainpiel.shimmer.ShimmerTextView;
 
 public class TopPostFragment extends Fragment
 {
@@ -32,7 +35,8 @@ public class TopPostFragment extends Fragment
 	final int tabNumber = 0;
 	int spinnerNumber = 0;
 	static ListView list;
-	static ProgressBar loadingIndicator;
+	static ShimmerTextView loadingText;
+	static Shimmer shimmer;
 
 	public TopPostFragment()
 	{
@@ -49,7 +53,10 @@ public class TopPostFragment extends Fragment
 		View rootView = inflater.inflate(R.layout.fragment_layout,
 				container, false);
 		list = (ListView)rootView.findViewById(R.id.fragmentListView);
-		loadingIndicator = (ProgressBar)rootView.findViewById(R.id.loadingIndicator);
+		loadingText = (ShimmerTextView)rootView.findViewById(R.id.loadingText);
+		
+		Typeface customfont = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/Roboto-Light.ttf");
+		loadingText.setTypeface(customfont);
 					
 		//if doesnt have header and footer, add them
 		if(list.getHeaderViewsCount() == 0)
@@ -136,12 +143,19 @@ public class TopPostFragment extends Fragment
 		if(makeLoading)
 		{
 			list.setVisibility(View.INVISIBLE);
-			loadingIndicator.setVisibility(View.VISIBLE);
+			loadingText.setVisibility(View.VISIBLE);
+			
+			shimmer = new Shimmer();
+			shimmer.setDuration(600);
+			shimmer.start(loadingText);
 		}
 		else
 		{
 			list.setVisibility(View.VISIBLE);
-			loadingIndicator.setVisibility(View.INVISIBLE);
+			loadingText.setVisibility(View.INVISIBLE);
+			
+			if (shimmer != null && shimmer.isAnimating()) 
+	            shimmer.cancel();
 		}
 	}
 }
