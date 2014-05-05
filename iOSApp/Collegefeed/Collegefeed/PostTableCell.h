@@ -13,7 +13,7 @@
 
 @interface PostTableCell : UITableViewCell
 
-@property (strong, nonatomic) Post* post;
+@property (nonatomic) Post* post;
 
 @property (nonatomic) int dummyVoteValue;
 

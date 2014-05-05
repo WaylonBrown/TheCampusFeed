@@ -7,14 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CreatePostViewController.h"
 
-// forward declaration that the data controller exists
 @class PostDataController;
 @class Post;
 
-@interface PostsViewController : UIViewController
+@interface PostsViewController : UIViewController <CreatePostViewControllerDelegate>
 
 @property (strong, nonatomic) PostDataController *dataController;
 @property (strong, nonatomic) Post* selectedPost;
+@property (weak, nonatomic) IBOutlet UITableView *postTableView;
 
 @end

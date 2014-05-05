@@ -11,19 +11,26 @@
 
 @implementation Post
 
+@synthesize postID;
+@synthesize collegeID;
+@synthesize score;
+@synthesize vote;
+
+@synthesize message;
+@synthesize collegeName;
+
 // initializer to create a new post
-- (id)initWithPostID:(NSInteger)postID withMessage:(NSString *)message
+- (id)initWithPostID:(NSInteger)postID withMessage:(NSString *)postMessage
 {
     self = [super init];
     if (self)
     {
-        _postID = postID;
-        _collegeID = 0;
-        _score = 0;
-        _vote = 0;
+        collegeID = 0;
+        score = 0;
+        vote = 0;
         
-        _message = message;
-        _collegeName = @"<No College>";
+        self.message = message;
+        collegeName = @"<No College>";
         
         _date = [NSDate date];
         
@@ -40,27 +47,27 @@
     self = [super init];
     if (self)
     {
-        _postID = arc4random() % 999;
-        _collegeID = arc4random() % 999;
-        _score = arc4random() % 99;
-        _vote = 0;
+        postID = arc4random() % 999;
+        collegeID = arc4random() % 999;
+        score = arc4random() % 99;
+        vote = 0;
         
-        switch (_postID % 6)
+        switch (postID % 6)
         {
-            case 0: _message = @"Post: If you're hungry for a hunk of fat and juicy meat"; break;
-            case 1: _message = @"Post: Eat my buddy Pumba here because he is a treat"; break;
-            case 2: _message = @"Post: Come on down and dine"; break;
-            case 3: _message = @"Post: On this tasty swine"; break;
-            case 4: _message = @"Post: All you have to do is get in line"; break;
-            default: _message = @"Post: LUAU!"; break;
+            case 0: message = @"Post: If you're hungry for a hunk of fat and juicy meat"; break;
+            case 1: message = @"Post: Eat my buddy Pumba here because he is a treat"; break;
+            case 2: message = @"Post: Come on down and dine"; break;
+            case 3: message = @"Post: On this tasty swine"; break;
+            case 4: message = @"Post: All you have to do is get in line"; break;
+            default: message = @"Post: LUAU!"; break;
         }
-        _collegeName = @"University of America, Bitch";
+        collegeName = @"University of America, Bitch";
         
         _date = [NSDate date];
         
         self.commentList = [[NSMutableArray alloc] init];
         for (int i = 0; i < 3; i++)
-        {   // initialize commentList?
+        {   // initialize commentList
             Comment *comment = [[Comment alloc] initDummy];
             [self.commentList addObject:comment];
         }

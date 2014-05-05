@@ -11,6 +11,7 @@
 #import "PostDataController.h"
 #import "Post.h"
 #import "CommentViewController.h"
+#import "CreatePostViewController.h"
 
 @implementation PostsViewController
 
@@ -40,15 +41,22 @@
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
+// A little preparation before navigation to different view
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UIViewController* vc = [segue destinationViewController];
     
     if ([vc class] == [CommentViewController class] && [sender class] == [PostTableCell class])
-    {   // Pass the selected object to the new view
+    {   // When switching to comment view
         PostTableCell *cell = sender;
         [((CommentViewController *) vc) setOriginalPost:cell.post];
+        return;
+    }
+    
+    if ([vc class] == [CreatePostViewController class] && [sender class] == [UIBarButtonItem class])
+    {   // When creating a new post
+        CreatePostViewController *cpvc = (CreatePostViewController *)vc;
+        cpvc.delegate = self;
     }
 }
  
@@ -79,9 +87,8 @@
         cell = [nib objectAtIndex:0];
     }
     
-    // get the post to be displayed in this cell
+    // get the post and display in this cell
     Post *postAtIndex = [self.dataController objectInListAtIndex:indexPath.row];
-//    [cell assignPropertiesWithPost:postAtIndex];
     [cell setPost:postAtIndex];
     
     return cell;
@@ -101,5 +108,17 @@
 //{
 //    self.selectedPost = (Post *)[self.dataController objectInListAtIndex:indexPath.row];
 //}
+
+#pragma mark - Child view delegate methods
+
+// User created a new post
+- (void)createPostViewController:(CreatePostViewController *)viewController createdNewPost:(Post *)post
+{
+    [self.dataController addPostWithMessage:post];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+    // reload the table
+    [self.postTableView reloadData];
+}
 
 @end

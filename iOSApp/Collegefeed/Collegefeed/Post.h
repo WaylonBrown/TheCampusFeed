@@ -24,7 +24,7 @@
 @property (nonatomic) NSMutableArray *commentList;
 
 
-- (id)initWithPostID:(NSInteger)postID withMessage:(NSString *)message;
+- (id)initWithPostID:(NSInteger)postID withMessage:(NSString *)postMessage;
 - (id)initDummy;
 
 @end

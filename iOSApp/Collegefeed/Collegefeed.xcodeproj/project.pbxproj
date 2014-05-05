@@ -23,6 +23,7 @@
 		5390A94119158E0E00ACD082 /* ViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A94019158E0E00ACD082 /* ViewControllerTests.m */; };
 		5390A94319158E1A00ACD082 /* DataControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A94219158E1A00ACD082 /* DataControllerTests.m */; };
 		53963DE71916E5F50084E646 /* PostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53963DE61916E5F50084E646 /* PostsViewController.m */; };
+		53B5028E19174E4C005048C9 /* CreatePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5028D19174E4C005048C9 /* CreatePostViewController.m */; };
 		53F8789119133F60002A578B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789019133F60002A578B /* Foundation.framework */; };
 		53F8789319133F60002A578B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789219133F60002A578B /* CoreGraphics.framework */; };
 		53F8789519133F60002A578B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789419133F60002A578B /* UIKit.framework */; };
@@ -73,6 +74,8 @@
 		5390A94219158E1A00ACD082 /* DataControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataControllerTests.m; sourceTree = "<group>"; };
 		53963DE51916E5F50084E646 /* PostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostsViewController.h; sourceTree = "<group>"; };
 		53963DE61916E5F50084E646 /* PostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostsViewController.m; sourceTree = "<group>"; };
+		53B5028C19174E4C005048C9 /* CreatePostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatePostViewController.h; sourceTree = "<group>"; };
+		53B5028D19174E4C005048C9 /* CreatePostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatePostViewController.m; sourceTree = "<group>"; };
 		53F8788D19133F60002A578B /* Collegefeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collegefeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53F8789019133F60002A578B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		53F8789219133F60002A578B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -170,6 +173,8 @@
 				53963DE61916E5F50084E646 /* PostsViewController.m */,
 				5390A939191552AE00ACD082 /* CommentViewController.h */,
 				5390A93A191552AE00ACD082 /* CommentViewController.m */,
+				53B5028C19174E4C005048C9 /* CreatePostViewController.h */,
+				53B5028D19174E4C005048C9 /* CreatePostViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -372,6 +377,7 @@
 			files = (
 				531107A919147B07006F7DAF /* PostTableCell.m in Sources */,
 				532706DD1913745E00F5EAB9 /* Post.m in Sources */,
+				53B5028E19174E4C005048C9 /* CreatePostViewController.m in Sources */,
 				5390A9381915407100ACD082 /* CommentTableCell.m in Sources */,
 				5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */,
 				5390A93519153F7A00ACD082 /* Comment.m in Sources */,
