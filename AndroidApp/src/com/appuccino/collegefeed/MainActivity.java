@@ -38,6 +38,7 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -67,6 +68,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
 	static final double milesForPermissions = 15.0;
 	final int locationTimeoutSeconds = 10;
+	final int minPostLength = 10;
 	
 	/*
 	 * TODO:
@@ -328,18 +330,38 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
     	builder.setCancelable(true);
     	builder.setView(postDialogLayout)
-    	.setPositiveButton("Post", new DialogInterface.OnClickListener() {
-    		public void onClick(DialogInterface dialog, int id) {
-    			Post newPost = new Post(postMessage.getText().toString());
-    			NewPostFragment.postList.add(newPost);
-    			TopPostFragment.postList.add(newPost);
-    			new MakePostTask().execute(newPost);
-    		}
-    	});
-    	
+    	.setPositiveButton("Post", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                //do nothing here since overridden below to be able to click button and not dismiss dialog
+            }
+        });
+    	    	
     	final AlertDialog dialog = builder.create();
-    	if(spinner.getSelectedItemPosition() == 2)
-    		dialog.show();
+    	dialog.show();
+    	
+    	Button postButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+    	postButton.setOnClickListener(new View.OnClickListener()
+    	{
+    		@Override
+			public void onClick(View v) 
+    		{				
+    			if(postMessage.getText().toString().length() >= minPostLength)
+    			{
+    				Post newPost = new Post(postMessage.getText().toString());
+        			NewPostFragment.postList.add(newPost);
+        			TopPostFragment.postList.add(newPost);
+        			new MakePostTask().execute(newPost);
+        			dialog.dismiss();
+    			}
+    			else
+    			{
+    				Toast.makeText(getApplicationContext(), "Post must be at least 10 characters long.", Toast.LENGTH_LONG).show();
+    			}
+			}
+    	});
     	
     	Typeface customfont = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
     	TextView title = (TextView)postDialogLayout.findViewById(R.id.newPostTitle);
