@@ -6,8 +6,8 @@ module Api
       before_action :set_college, only: [:show, :edit, :update, :destroy, :within]
 
       def import
-        #destroyAll
-        #importFromFile
+        destroyAll
+        importFromFile
       end
 
       # GET /colleges
