@@ -26,8 +26,8 @@
       "request_content_type": "application/json",
       "response_status": 201,
       "response_status_text": "Created",
-      "response_body": "{\"id\":57,\"text\":\"I yolo'd so hard I swagged myself #lol #swuggedmyself\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-06T07:19:55.814Z\",\"updated_at\":\"2014-05-06T07:19:55.814Z\"}",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/posts/57","Content-Type":"application/json; charset=utf-8","ETag":"\"7b8902430e38405bfb087cb2e38a766d\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"8335a4c1-eb77-4b59-8f81-a2336b83b77f","X-Runtime":"0.003488","Content-Length":"187"},
+      "response_body": "{\"id\":75,\"text\":\"I yolo'd so hard I swagged myself #lol #swuggedmyself\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-06T08:28:50.167Z\",\"updated_at\":\"2014-05-06T08:28:50.167Z\"}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/posts/75","Content-Type":"application/json; charset=utf-8","ETag":"\"194809061d01a2be228e3decb917ae45\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"ef40593c-5bcf-432f-a63c-6645b41eeb9c","X-Runtime":"0.005562","Content-Length":"187"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

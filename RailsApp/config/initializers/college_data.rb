@@ -37,7 +37,7 @@ def importFromWrongFile
   }
 end
 
-if Api::V1::College.all.length < 1
+if Api::V1::College.all.length < 1 && !Rails.env.test?
   Api::V1::College.destroy_all
   importFromFile
 end
