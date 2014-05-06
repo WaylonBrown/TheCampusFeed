@@ -8,6 +8,8 @@
 
 #import "Post.h"
 #import "Comment.h"
+#import "Constants.h"
+
 
 @implementation Post
 
@@ -34,8 +36,7 @@
         
         _date = [NSDate date];
         
-        // need to initialize commentList?
-        
+        [self validatePost];
         return self;
     }
     return nil;
@@ -71,10 +72,21 @@
             Comment *comment = [[Comment alloc] initDummy];
             [self.commentList addObject:comment];
         }
-        
+        [self validatePost];
         return self;
     }
     return nil;
 }
-
+// check for proper length
+- (void)validatePost
+{
+    if (self.message.length < MIN_POST_LENGTH)
+    {
+        [NSException raise:@"Invalid Post" format:@"Post \"%@\" is too short", self.message];
+    }
+    if (self.message.length > MAX_POST_LENGTH)
+    {
+        [NSException raise:@"Invalid Post" format:@"Post \"%@\" is too long", self.message];
+    }
+}
 @end
