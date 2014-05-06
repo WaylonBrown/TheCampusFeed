@@ -27,4 +27,6 @@
 - (id)initWithPostID:(NSInteger)postID withMessage:(NSString *)postMessage;
 - (id)initDummy;
 
+- (void)validatePost;
+
 @end

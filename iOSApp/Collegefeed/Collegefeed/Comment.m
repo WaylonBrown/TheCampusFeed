@@ -8,8 +8,11 @@
 
 #import "Comment.h"
 #import "Post.h"
+#import "Constants.h"
 
 @implementation Comment
+
+//TODO: synthesizes
 
 - (id)initWithCommentID:(NSInteger)commentID withMessage:(NSString *)message withPostID:(NSInteger)postID
 {
@@ -25,7 +28,7 @@
         _message = message;
         
         _date = [NSDate date];
-        
+        [self validateComment];
         return self;
     }
     return nil;
@@ -40,7 +43,8 @@
         _postID = post.postID;
         _collegeID = post.collegeID;
         _postMessage = post.message;
-        
+        [self validateComment];
+
         return self;
     }
     return nil;
@@ -65,10 +69,22 @@
         }
         
         _date = [NSDate date];
-        
+        [self validateComment];
+
         return self;
     }
     return nil;
 }
-
+// check for proper length
+- (void)validateComment
+{
+    if (self.message.length < MIN_COMMENT_LENGTH)
+    {
+        [NSException raise:@"Invalid Comment" format:@"Comment \"%@\" is too short", self.message];
+    }
+    if (self.message.length > MAX_COMMENT_LENGTH)
+    {
+        [NSException raise:@"Invalid Comment" format:@"Comment \"%@\" is too long", self.message];
+    }
+}
 @end

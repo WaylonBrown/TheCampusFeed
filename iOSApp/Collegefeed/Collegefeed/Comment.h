@@ -27,4 +27,5 @@
 - (id)initWithPost:(Post *)post;
 - (id)initDummy;
 
+- (void)validateComment;
 @end
