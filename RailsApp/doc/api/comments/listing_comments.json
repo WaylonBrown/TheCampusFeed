@@ -1,7 +1,7 @@
 {
   "resource": "Comments",
   "http_method": "GET",
-  "route": "/comments",
+  "route": "/api/v1/comments",
   "description": "Listing comments",
   "explanation": null,
   "parameters": [
@@ -14,7 +14,7 @@
   "requests": [
     {
       "request_method": "GET",
-      "request_path": "/comments?format=json&postid=1",
+      "request_path": "/api/v1/comments?postid=51",
       "request_body": null,
       "request_headers": {
         "Content-Type": "application/json",
@@ -22,14 +22,13 @@
         "Cookie": ""
       },
       "request_query_parameters": {
-        "format": "json",
-        "postid": "1"
+        "postid": "51"
       },
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "[{\"id\":1,\"text\":\"Test comment.\",\"score\":null,\"url\":\"http://example.org/comments/1.json\"},{\"id\":2,\"text\":\"Test comment number 2.\",\"score\":null,\"url\":\"http://example.org/comments/2.json\"}]",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"32adf73e0ee97ba761c22e9408277ab6\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"97a6d97d-576a-4577-8300-3c1349a9289d","X-Runtime":"0.059858","Content-Length":"186"},
+      "response_body": "[{\"id\":26,\"text\":\"Test comment.\",\"score\":null,\"url\":\"http://example.org/api/v1/comments/26\"},{\"id\":27,\"text\":\"Test comment number 2.\",\"score\":null,\"url\":\"http://example.org/api/v1/comments/27\"}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"042d272e2b1f6db2421e75ab6cdab056\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"32e6121d-1de5-4d5d-96bd-a965c69304d1","X-Runtime":"0.005511","Content-Length":"194"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

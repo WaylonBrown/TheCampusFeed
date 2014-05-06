@@ -5,11 +5,11 @@ resource "Votes" do
   header "Content-Type", "application/json"
 
   before do
-    @p = Post.create(:text => "Test post.");
+    @p = Api::V1::Post.create(:text => "Test post.");
     @p.votes.create(:upvote => true);
   end
 
-  post "/votes" do
+  post "/api/v1/votes" do
     let(:raw_post) { params.to_json }
 
     parameter :vote, "The new vote.", :required => true
