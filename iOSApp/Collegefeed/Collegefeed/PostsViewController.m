@@ -11,7 +11,7 @@
 #import "PostDataController.h"
 #import "Post.h"
 #import "CommentViewController.h"
-#import "CreatePostViewController.h"
+#import "CreateViewController.h"
 
 @implementation PostsViewController
 
@@ -55,10 +55,12 @@
         return;
     }
     
-    if ([vc class] == [CreatePostViewController class] && [sender class] == [UIBarButtonItem class])
+    if ([vc class] == [CreateViewController class] && [sender class] == [UIBarButtonItem class])
     {   // When creating a new post
-        CreatePostViewController *cpvc = (CreatePostViewController *)vc;
-        cpvc.delegate = self;
+        CreateViewController *createView = (CreateViewController *)vc;
+        [createView setPDelegate:self];
+        [createView.createLabel setText:@"Create new post"];
+        [createView.createButton setTitle:@"Post!" forState:UIControlStateNormal];
         return;
     }
 }

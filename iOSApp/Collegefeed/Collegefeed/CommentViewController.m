@@ -14,6 +14,7 @@
 #import "CommentTableCell.h"
 #import "CommentDataController.h"
 #import "Comment.h"
+#import "CreateViewController.h"
 
 @interface CommentViewController ()
 
@@ -218,15 +219,27 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    UIViewController* vc = [segue destinationViewController];
+    
+    if ([vc class] == [CreateViewController class] && [sender class] == [UIBarButtonItem class])
+    {   // When creating a new comment on a post
+        CreateViewController *createView = (CreateViewController *)vc;
+        [createView setCDelegate:self];
+        [createView.createLabel setText:@"Create new comment"];
+        [createView.createButton setTitle:@"Comment!" forState:UIControlStateNormal];
+        return;
+    }
 }
 
-- (IBAction) Done:(id)sender
+- (IBAction)done
 {
     [self.navigationController popViewControllerAnimated:YES];
     id<PostSubViewDelegate> strongDelegate = self.delegate;
     [strongDelegate votedOnPost];
+}
+- (IBAction)create
+{
+    
 }
 
 // return string indicating how long ago the comment was created
@@ -246,37 +259,37 @@
     }
     return [NSString stringWithFormat:@"%d seconds ago", commentAgeSeconds];
 }
-- (IBAction)handleUpvote:(id)sender
-{
-    UIButton *upVoteButton = (UIButton *)sender;
-    
-    //TODO: ya this sucks... add tests to ensure proper casting etc
-    CommentTableCell *tableCell = (CommentTableCell *)upVoteButton.superview.superview.superview;
-    UITableView *tableView = (UITableView *)tableCell.superview.superview;
-    NSIndexPath *indexPath = [tableView indexPathForCell:tableCell];
-    
-    Comment *comment = [self.dataController objectInListAtIndex:indexPath.row];
-    
-    comment.vote = comment.vote == 1 ? 0 : 1;
-    
-    [self updateVoteButtons:tableCell withVoteValue:comment.vote];
-    
-}
-- (IBAction)handleDownvote:(id)sender
-{
-    UIButton *downVoteButton = (UIButton *)sender;
-    
-    //TODO: ya this sucks... add tests to ensure proper casting etc
-    CommentTableCell *tableCell = (CommentTableCell *)downVoteButton.superview.superview.superview;
-    UITableView *tableView = (UITableView *)tableCell.superview.superview;
-    NSIndexPath *indexPath = [tableView indexPathForCell:tableCell];
-    
-    Comment *comment = [self.dataController objectInListAtIndex:indexPath.row];
-    
-    comment.vote = comment.vote == -1 ? 0 : -1;
-    
-    [self updateVoteButtons:tableCell withVoteValue:comment.vote];
-}
+//- (IBAction)handleUpvote:(id)sender
+//{
+//    UIButton *upVoteButton = (UIButton *)sender;
+//    
+//    //TODO: ya this sucks... add tests to ensure proper casting etc
+//    CommentTableCell *tableCell = (CommentTableCell *)upVoteButton.superview.superview.superview;
+//    UITableView *tableView = (UITableView *)tableCell.superview.superview;
+//    NSIndexPath *indexPath = [tableView indexPathForCell:tableCell];
+//    
+//    Comment *comment = [self.dataController objectInListAtIndex:indexPath.row];
+//    
+//    comment.vote = comment.vote == 1 ? 0 : 1;
+//    
+//    [self updateVoteButtons:tableCell withVoteValue:comment.vote];
+//    
+//}
+//- (IBAction)handleDownvote:(id)sender
+//{
+//    UIButton *downVoteButton = (UIButton *)sender;
+//    
+//    //TODO: ya this sucks... add tests to ensure proper casting etc
+//    CommentTableCell *tableCell = (CommentTableCell *)downVoteButton.superview.superview.superview;
+//    UITableView *tableView = (UITableView *)tableCell.superview.superview;
+//    NSIndexPath *indexPath = [tableView indexPathForCell:tableCell];
+//    
+//    Comment *comment = [self.dataController objectInListAtIndex:indexPath.row];
+//    
+//    comment.vote = comment.vote == -1 ? 0 : -1;
+//    
+//    [self updateVoteButtons:tableCell withVoteValue:comment.vote];
+//}
 - (void) updateVoteButtons:(CommentTableCell *)cell withVoteValue:(int)vote
 {
     // assign appropriate arrow colors (based on user's vote)
@@ -302,4 +315,18 @@
 {
     return 100;
 }
+
+#pragma mark - Child view delegate methods
+
+// User created a new comment in create subview
+- (void)createdNewComment:(Comment *)comment
+{
+    [self.dataController addCommentWithMessage:comment];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+    // reload the tables
+    [self.originalPostTable reloadData];
+    [self.commentTable reloadData];
+}
+
 @end

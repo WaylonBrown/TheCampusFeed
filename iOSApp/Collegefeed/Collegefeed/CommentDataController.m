@@ -83,6 +83,7 @@
 - (void)addCommentWithMessage:(Comment *)comment
 {
     [self.masterCommentList addObject:comment];
+    [self.post.commentList addObject:comment];
 }
 
 

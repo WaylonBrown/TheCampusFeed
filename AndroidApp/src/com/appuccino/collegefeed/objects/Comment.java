@@ -7,6 +7,7 @@ public class Comment {
 	int hoursAgo;
 	int vote = 0;	//-1 = downvote, 0 = nothing, 1 = upvote
 	int collegeID;
+	int parentID;
 	
 	public Comment()
 	{
@@ -17,13 +18,14 @@ public class Comment {
 		collegeID = 234234;
 	}
 	
-	public Comment(String m)
+	public Comment(String m, int parentID)
 	{
 		score = (int)(Math.random() * 100);;
 		id = (int)(Math.random() * Integer.MAX_VALUE);
 		message = m;
 		hoursAgo = 0;
 		collegeID = 234234;
+		this.parentID = parentID;
 	}
 	
 	public void setVote(int vote)
@@ -37,6 +39,11 @@ public class Comment {
 
 	public int getID() {
 		return id;
+	}
+	
+	public int getParentID()
+	{
+		return parentID;
 	}
 	
 	public int getCollegeID()

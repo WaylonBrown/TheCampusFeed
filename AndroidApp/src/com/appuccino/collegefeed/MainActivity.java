@@ -38,16 +38,20 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
+import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
+import com.appuccino.collegefeed.fragments.MyCommentsFragment;
+import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
-import com.appuccino.collegefeed.objects.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.objects.Post;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener, LocationListener 
@@ -66,6 +70,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
 	static final double milesForPermissions = 15.0;
 	final int locationTimeoutSeconds = 10;
+	final int minPostLength = 10;
 	
 	/*
 	 * TODO:
@@ -327,18 +332,38 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
     	builder.setCancelable(true);
     	builder.setView(postDialogLayout)
-    	.setPositiveButton("Post", new DialogInterface.OnClickListener() {
-    		public void onClick(DialogInterface dialog, int id) {
-    			Post newPost = new Post(postMessage.getText().toString());
-    			NewPostFragment.postList.add(newPost);
-    			TopPostFragment.postList.add(newPost);
-    			new MakePostTask().execute(newPost);
-    		}
-    	});
-    	
+    	.setPositiveButton("Post", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                //do nothing here since overridden below to be able to click button and not dismiss dialog
+            }
+        });
+    	    	
     	final AlertDialog dialog = builder.create();
-    	if(spinner.getSelectedItemPosition() == 2)
-    		dialog.show();
+    	dialog.show();
+    	
+    	Button postButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+    	postButton.setOnClickListener(new View.OnClickListener()
+    	{
+    		@Override
+			public void onClick(View v) 
+    		{				
+    			if(postMessage.getText().toString().length() >= minPostLength)
+    			{
+    				Post newPost = new Post(postMessage.getText().toString());
+        			NewPostFragment.postList.add(newPost);
+        			TopPostFragment.postList.add(newPost);
+        			new MakePostTask().execute(newPost);
+        			dialog.dismiss();
+    			}
+    			else
+    			{
+    				Toast.makeText(getApplicationContext(), "Post must be at least 10 characters long.", Toast.LENGTH_LONG).show();
+    			}
+			}
+    	});
     	
     	Typeface customfont = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
     	TextView title = (TextView)postDialogLayout.findViewById(R.id.newPostTitle);
@@ -470,10 +495,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				fragment = new TagFragment(mainActivity);
 				break;
 			case 3:	//my posts
-				fragment = new NewPostFragment(mainActivity);
+				fragment = new MyPostsFragment(mainActivity);
 				break;
 			case 4:	//my comments
-				fragment = new NewPostFragment(mainActivity);
+				fragment = new MyCommentsFragment(mainActivity);
 				break;
 			}
 			
@@ -537,17 +562,18 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				fragment = new TagFragment(mainActivity);
 				break;
 			case 3:	//most active colleges
-				fragment = new TagFragment(mainActivity);
+				fragment = new MostActiveCollegesFragment(mainActivity);
 				break;
 			case 4:	//my posts
-				fragment = new NewPostFragment(mainActivity);
+				fragment = new MyPostsFragment(mainActivity);
 				break;
 			case 5:	//my comments
-				fragment = new NewPostFragment(mainActivity);
+				fragment = new MyCommentsFragment(mainActivity);
 				break;
 			}
 			
-			fragment.setArguments(args);
+			if(fragment != null)
+				fragment.setArguments(args);
 			return fragment;
 		}
 

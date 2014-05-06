@@ -30,7 +30,7 @@ public class Post implements Votable{
 		
 		int numberOfComments = (int)(Math.random() * 15);
 		for(int i = 0; i < numberOfComments; i++)
-			commentList.add(new Comment("test comment test comment test comment test comment test comment"));
+			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
 	}
 	
 	public Post(String m)
@@ -44,7 +44,7 @@ public class Post implements Votable{
 		
 		int numberOfComments = (int)(Math.random() * 15);
 		for(int i = 0; i < numberOfComments; i++)
-			commentList.add(new Comment("test comment test comment test comment test comment test comment"));
+			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
 	}
 	
 	public Post(int s, String m, int h)
@@ -58,7 +58,7 @@ public class Post implements Votable{
 		
 		int numberOfComments = (int)(Math.random() * 15);
 		for(int i = 0; i < numberOfComments; i++)
-			commentList.add(new Comment("test comment test comment test comment test comment test comment"));
+			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
 	}
 	
 	public ByteArrayOutputStream toJSONString() throws IOException{

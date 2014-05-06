@@ -2,7 +2,6 @@ package com.appuccino.collegefeed.fragments;
 
 import java.util.ArrayList;
 
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,21 +14,20 @@ import android.widget.TextView;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
-import com.appuccino.collegefeed.TagListActivity;
-import com.appuccino.collegefeed.listadapters.TagListAdapter;
-import com.appuccino.collegefeed.objects.Tag;
+import com.appuccino.collegefeed.listadapters.CollegeListAdapter;
+import com.appuccino.collegefeed.objects.College;
 
-public class TagFragment extends Fragment
+public class MostActiveCollegesFragment extends Fragment
 {
 	static MainActivity mainActivity;
 	public static final String ARG_SECTION_NUMBER = "section_number";
-	static ArrayList<Tag> tagList;
+	static ArrayList<College> collegeList;
 
-	public TagFragment()
+	public MostActiveCollegesFragment()
 	{
 	}
 	
-	public TagFragment(MainActivity m) 
+	public MostActiveCollegesFragment(MainActivity m) 
 	{
 		mainActivity = m;
 	}
@@ -37,16 +35,16 @@ public class TagFragment extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.tag_fragment_layout,
+		View rootView = inflater.inflate(R.layout.fragment_layout,
 				container, false);
 		ListView fragList = (ListView)rootView.findViewById(R.id.fragmentListView);
 		
-		tagList = new ArrayList<Tag>();
-		tagList.add(new Tag("#YOLO", 5));
-		tagList.add(new Tag("#bieberfever", 5));
-		tagList.add(new Tag("#tbt", 5));
+		collegeList = new ArrayList<College>();
+		collegeList.add(new College("Texas A&M University"));
+		collegeList.add(new College("Harvard University"));
+		collegeList.add(new College("University of Texas at Austin"));
 		
-		TagListAdapter adapter = new TagListAdapter(getActivity(), R.layout.list_row_tag, tagList);
+		CollegeListAdapter adapter = new CollegeListAdapter(getActivity(), R.layout.list_row_college, collegeList);
 		
 		//if doesnt have header and footer, add them
 		if(fragList.getHeaderViewsCount() == 0)
@@ -60,20 +58,15 @@ public class TagFragment extends Fragment
 	    fragList.setAdapter(adapter);
 	    fragList.setItemsCanFocus(true);
 	    
-	    //set bottom text typeface
-	    Typeface light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
-	    TextView tagSearchText = (TextView)rootView.findViewById(R.id.tagSearchText);
-	    tagSearchText.setTypeface(light);
-	    
 		return rootView;
 	}
 
-	public static void tagClicked(Tag tag) 
+	public static void collegeClicked(College thisCollege) 
 	{
-		Intent intent = new Intent(mainActivity, TagListActivity.class);
-		intent.putExtra("TAG_ID", tag.getText());
-		
-		mainActivity.startActivity(intent);
-		mainActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);			
+//		Intent intent = new Intent(mainActivity, collegeListActivity.class);
+//		intent.putExtra("TAG_ID", tag.getText());
+//		
+//		mainActivity.startActivity(intent);
+//		mainActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);			
 	}
 }

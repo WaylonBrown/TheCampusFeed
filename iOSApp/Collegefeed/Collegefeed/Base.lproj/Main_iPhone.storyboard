@@ -210,10 +210,10 @@
             </objects>
             <point key="canvasLocation" x="514" y="226"/>
         </scene>
-        <!--Create Post View Controller-->
+        <!--Create View Controller-->
         <scene sceneID="rMP-MZ-9yH">
             <objects>
-                <viewController id="2hn-2n-eJy" customClass="CreatePostViewController" sceneMemberID="viewController">
+                <viewController id="2hn-2n-eJy" customClass="CreateViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="r3P-ax-g0l"/>
                         <viewControllerLayoutGuide type="bottom" id="UXy-hL-77h"/>
@@ -242,8 +242,8 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Create New Post:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L9m-KV-c72">
-                                <rect key="frame" x="20" y="84" width="135" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Create New:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L9m-KV-c72">
+                                <rect key="frame" x="20" y="84" width="95" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -256,24 +256,26 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cb9-bq-Ell">
-                                <rect key="frame" x="137" y="178" width="46" height="30"/>
+                                <rect key="frame" x="137" y="178" width="52" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="Post!"/>
+                                <state key="normal" title="Create!"/>
                                 <connections>
-                                    <action selector="createPost" destination="2hn-2n-eJy" eventType="touchUpInside" id="2oT-qN-Hrp"/>
+                                    <action selector="create" destination="2hn-2n-eJy" eventType="touchUpInside" id="iyJ-U0-RBI"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="postTextField" destination="c1M-i6-PVr" id="E6w-r0-bQV"/>
+                        <outlet property="createButton" destination="cb9-bq-Ell" id="WuN-4c-qe3"/>
+                        <outlet property="createLabel" destination="L9m-KV-c72" id="0o0-nA-1do"/>
+                        <outlet property="textField" destination="c1M-i6-PVr" id="zL0-XM-1jO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gPE-lC-yUT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1011" y="578"/>
+            <point key="canvasLocation" x="1365" y="474"/>
         </scene>
         <!--Comment View Controller - Regular View-->
         <scene sceneID="bmb-gK-ste">
@@ -298,12 +300,16 @@
                                             <inset key="imageInsets" minX="-10" minY="2" maxX="0.0" maxY="-1"/>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <connections>
-                                                <action selector="Done:" destination="mlT-Ey-0kC" id="RJ4-aN-VnK"/>
+                                                <action selector="done" destination="mlT-Ey-0kC" id="85Q-ky-Llq"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="Bq4-uN-5AL">
                                             <inset key="imageInsets" minX="2" minY="3" maxX="2" maxY="0.0"/>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <connections>
+                                                <action selector="create" destination="mlT-Ey-0kC" id="g8o-Ue-6d4"/>
+                                                <segue destination="2hn-2n-eJy" kind="modal" id="oIh-fa-pEh"/>
+                                            </connections>
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
@@ -459,10 +465,14 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="8Nc-ZX-kmB"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="commentTable" destination="qho-27-4B4" id="d3O-U9-vGI"/>
+                        <outlet property="originalPostTable" destination="AHv-hF-Dcy" id="cVk-sd-xYY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jht-IZ-SIk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1011" y="-110"/>
+            <point key="canvasLocation" x="996" y="-98"/>
         </scene>
         <!--Navigation Controller - Item-->
         <scene sceneID="h1o-fD-jGn">
@@ -511,4 +521,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="oIh-fa-pEh"/>
+    </inferredMetricsTieBreakers>
 </document>
