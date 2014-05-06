@@ -1,7 +1,14 @@
+include CollegesHelper
+
 module Api
   module V1
     class CollegesController < ApplicationController
       before_action :set_college, only: [:show, :edit, :update, :destroy, :within]
+
+      def import
+        #destroyAll
+        #importFromFile
+      end
 
       # GET /colleges
       # GET /colleges.json
@@ -23,13 +30,22 @@ module Api
       def edit
       end
 
-      $threshold = 0.3 #within 15 miles, roughly
+      @@threshold = 24.14  #within 15 miles, roughly
       # GET /colleges/1/within
       def within
-        @dist = Math.sqrt((Float(params[:lat]) - @college.lat)**2 +
-                          (Float(params[:lon]) - @college.lon)**2)
-        @within = @dist < $threshold
-        render json: @within
+        render json: distance(Float(params[:lat]), Float(params[:lon]),
+                              @college.lat, @college.lon) < @@threshold
+      end
+
+      def listNearby
+        @ret = Array.new
+        College.all.each do |c|
+          if distance(Float(params[:lat]), Float(params[:lon]),
+                      c.lat, c.lon) < @@threshold
+            @ret.push(c)
+          end
+        end
+        render json: @ret
       end
 
       # POST /colleges
