@@ -5,11 +5,6 @@ module Api
     class CollegesController < ApplicationController
       before_action :set_college, only: [:show, :edit, :update, :destroy, :within]
 
-      def import
-        destroyAll
-        importFromFile
-      end
-
       # GET /colleges
       # GET /colleges.json
       def index
