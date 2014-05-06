@@ -1,8 +1,11 @@
 Postfeed::Application.routes.draw do
   namespace :api do 
     namespace :v1, defaults: {format: :json} do
-      resources :colleges
+
+      get '/colleges/listNearby' => 'colleges#listNearby'
       get '/colleges/:id/within' => 'colleges#within'
+      get '/colleges/import' => 'colleges#import'
+      resources :colleges
 
       resources :votes
 
