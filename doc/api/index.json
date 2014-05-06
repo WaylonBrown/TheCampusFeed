@@ -4,8 +4,13 @@
       "name": "Colleges",
       "examples": [
         {
-          "description": "Listing colleges",
-          "link": "colleges/listing_colleges.json",
+          "description": "List all colleges",
+          "link": "colleges/list_all_colleges.json",
+          "groups": "all"
+        },
+        {
+          "description": "List nearby colleges",
+          "link": "colleges/list_nearby_colleges.json",
           "groups": "all"
         }
       ]

@@ -1,7 +1,7 @@
 {
   "resource": "Comments",
   "http_method": "POST",
-  "route": "/comments",
+  "route": "/api/v1/comments",
   "description": "Creating a comment",
   "explanation": null,
   "parameters": [
@@ -14,8 +14,8 @@
   "requests": [
     {
       "request_method": "POST",
-      "request_path": "/comments",
-      "request_body": "{\"format\":\"json\",\"comment\":{\"post_id\":1,\"text\":\"I find this highly offensive.\"}}",
+      "request_path": "/api/v1/comments",
+      "request_body": "{\"post_id\":52,\"text\":\"I lold so hard I shat myself.\"}",
       "request_headers": {
         "Content-Type": "application/json",
         "Host": "example.org",
@@ -26,8 +26,8 @@
       "request_content_type": "application/json",
       "response_status": 201,
       "response_status_text": "Created",
-      "response_body": "{\"id\":3,\"text\":\"I find this highly offensive.\",\"score\":null,\"created_at\":\"2014-05-02T01:30:26.160Z\",\"updated_at\":\"2014-05-02T01:30:26.160Z\"}",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/comments/3","Content-Type":"application/json; charset=utf-8","ETag":"\"66b1a783ac1ff9426bdc6b84d14826f2\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"75fbfef6-5332-44e1-be03-1f1ac73d9b30","X-Runtime":"0.010190","Content-Length":"140"},
+      "response_body": "{\"id\":30,\"text\":\"I lold so hard I shat myself.\",\"score\":null,\"created_at\":\"2014-05-06T07:03:53.253Z\",\"updated_at\":\"2014-05-06T07:03:53.253Z\"}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/comments/30","Content-Type":"application/json; charset=utf-8","ETag":"\"4b477c2d9dbccea11ba74ab667b25861\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"1b8b4a5a-9516-4c49-820f-4bae818d1fec","X-Runtime":"0.003692","Content-Length":"141"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

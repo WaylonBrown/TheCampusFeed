@@ -42,6 +42,7 @@ RSpec.configure do |config|
 end
 
 RspecApiDocumentation.configure do |config|
+  #config.docs_dir = Rails.root.join("
   config.format = :json
   config.api_name = "Postfeed API Documentation."
 end
