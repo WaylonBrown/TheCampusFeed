@@ -1,0 +1,42 @@
+{
+  "resource": "Colleges",
+  "http_method": "GET",
+  "route": "/api/v1/colleges/listNearby",
+  "description": "List nearby colleges",
+  "explanation": null,
+  "parameters": [
+    {
+      "required": true,
+      "name": "lat",
+      "description": "Your current latitude."
+    },
+    {
+      "required": true,
+      "name": "lon",
+      "description": "Your current longitude."
+    }
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/v1/colleges/listNearby?lat=10&lon=10",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+        "lat": "10",
+        "lon": "10"
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "[]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"d751713988987e9331980363e24189ce\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"7c62965b-60dc-4275-842a-361198410ab4","X-Runtime":"0.178039","Content-Length":"2"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

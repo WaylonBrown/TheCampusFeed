@@ -21,8 +21,8 @@ resource "Colleges" do
 
   get "/api/v1/colleges/listNearby" do
 
-    parameter :lat, "Your current latitude."
-    parameter :lon, "Your current longitude."
+    parameter :lat, "Your current latitude.", :required => true
+    parameter :lon, "Your current longitude.", :required => true
 
     example "List nearby colleges" do
       do_request(
