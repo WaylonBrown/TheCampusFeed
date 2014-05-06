@@ -4,7 +4,6 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>State</th>
       <th>Lat</th>
       <th>Lon</th>
       <th></th>
@@ -17,7 +16,6 @@
     <% @colleges.each do |college| %>
       <tr>
         <td><%= college.name %></td>
-        <td><%= college.state %></td>
         <td><%= college.lat %></td>
         <td><%= college.lon %></td>
         <td><%= link_to 'Show', college %></td>
