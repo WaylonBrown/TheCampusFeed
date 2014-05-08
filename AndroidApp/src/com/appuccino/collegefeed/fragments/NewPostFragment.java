@@ -112,6 +112,7 @@ public class NewPostFragment extends Fragment
 	{
 		Intent intent = new Intent(getActivity(), PostCommentsActivity.class);
 		intent.putExtra("POST_ID", post.getID());
+		intent.putExtra("COLLEGE_ID", post.getCollegeID());
 		intent.putExtra("SECTION_NUMBER", tabNumber);
 		
 		startActivity(intent);

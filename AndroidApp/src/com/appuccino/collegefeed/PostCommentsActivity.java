@@ -46,9 +46,16 @@ public class PostCommentsActivity extends Activity{
 		actionBar.setDisplayUseLogoEnabled(false);
 		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
 		actionBar.setIcon(R.drawable.logofake);
+		newCommentButton = (ImageView)findViewById(R.id.newCommentButton);
 		
 		int collegeID = getIntent().getIntExtra("COLLEGE_ID", 0);
 		int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);
+		
+		if(MainActivity.hasPermissions(collegeID))
+			newCommentButton.setVisibility(View.VISIBLE);
+		else
+			newCommentButton.setVisibility(View.GONE);
+		
 		if(sectionNumber == 0)
 			post = TopPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
 		else if(sectionNumber == 1)
@@ -119,7 +126,7 @@ public class PostCommentsActivity extends Activity{
 				@Override
 				public void onClick(View v) 
 				{					
-					if(MainActivity.permissions == post.getCollegeID())
+					if(MainActivity.hasPermissions(post.getCollegeID()))
 					{
 						//if already downvoted, un-downvote
 						if(post.getVote() != -1)

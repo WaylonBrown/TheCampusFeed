@@ -103,6 +103,7 @@ public class MyPostsFragment extends Fragment
 	protected void postClicked(Post post) 
 	{
 		Intent intent = new Intent(getActivity(), PostCommentsActivity.class);
+		intent.putExtra("COLLEGE_ID", post.getCollegeID());
 		intent.putExtra("POST_ID", post.getID());
 		intent.putExtra("SECTION_NUMBER", tabNumber);
 		

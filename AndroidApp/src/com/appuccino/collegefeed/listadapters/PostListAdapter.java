@@ -112,7 +112,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 			@Override
 			public void onClick(View v) 
 			{
-				if(MainActivity.permissions == thisPost.getCollegeID())
+				if(MainActivity.hasPermissions(thisPost.getCollegeID()))
 				{
 					//if already downvoted, un-downvote
 					if(thisPost.getVote() != -1)

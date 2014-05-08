@@ -66,7 +66,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	ArrayList<Fragment> fragmentList;
 	boolean locationFound = false;
 	public static LocationManager mgr;
-	public static int permissions = 0;	//0 = no perms, otherwise the college ID is the perm IDs
+	public static ArrayList<Integer> permissions = new ArrayList<Integer>();	//0 = no perms, otherwise the college ID is the perm IDs
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
 	static final double milesForPermissions = 15.0;
 	final int locationTimeoutSeconds = 10;
@@ -170,7 +170,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		{
 			currentFeedCollegeID = 234234;
 			
-			if(permissions == currentFeedCollegeID)
+			if(hasPermissions(currentFeedCollegeID))
 			{
 				Toast.makeText(this, "Since you are near Texas A&M University, you can upvote, downvote, post, and comment", Toast.LENGTH_LONG).show();
 			}
@@ -214,6 +214,25 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		}
 	}
 	
+	public static boolean hasPermissions(int collegeID) 
+	{
+		if(permissions == null)
+			return false;
+		else
+		{
+			//have to access here to not throw nullpointerexception
+			if(permissions.size() == 0)
+				return false;
+			else
+			{
+				if(permissions.contains(collegeID))
+					return true;
+				else
+					return false;
+			}
+		}
+	}
+
 	private void fadeActionBarColor(ColorDrawable to){
 		ColorDrawable[] colors = {new ColorDrawable(getResources().getColor(R.color.blue)), to};
 	    
@@ -253,7 +272,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		Log.d("location", best);
 		if (best == null) {
 		    //ask user to enable at least one of the Location Providers
-			permissions = 0;
+			permissions.clear();	//no permissions
 			newPostButton.setVisibility(View.INVISIBLE);
 			Toast.makeText(this, "Location Services are turned off.", Toast.LENGTH_LONG).show();
 			Toast.makeText(this, "You can upvote, but nothing else.", Toast.LENGTH_LONG).show();
@@ -310,14 +329,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		double degreesAway = Math.sqrt(Math.pow((loc.getLatitude() - tamuLatitude), 2) + Math.pow((loc.getLongitude() - tamuLongitude), 2));
 		if(degreesAway < degreesForPermissions)
 		{
-			permissions = tamuID;
+			permissions.clear();
+			permissions.add(tamuID);
 			newPostButton.setVisibility(View.VISIBLE);
 			Toast.makeText(this, "You're near Texas A&M University", Toast.LENGTH_LONG).show();
 			Toast.makeText(this, "You can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
 		}
 		else
 		{
-			permissions = 0;
+			permissions.clear();
 			newPostButton.setVisibility(View.INVISIBLE);
 			Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
 		}

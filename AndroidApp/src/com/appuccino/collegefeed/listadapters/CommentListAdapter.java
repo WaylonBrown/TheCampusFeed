@@ -88,7 +88,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 
 			@Override
 			public void onClick(View v) {
-				if(MainActivity.permissions == thisComment.getCollegeID())
+				if(MainActivity.hasPermissions(thisComment.getCollegeID()))
 				{
 					//if already downvoted, un-downvote
 					if(thisComment.getVote() != -1)
