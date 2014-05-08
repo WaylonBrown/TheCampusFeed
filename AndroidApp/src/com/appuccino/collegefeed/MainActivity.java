@@ -365,10 +365,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			}
     	});
     	
-    	Typeface customfont = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
+    	Typeface light = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
+    	Typeface italic = Typeface.createFromAsset(getAssets(), "fonts/Roboto-LightItalic.ttf");
     	TextView title = (TextView)postDialogLayout.findViewById(R.id.newPostTitle);
-    	postMessage.setTypeface(customfont);
-    	title.setTypeface(customfont);
+    	TextView college = (TextView)postDialogLayout.findViewById(R.id.collegeText);
+    	postMessage.setTypeface(light);
+    	college.setTypeface(italic);
+    	title.setTypeface(light);
     	
     	//ensure keyboard is brought up when dialog shows
     	postMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -381,7 +384,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     	});
    
     	final TextView tagsText = (TextView)postDialogLayout.findViewById(R.id.newPostTagsText);
-    	tagsText.setTypeface(customfont);
+    	tagsText.setTypeface(light);
     	
     	//set listener for tags
     	postMessage.addTextChangedListener(new TextWatcher(){

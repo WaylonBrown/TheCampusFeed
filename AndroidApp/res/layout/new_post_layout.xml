@@ -15,6 +15,16 @@
         android:gravity="center_horizontal"
         />
     
+    <TextView
+        android:id="@+id/collegeText"
+        android:text="Posting to Texas A&amp;M University"
+        android:textSize="15sp"
+        android:textColor="@color/darkgray"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal"
+        />
+    
     <!-- custom so that it cant do a carriage return -->
     <com.appuccino.collegefeed.extra.MyEditText
         android:id="@+id/newPostMessage"
