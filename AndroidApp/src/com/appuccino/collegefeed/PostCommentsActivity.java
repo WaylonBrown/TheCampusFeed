@@ -5,19 +5,28 @@ import java.util.Comparator;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.extra.NetWorker;
+import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.extra.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
@@ -32,6 +41,8 @@ public class PostCommentsActivity extends Activity{
 	static CommentListAdapter listAdapter;
 	Post post;
 	ImageView newCommentButton;
+	final int minCommentLength = 3;
+	ListView commentsList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +58,7 @@ public class PostCommentsActivity extends Activity{
 		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
 		actionBar.setIcon(R.drawable.logofake);
 		newCommentButton = (ImageView)findViewById(R.id.newCommentButton);
+		commentsList = (ListView)findViewById(R.id.commentsList);
 		
 		int collegeID = getIntent().getIntExtra("COLLEGE_ID", 0);
 		int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);
@@ -145,10 +157,137 @@ public class PostCommentsActivity extends Activity{
 				}        	
 	        });
 	        
+	        //I know it's redundent to check permissions this many times, but no one fcking post to the wrong college!
+	        if(MainActivity.hasPermissions(collegeID))
+				newCommentButton.setOnClickListener(new OnClickListener(){
+
+					@Override
+					public void onClick(View v) 
+					{					
+						if(MainActivity.hasPermissions(post.getCollegeID()))
+						{
+							newCommentDialog();
+						}
+					}        	
+		        });
+	        
 	        updateArrows(arrowUp, arrowDown);
 		}
 	}
 	
+	protected void newCommentDialog() 
+	{
+		LayoutInflater inflater = getLayoutInflater();
+		View postDialogLayout = inflater.inflate(R.layout.new_comment_layout, null);
+		final EditText commentMessage = (EditText)postDialogLayout.findViewById(R.id.newCommentMessage);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	builder.setCancelable(true);
+    	builder.setView(postDialogLayout)
+    	.setPositiveButton("Comment", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                //do nothing here since overridden below to be able to click button and not dismiss dialog
+            }
+        });
+    	    	
+    	final AlertDialog dialog = builder.create();
+    	dialog.show();
+    	
+    	Button postButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+    	postButton.setOnClickListener(new View.OnClickListener()
+    	{
+    		@Override
+			public void onClick(View v) 
+    		{				
+    			if(commentMessage.getText().toString().length() >= minCommentLength)
+    			{
+    				Comment newComment = new Comment(commentMessage.getText().toString(), post.getID());
+        			post.addComment(newComment);
+        			//new MakePostTask().execute(newPost);
+        			updateList();
+        			dialog.dismiss();
+    			}
+    			else
+    			{
+    				Toast.makeText(getApplicationContext(), "Post must be at least 3 characters long.", Toast.LENGTH_LONG).show();
+    			}
+			}
+    	});
+    	
+    	Typeface light = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
+    	Typeface italic = Typeface.createFromAsset(getAssets(), "fonts/Roboto-LightItalic.ttf");
+    	TextView title = (TextView)postDialogLayout.findViewById(R.id.newCommentTitle);
+    	commentMessage.setTypeface(light);
+    	title.setTypeface(light);
+    	postButton.setTypeface(light);
+    	
+    	//ensure keyboard is brought up when dialog shows
+    	commentMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+    	    @Override
+    	    public void onFocusChange(View v, boolean hasFocus) {
+    	        if (hasFocus) {
+    	            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+    	        }
+    	    }
+    	});
+   
+    	final TextView tagsText = (TextView)postDialogLayout.findViewById(R.id.newCommentTagsText);
+    	tagsText.setTypeface(light);
+    	
+    	//set listener for tags
+    	commentMessage.addTextChangedListener(new TextWatcher(){
+
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				String message = commentMessage.getText().toString();
+				String currentTags = "Tags: <font color='#33B5E5'>";
+				
+				String[] wordArray = message.split(" ");
+				if(wordArray.length > 0)
+				{
+					for(int i = 0; i < wordArray.length; i++)
+					{
+						//prevent indexoutofboundsexception
+						if(wordArray[i].length() > 0)
+						{
+							if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
+							{
+								currentTags += wordArray[i] + " ";
+							}
+						}
+					}
+				}
+				
+				currentTags += "</font>";
+				//if there aren't any tags and view is shown, remove view
+				if(currentTags.equals("Tags: <font color='#33B5E5'></font>") && tagsText.isShown())
+				{
+					tagsText.setVisibility(View.GONE);
+				}					
+				else if(!currentTags.equals("Tags: <font color='#33B5E5'></font>") && !tagsText.isShown())
+				{
+					tagsText.setVisibility(View.VISIBLE);
+				}
+					
+				tagsText.setText(Html.fromHtml((currentTags)));
+			}
+    		
+    	});
+	}
+
 	private void sortCommentsList(Post post) 
 	{
 		Collections.sort(post.getCommentList(), new Comparator<Comment>()

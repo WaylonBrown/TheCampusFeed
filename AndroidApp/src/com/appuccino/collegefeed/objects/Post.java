@@ -61,6 +61,11 @@ public class Post implements Votable{
 			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
 	}
 	
+	public void addComment(Comment comment)
+	{
+		commentList.add(comment);
+	}
+	
 	public ByteArrayOutputStream toJSONString() throws IOException{
 		ByteArrayOutputStream ret = new ByteArrayOutputStream();
 		JsonWriter writer = new JsonWriter(new OutputStreamWriter(ret, "UTF-8"));
