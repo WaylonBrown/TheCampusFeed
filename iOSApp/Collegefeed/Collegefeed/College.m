@@ -10,10 +10,6 @@
 
 @implementation College
 
-@synthesize collegeID;
-@synthesize name;
-@synthesize shortName;
-
 - (id)initWithCollegeID:(NSInteger)cID withName:(NSString*)cName withShortName:(NSString*)cShortName
 {
     self = [super init];

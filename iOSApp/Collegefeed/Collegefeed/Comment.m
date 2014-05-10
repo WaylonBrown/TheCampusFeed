@@ -12,22 +12,19 @@
 
 @implementation Comment
 
-//TODO: synthesizes
-
-- (id)initWithCommentID:(NSInteger)commentID withMessage:(NSString *)message withPostID:(NSInteger)postID
+- (id)initWithCommentID:(NSInteger)newCommentID withMessage:(NSString *)newMessage withPostID:(NSInteger)newPostID
 {
     self = [super init];
     if (self)
     {
-        _commentID = commentID;
-        _postID = postID;
-        _collegeID = 0;
-        _score = 0;
-        _vote = 0;
+        [self setCommentID:newCommentID];
+        [self setPostID:newPostID];
+        [self setCollegeID:0];
+        [self setScore:0];
+        [self setVote:0];
+        [self setMessage:newMessage];
+        [self setDate:[NSDate date]];
         
-        _message = message;
-        
-        _date = [NSDate date];
         [self validateComment];
         return self;
     }
@@ -40,11 +37,11 @@
     self = [self initDummy];
     if (self)
     {
-        _postID = post.postID;
-        _collegeID = post.collegeID;
-        _postMessage = post.message;
-        [self validateComment];
+        [self setPostID:post.postID];
+        [self setCollegeID:post.collegeID];
+        [self setPostMessage:post.message];
 
+        [self validateComment];
         return self;
     }
     return nil;
@@ -54,21 +51,21 @@
     self = [super init];
     if (self)
     {
-        _commentID = arc4random() % 999;
-        _postID = arc4random() % 999;
-        _collegeID = arc4random() % 999;
-        _score = arc4random() % 99;
-        _vote = 0;
+        [self setCommentID:arc4random() % 999];
+        [self setPostID:arc4random() % 999];
+        [self setCollegeID:arc4random() % 999];
+        [self setScore:arc4random() % 99];
+        [self setVote:0];
+        [self setDate:[NSDate date]];
         
-        switch (_commentID % 4)
+        switch (self.commentID % 4)
         {
-            case 0: _message = @"Comment: Are you achin?"; break;
-            case 1: _message = @"Comment: Yup yup yup"; break;
-            case 2: _message = @"Comment: For some bacon?"; break;
-            default: _message = @"Comment: LUAU!"; break;
+            case 0: [self setMessage:@"Comment: Are you achin?"]; break;
+            case 1: [self setMessage:@"Comment: Yup yup yup"]; break;
+            case 2: [self setMessage:@"Comment: For some bacon?"]; break;
+            default: [self setMessage:@"Comment: LUAU!"]; break;
         }
         
-        _date = [NSDate date];
         [self validateComment];
 
         return self;
@@ -86,5 +83,21 @@
     {
         [NSException raise:@"Invalid Comment" format:@"Comment \"%@\" is too long", self.message];
     }
+    if (self.vote != -1 && self.vote != 0 && self.vote != 1)
+    {
+        [NSException raise:@"Invalid Vote value" format:@"Invalid Vote value on comment with id = %d", self.commentID];
+    }
 }
+// assign the comment's vote to -1, 0, or 1
+//- (void) setVote:(NSInteger)newVote
+//{
+//    if (newVote == -1 || newVote == 0 || newVote == 1)
+//    {
+//        [self setVote:newVote];
+//    }
+//    else
+//    {
+//        [NSException raise:@"Invalid Vote value" format:@"Invalid Vote value on comment with id = %d", self.commentID];
+//    }
+//}
 @end

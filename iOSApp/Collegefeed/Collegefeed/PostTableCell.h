@@ -27,7 +27,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *downVoteButton;
 @property (nonatomic, weak) IBOutlet UILabel *collegeLabel;
 
-- (NSString *) getAgeOfPostAsString:(NSDate *)postDate;
+- (NSString *)getAgeAsString:(NSDate *)creationDate;
 - (void) assignPropertiesWithPost:(Post *)post;
 - (void) assignProperties;
 - (void) updateVoteButtonsWithVoteValue:(int)vote;

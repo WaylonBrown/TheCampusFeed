@@ -10,9 +10,6 @@
 
 @implementation Vote
 
-@synthesize voteID;
-@synthesize upvote;
-
 - (id)initWithVoteID:(NSInteger)vID withUpvoteValue:(BOOL)isUpvote
 {
     self = [super init];

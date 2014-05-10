@@ -7,15 +7,9 @@
 //
 
 #import "CommentTableCell.h"
+#import "Comment.h"
 
 @implementation CommentTableCell
-
-// sythesize properties to automatically generate accessor code
-@synthesize messageLabel = _messageLabel;
-@synthesize scoreLabel = _scoreLabel;
-@synthesize ageLabel = _ageLabel;
-@synthesize upVoteButton = _upVoteButton;
-@synthesize downVoteButton = _downVoteButton;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -37,5 +31,52 @@
 
     // Configure the view for the selected state
 }
+- (void) assignProperties
+{
+    if (self.comment == nil)
+    {
+        [NSException raise:@"Error assign properties to a comment cell" format:@"CommentTableCell does not have a comment reference"];
+        return;
+    }
+        
+    // assign cell's text labels
+    [self.ageLabel setText: [self getAgeAsString:(NSDate*)self.comment.date]];
+    [self.messageLabel setText:self.comment.message];
+    [self.scoreLabel setText:[NSString stringWithFormat:@"%d", (int)self.comment.score]];
+    
+    // assign arrow colors according to user's vote
+    [self updateVoteButtonsWithVoteValue:self.comment.vote];
+}
+- (void) setComment:(Comment*)newComment
+{
+    _comment = newComment;
+    [self assignProperties];
+}
+- (IBAction)upVotePressed:(id)sender
+{
+    if (self.comment != nil)
+    {
+        [self.comment setVote:(self.comment.vote == 1 ? 0 : 1)];
+        [self updateVoteButtonsWithVoteValue:self.comment.vote];
+    }
+    else
+    {
+        self.dummyVoteValue = self.dummyVoteValue == 1 ? 0 : 1;
+        [self updateVoteButtonsWithVoteValue:self.dummyVoteValue];
+    }
+}
 
+- (IBAction)downVotePresed:(id)sender
+{
+    if (self.comment != nil)
+    {
+        self.comment.vote = self.comment.vote == -1 ? 0 : -1;
+        [self updateVoteButtonsWithVoteValue:self.comment.vote];
+    }
+    else
+    {
+        self.dummyVoteValue = self.dummyVoteValue == -1 ? 0 : -1;
+        [self updateVoteButtonsWithVoteValue:self.dummyVoteValue];
+    }
+}
 @end

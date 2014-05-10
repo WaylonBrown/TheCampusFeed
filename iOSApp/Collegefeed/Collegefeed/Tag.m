@@ -11,10 +11,6 @@
 
 @implementation Tag
 
-@synthesize tagID;
-@synthesize score;
-@synthesize name;
-
 - (id)initWithTagID:(NSInteger)tID withScore:(BOOL)tScore withName:(NSString*)tName
 {
     self = [super init];

@@ -13,18 +13,6 @@
 
 @implementation PostTableCell
 
-// sythesize properties to automatically generate accessor code
-//@synthesize post = _post;
-
-@synthesize messageLabel;
-@synthesize scoreLabel;
-@synthesize commentCountLabel;
-@synthesize ageLabel;
-@synthesize upVoteButton;
-@synthesize downVoteButton;
-@synthesize collegeLabel;
-@synthesize dummyVoteValue;
-
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -33,10 +21,6 @@
         // Initialization code
     }
     return self;
-}
-- (void)awakeFromNib
-{
-    // Initialization code
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
@@ -55,55 +39,57 @@
     if (post == nil) return;
     
     NSDate *d = (NSDate*)[post date];
-    NSString *myAgeLabel = [self getAgeOfPostAsString:d];
+    NSString *myAgeLabel = [self getAgeAsString:d];
     
     // assign cell's text labels
-    [ageLabel setText: myAgeLabel];
-    [messageLabel setText:post.message];
-    [scoreLabel setText:[NSString stringWithFormat:@"%d", (int)post.score]];
-    [commentCountLabel setText:[NSString stringWithFormat:@"%d comments", (int)post.commentList.count]];
+    [self.ageLabel setText: myAgeLabel];
+    [self.messageLabel setText:post.message];
+    [self.scoreLabel setText:[NSString stringWithFormat:@"%d", (int)post.score]];
+    [self.commentCountLabel setText:[NSString stringWithFormat:@"%d comments", (int)post.commentList.count]];
     
     // assign arrow colors according to user's vote
     [self updateVoteButtonsWithVoteValue:post.vote];
 }
-
 // configure view of the cell according to the post's delegate ID
 - (void) assignProperties
 {
-    if (self.post == nil) return;
+    if (self.post == nil)
+    {
+        [NSException raise:@"Error assign properties to a post cell" format:@"PostTableCell does not have a post reference"];
+        return;
+    }
     
     Post *post = self.post;
     
     NSDate *d = (NSDate*)[post date];
-    NSString *myAgeLabel = [self getAgeOfPostAsString:d];
+    NSString *myAgeLabel = [self getAgeAsString:d];
     
     // assign cell's text labels
-    [ageLabel setText: myAgeLabel];
-    [messageLabel setText:post.message];
-    [scoreLabel setText:[NSString stringWithFormat:@"%d", (int)post.score]];
-    [commentCountLabel setText:[NSString stringWithFormat:@"%d comments", (int)post.commentList.count]];
+    [self.ageLabel setText: myAgeLabel];
+    [self.messageLabel setText:post.message];
+    [self.scoreLabel setText:[NSString stringWithFormat:@"%d", (int)post.score]];
+    [self.commentCountLabel setText:[NSString stringWithFormat:@"%d comments", (int)post.commentList.count]];
     
     // assign arrow colors according to user's vote
     [self updateVoteButtonsWithVoteValue:post.vote];
-    
 }
 
 // return string indicating how long ago the post was created
-- (NSString *)getAgeOfPostAsString:(NSDate *)postDate
+- (NSString *)getAgeAsString:(NSDate *)creationDate
 {
-    int postAgeSeconds = [[NSDate date] timeIntervalSinceDate:postDate];
-    int postAgeMinutes = postAgeSeconds / 60;
-    int postAgeHours = postAgeMinutes / 60;
+    int seconds = [[NSDate date] timeIntervalSinceDate:creationDate];
+    int minutes = seconds / 60;
+    int hours = minutes / 60;
     
-    if (postAgeHours >= 1)
+    if (hours >= 1)
     {
-        return [NSString stringWithFormat:@"%d hours ago", postAgeHours];
+        return [NSString stringWithFormat:@"%d hours ago", hours];
     }
-    else if (postAgeMinutes >= 1)
+    else if (minutes >= 1)
     {
-        return [NSString stringWithFormat:@"%d minutes ago", postAgeMinutes];
+        return [NSString stringWithFormat:@"%d minutes ago", minutes];
     }
-    return [NSString stringWithFormat:@"%d seconds ago", postAgeSeconds];
+    return [NSString stringWithFormat:@"%d seconds ago", seconds];
 }
 
 - (void) updateVoteButtonsWithVoteValue:(int)vote
