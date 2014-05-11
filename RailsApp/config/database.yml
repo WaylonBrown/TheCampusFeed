@@ -2,22 +2,25 @@ development:
   adapter: postgresql
   encoding: utf8
   database: cf_development
+  host: localhost
   pool: 5
   username: james
-  password:
+  password: apple
 
 test: &TEST
   adapter: postgresql
   encoding: utf8
   database: cf_test
+  host: localhost
   pool: 5
   username: james
-  password:
+  password: apple
 
 production:
   adapter: postgresql
   encoding: utf8
   database: cf_production
+  host: localhost
   pool: 5
   username: james
-  password:
+  password: apple

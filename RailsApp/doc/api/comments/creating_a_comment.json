@@ -15,7 +15,7 @@
     {
       "request_method": "POST",
       "request_path": "/api/v1/comments",
-      "request_body": "{\"post_id\":72,\"text\":\"I lold so hard I shat myself.\"}",
+      "request_body": "{\"post_id\":2,\"text\":\"I lold so hard I shat myself.\"}",
       "request_headers": {
         "Content-Type": "application/json",
         "Host": "example.org",
@@ -26,8 +26,8 @@
       "request_content_type": "application/json",
       "response_status": 201,
       "response_status_text": "Created",
-      "response_body": "{\"id\":48,\"text\":\"I lold so hard I shat myself.\",\"score\":null,\"created_at\":\"2014-05-06T08:28:50.151Z\",\"updated_at\":\"2014-05-06T08:28:50.151Z\"}",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/comments/48","Content-Type":"application/json; charset=utf-8","ETag":"\"77b6b852d55161dc1325de2cf2bff4c9\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"5dbe6831-3ba2-4185-999b-bcb44d65e41f","X-Runtime":"0.005626","Content-Length":"141"},
+      "response_body": "{\"id\":5,\"text\":\"I lold so hard I shat myself.\",\"score\":null,\"created_at\":\"2014-05-11T15:27:41.557Z\",\"updated_at\":\"2014-05-11T15:27:41.557Z\"}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/comments/5","Content-Type":"application/json; charset=utf-8","ETag":"\"b7f9256828d9141ddfe639e36a22eaf1\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"b8e9ae2c-bb76-4f9d-b68a-2ffc9ed928ff","X-Runtime":"0.014675","Content-Length":"140"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }
