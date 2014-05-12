@@ -24,7 +24,10 @@
 @property (nonatomic) NSMutableArray *commentList;
 
 
-- (id)initWithPostID:(NSInteger)newPostID withMessage:(NSString *)newPostMessage;
+- (id)initWithPostID:(NSInteger)newPostID
+           withScore:(NSInteger)score
+         withMessage:(NSString *)newPostMessage;
+
 - (id)initDummy;
 - (void)validatePost;
 

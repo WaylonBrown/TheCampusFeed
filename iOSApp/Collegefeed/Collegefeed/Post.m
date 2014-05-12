@@ -14,20 +14,22 @@
 @implementation Post
 
 // initializer to create a new post
-- (id)initWithPostID:(NSInteger)newPostID withMessage:(NSString *)newPostMessage
+- (id)initWithPostID:(NSInteger)newPostID
+           withScore:(NSInteger)score
+         withMessage:(NSString *)newPostMessage
 {
     self = [super init];
     if (self)
     {
         [self setPostID:newPostID];
         [self setCollegeID:0];
-        [self setScore:0];
+        [self setScore:score];
         [self setVote:0];
         [self setMessage:newPostMessage];
         [self setCollegeName:@"<No College>"];
         [self setDate:[NSDate date]];
         
-        [self validatePost];
+//        [self validatePost];
         return self;
     }
     return nil;
@@ -63,7 +65,7 @@
             Comment *comment = [[Comment alloc] initDummy];
             [self.commentList addObject:comment];
         }
-        [self validatePost];
+//        [self validatePost];
         return self;
     }
     return nil;

@@ -164,17 +164,6 @@
     
     [cell setComment:commentAtIndex];
     
-//    NSDate *d = (NSDate*)[commentAtIndex date];
-//    NSString *myAgeLabel = [self getAgeOfCommentAsString:d];
-//    
-//    // assign cell's text labels
-//    [[cell ageLabel] setText: myAgeLabel];
-//    [[cell messageLabel] setText:commentAtIndex.message];
-//    [[cell scoreLabel] setText:[NSString stringWithFormat:@"%d", (int)commentAtIndex.score]];
-//    
-//    // assign arrow colors according to user's vote
-//    [self updateVoteButtons:cell withVoteValue:commentAtIndex.vote];
-    
     return cell;
 }
 

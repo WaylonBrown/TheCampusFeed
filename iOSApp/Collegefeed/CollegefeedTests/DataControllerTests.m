@@ -19,8 +19,8 @@
 
 @interface DataControllerTests : XCTestCase
 
-@property (nonatomic, copy) PostDataController* PDC;
-@property (nonatomic, copy) CommentDataController* CDC;
+@property (nonatomic) PostDataController* PDC;
+@property (nonatomic) CommentDataController* CDC;
 
 @end
 
@@ -39,23 +39,41 @@
     [super tearDown];
 }
 
-- (void)PostDataControllerAddPostWithMessage
+#pragma mark PostDataController Tests
+- (void)testPostDataControllerAddPost
 {
     // Assemble
+    [self.PDC.masterPostList removeAllObjects];
+
     Post *post1 = [[Post alloc] initDummy];
     Post *post2 = [[Post alloc] initDummy];
     Post *post3 = [[Post alloc] initDummy];
 
     // Act
-    [self.PDC addPostWithMessage:post1];
-    [self.PDC addPostWithMessage:post2];
-    [self.PDC addPostWithMessage:post3];
+    [self.PDC addPost:post1];
+    [self.PDC addPost:post2];
+    [self.PDC addPost:post3];
     
     // Assert
     XCTAssertEqual(3, self.PDC.countOfList, @"Wrong Post Array Size");
 }
 
-- (void)CommentDataControllerCommentsHaveSamePost
+- (void)testPostDataControllerGetPosts
+{
+    // Assemble
+    [self.PDC.masterPostList removeAllObjects];
+    
+    // Act
+   [self.PDC fetchAllPosts];
+
+    // Assert
+    XCTAssertNotEqual(0, self.PDC.countOfList, @"No posts gathered during GET request");
+    
+    // XCTAssertNoThrow ?
+}
+
+#pragma mark CommentDataController Tests
+- (void)testCommentDataControllerCommentsHaveSamePost
 {
     // Assemble
     [self.CDC initializeDefaultList];
@@ -67,7 +85,6 @@
     // Assert
     XCTAssertNotEqual(postMessage, @"[Post's message not found]", @"No comments in array");
     XCTAssertNotEqual(postMessage, @"[Comments' post messages inconsistent]", @"Messages didn't match");
-    NSLog(@"PostMessage = %@", postMessage);
 }
 
 
