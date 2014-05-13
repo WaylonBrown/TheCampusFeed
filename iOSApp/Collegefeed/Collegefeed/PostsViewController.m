@@ -119,7 +119,7 @@
 // User created a new post
 - (void)createdNewPost:(Post *)post
 {
-    [self.dataController addPostWithMessage:post];
+    [self.dataController addPost:post];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     
     // reload the table

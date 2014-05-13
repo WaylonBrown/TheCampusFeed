@@ -17,6 +17,9 @@
 
 - (NSUInteger)countOfList;
 - (Post *)objectInListAtIndex:(NSUInteger)theIndex;
-- (void)addPostWithMessage:(Post *)post;
+- (void)addPost:(Post *)post;
+
+- (void)fetchAllPosts;
+- (id)getJsonObjectWithUrl:(NSURL*) url;
 
 @end

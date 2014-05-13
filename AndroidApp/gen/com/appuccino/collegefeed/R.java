@@ -18,14 +18,23 @@ public final class R {
         public static final int spinnerArray=0x7f080000;
     }
     public static final class attr {
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int reflectionColor=0x7f010000;
     }
     public static final class color {
-        public static final int blue=0x7f050001;
-        public static final int darkgray=0x7f050004;
-        public static final int gray=0x7f050003;
-        public static final int lightblue=0x7f050000;
-        public static final int lightgray=0x7f050002;
-        public static final int white=0x7f050005;
+        public static final int blue=0x7f060001;
+        public static final int darkgray=0x7f060004;
+        public static final int gray=0x7f060003;
+        public static final int lightblue=0x7f060000;
+        public static final int lightgray=0x7f060002;
+        public static final int white=0x7f060005;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -34,8 +43,8 @@ public final class R {
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-        public static final int activity_horizontal_margin=0x7f060000;
-        public static final int activity_vertical_margin=0x7f060001;
+        public static final int activity_horizontal_margin=0x7f070000;
+        public static final int activity_vertical_margin=0x7f070001;
     }
     public static final class drawable {
         public static final int arrowdown=0x7f020000;
@@ -46,13 +55,15 @@ public final class R {
         public static final int collegefeedlogosmall=0x7f020005;
         public static final int ic_launcher=0x7f020006;
         public static final int logofake=0x7f020007;
-        public static final int newpost=0x7f020008;
-        public static final int old_card=0x7f020009;
-        public static final int postbuttonclick=0x7f02000a;
-        public static final int postfeedlogosmall=0x7f02000b;
+        public static final int mask=0x7f020008;
+        public static final int newpost=0x7f020009;
+        public static final int old_card=0x7f02000a;
+        public static final int postbuttonclick=0x7f02000b;
+        public static final int postfeedlogosmall=0x7f02000c;
+        public static final int searchtagbuttonclick=0x7f02000d;
+        public static final int spot_mask=0x7f02000e;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b001c;
         public static final int arrowDown=0x7f0b0007;
         public static final int arrowUp=0x7f0b0005;
         public static final int card=0x7f0b000e;
@@ -63,6 +74,9 @@ public final class R {
         public static final int commentsText=0x7f0b000a;
         public static final int fragmentListView=0x7f0b000c;
         public static final int loadingText=0x7f0b000d;
+        public static final int menu_GPS=0x7f0b001f;
+        public static final int menu_help=0x7f0b001e;
+        public static final int menu_settings=0x7f0b001d;
         public static final int messageText=0x7f0b0008;
         public static final int newCommentButton=0x7f0b0000;
         public static final int newCommentMessage=0x7f0b0015;
@@ -76,11 +90,12 @@ public final class R {
         public static final int postCard=0x7f0b0004;
         public static final int postDetails=0x7f0b000f;
         public static final int scoreText=0x7f0b0006;
+        public static final int searchTagEditText=0x7f0b001a;
         public static final int spinner=0x7f0b0001;
-        public static final int tagSearchText=0x7f0b001b;
+        public static final int tagSearchText=0x7f0b001c;
         public static final int tagText=0x7f0b0013;
         public static final int timeText=0x7f0b0009;
-        public static final int topTagText=0x7f0b001a;
+        public static final int topTagText=0x7f0b001b;
     }
     public static final class layout {
         public static final int actionbar_comment=0x7f030000;
@@ -95,26 +110,27 @@ public final class R {
         public static final int list_row_tag=0x7f030009;
         public static final int new_comment_layout=0x7f03000a;
         public static final int new_post_layout=0x7f03000b;
-        public static final int tag_activity_layout=0x7f03000c;
-        public static final int tag_fragment_layout=0x7f03000d;
+        public static final int search_for_tag_layout=0x7f03000c;
+        public static final int tag_activity_layout=0x7f03000d;
+        public static final int tag_fragment_layout=0x7f03000e;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;
     }
     public static final class string {
-        public static final int action_settings=0x7f070001;
-        public static final int allcollege_section1=0x7f070007;
-        public static final int allcollege_section2=0x7f070008;
-        public static final int allcollege_section3=0x7f070009;
-        public static final int allcollege_section4=0x7f07000a;
-        public static final int allcollege_section5=0x7f07000b;
-        public static final int allcollege_section6=0x7f07000c;
-        public static final int app_name=0x7f070000;
-        public static final int onecollege_section1=0x7f070002;
-        public static final int onecollege_section2=0x7f070003;
-        public static final int onecollege_section3=0x7f070004;
-        public static final int onecollege_section4=0x7f070005;
-        public static final int onecollege_section5=0x7f070006;
+        public static final int action_settings=0x7f050001;
+        public static final int allcollege_section1=0x7f050007;
+        public static final int allcollege_section2=0x7f050008;
+        public static final int allcollege_section3=0x7f050009;
+        public static final int allcollege_section4=0x7f05000a;
+        public static final int allcollege_section5=0x7f05000b;
+        public static final int allcollege_section6=0x7f05000c;
+        public static final int app_name=0x7f050000;
+        public static final int onecollege_section1=0x7f050002;
+        public static final int onecollege_section2=0x7f050003;
+        public static final int onecollege_section3=0x7f050004;
+        public static final int onecollege_section4=0x7f050005;
+        public static final int onecollege_section5=0x7f050006;
     }
     public static final class style {
         /** 
@@ -143,4 +159,34 @@ public final class R {
          */
         public static final int AppTheme=0x7f090001;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a ShimmerView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #ShimmerView_reflectionColor com.appuccino.collegefeed:reflectionColor}</code></td><td></td></tr>
+           </table>
+           @see #ShimmerView_reflectionColor
+         */
+        public static final int[] ShimmerView = {
+            0x7f010000
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.appuccino.collegefeed.R.attr#reflectionColor}
+          attribute's value can be found in the {@link #ShimmerView} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.appuccino.collegefeed:reflectionColor
+        */
+        public static final int ShimmerView_reflectionColor = 0;
+    };
 }

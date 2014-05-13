@@ -13,7 +13,7 @@
 // Assert
 
 #import <XCTest/XCTest.h>
-#import "PostViewController.h"
+#import "PostsViewController.h"
 #import "CommentViewController.h"
 
 @interface ViewControllerTests : XCTestCase

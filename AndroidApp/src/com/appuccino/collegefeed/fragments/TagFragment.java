@@ -2,21 +2,33 @@ package com.appuccino.collegefeed.fragments;
 
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.Html;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
+import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.listadapters.TagListAdapter;
+import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Tag;
 
 public class TagFragment extends Fragment
@@ -65,6 +77,15 @@ public class TagFragment extends Fragment
 	    TextView tagSearchText = (TextView)rootView.findViewById(R.id.tagSearchText);
 	    tagSearchText.setTypeface(light);
 	    
+	    tagSearchText.setOnClickListener(new OnClickListener()
+	    {
+			@Override
+			public void onClick(View v) 
+			{
+				searchTagsClicked();
+			}
+	    });
+	    
 		return rootView;
 	}
 
@@ -75,5 +96,64 @@ public class TagFragment extends Fragment
 		
 		mainActivity.startActivity(intent);
 		mainActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);			
+	}
+	
+	public void searchTagsClicked() 
+	{
+		LayoutInflater inflater = mainActivity.getLayoutInflater();
+		View searchDialogLayout = inflater.inflate(R.layout.search_for_tag_layout, null);
+		final EditText searchTagEditText = (EditText)searchDialogLayout.findViewById(R.id.searchTagEditText);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
+    	builder.setCancelable(true);
+    	builder.setView(searchDialogLayout)
+    	.setPositiveButton("Search", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                //do nothing here since overridden below to be able to click button and not dismiss dialog
+            }
+        });
+    	    	
+    	final AlertDialog dialog = builder.create();
+    	dialog.show();
+    	
+    	Button searchButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+    	searchButton.setOnClickListener(new View.OnClickListener()
+    	{
+    		@Override
+			public void onClick(View v) 
+    		{				
+    			if(searchTagEditText.getText().toString().length() >= 3)
+    			{
+    				Intent intent = new Intent(mainActivity, TagListActivity.class);
+    				intent.putExtra("TAG_ID", searchTagEditText.getText().toString());
+    				
+    				mainActivity.startActivity(intent);
+    				mainActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        			dialog.dismiss();
+    			}
+    			else
+    			{
+    				Toast.makeText(mainActivity, "Must be 3 characters long.", Toast.LENGTH_LONG).show();
+    			}
+			}
+    	});
+    	
+    	Typeface light = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/Roboto-Light.ttf");
+    	searchTagEditText.setTypeface(light);
+    	searchButton.setTypeface(light);
+    	
+    	searchTagEditText.setSelection(1);	//start cursor after #
+    	//ensure keyboard is brought up when dialog shows
+    	searchTagEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+    	    @Override
+    	    public void onFocusChange(View v, boolean hasFocus) {
+    	        if (hasFocus) {
+    	            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+    	        }
+    	    }
+    	});
 	}
 }

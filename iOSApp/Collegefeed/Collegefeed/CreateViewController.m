@@ -83,7 +83,6 @@
 
 - (IBAction)create
 {
-    
     if (self.pDelegate)
     {   // if post
         Post *post = [[Post alloc] initDummy];

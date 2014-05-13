@@ -273,7 +273,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		if (best == null) {
 		    //ask user to enable at least one of the Location Providers
 			permissions.clear();	//no permissions
-			newPostButton.setVisibility(View.INVISIBLE);
+			if(newPostButton.isShown())
+				newPostButton.setVisibility(View.INVISIBLE);
 			Toast.makeText(this, "Location Services are turned off.", Toast.LENGTH_LONG).show();
 			Toast.makeText(this, "You can upvote, but nothing else.", Toast.LENGTH_LONG).show();
 		} else {
@@ -322,23 +323,38 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	private void determinePermissions(Location loc) 
 	{
 		double degreesForPermissions = milesForPermissions / 50.0;	//roughly 50 miles per degree
+		
+		//USED FOR TESTING, ALL OF OUR CITIES RETURN A&M
 		double tamuLatitude = 30.614942;
 		double tamuLongitude = -96.342316;
+		double austinLatitude = 30.435129;
+		double austinLongitude = -97.730341;
+		double seattleLatitude = 0;	//JAMES fill these in
+		double seattleLongitude = 0;
+		
 		int tamuID = 234234;
 		
-		double degreesAway = Math.sqrt(Math.pow((loc.getLatitude() - tamuLatitude), 2) + Math.pow((loc.getLongitude() - tamuLongitude), 2));
+		double degreesAway1 = Math.sqrt(Math.pow((loc.getLatitude() - tamuLatitude), 2) + Math.pow((loc.getLongitude() - tamuLongitude), 2));
+		double degreesAway2 = Math.sqrt(Math.pow((loc.getLatitude() - austinLatitude), 2) + Math.pow((loc.getLongitude() - austinLongitude), 2));
+		double degreesAway3 = Math.sqrt(Math.pow((loc.getLatitude() - seattleLatitude), 2) + Math.pow((loc.getLongitude() - seattleLongitude), 2));
+		
+		//gets which is least of the three
+		double degreesAway = Math.min(degreesAway1, degreesAway2);
+		degreesAway = Math.min(degreesAway, degreesAway3);
 		if(degreesAway < degreesForPermissions)
 		{
 			permissions.clear();
 			permissions.add(tamuID);
-			newPostButton.setVisibility(View.VISIBLE);
+			if(!newPostButton.isShown())
+				newPostButton.setVisibility(View.VISIBLE);
 			Toast.makeText(this, "You're near Texas A&M University", Toast.LENGTH_LONG).show();
 			Toast.makeText(this, "You can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
 		}
 		else
 		{
 			permissions.clear();
-			newPostButton.setVisibility(View.INVISIBLE);
+			if(newPostButton.isShown())
+				newPostButton.setVisibility(View.INVISIBLE);
 			Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
 		}
 	}
@@ -392,6 +408,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     	postMessage.setTypeface(light);
     	college.setTypeface(italic);
     	title.setTypeface(light);
+    	postButton.setTypeface(light);
     	
     	//ensure keyboard is brought up when dialog shows
     	postMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
