@@ -89,6 +89,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         if(thisPost.getCommentList().size() != 1)
         	commentString += "s";
         postHolder.commentText.setText(commentString);
+        
         setMessageAndColorizeTags(thisPost.getMessage(), postHolder);
         
         //arrow click listeners

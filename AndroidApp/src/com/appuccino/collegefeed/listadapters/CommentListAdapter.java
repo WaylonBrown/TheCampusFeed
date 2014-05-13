@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,6 +21,7 @@ import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
+import com.appuccino.collegefeed.listadapters.PostListAdapter.PostHolder;
 import com.appuccino.collegefeed.objects.Comment;
 
 public class CommentListAdapter extends ArrayAdapter<Comment>{
@@ -38,7 +40,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;	//this is listview_item_row
-        commentHolder commentHolder = null;
+        CommentHolder commentHolder = null;
         
         //first pass
         if(row == null)
@@ -46,7 +48,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         	LayoutInflater inflater = ((Activity)context).getLayoutInflater();
         	row = inflater.inflate(layoutResourceId, parent, false);        	
         	
-        	commentHolder = new commentHolder();
+        	commentHolder = new CommentHolder();
         	commentHolder.scoreText = (TextView)row.findViewById(R.id.scoreText);
         	commentHolder.messageText = (TextView)row.findViewById(R.id.messageText);
         	commentHolder.timeText = (TextView)row.findViewById(R.id.timeText);
@@ -64,12 +66,14 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
             row.setTag(commentHolder);
         }
         else
-        	commentHolder = (commentHolder)row.getTag();
+        	commentHolder = (CommentHolder)row.getTag();
         
         final Comment thisComment = commentList.get(position);
         commentHolder.scoreText.setText(String.valueOf(thisComment.getScore()));
         commentHolder.messageText.setText(thisComment.getMessage());
         commentHolder.timeText.setText(String.valueOf(thisComment.getHoursAgo()) + " hours ago");
+        
+        setMessageAndColorizeTags(thisComment.getMessage(), commentHolder);
         
       //arrow click listeners
         commentHolder.arrowUp.setOnClickListener(new OnClickListener(){
@@ -123,8 +127,34 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         
         return row;
     }
+    
+    private void setMessageAndColorizeTags(String msg, CommentHolder commentHolder) 
+    {
+    	String tagColor = "#33B5E5";
+    	String message = msg;
+    	
+    	String[] wordArray = message.split(" ");
+    	//check for tags, colorize them
+    	for(int i = 0; i < wordArray.length; i++)
+    	{
+    		if(wordArray[i].length() > 0 && wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
+    		{
+    			wordArray[i] = "<font color='" + tagColor + "'>" + wordArray[i] + "</font>";
+    		}
+    	}
+    	
+    	message = "";
+    	//combine back to string
+    	for(int i = 0; i < wordArray.length; i++)
+    	{
+    		message += wordArray[i] + " ";
+    	}
+    	
+    	commentHolder.messageText.setText(Html.fromHtml(message));
+		
+	}
         
-    static class commentHolder
+    static class CommentHolder
     {
     	TextView scoreText;
     	TextView messageText;
