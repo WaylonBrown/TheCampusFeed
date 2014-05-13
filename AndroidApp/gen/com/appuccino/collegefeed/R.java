@@ -60,10 +60,10 @@ containing a value of this type.
         public static final int old_card=0x7f02000a;
         public static final int postbuttonclick=0x7f02000b;
         public static final int postfeedlogosmall=0x7f02000c;
-        public static final int spot_mask=0x7f02000d;
+        public static final int searchtagbuttonclick=0x7f02000d;
+        public static final int spot_mask=0x7f02000e;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b001c;
         public static final int arrowDown=0x7f0b0007;
         public static final int arrowUp=0x7f0b0005;
         public static final int card=0x7f0b000e;
@@ -74,6 +74,9 @@ containing a value of this type.
         public static final int commentsText=0x7f0b000a;
         public static final int fragmentListView=0x7f0b000c;
         public static final int loadingText=0x7f0b000d;
+        public static final int menu_GPS=0x7f0b001f;
+        public static final int menu_help=0x7f0b001e;
+        public static final int menu_settings=0x7f0b001d;
         public static final int messageText=0x7f0b0008;
         public static final int newCommentButton=0x7f0b0000;
         public static final int newCommentMessage=0x7f0b0015;
@@ -87,11 +90,12 @@ containing a value of this type.
         public static final int postCard=0x7f0b0004;
         public static final int postDetails=0x7f0b000f;
         public static final int scoreText=0x7f0b0006;
+        public static final int searchTagEditText=0x7f0b001a;
         public static final int spinner=0x7f0b0001;
-        public static final int tagSearchText=0x7f0b001b;
+        public static final int tagSearchText=0x7f0b001c;
         public static final int tagText=0x7f0b0013;
         public static final int timeText=0x7f0b0009;
-        public static final int topTagText=0x7f0b001a;
+        public static final int topTagText=0x7f0b001b;
     }
     public static final class layout {
         public static final int actionbar_comment=0x7f030000;
@@ -106,8 +110,9 @@ containing a value of this type.
         public static final int list_row_tag=0x7f030009;
         public static final int new_comment_layout=0x7f03000a;
         public static final int new_post_layout=0x7f03000b;
-        public static final int tag_activity_layout=0x7f03000c;
-        public static final int tag_fragment_layout=0x7f03000d;
+        public static final int search_for_tag_layout=0x7f03000c;
+        public static final int tag_activity_layout=0x7f03000d;
+        public static final int tag_fragment_layout=0x7f03000e;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;

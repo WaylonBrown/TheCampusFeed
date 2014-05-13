@@ -408,6 +408,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     	postMessage.setTypeface(light);
     	college.setTypeface(italic);
     	title.setTypeface(light);
+    	postButton.setTypeface(light);
     	
     	//ensure keyboard is brought up when dialog shows
     	postMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
