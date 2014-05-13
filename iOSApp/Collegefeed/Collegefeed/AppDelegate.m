@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "CreateViewController.h"
 
 @implementation AppDelegate
 
@@ -61,4 +62,11 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    CreateViewController *controller = [[CreateViewController alloc] initWithNibName:@"MyViewController" bundle:[NSBundle mainBundle]];
+    
+    [self.window.rootViewController presentModalViewController:controller animated:YES];
+    
+    return YES;
+}
 @end

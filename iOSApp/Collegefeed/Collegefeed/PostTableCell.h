@@ -8,17 +8,18 @@
 // a subclass of UITableViewCell to enable custom properties
 
 #import <UIKit/UIKit.h>
-//#import "PostsViewController.h"
+#import "TTTAttributedLabel.h"
 
 @class Post;
+
 @protocol PostSubViewDelegate;
 
 
-@interface PostTableCell : UITableViewCell
+@interface PostTableCell : UITableViewCell <TTTAttributedLabelDelegate>
 
 @property (nonatomic) Post* post;
 @property (nonatomic) int dummyVoteValue;
-@property (nonatomic, weak) IBOutlet UILabel *messageLabel;
+@property (nonatomic, weak) IBOutlet TTTAttributedLabel *messageLabel;
 @property (nonatomic, weak) IBOutlet UILabel *scoreLabel;
 @property (nonatomic, weak) IBOutlet UILabel *commentCountLabel;
 @property (nonatomic, weak) IBOutlet UILabel *ageLabel;

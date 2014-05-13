@@ -64,9 +64,26 @@
     NSDate *d = (NSDate*)[post date];
     NSString *myAgeLabel = [self getAgeAsString:d];
     
-    // assign cell's text labels
-    [self.ageLabel setText: myAgeLabel];
+    // assign cell's message label and look for hashtags
+//    [self.messageLabel setDelegate:self];
     [self.messageLabel setText:post.message];
+    NSArray *words = [self.messageLabel.text componentsSeparatedByString:@" "];
+    for (NSString *word in words)
+    {
+        if ([word hasPrefix:@"#"])
+        {
+            NSRange range = [self.messageLabel.text rangeOfString:word];
+            
+            [self.messageLabel addLinkToURL:[NSURL URLWithString:[NSString stringWithFormat:@"action://tags?%@", word]] withRange:range];
+        }
+    }
+
+//    NSRange range = [self.messageLabel.text rangeOfString:@"#"];
+//    self.messageLabel add
+//    [self.messageLabel addLinkToURL:[NSURL URLWithString:@"google.com"] withRange:range];
+    
+    // assign cell's plain text labels
+    [self.ageLabel setText: myAgeLabel];
     [self.scoreLabel setText:[NSString stringWithFormat:@"%d", (int)post.score]];
     [self.commentCountLabel setText:[NSString stringWithFormat:@"%d comments", (int)post.commentList.count]];
     
@@ -74,9 +91,22 @@
     [self updateVoteButtonsWithVoteValue:post.vote];
 }
 
-// return string indicating how long ago the post was created
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
+    
+    if ([[url scheme] hasPrefix:@"action"]) {
+        if ([[url host] hasPrefix:@"hash"]) {
+            /* load help screen */
+//            UIStoryboard  *storyboard=[UIStoryboard storyboardWithName:@"viewTags" bundle:nil];
+//            OIOI_VC_ViewTags *viewController =[storyboard instantiateViewControllerWithIdentifier:@"viewTags"];
+//            viewController.str_word = ??????;
+//            [self.navigationController pushViewController:viewController animated:YES];
+            
+        }
+    }
+}
 - (NSString *)getAgeAsString:(NSDate *)creationDate
-{
+{   // return string indicating how long ago the post was created
+
     int seconds = [[NSDate date] timeIntervalSinceDate:creationDate];
     int minutes = seconds / 60;
     int hours = minutes / 60;

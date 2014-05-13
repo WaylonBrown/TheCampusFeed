@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="48p-bN-rQ1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Y4b-Ch-0dM">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -46,7 +46,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <segments>
                                             <segment title="All Colleges"/>
-                                            <segment title="Choose a College..."/>
+                                            <segment title="#HashTags"/>
                                             <segment title="Texas A&amp;M"/>
                                         </segments>
                                     </segmentedControl>
@@ -124,14 +124,14 @@
                                             <outlet property="upVoteButton" destination="ZwW-fm-z6c" id="XlB-Sf-Pci"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PostTableCell" rowHeight="100" id="wlV-F3-KDZ" customClass="PostTableCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="PostTableCell" rowHeight="100" id="wlV-F3-KDZ" customClass="PostTableCell">
                                         <rect key="frame" x="0.0" y="142" width="328" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wlV-F3-KDZ" id="kQo-qh-R6v">
-                                            <rect key="frame" x="0.0" y="0.0" width="328" height="99"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="261" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="A Post" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumFontSize="7" preferredMaxLayoutWidth="262" translatesAutoresizingMaskIntoConstraints="NO" id="fYi-If-gvf">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="A Post" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumFontSize="7" preferredMaxLayoutWidth="262" translatesAutoresizingMaskIntoConstraints="NO" id="fYi-If-gvf" customClass="TTTAttributedLabel">
                                                     <rect key="frame" x="48" y="6" width="262" height="59"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -209,6 +209,49 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ccY-Qr-3aH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="514" y="226"/>
+        </scene>
+        <!--Tempviewcontroller-->
+        <scene sceneID="3cw-Xi-YlP">
+            <objects>
+                <viewController id="Y4b-Ch-0dM" customClass="tempviewcontroller" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zxe-2Z-5b9"/>
+                        <viewControllerLayoutGuide type="bottom" id="8QD-6k-4TY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gik-ZL-LL9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="TAGS #HashTags #BITCHES!!!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="buz-iU-T05" customClass="TTTAttributedLabel">
+                                <rect key="frame" x="20" y="144" width="280" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Y4b-Ch-0dM" id="DMO-h7-uXb"/>
+                                </connections>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RDX-L5-5ZY">
+                                <rect key="frame" x="137" y="292" width="40" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Tagify">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="something" destination="Y4b-Ch-0dM" eventType="touchUpInside" id="jBH-ED-iiY"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="gDN-Vd-cPO"/>
+                    <connections>
+                        <outlet property="tagsLabel" destination="buz-iU-T05" id="3qI-7d-eOG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vxh-7p-ICd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="556" y="935"/>
         </scene>
         <!--Create View Controller-->
         <scene sceneID="rMP-MZ-9yH">
@@ -496,7 +539,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W92-7i-fZT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-387" y="196"/>
+            <point key="canvasLocation" x="-413" y="356"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="FoH-hH-Fn3">

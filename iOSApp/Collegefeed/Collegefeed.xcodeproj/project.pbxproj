@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		531107A919147B07006F7DAF /* PostTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531107A819147B07006F7DAF /* PostTableCell.m */; };
 		532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706E1191378EF00F5EAB9 /* PostDataController.m */; };
+		533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 533475881922B88300E84CC8 /* TTTAttributedLabel.m */; };
+		5334758C1922D9B700E84CC8 /* tempviewcontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 5334758B1922D9B700E84CC8 /* tempviewcontroller.m */; };
 		5390A91D1914B76800ACD082 /* arrowdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9141914B76800ACD082 /* arrowdown.png */; };
 		5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9151914B76800ACD082 /* arrowdownred.png */; };
 		5390A91F1914B76800ACD082 /* arrowup.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9161914B76800ACD082 /* arrowup.png */; };
@@ -57,6 +59,10 @@
 		531107A819147B07006F7DAF /* PostTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostTableCell.m; sourceTree = "<group>"; };
 		532706E0191378EF00F5EAB9 /* PostDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDataController.h; sourceTree = "<group>"; };
 		532706E1191378EF00F5EAB9 /* PostDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PostDataController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		533475871922B88300E84CC8 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
+		533475881922B88300E84CC8 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
+		5334758A1922D9B700E84CC8 /* tempviewcontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tempviewcontroller.h; sourceTree = "<group>"; };
+		5334758B1922D9B700E84CC8 /* tempviewcontroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = tempviewcontroller.m; sourceTree = "<group>"; };
 		5390A9141914B76800ACD082 /* arrowdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdown.png; sourceTree = "<group>"; };
 		5390A9151914B76800ACD082 /* arrowdownred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdownred.png; sourceTree = "<group>"; };
 		5390A9161914B76800ACD082 /* arrowup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowup.png; sourceTree = "<group>"; };
@@ -174,6 +180,8 @@
 				5390A93A191552AE00ACD082 /* CommentViewController.m */,
 				53D2ACF5191823010097C840 /* CreateViewController.h */,
 				53D2ACF6191823010097C840 /* CreateViewController.m */,
+				5334758A1922D9B700E84CC8 /* tempviewcontroller.h */,
+				5334758B1922D9B700E84CC8 /* tempviewcontroller.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -247,6 +255,8 @@
 		53F8789619133F60002A578B /* Collegefeed */ = {
 			isa = PBXGroup;
 			children = (
+				533475871922B88300E84CC8 /* TTTAttributedLabel.h */,
+				533475881922B88300E84CC8 /* TTTAttributedLabel.m */,
 				53D2AD0819189EAB0097C840 /* Models */,
 				531107AA19147CBF006F7DAF /* Views */,
 				53963DDE1916C8EB0084E646 /* Controllers */,
@@ -396,6 +406,7 @@
 				5390A9381915407100ACD082 /* CommentTableCell.m in Sources */,
 				5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */,
 				53D2AD0719189E9E0097C840 /* Comment.m in Sources */,
+				5334758C1922D9B700E84CC8 /* tempviewcontroller.m in Sources */,
 				53F878A119133F60002A578B /* AppDelegate.m in Sources */,
 				532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */,
 				53D2AD111918A22A0097C840 /* Tag.m in Sources */,
@@ -406,6 +417,7 @@
 				53963DE71916E5F50084E646 /* PostsViewController.m in Sources */,
 				53F8789D19133F60002A578B /* main.m in Sources */,
 				53D2AD0E19189F740097C840 /* Vote.m in Sources */,
+				533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
