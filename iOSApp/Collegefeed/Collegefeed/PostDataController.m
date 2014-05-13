@@ -15,7 +15,8 @@
 
 @end
 
-static NSString* requestUrlString = @"http://cfeed.herokuapp.com/api/v1/";
+static NSString* requestUrlString = @"http://cfeed.herokuapp.com/api/";
+static NSString* apiVersion = @"v1/";
 
 @implementation PostDataController
 
@@ -25,9 +26,12 @@ static NSString* requestUrlString = @"http://cfeed.herokuapp.com/api/v1/";
 { // initialize this data controller
     if (self = [super init])
     {
+        self.postURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",
+                                             requestUrlString, apiVersion, @"posts"]];
         NSMutableArray *postList = [[NSMutableArray alloc] init];
         self.masterPostList = postList;
         [self fetchAllPosts];
+        
         return self;
     }
     return nil;
@@ -68,10 +72,88 @@ static NSString* requestUrlString = @"http://cfeed.herokuapp.com/api/v1/";
 }
 
 - (void)addPost:(Post *)post
-{
+{   // add post locally to the masterPostList array
+    [self.masterPostList addObject:post];
+//    [self addPostToServer:post];
+}
+
+#pragma mark Network Access
+
+- (void)fetchAllPosts
+{   // call getJsonObjectWithUrl to access network,
+    // then read JSON result into list of posts
+    
+    @try{
+        NSArray *allPosts = (NSArray*)[self getJsonObjectWithUrl:self.postURL];
+        
+        NSLog(@"%@", allPosts);
+        
+        [self.masterPostList removeAllObjects];
+        for (int i = 0; i < allPosts.count; i++)
+        {
+            // this post as a json object
+            NSDictionary *jsonPost = (NSDictionary *) [allPosts objectAtIndex:i];
+            NSLog(@"%@", jsonPost);
+            // values to pass to Post constructor
+
+            NSString *postID    = (NSString*)[jsonPost valueForKey:@"id"];
+            NSString *score     = (NSString*)[jsonPost valueForKey:@"score"];
+            if (score == (id)[NSNull null]) score = @"0";
+            NSString *message   = (NSString*)[jsonPost valueForKey:@"text"];
+            
+            // create post and add to the masterPostList Array
+            Post* newPost = [[Post alloc] initWithPostID:[postID integerValue]
+                                               withScore:[score integerValue]
+                                             withMessage:message];
+            [self addPost:newPost];
+        }
+    }
+    @catch (NSException *exc)
+    {
+        NSLog(@"Error fetching all posts");
+    }
+}
+
+- (void)addPostToServer:(Post *)post
+{   // Serialize new post into JSON and send as POST request to url
     @try
     {
-        [self.masterPostList addObject:post];
+        // Create the request.
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:self.postURL];
+
+        // Convert post to data for HTTPBody
+        NSString *stringData = [NSString stringWithFormat:@"text=%@", post.message];
+        NSDictionary *requestData = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                     post.message, @"text",
+                                     nil];
+        
+        NSError *error;
+        NSData *postData = [NSJSONSerialization dataWithJSONObject:requestData options:0 error:&error];
+        
+        // Set header field
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+
+        // Specify that it will be a POST request
+        [request setHTTPMethod:@"POST"];
+//        [request setHTTPBody:[NSData dataWithBytes:[stringData UTF8String] length:strlen([stringData UTF8String])]];
+        [request setHTTPBody:postData];
+        
+        NSLog(@"%@", request);
+        
+        // Create url connection and fire request
+        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request
+                                                                      delegate:self];
+
+
+        if (!connection)
+        {
+            NSLog(@"POST was unsuccessful");
+        }
+        else
+        {
+            [self addPost:post];
+        }
+        
     }
     @catch(NSException* e)
     {
@@ -79,39 +161,30 @@ static NSString* requestUrlString = @"http://cfeed.herokuapp.com/api/v1/";
         //          truncate? ignore?
     }
 }
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    // should be called when connection received response
+    self.responseData = [NSMutableData data];
+}
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    [self.responseData appendData:data];
 
-#pragma mark Network Access
-
-- (void)fetchAllPosts
-{ // access API to get list of colleges and populate master list
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", requestUrlString, @"posts"]];
+}
+- (void)connection:(NSURLConnection *)connection
+  didFailWithError:(NSError *)error
+{
     
-    NSArray *allPosts = (NSArray*)[self getJsonObjectWithUrl:url];
+}
 
-    [self.masterPostList removeAllObjects];
-    for (int i = 0; i < allPosts.count; i++)
-    {
-        // this post as a json object
-        NSDictionary *jsonPost = (NSDictionary *) [allPosts objectAtIndex:i];
-        NSLog(@"%@", jsonPost);
-        // values to pass to Post constructor
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSLog(@"response data - %@", [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding]);
 
-        NSString *postID    = (NSString*)[jsonPost valueForKey:@"id"];
-        NSString *score     = (NSString*)[jsonPost valueForKey:@"score"];
-        if (score == (id)[NSNull null]) score = @"0";
-        NSString *message   = (NSString*)[jsonPost valueForKey:@"text"];
-        
-        // create post and add to the masterPostList Array
-        Post* newPost = [[Post alloc] initWithPostID:[postID integerValue]
-                                           withScore:[score integerValue]
-                                         withMessage:message];
-        [self addPost:newPost];
-    }
 }
 
 - (id)getJsonObjectWithUrl:(NSURL*) url
-{
-//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", requestUrlString, @"posts"]];
+{ // used to GET posts
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url
                                              cachePolicy:NSURLRequestReturnCacheDataElseLoad
@@ -119,7 +192,7 @@ static NSString* requestUrlString = @"http://cfeed.herokuapp.com/api/v1/";
     
     // Fetch the JSON response
     NSData *urlData;
-    NSURLResponse *response;
+    NSHTTPURLResponse *response;
     NSError *error;
     
     // Make synchronous request
@@ -127,13 +200,19 @@ static NSString* requestUrlString = @"http://cfeed.herokuapp.com/api/v1/";
                                     returningResponse:&response
                                                 error:&error];
     
-    if (error != nil)
+    NSInteger code = [response statusCode];
+    if (code != 200 || error != nil)
     {
-        [NSException raise:@"Error with while GETting posts"
-                    format:@"Error with while GETting posts"];
+        NSString *excReason = [NSString stringWithFormat:@"Error accessing %@", url];
+        NSException *exc = [NSException exceptionWithName:@"NetworkRequestError"
+                                                   reason:excReason
+                                                 userInfo:nil];
+        @throw exc;
     }
     
-    return [NSJSONSerialization JSONObjectWithData:urlData options:0 error:&error];
+    return [NSJSONSerialization JSONObjectWithData:urlData
+                                           options:0
+                                             error:&error];
 }
 
 

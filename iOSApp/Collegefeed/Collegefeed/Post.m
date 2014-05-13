@@ -50,12 +50,12 @@
         
         switch (self.postID % 6)
         {
-            case 0: [self setMessage:@"Post: If you're hungry for a hunk of fat and juicy meat"]; break;
-            case 1: [self setMessage:@"Post: Eat my buddy Pumba here because he is a treat"]; break;
+            case 0: [self setMessage:@"Post: If you're hungry for a hunk of #fat and #juicy meat"]; break;
+            case 1: [self setMessage:@"Post: Eat my buddy #Pumba here because he is a treat"]; break;
             case 2: [self setMessage:@"Post: Come on down and dine"]; break;
-            case 3: [self setMessage:@"Post: On this tasty swine"]; break;
+            case 3: [self setMessage:@"Post: On this #tastyswine"]; break;
             case 4: [self setMessage:@"Post: All you have to do is get in line"]; break;
-            default: [self setMessage:@"Post: LUAU!"]; break;
+            default: [self setMessage:@"Post: #LUAU!"]; break;
         }
         
         

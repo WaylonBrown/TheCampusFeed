@@ -60,10 +60,10 @@
         
         switch (self.commentID % 4)
         {
-            case 0: [self setMessage:@"Comment: Are you achin?"]; break;
-            case 1: [self setMessage:@"Comment: Yup yup yup"]; break;
-            case 2: [self setMessage:@"Comment: For some bacon?"]; break;
-            default: [self setMessage:@"Comment: LUAU!"]; break;
+            case 0: [self setMessage:@"Comment: Are you #achin?"]; break;
+            case 1: [self setMessage:@"Comment: #Yupyupyup"]; break;
+            case 2: [self setMessage:@"Comment: For some #bacon?"]; break;
+            default: [self setMessage:@"Comment: #LUAU!"]; break;
         }
         
         [self validateComment];

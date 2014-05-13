@@ -27,7 +27,7 @@
 @implementation DataControllerTests
 
 - (void)setUp
-{
+{   // NOT called by default
     [super setUp];
     self.PDC = [[PostDataController alloc] init];
     self.CDC = [[CommentDataController alloc] init];
@@ -40,7 +40,8 @@
 }
 
 #pragma mark PostDataController Tests
-- (void)testPostDataControllerAddPost
+
+- (void)testPostDataControllerAddPostLocally
 {
     // Assemble
     [self.PDC.masterPostList removeAllObjects];
@@ -58,19 +59,31 @@
     XCTAssertEqual(3, self.PDC.countOfList, @"Wrong Post Array Size");
 }
 
-- (void)testPostDataControllerGetPosts
+- (void)testPostDataControllerGetPostsFromServer
 {
     // Assemble
-    [self.PDC.masterPostList removeAllObjects];
+    self.PDC = [[PostDataController alloc] init];
     
     // Act
-   [self.PDC fetchAllPosts];
-
+    [self.PDC fetchAllPosts];
+    
     // Assert
     XCTAssertNotEqual(0, self.PDC.countOfList, @"No posts gathered during GET request");
-    
-    // XCTAssertNoThrow ?
 }
+
+- (void)testPostDataControllerAddPostToServer
+{
+    // Assemble
+    Post *post = [[Post alloc] initDummy];
+    self.PDC = [[PostDataController alloc] init];
+    
+    // Act
+    [self.PDC addPostToServer:post];
+    
+    // Assert
+    
+}
+
 
 #pragma mark CommentDataController Tests
 - (void)testCommentDataControllerCommentsHaveSamePost

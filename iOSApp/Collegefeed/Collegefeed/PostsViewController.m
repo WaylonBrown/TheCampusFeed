@@ -24,26 +24,23 @@
     }
     return self;
 }
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.dataController = [[PostDataController alloc] init];
 }
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-
 #pragma mark - Navigation
 
-// A little preparation before navigation to different view
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
+{   // A little preparation before navigation to different view
+
     UIViewController* vc = [segue destinationViewController];
     
     if ([vc class] == [CommentViewController class] && [sender class] == [PostTableCell class])
@@ -64,7 +61,6 @@
         return;
     }
 }
- 
 
 #pragma mark - Table view data source
 
@@ -72,16 +68,15 @@
 {
     return 1;
 }
-
-// Return the number of posts in the list
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+{   // Return the number of posts in the list
+    
     return [self.dataController countOfList];
 }
-// invoked every time a table row needs to be shown.
-// this specifies the prototype (PostTableCell) and assigns the labels
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+{   // invoked every time a table row needs to be shown.
+    // this specifies the prototype (PostTableCell) and assigns the labels
+    
     //TODO: check if these cells should be of type PostTableCellWithCollege instead
     static NSString *CellIdentifier = @"PostTableCell";
     
@@ -98,37 +93,36 @@
     
     return cell;
 }
-// User should not directly modify a PostTableCell
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
+{   // User should not directly modify a PostTableCell
+
     return NO;
 }
-// TODO: This should probably not be hardcoded; revist
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+{   // TODO: This should probably not be hardcoded; revist
+
     return 100;
 }
-// set selected cell and post message of the selected cell
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+{   // set selected cell and post message of the selected cell
+
     self.selectedPost = (Post *)[self.dataController objectInListAtIndex:indexPath.row];
 }
 
 #pragma mark - Child view delegate methods
 
-// User created a new post
 - (void)createdNewPost:(Post *)post
-{
+{   // User created a new post
+
     [self.dataController addPost:post];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     
     // reload the table
     [self.postTableView reloadData];
 }
-
-// User voted on post (usually in subview)
 - (void)votedOnPost
-{
+{   // User voted on post (usually in subview)
+
     [self.postTableView reloadData];
 }
 
