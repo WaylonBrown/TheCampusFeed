@@ -273,7 +273,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		if (best == null) {
 		    //ask user to enable at least one of the Location Providers
 			permissions.clear();	//no permissions
-			newPostButton.setVisibility(View.INVISIBLE);
+			if(newPostButton.isShown())
+				newPostButton.setVisibility(View.INVISIBLE);
 			Toast.makeText(this, "Location Services are turned off.", Toast.LENGTH_LONG).show();
 			Toast.makeText(this, "You can upvote, but nothing else.", Toast.LENGTH_LONG).show();
 		} else {
@@ -331,14 +332,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		{
 			permissions.clear();
 			permissions.add(tamuID);
-			newPostButton.setVisibility(View.VISIBLE);
+			if(!newPostButton.isShown())
+				newPostButton.setVisibility(View.VISIBLE);
 			Toast.makeText(this, "You're near Texas A&M University", Toast.LENGTH_LONG).show();
 			Toast.makeText(this, "You can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
 		}
 		else
 		{
 			permissions.clear();
-			newPostButton.setVisibility(View.INVISIBLE);
+			if(newPostButton.isShown())
+				newPostButton.setVisibility(View.INVISIBLE);
 			Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
 		}
 	}
