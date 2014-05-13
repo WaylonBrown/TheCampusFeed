@@ -1,9 +1,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/menu_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="Settings"/>
+    
+    <item
+        android:id="@+id/menu_help"
+        android:orderInCategory="75"
+        android:showAsAction="never"
+        android:title="Help"/>
+    
+    <item
+        android:id="@+id/menu_GPS"
+        android:orderInCategory="50"
+        android:showAsAction="never"
+        android:title="Reset GPS Location"/>
 
 </menu>
