@@ -11,7 +11,7 @@
 @interface College : NSObject
 
 @property (nonatomic) NSInteger collegeID;
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *shortName;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *shortName;
 
 @end

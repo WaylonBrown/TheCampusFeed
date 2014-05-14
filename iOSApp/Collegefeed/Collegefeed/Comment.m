@@ -93,9 +93,9 @@
     }
     return nil;
 }
-// check for proper length
 - (void)validateComment
-{
+{   // check for proper length
+
 //    if (self.commentMessage.length < MIN_COMMENT_LENGTH)
 //    {
 //        [NSException raise:@"Invalid Comment" format:@"Comment \"%@\" is too short", self.commentMessage];

@@ -16,14 +16,6 @@
 #import "Comment.h"
 #import "TTTAttributedLabel.h"
 
-@interface CommentViewController ()
-
-- (NSString *)getAgeOfCommentAsString:(NSDate *)commentDate;
-- (void) updateVoteButtons:(CommentTableCell *)cell withVoteValue:(int)vote;
-- (UIViewController *)backViewController;
-
-@end
-
 @implementation CommentViewController
 
 #pragma mark - Initialization and view loading
@@ -34,7 +26,6 @@
     self = [super init];
     if (self)
     {
-        [self setDelegate:postSubViewDelegate];
         [self setOriginalPost:post];
         [self setDataController:[[CommentDataController alloc] initWithPost:post]];
     }
@@ -58,37 +49,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
-
-
-/*
-//    NSArray *array = [NSArray arrayWithObject:@"foo"];
-//    [self.originalPostTable insertRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationAutomatic]
-//    [self.originalPostTable setDataSource:array];
-    
-//    UIImage *image = [UIImage imageNamed:@"collegefeedlogosmall.png"];
-//    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:image];
-    
-//    UIViewController *previousController = (UIViewController *) [self backViewController];
-//    
-//    if ([previousController class] == [PostsViewController
-//                                       
-//                                       class])
-//    {   // invoked if comments view was opened from a posts view
-//        PostsViewController *PVC = (PostsViewController *)previousController;
-//        Post* selectedPost = PVC.selectedPost;
-//        
-//        if (selectedPost != nil)
-//        {
-//            // assign post cell attributes based on post that was selected
-//            [[self originalPostCell] assignPropertiesWithPost:selectedPost];
-//            
-//            [[self originalPostCell] setNeedsDisplay];
-//            return;
-//        }
-//    }
-*/
 }
 
 - (void)didReceiveMemoryWarning
@@ -163,7 +123,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 120;
+    return 100;
 }
 
 #pragma mark - Navigation
@@ -174,13 +134,11 @@
 }
 
 #pragma mark - Actions
+
 - (IBAction)done
 {   // Called when user is done viewing comments, return to previous view
+
     [[self navigationController] popViewControllerAnimated:YES];
-    id<PostSubViewDelegate> strongDelegate = self.delegate;
-    
-    // call post delegate method below to reload table data (in case user voted)
-    [strongDelegate votedOnPost];
 }
 
 - (IBAction)createComment
@@ -246,17 +204,5 @@
     
     [cell setNeedsDisplay];
 }
-- (UIViewController *)backViewController
-{   //TODO: (unused) return the previous view controller
-    
-    NSInteger numberOfViewControllers = self.navigationController.viewControllers.count;
-    
-    if (numberOfViewControllers < 2)
-        return nil;
-    else
-        return [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
-}
-
-
 
 @end

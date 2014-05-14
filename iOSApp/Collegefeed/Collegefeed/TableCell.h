@@ -19,7 +19,6 @@
 @property (nonatomic) Post* cellPost;
 @property (nonatomic) Comment* cellComment;
 
-@property (nonatomic) int dummyVoteValue;
 @property (nonatomic, weak) IBOutlet TTTAttributedLabel *messageLabel;
 @property (nonatomic, weak) IBOutlet UILabel *scoreLabel;
 @property (nonatomic, weak) IBOutlet UILabel *commentCountLabel;
@@ -30,10 +29,6 @@
 
 - (void)setAsPostCell:(Post *)post;
 - (void)setAsCommentCell:(Comment*)newComment;
-- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url;
-- (NSString *)getAgeAsString:(NSDate *)creationDate;
-- (void) assignProperties:(NSObject *)obj;
-- (void) updateVoteButtonsWithVoteValue:(int)vote;
 - (IBAction) upVotePressed:(id)sender;
 - (IBAction) downVotePresed:(id)sender;
 

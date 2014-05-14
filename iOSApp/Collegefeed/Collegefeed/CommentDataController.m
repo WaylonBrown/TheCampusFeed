@@ -49,6 +49,7 @@
     }
 }
 
+#pragma mark - Data Access
 
 - (NSString *)getPostMessage
 {   // return a string of the post that this comment is on
@@ -86,6 +87,5 @@
     [self.masterCommentList addObject:comment];
     [self.post.commentList addObject:comment];
 }
-
 
 @end

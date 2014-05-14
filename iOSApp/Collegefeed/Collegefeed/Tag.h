@@ -12,7 +12,7 @@
 
 @property (nonatomic) NSInteger tagID;
 @property (nonatomic) NSInteger score;
-@property (nonatomic) NSString *name;
+@property (nonatomic, strong) NSString *name;
 
 - (id)initWithTagID:(NSInteger)tID withScore:(BOOL)tScore withName:(NSString*)name;
 - (id)initDummy;

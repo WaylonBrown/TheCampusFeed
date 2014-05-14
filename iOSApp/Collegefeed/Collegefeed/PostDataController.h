@@ -13,9 +13,9 @@
 
 @interface PostDataController : NSObject
 
-@property (nonatomic, copy) NSMutableArray *masterPostList;
+@property (nonatomic, strong) NSMutableArray *masterPostList;
 @property (nonatomic) NSURL *postURL;
-@property (strong, nonatomic) NSMutableData *responseData;
+@property (nonatomic) NSMutableData *responseData;
 
 - (NSUInteger)countOfList;
 - (Post *)objectInListAtIndex:(NSUInteger)theIndex;
@@ -28,8 +28,7 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data;
-- (void)connection:(NSURLConnection *)connection
-  didFailWithError:(NSError *)error;
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error;
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection;
 

@@ -15,8 +15,8 @@
 @property (nonatomic) NSInteger collegeID;
 @property (nonatomic) NSInteger score;
 @property (nonatomic) NSInteger vote; //-1 = downvote, 0 = nothing, 1 = upvote
-@property (nonatomic, copy) NSString *postMessage;
-@property (nonatomic, copy) NSString *collegeName;
+@property (nonatomic, strong) NSString *postMessage;
+@property (nonatomic, strong) NSString *collegeName;
 @property (nonatomic, strong) NSDate *date;
 
 // should only be for Post

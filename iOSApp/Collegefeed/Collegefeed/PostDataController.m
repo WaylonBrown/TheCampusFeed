@@ -9,14 +9,8 @@
 #import "PostDataController.h"
 #import "Post.h"
 
-@interface PostDataController()
-
-- (void) initializeDefaultList;
-
-@end
-
-static NSString* requestUrlString = @"http://cfeed.herokuapp.com/api/";
-static NSString* apiVersion = @"v1/";
+static NSString *requestUrlString = @"http://cfeed.herokuapp.com/api/";
+static NSString *apiVersion = @"v1/";
 
 // set to NO to use dummy initialization
 static BOOL useNetwork = NO;
@@ -57,7 +51,7 @@ static BOOL useNetwork = NO;
         [self addPost:post];
     }
 }
-- (void) setMasterPostList:(NSMutableArray *)newList
+- (void)setMasterPostList:(NSMutableArray *)newList
 { // override its default setter method to ensure new array remains mutable
     if (_masterPostList != newList)
     {
@@ -81,7 +75,7 @@ static BOOL useNetwork = NO;
 //    [self addPostToServer:post];
 }
 
-#pragma mark Network Access
+#pragma mark Network Access (NEEDS WORK)
 
 - (void)fetchAllPosts
 {   // call getJsonObjectWithUrl to access network,
@@ -117,7 +111,37 @@ static BOOL useNetwork = NO;
         NSLog(@"Error fetching all posts");
     }
 }
-
+- (id)getJsonObjectWithUrl:(NSURL *)url
+{ // used to GET posts
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url
+                                             cachePolicy:NSURLRequestReturnCacheDataElseLoad
+                                         timeoutInterval:30];
+    
+    // Fetch the JSON response
+    NSData *urlData;
+    NSHTTPURLResponse *response;
+    NSError *error;
+    
+    // Make synchronous request
+    urlData = [NSURLConnection sendSynchronousRequest:request
+                                    returningResponse:&response
+                                                error:&error];
+    
+    NSInteger code = [response statusCode];
+    if (code != 200 || error != nil)
+    {
+        NSString *excReason = [NSString stringWithFormat:@"Error accessing %@", url];
+        NSException *exc = [NSException exceptionWithName:@"NetworkRequestError"
+                                                   reason:excReason
+                                                 userInfo:nil];
+        @throw exc;
+    }
+    
+    return [NSJSONSerialization JSONObjectWithData:urlData
+                                           options:0
+                                             error:&error];
+}
 - (void)addPostToServer:(Post *)post
 {   // Serialize new post into JSON and send as POST request to url
     @try
@@ -175,49 +199,14 @@ static BOOL useNetwork = NO;
     [self.responseData appendData:data];
 
 }
-- (void)connection:(NSURLConnection *)connection
-  didFailWithError:(NSError *)error
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     
 }
-
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     NSLog(@"response data - %@", [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding]);
 
 }
-
-- (id)getJsonObjectWithUrl:(NSURL*) url
-{ // used to GET posts
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:url
-                                             cachePolicy:NSURLRequestReturnCacheDataElseLoad
-                                         timeoutInterval:30];
-    
-    // Fetch the JSON response
-    NSData *urlData;
-    NSHTTPURLResponse *response;
-    NSError *error;
-    
-    // Make synchronous request
-    urlData = [NSURLConnection sendSynchronousRequest:request
-                                    returningResponse:&response
-                                                error:&error];
-    
-    NSInteger code = [response statusCode];
-    if (code != 200 || error != nil)
-    {
-        NSString *excReason = [NSString stringWithFormat:@"Error accessing %@", url];
-        NSException *exc = [NSException exceptionWithName:@"NetworkRequestError"
-                                                   reason:excReason
-                                                 userInfo:nil];
-        @throw exc;
-    }
-    
-    return [NSJSONSerialization JSONObjectWithData:urlData
-                                           options:0
-                                             error:&error];
-}
-
 
 @end

@@ -13,7 +13,8 @@
 @interface Comment : Post
 
 @property (nonatomic) NSInteger commentID;
-@property (nonatomic, copy) NSString *commentMessage;
+@property (nonatomic, strong) NSString *commentMessage;
+
 
 - (id)initWithCommentID:(NSInteger)commentID
      withCommentMessage:(NSString *)message

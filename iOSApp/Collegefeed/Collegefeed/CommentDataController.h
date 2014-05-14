@@ -13,8 +13,8 @@
 
 @interface CommentDataController : NSObject
 
-@property (nonatomic, copy) NSMutableArray *masterCommentList;
-@property (nonatomic, strong) Post* post;
+@property (nonatomic, strong) NSMutableArray *masterCommentList;
+@property (nonatomic, weak) Post* post;
 
 - (id) initWithPost:(Post*)post;
 - (NSString *)getPostMessage;

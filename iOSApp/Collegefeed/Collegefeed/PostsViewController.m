@@ -23,6 +23,10 @@
     }
     return self;
 }
+- (void)viewWillAppear:(BOOL)animated
+{   // Post View is about to appear; reload table data
+    [self.postTableView reloadData];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -48,12 +52,12 @@
     CommentViewController* controller = [[CommentViewController alloc] initWithOriginalPost:self.selectedPost
                                                                                withDelegate:self];
     
-    [self.navigationController presentViewController:controller
-                                            animated:YES
-                                          completion:nil];
+    [self.navigationController pushViewController:controller
+                                         animated:YES];
+//                                          completion:nil];
 }
 
-#pragma mark - Table view data source
+#pragma mark - Table View Override Functions
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -99,7 +103,7 @@
 //    return 120;
 }
 
-#pragma mark - Actions in child views
+#pragma mark - Actions
 
 - (IBAction)createPost:(id)sender
 {   // Display popup to let user type a new post
@@ -123,9 +127,10 @@
 
 }
 - (void)votedOnPost
-{   // User voted on post (usually in subview)
+{   //TODO: I dont like this
+    // just called to refresh table when child (comments) view is finished
 
-    [self.postTableView reloadData];
+//    [self.postTableView reloadData];
 }
 
 

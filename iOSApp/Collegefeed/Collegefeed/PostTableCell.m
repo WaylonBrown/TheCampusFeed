@@ -63,7 +63,6 @@
     }
     @catch(NSException* e)
     {
-        NSLog((NSString*)e.description);
     }
     NSArray *words = [self.messageLabel.text componentsSeparatedByString:@" "];
     for (NSString *word in words)

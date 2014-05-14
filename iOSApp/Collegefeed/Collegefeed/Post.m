@@ -44,7 +44,6 @@
     }
     return nil;
 }
-
 - (id)initDummy
 {   // dummy initializer for dev/testing
 
