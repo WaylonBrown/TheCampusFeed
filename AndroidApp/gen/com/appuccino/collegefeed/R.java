@@ -15,17 +15,76 @@ public final class R {
         public static final int slide_out_right=0x7f040003;
     }
     public static final class array {
-        public static final int spinnerArray=0x7f080000;
+        public static final int spinnerArray=0x7f0a0000;
     }
     public static final class attr {
+        /**  A drawable to use as the background of the Header View 
+         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static final int ptrHeaderBackground=0x7f010001;
+        /**  The height of the Header View 
+         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+         */
+        public static final int ptrHeaderHeight=0x7f010002;
+        /**  The attribute to set in your Application/Activity theme to reference your custom theme 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int ptrHeaderStyle=0x7f010000;
+        /**  The Text Appearance of the Header View's Title text 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int ptrHeaderTitleTextAppearance=0x7f010003;
+        /**  The color that the Progress Bar should be tinted with 
+         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static final int ptrProgressBarColor=0x7f010004;
+        /**  Text to show to prompt the user is pull (or keep pulling) 
+         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+         */
+        public static final int ptrPullText=0x7f010005;
+        /**  Text to show to tell the user that a refresh is currently in progress 
+         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+         */
+        public static final int ptrRefreshingText=0x7f010006;
+        /**  Text to show to tell the user has scrolled enough to refresh 
+         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+         */
+        public static final int ptrReleaseText=0x7f010007;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int reflectionColor=0x7f010008;
     }
     public static final class color {
-        public static final int blue=0x7f050001;
-        public static final int darkgray=0x7f050004;
-        public static final int gray=0x7f050003;
-        public static final int lightblue=0x7f050000;
-        public static final int lightgray=0x7f050002;
-        public static final int white=0x7f050005;
+        public static final int blue=0x7f080001;
+        public static final int darkgray=0x7f080004;
+        public static final int gray=0x7f080003;
+        public static final int lightblue=0x7f080000;
+        public static final int lightgray=0x7f080002;
+        public static final int white=0x7f080005;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -34,8 +93,8 @@ public final class R {
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-        public static final int activity_horizontal_margin=0x7f060000;
-        public static final int activity_vertical_margin=0x7f060001;
+        public static final int activity_horizontal_margin=0x7f090000;
+        public static final int activity_vertical_margin=0x7f090001;
     }
     public static final class drawable {
         public static final int arrowdown=0x7f020000;
@@ -46,80 +105,100 @@ public final class R {
         public static final int collegefeedlogosmall=0x7f020005;
         public static final int ic_launcher=0x7f020006;
         public static final int logofake=0x7f020007;
-        public static final int newpost=0x7f020008;
-        public static final int old_card=0x7f020009;
-        public static final int postbuttonclick=0x7f02000a;
-        public static final int postfeedlogosmall=0x7f02000b;
-        public static final int searchtagbuttonclick=0x7f02000c;
+        public static final int mask=0x7f020008;
+        public static final int newpost=0x7f020009;
+        public static final int old_card=0x7f02000a;
+        public static final int postbuttonclick=0x7f02000b;
+        public static final int postfeedlogosmall=0x7f02000c;
+        public static final int ptr_progress_horizontal_holo_center=0x7f02000d;
+        public static final int ptr_progress_indeterminate_horizontal_holo=0x7f02000e;
+        public static final int ptr_progress_primary_holo=0x7f02000f;
+        public static final int ptr_progressbar_indeterminate_holo1=0x7f020010;
+        public static final int ptr_progressbar_indeterminate_holo2=0x7f020011;
+        public static final int ptr_progressbar_indeterminate_holo3=0x7f020012;
+        public static final int ptr_progressbar_indeterminate_holo4=0x7f020013;
+        public static final int ptr_progressbar_indeterminate_holo5=0x7f020014;
+        public static final int ptr_progressbar_indeterminate_holo6=0x7f020015;
+        public static final int ptr_progressbar_indeterminate_holo7=0x7f020016;
+        public static final int ptr_progressbar_indeterminate_holo8=0x7f020017;
+        public static final int searchtagbuttonclick=0x7f020018;
+        public static final int spot_mask=0x7f020019;
     }
     public static final class id {
-        public static final int arrowDown=0x7f0b0007;
-        public static final int arrowUp=0x7f0b0005;
-        public static final int card=0x7f0b000e;
-        public static final int collegeNameText=0x7f0b0012;
-        public static final int collegeText=0x7f0b0011;
-        public static final int commentText=0x7f0b0010;
-        public static final int commentsList=0x7f0b000b;
-        public static final int commentsText=0x7f0b000a;
-        public static final int fragmentListView=0x7f0b000c;
-        public static final int loadingText=0x7f0b000d;
-        public static final int menu_GPS=0x7f0b001f;
-        public static final int menu_help=0x7f0b001e;
-        public static final int menu_settings=0x7f0b001d;
-        public static final int messageText=0x7f0b0008;
-        public static final int newCommentButton=0x7f0b0000;
-        public static final int newCommentMessage=0x7f0b0015;
-        public static final int newCommentTagsText=0x7f0b0016;
-        public static final int newCommentTitle=0x7f0b0014;
-        public static final int newPostButton=0x7f0b0002;
-        public static final int newPostMessage=0x7f0b0018;
-        public static final int newPostTagsText=0x7f0b0019;
-        public static final int newPostTitle=0x7f0b0017;
-        public static final int pager=0x7f0b0003;
-        public static final int postCard=0x7f0b0004;
-        public static final int postDetails=0x7f0b000f;
-        public static final int scoreText=0x7f0b0006;
-        public static final int searchTagEditText=0x7f0b001a;
-        public static final int spinner=0x7f0b0001;
-        public static final int tagSearchText=0x7f0b001c;
-        public static final int tagText=0x7f0b0013;
-        public static final int timeText=0x7f0b0009;
-        public static final int topTagText=0x7f0b001b;
+        public static final int arrowDown=0x7f050009;
+        public static final int arrowUp=0x7f050007;
+        public static final int card=0x7f05001b;
+        public static final int collegeNameText=0x7f05001e;
+        public static final int collegeText=0x7f050015;
+        public static final int commentText=0x7f05001d;
+        public static final int commentsList=0x7f05000d;
+        public static final int commentsText=0x7f05000c;
+        public static final int fragmentListView=0x7f050010;
+        public static final int loadingText=0x7f050019;
+        public static final int menu_GPS=0x7f050022;
+        public static final int menu_help=0x7f050021;
+        public static final int menu_settings=0x7f050020;
+        public static final int messageText=0x7f05000a;
+        public static final int newCommentButton=0x7f050003;
+        public static final int newCommentMessage=0x7f050012;
+        public static final int newCommentTagsText=0x7f050013;
+        public static final int newCommentTitle=0x7f050011;
+        public static final int newPostButton=0x7f050005;
+        public static final int newPostMessage=0x7f050016;
+        public static final int newPostTagsText=0x7f050017;
+        public static final int newPostTitle=0x7f050014;
+        public static final int pager=0x7f05000e;
+        public static final int postCard=0x7f050006;
+        public static final int postDetails=0x7f05001c;
+        public static final int ptr_content=0x7f050000;
+        public static final int ptr_progress=0x7f050002;
+        public static final int ptr_text=0x7f050001;
+        public static final int scoreText=0x7f050008;
+        public static final int searchTagEditText=0x7f050018;
+        public static final int spinner=0x7f050004;
+        public static final int tagSearchText=0x7f05001a;
+        public static final int tagText=0x7f05001f;
+        public static final int timeText=0x7f05000b;
+        public static final int topTagText=0x7f05000f;
     }
     public static final class layout {
         public static final int actionbar_comment=0x7f030000;
         public static final int actionbar_main=0x7f030001;
         public static final int actionbar_tag_layout=0x7f030002;
-        public static final int activity_main=0x7f030003;
-        public static final int comment_layout=0x7f030004;
-        public static final int fragment_layout=0x7f030005;
-        public static final int list_row=0x7f030006;
-        public static final int list_row_college=0x7f030007;
-        public static final int list_row_collegepost=0x7f030008;
-        public static final int list_row_tag=0x7f030009;
-        public static final int new_comment_layout=0x7f03000a;
-        public static final int new_post_layout=0x7f03000b;
-        public static final int search_for_tag_layout=0x7f03000c;
-        public static final int tag_activity_layout=0x7f03000d;
-        public static final int tag_fragment_layout=0x7f03000e;
+        public static final int activity_comment=0x7f030003;
+        public static final int activity_main=0x7f030004;
+        public static final int activity_tag=0x7f030005;
+        public static final int default_header=0x7f030006;
+        public static final int dialog_comment=0x7f030007;
+        public static final int dialog_post=0x7f030008;
+        public static final int dialog_tag_search=0x7f030009;
+        public static final int fragment_layout=0x7f03000a;
+        public static final int fragment_layout_tag=0x7f03000b;
+        public static final int list_row=0x7f03000c;
+        public static final int list_row_college=0x7f03000d;
+        public static final int list_row_collegepost=0x7f03000e;
+        public static final int list_row_tag=0x7f03000f;
     }
     public static final class menu {
-        public static final int main=0x7f0a0000;
+        public static final int main=0x7f0b0000;
     }
     public static final class string {
-        public static final int action_settings=0x7f070001;
-        public static final int allcollege_section1=0x7f070007;
-        public static final int allcollege_section2=0x7f070008;
-        public static final int allcollege_section3=0x7f070009;
-        public static final int allcollege_section4=0x7f07000a;
-        public static final int allcollege_section5=0x7f07000b;
-        public static final int allcollege_section6=0x7f07000c;
-        public static final int app_name=0x7f070000;
-        public static final int onecollege_section1=0x7f070002;
-        public static final int onecollege_section2=0x7f070003;
-        public static final int onecollege_section3=0x7f070004;
-        public static final int onecollege_section4=0x7f070005;
-        public static final int onecollege_section5=0x7f070006;
+        public static final int action_settings=0x7f060004;
+        public static final int allcollege_section1=0x7f06000a;
+        public static final int allcollege_section2=0x7f06000b;
+        public static final int allcollege_section3=0x7f06000c;
+        public static final int allcollege_section4=0x7f06000d;
+        public static final int allcollege_section5=0x7f06000e;
+        public static final int allcollege_section6=0x7f06000f;
+        public static final int app_name=0x7f060003;
+        public static final int onecollege_section1=0x7f060005;
+        public static final int onecollege_section2=0x7f060006;
+        public static final int onecollege_section3=0x7f060007;
+        public static final int onecollege_section4=0x7f060008;
+        public static final int onecollege_section5=0x7f060009;
+        public static final int pull_to_refresh_pull_label=0x7f060000;
+        public static final int pull_to_refresh_refreshing_label=0x7f060002;
+        public static final int pull_to_refresh_release_label=0x7f060001;
     }
     public static final class style {
         /** 
@@ -143,9 +222,160 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f090000;
+        public static final int AppBaseTheme=0x7f070001;
         /**  Application theme. 
          */
-        public static final int AppTheme=0x7f090001;
+        public static final int AppTheme=0x7f070002;
+        public static final int Widget_PullToRefresh_ProgressBar_Horizontal_Center=0x7f070000;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a PullToRefreshHeader.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #PullToRefreshHeader_ptrHeaderBackground com.appuccino.collegefeed:ptrHeaderBackground}</code></td><td> A drawable to use as the background of the Header View </td></tr>
+           <tr><td><code>{@link #PullToRefreshHeader_ptrHeaderHeight com.appuccino.collegefeed:ptrHeaderHeight}</code></td><td> The height of the Header View </td></tr>
+           <tr><td><code>{@link #PullToRefreshHeader_ptrHeaderTitleTextAppearance com.appuccino.collegefeed:ptrHeaderTitleTextAppearance}</code></td><td> The Text Appearance of the Header View's Title text </td></tr>
+           <tr><td><code>{@link #PullToRefreshHeader_ptrProgressBarColor com.appuccino.collegefeed:ptrProgressBarColor}</code></td><td> The color that the Progress Bar should be tinted with </td></tr>
+           <tr><td><code>{@link #PullToRefreshHeader_ptrPullText com.appuccino.collegefeed:ptrPullText}</code></td><td> Text to show to prompt the user is pull (or keep pulling) </td></tr>
+           <tr><td><code>{@link #PullToRefreshHeader_ptrRefreshingText com.appuccino.collegefeed:ptrRefreshingText}</code></td><td> Text to show to tell the user that a refresh is currently in progress </td></tr>
+           <tr><td><code>{@link #PullToRefreshHeader_ptrReleaseText com.appuccino.collegefeed:ptrReleaseText}</code></td><td> Text to show to tell the user has scrolled enough to refresh </td></tr>
+           </table>
+           @see #PullToRefreshHeader_ptrHeaderBackground
+           @see #PullToRefreshHeader_ptrHeaderHeight
+           @see #PullToRefreshHeader_ptrHeaderTitleTextAppearance
+           @see #PullToRefreshHeader_ptrProgressBarColor
+           @see #PullToRefreshHeader_ptrPullText
+           @see #PullToRefreshHeader_ptrRefreshingText
+           @see #PullToRefreshHeader_ptrReleaseText
+         */
+        public static final int[] PullToRefreshHeader = {
+            0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004,
+            0x7f010005, 0x7f010006, 0x7f010007
+        };
+        /**
+          <p>
+          @attr description
+           A drawable to use as the background of the Header View 
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          <p>This is a private symbol.
+          @attr name com.appuccino.collegefeed:ptrHeaderBackground
+        */
+        public static final int PullToRefreshHeader_ptrHeaderBackground = 0;
+        /**
+          <p>
+          @attr description
+           The height of the Header View 
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+          <p>This is a private symbol.
+          @attr name com.appuccino.collegefeed:ptrHeaderHeight
+        */
+        public static final int PullToRefreshHeader_ptrHeaderHeight = 1;
+        /**
+          <p>
+          @attr description
+           The Text Appearance of the Header View's Title text 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name com.appuccino.collegefeed:ptrHeaderTitleTextAppearance
+        */
+        public static final int PullToRefreshHeader_ptrHeaderTitleTextAppearance = 2;
+        /**
+          <p>
+          @attr description
+           The color that the Progress Bar should be tinted with 
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          <p>This is a private symbol.
+          @attr name com.appuccino.collegefeed:ptrProgressBarColor
+        */
+        public static final int PullToRefreshHeader_ptrProgressBarColor = 3;
+        /**
+          <p>
+          @attr description
+           Text to show to prompt the user is pull (or keep pulling) 
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+          <p>This is a private symbol.
+          @attr name com.appuccino.collegefeed:ptrPullText
+        */
+        public static final int PullToRefreshHeader_ptrPullText = 4;
+        /**
+          <p>
+          @attr description
+           Text to show to tell the user that a refresh is currently in progress 
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+          <p>This is a private symbol.
+          @attr name com.appuccino.collegefeed:ptrRefreshingText
+        */
+        public static final int PullToRefreshHeader_ptrRefreshingText = 5;
+        /**
+          <p>
+          @attr description
+           Text to show to tell the user has scrolled enough to refresh 
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+          <p>This is a private symbol.
+          @attr name com.appuccino.collegefeed:ptrReleaseText
+        */
+        public static final int PullToRefreshHeader_ptrReleaseText = 6;
+        /** Attributes that can be used with a ShimmerView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #ShimmerView_reflectionColor com.appuccino.collegefeed:reflectionColor}</code></td><td></td></tr>
+           </table>
+           @see #ShimmerView_reflectionColor
+         */
+        public static final int[] ShimmerView = {
+            0x7f010008
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.appuccino.collegefeed.R.attr#reflectionColor}
+          attribute's value can be found in the {@link #ShimmerView} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.appuccino.collegefeed:reflectionColor
+        */
+        public static final int ShimmerView_reflectionColor = 0;
+    };
 }

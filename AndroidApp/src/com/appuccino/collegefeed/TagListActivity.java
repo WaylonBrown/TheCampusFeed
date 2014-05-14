@@ -25,7 +25,7 @@ public class TagListActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.tag_activity_layout);		
+		setContentView(R.layout.activity_tag);		
 		
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();

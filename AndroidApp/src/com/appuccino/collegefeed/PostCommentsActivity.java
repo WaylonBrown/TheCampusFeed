@@ -48,7 +48,7 @@ public class PostCommentsActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.comment_layout);
+		setContentView(R.layout.activity_comment);
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
 		actionBar.setCustomView(R.layout.actionbar_comment);
@@ -178,7 +178,7 @@ public class PostCommentsActivity extends Activity{
 	protected void newCommentDialog() 
 	{
 		LayoutInflater inflater = getLayoutInflater();
-		View postDialogLayout = inflater.inflate(R.layout.new_comment_layout, null);
+		View postDialogLayout = inflater.inflate(R.layout.dialog_comment, null);
 		final EditText commentMessage = (EditText)postDialogLayout.findViewById(R.id.newCommentMessage);
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);

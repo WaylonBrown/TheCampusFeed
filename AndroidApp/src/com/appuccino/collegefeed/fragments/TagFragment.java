@@ -49,7 +49,7 @@ public class TagFragment extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.tag_fragment_layout,
+		View rootView = inflater.inflate(R.layout.fragment_layout_tag,
 				container, false);
 		ListView fragList = (ListView)rootView.findViewById(R.id.fragmentListView);
 		
@@ -101,7 +101,7 @@ public class TagFragment extends Fragment
 	public void searchTagsClicked() 
 	{
 		LayoutInflater inflater = mainActivity.getLayoutInflater();
-		View searchDialogLayout = inflater.inflate(R.layout.search_for_tag_layout, null);
+		View searchDialogLayout = inflater.inflate(R.layout.dialog_tag_search, null);
 		final EditText searchTagEditText = (EditText)searchDialogLayout.findViewById(R.id.searchTagEditText);
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
