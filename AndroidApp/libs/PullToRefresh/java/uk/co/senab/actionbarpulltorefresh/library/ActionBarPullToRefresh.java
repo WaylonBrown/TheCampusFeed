@@ -128,8 +128,8 @@ public class ActionBarPullToRefresh {
                 child = viewGroup.getChildAt(0);
             }
 
-            viewGroup.addView(pullToRefreshLayout, ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT);
+            viewGroup.addView(pullToRefreshLayout, ViewGroup.LayoutParams.FILL_PARENT,
+                    ViewGroup.LayoutParams.FILL_PARENT);
         }
     }
 }

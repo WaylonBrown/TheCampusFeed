@@ -1,10 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pullToRefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-	android:background="@color/lightgray"
-    tools:context=".MainActivity$DummySectionFragment" >
-
+    android:background="@color/lightgray">
+	
     <ListView
         android:id="@+id/fragmentListView"
         android:layout_width="match_parent"
@@ -23,10 +23,10 @@
         android:id="@+id/loadingText"
         android:text="Loading..."
         android:textSize="30sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" 
         android:visibility="gone"/>
 
-</RelativeLayout>
+</uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
