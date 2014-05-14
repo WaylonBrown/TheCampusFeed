@@ -15,6 +15,7 @@
 #import "CommentDataController.h"
 #import "Comment.h"
 #import "CreateViewController.h"
+#import "TTTAttributedLabel.h"
 
 @interface CommentViewController ()
 
@@ -33,6 +34,13 @@
     {
         // Custom initialization
     }
+    return self;
+}
+- (id)initWithOriginalPost:(Post*)post withDelegate:(id)postSubViewDelegate
+{
+    self = [super init];
+    [self setDelegate:postSubViewDelegate];
+    [self setOriginalPost:post];
     return self;
 }
 
@@ -75,11 +83,23 @@
 //    self.dataController = [[CommentDataController alloc] init];
 //    
 //}
-- (void)viewDidLoad
+- (void)loadView
 {
+    UIView* view = [[[NSBundle mainBundle] loadNibNamed:@"CommentsView"
+                                                  owner:self
+                                                options:nil]
+                    objectAtIndex:0];
+    
+    [self setView:view];
+}
+- (void)viewDidLoad
+{   // When CommentViewController is initialized, show CommentsView.xib
     [super viewDidLoad];
     
     self.dataController = [[CommentDataController alloc] initWithPost:_originalPost];
+
+
+    
 //    NSArray *array = [NSArray arrayWithObject:@"foo"];
 //    [self.originalPostTable insertRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationAutomatic]
 //    [self.originalPostTable setDataSource:array];
@@ -134,9 +154,10 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+{   // this method handles two tableViews: one for the post and another for it's comments
+
     if ([tableView.restorationIdentifier compare:@"OriginalPostTableView"] == NSOrderedSame)
-    {
+    {   // PostView table
         static NSString *PostCellIdentifier = @"PostTableCell";
 
         PostTableCell *cell = (PostTableCell *)[tableView dequeueReusableCellWithIdentifier:PostCellIdentifier];
@@ -148,6 +169,8 @@
         [cell setPost:(self.originalPost)];
         return cell;
     }
+    
+    // CommentView table
     static NSString *CellIdentifier = @"CommentTableCell";
     
     CommentTableCell *cell = (CommentTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];

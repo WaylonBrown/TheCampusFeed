@@ -11,6 +11,8 @@
 		532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706E1191378EF00F5EAB9 /* PostDataController.m */; };
 		533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 533475881922B88300E84CC8 /* TTTAttributedLabel.m */; };
 		5334758C1922D9B700E84CC8 /* tempviewcontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 5334758B1922D9B700E84CC8 /* tempviewcontroller.m */; };
+		5334758E1922F53800E84CC8 /* PostTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5334758D1922F53800E84CC8 /* PostTableCell.xib */; };
+		533475981923001E00E84CC8 /* CommentsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 533475971923001E00E84CC8 /* CommentsView.xib */; };
 		5390A91D1914B76800ACD082 /* arrowdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9141914B76800ACD082 /* arrowdown.png */; };
 		5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9151914B76800ACD082 /* arrowdownred.png */; };
 		5390A91F1914B76800ACD082 /* arrowup.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9161914B76800ACD082 /* arrowup.png */; };
@@ -63,6 +65,8 @@
 		533475881922B88300E84CC8 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		5334758A1922D9B700E84CC8 /* tempviewcontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tempviewcontroller.h; sourceTree = "<group>"; };
 		5334758B1922D9B700E84CC8 /* tempviewcontroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = tempviewcontroller.m; sourceTree = "<group>"; };
+		5334758D1922F53800E84CC8 /* PostTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTableCell.xib; sourceTree = "<group>"; };
+		533475971923001E00E84CC8 /* CommentsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentsView.xib; sourceTree = "<group>"; };
 		5390A9141914B76800ACD082 /* arrowdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdown.png; sourceTree = "<group>"; };
 		5390A9151914B76800ACD082 /* arrowdownred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdownred.png; sourceTree = "<group>"; };
 		5390A9161914B76800ACD082 /* arrowup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowup.png; sourceTree = "<group>"; };
@@ -135,27 +139,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		531107AA19147CBF006F7DAF /* Views */ = {
+		533475901922F66400E84CC8 /* Posts */ = {
 			isa = PBXGroup;
 			children = (
-				53F878A219133F60002A578B /* Main_iPhone.storyboard */,
+				533475921922F6F200E84CC8 /* PostTableCell */,
+				53963DE51916E5F50084E646 /* PostsViewController.h */,
+				53963DE61916E5F50084E646 /* PostsViewController.m */,
+				532706E0191378EF00F5EAB9 /* PostDataController.h */,
+				532706E1191378EF00F5EAB9 /* PostDataController.m */,
+				53D2AD0919189EC60097C840 /* Post.h */,
+				53D2AD0A19189EC60097C840 /* Post.m */,
+			);
+			name = Posts;
+			sourceTree = "<group>";
+		};
+		533475911922F69300E84CC8 /* Comments */ = {
+			isa = PBXGroup;
+			children = (
+				533475931922FA0A00E84CC8 /* CommentTableCell */,
+				533475961922FD8900E84CC8 /* CommentsView */,
+				5390A92A19153EBE00ACD082 /* CommentDataController.h */,
+				5390A92B19153EBE00ACD082 /* CommentDataController.m */,
+				53D2AD0519189E9E0097C840 /* Comment.h */,
+				53D2AD0619189E9E0097C840 /* Comment.m */,
+			);
+			name = Comments;
+			sourceTree = "<group>";
+		};
+		533475921922F6F200E84CC8 /* PostTableCell */ = {
+			isa = PBXGroup;
+			children = (
+				5334758D1922F53800E84CC8 /* PostTableCell.xib */,
 				531107A719147B07006F7DAF /* PostTableCell.h */,
 				531107A819147B07006F7DAF /* PostTableCell.m */,
+			);
+			name = PostTableCell;
+			sourceTree = "<group>";
+		};
+		533475931922FA0A00E84CC8 /* CommentTableCell */ = {
+			isa = PBXGroup;
+			children = (
 				5390A9361915407100ACD082 /* CommentTableCell.h */,
 				5390A9371915407100ACD082 /* CommentTableCell.m */,
 			);
-			name = Views;
+			name = CommentTableCell;
 			sourceTree = "<group>";
 		};
-		532706DF191378A500F5EAB9 /* Data Controllers */ = {
+		533475961922FD8900E84CC8 /* CommentsView */ = {
 			isa = PBXGroup;
 			children = (
-				532706E0191378EF00F5EAB9 /* PostDataController.h */,
-				532706E1191378EF00F5EAB9 /* PostDataController.m */,
-				5390A92A19153EBE00ACD082 /* CommentDataController.h */,
-				5390A92B19153EBE00ACD082 /* CommentDataController.m */,
+				5390A939191552AE00ACD082 /* CommentViewController.h */,
+				5390A93A191552AE00ACD082 /* CommentViewController.m */,
+				533475971923001E00E84CC8 /* CommentsView.xib */,
 			);
-			name = "Data Controllers";
+			name = CommentsView;
 			sourceTree = "<group>";
 		};
 		5390A9131914B76800ACD082 /* Images */ = {
@@ -174,10 +211,6 @@
 		5390A92919153E5200ACD082 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				53963DE51916E5F50084E646 /* PostsViewController.h */,
-				53963DE61916E5F50084E646 /* PostsViewController.m */,
-				5390A939191552AE00ACD082 /* CommentViewController.h */,
-				5390A93A191552AE00ACD082 /* CommentViewController.m */,
 				53D2ACF5191823010097C840 /* CreateViewController.h */,
 				53D2ACF6191823010097C840 /* CreateViewController.m */,
 				5334758A1922D9B700E84CC8 /* tempviewcontroller.h */,
@@ -186,32 +219,9 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
-		53963DDD1916C8DC0084E646 /* Delegates */ = {
-			isa = PBXGroup;
-			children = (
-				53F8789F19133F60002A578B /* AppDelegate.h */,
-				53F878A019133F60002A578B /* AppDelegate.m */,
-			);
-			name = Delegates;
-			sourceTree = "<group>";
-		};
-		53963DDE1916C8EB0084E646 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				53963DDD1916C8DC0084E646 /* Delegates */,
-				5390A92919153E5200ACD082 /* View Controllers */,
-				532706DF191378A500F5EAB9 /* Data Controllers */,
-			);
-			name = Controllers;
-			sourceTree = "<group>";
-		};
 		53D2AD0819189EAB0097C840 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				53D2AD0919189EC60097C840 /* Post.h */,
-				53D2AD0A19189EC60097C840 /* Post.m */,
-				53D2AD0519189E9E0097C840 /* Comment.h */,
-				53D2AD0619189E9E0097C840 /* Comment.m */,
 				53D2AD0C19189F740097C840 /* Vote.h */,
 				53D2AD0D19189F740097C840 /* Vote.m */,
 				53D2AD0F1918A22A0097C840 /* Tag.h */,
@@ -255,11 +265,11 @@
 		53F8789619133F60002A578B /* Collegefeed */ = {
 			isa = PBXGroup;
 			children = (
-				533475871922B88300E84CC8 /* TTTAttributedLabel.h */,
-				533475881922B88300E84CC8 /* TTTAttributedLabel.m */,
+				53F878A219133F60002A578B /* Main_iPhone.storyboard */,
+				533475901922F66400E84CC8 /* Posts */,
+				533475911922F69300E84CC8 /* Comments */,
+				5390A92919153E5200ACD082 /* View Controllers */,
 				53D2AD0819189EAB0097C840 /* Models */,
-				531107AA19147CBF006F7DAF /* Views */,
-				53963DDE1916C8EB0084E646 /* Controllers */,
 				5390A9131914B76800ACD082 /* Images */,
 				53F8789719133F60002A578B /* Supporting Files */,
 				53F878AE19133F60002A578B /* Images.xcassets */,
@@ -270,6 +280,10 @@
 		53F8789719133F60002A578B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				53F8789F19133F60002A578B /* AppDelegate.h */,
+				53F878A019133F60002A578B /* AppDelegate.m */,
+				533475871922B88300E84CC8 /* TTTAttributedLabel.h */,
+				533475881922B88300E84CC8 /* TTTAttributedLabel.m */,
 				53F8789819133F60002A578B /* Collegefeed-Info.plist */,
 				53F8789919133F60002A578B /* InfoPlist.strings */,
 				53F8789C19133F60002A578B /* main.m */,
@@ -379,11 +393,13 @@
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,
 				5390A9201914B76800ACD082 /* arrowupblue.png in Resources */,
+				5334758E1922F53800E84CC8 /* PostTableCell.xib in Resources */,
 				5390A9241914B76800ACD082 /* postbuttonclick.xml in Resources */,
 				53F878AF19133F60002A578B /* Images.xcassets in Resources */,
 				53F878A419133F60002A578B /* Main_iPhone.storyboard in Resources */,
 				5390A91F1914B76800ACD082 /* arrowup.png in Resources */,
 				53F8789B19133F60002A578B /* InfoPlist.strings in Resources */,
+				533475981923001E00E84CC8 /* CommentsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

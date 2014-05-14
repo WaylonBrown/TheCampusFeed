@@ -14,7 +14,6 @@
 
 @protocol PostSubViewDelegate;
 
-
 @interface PostTableCell : UITableViewCell <TTTAttributedLabelDelegate>
 
 @property (nonatomic) Post* post;

@@ -43,14 +43,14 @@
 
     UIViewController* vc = [segue destinationViewController];
     
-    if ([vc class] == [CommentViewController class] && [sender class] == [PostTableCell class])
-    {   // When switching to comment view
-        PostTableCell *cell = sender;
-        CommentViewController * cvc = (CommentViewController *) vc;
-        [cvc setDelegate:self];
-        [cvc setOriginalPost:cell.post];
-        return;
-    }
+//    if ([vc class] == [CommentViewController class] && [sender class] == [PostTableCell class])
+//    {   // When switching to comment view
+//        PostTableCell *cell = sender;
+//        CommentViewController * cvc = (CommentViewController *) vc;
+//        [cvc setDelegate:self];
+//        [cvc setOriginalPost:cell.post];
+//        return;
+//    }
     
     if ([vc class] == [CreateViewController class] && [sender class] == [UIBarButtonItem class])
     {   // When creating a new post
@@ -60,6 +60,17 @@
         [createView.createButton setTitle:@"Post!" forState:UIControlStateNormal];
         return;
     }
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{   // Present a Comment View for the selected post
+    
+    self.selectedPost = (Post *)[self.dataController objectInListAtIndex:indexPath.row];
+    CommentViewController* controller = [[CommentViewController alloc] initWithOriginalPost:self.selectedPost
+                                                                               withDelegate:self];
+    
+    [self.navigationController presentViewController:controller
+                                            animated:YES
+                                          completion:nil];
 }
 
 #pragma mark - Table view data source
@@ -103,11 +114,7 @@
 
     return 100;
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{   // set selected cell and post message of the selected cell
 
-    self.selectedPost = (Post *)[self.dataController objectInListAtIndex:indexPath.row];
-}
 
 #pragma mark - Child view delegate methods
 

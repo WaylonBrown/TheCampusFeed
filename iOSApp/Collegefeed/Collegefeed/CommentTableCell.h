@@ -10,6 +10,9 @@
 #import "PostTableCell.h"
 
 @class Comment;
+
+//@protocol PostSubViewDelegate;
+
 @interface CommentTableCell : PostTableCell
 
 //@property (nonatomic, weak) IBOutlet UILabel *messageLabel;

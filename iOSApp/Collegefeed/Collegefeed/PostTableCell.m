@@ -65,8 +65,15 @@
     NSString *myAgeLabel = [self getAgeAsString:d];
     
     // assign cell's message label and look for hashtags
-//    [self.messageLabel setDelegate:self];
     [self.messageLabel setText:post.message];
+
+    @try{
+        [self.messageLabel setDelegate:self];
+    }
+    @catch(NSException* e)
+    {
+        NSLog((NSString*)e.description);
+    }
     NSArray *words = [self.messageLabel.text componentsSeparatedByString:@" "];
     for (NSString *word in words)
     {
@@ -74,13 +81,9 @@
         {
             NSRange range = [self.messageLabel.text rangeOfString:word];
             
-            [self.messageLabel addLinkToURL:[NSURL URLWithString:[NSString stringWithFormat:@"action://tags?%@", word]] withRange:range];
+            [self.messageLabel addLinkToURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", word]] withRange:range];
         }
     }
-
-//    NSRange range = [self.messageLabel.text rangeOfString:@"#"];
-//    self.messageLabel add
-//    [self.messageLabel addLinkToURL:[NSURL URLWithString:@"google.com"] withRange:range];
     
     // assign cell's plain text labels
     [self.ageLabel setText: myAgeLabel];
@@ -91,19 +94,12 @@
     [self updateVoteButtonsWithVoteValue:post.vote];
 }
 
-- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
-    
-    if ([[url scheme] hasPrefix:@"action"]) {
-        if ([[url host] hasPrefix:@"hash"]) {
-            /* load help screen */
-//            UIStoryboard  *storyboard=[UIStoryboard storyboardWithName:@"viewTags" bundle:nil];
-//            OIOI_VC_ViewTags *viewController =[storyboard instantiateViewControllerWithIdentifier:@"viewTags"];
-//            viewController.str_word = ??????;
-//            [self.navigationController pushViewController:viewController animated:YES];
-            
-        }
-    }
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
+{
+    NSString* tagMessage = [url absoluteString];
+    NSLog(@"tag = %@", tagMessage);
 }
+
 - (NSString *)getAgeAsString:(NSDate *)creationDate
 {   // return string indicating how long ago the post was created
 

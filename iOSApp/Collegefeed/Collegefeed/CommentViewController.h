@@ -31,6 +31,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *originalPostTable;
 @property (weak, nonatomic) IBOutlet UITableView *commentTable;
 
+- (id)initWithOriginalPost:(Post*)post withDelegate:(id)postSubViewDelegate;
+
 - (IBAction)done;
 - (IBAction)create;
 
