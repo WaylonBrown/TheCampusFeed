@@ -14,7 +14,6 @@
 #import "CommentTableCell.h"
 #import "CommentDataController.h"
 #import "Comment.h"
-#import "CreateViewController.h"
 #import "TTTAttributedLabel.h"
 
 @interface CommentViewController ()
@@ -98,7 +97,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view method overrides
+#pragma mark - Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -172,16 +171,6 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    UIViewController* vc = [segue destinationViewController];
-    
-    if ([vc class] == [CreateViewController class] && [sender class] == [UIBarButtonItem class])
-    {   // When creating a new comment on a post
-        CreateViewController *createView = (CreateViewController *)vc;
-        [createView setCDelegate:self];
-        [createView.createLabel setText:@"Create new comment"];
-        [createView.createButton setTitle:@"Comment!" forState:UIControlStateNormal];
-        return;
-    }
 }
 
 #pragma mark - Actions
@@ -193,11 +182,32 @@
     // call post delegate method below to reload table data (in case user voted)
     [strongDelegate votedOnPost];
 }
-- (IBAction)create
-{
-    
+
+- (IBAction)createComment
+{   // Display popup to let user type a new comment
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Comment"
+                                                    message:@"You got an opinion?"
+                                                   delegate:self
+                                          cancelButtonTitle:@"nope.."
+                                          otherButtonTitles:@"Comment!", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert show];
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{   // Add new post if user submits on the alert view
+    
+    if (buttonIndex == 0) return;
+    
+    Comment *newComment = [[Comment alloc] initWithCommentMessage:[[alertView textFieldAtIndex:0] text]
+                                                         withPost:self.originalPost];
+    //    [newComment validateComment];
+    [self.dataController addComment:newComment];
+    [self.commentTable reloadData];
+    [self.originalPostTable reloadData];
+}
+
+#pragma mark - Helper Methods
 
 - (NSString *)getAgeOfCommentAsString:(NSDate *)commentDate
 {   // return string indicating how long ago the comment was created
@@ -236,7 +246,6 @@
     
     [cell setNeedsDisplay];
 }
-
 - (UIViewController *)backViewController
 {   //TODO: (unused) return the previous view controller
     
@@ -247,17 +256,7 @@
     else
         return [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
 }
-#pragma mark - Child view delegate methods
 
-// User created a new comment in create subview
-- (void)createdNewComment:(Comment *)comment
-{
-    [self.dataController addCommentWithMessage:comment];
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-    
-    // reload the tables
-    [self.originalPostTable reloadData];
-    [self.commentTable reloadData];
-}
+
 
 @end

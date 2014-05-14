@@ -49,7 +49,7 @@ static BOOL useNetwork = NO;
 
     [self setMasterPostList:[[NSMutableArray alloc] init]];
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 3; i++)
     {
         Post *post;
         post = [[Post alloc] initDummy];

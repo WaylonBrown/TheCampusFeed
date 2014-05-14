@@ -11,7 +11,6 @@
 #import "PostDataController.h"
 #import "Post.h"
 #import "CommentViewController.h"
-#import "CreateViewController.h"
 
 @implementation PostsViewController
 
@@ -41,16 +40,6 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {   // A little preparation before navigation to different view
 
-    UIViewController* vc = [segue destinationViewController];
-    
-    if ([vc class] == [CreateViewController class] && [sender class] == [UIBarButtonItem class])
-    {   // When creating a new post
-        CreateViewController *createView = (CreateViewController *)vc;
-        [createView setPDelegate:self];
-        [createView.createLabel setText:@"Create new post"];
-        [createView.createButton setTitle:@"Post!" forState:UIControlStateNormal];
-        return;
-    }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Comment View for the selected post
@@ -110,22 +99,34 @@
 //    return 120;
 }
 
+#pragma mark - Actions in child views
 
-#pragma mark - Child view delegate methods
-
-- (void)createdNewPost:(Post *)post
-{   // User created a new post
-
-    [self.dataController addPost:post];
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+- (IBAction)createPost:(id)sender
+{   // Display popup to let user type a new post
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
+                                                     message:@"What's poppin?"
+                                                    delegate:self
+                                           cancelButtonTitle:@"nvm.."
+                                           otherButtonTitles:@"Post!", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert show];
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{   // Add new post if user submits on the alert view
     
-    // reload the table
+    if (buttonIndex == 0) return;
+    
+    Post *newPost = [[Post alloc] initWithPostMessage:[[alertView textFieldAtIndex:0] text]];
+//    [newPost validatePost];
+    [self.dataController addPost:newPost];
     [self.postTableView reloadData];
+
 }
 - (void)votedOnPost
 {   // User voted on post (usually in subview)
 
     [self.postTableView reloadData];
 }
+
 
 @end

@@ -27,6 +27,7 @@
            withScore:(NSInteger)score
      withPostMessage:(NSString *)newPostMessage;
 
+- (id)initWithPostMessage:(NSString *)newPostMessage;
 - (id)initDummy;
 - (void)validatePost;
 

@@ -22,7 +22,7 @@
 - (void)addPost:(Post *)post;
 
 
-- (void)addPostToServer:(Post *)post;
+//- (void)addPostToServer:(Post *)post;
 - (void)fetchAllPosts;
 - (id)getJsonObjectWithUrl:(NSURL*) url;
 

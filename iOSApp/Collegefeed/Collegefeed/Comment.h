@@ -15,7 +15,13 @@
 @property (nonatomic) NSInteger commentID;
 @property (nonatomic, copy) NSString *commentMessage;
 
-- (id)initWithCommentID:(NSInteger)commentID withMessage:(NSString *)message withPostID:(NSInteger)postID;
+- (id)initWithCommentID:(NSInteger)commentID
+     withCommentMessage:(NSString *)message
+             withPostID:(NSInteger)postID;
+
+- (id)initWithCommentMessage:(NSString *)message
+                    withPost:(Post *)post;
+
 - (id)initWithPost:(Post *)post;
 - (id)initDummy;
 

@@ -14,14 +14,8 @@
 @class Comment;
 @protocol PostSubViewDelegate;
 
-// protocol to handle events in subview: createView(comment)
-@protocol CommentSubViewDelegate <NSObject>
 
-- (void)createdNewComment:(Comment *)comment;
-
-@end
-
-@interface CommentViewController : UIViewController <CommentSubViewDelegate>
+@interface CommentViewController : UIViewController
 
 @property (nonatomic, assign) id<PostSubViewDelegate> delegate;
 @property (strong, nonatomic) CommentDataController *dataController;
@@ -33,6 +27,6 @@
 - (id)initWithOriginalPost:(Post*)post withDelegate:(id)postSubViewDelegate;
 
 - (IBAction)done;
-- (IBAction)create;
+- (IBAction)createComment;
 
 @end

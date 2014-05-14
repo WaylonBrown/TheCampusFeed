@@ -12,7 +12,9 @@
 
 @implementation Comment
 
-- (id)initWithCommentID:(NSInteger)newCommentID withMessage:(NSString *)newMessage withPostID:(NSInteger)newPostID
+- (id)initWithCommentID:(NSInteger)newCommentID
+     withCommentMessage:(NSString *)newMessage
+             withPostID:(NSInteger)newPostID
 {
     self = [super init];
     if (self)
@@ -31,7 +33,26 @@
     return nil;
     
 }
-// assign values from the post that was commented on
+- (id)initWithCommentMessage:(NSString *)message
+                    withPost:(Post *)post
+{   // assign values from the post that was commented on
+
+    self = [self initDummy];
+    if (self)
+    {
+        [self setPostID:post.postID];
+        [self setCommentMessage:message];
+        [self setCollegeID:post.collegeID];
+        [self setScore:0];
+        [self setVote:0];
+        [self setDate:[NSDate date]];
+ 
+        [self validateComment];
+        return self;
+    }
+    return nil;
+    
+}
 - (id)initWithPost:(Post *)post
 {
     self = [self initDummy];
@@ -75,29 +96,17 @@
 // check for proper length
 - (void)validateComment
 {
-    if (self.commentMessage.length < MIN_COMMENT_LENGTH)
-    {
-        [NSException raise:@"Invalid Comment" format:@"Comment \"%@\" is too short", self.commentMessage];
-    }
-    if (self.commentMessage.length > MAX_COMMENT_LENGTH)
-    {
-        [NSException raise:@"Invalid Comment" format:@"Comment \"%@\" is too long", self.commentMessage];
-    }
-    if (self.vote != -1 && self.vote != 0 && self.vote != 1)
-    {
-        [NSException raise:@"Invalid Vote value" format:@"Invalid Vote value on comment with id = %d", self.commentID];
-    }
-}
-// assign the comment's vote to -1, 0, or 1
-//- (void) setVote:(NSInteger)newVote
-//{
-//    if (newVote == -1 || newVote == 0 || newVote == 1)
+//    if (self.commentMessage.length < MIN_COMMENT_LENGTH)
 //    {
-//        [self setVote:newVote];
+//        [NSException raise:@"Invalid Comment" format:@"Comment \"%@\" is too short", self.commentMessage];
 //    }
-//    else
+//    if (self.commentMessage.length > MAX_COMMENT_LENGTH)
+//    {
+//        [NSException raise:@"Invalid Comment" format:@"Comment \"%@\" is too long", self.commentMessage];
+//    }
+//    if (self.vote != -1 && self.vote != 0 && self.vote != 1)
 //    {
 //        [NSException raise:@"Invalid Vote value" format:@"Invalid Vote value on comment with id = %d", self.commentID];
 //    }
-//}
+}
 @end

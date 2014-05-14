@@ -45,7 +45,7 @@
     {
         Comment *comment;
         comment = [[Comment alloc] initWithPost:post];
-        [self addCommentWithMessage:comment];
+        [self addComment:comment];
     }
 }
 
@@ -81,8 +81,8 @@
 {
     return [self.masterCommentList objectAtIndex:theIndex];
 }
-- (void)addCommentWithMessage:(Comment *)comment
-{
+- (void)addComment:(Comment *)comment
+{   // add comment to list maintained by this datacontroller and the post
     [self.masterCommentList addObject:comment];
     [self.post.commentList addObject:comment];
 }

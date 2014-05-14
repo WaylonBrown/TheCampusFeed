@@ -78,7 +78,7 @@
     self.PDC = [[PostDataController alloc] init];
     
     // Act
-    [self.PDC addPostToServer:post];
+    [self.PDC addPost:post];
     
     // Assert
     

@@ -10,14 +10,13 @@
 #import "Comment.h"
 #import "Constants.h"
 
-
 @implementation Post
 
-// initializer to create a new post
 - (id)initWithPostID:(NSInteger)newPostID
            withScore:(NSInteger)score
      withPostMessage:(NSString *)newPostMessage
-{
+{   // initializer to create a new post
+
     self = [super init];
     if (self)
     {
@@ -29,15 +28,26 @@
         [self setCollegeName:@"<No College>"];
         [self setDate:[NSDate date]];
         
-//        [self validatePost];
+        [self validatePost];
+        return self;
+    }
+    return nil;
+}
+- (id)initWithPostMessage:(NSString *)newPostMessage
+{   // initializer to create a new post
+    
+    self = [self initDummy];
+    if (self)
+    {
+        [self setPostMessage:newPostMessage];
         return self;
     }
     return nil;
 }
 
-// dummy initializer for dev/testing
 - (id)initDummy
-{
+{   // dummy initializer for dev/testing
+
     self = [super init];
     if (self)
     {
@@ -65,21 +75,21 @@
             Comment *comment = [[Comment alloc] initDummy];
             [self.commentList addObject:comment];
         }
-//        [self validatePost];
+        [self validatePost];
         return self;
     }
     return nil;
 }
-// check for proper length
 - (void)validatePost
-{
-    if (self.postMessage.length < MIN_POST_LENGTH)
-    {
-        [NSException raise:@"Invalid Post" format:@"Post \"%@\" is too short", self.postMessage];
-    }
-    if (self.postMessage.length > MAX_POST_LENGTH)
-    {
-        [NSException raise:@"Invalid Post" format:@"Post \"%@\" is too long", self.postMessage];
-    }
+{   // check for proper length
+
+//    if (self.postMessage.length < MIN_POST_LENGTH)
+//    {
+//        [NSException raise:@"Invalid Post" format:@"Post \"%@\" is too short", self.postMessage];
+//    }
+//    if (self.postMessage.length > MAX_POST_LENGTH)
+//    {
+//        [NSException raise:@"Invalid Post" format:@"Post \"%@\" is too long", self.postMessage];
+//    }
 }
 @end

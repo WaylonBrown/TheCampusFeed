@@ -20,7 +20,7 @@
 - (NSString *)getPostMessage;
 - (NSUInteger)countOfList;
 - (Comment *)objectInListAtIndex:(NSUInteger)theIndex;
-- (void)addCommentWithMessage:(Comment *)post;
+- (void)addComment:(Comment *)comment;
 - (void) initializeDefaultList;
 
 

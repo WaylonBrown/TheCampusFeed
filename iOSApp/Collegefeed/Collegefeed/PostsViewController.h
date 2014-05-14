@@ -15,7 +15,6 @@
 @protocol PostSubViewDelegate <NSObject>
 
 - (void)votedOnPost;
-- (void)createdNewPost:(Post *)post;
 
 @end
 
@@ -24,6 +23,8 @@
 @property (strong, nonatomic) PostDataController *dataController;
 @property (strong, nonatomic) Post* selectedPost;
 @property (weak, nonatomic) IBOutlet UITableView *postTableView;
+
+- (IBAction)createPost:(id)sender;
 
 @end
 

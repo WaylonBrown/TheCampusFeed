@@ -27,7 +27,6 @@
 		5390A94119158E0E00ACD082 /* ViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A94019158E0E00ACD082 /* ViewControllerTests.m */; };
 		5390A94319158E1A00ACD082 /* DataControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A94219158E1A00ACD082 /* DataControllerTests.m */; };
 		53963DE71916E5F50084E646 /* PostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53963DE61916E5F50084E646 /* PostsViewController.m */; };
-		53D2ACF7191823010097C840 /* CreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2ACF6191823010097C840 /* CreateViewController.m */; };
 		53D2AD0719189E9E0097C840 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0619189E9E0097C840 /* Comment.m */; };
 		53D2AD0B19189EC60097C840 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0A19189EC60097C840 /* Post.m */; };
 		53D2AD0E19189F740097C840 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0D19189F740097C840 /* Vote.m */; };
@@ -88,8 +87,6 @@
 		5390A94219158E1A00ACD082 /* DataControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataControllerTests.m; sourceTree = "<group>"; };
 		53963DE51916E5F50084E646 /* PostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostsViewController.h; sourceTree = "<group>"; };
 		53963DE61916E5F50084E646 /* PostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostsViewController.m; sourceTree = "<group>"; };
-		53D2ACF5191823010097C840 /* CreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateViewController.h; sourceTree = "<group>"; };
-		53D2ACF6191823010097C840 /* CreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateViewController.m; sourceTree = "<group>"; };
 		53D2AD0519189E9E0097C840 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
 		53D2AD0619189E9E0097C840 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		53D2AD0919189EC60097C840 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
@@ -227,8 +224,6 @@
 		5390A92919153E5200ACD082 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				53D2ACF5191823010097C840 /* CreateViewController.h */,
-				53D2ACF6191823010097C840 /* CreateViewController.m */,
 				5334758A1922D9B700E84CC8 /* tempviewcontroller.h */,
 				5334758B1922D9B700E84CC8 /* tempviewcontroller.m */,
 			);
@@ -281,8 +276,8 @@
 		53F8789619133F60002A578B /* Collegefeed */ = {
 			isa = PBXGroup;
 			children = (
-				533475A019232A4A00E84CC8 /* TableCell */,
 				53F878A219133F60002A578B /* Main_iPhone.storyboard */,
+				533475A019232A4A00E84CC8 /* TableCell */,
 				533475901922F66400E84CC8 /* Posts */,
 				533475911922F69300E84CC8 /* Comments */,
 				5390A92919153E5200ACD082 /* View Controllers */,
@@ -445,7 +440,6 @@
 				532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */,
 				53D2AD111918A22A0097C840 /* Tag.m in Sources */,
 				53D2AD151918AAB80097C840 /* College.m in Sources */,
-				53D2ACF7191823010097C840 /* CreateViewController.m in Sources */,
 				5390A92C19153EBE00ACD082 /* CommentDataController.m in Sources */,
 				533475A41923344100E84CC8 /* TableCell.m in Sources */,
 				53D2AD0B19189EC60097C840 /* Post.m in Sources */,

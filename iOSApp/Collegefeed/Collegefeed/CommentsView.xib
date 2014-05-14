@@ -33,7 +33,7 @@
                                 <inset key="imageInsets" minX="2" minY="3" maxX="2" maxY="0.0"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <action selector="create" destination="-1" id="lKQ-Qw-2TA"/>
+                                    <action selector="createComment" destination="-1" id="WRV-2C-qK8"/>
                                 </connections>
                             </barButtonItem>
                         </navigationItem>
