@@ -17,15 +17,15 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int reflectionColor=0x7f010000;
+        public static int reflectionColor=0x7f010000;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int mask=0x7f020001;
-        public static final int spot_mask=0x7f020002;
+        public static int ic_launcher=0x7f020000;
+        public static int mask=0x7f020001;
+        public static int spot_mask=0x7f020002;
     }
     public static final class string {
-        public static final int app_name=0x7f030000;
+        public static int app_name=0x7f030000;
     }
     public static final class styleable {
         /** Attributes that can be used with a ShimmerView.

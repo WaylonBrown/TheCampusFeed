@@ -362,7 +362,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public void newPostClicked() 
 	{
 		LayoutInflater inflater = getLayoutInflater();
-		View postDialogLayout = inflater.inflate(R.layout.new_post_layout, null);
+		View postDialogLayout = inflater.inflate(R.layout.dialog_post, null);
 		final EditText postMessage = (EditText)postDialogLayout.findViewById(R.id.newPostMessage);
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
