@@ -43,15 +43,6 @@
 
     UIViewController* vc = [segue destinationViewController];
     
-//    if ([vc class] == [CommentViewController class] && [sender class] == [PostTableCell class])
-//    {   // When switching to comment view
-//        PostTableCell *cell = sender;
-//        CommentViewController * cvc = (CommentViewController *) vc;
-//        [cvc setDelegate:self];
-//        [cvc setOriginalPost:cell.post];
-//        return;
-//    }
-    
     if ([vc class] == [CreateViewController class] && [sender class] == [UIBarButtonItem class])
     {   // When creating a new post
         CreateViewController *createView = (CreateViewController *)vc;
@@ -111,8 +102,12 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // TODO: This should probably not be hardcoded; revist
-
+    
+    // if not showing college name
     return 100;
+    
+    // if showing college name
+//    return 120;
 }
 
 

@@ -1,49 +1,45 @@
 //
-//  PostTableCell.m
+//  TableCell.m
 //  Collegefeed
 //
-//  Created by Patrick Sheehan on 5/2/14.
+//  Created by Patrick Sheehan on 5/13/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
-// a subclass of UITableViewCell to enable custom properties
 
-#import "PostTableCell.h"
+#import "TableCell.h"
 #import "Post.h"
-#import "PostsViewController.h"
+#import "Comment.h"
 
-@implementation PostTableCell
+@implementation TableCell
 
+@synthesize cellPost;
+@synthesize cellComment;
+
+- (void)awakeFromNib
+{
+    // Initialization code
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
-- (void)setPost:(Post *)post
+- (void)setAsPostCell:(Post *)post
 {
-    _post = post;
-    [self assignProperties];
+    [self setCellComment:nil];
+    [self setCellPost:post];
+    [self assignProperties:post];
 }
-- (void)assignPropertiesWithPost:(Post *)post
-{   // configure view of the cell according to a post
-
-    if (post == nil) return;
-    
-    NSDate *d = (NSDate*)[post date];
-    NSString *myAgeLabel = [self getAgeAsString:d];
-    
-    // assign cell's text labels
-    [self.ageLabel setText: myAgeLabel];
-    [self.messageLabel setText:post.message];
-    [self.scoreLabel setText:[NSString stringWithFormat:@"%d", (int)post.score]];
-    [self.commentCountLabel setText:[NSString stringWithFormat:@"%d comments", (int)post.commentList.count]];
-    
-    // assign arrow colors according to user's vote
-    [self updateVoteButtonsWithVoteValue:post.vote];
+- (void)setAsCommentCell:(Comment*)comment
+{
+    [self setCellPost:nil];
+    [self setCellComment:comment];
+    [self assignProperties:comment];
 }
 - (void)assignProperties
 {   // configure view of the cell according to the post's delegate ID
-
+    
     if (self.post == nil)
     {
         [NSException raise:@"Error assign properties to a post cell" format:@"PostTableCell does not have a post reference"];
@@ -57,7 +53,7 @@
     
     // assign cell's message label and look for hashtags
     [self.messageLabel setText:post.message];
-
+    
     @try{
         [self.messageLabel setDelegate:self];
     }
@@ -84,6 +80,57 @@
     // assign arrow colors according to user's vote
     [self updateVoteButtonsWithVoteValue:post.vote];
 }
+
+/*
+- (void) assignProperties:(NSObject *)obj
+{   // configure view of the cell according provided Post/Comment
+    
+    // obj must a Comment or a Post
+    Class class = [obj class];
+    if ((class != [Post class] && class != [Comment class])
+        || obj == nil)
+    {
+        [NSException raise:@"Error assigning properties to table cell"
+                    format:@"Cell does not have a valid post or comment reference"];
+        return;
+    }
+    
+//    Post *post = self.post;
+    
+    NSDate *d = (NSDate*)[obj date];
+    NSString *myAgeLabel = [self getAgeAsString:d];
+    
+    // assign cell's message label and look for hashtags
+    [self.messageLabel setText:post.message];
+    
+    @try{
+        [self.messageLabel setDelegate:self];
+    }
+    @catch(NSException* e)
+    {
+        NSLog((NSString*)e.description);
+    }
+    NSArray *words = [self.messageLabel.text componentsSeparatedByString:@" "];
+    for (NSString *word in words)
+    {
+        if ([word hasPrefix:@"#"])
+        {
+            NSRange range = [self.messageLabel.text rangeOfString:word];
+            
+            [self.messageLabel addLinkToURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", word]] withRange:range];
+        }
+    }
+    
+    // assign cell's plain text labels
+    [self.ageLabel setText: myAgeLabel];
+    [self.scoreLabel setText:[NSString stringWithFormat:@"%d", (int)post.score]];
+    [self.commentCountLabel setText:[NSString stringWithFormat:@"%d comments", (int)post.commentList.count]];
+    
+    // assign arrow colors according to user's vote
+    [self updateVoteButtonsWithVoteValue:post.vote];
+}
+*/
+
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
 {
     NSString* tagMessage = [url absoluteString];
@@ -91,7 +138,7 @@
 }
 - (NSString *)getAgeAsString:(NSDate *)creationDate
 {   // return string indicating how long ago the post was created
-
+    
     int seconds = [[NSDate date] timeIntervalSinceDate:creationDate];
     int minutes = seconds / 60;
     int hours = minutes / 60;
@@ -125,7 +172,7 @@
             break;
     }
     
-//    [self setNeedsDisplay];
+    //    [self setNeedsDisplay];
 }
 - (IBAction)upVotePressed:(id)sender
 {

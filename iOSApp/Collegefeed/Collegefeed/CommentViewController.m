@@ -164,7 +164,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 120;
 }
 
 #pragma mark - Navigation
@@ -187,7 +187,7 @@
 #pragma mark - Actions
 - (IBAction)done
 {   // Called when user is done viewing comments, return to previous view
-    [self.navigationController popViewControllerAnimated:YES];
+    [[self navigationController] popViewControllerAnimated:YES];
     id<PostSubViewDelegate> strongDelegate = self.delegate;
     
     // call post delegate method below to reload table data (in case user voted)

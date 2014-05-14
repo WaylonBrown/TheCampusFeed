@@ -11,19 +11,6 @@
 
 @implementation CommentTableCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
-- (void)awakeFromNib
-{
-    // Initialization code
-}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
@@ -31,11 +18,16 @@
 
     // Configure the view for the selected state
 }
-- (void) assignProperties
+- (void)setComment:(Comment*)newComment
+{
+    _comment = newComment;
+    [self assignProperties];
+}
+- (void)assignProperties
 {
     if (self.comment == nil)
     {
-        [NSException raise:@"Error assign properties to a comment cell" format:@"CommentTableCell does not have a comment reference"];
+        [NSException raise:@"Error assigning properties to a comment cell" format:@"CommentTableCell does not have a comment reference"];
         return;
     }
         
@@ -47,11 +39,7 @@
     // assign arrow colors according to user's vote
     [self updateVoteButtonsWithVoteValue:self.comment.vote];
 }
-- (void) setComment:(Comment*)newComment
-{
-    _comment = newComment;
-    [self assignProperties];
-}
+
 - (IBAction)upVotePressed:(id)sender
 {
     if (self.comment != nil)
