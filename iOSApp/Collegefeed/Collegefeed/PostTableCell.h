@@ -16,7 +16,7 @@
 
 @interface PostTableCell : UITableViewCell <TTTAttributedLabelDelegate>
 
-@property (nonatomic ) Post* post;
+@property (nonatomic) Post* post;
 @property (nonatomic) int dummyVoteValue;
 @property (nonatomic, weak) IBOutlet TTTAttributedLabel *messageLabel;
 @property (nonatomic, weak) IBOutlet UILabel *scoreLabel;

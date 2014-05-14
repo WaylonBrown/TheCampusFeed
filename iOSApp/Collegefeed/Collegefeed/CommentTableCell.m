@@ -33,7 +33,7 @@
         
     // assign cell's text labels
     [self.ageLabel setText: [self getAgeAsString:(NSDate*)self.comment.date]];
-    [self.messageLabel setText:self.comment.message];
+    [self.messageLabel setText:self.comment.commentMessage];
     [self.scoreLabel setText:[NSString stringWithFormat:@"%d", (int)self.comment.score]];
     
     // assign arrow colors according to user's vote

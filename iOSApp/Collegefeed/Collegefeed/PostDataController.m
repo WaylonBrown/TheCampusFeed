@@ -108,7 +108,7 @@ static BOOL useNetwork = NO;
             // create post and add to the masterPostList Array
             Post* newPost = [[Post alloc] initWithPostID:[postID integerValue]
                                                withScore:[score integerValue]
-                                             withMessage:message];
+                                         withPostMessage:message];
             [self addPost:newPost];
         }
     }
@@ -128,7 +128,7 @@ static BOOL useNetwork = NO;
         // Convert post to data for HTTPBody
 //        NSString *stringData = [NSString stringWithFormat:@"text=%@", post.message];
         NSDictionary *requestData = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                     post.message, @"text",
+                                     post.postMessage, @"text",
                                      nil];
         
         NSError *error;

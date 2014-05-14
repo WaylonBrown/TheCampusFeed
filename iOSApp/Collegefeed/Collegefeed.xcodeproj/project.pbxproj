@@ -13,8 +13,8 @@
 		5334758C1922D9B700E84CC8 /* tempviewcontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 5334758B1922D9B700E84CC8 /* tempviewcontroller.m */; };
 		5334758E1922F53800E84CC8 /* PostTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5334758D1922F53800E84CC8 /* PostTableCell.xib */; };
 		533475981923001E00E84CC8 /* CommentsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 533475971923001E00E84CC8 /* CommentsView.xib */; };
-		5334759E192329F700E84CC8 /* TableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5334759C192329F700E84CC8 /* TableCell.m */; };
-		5334759F192329F700E84CC8 /* TableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5334759D192329F700E84CC8 /* TableCell.xib */; };
+		533475A41923344100E84CC8 /* TableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533475A21923344100E84CC8 /* TableCell.m */; };
+		533475A51923344100E84CC8 /* TableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 533475A31923344100E84CC8 /* TableCell.xib */; };
 		5390A91D1914B76800ACD082 /* arrowdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9141914B76800ACD082 /* arrowdown.png */; };
 		5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9151914B76800ACD082 /* arrowdownred.png */; };
 		5390A91F1914B76800ACD082 /* arrowup.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9161914B76800ACD082 /* arrowup.png */; };
@@ -69,9 +69,9 @@
 		5334758B1922D9B700E84CC8 /* tempviewcontroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = tempviewcontroller.m; sourceTree = "<group>"; };
 		5334758D1922F53800E84CC8 /* PostTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTableCell.xib; sourceTree = "<group>"; };
 		533475971923001E00E84CC8 /* CommentsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentsView.xib; sourceTree = "<group>"; };
-		5334759B192329F700E84CC8 /* TableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableCell.h; sourceTree = "<group>"; };
-		5334759C192329F700E84CC8 /* TableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableCell.m; sourceTree = "<group>"; };
-		5334759D192329F700E84CC8 /* TableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableCell.xib; sourceTree = "<group>"; };
+		533475A11923344100E84CC8 /* TableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableCell.h; path = Collegefeed/TableCell.h; sourceTree = "<group>"; };
+		533475A21923344100E84CC8 /* TableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TableCell.m; path = Collegefeed/TableCell.m; sourceTree = "<group>"; };
+		533475A31923344100E84CC8 /* TableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TableCell.xib; path = Collegefeed/TableCell.xib; sourceTree = "<group>"; };
 		5390A9141914B76800ACD082 /* arrowdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdown.png; sourceTree = "<group>"; };
 		5390A9151914B76800ACD082 /* arrowdownred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdownred.png; sourceTree = "<group>"; };
 		5390A9161914B76800ACD082 /* arrowup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowup.png; sourceTree = "<group>"; };
@@ -203,9 +203,9 @@
 		533475A019232A4A00E84CC8 /* TableCell */ = {
 			isa = PBXGroup;
 			children = (
-				5334759B192329F700E84CC8 /* TableCell.h */,
-				5334759C192329F700E84CC8 /* TableCell.m */,
-				5334759D192329F700E84CC8 /* TableCell.xib */,
+				533475A11923344100E84CC8 /* TableCell.h */,
+				533475A21923344100E84CC8 /* TableCell.m */,
+				533475A31923344100E84CC8 /* TableCell.xib */,
 			);
 			name = TableCell;
 			path = ..;
@@ -416,7 +416,7 @@
 				53F878A419133F60002A578B /* Main_iPhone.storyboard in Resources */,
 				5390A91F1914B76800ACD082 /* arrowup.png in Resources */,
 				53F8789B19133F60002A578B /* InfoPlist.strings in Resources */,
-				5334759F192329F700E84CC8 /* TableCell.xib in Resources */,
+				533475A51923344100E84CC8 /* TableCell.xib in Resources */,
 				533475981923001E00E84CC8 /* CommentsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -447,7 +447,7 @@
 				53D2AD151918AAB80097C840 /* College.m in Sources */,
 				53D2ACF7191823010097C840 /* CreateViewController.m in Sources */,
 				5390A92C19153EBE00ACD082 /* CommentDataController.m in Sources */,
-				5334759E192329F700E84CC8 /* TableCell.m in Sources */,
+				533475A41923344100E84CC8 /* TableCell.m in Sources */,
 				53D2AD0B19189EC60097C840 /* Post.m in Sources */,
 				53963DE71916E5F50084E646 /* PostsViewController.m in Sources */,
 				53F8789D19133F60002A578B /* main.m in Sources */,

@@ -34,7 +34,7 @@
     
     // assign cell's text labels
     [self.ageLabel setText: myAgeLabel];
-    [self.messageLabel setText:post.message];
+    [self.messageLabel setText:post.postMessage];
     [self.scoreLabel setText:[NSString stringWithFormat:@"%d", (int)post.score]];
     [self.commentCountLabel setText:[NSString stringWithFormat:@"%d comments", (int)post.commentList.count]];
     
@@ -56,7 +56,7 @@
     NSString *myAgeLabel = [self getAgeAsString:d];
     
     // assign cell's message label and look for hashtags
-    [self.messageLabel setText:post.message];
+    [self.messageLabel setText:post.postMessage];
 
     @try{
         [self.messageLabel setDelegate:self];

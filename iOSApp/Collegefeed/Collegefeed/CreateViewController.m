@@ -86,7 +86,7 @@
     if (self.pDelegate)
     {   // if post
         Post *post = [[Post alloc] initDummy];
-        [post setMessage:self.textField.text];
+        [post setPostMessage:self.textField.text];
     
         id<PostSubViewDelegate> strongDelegate = self.pDelegate;
         [strongDelegate createdNewPost:post];
@@ -94,7 +94,7 @@
     else if (self.cDelegate)
     {   // if comment
         Comment *comment = [[Comment alloc] initDummy];
-        [comment setMessage:self.textField.text];
+        [comment setCommentMessage:self.textField.text];
     
         id<CommentSubViewDelegate> strongDelegate = self.cDelegate;
         [strongDelegate createdNewComment:comment];
