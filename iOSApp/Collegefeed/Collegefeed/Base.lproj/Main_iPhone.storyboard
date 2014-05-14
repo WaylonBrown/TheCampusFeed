@@ -255,19 +255,6 @@
             </objects>
             <point key="canvasLocation" x="1365" y="474"/>
         </scene>
-        <!--View Controller - Regular View-->
-        <scene sceneID="bmb-gK-ste">
-            <objects>
-                <viewController storyboardIdentifier="CommentsPage" title="Regular View" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mlT-Ey-0kC" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="YiO-TW-Ru0"/>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="8Nc-ZX-kmB"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jht-IZ-SIk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="996" y="-98"/>
-        </scene>
         <!--Navigation Controller - Item-->
         <scene sceneID="h1o-fD-jGn">
             <objects>

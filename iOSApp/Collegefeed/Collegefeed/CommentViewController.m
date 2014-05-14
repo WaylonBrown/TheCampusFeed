@@ -27,64 +27,28 @@
 
 @implementation CommentViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+#pragma mark - Initialization and view loading
+
+- (id)initWithOriginalPost:(Post*)post withDelegate:(id)postSubViewDelegate
+{   // initialize a CommentsView provided info about the previously selected Post
+
+    self = [super init];
     if (self)
     {
-        // Custom initialization
+        [self setDelegate:postSubViewDelegate];
+        [self setOriginalPost:post];
+        [self setDataController:[[CommentDataController alloc] initWithPost:post]];
     }
     return self;
 }
-- (id)initWithOriginalPost:(Post*)post withDelegate:(id)postSubViewDelegate
-{
-    self = [super init];
-    [self setDelegate:postSubViewDelegate];
-    [self setOriginalPost:post];
-    return self;
+- (void)awakeFromNib
+{   //TODO: (unused/unneeded?)
+    [super awakeFromNib];
+    self.dataController = [[CommentDataController alloc] init];
 }
-
-// return the previous view controller
-- (UIViewController *)backViewController
-{
-    NSInteger numberOfViewControllers = self.navigationController.viewControllers.count;
-    
-    if (numberOfViewControllers < 2)
-        return nil;
-    else
-        return [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
-}
-//- (void)viewDidAppear:(BOOL)animated
-//{
-//    [[self navigationController] setNavigationBarHidden:NO animated:NO];
-//    UIViewController *previousController = (UIViewController *) [self backViewController];
-//    
-//    
-//    if ([previousController class] == [PostsViewController
-//                                       
-//                                       class])
-//    {   // invoked if comments view was opened from a posts view
-//        PostsViewController *PVC = (PostsViewController *)previousController;
-//        Post* selectedPost = PVC.selectedPost;
-//        
-//        if (selectedPost != nil)
-//        {
-//            // assign post cell attributes based on post that was selected
-//            [[self originalPostCell] assignPropertiesWithPost:selectedPost];
-//            
-//            [[self originalPostCell] setNeedsDisplay];
-//            return;
-//        }
-//    }
-//}
-//- (void)awakeFromNib
-//{
-//    [super awakeFromNib];
-//    self.dataController = [[CommentDataController alloc] init];
-//    
-//}
 - (void)loadView
-{
+{   // Use CommentsView.xib to show comments on a post
+    
     UIView* view = [[[NSBundle mainBundle] loadNibNamed:@"CommentsView"
                                                   owner:self
                                                 options:nil]
@@ -93,13 +57,13 @@
     [self setView:view];
 }
 - (void)viewDidLoad
-{   // When CommentViewController is initialized, show CommentsView.xib
+{
     [super viewDidLoad];
     
-    self.dataController = [[CommentDataController alloc] initWithPost:_originalPost];
-
-
     
+
+
+/*
 //    NSArray *array = [NSArray arrayWithObject:@"foo"];
 //    [self.originalPostTable insertRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationAutomatic]
 //    [self.originalPostTable setDataSource:array];
@@ -125,7 +89,7 @@
 //            return;
 //        }
 //    }
-    
+*/
 }
 
 - (void)didReceiveMemoryWarning
@@ -134,27 +98,26 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
+#pragma mark - Table view method overrides
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+{   // Number of rows in table views
     if ([tableView.restorationIdentifier compare:@"CommentTableView"] == NSOrderedSame)
-    {
+    {   // Comment Table has as many rows as number of comments
         return [self.dataController countOfList];
     }
     else // if ([tableView.restorationIdentifier compare:@"OriginalPostTableView"] == NSOrderedSame)
-    {
+    {   // only one row in Post Table (the original Post)
         return 1;
     }
 }
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{   // this method handles two tableViews: one for the post and another for it's comments
+{   // Get the table view cell for the given row
+    // This method handles two table views: one for the post and another for it's comments
 
     if ([tableView.restorationIdentifier compare:@"OriginalPostTableView"] == NSOrderedSame)
     {   // PostView table
@@ -163,71 +126,46 @@
         PostTableCell *cell = (PostTableCell *)[tableView dequeueReusableCellWithIdentifier:PostCellIdentifier];
         if (cell == nil)
         {
-            NSArray *nib1 = [[NSBundle mainBundle] loadNibNamed:PostCellIdentifier owner:self options:nil];
-            cell = [nib1 objectAtIndex:0];
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:PostCellIdentifier owner:self options:nil];
+            cell = [nib objectAtIndex:0];
         }
-        [cell setPost:(self.originalPost)];
+        [cell setPost:self.originalPost];
+        return cell;
+    }
+    else
+    {   // CommentView table
+        static NSString *CellIdentifier = @"CommentTableCell";
+        
+        CommentTableCell *cell = (CommentTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if (cell == nil)
+        {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
+            cell = [nib objectAtIndex:0];
+        }
+        
+        // get the comment to be displayed in this cell
+        Comment *commentAtIndex = [self.dataController objectInListAtIndex:indexPath.row];
+        [cell setComment:commentAtIndex];
         return cell;
     }
     
-    // CommentView table
-    static NSString *CellIdentifier = @"CommentTableCell";
-    
-    CommentTableCell *cell = (CommentTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (cell == nil)
-    {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
-        cell = [nib objectAtIndex:0];
-    }
-    
-    // get the comment to be displayed in this cell
-    Comment *commentAtIndex = [self.dataController objectInListAtIndex:indexPath.row];
-    
-    
-    [cell setComment:commentAtIndex];
-    
-    return cell;
+    return nil;
 }
-
-/*
-// Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
+{   // Return NO if you do not want the specified item to be editable.
+    
     return YES;
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-
-// Override to support conditional rearranging of the table view.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+{   // Return NO if you do not want the item to be re-orderable.
+ 
+    return NO;
 }
-
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
+}
 
 #pragma mark - Navigation
 
@@ -246,10 +184,13 @@
     }
 }
 
+#pragma mark - Actions
 - (IBAction)done
-{
+{   // Called when user is done viewing comments, return to previous view
     [self.navigationController popViewControllerAnimated:YES];
     id<PostSubViewDelegate> strongDelegate = self.delegate;
+    
+    // call post delegate method below to reload table data (in case user voted)
     [strongDelegate votedOnPost];
 }
 - (IBAction)create
@@ -257,9 +198,9 @@
     
 }
 
-// return string indicating how long ago the comment was created
+
 - (NSString *)getAgeOfCommentAsString:(NSDate *)commentDate
-{
+{   // return string indicating how long ago the comment was created
     int commentAgeSeconds = [[NSDate date] timeIntervalSinceDate:commentDate];
     int commentAgeMinutes = commentAgeSeconds / 60;
     int commentAgeHours = commentAgeMinutes / 60;
@@ -274,37 +215,6 @@
     }
     return [NSString stringWithFormat:@"%d seconds ago", commentAgeSeconds];
 }
-//- (IBAction)handleUpvote:(id)sender
-//{
-//    UIButton *upVoteButton = (UIButton *)sender;
-//    
-//    //TODO: ya this sucks... add tests to ensure proper casting etc
-//    CommentTableCell *tableCell = (CommentTableCell *)upVoteButton.superview.superview.superview;
-//    UITableView *tableView = (UITableView *)tableCell.superview.superview;
-//    NSIndexPath *indexPath = [tableView indexPathForCell:tableCell];
-//    
-//    Comment *comment = [self.dataController objectInListAtIndex:indexPath.row];
-//    
-//    comment.vote = comment.vote == 1 ? 0 : 1;
-//    
-//    [self updateVoteButtons:tableCell withVoteValue:comment.vote];
-//    
-//}
-//- (IBAction)handleDownvote:(id)sender
-//{
-//    UIButton *downVoteButton = (UIButton *)sender;
-//    
-//    //TODO: ya this sucks... add tests to ensure proper casting etc
-//    CommentTableCell *tableCell = (CommentTableCell *)downVoteButton.superview.superview.superview;
-//    UITableView *tableView = (UITableView *)tableCell.superview.superview;
-//    NSIndexPath *indexPath = [tableView indexPathForCell:tableCell];
-//    
-//    Comment *comment = [self.dataController objectInListAtIndex:indexPath.row];
-//    
-//    comment.vote = comment.vote == -1 ? 0 : -1;
-//    
-//    [self updateVoteButtons:tableCell withVoteValue:comment.vote];
-//}
 - (void) updateVoteButtons:(CommentTableCell *)cell withVoteValue:(int)vote
 {
     // assign appropriate arrow colors (based on user's vote)
@@ -326,11 +236,17 @@
     
     [cell setNeedsDisplay];
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 100;
-}
 
+- (UIViewController *)backViewController
+{   //TODO: (unused) return the previous view controller
+    
+    NSInteger numberOfViewControllers = self.navigationController.viewControllers.count;
+    
+    if (numberOfViewControllers < 2)
+        return nil;
+    else
+        return [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
+}
 #pragma mark - Child view delegate methods
 
 // User created a new comment in create subview

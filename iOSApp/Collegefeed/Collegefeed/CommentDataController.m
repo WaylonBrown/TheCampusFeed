@@ -12,8 +12,10 @@
 
 @implementation CommentDataController
 
-- (id) init
-{
+#pragma mark - Initialization
+
+- (id)init
+{   // Initialize with default list
     if (self = [super init])
     {
         [self initializeDefaultList];
@@ -21,21 +23,20 @@
     }
     return nil;
 }
-- (id) initWithPost:(Post*)post
-{
+- (id)initWithPost:(Post*)post
+{   // Initialize using the post's comment list
     if (self = [super init])
     {
         [self setPost:post];
-        self.masterCommentList = post.commentList;
+        [self setMasterCommentList:post.commentList];
         
         return self;
     }
     return nil;
 }
-
-// initialize the comment array with a placeholder element
 - (void)initializeDefaultList
-{
+{   // initialize the comment array with placeholder elements
+ 
     NSMutableArray *commentList = [[NSMutableArray alloc] init];
     self.masterCommentList = commentList;
     Post *post = [[Post alloc] initDummy];
@@ -47,11 +48,15 @@
         [self addCommentWithMessage:comment];
     }
 }
-// return a string of the post that this comment is on
+
+
 - (NSString *)getPostMessage
-{
+{   // return a string of the post that this comment is on
+
     if (self.masterCommentList.count == 0)
         return @"[Post's message not found]";
+    
+    //TODO: move this to a test class
     NSString *message1 = ((Comment *)self.masterCommentList.firstObject).postMessage;
     NSString *message2 = ((Comment *)self.masterCommentList.lastObject).postMessage;
     
@@ -61,25 +66,21 @@
     }
     return @"[Comments' post messages inconsistent]";
 }
-// override its default setter method to ensure new array remains mutable
-- (void) setMasterCommentList:(NSMutableArray *)newList
-{
+- (void)setMasterCommentList:(NSMutableArray *)newList
+{   // override its default setter method to ensure new array remains mutable
     if (_masterCommentList != newList)
     {
         _masterCommentList = [newList mutableCopy];
     }
 }
-
-- (NSUInteger) countOfList
+- (NSUInteger)countOfList
 {
     return [self.masterCommentList count];
 }
-
 - (Comment *)objectInListAtIndex:(NSUInteger)theIndex
 {
     return [self.masterCommentList objectAtIndex:theIndex];
 }
-
 - (void)addCommentWithMessage:(Comment *)comment
 {
     [self.masterCommentList addObject:comment];

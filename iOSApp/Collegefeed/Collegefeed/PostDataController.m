@@ -18,6 +18,9 @@
 static NSString* requestUrlString = @"http://cfeed.herokuapp.com/api/";
 static NSString* apiVersion = @"v1/";
 
+// set to NO to use dummy initialization
+static BOOL useNetwork = NO;
+
 @implementation PostDataController
 
 #pragma mark Initialization 
@@ -26,23 +29,27 @@ static NSString* apiVersion = @"v1/";
 { // initialize this data controller
     if (self = [super init])
     {
-        self.postURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",
-                                             requestUrlString, apiVersion, @"posts"]];
-        NSMutableArray *postList = [[NSMutableArray alloc] init];
-        self.masterPostList = postList;
-        [self fetchAllPosts];
-        
+        if (useNetwork)
+        {
+            [self setMasterPostList:[[NSMutableArray alloc] init]];
+            self.postURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",
+                                                 requestUrlString, apiVersion, @"posts"]];
+            [self fetchAllPosts];
+        }
+        else // dummy initialization
+        {
+            [self initializeDefaultList];
+        }
         return self;
     }
     return nil;
 }
-
 - (void)initializeDefaultList
 { // initialize the post array with placeholder elements
 
-    NSMutableArray *postList = [[NSMutableArray alloc] init];
-    self.masterPostList = postList;
-    for (int i = 0; i < 3; i++)
+    [self setMasterPostList:[[NSMutableArray alloc] init]];
+
+    for (int i = 0; i < 5; i++)
     {
         Post *post;
         post = [[Post alloc] initDummy];
@@ -50,7 +57,6 @@ static NSString* apiVersion = @"v1/";
         [self addPost:post];
     }
 }
-
 - (void) setMasterPostList:(NSMutableArray *)newList
 { // override its default setter method to ensure new array remains mutable
     if (_masterPostList != newList)
@@ -65,12 +71,10 @@ static NSString* apiVersion = @"v1/";
 {
     return [self.masterPostList count];
 }
-
 - (Post *)objectInListAtIndex:(NSUInteger)theIndex
 {
     return [self.masterPostList objectAtIndex:theIndex];
 }
-
 - (void)addPost:(Post *)post
 {   // add post locally to the masterPostList array
     [self.masterPostList addObject:post];
@@ -122,7 +126,7 @@ static NSString* apiVersion = @"v1/";
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:self.postURL];
 
         // Convert post to data for HTTPBody
-        NSString *stringData = [NSString stringWithFormat:@"text=%@", post.message];
+//        NSString *stringData = [NSString stringWithFormat:@"text=%@", post.message];
         NSDictionary *requestData = [[NSDictionary alloc] initWithObjectsAndKeys:
                                      post.message, @"text",
                                      nil];

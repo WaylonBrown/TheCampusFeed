@@ -24,7 +24,6 @@
 @interface CommentViewController : UIViewController <CommentSubViewDelegate>
 
 @property (nonatomic, assign) id<PostSubViewDelegate> delegate;
-
 @property (strong, nonatomic) CommentDataController *dataController;
 @property (strong, nonatomic) Post *originalPost;
 
