@@ -5,13 +5,13 @@
 //  Created by Patrick Sheehan on 5/3/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
+
+#import "TableCell.h"
 #import "PostsViewController.h"
 #import "PostDataController.h"
 #import "Post.h"
 #import "PostsViewController.h"
-#import "PostTableCell.h"
 #import "CommentViewController.h"
-#import "CommentTableCell.h"
 #import "CommentDataController.h"
 #import "Comment.h"
 #import "TTTAttributedLabel.h"
@@ -50,7 +50,6 @@
 {
     [super viewDidLoad];
 }
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -77,35 +76,23 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Get the table view cell for the given row
     // This method handles two table views: one for the post and another for it's comments
-
+    static NSString *CellIdentifier = @"TableCell";
+    TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil)
+    {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
+        cell = [nib objectAtIndex:0];
+    }
+    
     if ([tableView.restorationIdentifier compare:@"OriginalPostTableView"] == NSOrderedSame)
-    {   // PostView table
-        static NSString *PostCellIdentifier = @"PostTableCell";
-
-        PostTableCell *cell = (PostTableCell *)[tableView dequeueReusableCellWithIdentifier:PostCellIdentifier];
-        if (cell == nil)
-        {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:PostCellIdentifier owner:self options:nil];
-            cell = [nib objectAtIndex:0];
-        }
-        [cell setPost:self.originalPost];
+    {   // PostView table; get the original post to display in this table
+        [cell setAsPostCell:self.originalPost];
         return cell;
     }
     else
-    {   // CommentView table
-        static NSString *CellIdentifier = @"CommentTableCell";
-        
-        CommentTableCell *cell = (CommentTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        
-        if (cell == nil)
-        {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
-            cell = [nib objectAtIndex:0];
-        }
-        
-        // get the comment to be displayed in this cell
+    {   // CommentView table; get the comment to be displayed in this cell
         Comment *commentAtIndex = [self.dataController objectInListAtIndex:indexPath.row];
-        [cell setComment:commentAtIndex];
+        [cell setAsCommentCell:commentAtIndex];
         return cell;
     }
     
@@ -128,9 +115,8 @@
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
+{   // In a storyboard-based application, you will often want to do a little preparation before navigation
 }
 
 #pragma mark - Actions
@@ -140,7 +126,6 @@
 
     [[self navigationController] popViewControllerAnimated:YES];
 }
-
 - (IBAction)createComment
 {   // Display popup to let user type a new comment
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Comment"
@@ -151,7 +136,6 @@
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     [alert show];
 }
-
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {   // Add new post if user submits on the alert view
     
@@ -182,27 +166,6 @@
         return [NSString stringWithFormat:@"%d minutes ago", commentAgeMinutes];
     }
     return [NSString stringWithFormat:@"%d seconds ago", commentAgeSeconds];
-}
-- (void) updateVoteButtons:(CommentTableCell *)cell withVoteValue:(int)vote
-{
-    // assign appropriate arrow colors (based on user's vote)
-    switch (vote)
-    {
-        case -1:
-            [[cell upVoteButton] setImage:[UIImage imageNamed:@"arrowup.png"] forState:UIControlStateNormal];
-            [[cell downVoteButton] setImage:[UIImage imageNamed:@"arrowdownred.png"] forState:UIControlStateNormal];
-            break;
-        case 1:
-            [[cell upVoteButton] setImage:[UIImage imageNamed:@"arrowupblue.png"] forState:UIControlStateNormal];
-            [[cell downVoteButton] setImage:[UIImage imageNamed:@"arrowdown.png"] forState:UIControlStateNormal];
-            break;
-        default:
-            [[cell upVoteButton] setImage:[UIImage imageNamed:@"arrowup.png"] forState:UIControlStateNormal];
-            [[cell downVoteButton] setImage:[UIImage imageNamed:@"arrowdown.png"] forState:UIControlStateNormal];
-            break;
-    }
-    
-    [cell setNeedsDisplay];
 }
 
 @end
