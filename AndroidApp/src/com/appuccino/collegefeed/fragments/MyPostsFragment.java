@@ -2,6 +2,9 @@ package com.appuccino.collegefeed.fragments;
 
 import java.util.ArrayList;
 
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -13,9 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.PostCommentsActivity;
@@ -27,7 +30,7 @@ import com.appuccino.collegefeed.objects.Post;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
 
-public class MyPostsFragment extends Fragment
+public class MyPostsFragment extends Fragment implements OnRefreshListener
 {
 	static MainActivity mainActivity;
 	public static final String ARG_TAB_NUMBER = "section_number";
@@ -37,9 +40,11 @@ public class MyPostsFragment extends Fragment
 	final int tabNumber = 2;
 	int spinnerNumber = 0;
 	static ListView list;
+	//library objects
 	static ShimmerTextView loadingText;
 	static Shimmer shimmer;
-
+	private static PullToRefreshLayout pullToRefresh;
+	
 	public MyPostsFragment()
 	{
 	}
@@ -56,10 +61,18 @@ public class MyPostsFragment extends Fragment
 				container, false);
 		list = (ListView)rootView.findViewById(R.id.fragmentListView);
 		loadingText = (ShimmerTextView)rootView.findViewById(R.id.loadingText);
+		ViewGroup viewGroup = (ViewGroup)rootView;
 		
 		Typeface customfont = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/Roboto-Light.ttf");
 		loadingText.setTypeface(customfont);
 					
+		// Now give the find the PullToRefreshLayout and set it up
+        pullToRefresh = (PullToRefreshLayout) rootView.findViewById(R.id.pullToRefresh);
+        ActionBarPullToRefresh.from(getActivity())
+                .allChildrenArePullable()
+                .listener(this)
+                .setup(pullToRefresh);
+		
 		//if doesnt have header and footer, add them
 		if(list.getHeaderViewsCount() == 0)
 		{
@@ -72,17 +85,14 @@ public class MyPostsFragment extends Fragment
 		
 		if(postList == null)
 		{
-			postList = new ArrayList<Post>();
-			ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
-			if(cm.getActiveNetworkInfo() != null)
-				new GetPostsTask(2).execute(new PostSelector());
+			pullListFromServer();
 			//postList.add()
 			/*postList.add(new Post(100, "Top message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
 			postList.add(new Post(70, "Top message 2 test message 2 test message #onetag #twotag", 10));
 			postList.add(new Post(15, "Top message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));*/
 		}		
 		
-		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row, postList, 0);
+		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_post, postList, 0);
 		list.setAdapter(listAdapter);
 		
 		
@@ -98,6 +108,16 @@ public class MyPostsFragment extends Fragment
 		});
 	    
 		return rootView;
+	}
+
+	private void pullListFromServer() 
+	{
+		postList = new ArrayList<Post>();
+		ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+		if(cm.getActiveNetworkInfo() != null)
+			new GetPostsTask(2).execute(new PostSelector());
+		else
+			Toast.makeText(getActivity(), "You have no internet connection. Pull down to refresh and try again.", Toast.LENGTH_LONG).show();
 	}
 
 	protected void postClicked(Post post) 
@@ -153,6 +173,18 @@ public class MyPostsFragment extends Fragment
 			
 			if (shimmer != null && shimmer.isAnimating()) 
 	            shimmer.cancel();
+			
+			if(pullToRefresh != null)
+			{
+				// Notify PullToRefreshLayout that the refresh has finished
+	            pullToRefresh.setRefreshComplete();
+			}
 		}
+	}
+
+	@Override
+	public void onRefreshStarted(View arg0) 
+	{
+		pullListFromServer();
 	}
 }

@@ -2,6 +2,9 @@ package com.appuccino.collegefeed.fragments;
 
 import java.util.ArrayList;
 
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -28,7 +31,7 @@ import com.appuccino.collegefeed.objects.Post;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
 
-public class MyCommentsFragment extends Fragment
+public class MyCommentsFragment extends Fragment implements OnRefreshListener
 {
 	static MainActivity mainActivity;
 	public static final String ARG_TAB_NUMBER = "section_number";
@@ -38,8 +41,10 @@ public class MyCommentsFragment extends Fragment
 	final int tabNumber = 2;
 	int spinnerNumber = 0;
 	static ListView list;
+	//library objects
 	static ShimmerTextView loadingText;
 	static Shimmer shimmer;
+	private static PullToRefreshLayout pullToRefresh;
 
 	public MyCommentsFragment()
 	{
@@ -61,6 +66,13 @@ public class MyCommentsFragment extends Fragment
 		Typeface customfont = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/Roboto-Light.ttf");
 		loadingText.setTypeface(customfont);
 					
+		// Now give the find the PullToRefreshLayout and set it up
+        pullToRefresh = (PullToRefreshLayout) rootView.findViewById(R.id.pullToRefresh);
+        ActionBarPullToRefresh.from(getActivity())
+                .allChildrenArePullable()
+                .listener(this)
+                .setup(pullToRefresh);
+		
 		//if doesnt have header and footer, add them
 		if(list.getHeaderViewsCount() == 0)
 		{
@@ -73,17 +85,14 @@ public class MyCommentsFragment extends Fragment
 		
 		if(commentList == null)
 		{
-			commentList = new ArrayList<Comment>();
-			ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
-			if(cm.getActiveNetworkInfo() != null)
-				new GetPostsTask(3).execute(new PostSelector());
-			//commentList.add()
-			/*commentList.add(new Post(100, "Top message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
-			commentList.add(new Post(70, "Top message 2 test message 2 test message #onetag #twotag", 10));
-			commentList.add(new Post(15, "Top message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));*/
+			pullListFromServer();
+			//postList.add()
+			/*postList.add(new Post(100, "Top message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
+			postList.add(new Post(70, "Top message 2 test message 2 test message #onetag #twotag", 10));
+			postList.add(new Post(15, "Top message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));*/
 		}		
 		
-		listAdapter = new CommentListAdapter(getActivity(), R.layout.list_row, commentList);
+		listAdapter = new CommentListAdapter(getActivity(), R.layout.list_row_post, commentList);
 		list.setAdapter(listAdapter);
 		
 		
@@ -101,12 +110,22 @@ public class MyCommentsFragment extends Fragment
 		return rootView;
 	}
 
+	private void pullListFromServer() 
+	{
+		commentList = new ArrayList<Comment>();
+		ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+		if(cm.getActiveNetworkInfo() != null)
+			new GetPostsTask(3).execute(new PostSelector());
+		else
+			Toast.makeText(getActivity(), "You have no internet connection. Pull down to refresh and try again.", Toast.LENGTH_LONG).show();
+	}
+	
 	protected void commentClicked(Comment comment) 
 	{
 		Intent intent = new Intent(getActivity(), PostCommentsActivity.class);
 		intent.putExtra("POST_ID", comment.getParentID());
 		intent.putExtra("SECTION_NUMBER", tabNumber);
-		
+
 		startActivity(intent);
 		getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 	}
@@ -154,6 +173,18 @@ public class MyCommentsFragment extends Fragment
 			
 			if (shimmer != null && shimmer.isAnimating()) 
 	            shimmer.cancel();
+			
+			if(pullToRefresh != null)
+			{
+				// Notify PullToRefreshLayout that the refresh has finished
+	            pullToRefresh.setRefreshComplete();
+			}
 		}
+	}
+
+	@Override
+	public void onRefreshStarted(View arg0) 
+	{
+		pullListFromServer();
 	}
 }

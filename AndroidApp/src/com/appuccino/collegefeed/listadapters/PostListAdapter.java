@@ -63,14 +63,14 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         		postHolder.collegeName = (TextView)row.findViewById(R.id.collegeNameText);
             		
         	Typeface light = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
-        	Typeface medium = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Medium.ttf");
+        	Typeface medium = Typeface.createFromAsset(context.getAssets(), "fonts/omnes_semibold.otf");
             Typeface lightItalic = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-LightItalic.ttf");
             Typeface bold = Typeface.createFromAsset(context.getAssets(), "fonts/mplus-2c-bold.ttf");
             
             postHolder.scoreText.setTypeface(bold);
             postHolder.messageText.setTypeface(light);
-            postHolder.timeText.setTypeface(lightItalic);
-            postHolder.commentText.setTypeface(lightItalic);
+            postHolder.timeText.setTypeface(medium);
+            postHolder.commentText.setTypeface(medium);
             if(postHolder.collegeName != null)
             	postHolder.collegeName.setTypeface(lightItalic);
             
