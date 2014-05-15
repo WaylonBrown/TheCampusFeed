@@ -4,7 +4,12 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CommentViewController">
+            <connections>
+                <outlet property="commentTable" destination="O2c-4K-OIl" id="cp6-iB-LhR"/>
+                <outlet property="originalPostTable" destination="Zfv-Pj-Ay8" id="na4-Gp-qeT"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="R7p-5x-MAR">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -20,10 +25,16 @@
                             <barButtonItem key="leftBarButtonItem" systemItem="done" id="rqP-2z-Fgu">
                                 <inset key="imageInsets" minX="-10" minY="2" maxX="0.0" maxY="-1"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="done" destination="-1" id="7El-Ti-BcA"/>
+                                </connections>
                             </barButtonItem>
                             <barButtonItem key="rightBarButtonItem" systemItem="compose" id="9hG-Hk-e0y">
                                 <inset key="imageInsets" minX="2" minY="3" maxX="2" maxY="0.0"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="createComment" destination="-1" id="WRV-2C-qK8"/>
+                                </connections>
                             </barButtonItem>
                         </navigationItem>
                     </items>
@@ -33,11 +44,19 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <sections/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="r2L-YI-6rz"/>
+                        <outlet property="delegate" destination="-1" id="Rrg-CP-QRd"/>
+                    </connections>
                 </tableView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="CommentTableView" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="O2c-4K-OIl">
                     <rect key="frame" x="0.0" y="201" width="321" height="323"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="cE9-JQ-R6g"/>
+                        <outlet property="delegate" destination="-1" id="14U-R7-fvv"/>
+                    </connections>
                 </tableView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Comments" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BOn-HS-ecc">
                     <rect key="frame" x="122" y="172" width="75" height="21"/>

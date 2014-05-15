@@ -9,21 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @class CommentDataController;
-@class PostTableCell;
 @class Post;
-@class Comment;
-@protocol PostSubViewDelegate;
 
-// protocol to handle events in subview: createView(comment)
-@protocol CommentSubViewDelegate <NSObject>
-
-- (void)createdNewComment:(Comment *)comment;
-
-@end
-
-@interface CommentViewController : UIViewController <CommentSubViewDelegate>
-
-@property (nonatomic, assign) id<PostSubViewDelegate> delegate;
+@interface CommentViewController : UIViewController
 
 @property (strong, nonatomic) CommentDataController *dataController;
 @property (strong, nonatomic) Post *originalPost;
@@ -34,6 +22,6 @@
 - (id)initWithOriginalPost:(Post*)post withDelegate:(id)postSubViewDelegate;
 
 - (IBAction)done;
-- (IBAction)create;
+- (IBAction)createComment;
 
 @end

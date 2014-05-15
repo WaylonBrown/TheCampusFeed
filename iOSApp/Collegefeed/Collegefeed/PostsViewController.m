@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
+#import "TableCell.h"
 #import "PostsViewController.h"
-#import "PostTableCell.h"
+//#import "PostTableCell.h"
 #import "PostDataController.h"
 #import "Post.h"
 #import "CommentViewController.h"
-#import "CreateViewController.h"
 
 @implementation PostsViewController
 
@@ -23,6 +23,10 @@
         // Custom initialization
     }
     return self;
+}
+- (void)viewWillAppear:(BOOL)animated
+{   // Post View is about to appear; reload table data
+    [self.postTableView reloadData];
 }
 - (void)viewDidLoad
 {
@@ -41,25 +45,6 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {   // A little preparation before navigation to different view
 
-    UIViewController* vc = [segue destinationViewController];
-    
-//    if ([vc class] == [CommentViewController class] && [sender class] == [PostTableCell class])
-//    {   // When switching to comment view
-//        PostTableCell *cell = sender;
-//        CommentViewController * cvc = (CommentViewController *) vc;
-//        [cvc setDelegate:self];
-//        [cvc setOriginalPost:cell.post];
-//        return;
-//    }
-    
-    if ([vc class] == [CreateViewController class] && [sender class] == [UIBarButtonItem class])
-    {   // When creating a new post
-        CreateViewController *createView = (CreateViewController *)vc;
-        [createView setPDelegate:self];
-        [createView.createLabel setText:@"Create new post"];
-        [createView.createButton setTitle:@"Post!" forState:UIControlStateNormal];
-        return;
-    }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Comment View for the selected post
@@ -68,12 +53,11 @@
     CommentViewController* controller = [[CommentViewController alloc] initWithOriginalPost:self.selectedPost
                                                                                withDelegate:self];
     
-    [self.navigationController presentViewController:controller
-                                            animated:YES
-                                          completion:nil];
+    [self.navigationController pushViewController:controller
+                                         animated:YES];
 }
 
-#pragma mark - Table view data source
+#pragma mark - Table View Override Functions
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -89,18 +73,19 @@
     // this specifies the prototype (PostTableCell) and assigns the labels
     
     //TODO: check if these cells should be of type PostTableCellWithCollege instead
-    static NSString *CellIdentifier = @"PostTableCell";
+    static NSString *CellIdentifier = @"TableCell";
     
-    PostTableCell *cell = (PostTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
     {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"PostTableCell" owner:self options:nil];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier
+                                                     owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
     
     // get the post and display in this cell
     Post *postAtIndex = [self.dataController objectInListAtIndex:indexPath.row];
-    [cell setPost:postAtIndex];
+    [cell setAsPostCell:postAtIndex];
     
     return cell;
 }
@@ -111,26 +96,36 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // TODO: This should probably not be hardcoded; revist
-
-    return 100;
-}
-
-
-#pragma mark - Child view delegate methods
-
-- (void)createdNewPost:(Post *)post
-{   // User created a new post
-
-    [self.dataController addPost:post];
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     
-    // reload the table
-    [self.postTableView reloadData];
+    // if not showing college name
+    return 100;
+    
+    // if showing college name
+//    return 120;
 }
-- (void)votedOnPost
-{   // User voted on post (usually in subview)
 
+#pragma mark - Actions
+
+- (IBAction)createPost:(id)sender
+{   // Display popup to let user type a new post
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
+                                                     message:@"What's poppin?"
+                                                    delegate:self
+                                           cancelButtonTitle:@"nvm.."
+                                           otherButtonTitles:@"Post!", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert show];
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{   // Add new post if user submits on the alert view
+    
+    if (buttonIndex == 0) return;
+    
+    Post *newPost = [[Post alloc] initWithPostMessage:[[alertView textFieldAtIndex:0] text]];
+//    [newPost validatePost];
+    [self.dataController addPost:newPost];
     [self.postTableView reloadData];
+
 }
 
 @end

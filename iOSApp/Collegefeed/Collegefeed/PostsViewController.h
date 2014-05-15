@@ -11,19 +11,14 @@
 @class PostDataController;
 @class Post;
 
-// protocol to handle events in subviews: createView(post) and commentView(commented on this post)
-@protocol PostSubViewDelegate <NSObject>
-
-- (void)votedOnPost;
-- (void)createdNewPost:(Post *)post;
-
-@end
-
-@interface PostsViewController : UIViewController <PostSubViewDelegate>
+@interface PostsViewController : UIViewController
 
 @property (strong, nonatomic) PostDataController *dataController;
-@property (strong, nonatomic) Post* selectedPost;
+@property (weak, nonatomic) Post* selectedPost;
+
 @property (weak, nonatomic) IBOutlet UITableView *postTableView;
+
+- (IBAction)createPost:(id)sender;
 
 @end
 

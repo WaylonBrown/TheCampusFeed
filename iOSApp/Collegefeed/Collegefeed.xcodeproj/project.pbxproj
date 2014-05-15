@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		531107A919147B07006F7DAF /* PostTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531107A819147B07006F7DAF /* PostTableCell.m */; };
 		532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706E1191378EF00F5EAB9 /* PostDataController.m */; };
 		533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 533475881922B88300E84CC8 /* TTTAttributedLabel.m */; };
 		5334758C1922D9B700E84CC8 /* tempviewcontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 5334758B1922D9B700E84CC8 /* tempviewcontroller.m */; };
-		5334758E1922F53800E84CC8 /* PostTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5334758D1922F53800E84CC8 /* PostTableCell.xib */; };
 		533475981923001E00E84CC8 /* CommentsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 533475971923001E00E84CC8 /* CommentsView.xib */; };
+		533475A41923344100E84CC8 /* TableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533475A21923344100E84CC8 /* TableCell.m */; };
+		533475A51923344100E84CC8 /* TableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 533475A31923344100E84CC8 /* TableCell.xib */; };
 		5390A91D1914B76800ACD082 /* arrowdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9141914B76800ACD082 /* arrowdown.png */; };
 		5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9151914B76800ACD082 /* arrowdownred.png */; };
 		5390A91F1914B76800ACD082 /* arrowup.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9161914B76800ACD082 /* arrowup.png */; };
@@ -20,12 +20,10 @@
 		5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9191914B76800ACD082 /* collegefeedlogosmall.png */; };
 		5390A9241914B76800ACD082 /* postbuttonclick.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5390A91B1914B76800ACD082 /* postbuttonclick.xml */; };
 		5390A92C19153EBE00ACD082 /* CommentDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A92B19153EBE00ACD082 /* CommentDataController.m */; };
-		5390A9381915407100ACD082 /* CommentTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A9371915407100ACD082 /* CommentTableCell.m */; };
 		5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A93A191552AE00ACD082 /* CommentViewController.m */; };
 		5390A94119158E0E00ACD082 /* ViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A94019158E0E00ACD082 /* ViewControllerTests.m */; };
 		5390A94319158E1A00ACD082 /* DataControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A94219158E1A00ACD082 /* DataControllerTests.m */; };
 		53963DE71916E5F50084E646 /* PostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53963DE61916E5F50084E646 /* PostsViewController.m */; };
-		53D2ACF7191823010097C840 /* CreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2ACF6191823010097C840 /* CreateViewController.m */; };
 		53D2AD0719189E9E0097C840 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0619189E9E0097C840 /* Comment.m */; };
 		53D2AD0B19189EC60097C840 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0A19189EC60097C840 /* Post.m */; };
 		53D2AD0E19189F740097C840 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0D19189F740097C840 /* Vote.m */; };
@@ -57,16 +55,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		531107A719147B07006F7DAF /* PostTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostTableCell.h; sourceTree = "<group>"; };
-		531107A819147B07006F7DAF /* PostTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostTableCell.m; sourceTree = "<group>"; };
 		532706E0191378EF00F5EAB9 /* PostDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDataController.h; sourceTree = "<group>"; };
 		532706E1191378EF00F5EAB9 /* PostDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PostDataController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		533475871922B88300E84CC8 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		533475881922B88300E84CC8 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		5334758A1922D9B700E84CC8 /* tempviewcontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tempviewcontroller.h; sourceTree = "<group>"; };
 		5334758B1922D9B700E84CC8 /* tempviewcontroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = tempviewcontroller.m; sourceTree = "<group>"; };
-		5334758D1922F53800E84CC8 /* PostTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTableCell.xib; sourceTree = "<group>"; };
 		533475971923001E00E84CC8 /* CommentsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentsView.xib; sourceTree = "<group>"; };
+		533475A11923344100E84CC8 /* TableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableCell.h; path = Collegefeed/TableCell.h; sourceTree = "<group>"; };
+		533475A21923344100E84CC8 /* TableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TableCell.m; path = Collegefeed/TableCell.m; sourceTree = "<group>"; };
+		533475A31923344100E84CC8 /* TableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TableCell.xib; path = Collegefeed/TableCell.xib; sourceTree = "<group>"; };
 		5390A9141914B76800ACD082 /* arrowdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdown.png; sourceTree = "<group>"; };
 		5390A9151914B76800ACD082 /* arrowdownred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdownred.png; sourceTree = "<group>"; };
 		5390A9161914B76800ACD082 /* arrowup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowup.png; sourceTree = "<group>"; };
@@ -75,16 +73,12 @@
 		5390A91B1914B76800ACD082 /* postbuttonclick.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = postbuttonclick.xml; sourceTree = "<group>"; };
 		5390A92A19153EBE00ACD082 /* CommentDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentDataController.h; sourceTree = "<group>"; };
 		5390A92B19153EBE00ACD082 /* CommentDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentDataController.m; sourceTree = "<group>"; };
-		5390A9361915407100ACD082 /* CommentTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableCell.h; sourceTree = "<group>"; };
-		5390A9371915407100ACD082 /* CommentTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableCell.m; sourceTree = "<group>"; };
 		5390A939191552AE00ACD082 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
 		5390A93A191552AE00ACD082 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
 		5390A94019158E0E00ACD082 /* ViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerTests.m; sourceTree = "<group>"; };
 		5390A94219158E1A00ACD082 /* DataControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataControllerTests.m; sourceTree = "<group>"; };
 		53963DE51916E5F50084E646 /* PostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostsViewController.h; sourceTree = "<group>"; };
 		53963DE61916E5F50084E646 /* PostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostsViewController.m; sourceTree = "<group>"; };
-		53D2ACF5191823010097C840 /* CreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateViewController.h; sourceTree = "<group>"; };
-		53D2ACF6191823010097C840 /* CreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateViewController.m; sourceTree = "<group>"; };
 		53D2AD0519189E9E0097C840 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
 		53D2AD0619189E9E0097C840 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		53D2AD0919189EC60097C840 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
@@ -142,7 +136,6 @@
 		533475901922F66400E84CC8 /* Posts */ = {
 			isa = PBXGroup;
 			children = (
-				533475921922F6F200E84CC8 /* PostTableCell */,
 				53963DE51916E5F50084E646 /* PostsViewController.h */,
 				53963DE61916E5F50084E646 /* PostsViewController.m */,
 				532706E0191378EF00F5EAB9 /* PostDataController.h */,
@@ -156,7 +149,6 @@
 		533475911922F69300E84CC8 /* Comments */ = {
 			isa = PBXGroup;
 			children = (
-				533475931922FA0A00E84CC8 /* CommentTableCell */,
 				533475961922FD8900E84CC8 /* CommentsView */,
 				5390A92A19153EBE00ACD082 /* CommentDataController.h */,
 				5390A92B19153EBE00ACD082 /* CommentDataController.m */,
@@ -164,25 +156,6 @@
 				53D2AD0619189E9E0097C840 /* Comment.m */,
 			);
 			name = Comments;
-			sourceTree = "<group>";
-		};
-		533475921922F6F200E84CC8 /* PostTableCell */ = {
-			isa = PBXGroup;
-			children = (
-				5334758D1922F53800E84CC8 /* PostTableCell.xib */,
-				531107A719147B07006F7DAF /* PostTableCell.h */,
-				531107A819147B07006F7DAF /* PostTableCell.m */,
-			);
-			name = PostTableCell;
-			sourceTree = "<group>";
-		};
-		533475931922FA0A00E84CC8 /* CommentTableCell */ = {
-			isa = PBXGroup;
-			children = (
-				5390A9361915407100ACD082 /* CommentTableCell.h */,
-				5390A9371915407100ACD082 /* CommentTableCell.m */,
-			);
-			name = CommentTableCell;
 			sourceTree = "<group>";
 		};
 		533475961922FD8900E84CC8 /* CommentsView */ = {
@@ -193,6 +166,17 @@
 				533475971923001E00E84CC8 /* CommentsView.xib */,
 			);
 			name = CommentsView;
+			sourceTree = "<group>";
+		};
+		533475A019232A4A00E84CC8 /* TableCell */ = {
+			isa = PBXGroup;
+			children = (
+				533475A11923344100E84CC8 /* TableCell.h */,
+				533475A21923344100E84CC8 /* TableCell.m */,
+				533475A31923344100E84CC8 /* TableCell.xib */,
+			);
+			name = TableCell;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		5390A9131914B76800ACD082 /* Images */ = {
@@ -211,8 +195,6 @@
 		5390A92919153E5200ACD082 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				53D2ACF5191823010097C840 /* CreateViewController.h */,
-				53D2ACF6191823010097C840 /* CreateViewController.m */,
 				5334758A1922D9B700E84CC8 /* tempviewcontroller.h */,
 				5334758B1922D9B700E84CC8 /* tempviewcontroller.m */,
 			);
@@ -266,6 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				53F878A219133F60002A578B /* Main_iPhone.storyboard */,
+				533475A019232A4A00E84CC8 /* TableCell */,
 				533475901922F66400E84CC8 /* Posts */,
 				533475911922F69300E84CC8 /* Comments */,
 				5390A92919153E5200ACD082 /* View Controllers */,
@@ -393,12 +376,12 @@
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,
 				5390A9201914B76800ACD082 /* arrowupblue.png in Resources */,
-				5334758E1922F53800E84CC8 /* PostTableCell.xib in Resources */,
 				5390A9241914B76800ACD082 /* postbuttonclick.xml in Resources */,
 				53F878AF19133F60002A578B /* Images.xcassets in Resources */,
 				53F878A419133F60002A578B /* Main_iPhone.storyboard in Resources */,
 				5390A91F1914B76800ACD082 /* arrowup.png in Resources */,
 				53F8789B19133F60002A578B /* InfoPlist.strings in Resources */,
+				533475A51923344100E84CC8 /* TableCell.xib in Resources */,
 				533475981923001E00E84CC8 /* CommentsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,8 +401,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				531107A919147B07006F7DAF /* PostTableCell.m in Sources */,
-				5390A9381915407100ACD082 /* CommentTableCell.m in Sources */,
 				5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */,
 				53D2AD0719189E9E0097C840 /* Comment.m in Sources */,
 				5334758C1922D9B700E84CC8 /* tempviewcontroller.m in Sources */,
@@ -427,8 +408,8 @@
 				532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */,
 				53D2AD111918A22A0097C840 /* Tag.m in Sources */,
 				53D2AD151918AAB80097C840 /* College.m in Sources */,
-				53D2ACF7191823010097C840 /* CreateViewController.m in Sources */,
 				5390A92C19153EBE00ACD082 /* CommentDataController.m in Sources */,
+				533475A41923344100E84CC8 /* TableCell.m in Sources */,
 				53D2AD0B19189EC60097C840 /* Post.m in Sources */,
 				53963DE71916E5F50084E646 /* PostsViewController.m in Sources */,
 				53F8789D19133F60002A578B /* main.m in Sources */,

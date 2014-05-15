@@ -44,13 +44,14 @@ public final class R {
         public static final int arrowupblue=0x7f020003;
         public static final int card=0x7f020004;
         public static final int collegefeedlogosmall=0x7f020005;
-        public static final int ic_launcher=0x7f020006;
-        public static final int logofake=0x7f020007;
-        public static final int newpost=0x7f020008;
-        public static final int old_card=0x7f020009;
-        public static final int postbuttonclick=0x7f02000a;
-        public static final int postfeedlogosmall=0x7f02000b;
-        public static final int searchtagbuttonclick=0x7f02000c;
+        public static final int gps=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
+        public static final int logofake=0x7f020008;
+        public static final int newpost=0x7f020009;
+        public static final int old_card=0x7f02000a;
+        public static final int postbuttonclick=0x7f02000b;
+        public static final int postfeedlogosmall=0x7f02000c;
+        public static final int searchtagbuttonclick=0x7f02000d;
     }
     public static final class id {
         public static final int arrowDown=0x7f0b0006;
@@ -62,10 +63,11 @@ public final class R {
         public static final int commentsList=0x7f0b000a;
         public static final int commentsText=0x7f0b0009;
         public static final int fragmentListView=0x7f0b000d;
+        public static final int gpsImage=0x7f0b001d;
         public static final int loadingText=0x7f0b0017;
-        public static final int menu_GPS=0x7f0b0020;
-        public static final int menu_help=0x7f0b001f;
-        public static final int menu_settings=0x7f0b001e;
+        public static final int menu_GPS=0x7f0b0021;
+        public static final int menu_help=0x7f0b0020;
+        public static final int menu_settings=0x7f0b001f;
         public static final int messageText=0x7f0b0007;
         public static final int newCommentButton=0x7f0b0000;
         public static final int newCommentMessage=0x7f0b000f;
@@ -83,7 +85,7 @@ public final class R {
         public static final int searchTagEditText=0x7f0b0015;
         public static final int spinner=0x7f0b0001;
         public static final int tagSearchText=0x7f0b0018;
-        public static final int tagText=0x7f0b001d;
+        public static final int tagText=0x7f0b001e;
         public static final int timeText=0x7f0b0008;
         public static final int topTagText=0x7f0b000c;
     }
@@ -99,9 +101,9 @@ public final class R {
         public static final int dialog_tag_search=0x7f030008;
         public static final int fragment_layout=0x7f030009;
         public static final int fragment_layout_tag=0x7f03000a;
-        public static final int list_row=0x7f03000b;
-        public static final int list_row_college=0x7f03000c;
-        public static final int list_row_collegepost=0x7f03000d;
+        public static final int list_row_college=0x7f03000b;
+        public static final int list_row_collegepost=0x7f03000c;
+        public static final int list_row_post=0x7f03000d;
         public static final int list_row_tag=0x7f03000e;
     }
     public static final class menu {

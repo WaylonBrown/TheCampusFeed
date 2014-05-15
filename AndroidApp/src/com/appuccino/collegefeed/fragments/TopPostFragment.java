@@ -63,7 +63,6 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 				container, false);
 		list = (ListView)rootView.findViewById(R.id.fragmentListView);
 		loadingText = (ShimmerTextView)rootView.findViewById(R.id.loadingText);
-		ViewGroup viewGroup = (ViewGroup)rootView;
 		
 		Typeface customfont = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/Roboto-Light.ttf");
 		loadingText.setTypeface(customfont);
@@ -97,7 +96,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		//if not in specific college feed, use layout with college name
 		if(MainActivity.spinner.getSelectedItemPosition() == 2)
 		{
-			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row, postList, 0);
+			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_post, postList, 0);
 		}
 		else
 		{

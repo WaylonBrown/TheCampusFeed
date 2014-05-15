@@ -59,18 +59,22 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         	postHolder.commentText = (TextView)row.findViewById(R.id.commentText);
         	postHolder.arrowUp = (ImageView)row.findViewById(R.id.arrowUp);
         	postHolder.arrowDown = (ImageView)row.findViewById(R.id.arrowDown);
+        	//if All Colleges post
         	if(MainActivity.spinner.getSelectedItemPosition() != 2)
+        	{
         		postHolder.collegeName = (TextView)row.findViewById(R.id.collegeNameText);
+        		postHolder.gpsImage = (ImageView)row.findViewById(R.id.gpsImage);
+        	}
             		
         	Typeface light = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
-        	Typeface medium = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Medium.ttf");
+        	Typeface medium = Typeface.createFromAsset(context.getAssets(), "fonts/omnes_semibold.otf");
             Typeface lightItalic = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-LightItalic.ttf");
             Typeface bold = Typeface.createFromAsset(context.getAssets(), "fonts/mplus-2c-bold.ttf");
             
             postHolder.scoreText.setTypeface(bold);
             postHolder.messageText.setTypeface(light);
-            postHolder.timeText.setTypeface(lightItalic);
-            postHolder.commentText.setTypeface(lightItalic);
+            postHolder.timeText.setTypeface(medium);
+            postHolder.commentText.setTypeface(medium);
             if(postHolder.collegeName != null)
             	postHolder.collegeName.setTypeface(lightItalic);
             
@@ -84,6 +88,9 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         postHolder.timeText.setText(String.valueOf(thisPost.getHoursAgo()) + " hours ago");
         if(postHolder.collegeName != null)
         	postHolder.collegeName.setText(thisPost.getCollegeName());
+        
+        if(postHolder.gpsImage != null)
+        	setGPSImageVisibility(postHolder, thisPost);
         
         String commentString = thisPost.getCommentList().size() + " comment";
         if(thisPost.getCommentList().size() != 1)
@@ -151,7 +158,23 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         return row;
     }
         
-    private void setMessageAndColorizeTags(String msg, PostHolder postHolder) 
+    private void setGPSImageVisibility(PostHolder holder, Post thisPost) 
+    {
+		if(MainActivity.permissions == null)
+		{
+			holder.gpsImage.setVisibility(View.GONE);
+		}
+		else if(!MainActivity.hasPermissions(thisPost.getCollegeID()))
+		{
+			holder.gpsImage.setVisibility(View.GONE);
+		}
+		else
+		{
+			holder.gpsImage.setVisibility(View.VISIBLE);
+		}
+	}
+
+	private void setMessageAndColorizeTags(String msg, PostHolder postHolder) 
     {
     	String tagColor = "#33B5E5";
     	String message = msg;
@@ -186,5 +209,6 @@ public class PostListAdapter extends ArrayAdapter<Post>{
     	TextView collegeName;
     	ImageView arrowUp;
     	ImageView arrowDown;
+    	ImageView gpsImage;
     }
 }

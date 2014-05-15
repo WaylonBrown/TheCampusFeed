@@ -8,22 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
-@class Post;
+#import "Post.h"
 
-@interface Comment : NSObject
+@interface Comment : Post
 
 @property (nonatomic) NSInteger commentID;
-@property (nonatomic) NSInteger postID;
-@property (nonatomic) NSInteger collegeID;
-@property (nonatomic) NSInteger score;
-@property (nonatomic) NSInteger vote; //-1 = downvote, 0 = nothing, 1 = upvote
+@property (nonatomic, strong) NSString *commentMessage;
 
-@property (nonatomic, copy) NSString *postMessage;
-@property (nonatomic, copy) NSString *message;
 
-@property (nonatomic, strong) NSDate *date;
+- (id)initWithCommentID:(NSInteger)commentID
+     withCommentMessage:(NSString *)message
+             withPostID:(NSInteger)postID;
 
-- (id)initWithCommentID:(NSInteger)commentID withMessage:(NSString *)message withPostID:(NSInteger)postID;
+- (id)initWithCommentMessage:(NSString *)message
+                    withPost:(Post *)post;
+
 - (id)initWithPost:(Post *)post;
 - (id)initDummy;
 

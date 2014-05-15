@@ -10,14 +10,13 @@
 #import "Comment.h"
 #import "Constants.h"
 
-
 @implementation Post
 
-// initializer to create a new post
 - (id)initWithPostID:(NSInteger)newPostID
            withScore:(NSInteger)score
-         withMessage:(NSString *)newPostMessage
-{
+     withPostMessage:(NSString *)newPostMessage
+{   // initializer to create a new post
+
     self = [super init];
     if (self)
     {
@@ -25,19 +24,29 @@
         [self setCollegeID:0];
         [self setScore:score];
         [self setVote:0];
-        [self setMessage:newPostMessage];
+        [self setPostMessage:newPostMessage];
         [self setCollegeName:@"<No College>"];
         [self setDate:[NSDate date]];
         
-//        [self validatePost];
+        [self validatePost];
         return self;
     }
     return nil;
 }
-
-// dummy initializer for dev/testing
+- (id)initWithPostMessage:(NSString *)newPostMessage
+{   // initializer to create a new post
+    
+    self = [self initDummy];
+    if (self)
+    {
+        [self setPostMessage:newPostMessage];
+        return self;
+    }
+    return nil;
+}
 - (id)initDummy
-{
+{   // dummy initializer for dev/testing
+
     self = [super init];
     if (self)
     {
@@ -50,12 +59,12 @@
         
         switch (self.postID % 6)
         {
-            case 0: [self setMessage:@"Post: If you're hungry for a hunk of #fat and #juicy meat"]; break;
-            case 1: [self setMessage:@"Post: Eat my buddy #Pumba here because he is a treat"]; break;
-            case 2: [self setMessage:@"Post: Come on down and dine"]; break;
-            case 3: [self setMessage:@"Post: On this #tastyswine"]; break;
-            case 4: [self setMessage:@"Post: All you have to do is get in line"]; break;
-            default: [self setMessage:@"Post: #LUAU!"]; break;
+            case 0: [self setPostMessage:@"Post: If you're hungry for a hunk of #fat and #juicy meat"]; break;
+            case 1: [self setPostMessage:@"Post: Eat my buddy #Pumba here because he is a treat"]; break;
+            case 2: [self setPostMessage:@"Post: Come on down and dine"]; break;
+            case 3: [self setPostMessage:@"Post: On this #tastyswine"]; break;
+            case 4: [self setPostMessage:@"Post: All you have to do is get in line"]; break;
+            default: [self setPostMessage:@"Post: #LUAU!"]; break;
         }
         
         
@@ -65,21 +74,21 @@
             Comment *comment = [[Comment alloc] initDummy];
             [self.commentList addObject:comment];
         }
-//        [self validatePost];
+        [self validatePost];
         return self;
     }
     return nil;
 }
-// check for proper length
 - (void)validatePost
-{
-    if (self.message.length < MIN_POST_LENGTH)
-    {
-        [NSException raise:@"Invalid Post" format:@"Post \"%@\" is too short", self.message];
-    }
-    if (self.message.length > MAX_POST_LENGTH)
-    {
-        [NSException raise:@"Invalid Post" format:@"Post \"%@\" is too long", self.message];
-    }
+{   // check for proper length
+
+//    if (self.postMessage.length < MIN_POST_LENGTH)
+//    {
+//        [NSException raise:@"Invalid Post" format:@"Post \"%@\" is too short", self.postMessage];
+//    }
+//    if (self.postMessage.length > MAX_POST_LENGTH)
+//    {
+//        [NSException raise:@"Invalid Post" format:@"Post \"%@\" is too long", self.postMessage];
+//    }
 }
 @end

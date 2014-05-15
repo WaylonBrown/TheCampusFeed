@@ -101,7 +101,7 @@ public class PostCommentsActivity extends Activity{
 				commentsText.setText("No Comments");
 				
 			sortCommentsList(post);
-			listAdapter = new CommentListAdapter(this, R.layout.list_row, post.getCommentList());
+			listAdapter = new CommentListAdapter(this, R.layout.list_row_post, post.getCommentList());
 			
 			//if doesnt havefooter, add it
 			if(commentsListView.getFooterViewsCount() == 0)
