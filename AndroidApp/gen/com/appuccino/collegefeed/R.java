@@ -114,6 +114,7 @@ containing a value of this type.
         public static final int list_row_college=0x7f03000c;
         public static final int list_row_collegepost=0x7f03000d;
         public static final int list_row_tag=0x7f03000e;
+
     }
     public static final class menu {
         public static final int main=0x7f0a0000;
