@@ -349,6 +349,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				newPostButton.setVisibility(View.VISIBLE);
 			Toast.makeText(this, "You're near Texas A&M University", Toast.LENGTH_LONG).show();
 			Toast.makeText(this, "You can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
+			updateListsForGPS();	//so that GPS icon can be set
 		}
 		else
 		{
@@ -358,6 +359,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
 		}
 	}
+
+	private void updateListsForGPS() 
+	{
+		//if looking at All Colleges, update lists for GPS icon
+		if(spinner.getSelectedItemPosition() == 0)
+		{
+			TopPostFragment.updateList();
+			NewPostFragment.updateList();
+		}
+	}
+
 
 	public void newPostClicked() 
 	{

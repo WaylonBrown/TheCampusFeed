@@ -270,15 +270,16 @@ containing a value of this type.
         public static final int arrowupblue=0x7f020003;
         public static final int card=0x7f020004;
         public static final int collegefeedlogosmall=0x7f020005;
-        public static final int ic_launcher=0x7f020006;
-        public static final int logofake=0x7f020007;
-        public static final int mask=0x7f020008;
-        public static final int newpost=0x7f020009;
-        public static final int old_card=0x7f02000a;
-        public static final int postbuttonclick=0x7f02000b;
-        public static final int postfeedlogosmall=0x7f02000c;
-        public static final int searchtagbuttonclick=0x7f02000d;
-        public static final int spot_mask=0x7f02000e;
+        public static final int gps=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
+        public static final int logofake=0x7f020008;
+        public static final int mask=0x7f020009;
+        public static final int newpost=0x7f02000a;
+        public static final int old_card=0x7f02000b;
+        public static final int postbuttonclick=0x7f02000c;
+        public static final int postfeedlogosmall=0x7f02000d;
+        public static final int searchtagbuttonclick=0x7f02000e;
+        public static final int spot_mask=0x7f02000f;
     }
     public static final class id {
         public static final int arrowDown=0x7f05000f;
@@ -290,11 +291,12 @@ containing a value of this type.
         public static final int commentsList=0x7f050013;
         public static final int commentsText=0x7f050012;
         public static final int fragmentListView=0x7f050016;
+        public static final int gpsImage=0x7f050026;
         public static final int inside=0x7f050004;
         public static final int loadingText=0x7f050020;
-        public static final int menu_GPS=0x7f050029;
-        public static final int menu_help=0x7f050028;
-        public static final int menu_settings=0x7f050027;
+        public static final int menu_GPS=0x7f05002a;
+        public static final int menu_help=0x7f050029;
+        public static final int menu_settings=0x7f050028;
         public static final int messageText=0x7f050010;
         public static final int newCommentButton=0x7f050009;
         public static final int newCommentMessage=0x7f050018;
@@ -320,7 +322,7 @@ containing a value of this type.
         public static final int spb_interpolator_linear=0x7f050001;
         public static final int spinner=0x7f05000a;
         public static final int tagSearchText=0x7f050021;
-        public static final int tagText=0x7f050026;
+        public static final int tagText=0x7f050027;
         public static final int timeText=0x7f050011;
         public static final int topTagText=0x7f050015;
     }
