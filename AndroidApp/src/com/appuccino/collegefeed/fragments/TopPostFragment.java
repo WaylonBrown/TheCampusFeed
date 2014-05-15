@@ -63,7 +63,6 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 				container, false);
 		list = (ListView)rootView.findViewById(R.id.fragmentListView);
 		loadingText = (ShimmerTextView)rootView.findViewById(R.id.loadingText);
-		ViewGroup viewGroup = (ViewGroup)rootView;
 		
 		Typeface customfont = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/Roboto-Light.ttf");
 		loadingText.setTypeface(customfont);
