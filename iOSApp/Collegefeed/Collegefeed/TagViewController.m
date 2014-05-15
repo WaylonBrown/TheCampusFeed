@@ -1,14 +1,14 @@
 //
-//  tempviewcontroller.m
+//  TagViewController.m
 //  Collegefeed
 //
 //  Created by Patrick Sheehan on 5/13/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
-#import "tempviewcontroller.h"
+#import "TagViewController.h"
 
-@implementation tempviewcontroller
+@implementation TagViewController
 
 -(IBAction) something
 {

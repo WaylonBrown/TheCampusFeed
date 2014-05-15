@@ -1,5 +1,5 @@
 //
-//  tempviewcontroller.h
+//  TagViewController.h
 //  Collegefeed
 //
 //  Created by Patrick Sheehan on 5/13/14.
@@ -10,7 +10,7 @@
 #import "TTTAttributedLabel.h"
 
 
-@interface tempviewcontroller : UIViewController <TTTAttributedLabelDelegate>
+@interface TagViewController : UIViewController <TTTAttributedLabelDelegate>
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *tagsLabel;
 
 - (IBAction)something;
