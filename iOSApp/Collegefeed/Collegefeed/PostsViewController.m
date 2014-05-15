@@ -6,8 +6,9 @@
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
+#import "TableCell.h"
 #import "PostsViewController.h"
-#import "PostTableCell.h"
+//#import "PostTableCell.h"
 #import "PostDataController.h"
 #import "Post.h"
 #import "CommentViewController.h"
@@ -54,7 +55,6 @@
     
     [self.navigationController pushViewController:controller
                                          animated:YES];
-//                                          completion:nil];
 }
 
 #pragma mark - Table View Override Functions
@@ -73,18 +73,19 @@
     // this specifies the prototype (PostTableCell) and assigns the labels
     
     //TODO: check if these cells should be of type PostTableCellWithCollege instead
-    static NSString *CellIdentifier = @"PostTableCell";
+    static NSString *CellIdentifier = @"TableCell";
     
-    PostTableCell *cell = (PostTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
     {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"PostTableCell" owner:self options:nil];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier
+                                                     owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
     
     // get the post and display in this cell
     Post *postAtIndex = [self.dataController objectInListAtIndex:indexPath.row];
-    [cell setPost:postAtIndex];
+    [cell setAsPostCell:postAtIndex];
     
     return cell;
 }
@@ -126,12 +127,5 @@
     [self.postTableView reloadData];
 
 }
-- (void)votedOnPost
-{   //TODO: I dont like this
-    // just called to refresh table when child (comments) view is finished
-
-//    [self.postTableView reloadData];
-}
-
 
 @end
