@@ -92,7 +92,7 @@ public class MyPostsFragment extends Fragment implements OnRefreshListener
 			postList.add(new Post(15, "Top message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));*/
 		}		
 		
-		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row, postList, 0);
+		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_post, postList, 0);
 		list.setAdapter(listAdapter);
 		
 		

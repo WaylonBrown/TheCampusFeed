@@ -341,9 +341,9 @@ containing a value of this type.
         public static final int dialog_tag_search=0x7f030009;
         public static final int fragment_layout=0x7f03000a;
         public static final int fragment_layout_tag=0x7f03000b;
-        public static final int list_row=0x7f03000c;
-        public static final int list_row_college=0x7f03000d;
-        public static final int list_row_collegepost=0x7f03000e;
+        public static final int list_row_college=0x7f03000c;
+        public static final int list_row_collegepost=0x7f03000d;
+        public static final int list_row_post=0x7f03000e;
         public static final int list_row_tag=0x7f03000f;
     }
     public static final class menu {

@@ -96,7 +96,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		//if not in specific college feed, use layout with college name
 		if(MainActivity.spinner.getSelectedItemPosition() == 2)
 		{
-			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row, postList, 0);
+			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_post, postList, 0);
 		}
 		else
 		{
