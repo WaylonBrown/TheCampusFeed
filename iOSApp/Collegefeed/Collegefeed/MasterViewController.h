@@ -12,13 +12,13 @@
 // Posts, Colleges, or Tags (Comment has unique one)
 
 @class PostDataController;
-@class CommentDataController;
 @class TagDataController;
+@class CollegeDataController;
 
 @interface MasterViewController : UIViewController
 
 @property (strong, nonatomic) PostDataController *postDataController;
-@property (strong, nonatomic) CommentDataController *commentDataController;
+@property (strong, nonatomic) CollegeDataController *collegeDataController;
 @property (strong, nonatomic) TagDataController *tagDataController;
 
 

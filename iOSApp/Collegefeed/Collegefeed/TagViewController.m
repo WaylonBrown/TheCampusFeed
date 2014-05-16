@@ -62,15 +62,6 @@
     
     return cell;
 }
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{   // TODO: This should probably not be hardcoded; revist
-//    
-//    // if not showing college name
-//    return 100;
-//    
-//    // if showing college name
-//    //    return 120;
-//}
 
 // Code when testing the attributed label
 

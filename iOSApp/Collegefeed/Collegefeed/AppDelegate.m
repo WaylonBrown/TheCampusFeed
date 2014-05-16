@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "PostsViewController.h"
 #import "CommentViewController.h"
+#import "CollegeViewController.h"
 #import "TagViewController.h"
 #import "Constants.h"
 
@@ -17,48 +18,57 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {   // Set up of the TabBarController, NavigationControllers, and Custom ViewControllers (Posts, Comments, Tags).
-    // i.e. [TabBar] -> [NavigationController]s -> [____ViewController]
-    //                   One NavigationController for each ViewController
+    // i.e. [TabBar] -> [NavigationControllers] -> [____ViewController]
+    //                   One NavigationController for each ViewController (for now)
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(cf_lightblue)];
     
-    // Top Posts - PostsViewController
+    // *** Top Posts - PostsViewController *** //
     PostsViewController *topPostsController = [[PostsViewController alloc] init];
     topPostsController.title = @"Top Posts";
     UINavigationController *topPostsNavController = [[UINavigationController alloc] initWithRootViewController:topPostsController];
     [topPostsNavController.navigationBar.topItem setTitleView:logoTitleView];
+    // *************************************** //
     
-    // New Posts - PostsViewController
+    // *** New Posts - PostsViewController *** //
     PostsViewController *newPostsController = [[PostsViewController alloc] init];
     newPostsController.title = @"New Posts";
     UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:newPostsController];
     [newPostsNavController.navigationBar.topItem setTitleView:logoTitleView];
+    // *************************************** //
     
-    // Trending Tags - TagViewController
+    // *** Trending Tags - TagViewController *** //
     TagViewController *tagController = [[TagViewController alloc] init];
     tagController.title = @"Trending Tags";
     UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:tagController];
     [tagNavController.navigationBar.topItem setTitleView:logoTitleView];
-
-    // Top Colleges - CollegeViewController
-    //    CollegeViewController *collegeController = [[CollegeViewController alloc] init];
-    //    UINavigationController *collegeNavController = [[UINavigationController alloc] initWithRootViewController:collegeController];
+    // *************************************** //
     
-    // My Posts - PostsViewController
+    // *** Top Colleges - CollegeViewController *** //
+    CollegeViewController *collegeController = [[CollegeViewController alloc] init];
+    collegeController.title = @"Top Colleges";
+    UINavigationController *collegeNavController = [[UINavigationController alloc] initWithRootViewController:collegeController];
+    [collegeNavController.navigationBar.topItem setTitleView:logoTitleView];
+    // *************************************** //
+    
+    // *** My Posts - PostsViewController *** //
     PostsViewController *myPostsController = [[PostsViewController alloc] init];
     myPostsController.title = @"My Posts";
     UINavigationController *myPostsNavController = [[UINavigationController alloc] initWithRootViewController:myPostsController];
     [myPostsNavController.navigationBar.topItem setTitleView:logoTitleView];
-
-    // My Comments - PostsViewController
-    PostsViewController *myCommentController = [[PostsViewController alloc] init];
-    myCommentController.title = @"My Comments";
-    UINavigationController *myCommentNavController = [[UINavigationController alloc] initWithRootViewController:myCommentController];
-    [myCommentNavController.navigationBar.topItem setTitleView:logoTitleView];
-
+    // *************************************** //
+    
+    // *** My Comments - PostsViewController *** //
+//    CommentViewController *myCommentController = [[CommentViewController alloc] init];
+//    myCommentController.title = @"My Comments";
+//    UINavigationController *myCommentNavController = [[UINavigationController alloc] initWithRootViewController:myCommentController];
+//    [myCommentNavController.navigationBar.topItem setTitleView:logoTitleView];
+    // *************************************** //
+    
     // assign all navigation controllers to the TabBar
-    NSArray *navControllers = [NSArray arrayWithObjects:topPostsNavController, newPostsNavController, tagNavController, myPostsNavController, myCommentNavController, nil];
+    NSArray *navControllers = [NSArray arrayWithObjects:topPostsNavController, newPostsNavController, tagNavController,
+                               collegeNavController, myPostsNavController, /*myCommentNavController, */ nil];
     [self setTabBarController:[[UITabBarController alloc] init]];
     [self.tabBarController setViewControllers:navControllers];
     

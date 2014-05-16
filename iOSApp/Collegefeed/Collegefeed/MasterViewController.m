@@ -9,7 +9,7 @@
 #import "MasterViewController.h"
 #import "Post.h"
 #import "PostDataController.h"
-//#import "CommentDataController.h"
+#import "CollegeDataController.h"
 #import "TagDataController.h"
 
 @implementation MasterViewController
@@ -22,6 +22,7 @@
         // Custom initialization
         self.postDataController = [[PostDataController alloc] init];
         self.tagDataController = [[TagDataController alloc] init];
+        self.collegeDataController = [[CollegeDataController alloc] init];
     }
     return self;
 }
