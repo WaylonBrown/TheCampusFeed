@@ -24,6 +24,7 @@
 		5390A94119158E0E00ACD082 /* ViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A94019158E0E00ACD082 /* ViewControllerTests.m */; };
 		5390A94319158E1A00ACD082 /* DataControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A94219158E1A00ACD082 /* DataControllerTests.m */; };
 		53963DE71916E5F50084E646 /* PostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53963DE61916E5F50084E646 /* PostsViewController.m */; };
+		53AE73601925B53900BE6B02 /* TagDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE735F1925B53900BE6B02 /* TagDataController.m */; };
 		53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B1FDFC19254E4700905E49 /* MasterView.xib */; };
 		53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B1FDFF19254E8F00905E49 /* MasterViewController.m */; };
 		53D2AD0719189E9E0097C840 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0619189E9E0097C840 /* Comment.m */; };
@@ -80,6 +81,8 @@
 		5390A94219158E1A00ACD082 /* DataControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataControllerTests.m; sourceTree = "<group>"; };
 		53963DE51916E5F50084E646 /* PostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostsViewController.h; sourceTree = "<group>"; };
 		53963DE61916E5F50084E646 /* PostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostsViewController.m; sourceTree = "<group>"; };
+		53AE735E1925B53900BE6B02 /* TagDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagDataController.h; sourceTree = "<group>"; };
+		53AE735F1925B53900BE6B02 /* TagDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagDataController.m; sourceTree = "<group>"; };
 		53B1FDFC19254E4700905E49 /* MasterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterView.xib; sourceTree = "<group>"; };
 		53B1FDFE19254E8F00905E49 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		53B1FDFF19254E8F00905E49 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
@@ -141,10 +144,10 @@
 			children = (
 				53963DE51916E5F50084E646 /* PostsViewController.h */,
 				53963DE61916E5F50084E646 /* PostsViewController.m */,
-				532706E0191378EF00F5EAB9 /* PostDataController.h */,
-				532706E1191378EF00F5EAB9 /* PostDataController.m */,
 				53D2AD0919189EC60097C840 /* Post.h */,
 				53D2AD0A19189EC60097C840 /* Post.m */,
+				532706E0191378EF00F5EAB9 /* PostDataController.h */,
+				532706E1191378EF00F5EAB9 /* PostDataController.m */,
 			);
 			name = Posts;
 			sourceTree = "<group>";
@@ -195,20 +198,15 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
-		5390A92919153E5200ACD082 /* View Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "View Controllers";
-			sourceTree = "<group>";
-		};
 		53B1FDFB19254C8600905E49 /* Tags */ = {
 			isa = PBXGroup;
 			children = (
-				53D2AD0F1918A22A0097C840 /* Tag.h */,
-				53D2AD101918A22A0097C840 /* Tag.m */,
 				5334758A1922D9B700E84CC8 /* TagViewController.h */,
 				5334758B1922D9B700E84CC8 /* TagViewController.m */,
+				53D2AD0F1918A22A0097C840 /* Tag.h */,
+				53D2AD101918A22A0097C840 /* Tag.m */,
+				53AE735E1925B53900BE6B02 /* TagDataController.h */,
+				53AE735F1925B53900BE6B02 /* TagDataController.m */,
 			);
 			name = Tags;
 			sourceTree = "<group>";
@@ -232,6 +230,15 @@
 				53D2AD141918AAB80097C840 /* College.m */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		53F742F219259B6400A49A37 /* Shared Views */ = {
+			isa = PBXGroup;
+			children = (
+				53B1FE0119254EB900905E49 /* MasterView */,
+				533475A019232A4A00E84CC8 /* TableCell */,
+			);
+			name = "Shared Views";
 			sourceTree = "<group>";
 		};
 		53F8788419133F60002A578B = {
@@ -267,16 +274,15 @@
 		53F8789619133F60002A578B /* Collegefeed */ = {
 			isa = PBXGroup;
 			children = (
-				53F8789F19133F60002A578B /* AppDelegate.h */,
-				53F878A019133F60002A578B /* AppDelegate.m */,
-				53B1FE0119254EB900905E49 /* MasterView */,
+				53F742F219259B6400A49A37 /* Shared Views */,
 				533475901922F66400E84CC8 /* Posts */,
 				533475911922F69300E84CC8 /* Comments */,
 				53B1FDFB19254C8600905E49 /* Tags */,
-				5390A92919153E5200ACD082 /* View Controllers */,
 				53D2AD0819189EAB0097C840 /* Models */,
 				5390A9131914B76800ACD082 /* Images */,
 				53F8789719133F60002A578B /* Supporting Files */,
+				53F8789F19133F60002A578B /* AppDelegate.h */,
+				53F878A019133F60002A578B /* AppDelegate.m */,
 				53F878AE19133F60002A578B /* Images.xcassets */,
 			);
 			path = Collegefeed;
@@ -285,14 +291,13 @@
 		53F8789719133F60002A578B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				533475A019232A4A00E84CC8 /* TableCell */,
+				53D2AD121918A7760097C840 /* Constants.h */,
 				533475871922B88300E84CC8 /* TTTAttributedLabel.h */,
 				533475881922B88300E84CC8 /* TTTAttributedLabel.m */,
 				53F8789819133F60002A578B /* Collegefeed-Info.plist */,
 				53F8789919133F60002A578B /* InfoPlist.strings */,
 				53F8789C19133F60002A578B /* main.m */,
 				53F8789E19133F60002A578B /* Collegefeed-Prefix.pch */,
-				53D2AD121918A7760097C840 /* Constants.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -430,6 +435,7 @@
 				53D2AD111918A22A0097C840 /* Tag.m in Sources */,
 				53D2AD151918AAB80097C840 /* College.m in Sources */,
 				53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */,
+				53AE73601925B53900BE6B02 /* TagDataController.m in Sources */,
 				5390A92C19153EBE00ACD082 /* CommentDataController.m in Sources */,
 				533475A41923344100E84CC8 /* TableCell.m in Sources */,
 				53D2AD0B19189EC60097C840 /* Post.m in Sources */,

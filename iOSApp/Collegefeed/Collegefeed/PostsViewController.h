@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "MasterViewController.h"
 
-@class PostDataController;
 @class Post;
 
 @interface PostsViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate>

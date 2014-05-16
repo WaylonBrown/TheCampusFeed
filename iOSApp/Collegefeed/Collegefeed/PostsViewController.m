@@ -14,17 +14,17 @@
 
 @implementation PostsViewController
 
-- (void)viewWillAppear:(BOOL)animated
-{   // View is about to appear after being inactive
-    
-    [super viewWillAppear:animated];
-    // refresh dataController?
-}
+//- (void)viewWillAppear:(BOOL)animated
+//{   // View is about to appear after being inactive
+//    
+//    [super viewWillAppear:animated];
+//    // refresh dataController?
+//}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.postDataController = [[PostDataController alloc] init];
+//    self.postDataController = [[PostDataController alloc] init];
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
 }

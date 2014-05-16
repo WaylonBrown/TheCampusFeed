@@ -10,17 +10,18 @@
 #import "Post.h"
 #import "PostDataController.h"
 //#import "CommentDataController.h"
-//#import "TagDataController.h"
+#import "TagDataController.h"
 
 @implementation MasterViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:@"MasterView" bundle:nibBundleOrNil];
-    if (self) {
-        self.postDataController = [[PostDataController alloc] init];
-
+    if (self)
+    {
         // Custom initialization
+        self.postDataController = [[PostDataController alloc] init];
+        self.tagDataController = [[TagDataController alloc] init];
     }
     return self;
 }

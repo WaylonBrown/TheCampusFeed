@@ -10,7 +10,7 @@
 
 @interface Post : NSObject
 
-// shared with Comment
+// these properties inherited by Comment
 @property (nonatomic) NSInteger postID;
 @property (nonatomic) NSInteger collegeID;
 @property (nonatomic) NSInteger score;

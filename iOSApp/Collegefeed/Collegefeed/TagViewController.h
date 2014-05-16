@@ -7,14 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TTTAttributedLabel.h"
+#import "MasterViewController.h"
+
+@class Tag;
+
+@interface TagViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate>     //, TTTAttributedLabel>
 
 
-@interface TagViewController : UIViewController <TTTAttributedLabelDelegate>
-@property (weak, nonatomic) IBOutlet TTTAttributedLabel *tagsLabel;
+@property (weak, nonatomic) Tag* selectedTag;
 
-- (IBAction)something;
-- (void)showTagsList:(NSString *)tag;
-- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url;
+
+//@property (weak, nonatomic) IBOutlet TTTAttributedLabel *tagsLabel;
+
+//- (IBAction)something;
+//- (void)showTagsList:(NSString *)tag;
+//- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url;
 
 @end
