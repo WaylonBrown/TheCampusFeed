@@ -24,11 +24,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
          */
-<<<<<<< HEAD
-        public static final int ptrHeaderBackground=0x7f010002;
-=======
-        public static final int ptrHeaderBackground=0x7f010013;
->>>>>>> FETCH_HEAD
+        public static final int ptrHeaderBackground=0x7f010012;
         /**  The height of the Header View 
          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
@@ -36,40 +32,24 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
          */
-<<<<<<< HEAD
-        public static final int ptrHeaderHeight=0x7f010003;
-=======
-        public static final int ptrHeaderHeight=0x7f010014;
->>>>>>> FETCH_HEAD
+        public static final int ptrHeaderHeight=0x7f010013;
         /**  The attribute to set in your Application/Activity theme to reference your custom theme 
          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-<<<<<<< HEAD
-        public static final int ptrHeaderStyle=0x7f010001;
-=======
-        public static final int ptrHeaderStyle=0x7f010012;
->>>>>>> FETCH_HEAD
+        public static final int ptrHeaderStyle=0x7f010011;
         /**  The Text Appearance of the Header View's Title text 
          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-<<<<<<< HEAD
-        public static final int ptrHeaderTitleTextAppearance=0x7f010004;
-=======
-        public static final int ptrHeaderTitleTextAppearance=0x7f010015;
->>>>>>> FETCH_HEAD
+        public static final int ptrHeaderTitleTextAppearance=0x7f010014;
         /**  The color that the Progress Bar should be tinted with 
          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
          */
-<<<<<<< HEAD
-        public static final int ptrProgressBarColor=0x7f010005;
-=======
-        public static final int ptrProgressBarColor=0x7f010016;
->>>>>>> FETCH_HEAD
+        public static final int ptrProgressBarColor=0x7f010015;
         /**  The height of the Progress Bar 
          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
@@ -77,11 +57,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
          */
-<<<<<<< HEAD
-        public static final int ptrProgressBarHeight=0x7f010007;
-=======
-        public static final int ptrProgressBarHeight=0x7f010018;
->>>>>>> FETCH_HEAD
+        public static final int ptrProgressBarHeight=0x7f010017;
         /**  The style of the Progress Bar 
          <p>Must be one or more (separated by '|') of the following constant values.</p>
 <table>
@@ -93,60 +69,36 @@ in (inches), mm (millimeters).
 <tr><td><code>outside</code></td><td>0x1</td><td></td></tr>
 </table>
          */
-<<<<<<< HEAD
-        public static final int ptrProgressBarStyle=0x7f010006;
-=======
-        public static final int ptrProgressBarStyle=0x7f010017;
->>>>>>> FETCH_HEAD
+        public static final int ptrProgressBarStyle=0x7f010016;
         /**  Text to show to prompt the user is pull (or keep pulling) 
          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
          */
-<<<<<<< HEAD
-        public static final int ptrPullText=0x7f010008;
-=======
-        public static final int ptrPullText=0x7f010019;
->>>>>>> FETCH_HEAD
+        public static final int ptrPullText=0x7f010018;
         /**  Text to show to tell the user that a refresh is currently in progress 
          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
          */
-<<<<<<< HEAD
-        public static final int ptrRefreshingText=0x7f010009;
-=======
-        public static final int ptrRefreshingText=0x7f01001a;
->>>>>>> FETCH_HEAD
+        public static final int ptrRefreshingText=0x7f010019;
         /**  Text to show to tell the user has scrolled enough to refresh 
          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
          */
-<<<<<<< HEAD
-        public static final int ptrReleaseText=0x7f01000a;
-=======
-        public static final int ptrReleaseText=0x7f01001b;
->>>>>>> FETCH_HEAD
+        public static final int ptrReleaseText=0x7f01001a;
         /** indeterminate progressbar style
          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-<<<<<<< HEAD
-        public static final int ptrSmoothProgressBarStyle=0x7f01000b;
-=======
-        public static final int ptrSmoothProgressBarStyle=0x7f01001c;
->>>>>>> FETCH_HEAD
+        public static final int ptrSmoothProgressBarStyle=0x7f01001b;
         /**  The class to use as a View's View Delegate. Can be relative path from app's package name 
          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
          */
-<<<<<<< HEAD
-        public static final int ptrViewDelegateClass=0x7f010000;
-=======
-        public static final int ptrViewDelegateClass=0x7f010011;
->>>>>>> FETCH_HEAD
+        public static final int ptrViewDelegateClass=0x7f010010;
         /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
 <p>This may also be a reference to a resource (in the form
@@ -155,27 +107,15 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-<<<<<<< HEAD
         public static final int reflectionColor=0x7f01001c;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int spbStyle=0x7f01000c;
+        public static final int spbStyle=0x7f010000;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int spb_background=0x7f010019;
-=======
-        public static final int reflectionColor=0x7f010000;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int spbStyle=0x7f010001;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int spb_background=0x7f01000e;
->>>>>>> FETCH_HEAD
+        public static final int spb_background=0x7f01000d;
         /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
 <p>This may also be a reference to a resource (in the form
@@ -184,19 +124,11 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-<<<<<<< HEAD
-        public static final int spb_color=0x7f01000d;
+        public static final int spb_color=0x7f010001;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int spb_colors=0x7f010017;
-=======
-        public static final int spb_color=0x7f010002;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int spb_colors=0x7f01000c;
->>>>>>> FETCH_HEAD
+        public static final int spb_colors=0x7f01000b;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -204,11 +136,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-<<<<<<< HEAD
-        public static final int spb_generate_background_with_colors=0x7f01001a;
-=======
-        public static final int spb_generate_background_with_colors=0x7f01000f;
->>>>>>> FETCH_HEAD
+        public static final int spb_generate_background_with_colors=0x7f01000e;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -216,11 +144,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-<<<<<<< HEAD
-        public static final int spb_gradients=0x7f01001b;
-=======
-        public static final int spb_gradients=0x7f010010;
->>>>>>> FETCH_HEAD
+        public static final int spb_gradients=0x7f01000f;
         /** <p>Must be one of the following constant values.</p>
 <table>
 <colgroup align="left" />
@@ -233,11 +157,7 @@ containing a value of this type.
 <tr><td><code>spb_interpolator_decelerate</code></td><td>3</td><td></td></tr>
 </table>
          */
-<<<<<<< HEAD
-        public static final int spb_interpolator=0x7f010014;
-=======
-        public static final int spb_interpolator=0x7f010009;
->>>>>>> FETCH_HEAD
+        public static final int spb_interpolator=0x7f010008;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -245,11 +165,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-<<<<<<< HEAD
-        public static final int spb_mirror_mode=0x7f010016;
-=======
-        public static final int spb_mirror_mode=0x7f01000b;
->>>>>>> FETCH_HEAD
+        public static final int spb_mirror_mode=0x7f01000a;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -257,11 +173,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-<<<<<<< HEAD
-        public static final int spb_progressiveStart_activated=0x7f010018;
-=======
-        public static final int spb_progressiveStart_activated=0x7f01000d;
->>>>>>> FETCH_HEAD
+        public static final int spb_progressiveStart_activated=0x7f01000c;
         /** <p>Must be a floating point value, such as "<code>1.2</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -269,11 +181,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-<<<<<<< HEAD
-        public static final int spb_progressiveStart_speed=0x7f010012;
-=======
-        public static final int spb_progressiveStart_speed=0x7f010007;
->>>>>>> FETCH_HEAD
+        public static final int spb_progressiveStart_speed=0x7f010006;
         /** <p>Must be a floating point value, such as "<code>1.2</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -281,11 +189,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-<<<<<<< HEAD
-        public static final int spb_progressiveStop_speed=0x7f010013;
-=======
-        public static final int spb_progressiveStop_speed=0x7f010008;
->>>>>>> FETCH_HEAD
+        public static final int spb_progressiveStop_speed=0x7f010007;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -293,11 +197,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-<<<<<<< HEAD
-        public static final int spb_reversed=0x7f010015;
-=======
-        public static final int spb_reversed=0x7f01000a;
->>>>>>> FETCH_HEAD
+        public static final int spb_reversed=0x7f010009;
         /** <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -305,11 +205,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-<<<<<<< HEAD
-        public static final int spb_sections_count=0x7f010010;
-=======
-        public static final int spb_sections_count=0x7f010005;
->>>>>>> FETCH_HEAD
+        public static final int spb_sections_count=0x7f010004;
         /** <p>Must be a floating point value, such as "<code>1.2</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -317,11 +213,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-<<<<<<< HEAD
-        public static final int spb_speed=0x7f010011;
-=======
-        public static final int spb_speed=0x7f010006;
->>>>>>> FETCH_HEAD
+        public static final int spb_speed=0x7f010005;
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
@@ -331,11 +223,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-<<<<<<< HEAD
-        public static final int spb_stroke_separator_length=0x7f01000f;
-=======
-        public static final int spb_stroke_separator_length=0x7f010004;
->>>>>>> FETCH_HEAD
+        public static final int spb_stroke_separator_length=0x7f010003;
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
@@ -345,11 +233,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-<<<<<<< HEAD
-        public static final int spb_stroke_width=0x7f01000e;
-=======
-        public static final int spb_stroke_width=0x7f010003;
->>>>>>> FETCH_HEAD
+        public static final int spb_stroke_width=0x7f010002;
     }
     public static final class bool {
         public static final int spb_default_mirror_mode=0x7f0a0001;
@@ -357,25 +241,14 @@ containing a value of this type.
         public static final int spb_default_reversed=0x7f0a0000;
     }
     public static final class color {
-<<<<<<< HEAD
         public static final int blue=0x7f060003;
         public static final int darkgray=0x7f060006;
-        public static final int default_progress_bar_color=0x7f060000;
+        public static final int default_progress_bar_color=0x7f060001;
         public static final int gray=0x7f060005;
         public static final int lightblue=0x7f060002;
         public static final int lightgray=0x7f060004;
-        public static final int spb_default_color=0x7f060001;
+        public static final int spb_default_color=0x7f060000;
         public static final int white=0x7f060007;
-=======
-        public static final int blue=0x7f070003;
-        public static final int darkgray=0x7f070006;
-        public static final int default_progress_bar_color=0x7f070001;
-        public static final int gray=0x7f070005;
-        public static final int lightblue=0x7f070002;
-        public static final int lightgray=0x7f070004;
-        public static final int spb_default_color=0x7f070000;
-        public static final int white=0x7f070007;
->>>>>>> FETCH_HEAD
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -384,19 +257,11 @@ containing a value of this type.
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-<<<<<<< HEAD
         public static final int activity_horizontal_margin=0x7f070003;
         public static final int activity_vertical_margin=0x7f070004;
-        public static final int ptr_progress_bar_stroke_width=0x7f070000;
-        public static final int spb_default_stroke_separator_length=0x7f070001;
-        public static final int spb_default_stroke_width=0x7f070002;
-=======
-        public static final int activity_horizontal_margin=0x7f080003;
-        public static final int activity_vertical_margin=0x7f080004;
-        public static final int ptr_progress_bar_stroke_width=0x7f080002;
-        public static final int spb_default_stroke_separator_length=0x7f080000;
-        public static final int spb_default_stroke_width=0x7f080001;
->>>>>>> FETCH_HEAD
+        public static final int ptr_progress_bar_stroke_width=0x7f070002;
+        public static final int spb_default_stroke_separator_length=0x7f070000;
+        public static final int spb_default_stroke_width=0x7f070001;
     }
     public static final class drawable {
         public static final int arrowdown=0x7f020000;
@@ -417,7 +282,6 @@ containing a value of this type.
         public static final int spot_mask=0x7f02000f;
     }
     public static final class id {
-<<<<<<< HEAD
         public static final int arrowDown=0x7f05000f;
         public static final int arrowUp=0x7f05000d;
         public static final int card=0x7f050022;
@@ -428,7 +292,7 @@ containing a value of this type.
         public static final int commentsText=0x7f050012;
         public static final int fragmentListView=0x7f050016;
         public static final int gpsImage=0x7f050026;
-        public static final int inside=0x7f050000;
+        public static final int inside=0x7f050004;
         public static final int loadingText=0x7f050020;
         public static final int menu_GPS=0x7f05002a;
         public static final int menu_help=0x7f050029;
@@ -442,74 +306,29 @@ containing a value of this type.
         public static final int newPostMessage=0x7f05001c;
         public static final int newPostTagsText=0x7f05001d;
         public static final int newPostTitle=0x7f05001a;
-        public static final int outside=0x7f050001;
+        public static final int outside=0x7f050005;
         public static final int pager=0x7f050014;
         public static final int postCard=0x7f05000c;
         public static final int postDetails=0x7f050023;
-        public static final int ptr_content=0x7f050002;
-        public static final int ptr_progress=0x7f050004;
-        public static final int ptr_text=0x7f050003;
+        public static final int ptr_content=0x7f050006;
+        public static final int ptr_progress=0x7f050008;
+        public static final int ptr_text=0x7f050007;
         public static final int pullToRefresh=0x7f05001f;
         public static final int scoreText=0x7f05000e;
         public static final int searchTagEditText=0x7f05001e;
-        public static final int spb_interpolator_accelerate=0x7f050005;
-        public static final int spb_interpolator_acceleratedecelerate=0x7f050007;
-        public static final int spb_interpolator_decelerate=0x7f050008;
-        public static final int spb_interpolator_linear=0x7f050006;
+        public static final int spb_interpolator_accelerate=0x7f050000;
+        public static final int spb_interpolator_acceleratedecelerate=0x7f050002;
+        public static final int spb_interpolator_decelerate=0x7f050003;
+        public static final int spb_interpolator_linear=0x7f050001;
         public static final int spinner=0x7f05000a;
         public static final int tagSearchText=0x7f050021;
         public static final int tagText=0x7f050027;
         public static final int timeText=0x7f050011;
         public static final int topTagText=0x7f050015;
-=======
-        public static final int arrowDown=0x7f06000f;
-        public static final int arrowUp=0x7f06000d;
-        public static final int card=0x7f060022;
-        public static final int collegeNameText=0x7f060025;
-        public static final int collegeText=0x7f06001b;
-        public static final int commentText=0x7f060024;
-        public static final int commentsList=0x7f060013;
-        public static final int commentsText=0x7f060012;
-        public static final int fragmentListView=0x7f060016;
-        public static final int gpsImage=0x7f060026;
-        public static final int inside=0x7f060004;
-        public static final int loadingText=0x7f060020;
-        public static final int menu_GPS=0x7f06002a;
-        public static final int menu_help=0x7f060029;
-        public static final int menu_settings=0x7f060028;
-        public static final int messageText=0x7f060010;
-        public static final int newCommentButton=0x7f060009;
-        public static final int newCommentMessage=0x7f060018;
-        public static final int newCommentTagsText=0x7f060019;
-        public static final int newCommentTitle=0x7f060017;
-        public static final int newPostButton=0x7f06000b;
-        public static final int newPostMessage=0x7f06001c;
-        public static final int newPostTagsText=0x7f06001d;
-        public static final int newPostTitle=0x7f06001a;
-        public static final int outside=0x7f060005;
-        public static final int pager=0x7f060014;
-        public static final int postCard=0x7f06000c;
-        public static final int postDetails=0x7f060023;
-        public static final int ptr_content=0x7f060006;
-        public static final int ptr_progress=0x7f060008;
-        public static final int ptr_text=0x7f060007;
-        public static final int pullToRefresh=0x7f06001f;
-        public static final int scoreText=0x7f06000e;
-        public static final int searchTagEditText=0x7f06001e;
-        public static final int spb_interpolator_accelerate=0x7f060000;
-        public static final int spb_interpolator_acceleratedecelerate=0x7f060002;
-        public static final int spb_interpolator_decelerate=0x7f060003;
-        public static final int spb_interpolator_linear=0x7f060001;
-        public static final int spinner=0x7f06000a;
-        public static final int tagSearchText=0x7f060021;
-        public static final int tagText=0x7f060027;
-        public static final int timeText=0x7f060011;
-        public static final int topTagText=0x7f060015;
->>>>>>> FETCH_HEAD
     }
     public static final class integer {
-        public static final int spb_default_interpolator=0x7f090001;
-        public static final int spb_default_sections_count=0x7f090000;
+        public static final int spb_default_interpolator=0x7f080001;
+        public static final int spb_default_sections_count=0x7f080000;
     }
     public static final class layout {
         public static final int actionbar_comment=0x7f030000;
@@ -533,43 +352,23 @@ containing a value of this type.
         public static final int main=0x7f0d0000;
     }
     public static final class string {
-<<<<<<< HEAD
-        public static final int action_settings=0x7f080005;
-        public static final int allcollege_section1=0x7f08000b;
-        public static final int allcollege_section2=0x7f08000c;
-        public static final int allcollege_section3=0x7f08000d;
-        public static final int allcollege_section4=0x7f08000e;
-        public static final int allcollege_section5=0x7f08000f;
-        public static final int allcollege_section6=0x7f080010;
-        public static final int app_name=0x7f080004;
-        public static final int onecollege_section1=0x7f080006;
-        public static final int onecollege_section2=0x7f080007;
-        public static final int onecollege_section3=0x7f080008;
-        public static final int onecollege_section4=0x7f080009;
-        public static final int onecollege_section5=0x7f08000a;
-        public static final int pull_to_refresh_pull_label=0x7f080000;
-        public static final int pull_to_refresh_refreshing_label=0x7f080002;
-        public static final int pull_to_refresh_release_label=0x7f080001;
-        public static final int spb_default_speed=0x7f080003;
-=======
-        public static final int action_settings=0x7f050005;
-        public static final int allcollege_section1=0x7f05000b;
-        public static final int allcollege_section2=0x7f05000c;
-        public static final int allcollege_section3=0x7f05000d;
-        public static final int allcollege_section4=0x7f05000e;
-        public static final int allcollege_section5=0x7f05000f;
-        public static final int allcollege_section6=0x7f050010;
-        public static final int app_name=0x7f050000;
-        public static final int onecollege_section1=0x7f050006;
-        public static final int onecollege_section2=0x7f050007;
-        public static final int onecollege_section3=0x7f050008;
-        public static final int onecollege_section4=0x7f050009;
-        public static final int onecollege_section5=0x7f05000a;
-        public static final int pull_to_refresh_pull_label=0x7f050002;
-        public static final int pull_to_refresh_refreshing_label=0x7f050004;
-        public static final int pull_to_refresh_release_label=0x7f050003;
-        public static final int spb_default_speed=0x7f050001;
->>>>>>> FETCH_HEAD
+        public static final int action_settings=0x7f090005;
+        public static final int allcollege_section1=0x7f09000b;
+        public static final int allcollege_section2=0x7f09000c;
+        public static final int allcollege_section3=0x7f09000d;
+        public static final int allcollege_section4=0x7f09000e;
+        public static final int allcollege_section5=0x7f09000f;
+        public static final int allcollege_section6=0x7f090010;
+        public static final int app_name=0x7f090004;
+        public static final int onecollege_section1=0x7f090006;
+        public static final int onecollege_section2=0x7f090007;
+        public static final int onecollege_section3=0x7f090008;
+        public static final int onecollege_section4=0x7f090009;
+        public static final int onecollege_section5=0x7f09000a;
+        public static final int pull_to_refresh_pull_label=0x7f090001;
+        public static final int pull_to_refresh_refreshing_label=0x7f090003;
+        public static final int pull_to_refresh_release_label=0x7f090002;
+        public static final int spb_default_speed=0x7f090000;
     }
     public static final class style {
         /** 
@@ -630,15 +429,9 @@ containing a value of this type.
            @see #PullToRefreshHeader_ptrSmoothProgressBarStyle
          */
         public static final int[] PullToRefreshHeader = {
-<<<<<<< HEAD
-            0x7f010002, 0x7f010003, 0x7f010004, 0x7f010005,
-            0x7f010006, 0x7f010007, 0x7f010008, 0x7f010009,
-            0x7f01000a, 0x7f01000b
-=======
-            0x7f010013, 0x7f010014, 0x7f010015, 0x7f010016,
-            0x7f010017, 0x7f010018, 0x7f010019, 0x7f01001a,
-            0x7f01001b, 0x7f01001c
->>>>>>> FETCH_HEAD
+            0x7f010012, 0x7f010013, 0x7f010014, 0x7f010015,
+            0x7f010016, 0x7f010017, 0x7f010018, 0x7f010019,
+            0x7f01001a, 0x7f01001b
         };
         /**
           <p>
@@ -791,11 +584,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            @see #PullToRefreshView_ptrViewDelegateClass
          */
         public static final int[] PullToRefreshView = {
-<<<<<<< HEAD
-            0x7f010000
-=======
-            0x7f010011
->>>>>>> FETCH_HEAD
+            0x7f010010
         };
         /**
           <p>
@@ -821,11 +610,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            @see #ShimmerView_reflectionColor
          */
         public static final int[] ShimmerView = {
-<<<<<<< HEAD
             0x7f01001c
-=======
-            0x7f010000
->>>>>>> FETCH_HEAD
         };
         /**
           <p>This symbol is the offset where the {@link com.appuccino.collegefeed.R.attr#reflectionColor}
@@ -883,17 +668,10 @@ containing a value of this type.
            @see #SmoothProgressBar_spb_stroke_width
          */
         public static final int[] SmoothProgressBar = {
-<<<<<<< HEAD
-            0x7f01000c, 0x7f01000d, 0x7f01000e, 0x7f01000f,
-            0x7f010010, 0x7f010011, 0x7f010012, 0x7f010013,
-            0x7f010014, 0x7f010015, 0x7f010016, 0x7f010017,
-            0x7f010018, 0x7f010019, 0x7f01001a, 0x7f01001b
-=======
-            0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004,
-            0x7f010005, 0x7f010006, 0x7f010007, 0x7f010008,
-            0x7f010009, 0x7f01000a, 0x7f01000b, 0x7f01000c,
-            0x7f01000d, 0x7f01000e, 0x7f01000f, 0x7f010010
->>>>>>> FETCH_HEAD
+            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
+            0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007,
+            0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b,
+            0x7f01000c, 0x7f01000d, 0x7f01000e, 0x7f01000f
         };
         /**
           <p>This symbol is the offset where the {@link com.appuccino.collegefeed.R.attr#spbStyle}
