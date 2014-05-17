@@ -10,12 +10,12 @@
 
 @implementation Vote
 
-- (id)initWithVoteID:(NSInteger)vID withUpvoteValue:(BOOL)isUpvote
+- (id)initWithVotableID:(NSInteger)ID withUpvoteValue:(BOOL)isUpvote;
 {
     self = [super init];
     if (self)
     {
-        [self setVoteID:vID];
+        [self setVotableID:ID];
         [self setUpvote:isUpvote];
         return self;
     }
@@ -26,7 +26,7 @@
     self = [super init];
     if (self)
     {
-        [self setVoteID:arc4random() % 999];
+        [self setVotableID:-1];
         [self setUpvote:NO];
         return self;
     }
@@ -37,7 +37,7 @@
     NSString* stringUpvote = self.upvote ? @"true" : @"false";
     NSDictionary *requestData = [[NSDictionary alloc] initWithObjectsAndKeys:
                                  stringUpvote, @"upvote",
-                                 self.voteID, @"votable_id",
+                                 self.votableID, @"votable_id",
                                  nil];
     
     NSError *error;

@@ -9,6 +9,7 @@
 #import "TableCell.h"
 #import "Post.h"
 #import "Comment.h"
+#import "Vote.h"
 
 @implementation TableCell
 
@@ -89,7 +90,7 @@
     }
     
     // assign arrow colors according to user's vote
-    [self updateVoteButtonsWithVoteValue:obj.vote];
+    [self updateVoteButtonsWithVote:obj.vote withScore:obj.score];
 }
 
 #pragma mark - Actions
@@ -102,14 +103,14 @@
     if (isPost)
     {
         Post *post = self.cellPost;
-        [post setVote:(post.vote == 1 ? 0 : 1)];
-        [self updateVoteButtonsWithVoteValue:post.vote];
+        [post castVote:YES];
+        [self updateVoteButtonsWithVote:post.vote withScore:post.score];
     }
     else if (isComment)
     {
         Comment *comment = self.cellComment;
-        [comment setVote:(comment.vote == 1 ? 0 : 1)];
-        [self updateVoteButtonsWithVoteValue:comment.vote];
+        [comment castVote:YES];
+        [self updateVoteButtonsWithVote:comment.vote withScore:comment.score];
     }
 }
 - (IBAction)downVotePresed:(id)sender
@@ -120,14 +121,14 @@
     if (isPost)
     {
         Post *post = self.cellPost;
-        [post setVote:(post.vote == -1 ? 0 : -1)];
-        [self updateVoteButtonsWithVoteValue:post.vote];
+        [post castVote:NO];
+        [self updateVoteButtonsWithVote:post.vote withScore:post.score];
     }
     else if (isComment)
     {
         Comment *comment = self.cellComment;
-        [comment setVote:(comment.vote == -1 ? 0 : -1)];
-        [self updateVoteButtonsWithVoteValue:comment.vote];
+        [comment castVote:NO];
+        [self updateVoteButtonsWithVote:comment.vote withScore:comment.score];
     }
 }
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
@@ -155,28 +156,32 @@
     }
     return [NSString stringWithFormat:@"%d seconds ago", seconds];
 }
-- (void)updateVoteButtonsWithVoteValue:(int)vote
+- (void)updateVoteButtonsWithVote:(Vote*)vote withScore:(int)score
 {   // assign appropriate arrow colors (based on user's vote)
     
-    switch (vote)
+    if (vote == nil)
     {
-        case -1:
-            [self.upVoteButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@",@"arrowup.png"]] forState:UIControlStateNormal];
-            [self.downVoteButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", @"arrowdownred.png"]] forState:UIControlStateNormal];
-            break;
-        case 1:
-            [self.upVoteButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", @"arrowupblue.png"]] forState:UIControlStateNormal];
-            [self.downVoteButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", @"arrowdown.png"]] forState:UIControlStateNormal];
-            break;
-        default:
-            [self.upVoteButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", @"arrowup.png"]] forState:UIControlStateNormal];
-            [self.downVoteButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", @"arrowdown.png"]] forState:UIControlStateNormal];
-            break;
+        [self.upVoteButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", @"arrowup.png"]]
+                           forState:UIControlStateNormal];
+        [self.downVoteButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", @"arrowdown.png"]]
+                             forState:UIControlStateNormal];
+    }
+    else if (vote.upvote == NO)
+    {
+            [self.upVoteButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@",@"arrowup.png"]]
+                               forState:UIControlStateNormal];
+            [self.downVoteButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", @"arrowdownred.png"]]
+                                 forState:UIControlStateNormal];
+    }
+    else if (vote.upvote == YES)
+    {
+        [self.upVoteButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", @"arrowupblue.png"]]
+                           forState:UIControlStateNormal];
+        [self.downVoteButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", @"arrowdown.png"]]
+                             forState:UIControlStateNormal];
     }
     
-    //    [self setNeedsDisplay];
+    [self.scoreLabel setText:[NSString stringWithFormat:@"%d", score]];
 }
-
-
 
 @end

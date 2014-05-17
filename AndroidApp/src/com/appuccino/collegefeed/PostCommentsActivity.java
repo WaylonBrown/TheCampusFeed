@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.extra.NetWorker;
 import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.extra.NetWorker.MakeVoteTask;

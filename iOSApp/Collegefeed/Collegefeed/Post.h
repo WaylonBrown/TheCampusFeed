@@ -8,13 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+@class Vote;
+
 @interface Post : NSObject
 
 // these properties inherited by Comment
 @property (nonatomic) NSInteger postID;
 @property (nonatomic) NSInteger collegeID;
 @property (nonatomic) NSInteger score;
-@property (nonatomic) NSInteger vote; //-1 = downvote, 0 = nothing, 1 = upvote
+@property (nonatomic, strong) Vote *vote;
+
 @property (nonatomic, strong) NSString *postMessage;
 @property (nonatomic, strong) NSString *collegeName;
 @property (nonatomic, strong) NSDate *date;
@@ -31,5 +34,6 @@
 - (id)initDummy;
 - (void)validatePost;
 - (NSData*)toJSON;
+- (void)castVote:(BOOL)isUpVote;
 
 @end

@@ -27,6 +27,7 @@
 		53AE73601925B53900BE6B02 /* TagDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE735F1925B53900BE6B02 /* TagDataController.m */; };
 		53AE736A1925CFA800BE6B02 /* CollegeDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73691925CFA800BE6B02 /* CollegeDataController.m */; };
 		53AE736D1925D46300BE6B02 /* CollegeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE736C1925D46300BE6B02 /* CollegeViewController.m */; };
+		53AE73C3192802BD00BE6B02 /* ModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73C2192802BD00BE6B02 /* ModelTests.m */; };
 		53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B1FDFC19254E4700905E49 /* MasterView.xib */; };
 		53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B1FDFF19254E8F00905E49 /* MasterViewController.m */; };
 		53D2AD0719189E9E0097C840 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0619189E9E0097C840 /* Comment.m */; };
@@ -89,6 +90,9 @@
 		53AE73691925CFA800BE6B02 /* CollegeDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollegeDataController.m; sourceTree = "<group>"; };
 		53AE736B1925D46300BE6B02 /* CollegeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollegeViewController.h; sourceTree = "<group>"; };
 		53AE736C1925D46300BE6B02 /* CollegeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollegeViewController.m; sourceTree = "<group>"; };
+		53AE73BC1927ED6600BE6B02 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
+		53AE73BF1927FBA700BE6B02 /* Votable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Votable.h; sourceTree = "<group>"; };
+		53AE73C2192802BD00BE6B02 /* ModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelTests.m; sourceTree = "<group>"; };
 		53B1FDFC19254E4700905E49 /* MasterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterView.xib; sourceTree = "<group>"; };
 		53B1FDFE19254E8F00905E49 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		53B1FDFF19254E8F00905E49 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
@@ -217,6 +221,15 @@
 			name = Colleges;
 			sourceTree = "<group>";
 		};
+		53AE73BA1927EB8F00BE6B02 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				53AE73BC1927ED6600BE6B02 /* DataController.h */,
+				53AE73BF1927FBA700BE6B02 /* Votable.h */,
+			);
+			name = Interfaces;
+			sourceTree = "<group>";
+		};
 		53B1FDFB19254C8600905E49 /* Tags */ = {
 			isa = PBXGroup;
 			children = (
@@ -291,6 +304,7 @@
 		53F8789619133F60002A578B /* Collegefeed */ = {
 			isa = PBXGroup;
 			children = (
+				53AE73BA1927EB8F00BE6B02 /* Interfaces */,
 				53F742F219259B6400A49A37 /* Shared Views */,
 				533475911922F69300E84CC8 /* Comments */,
 				533475901922F66400E84CC8 /* Posts */,
@@ -327,6 +341,7 @@
 				5390A94019158E0E00ACD082 /* ViewControllerTests.m */,
 				53F878C119133F60002A578B /* CollegefeedTests.m */,
 				53F878BC19133F60002A578B /* Supporting Files */,
+				53AE73C2192802BD00BE6B02 /* ModelTests.m */,
 			);
 			path = CollegefeedTests;
 			sourceTree = "<group>";
@@ -473,6 +488,7 @@
 				5390A94119158E0E00ACD082 /* ViewControllerTests.m in Sources */,
 				53F878C219133F60002A578B /* CollegefeedTests.m in Sources */,
 				5390A94319158E1A00ACD082 /* DataControllerTests.m in Sources */,
+				53AE73C3192802BD00BE6B02 /* ModelTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

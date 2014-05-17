@@ -9,6 +9,7 @@
 #import "Post.h"
 #import "Comment.h"
 #import "Constants.h"
+#import "Vote.h"
 
 @implementation Post
 
@@ -23,11 +24,11 @@
         [self setPostID:newPostID];
         [self setCollegeID:0];
         [self setScore:score];
-        [self setVote:0];
         [self setPostMessage:newPostMessage];
         [self setCollegeName:@"<No College>"];
         [self setDate:[NSDate date]];
-        
+        [self setVote:nil];
+         
         [self validatePost];
         return self;
     }
@@ -53,7 +54,6 @@
         [self setPostID:arc4random() % 999];
         [self setCollegeID:arc4random() % 999];
         [self setScore:arc4random() % 999];
-        [self setVote:0];
         [self setCollegeName:@"University of America, Bitch"];
         [self setDate:[NSDate date]];
         
@@ -102,4 +102,43 @@
     
     return postData;
 }
+- (void)castVote:(BOOL)isUpVote
+{   // TODO: send vote to server also (maybe only in data controller?)
+
+    
+    // Sets the vote for this Object and updates the score
+    // Removes the vote if the same one is given
+    // e.g. If (isUpVote && already upvoted) then (remove upvote/decrease score)
+    //  - (similarly for repeat downvotes)
+    
+    if (self.vote == nil)
+    {   // New vote on this object, one did not previously exist
+        Vote *newVote = [[Vote alloc] initWithVotableID:self.postID
+                                       withUpvoteValue:isUpVote];
+        [self setVote:newVote];
+    }
+    else
+    {   // This object already had a vote; update/delete
+        
+        // undo the original vote
+        self.score = self.vote.upvote
+                    ? self.score - 1
+                    : self.score + 1;
+        
+        if (self.vote.upvote == isUpVote)
+        {   // if a duplicate vote was cast, remove the vote
+            [self setVote:nil];
+            return;
+        }
+        
+        [self.vote setUpvote:isUpVote];
+    }
+    
+    // update score with new vote
+    self.score = self.vote.upvote
+                ? self.score + 1
+                : self.score - 1;
+}
+
+
 @end

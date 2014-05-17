@@ -16,8 +16,8 @@
 
 @interface TableCell : UITableViewCell <TTTAttributedLabelDelegate>
 
-@property (nonatomic) Post* cellPost;
-@property (nonatomic) Comment* cellComment;
+@property (nonatomic, strong) Post* cellPost;
+@property (nonatomic, strong) Comment* cellComment;
 
 @property (nonatomic, weak) IBOutlet TTTAttributedLabel *messageLabel;
 @property (nonatomic, weak) IBOutlet UILabel *scoreLabel;

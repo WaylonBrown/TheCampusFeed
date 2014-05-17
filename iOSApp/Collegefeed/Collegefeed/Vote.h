@@ -10,10 +10,13 @@
 
 @interface Vote : NSObject
 
-@property (nonatomic) NSInteger voteID;
+// upvote: {YES=upvote, NO=downvote}
 @property (nonatomic) BOOL upvote;
 
-- (id)initWithVoteID:(NSInteger)vID withUpvoteValue:(BOOL)isUpvote;
+// votableID: ID of what was voted on
+@property (nonatomic) NSInteger votableID;
+
+- (id)initWithVotableID:(NSInteger)ID withUpvoteValue:(BOOL)isUpvote;
 - (id)initDummy;
 
 @end
