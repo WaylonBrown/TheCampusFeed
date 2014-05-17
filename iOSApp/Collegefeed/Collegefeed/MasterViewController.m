@@ -47,7 +47,6 @@
 
 #pragma mark - Navigation
 
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
