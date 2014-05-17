@@ -7,18 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MasterViewController.h"
 
-@class PostDataController;
 @class Post;
 
-@interface PostsViewController : UIViewController
+@interface PostsViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) PostDataController *dataController;
 @property (weak, nonatomic) Post* selectedPost;
 
-@property (weak, nonatomic) IBOutlet UITableView *postTableView;
+//@property (weak, nonatomic) IBOutlet UITableView *postTableView;
 
-- (IBAction)createPost:(id)sender;
+//- (IBAction)createPost:(id)sender;
 
 @end
 

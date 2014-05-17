@@ -32,5 +32,19 @@
     }
     return nil;
 }
-
+- (NSData*)toJSON
+{   // Returns an NSData representation of this Post in JSON
+    NSString* stringUpvote = self.upvote ? @"true" : @"false";
+    NSDictionary *requestData = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 stringUpvote, @"upvote",
+                                 self.voteID, @"votable_id",
+                                 nil];
+    
+    NSError *error;
+    NSData *voteData = [NSJSONSerialization dataWithJSONObject:requestData
+                                                       options:0
+                                                         error:&error];
+    
+    return voteData;
+}
 @end

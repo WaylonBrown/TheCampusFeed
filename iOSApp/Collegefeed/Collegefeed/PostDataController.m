@@ -142,6 +142,7 @@ static BOOL useNetwork = NO;
                                            options:0
                                              error:&error];
 }
+
 - (void)addPostToServer:(Post *)post
 {   // Serialize new post into JSON and send as POST request to url
     @try

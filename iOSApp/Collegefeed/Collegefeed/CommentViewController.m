@@ -21,7 +21,8 @@
 #pragma mark - Initialization and view loading
 
 - (id)initWithOriginalPost:(Post*)post withDelegate:(id)postSubViewDelegate
-{   // initialize a CommentsView provided info about the previously selected Post
+{   //TODO: remove the delegate usage
+    // initialize a CommentsView provided info about the previously selected Post
 
     self = [super init];
     if (self)

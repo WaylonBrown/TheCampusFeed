@@ -36,27 +36,33 @@
     {
         [self setTagID:arc4random() % 999];
         [self setScore:arc4random() % 99];
-        [self setName:@"#FlamingKittens"];
+        
+        switch (self.tagID % 3)
+        {
+            case 0: [self setName:@"#FlamingKittens"]; break;
+            case 1: [self setName:@"#drankt"]; break;
+            default: [self setName:@"#america"]; break;
+        }
+        
         [self validateTag];
 
         return self;
     }
     return nil;
 }
-//TODO: ensure tag starts with '#' and is of valid length
 - (void)validateTag
 {
-    if ([self.name characterAtIndex:0] != '#')
-    {
-        [NSException raise:@"Invalid Tag" format:@"Tag \"%@\" must start with '#'", self.name];
-    }
-    if (self.name.length < MIN_TAG_LENGTH)
-    {
-        [NSException raise:@"Invalid Tag" format:@"Tag \"%@\" is too short", self.name];
-    }
-    if (self.name.length > MAX_TAG_LENGTH)
-    {
-        [NSException raise:@"Invalid Tag" format:@"Tag \"%@\" is too long", self.name];
-    }
+//    if ([self.name characterAtIndex:0] != '#')
+//    {
+//        [NSException raise:@"Invalid Tag" format:@"Tag \"%@\" must start with '#'", self.name];
+//    }
+//    if (self.name.length < MIN_TAG_LENGTH)
+//    {
+//        [NSException raise:@"Invalid Tag" format:@"Tag \"%@\" is too short", self.name];
+//    }
+//    if (self.name.length > MAX_TAG_LENGTH)
+//    {
+//        [NSException raise:@"Invalid Tag" format:@"Tag \"%@\" is too long", self.name];
+//    }
 }
 @end

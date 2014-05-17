@@ -8,36 +8,25 @@
 
 #import "TableCell.h"
 #import "PostsViewController.h"
-//#import "PostTableCell.h"
 #import "PostDataController.h"
 #import "Post.h"
 #import "CommentViewController.h"
 
 @implementation PostsViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
-    {
-        // Custom initialization
-    }
-    return self;
-}
-- (void)viewWillAppear:(BOOL)animated
-{   // Post View is about to appear; reload table data
-    [self.postTableView reloadData];
-}
+//- (void)viewWillAppear:(BOOL)animated
+//{   // View is about to appear after being inactive
+//    
+//    [super viewWillAppear:animated];
+//    // refresh dataController?
+//}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.dataController = [[PostDataController alloc] init];
-}
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+//    self.postDataController = [[PostDataController alloc] init];
+    [self.tableView setDataSource:self];
+    [self.tableView setDelegate:self];
 }
 
 #pragma mark - Navigation
@@ -49,7 +38,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Comment View for the selected post
     
-    self.selectedPost = (Post *)[self.dataController objectInListAtIndex:indexPath.row];
+    self.selectedPost = (Post *)[self.postDataController objectInListAtIndex:indexPath.row];
     CommentViewController* controller = [[CommentViewController alloc] initWithOriginalPost:self.selectedPost
                                                                                withDelegate:self];
     
@@ -59,14 +48,10 @@
 
 #pragma mark - Table View Override Functions
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
     
-    return [self.dataController countOfList];
+    return [self.postDataController countOfList];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
@@ -84,15 +69,10 @@
     }
     
     // get the post and display in this cell
-    Post *postAtIndex = [self.dataController objectInListAtIndex:indexPath.row];
+    Post *postAtIndex = [self.postDataController objectInListAtIndex:indexPath.row];
     [cell setAsPostCell:postAtIndex];
     
     return cell;
-}
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{   // User should not directly modify a PostTableCell
-
-    return NO;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // TODO: This should probably not be hardcoded; revist
@@ -104,28 +84,5 @@
 //    return 120;
 }
 
-#pragma mark - Actions
-
-- (IBAction)createPost:(id)sender
-{   // Display popup to let user type a new post
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
-                                                     message:@"What's poppin?"
-                                                    delegate:self
-                                           cancelButtonTitle:@"nvm.."
-                                           otherButtonTitles:@"Post!", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alert show];
-}
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{   // Add new post if user submits on the alert view
-    
-    if (buttonIndex == 0) return;
-    
-    Post *newPost = [[Post alloc] initWithPostMessage:[[alertView textFieldAtIndex:0] text]];
-//    [newPost validatePost];
-    [self.dataController addPost:newPost];
-    [self.postTableView reloadData];
-
-}
 
 @end

@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-// forward declaration (tell compiler a Post class does exist)
 @class Post;
 
 @interface PostDataController : NSObject
