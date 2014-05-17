@@ -109,4 +109,16 @@
 //        [NSException raise:@"Invalid Vote value" format:@"Invalid Vote value on comment with id = %d", self.commentID];
 //    }
 }
+- (NSData*)toJSON
+{   // Returns an NSData representation of this Post in JSON
+    NSDictionary *requestData = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 [NSString stringWithFormat:@"%d", self.postID], @"post_id",
+                                 self.commentMessage, @"text",
+                                 nil];
+    
+    NSError *error;
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:requestData options:0 error:&error];
+    
+    return postData;
+}
 @end

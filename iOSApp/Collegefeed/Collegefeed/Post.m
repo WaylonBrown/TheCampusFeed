@@ -91,4 +91,15 @@
 //        [NSException raise:@"Invalid Post" format:@"Post \"%@\" is too long", self.postMessage];
 //    }
 }
+- (NSData*)toJSON
+{   // Returns an NSData representation of this Post in JSON
+    NSDictionary *requestData = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 self.postMessage, @"text",
+                                 nil];
+    
+    NSError *error;
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:requestData options:0 error:&error];
+    
+    return postData;
+}
 @end

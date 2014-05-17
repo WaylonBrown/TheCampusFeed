@@ -85,13 +85,14 @@
     }
     return nil;
 }
-//TODO: ensure college is valid here
 - (void)validateCollege
-{
+{   //TODO: ensure college is valid here
+
 //    if (false)
 //    {
 //        [NSException raise:@"Invalid College" format:@"College \"%@\" invalid", self.name];
 //    }
 }
+
 
 @end

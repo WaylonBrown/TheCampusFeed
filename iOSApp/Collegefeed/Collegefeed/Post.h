@@ -30,5 +30,6 @@
 - (id)initWithPostMessage:(NSString *)newPostMessage;
 - (id)initDummy;
 - (void)validatePost;
+- (NSData*)toJSON;
 
 @end
