@@ -1,36 +1,101 @@
 <html>
+  <head>
+    <style>
+      #namesdiv{
+        position: fixed;
+        bottom: 10px;
+        right:10px;
+        background-color: white;
+        z-index: 100;
+        border-radius: 10;
+        padding: 10px;
+      }
+      #mapdiv{
+        z-index: 1;
+        position: relative;
+      }
+    </style>
+  </head>
   <body>
     <div id="mapdiv"></div>
+
+    <div id="namesdiv">
+    </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
     <script>
       map = new OpenLayers.Map("mapdiv");
       map.addLayer(new OpenLayers.Layer.OSM());
 
-      var pois = new OpenLayers.Layer.Vector( "My Points");
-                      //{ 
-                        //projection: map.displayProjection
-                      //});
+                var style = new OpenLayers.Style({
+                    pointRadius: "${radius}",
+                    fillColor: "#ffcc66",
+                    fillOpacity: 0.8,
+                    strokeColor: "#cc6633",
+                    strokeWidth: 2,
+                    strokeOpacity: 0.8
+                }, {
+                    context: {
+                        radius: function(feature) {
+                          //return 3;
+                          //Todo change this to the number of posts or somethin
+                            return Math.min(feature.attributes.count, 7) + 3;
+                        }
+                    }
+                });
+
+      var pois = new OpenLayers.Layer.Vector( "My Points",
+        {
+          strategies: [
+            new OpenLayers.Strategy.Cluster({
+                distance: 15
+            })],
+          styleMap: new OpenLayers.StyleMap({
+                        "default": style,
+                        "select": {
+                            fillColor: "#8aeeef",
+                            strokeColor: "#32a8a9"
+                        }
+                    })
+
+        }
+      );
+
+
+
+        var select = new OpenLayers.Control.SelectFeature(
+            pois, {hover: true}
+        );
+        map.addControl(select);
+        select.activate();
+      pois.events.on({"featureselected": display});
+
+      map.addLayer(pois);
+
+
+
 
     $.getJSON("api/v1/colleges",function(result){
+        var features = [];
         $.each(result, function(key, val){
-          console.log(val.lat + " " + val.lon);
           var pt = new OpenLayers.Geometry.Point(val.lon, val.lat);
           pt.transform(
             new OpenLayers.Projection("EPSG:4326"),
             new OpenLayers.Projection("EPSG:900913")
-        );
-          pois.addFeatures(
+          );
+          features.push(
             new OpenLayers.Feature.Vector( 
               pt,
-              {}, 
-              {pointRadius: 1, label: val.name}
+              {
+                schoolName: val.name
+              }
             )
           );
         });
 
+        pois.addFeatures(features);
 
-      map.addLayer(pois);
+
     // create layer switcher widget in top right corner of map.
       var layer_switcher= new OpenLayers.Control.LayerSwitcher({});
       map.addControl(layer_switcher);
@@ -45,6 +110,16 @@
 
 
       });
+
+
+      function display(event){
+        $("#namesdiv").empty();
+        console.log(event.feature.cluster);
+        $.each(event.feature.cluster, function(k,v){
+          $("#namesdiv").append("<div>" + v.data.schoolName + "</div>");
+        });
+        
+      }
 
     </script>
   </body></html>

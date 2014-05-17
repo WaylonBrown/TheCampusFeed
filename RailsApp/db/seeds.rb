@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 require 'csv'
 
-def importFromFile
+def importFromFile(lim = -1)
   #imports from the 2012 
   @i = 0
   @data = CSV.foreach("app/assets/hd2012.csv", encoding: "iso-8859-1:UTF-8" ){ |row|
@@ -26,7 +26,7 @@ def importFromFile
     if !@cur.save
       puts 'shit shit shit' #this shouldn't happen ;)
     end
-    if @i > 10
+    if lim != -1 and @i > lim
       break
     end
   }
@@ -48,4 +48,8 @@ def importFromWrongFile
 end
 
 Api::V1::College.destroy_all
-importFromFile
+if Rails.env.production?
+  importFromFile
+else
+  importFromFile 10
+end
