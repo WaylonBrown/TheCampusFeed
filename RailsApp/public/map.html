@@ -24,6 +24,20 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
     <script>
+      function getUrlParameter(sParam)
+      {
+          var sPageURL = window.location.search.substring(1);
+          var sURLVariables = sPageURL.split('&');
+          for (var i = 0; i < sURLVariables.length; i++) 
+          {
+              var sParameterName = sURLVariables[i].split('=');
+              if (sParameterName[0] == sParam) 
+              {
+                  return sParameterName[1];
+              }
+          }
+      }
+
       map = new OpenLayers.Map("mapdiv");
       map.addLayer(new OpenLayers.Layer.OSM());
 
@@ -74,6 +88,14 @@
 
 
 
+      var threshold = getUrlParameter("threshold");
+      console.log(threshold);
+
+
+
+
+
+
 
     $.getJSON("api/v1/colleges",function(result){
         var features = [];
@@ -83,14 +105,16 @@
             new OpenLayers.Projection("EPSG:4326"),
             new OpenLayers.Projection("EPSG:900913")
           );
-          features.push(
-            new OpenLayers.Feature.Vector( 
-              pt,
-              {
-                schoolName: val.name
-              }
-            )
-          );
+          if(threshold === undefined || val.size >= threshold){
+            features.push(
+              new OpenLayers.Feature.Vector( 
+                pt,
+                {
+                  schoolName: val.name
+                }
+              )
+            );
+          }
         });
 
         pois.addFeatures(features);
