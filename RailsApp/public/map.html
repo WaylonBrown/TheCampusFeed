@@ -1,0 +1,50 @@
+<html>
+  <body>
+    <div id="mapdiv"></div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+    <script>
+      map = new OpenLayers.Map("mapdiv");
+      map.addLayer(new OpenLayers.Layer.OSM());
+
+      var pois = new OpenLayers.Layer.Vector( "My Points");
+                      //{ 
+                        //projection: map.displayProjection
+                      //});
+
+    $.getJSON("api/v1/colleges",function(result){
+        $.each(result, function(key, val){
+          console.log(val.lat + " " + val.lon);
+          var pt = new OpenLayers.Geometry.Point(val.lon, val.lat);
+          pt.transform(
+            new OpenLayers.Projection("EPSG:4326"),
+            new OpenLayers.Projection("EPSG:900913")
+        );
+          pois.addFeatures(
+            new OpenLayers.Feature.Vector( 
+              pt,
+              {}, 
+              {pointRadius: 1, label: val.name}
+            )
+          );
+        });
+
+
+      map.addLayer(pois);
+    // create layer switcher widget in top right corner of map.
+      var layer_switcher= new OpenLayers.Control.LayerSwitcher({});
+      map.addControl(layer_switcher);
+      //Set start centrepoint and zoom    
+      var lonLat = new OpenLayers.LonLat( 9.5788, 48.9773 )
+            .transform(
+              new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+              map.getProjectionObject() // to Spherical Mercator Projection
+            );
+      var zoom=1;
+      map.setCenter (lonLat, zoom);  
+
+
+      });
+
+    </script>
+  </body></html>
