@@ -98,40 +98,38 @@
 - (IBAction)upVotePressed:(id)sender
 {
     BOOL isPost = self.cellPost != nil && self.cellComment == nil;
-//    BOOL isComment = self.cellComment != nil && self.cellPost == nil;
+    BOOL isComment = self.cellComment != nil && self.cellPost == nil;
     
     if (isPost)
     {
         Post *post = self.cellPost;
         [post castVote:YES];
-//        [post setVote:(post.vote == 1 ? 0 : 1)];
         [self updateVoteButtonsWithVote:post.vote withScore:post.score];
     }
-//    else if (isComment)
-//    {
-//        Comment *comment = self.cellComment;
-//        [comment setVote:(comment.vote == 1 ? 0 : 1)];
-//        [self updateVoteButtonsWithVoteValue:comment.vote];
-//    }
+    else if (isComment)
+    {
+        Comment *comment = self.cellComment;
+        [comment castVote:YES];
+        [self updateVoteButtonsWithVote:comment.vote withScore:comment.score];
+    }
 }
 - (IBAction)downVotePresed:(id)sender
 {
     BOOL isPost = self.cellPost != nil && self.cellComment == nil;
-//    BOOL isComment = self.cellComment != nil && self.cellPost == nil;
+    BOOL isComment = self.cellComment != nil && self.cellPost == nil;
     
     if (isPost)
     {
         Post *post = self.cellPost;
-        [post castVote:YES];
-//        [post setVote:(post.vote == -1 ? 0 : -1)];
+        [post castVote:NO];
         [self updateVoteButtonsWithVote:post.vote withScore:post.score];
     }
-//    else if (isComment)
-//    {
-//        Comment *comment = self.cellComment;
-//        [comment setVote:(comment.vote == -1 ? 0 : -1)];
-//        [self updateVoteButtonsWithVoteValue:comment.vote];
-//    }
+    else if (isComment)
+    {
+        Comment *comment = self.cellComment;
+        [comment castVote:NO];
+        [self updateVoteButtonsWithVote:comment.vote withScore:comment.score];
+    }
 }
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
 {
