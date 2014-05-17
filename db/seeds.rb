@@ -22,6 +22,7 @@ def importFromFile(lim = -1)
     @params[:name] = row[1]
     @params[:lat] = row[-1]
     @params[:lon] = row[-2] # database provided as lon then lat.. wtf
+    @params[:size] = row[49] # column AX
     @cur = Api::V1::College.new(@params)
     if !@cur.save
       puts 'shit shit shit' #this shouldn't happen ;)
