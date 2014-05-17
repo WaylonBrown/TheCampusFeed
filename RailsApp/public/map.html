@@ -1,6 +1,26 @@
 <html>
+  <head>
+    <style>
+      #namesdiv{
+        position: fixed;
+        bottom: 10px;
+        right:10px;
+        background-color: white;
+        z-index: 100;
+        border-radius: 10;
+        padding: 10px;
+      }
+      #mapdiv{
+        z-index: 1;
+        position: relative;
+      }
+    </style>
+  </head>
   <body>
     <div id="mapdiv"></div>
+
+    <div id="namesdiv">
+    </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
     <script>
@@ -58,7 +78,6 @@
     $.getJSON("api/v1/colleges",function(result){
         var features = [];
         $.each(result, function(key, val){
-          console.log(val.lat + " " + val.lon);
           var pt = new OpenLayers.Geometry.Point(val.lon, val.lat);
           pt.transform(
             new OpenLayers.Projection("EPSG:4326"),
@@ -67,7 +86,9 @@
           features.push(
             new OpenLayers.Feature.Vector( 
               pt,
-              {}
+              {
+                schoolName: val.name
+              }
             )
           );
         });
@@ -92,7 +113,12 @@
 
 
       function display(event){
-        console.log('herrr');
+        $("#namesdiv").empty();
+        console.log(event.feature.cluster);
+        $.each(event.feature.cluster, function(k,v){
+          $("#namesdiv").append("<div>" + v.data.schoolName + "</div>");
+        });
+        
       }
 
     </script>
