@@ -1,1 +1,1 @@
-json.extract! @college, :id, :name, :lat, :lon, :created_at, :updated_at
+json.extract! @college, :id, :name, :lat, :lon, :size, :created_at, :updated_at
