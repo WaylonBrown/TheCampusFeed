@@ -29,6 +29,8 @@
 		53AE736D1925D46300BE6B02 /* CollegeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE736C1925D46300BE6B02 /* CollegeViewController.m */; };
 		53AE73C3192802BD00BE6B02 /* ModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73C2192802BD00BE6B02 /* ModelTests.m */; };
 		53AE73C51928208100BE6B02 /* Votable.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73C41928208100BE6B02 /* Votable.m */; };
+		53AE73C71928354F00BE6B02 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73C61928354F00BE6B02 /* DataController.m */; };
+		53AE73CB19283A9D00BE6B02 /* VoteDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73CA19283A9D00BE6B02 /* VoteDataController.m */; };
 		53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B1FDFC19254E4700905E49 /* MasterView.xib */; };
 		53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B1FDFF19254E8F00905E49 /* MasterViewController.m */; };
 		53D2AD0719189E9E0097C840 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0619189E9E0097C840 /* Comment.m */; };
@@ -95,6 +97,9 @@
 		53AE73BF1927FBA700BE6B02 /* Votable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Votable.h; sourceTree = "<group>"; };
 		53AE73C2192802BD00BE6B02 /* ModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelTests.m; sourceTree = "<group>"; };
 		53AE73C41928208100BE6B02 /* Votable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Votable.m; sourceTree = "<group>"; };
+		53AE73C61928354F00BE6B02 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
+		53AE73C919283A9D00BE6B02 /* VoteDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoteDataController.h; sourceTree = "<group>"; };
+		53AE73CA19283A9D00BE6B02 /* VoteDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoteDataController.m; sourceTree = "<group>"; };
 		53B1FDFC19254E4700905E49 /* MasterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterView.xib; sourceTree = "<group>"; };
 		53B1FDFE19254E8F00905E49 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		53B1FDFF19254E8F00905E49 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
@@ -213,10 +218,10 @@
 		53AE73671925CDA600BE6B02 /* Colleges */ = {
 			isa = PBXGroup;
 			children = (
-				53D2AD131918AAB80097C840 /* College.h */,
-				53D2AD141918AAB80097C840 /* College.m */,
 				53AE73681925CFA800BE6B02 /* CollegeDataController.h */,
 				53AE73691925CFA800BE6B02 /* CollegeDataController.m */,
+				53D2AD131918AAB80097C840 /* College.h */,
+				53D2AD141918AAB80097C840 /* College.m */,
 				53AE736B1925D46300BE6B02 /* CollegeViewController.h */,
 				53AE736C1925D46300BE6B02 /* CollegeViewController.m */,
 			);
@@ -227,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				53AE73BC1927ED6600BE6B02 /* DataController.h */,
+				53AE73C61928354F00BE6B02 /* DataController.m */,
 				53AE73BF1927FBA700BE6B02 /* Votable.h */,
 				53AE73C41928208100BE6B02 /* Votable.m */,
 			);
@@ -256,13 +262,15 @@
 			name = MasterView;
 			sourceTree = "<group>";
 		};
-		53D2AD0819189EAB0097C840 /* Models */ = {
+		53D2AD0819189EAB0097C840 /* Votes */ = {
 			isa = PBXGroup;
 			children = (
 				53D2AD0C19189F740097C840 /* Vote.h */,
 				53D2AD0D19189F740097C840 /* Vote.m */,
+				53AE73C919283A9D00BE6B02 /* VoteDataController.h */,
+				53AE73CA19283A9D00BE6B02 /* VoteDataController.m */,
 			);
-			name = Models;
+			name = Votes;
 			sourceTree = "<group>";
 		};
 		53F742F219259B6400A49A37 /* Shared Views */ = {
@@ -313,7 +321,7 @@
 				533475901922F66400E84CC8 /* Posts */,
 				53AE73671925CDA600BE6B02 /* Colleges */,
 				53B1FDFB19254C8600905E49 /* Tags */,
-				53D2AD0819189EAB0097C840 /* Models */,
+				53D2AD0819189EAB0097C840 /* Votes */,
 				5390A9131914B76800ACD082 /* Images */,
 				53F8789719133F60002A578B /* Supporting Files */,
 				53F8789F19133F60002A578B /* AppDelegate.h */,
@@ -473,9 +481,11 @@
 				53D2AD111918A22A0097C840 /* Tag.m in Sources */,
 				53D2AD151918AAB80097C840 /* College.m in Sources */,
 				53AE736D1925D46300BE6B02 /* CollegeViewController.m in Sources */,
+				53AE73CB19283A9D00BE6B02 /* VoteDataController.m in Sources */,
 				53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */,
 				53AE73601925B53900BE6B02 /* TagDataController.m in Sources */,
 				5390A92C19153EBE00ACD082 /* CommentDataController.m in Sources */,
+				53AE73C71928354F00BE6B02 /* DataController.m in Sources */,
 				533475A41923344100E84CC8 /* TableCell.m in Sources */,
 				53D2AD0B19189EC60097C840 /* Post.m in Sources */,
 				53963DE71916E5F50084E646 /* PostsViewController.m in Sources */,

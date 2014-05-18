@@ -19,16 +19,16 @@ static BOOL useNetwork = NO;
 
 #pragma mark Initialization 
 
-- (id) init
+- (id)init
 { // initialize this data controller
     if (self = [super init])
     {
         if (useNetwork)
         {
-            [self setMasterPostList:[[NSMutableArray alloc] init]];
+            [self setList:[[NSMutableArray alloc] init]];
             self.postURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",
                                                  requestUrlString, apiVersion, @"posts"]];
-            [self fetchAllPosts];
+            [self fetchAll];
         }
         else // dummy initialization
         {
@@ -41,43 +41,20 @@ static BOOL useNetwork = NO;
 - (void)initializeDefaultList
 { // initialize the post array with placeholder elements
 
-    [self setMasterPostList:[[NSMutableArray alloc] init]];
+    [self setList:[[NSMutableArray alloc] init]];
 
     for (int i = 0; i < 3; i++)
     {
         Post *post;
         post = [[Post alloc] initDummy];
         post.postID = i;
-        [self addPost:post];
+        [self addObjectToList:post];
     }
-}
-- (void)setMasterPostList:(NSMutableArray *)newList
-{ // override its default setter method to ensure new array remains mutable
-    if (_masterPostList != newList)
-    {
-        _masterPostList = [newList mutableCopy];
-    }
-}
-
-#pragma mark Data Access
-
-- (NSUInteger)countOfList
-{
-    return [self.masterPostList count];
-}
-- (Post *)objectInListAtIndex:(NSUInteger)theIndex
-{
-    return [self.masterPostList objectAtIndex:theIndex];
-}
-- (void)addPost:(Post *)post
-{   // add post locally to the masterPostList array
-    [self.masterPostList addObject:post];
-//    [self addPostToServer:post];
 }
 
 #pragma mark Network Access (NEEDS WORK)
 
-- (void)fetchAllPosts
+- (void)fetchAll
 {   // call getJsonObjectWithUrl to access network,
     // then read JSON result into list of posts
     
@@ -86,7 +63,7 @@ static BOOL useNetwork = NO;
         
         NSLog(@"%@", allPosts);
         
-        [self.masterPostList removeAllObjects];
+        [self.list removeAllObjects];
         for (int i = 0; i < allPosts.count; i++)
         {
             // this post as a json object
@@ -103,7 +80,7 @@ static BOOL useNetwork = NO;
             Post* newPost = [[Post alloc] initWithPostID:[postID integerValue]
                                                withScore:[score integerValue]
                                              withMessage:message];
-            [self addPost:newPost];
+            [self addObjectToList:newPost];
         }
     }
     @catch (NSException *exc)
@@ -148,7 +125,7 @@ static BOOL useNetwork = NO;
     @try
     {
         // Create the request.
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:self.postURL];
+//        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:self.postURL];
 
         // Convert post to data for HTTPBody
 //        NSString *stringData = [NSString stringWithFormat:@"text=%@", post.message];
@@ -183,7 +160,7 @@ static BOOL useNetwork = NO;
 //        }
 //        else
 //        {
-//            [self addPost:post];
+//            [self addObjectToList:post];
 //        }
         
     }

@@ -8,16 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@class Tag;
+#import "DataController.h"
 
-@interface TagDataController : NSObject
+@interface TagDataController : DataController
 
-@property (nonatomic, strong) NSMutableArray *masterTagList;
 @property (nonatomic) NSURL *tagURL;
 @property (nonatomic) NSMutableData *responseData;
-
-- (NSUInteger)countOfList;
-- (Tag *)objectInListAtIndex:(NSUInteger)theIndex;
-- (void)addTag:(Tag *)tag;
 
 @end
