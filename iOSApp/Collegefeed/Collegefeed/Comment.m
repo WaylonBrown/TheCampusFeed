@@ -9,49 +9,63 @@
 #import "Comment.h"
 #import "Post.h"
 #import "Constants.h"
+#import "Vote.h"
 
 @implementation Comment
 
 - (id)initWithCommentID:(NSInteger)newCommentID
-     withCommentMessage:(NSString *)newMessage
+              withScore:(NSInteger)newScore
+            withMessage:(NSString *)newMessage
              withPostID:(NSInteger)newPostID
-{
+{   // initialize a new Comment
     self = [super init];
     if (self)
     {
         [self setCommentID:newCommentID];
         [self setPostID:newPostID];
-        [self setCollegeID:0];
-        [self setScore:0];
-        [self setVote:0];
-        [self setCommentMessage:newMessage];
+        [self setCollegeID:-1];
+        [self setScore:newScore];
+        [self setMessage:newMessage];
+        [self setCollegeName:@"<No College>"];
         [self setDate:[NSDate date]];
+        [self setVote:nil];
         
-        [self validateComment];
+        [self validate];
         return self;
     }
     return nil;
+}
+- (id)initDummy
+{   // dummy initializer for dev/testing
+    NSString* dummyMessage;
+    switch (arc4random() % 4)
+    {
+        case 0: dummyMessage = @"Comment: Are you #achin?"; break;
+        case 1: dummyMessage = @"Comment: #Yupyupyup"; break;
+        case 2: dummyMessage = @"Comment: For some #bacon?"; break;
+        default: dummyMessage = @"Comment: #LUAU!"; break;
+    }
     
+    self = [self initWithCommentID:(arc4random() % 999)
+                         withScore:(arc4random() % 99)
+                       withMessage:dummyMessage
+                        withPostID:(arc4random() % 999)];
+    
+    return self;
 }
 - (id)initWithCommentMessage:(NSString *)message
                     withPost:(Post *)post
 {   // assign values from the post that was commented on
 
-    self = [self initDummy];
-    if (self)
-    {
-        [self setPostID:post.postID];
-        [self setCommentMessage:message];
-        [self setCollegeID:post.collegeID];
-        [self setScore:0];
-        [self setVote:0];
-        [self setDate:[NSDate date]];
- 
-        [self validateComment];
-        return self;
-    }
-    return nil;
+    self = [self initWithCommentID:-1
+                         withScore:0
+                       withMessage:message
+                        withPostID:post.postID];
+
     
+    [self setCollegeID:post.collegeID];
+    
+    return self;
 }
 - (id)initWithPost:(Post *)post
 {
@@ -60,40 +74,13 @@
     {
         [self setPostID:post.postID];
         [self setCollegeID:post.collegeID];
-        [self setPostMessage:post.postMessage];
 
-        [self validateComment];
+        [self validate];
         return self;
     }
     return nil;
 }
-- (id)initDummy
-{
-    self = [super init];
-    if (self)
-    {
-        [self setCommentID:arc4random() % 999];
-        [self setPostID:arc4random() % 999];
-        [self setCollegeID:arc4random() % 999];
-        [self setScore:arc4random() % 99];
-        [self setVote:0];
-        [self setDate:[NSDate date]];
-        
-        switch (self.commentID % 4)
-        {
-            case 0: [self setCommentMessage:@"Comment: Are you #achin?"]; break;
-            case 1: [self setCommentMessage:@"Comment: #Yupyupyup"]; break;
-            case 2: [self setCommentMessage:@"Comment: For some #bacon?"]; break;
-            default: [self setCommentMessage:@"Comment: #LUAU!"]; break;
-        }
-        
-        [self validateComment];
-
-        return self;
-    }
-    return nil;
-}
-- (void)validateComment
+- (void)validate
 {   // check for proper length
 
 //    if (self.commentMessage.length < MIN_COMMENT_LENGTH)
@@ -110,15 +97,16 @@
 //    }
 }
 - (NSData*)toJSON
-{   // Returns an NSData representation of this Post in JSON
-    NSDictionary *requestData = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                 [NSString stringWithFormat:@"%d", self.postID], @"post_id",
-                                 self.commentMessage, @"text",
-                                 nil];
+{   // Returns an NSData object representing this Comment in JSON
+    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                       [NSString stringWithFormat:@"%d", self.postID], @"post_id",
+                                       self.message, @"text", nil];
     
     NSError *error;
-    NSData *postData = [NSJSONSerialization dataWithJSONObject:requestData options:0 error:&error];
+    NSData *data = [NSJSONSerialization dataWithJSONObject:dictionary
+                                                   options:0 error:&error];
     
-    return postData;
+    return data;
 }
+
 @end

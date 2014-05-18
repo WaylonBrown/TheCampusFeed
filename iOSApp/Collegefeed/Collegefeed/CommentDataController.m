@@ -58,13 +58,13 @@
         return @"[Post's message not found]";
     
     //TODO: move this to a test class
-    NSString *message1 = ((Comment *)self.masterCommentList.firstObject).postMessage;
-    NSString *message2 = ((Comment *)self.masterCommentList.lastObject).postMessage;
-    
-    if ([message1 isEqualToString:message2])
-    {
-        return message1;
-    }
+//    NSString *message1 = ((Comment *)self.masterCommentList.firstObject).postMessage;
+//    NSString *message2 = ((Comment *)self.masterCommentList.lastObject).postMessage;
+//    
+//    if ([message1 isEqualToString:message2])
+//    {
+//        return message1;
+//    }
     return @"[Comments' post messages inconsistent]";
 }
 - (void)setMasterCommentList:(NSMutableArray *)newList

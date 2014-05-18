@@ -7,33 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Votable.h"
 
 @class Vote;
 
-@interface Post : NSObject
+@interface Post : Votable
 
-// these properties inherited by Comment
-@property (nonatomic) NSInteger postID;
-@property (nonatomic) NSInteger collegeID;
-@property (nonatomic) NSInteger score;
-@property (nonatomic, strong) Vote *vote;
-
-@property (nonatomic, strong) NSString *postMessage;
-@property (nonatomic, strong) NSString *collegeName;
-@property (nonatomic, strong) NSDate *date;
-
-// should only be for Post
 @property (nonatomic) NSMutableArray *commentList;
 
 
 - (id)initWithPostID:(NSInteger)newPostID
-           withScore:(NSInteger)score
-     withPostMessage:(NSString *)newPostMessage;
+           withScore:(NSInteger)newScore
+         withMessage:(NSString *)newMessage;
 
-- (id)initWithPostMessage:(NSString *)newPostMessage;
-- (id)initDummy;
-- (void)validatePost;
-- (NSData*)toJSON;
-- (void)castVote:(BOOL)isUpVote;
+- (id)initWithMessage:(NSString *)newMessage;
 
 @end

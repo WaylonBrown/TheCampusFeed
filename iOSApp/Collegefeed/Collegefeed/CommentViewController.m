@@ -33,9 +33,9 @@
     return self;
 }
 - (void)awakeFromNib
-{   //TODO: (unused/unneeded?)
+{
     [super awakeFromNib];
-    self.dataController = [[CommentDataController alloc] init];
+//    self.dataController = [[CommentDataController alloc] init];
 }
 - (void)loadView
 {   // Use CommentsView.xib to show comments on a post
@@ -77,6 +77,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Get the table view cell for the given row
     // This method handles two table views: one for the post and another for it's comments
+    
     static NSString *CellIdentifier = @"TableCell";
     TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
@@ -87,13 +88,13 @@
     
     if ([tableView.restorationIdentifier compare:@"OriginalPostTableView"] == NSOrderedSame)
     {   // PostView table; get the original post to display in this table
-        [cell setAsPostCell:self.originalPost];
+        [cell assign:self.originalPost];
         return cell;
     }
     else
     {   // CommentView table; get the comment to be displayed in this cell
         Comment *commentAtIndex = [self.dataController objectInListAtIndex:indexPath.row];
-        [cell setAsCommentCell:commentAtIndex];
+        [cell assign:commentAtIndex];
         return cell;
     }
     

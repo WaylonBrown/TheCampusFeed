@@ -7,7 +7,7 @@
 //
 
 #import "MasterViewController.h"
-#import "Post.h"
+//#import "Post.h"
 #import "PostDataController.h"
 #import "CollegeDataController.h"
 #import "TagDataController.h"
@@ -73,11 +73,10 @@
 {   // Add new post if user submits on the alert view
     
     if (buttonIndex == 0) return;
-    
-    Post *newPost = [[Post alloc] initWithPostMessage:[[alertView textFieldAtIndex:0] text]];
-    //    [newPost validatePost];
-    [self.postDataController addPost:newPost];
-    [self.tableView reloadData];
+    //TODO
+//    Post *newPost = [[Post alloc] initWithPostMessage:[[alertView textFieldAtIndex:0] text]];
+//    [self.postDataController addPost:newPost];
+//    [self.tableView reloadData];
     
 }
 
