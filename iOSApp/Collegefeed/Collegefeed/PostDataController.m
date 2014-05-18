@@ -102,7 +102,7 @@ static BOOL useNetwork = NO;
             // create post and add to the masterPostList Array
             Post* newPost = [[Post alloc] initWithPostID:[postID integerValue]
                                                withScore:[score integerValue]
-                                         withPostMessage:message];
+                                             withMessage:message];
             [self addPost:newPost];
         }
     }
@@ -152,36 +152,39 @@ static BOOL useNetwork = NO;
 
         // Convert post to data for HTTPBody
 //        NSString *stringData = [NSString stringWithFormat:@"text=%@", post.message];
-        NSDictionary *requestData = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                     post.postMessage, @"text",
-                                     nil];
         
-        NSError *error;
-        NSData *postData = [NSJSONSerialization dataWithJSONObject:requestData options:0 error:&error];
-        
-        // Set header field
-        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        //TODO
 
-        // Specify that it will be a POST request
-        [request setHTTPMethod:@"POST"];
-//        [request setHTTPBody:[NSData dataWithBytes:[stringData UTF8String] length:strlen([stringData UTF8String])]];
-        [request setHTTPBody:postData];
-        
-        NSLog(@"%@", request);
-        
-        // Create url connection and fire request
-        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request
-                                                                      delegate:self];
-
-
-        if (!connection)
-        {
-            NSLog(@"POST was unsuccessful");
-        }
-        else
-        {
-            [self addPost:post];
-        }
+//        NSDictionary *requestData = [[NSDictionary alloc] initWithObjectsAndKeys:
+//                                     post.postMessage, @"text",
+//                                     nil];
+//        
+//        NSError *error;
+//        NSData *postData = [NSJSONSerialization dataWithJSONObject:requestData options:0 error:&error];
+//        
+//        // Set header field
+//        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//
+//        // Specify that it will be a POST request
+//        [request setHTTPMethod:@"POST"];
+////        [request setHTTPBody:[NSData dataWithBytes:[stringData UTF8String] length:strlen([stringData UTF8String])]];
+//        [request setHTTPBody:postData];
+//        
+//        NSLog(@"%@", request);
+//        
+//        // Create url connection and fire request
+//        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request
+//                                                                      delegate:self];
+//
+//
+//        if (!connection)
+//        {
+//            NSLog(@"POST was unsuccessful");
+//        }
+//        else
+//        {
+//            [self addPost:post];
+//        }
         
     }
     @catch(NSException* e)

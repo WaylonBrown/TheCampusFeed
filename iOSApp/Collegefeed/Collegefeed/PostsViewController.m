@@ -70,7 +70,7 @@
     
     // get the post and display in this cell
     Post *postAtIndex = [self.postDataController objectInListAtIndex:indexPath.row];
-    [cell setAsPostCell:postAtIndex];
+    [cell assign:postAtIndex];
     
     return cell;
 }

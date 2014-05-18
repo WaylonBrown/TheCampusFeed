@@ -14,33 +14,33 @@
 @implementation Post
 
 - (id)initWithPostID:(NSInteger)newPostID
-           withScore:(NSInteger)score
-     withPostMessage:(NSString *)newPostMessage
-{   // initializer to create a new post
+           withScore:(NSInteger)newScore
+         withMessage:(NSString *)newMessage
+{   // initialize a new post
 
     self = [super init];
     if (self)
     {
         [self setPostID:newPostID];
-        [self setCollegeID:0];
-        [self setScore:score];
-        [self setPostMessage:newPostMessage];
+        [self setCollegeID:-1];
+        [self setScore:newScore];
+        [self setMessage:newMessage];
         [self setCollegeName:@"<No College>"];
         [self setDate:[NSDate date]];
         [self setVote:nil];
          
-        [self validatePost];
+        [self validate];
         return self;
     }
     return nil;
 }
-- (id)initWithPostMessage:(NSString *)newPostMessage
+- (id)initWithMessage:(NSString *)newMessage
 {   // initializer to create a new post
     
     self = [self initDummy];
     if (self)
     {
-        [self setPostMessage:newPostMessage];
+        [self setMessage:newMessage];
         return self;
     }
     return nil;
@@ -59,27 +59,27 @@
         
         switch (self.postID % 6)
         {
-            case 0: [self setPostMessage:@"Post: If you're hungry for a hunk of #fat and #juicy meat"]; break;
-            case 1: [self setPostMessage:@"Post: Eat my buddy #Pumba here because he is a treat"]; break;
-            case 2: [self setPostMessage:@"Post: Come on down and dine"]; break;
-            case 3: [self setPostMessage:@"Post: On this #tastyswine"]; break;
-            case 4: [self setPostMessage:@"Post: All you have to do is get in line"]; break;
-            default: [self setPostMessage:@"Post: #LUAU!"]; break;
+            case 0: [self setMessage:@"Post: If you're hungry for a hunk of #fat and #juicy meat"]; break;
+            case 1: [self setMessage:@"Post: Eat my buddy #Pumba here because he is a treat"]; break;
+            case 2: [self setMessage:@"Post: Come on down and dine"]; break;
+            case 3: [self setMessage:@"Post: On this #tastyswine"]; break;
+            case 4: [self setMessage:@"Post: All you have to do is get in line"]; break;
+            default: [self setMessage:@"Post: #LUAU!"]; break;
         }
         
         
         self.commentList = [[NSMutableArray alloc] init];
         for (int i = 0; i < 3; i++)
-        {   // initialize commentList
+        {   // populate commentList
             Comment *comment = [[Comment alloc] initDummy];
             [self.commentList addObject:comment];
         }
-        [self validatePost];
+        [self validate];
         return self;
     }
     return nil;
 }
-- (void)validatePost
+- (void)validate
 {   // check for proper length
 
 //    if (self.postMessage.length < MIN_POST_LENGTH)
@@ -93,52 +93,15 @@
 }
 - (NSData*)toJSON
 {   // Returns an NSData representation of this Post in JSON
-    NSDictionary *requestData = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                 self.postMessage, @"text",
+    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 self.message, @"text",
                                  nil];
     
     NSError *error;
-    NSData *postData = [NSJSONSerialization dataWithJSONObject:requestData options:0 error:&error];
+    NSData *data = [NSJSONSerialization dataWithJSONObject:dictionary
+                                                   options:0 error:&error];
     
-    return postData;
+    return data;
 }
-- (void)castVote:(BOOL)isUpVote
-{   // TODO: send vote to server also (maybe only in data controller?)
-
-    
-    // Sets the vote for this Object and updates the score
-    // Removes the vote if the same one is given
-    // e.g. If (isUpVote && already upvoted) then (remove upvote/decrease score)
-    //  - (similarly for repeat downvotes)
-    
-    if (self.vote == nil)
-    {   // New vote on this object, one did not previously exist
-        Vote *newVote = [[Vote alloc] initWithVotableID:self.postID
-                                       withUpvoteValue:isUpVote];
-        [self setVote:newVote];
-    }
-    else
-    {   // This object already had a vote; update/delete
-        
-        // undo the original vote
-        self.score = self.vote.upvote
-                    ? self.score - 1
-                    : self.score + 1;
-        
-        if (self.vote.upvote == isUpVote)
-        {   // if a duplicate vote was cast, remove the vote
-            [self setVote:nil];
-            return;
-        }
-        
-        [self.vote setUpvote:isUpVote];
-    }
-    
-    // update score with new vote
-    self.score = self.vote.upvote
-                ? self.score + 1
-                : self.score - 1;
-}
-
 
 @end
