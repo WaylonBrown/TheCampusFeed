@@ -1,7 +1,7 @@
 package com.appuccino.collegefeed.objects;
 
 public class Comment {
-	int score;
+	public int score;
 	int id;
 	String message;
 	int hoursAgo;

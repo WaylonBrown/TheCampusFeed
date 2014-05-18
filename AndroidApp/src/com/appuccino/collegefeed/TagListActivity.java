@@ -2,8 +2,8 @@ package com.appuccino.collegefeed;
 
 import java.util.ArrayList;
 
-import com.appuccino.collegefeed.listadapters.CommentListAdapter;
-import com.appuccino.collegefeed.listadapters.PostListAdapter;
+import com.appuccino.collegefeed.adapters.CommentListAdapter;
+import com.appuccino.collegefeed.adapters.PostListAdapter;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.R;
 

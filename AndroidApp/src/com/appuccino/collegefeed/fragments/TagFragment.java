@@ -26,8 +26,8 @@ import android.widget.Toast;
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
+import com.appuccino.collegefeed.adapters.TagListAdapter;
 import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
-import com.appuccino.collegefeed.listadapters.TagListAdapter;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Tag;
 
