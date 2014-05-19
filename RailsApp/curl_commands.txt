@@ -1,0 +1,1 @@
+curl -H Content-Type: application/json -d {"post": {"text": "lol this is a #test of #tagging"}} http://cfeed.herokuapp.com/api/v1/posts/
