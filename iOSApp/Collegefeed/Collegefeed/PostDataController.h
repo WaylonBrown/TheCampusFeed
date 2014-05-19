@@ -8,22 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+#import "DataController.h"
+
 @class Post;
 
-@interface PostDataController : NSObject
+@interface PostDataController : DataController
 
-@property (nonatomic, strong) NSMutableArray *masterPostList;
 @property (nonatomic) NSURL *postURL;
 @property (nonatomic) NSMutableData *responseData;
 
-- (NSUInteger)countOfList;
-- (Post *)objectInListAtIndex:(NSUInteger)theIndex;
-- (void)addPost:(Post *)post;
-
-
 //- (void)addPostToServer:(Post *)post;
-- (void)fetchAllPosts;
-- (id)getJsonObjectWithUrl:(NSURL*) url;
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data;

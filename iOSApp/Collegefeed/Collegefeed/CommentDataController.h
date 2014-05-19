@@ -8,20 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-@class Comment;
+#import "DataController.h"
+
 @class Post;
 
-@interface CommentDataController : NSObject
+@interface CommentDataController : DataController
 
-@property (nonatomic, strong) NSMutableArray *masterCommentList;
 @property (nonatomic, weak) Post* post;
 
 - (id) initWithPost:(Post*)post;
 - (NSString *)getPostMessage;
-- (NSUInteger)countOfList;
-- (Comment *)objectInListAtIndex:(NSUInteger)theIndex;
-- (void)addComment:(Comment *)comment;
-- (void) initializeDefaultList;
 
 
 @end

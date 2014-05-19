@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
-import com.appuccino.collegefeed.listadapters.CollegeListAdapter;
+import com.appuccino.collegefeed.adapters.CollegeListAdapter;
 import com.appuccino.collegefeed.objects.College;
 
 public class MostActiveCollegesFragment extends Fragment

@@ -30,37 +30,15 @@ static NSString *apiVersion = @"v1/";
 - (void)initializeDefaultList
 { // initialize the tag array with placeholder elements
     
-    [self setMasterTagList:[[NSMutableArray alloc] init]];
+    [self setList:[[NSMutableArray alloc] init]];
     
     for (int i = 0; i < 4; i++)
     {
         Tag *tag;
         tag = [[Tag alloc] initDummy];
         tag.tagID = i;
-        [self addTag:tag];
+        [self addObjectToList:tag];
     }
-}
-- (void)setMasterTagList:(NSMutableArray *)newList
-{ // override its default setter method to ensure new array remains mutable
-    if (_masterTagList != newList)
-    {
-        _masterTagList = [newList mutableCopy];
-    }
-}
-
-#pragma mark Data Access
-
-- (NSUInteger)countOfList
-{
-    return [self.masterTagList count];
-}
-- (Tag *)objectInListAtIndex:(NSUInteger)theIndex
-{
-    return [self.masterTagList objectAtIndex:theIndex];
-}
-- (void)addTag:(Tag *)tag
-{   // add tag locally to the masterTagList array
-    [self.masterTagList addObject:tag];
 }
 
 @end

@@ -10,7 +10,7 @@ import android.util.JsonReader;
 import android.util.JsonWriter;
 
 public class Post implements Votable{
-	int score;
+	public int score;
 	String message;
 	int hoursAgo;
 	int id;

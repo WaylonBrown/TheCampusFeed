@@ -14,6 +14,8 @@
 
 @property (nonatomic, strong) NSMutableArray *list;
 
+- (void)initializeDefaultList;
+
 - (NSUInteger)countOfList;
 - (NSObject *)objectInListAtIndex:(NSUInteger)theIndex;
 - (void)addObjectToList:(NSObject *)obj;

@@ -8,16 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+#import "DataController.h"
+
 @class College;
 
-@interface CollegeDataController : NSObject
+@interface CollegeDataController : DataController
 
-@property (nonatomic, strong) NSMutableArray *masterCollegeList;
 @property (nonatomic) NSURL *collegeURL;
 @property (nonatomic) NSMutableData *responseData;
-
-- (NSUInteger)countOfList;
-- (College *)objectInListAtIndex:(NSUInteger)theIndex;
-- (void)addCollege:(College *)college;
 
 @end

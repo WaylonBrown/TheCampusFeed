@@ -26,13 +26,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.R;
+import com.appuccino.collegefeed.adapters.CommentListAdapter;
 import com.appuccino.collegefeed.extra.NetWorker;
 import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.extra.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
-import com.appuccino.collegefeed.listadapters.CommentListAdapter;
 import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
@@ -82,7 +82,7 @@ public class PostCommentsActivity extends Activity{
         Typeface medium = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Medium.ttf");
 		
         //set fonts
-		TextView scoreText = (TextView)findViewById(R.id.scoreText);
+		final TextView scoreText = (TextView)findViewById(R.id.scoreText);
 		TextView messageText = (TextView)findViewById(R.id.messageText);
 		TextView timeText = (TextView)findViewById(R.id.timeText);
 		TextView commentsText = (TextView)findViewById(R.id.commentsText);
@@ -123,10 +123,24 @@ public class PostCommentsActivity extends Activity{
 				@Override
 				public void onClick(View v) {
 					//if already upvoted, un-upvote
-					if(post.getVote() != 1)
+					if(post.getVote() == -1)
+					{
 						post.setVote(1);
-					else
+						post.score += 2;
+						scoreText.setText(String.valueOf(post.score));
+					}
+					else if(post.getVote() == 0)
+					{
+						post.setVote(1);
+						post.score++;
+						scoreText.setText(String.valueOf(post.score));
+					}
+					else 
+					{
 						post.setVote(0);
+						post.score--;
+						scoreText.setText(String.valueOf(post.score));
+					}
 					TopPostFragment.updateList();
 					NewPostFragment.updateList();
 					TagListActivity.updateList();
@@ -142,10 +156,24 @@ public class PostCommentsActivity extends Activity{
 					if(MainActivity.hasPermissions(post.getCollegeID()))
 					{
 						//if already downvoted, un-downvote
-						if(post.getVote() != -1)
-							post.setVote(-1);
-						else
+						if(post.getVote() == -1)
+						{
 							post.setVote(0);
+							post.score++;
+							scoreText.setText(String.valueOf(post.score));
+						}
+						else if(post.getVote() == 0)
+						{
+							post.setVote(-1);
+							post.score--;
+							scoreText.setText(String.valueOf(post.score));
+						}
+						else 
+						{
+							post.setVote(-1);
+							post.score -= 2;
+							scoreText.setText(String.valueOf(post.score));
+						}
 						TopPostFragment.updateList();
 						NewPostFragment.updateList();
 						TagListActivity.updateList();
