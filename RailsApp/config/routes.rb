@@ -1,6 +1,6 @@
 Postfeed::Application.routes.draw do
-  namespace :api do 
-    namespace :v1, defaults: {format: :json} do
+
+    scope '/api/v1', defaults: {format: :json} do
 
       get '/colleges/listNearby' => 'colleges#listNearby'
       get '/colleges/:id/within' => 'colleges#within'
@@ -12,10 +12,11 @@ Postfeed::Application.routes.draw do
       resources :comments
 
       resources :posts
+
+
+      get '/tags/trending' => 'tags#trending'
+      resources :tags
     end
-
-  end
-
 
 
   # The priority is based upon order of creation: first created -> highest priority.

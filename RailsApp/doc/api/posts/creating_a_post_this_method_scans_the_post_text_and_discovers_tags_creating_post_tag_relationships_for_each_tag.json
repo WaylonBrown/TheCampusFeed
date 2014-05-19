@@ -1,0 +1,35 @@
+{
+  "resource": "Posts",
+  "http_method": "POST",
+  "route": "/api/v1/posts",
+  "description": "Creating a post. This method scans the post text and discovers tags, creating post_tag relationships for each tag",
+  "explanation": null,
+  "parameters": [
+    {
+      "required": true,
+      "name": "post",
+      "description": "The new post."
+    }
+  ],
+  "requests": [
+    {
+      "request_method": "POST",
+      "request_path": "/api/v1/posts",
+      "request_body": "{\"text\":\"I yolo'd so hard I swagged myself #lol #swuggedmyself\"}",
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 201,
+      "response_status_text": "Created",
+      "response_body": "{\"id\":11,\"text\":\"I yolo'd so hard I swagged myself #lol #swuggedmyself\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-19T06:27:06.054Z\",\"updated_at\":\"2014-05-19T06:27:06.054Z\"}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/posts/11","Content-Type":"application/json; charset=utf-8","ETag":"\"16c490f686e48aa3efed3c507ddb0447\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"77f44845-1324-4ac2-bcfd-2253b9682f51","X-Runtime":"0.076923","Content-Length":"187"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

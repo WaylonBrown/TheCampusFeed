@@ -1,4 +1,4 @@
 Apitome Documentation
 =====================
 
-Welcome to the Postfeed API Documentation website.
+Welcome to the CollegeFeed API Documentation website.

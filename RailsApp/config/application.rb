@@ -19,5 +19,8 @@ module Postfeed
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+    config.versioncake.supported_version_numbers = [1]
+    config.versioncake.extraction_strategy = [:path_parameter, :request_parameter]
+    config.versioncake.default_version = 1
   end
 end

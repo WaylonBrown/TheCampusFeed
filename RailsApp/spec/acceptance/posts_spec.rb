@@ -5,7 +5,7 @@ resource "Posts" do
   header "Content-Type", "application/json"
 
   before do
-    Api::V1::Post.create(:text => "Test post.");
+    Post.create(:text => "Test post.");
   end
 
   get "/api/v1/posts" do
@@ -23,7 +23,7 @@ resource "Posts" do
 
     parameter :post, "The new post.", :required => true
 
-    example "Creating a post" do
+    example "Creating a post. This method scans the post text and discovers tags, creating post_tag relationships for each tag" do
       do_request(
         :text => "I yolo'd so hard I swagged myself #lol #swuggedmyself"
       )
