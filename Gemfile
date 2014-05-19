@@ -34,6 +34,8 @@ gem 'rspec-rails'
 gem 'rspec_api_documentation'
 #gem 'raddocs'
 gem 'apitome'
+gem 'versioncake'
+
 
 gem 'rails_12factor'
 

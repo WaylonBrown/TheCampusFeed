@@ -34,7 +34,7 @@
       "response_status": 200,
       "response_status_text": "OK",
       "response_body": "[]",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"d751713988987e9331980363e24189ce\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"fbbc28e6-4144-4514-a234-f99b2d134e42","X-Runtime":"0.006282","Content-Length":"2"},
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"d751713988987e9331980363e24189ce\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"0d711534-fed5-43cf-b3c5-39ef120b6575","X-Runtime":"0.006931","Content-Length":"2"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

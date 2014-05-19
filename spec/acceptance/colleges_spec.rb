@@ -6,8 +6,8 @@ resource "Colleges" do
   header "Content-Type", "application/json"
 
   before do
-    Api::V1::College.create(:name => "Texas A&M University", :lat => 30.614997, :lon => -96.342311);
-    Api::V1::College.create(:name => "University of Texas", :lat => 30.284960, :lon => -97.734239);
+    College.create(:name => "Texas A&M University", :lat => 30.614997, :lon => -96.342311);
+    College.create(:name => "University of Texas", :lat => 30.284960, :lon => -97.734239);
   end
 
   get "/api/v1/colleges" do
