@@ -20,9 +20,8 @@
 
 #pragma mark - Initialization and view loading
 
-- (id)initWithOriginalPost:(Post*)post withDelegate:(id)postSubViewDelegate
-{   //TODO: remove the delegate usage
-    // initialize a CommentsView provided info about the previously selected Post
+- (id)initWithOriginalPost:(Post*)post// withDelegate:(id)postSubViewDelegate
+{   // initialize a CommentsView provided info about the previously selected Post
 
     self = [super init];
     if (self)
@@ -93,7 +92,7 @@
     }
     else
     {   // CommentView table; get the comment to be displayed in this cell
-        Comment *commentAtIndex = [self.dataController objectInListAtIndex:indexPath.row];
+        Comment *commentAtIndex = (Comment*)[self.dataController objectInListAtIndex:indexPath.row];
         [cell assign:commentAtIndex];
         return cell;
     }
@@ -124,9 +123,9 @@
 #pragma mark - Actions
 
 - (IBAction)done
-{   // Called when user is done viewing comments, return to previous view
-
-    [[self navigationController] popViewControllerAnimated:YES];
+{   // Called when user is done viewing comments, dismiss this view
+    [self dismissViewControllerAnimated:YES completion:nil];
+  
 }
 - (IBAction)createComment
 {   // Display popup to let user type a new comment
@@ -139,14 +138,13 @@
     [alert show];
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{   // Add new post if user submits on the alert view
+{   // Add new comment if user submits on the alert view
     
     if (buttonIndex == 0) return;
     
     Comment *newComment = [[Comment alloc] initWithCommentMessage:[[alertView textFieldAtIndex:0] text]
                                                          withPost:self.originalPost];
-    //    [newComment validateComment];
-    [self.dataController addComment:newComment];
+    [self.dataController addObjectToList:newComment];
     [self.commentTable reloadData];
     [self.originalPostTable reloadData];
 }

@@ -61,7 +61,7 @@
 
 - (void)addObjectToList:(NSObject *)obj
 {   // add comment to list maintained by this datacontroller and the post
-    [super addObjectToList:obj];
+//    [super addObjectToList:obj];
 
     [self.post.commentList addObject:obj];
 }

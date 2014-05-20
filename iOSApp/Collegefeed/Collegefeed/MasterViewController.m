@@ -7,10 +7,10 @@
 //
 
 #import "MasterViewController.h"
-//#import "Post.h"
 #import "PostDataController.h"
 #import "CollegeDataController.h"
 #import "TagDataController.h"
+#import "CommentViewController.h"
 
 @implementation MasterViewController
 
@@ -23,22 +23,20 @@
         self.postDataController = [[PostDataController alloc] init];
         self.tagDataController = [[TagDataController alloc] init];
         self.collegeDataController = [[CollegeDataController alloc] init];
+//        self.commentViewController = [[CommentViewController alloc] init];
     }
     return self;
 }
-
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
     
     [self.tableView reloadData];
 }
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -59,24 +57,29 @@
 
 #pragma mark - Actions
 
-- (IBAction)createPost:(id)sender
+- (IBAction)create:(id)sender
 {   // Display popup to let user type a new post
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
-                                                    message:@"What's poppin?"
-                                                   delegate:self
-                                          cancelButtonTitle:@"nvm.."
-                                          otherButtonTitles:@"Post!", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alert show];
+//    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
+//                                                    message:@"What's poppin?"
+//                                                   delegate:self
+//                                          cancelButtonTitle:@"nvm.."
+//                                          otherButtonTitles:@"Post!", nil];
+//    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+//    [alert show];
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {   // Add new post if user submits on the alert view
     
-    if (buttonIndex == 0) return;
+//    if (buttonIndex == 0) return;
     //TODO
 //    Post *newPost = [[Post alloc] initWithPostMessage:[[alertView textFieldAtIndex:0] text]];
 //    [self.postDataController addPost:newPost];
 //    [self.tableView reloadData];
+    
+}
+- (IBAction)cancel:(id)sender
+{
+    
     
 }
 
