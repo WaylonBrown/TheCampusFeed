@@ -15,6 +15,7 @@
 #import "CommentDataController.h"
 #import "Comment.h"
 #import "TTTAttributedLabel.h"
+#import "Constants.h"
 
 @implementation CommentViewController
 
@@ -28,27 +29,32 @@
     {
         [self setOriginalPost:post];
         [self setDataController:[[CommentDataController alloc] initWithPost:post]];
+        
+       
     }
     return self;
 }
-- (void)awakeFromNib
-{
-    [super awakeFromNib];
-//    self.dataController = [[CommentDataController alloc] init];
-}
-- (void)loadView
-{   // Use CommentsView.xib to show comments on a post
-    
-    UIView* view = [[[NSBundle mainBundle] loadNibNamed:@"CommentsView"
-                                                  owner:self
-                                                options:nil]
-                    objectAtIndex:0];
-    
-    [self setView:view];
-}
+//- (void)awakeFromNib
+//{
+//    [super awakeFromNib];
+////    self.dataController = [[CommentDataController alloc] init];
+//}
+//- (void)loadView
+//{   // Use CommentsView.xib to show comments on a post
+//    
+//    UIView* view = [[[NSBundle mainBundle] loadNibNamed:@"CommentsView"
+//                                                  owner:self
+//                                                options:nil]
+//                    objectAtIndex:0];
+//    
+//    [self setView:view];
+//}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.tableView setDataSource:self];
+    [self.tableView setDelegate:self];
+    self.cancelButton.enabled = YES;
 }
 - (void)didReceiveMemoryWarning
 {
@@ -60,18 +66,21 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Number of rows in table views
-    if ([tableView.restorationIdentifier compare:@"CommentTableView"] == NSOrderedSame)
-    {   // Comment Table has as many rows as number of comments
-        return [self.dataController countOfList];
-    }
-    else // if ([tableView.restorationIdentifier compare:@"OriginalPostTableView"] == NSOrderedSame)
-    {   // only one row in Post Table (the original Post)
-        return 1;
-    }
+    if (section == 0) return 1;
+    else return [self.dataController countOfList];
+    
+//    if ([tableView.restorationIdentifier compare:@"CommentTableView"] == NSOrderedSame)
+//    {   // Comment Table has as many rows as number of comments
+//        return [self.dataController countOfList];
+//    }
+//    else // if ([tableView.restorationIdentifier compare:@"OriginalPostTableView"] == NSOrderedSame)
+//    {   // only one row in Post Table (the original Post)
+//        return 1;
+//    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Get the table view cell for the given row
@@ -85,7 +94,8 @@
         cell = [nib objectAtIndex:0];
     }
     
-    if ([tableView.restorationIdentifier compare:@"OriginalPostTableView"] == NSOrderedSame)
+//    if ([tableView.restorationIdentifier compare:@"OriginalPostTableView"] == NSOrderedSame)
+    if (indexPath.section == 0)
     {   // PostView table; get the original post to display in this table
         [cell assign:self.originalPost];
         return cell;
@@ -113,6 +123,25 @@
 {
     return 100;
 }
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{   // return the header title for the 'Comments' section
+    
+    if (section != 1) return nil;//[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    
+    UILabel *commentHeader = [[UILabel alloc] initWithFrame:CGRectZero];
+    [commentHeader setText:@"Comments"];
+    [commentHeader setTextAlignment:NSTextAlignmentCenter];
+    [commentHeader setFont:[UIFont systemFontOfSize:12]];
+    [commentHeader setBackgroundColor:UIColorFromRGB(cf_lightgray)];
+    
+    return commentHeader;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 1) return 25.0;
+    else return 5.0;
+}
+
 
 #pragma mark - Navigation
 
@@ -122,12 +151,12 @@
 
 #pragma mark - Actions
 
-- (IBAction)done
+- (IBAction)cancel:(id)sender
 {   // Called when user is done viewing comments, dismiss this view
     [self dismissViewControllerAnimated:YES completion:nil];
   
 }
-- (IBAction)createComment
+- (IBAction)create:(id)sender
 {   // Display popup to let user type a new comment
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Comment"
                                                     message:@"You got an opinion?"
@@ -145,8 +174,9 @@
     Comment *newComment = [[Comment alloc] initWithCommentMessage:[[alertView textFieldAtIndex:0] text]
                                                          withPost:self.originalPost];
     [self.dataController addObjectToList:newComment];
-    [self.commentTable reloadData];
-    [self.originalPostTable reloadData];
+//    [self.commentTable reloadData];
+//    [self.originalPostTable reloadData];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Helper Methods
