@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="lightblue">#33B5E5</color>
-    <color name="tabunderlineblue">#32ADD6</color>
+    <color name="tabunderlineblue">#11AADD</color>
     <color name="blue">#0099CC</color>
     <color name="lightgray">#E6E6E6</color>
     <color name="gray">#7C7C7C</color>
