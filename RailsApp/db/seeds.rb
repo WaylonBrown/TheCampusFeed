@@ -7,13 +7,17 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 require 'csv'
 
+@@smallestSizeIncluded = 15
 def importFromFile(lim = -1)
   #imports from the 2012 
   @i = 0
   @data = CSV.foreach("app/assets/hd2012.csv", encoding: "iso-8859-1:UTF-8" ){ |row|
-    @i += 1
+    if 0 == @i
+      @i += 1
+      next
+    end
 
-    if @i == 1
+    if Integer(row[49]) < @@smallestSizeIncluded #don't use first row and don't use small schools
       next
     end
 
@@ -22,7 +26,6 @@ def importFromFile(lim = -1)
     @params[:name] = row[1]
     @params[:lat] = row[-1]
     @params[:lon] = row[-2] # database provided as lon then lat.. wtf
-    @params[:size] = row[49] # column AX
     @cur = College.new(@params)
     if !@cur.save
       puts 'shit shit shit' #this shouldn't happen ;)
@@ -30,6 +33,8 @@ def importFromFile(lim = -1)
     if lim != -1 and @i > lim
       break
     end
+
+    @i += 1
   }
 end
 
