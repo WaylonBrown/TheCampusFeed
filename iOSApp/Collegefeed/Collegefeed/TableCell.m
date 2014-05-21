@@ -77,6 +77,8 @@
 - (NSString *)getAgeAsString:(NSDate *)creationDate
 {   // return string indicating how long ago the post was created
     
+    if (creationDate == nil) return @"";
+        
     int seconds = [[NSDate date] timeIntervalSinceDate:creationDate];
     int minutes = seconds / 60;
     int hours = minutes / 60;

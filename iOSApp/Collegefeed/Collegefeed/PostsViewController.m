@@ -27,6 +27,7 @@
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
     self.cancelButton.enabled = NO;
+    [self.tableView reloadData];
 }
 
 #pragma mark - Navigation

@@ -20,7 +20,7 @@
     if (self)
     {
         // Custom initialization
-        self.postDataController = [[PostDataController alloc] init];
+        self.postDataController = [[PostDataController alloc] initWithNetwork:YES];
         self.tagDataController = [[TagDataController alloc] init];
         self.collegeDataController = [[CollegeDataController alloc] init];
 //        self.commentViewController = [[CommentViewController alloc] init];

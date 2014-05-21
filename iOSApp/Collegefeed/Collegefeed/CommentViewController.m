@@ -28,9 +28,8 @@
     if (self)
     {
         [self setOriginalPost:post];
-        [self setDataController:[[CommentDataController alloc] initWithPost:post]];
-        
-       
+        [self setDataController:[[CommentDataController alloc] initWithNetwork:YES
+                                                                      withPost:post]];
     }
     return self;
 }
@@ -55,6 +54,7 @@
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
     self.cancelButton.enabled = YES;
+    [self.tableView reloadData];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -94,7 +94,6 @@
         cell = [nib objectAtIndex:0];
     }
     
-//    if ([tableView.restorationIdentifier compare:@"OriginalPostTableView"] == NSOrderedSame)
     if (indexPath.section == 0)
     {   // PostView table; get the original post to display in this table
         [cell assign:self.originalPost];

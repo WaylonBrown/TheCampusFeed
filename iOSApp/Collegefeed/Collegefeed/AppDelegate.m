@@ -41,30 +41,30 @@
     // *** New Posts - PostsViewController *** //
     PostsViewController *newPostsController = [[PostsViewController alloc] init];
     newPostsController.title = @"New Posts";
-    [newPostsController.navigationItem setTitleView:logoTitleView];
-    UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:newPostsController];
-    [newPostsNavController.navigationBar.topItem setTitleView:logoTitleView];
+//    [newPostsController.navigationItem setTitleView:logoTitleView];
+//    UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:newPostsController];
+//    [newPostsNavController.navigationBar.topItem setTitleView:logoTitleView];
     // *************************************** //
     
     // *** Trending Tags - TagViewController *** //
     TagViewController *tagController = [[TagViewController alloc] init];
     tagController.title = @"Trending Tags";
-    UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:tagController];
-    [tagNavController.navigationBar.topItem setTitleView:logoTitleView];
+//    UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:tagController];
+//    [tagNavController.navigationBar.topItem setTitleView:logoTitleView];
     // *************************************** //
     
     // *** Top Colleges - CollegeViewController *** //
     CollegeViewController *collegeController = [[CollegeViewController alloc] init];
     collegeController.title = @"Top Colleges";
-    UINavigationController *collegeNavController = [[UINavigationController alloc] initWithRootViewController:collegeController];
-    [collegeNavController.navigationBar.topItem setTitleView:logoTitleView];
+//    UINavigationController *collegeNavController = [[UINavigationController alloc] initWithRootViewController:collegeController];
+//    [collegeNavController.navigationBar.topItem setTitleView:logoTitleView];
     // *************************************** //
     
     // *** My Posts - PostsViewController *** //
     PostsViewController *myPostsController = [[PostsViewController alloc] init];
     myPostsController.title = @"My Posts";
-    UINavigationController *myPostsNavController = [[UINavigationController alloc] initWithRootViewController:myPostsController];
-    [myPostsNavController.navigationBar.topItem setTitleView:logoTitleView];
+//    UINavigationController *myPostsNavController = [[UINavigationController alloc] initWithRootViewController:myPostsController];
+//    [myPostsNavController.navigationBar.topItem setTitleView:logoTitleView];
     // *************************************** //
     
     // *** My Comments - PostsViewController *** //

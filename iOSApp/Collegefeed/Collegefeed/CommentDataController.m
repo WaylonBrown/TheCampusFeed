@@ -26,6 +26,7 @@
         [self setPost:post];
         if (useNetwork)
         {
+            [self setList:[[NSMutableArray alloc] init]];
             [self fetchWithUrl:commentsUrlGet(post.postID)
                       intoList:self.list];
         }

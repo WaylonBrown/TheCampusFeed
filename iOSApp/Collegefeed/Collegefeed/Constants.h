@@ -51,7 +51,7 @@
 
 
 #define commentsUrlGet(postid)  [NSURL URLWithString:[NSString \
-                                stringWithFormat: @"%@%@%@?postid=%@", \
+                                stringWithFormat: @"%@%@%@?postid=%d", \
                                 requestUrl, apiVersion, @"comments", postid]]
 
 #endif

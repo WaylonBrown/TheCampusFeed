@@ -18,7 +18,7 @@
 { // initialize this data controller
     if (self = [super init])
     {
-        [self setTopPostsAllColleges:[[NSMutableArray alloc] init]];
+//        [self setTopPostsAllColleges:[[NSMutableArray alloc] init]];
 //        [self setRecentPostsAllColleges:[[NSMutableArray alloc] init]];
 //        [self setUserPostsAllColleges:[[NSMutableArray alloc] init]];
 //        [self setTopPostsInCollege:[[NSMutableArray alloc] init]];
@@ -29,7 +29,7 @@
         {
             [self setList:[[NSMutableArray alloc] init]];
             [self fetchWithUrl:postsUrl
-                      intoList:self.topPostsAllColleges];
+                      intoList:self.list];
         }
         else // dummy initialization
         {
@@ -52,6 +52,7 @@
         [self addObjectToList:post];
     }
 }
+
 
 #pragma mark - Network Access
 
@@ -81,5 +82,6 @@
         NSLog(@"Error fetching all posts");
     }
 }
+
 
 @end

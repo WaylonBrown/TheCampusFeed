@@ -45,7 +45,7 @@
     urlData = [NSURLConnection sendSynchronousRequest:request
                                     returningResponse:&response
                                                 error:&error];
-    
+    NSLog(@"%@", urlData);
     NSInteger code = [response statusCode];
     if (code != 200 || error != nil)
     {
