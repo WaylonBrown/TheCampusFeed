@@ -50,7 +50,7 @@
     }
     
     // get the post and display in this cell
-    College *collegeAtIndex = [self.collegeDataController objectInListAtIndex:indexPath.row];
+    College *collegeAtIndex = (College*)[self.collegeDataController objectInListAtIndex:indexPath.row];
     [cell.textLabel setText:collegeAtIndex.name];
     
     return cell;

@@ -219,3 +219,5 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 
+
+AndroidApp/libs/ShimmerTextView/gen/com/romainpiel/shimmer/R.java

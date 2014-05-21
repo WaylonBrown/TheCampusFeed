@@ -15,9 +15,6 @@
 
 @property (weak, nonatomic) Post* selectedPost;
 
-//@property (weak, nonatomic) IBOutlet UITableView *postTableView;
-
-//- (IBAction)createPost:(id)sender;
 
 @end
 

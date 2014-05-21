@@ -328,11 +328,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		//USED FOR TESTING, ALL OF OUR CITIES RETURN A&M
 		double tamuLatitude = 30.614942;
 		double tamuLongitude = -96.342316;
-//		double austinLatitude = 30.435129;
-//		double austinLongitude = -97.730341;
-		//NOTE: THE AUSTIN VALUES ARE WRONG, THESE ARE DENTON VALUES FOR TESTING
-		double austinLatitude = 33.107418;
-		double austinLongitude = -97.118549;
+		double austinLatitude = 30.270664;
+		double austinLongitude = -97.741064;
 		double seattleLatitude = 0;	//JAMES fill these in
 		double seattleLongitude = 0;
 		

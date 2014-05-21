@@ -14,19 +14,19 @@
 
 @implementation PostsViewController
 
-//- (void)viewWillAppear:(BOOL)animated
-//{   // View is about to appear after being inactive
-//    
-//    [super viewWillAppear:animated];
-//    // refresh dataController?
-//}
+- (void)viewWillAppear:(BOOL)animated
+{   // View is about to appear after being inactive
+    
+    [super viewWillAppear:animated];
+    // refresh dataController?
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    self.postDataController = [[PostDataController alloc] init];
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
+    self.cancelButton.enabled = NO;
 }
 
 #pragma mark - Navigation
@@ -39,11 +39,13 @@
 {   // Present a Comment View for the selected post
     
     self.selectedPost = (Post *)[self.postDataController objectInListAtIndex:indexPath.row];
-    CommentViewController* controller = [[CommentViewController alloc] initWithOriginalPost:self.selectedPost
-                                                                               withDelegate:self];
-    
-    [self.navigationController pushViewController:controller
-                                         animated:YES];
+    CommentViewController* controller = [[CommentViewController alloc] initWithOriginalPost:self.selectedPost];
+
+    // when not in a navigation controller
+    [self presentViewController:controller animated:YES completion:nil];
+
+    // if in a navigation controller
+    // [self.navigationController pushViewController:controller animated:YES];
 }
 
 #pragma mark - Table View Override Functions
@@ -69,7 +71,7 @@
     }
     
     // get the post and display in this cell
-    Post *postAtIndex = [self.postDataController objectInListAtIndex:indexPath.row];
+    Post *postAtIndex = (Post*)[self.postDataController objectInListAtIndex:indexPath.row];
     [cell assign:postAtIndex];
     
     return cell;
@@ -84,5 +86,26 @@
 //    return 120;
 }
 
+#pragma mark - Actions
+
+- (IBAction)create:(id)sender
+{   // Display popup to let user type a new post
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
+                                                        message:@"What's poppin?"
+                                                       delegate:self
+                                              cancelButtonTitle:@"nvm.."
+                                              otherButtonTitles:@"Post!", nil];
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        [alert show];
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{   // Add new post if user submits on the alert view
+    
+    if (buttonIndex == 0) return;
+    Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]];
+    [self.postDataController addObjectToList:newPost];
+    [self.tableView reloadData];
+    
+}
 
 @end

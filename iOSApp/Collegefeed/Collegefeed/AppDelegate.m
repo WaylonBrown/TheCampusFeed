@@ -27,13 +27,21 @@
     // *** Top Posts - PostsViewController *** //
     PostsViewController *topPostsController = [[PostsViewController alloc] init];
     topPostsController.title = @"Top Posts";
-    UINavigationController *topPostsNavController = [[UINavigationController alloc] initWithRootViewController:topPostsController];
-    [topPostsNavController.navigationBar.topItem setTitleView:logoTitleView];
+//    [topPostsController.navigationItem setTitleView:logoTitleView];
+//    UINavigationController *topPostsNavController = [[UINavigationController alloc] initWithRootViewController:topPostsController];
+//    [topPostsNavController.navigationBar.topItem setTitleView:logoTitleView];
+    
+    
+//    [topPostsController.navigationController.navigationItem setRightBarButtonItem:
+//                [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+//                                    target:topPostsController action:@selector(createPost:)]];
+    
     // *************************************** //
     
     // *** New Posts - PostsViewController *** //
     PostsViewController *newPostsController = [[PostsViewController alloc] init];
     newPostsController.title = @"New Posts";
+    [newPostsController.navigationItem setTitleView:logoTitleView];
     UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:newPostsController];
     [newPostsNavController.navigationBar.topItem setTitleView:logoTitleView];
     // *************************************** //
@@ -67,10 +75,15 @@
     // *************************************** //
     
     // assign all navigation controllers to the TabBar
-    NSArray *navControllers = [NSArray arrayWithObjects:topPostsNavController, newPostsNavController, tagNavController,
-                               collegeNavController, myPostsNavController, /*myCommentNavController, */ nil];
+//    NSArray *navControllers = [NSArray arrayWithObjects:topPostsNavController, newPostsNavController, tagNavController,
+//                               collegeNavController, myPostsNavController, /*myCommentNavController, */ nil];
+//    [self setTabBarController:[[UITabBarController alloc] init]];
+//    [self.tabBarController setViewControllers:navControllers];
+    
+    NSArray *viewControllers = [NSArray arrayWithObjects:topPostsController, newPostsController, tagController, collegeController, myPostsController, nil];
     [self setTabBarController:[[UITabBarController alloc] init]];
-    [self.tabBarController setViewControllers:navControllers];
+
+    [self.tabBarController setViewControllers:viewControllers];
     
     // finalize window specifications
     [self.window setRootViewController:self.tabBarController];
