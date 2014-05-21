@@ -17,4 +17,9 @@
 @property (nonatomic) NSURL *collegeURL;
 @property (nonatomic) NSMutableData *responseData;
 
+- (id)initWithNetwork:(BOOL)useNetwork
+              nearLat:(float)lat
+              nearLon:(float)lon;
+
+
 @end

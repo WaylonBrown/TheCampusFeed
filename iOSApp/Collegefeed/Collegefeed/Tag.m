@@ -11,7 +11,9 @@
 
 @implementation Tag
 
-- (id)initWithTagID:(NSInteger)tID withScore:(BOOL)tScore withName:(NSString*)tName
+- (id)initWithTagID:(NSInteger)tID
+          withScore:(BOOL)tScore
+           withName:(NSString*)tName
 {
     self = [super init];
     if (self)
@@ -24,7 +26,7 @@
         {
             [self setName:[NSString stringWithFormat:@"#%@", tName]];
         }
-        [self validateTag];
+        [self validate];
         return self;
     }
     return nil;
@@ -44,18 +46,42 @@
             default: [self setName:@"#america"]; break;
         }
         
-        [self validateTag];
+        [self validate];
 
         return self;
     }
     return nil;
 }
-- (void)validateTag
+- (id)initFromJSON:(NSDictionary *)jsonObject
+{   // Initialize this Tag using a JSON object as an NSDictionary
+    self = [super init];
+    if (self)
+    {
+        NSString *tagID     = (NSString*)[jsonObject valueForKey:@"id"];
+        NSString *text      = (NSString*)[jsonObject valueForKey:@"text"];
+        NSString *postID    = (NSString*)[jsonObject valueForKey:@"post_id"];
+        NSString *postCount = (NSString*)[jsonObject valueForKey:@"post_count"];
+        
+        if (postID == (id)[NSNull null]) postID = nil;
+        if (postCount == (id)[NSNull null]) postCount = nil;
+
+        
+        [self setPostID:[postID integerValue]];
+        [self setTagID:[tagID integerValue]];
+        [self setName:text];
+        [self setScore:[postCount integerValue]];
+        
+        [self validate];
+        return self;
+    }
+    return nil;
+}
+- (void)validate
 {
-//    if ([self.name characterAtIndex:0] != '#')
-//    {
-//        [NSException raise:@"Invalid Tag" format:@"Tag \"%@\" must start with '#'", self.name];
-//    }
+    if ([self.name characterAtIndex:0] != '#')
+    {
+        [self setName:[NSString stringWithFormat:@"#%@", self.name]];
+    }
 //    if (self.name.length < MIN_TAG_LENGTH)
 //    {
 //        [NSException raise:@"Invalid Tag" format:@"Tag \"%@\" is too short", self.name];

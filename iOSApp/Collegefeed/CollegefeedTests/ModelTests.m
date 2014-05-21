@@ -32,7 +32,7 @@
 {
     Post *post = [[Post alloc] initWithPostID:1
                                     withScore:0
-                              withPostMessage:@"Testing Post voting"];
+                                  withMessage:@"Testing Post voting"];
     
     // vote value when initialized
     XCTAssertNil(post.vote, @"Post should not have a vote when initialized");

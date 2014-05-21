@@ -13,6 +13,21 @@
 
 @implementation Post
 
+- (id)initWithMessage:(NSString *)newMessage
+{   // NOTE: This constructor to be used when sending to server
+    // initializer to create a new post
+    
+    self = [self init];
+    if (self)
+    {
+        [self setMessage:newMessage];
+        [self setPostUrl:postsUrl];
+        
+        return self;
+    }
+    return nil;
+}
+
 - (id)initWithPostID:(NSInteger)newPostID
            withScore:(NSInteger)newScore
          withMessage:(NSString *)newMessage
@@ -34,17 +49,7 @@
     }
     return nil;
 }
-- (id)initWithMessage:(NSString *)newMessage
-{   // initializer to create a new post
-    
-    self = [self initDummy];
-    if (self)
-    {
-        [self setMessage:newMessage];
-        return self;
-    }
-    return nil;
-}
+
 - (id)initDummy
 {   // dummy initializer for dev/testing
 
@@ -79,6 +84,31 @@
     }
     return nil;
 }
+- (id)initFromJSON:(NSDictionary *)jsonObject
+{   // Initialize this Post using a JSON object as an NSDictionary
+    self = [super init];
+    if (self)
+    {
+        NSString *postID    = (NSString*)[jsonObject valueForKey:@"id"];
+        NSString *score     = (NSString*)[jsonObject valueForKey:@"score"];
+        NSString *text      = (NSString*)[jsonObject valueForKey:@"text"];
+        NSString *lat       = (NSString*)[jsonObject valueForKey:@"lat"];
+        NSString *lon       = (NSString*)[jsonObject valueForKey:@"lon"];
+        
+        if (score == (id)[NSNull null]) score = nil;
+        if (lat == (id)[NSNull null]) lat = nil;
+        if (lon == (id)[NSNull null]) lon = nil;
+        
+        [self setPostID:[postID integerValue]];
+        [self setScore:[score integerValue]];
+        [self setMessage:text];
+        [self setLat:[lat floatValue]];
+        [self setLon:[lon floatValue]];
+        
+        return self;
+    }
+    return nil;
+}
 - (void)validate
 {   // check for proper length
 
@@ -93,15 +123,12 @@
 }
 - (NSData*)toJSON
 {   // Returns an NSData representation of this Post in JSON
-    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                 self.message, @"text",
-                                 nil];
-    
-    NSError *error;
-    NSData *data = [NSJSONSerialization dataWithJSONObject:dictionary
-                                                   options:0 error:&error];
-    
-    return data;
+    NSString *postString = [NSString stringWithFormat:@"{\"text\":\"%@\"}", self.message];
+    NSData *postData = [postString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    return postData;
 }
-
+- (NSInteger)getID
+{   // Returns the ID for this Post
+    return self.postID;
+}
 @end

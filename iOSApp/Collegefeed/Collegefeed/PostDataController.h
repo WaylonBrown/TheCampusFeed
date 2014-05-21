@@ -10,19 +10,20 @@
 
 #import "DataController.h"
 
-@class Post;
-
 @interface PostDataController : DataController
+
+// Arrays for six possible GET requests: Top, New, and User posts for:
+//          all colleges, or the user's college
+
+@property (nonatomic, strong) NSMutableArray *topPostsAllColleges;
+@property (nonatomic, strong) NSMutableArray *recentPostsAllColleges;
+@property (nonatomic, strong) NSMutableArray *userPostsAllColleges;
+
+@property (nonatomic, strong) NSMutableArray *topPostsInCollege;
+@property (nonatomic, strong) NSMutableArray *recentPostsInCollege;
+@property (nonatomic, strong) NSMutableArray *userPostsInCollege;
 
 @property (nonatomic) NSURL *postURL;
 @property (nonatomic) NSMutableData *responseData;
-
-//- (void)addPostToServer:(Post *)post;
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data;
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error;
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection;
 
 @end

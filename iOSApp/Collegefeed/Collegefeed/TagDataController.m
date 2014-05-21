@@ -8,18 +8,23 @@
 
 #import "TagDataController.h"
 #import "Tag.h"
-
-static NSString *requestUrlString = @"http://cfeed.herokuapp.com/api/";
-static NSString *apiVersion = @"v1/";
+#import "Constants.h"
 
 @implementation TagDataController
 
 #pragma mark Initialization
 
-- (id) init
+- (id) initWithNetwork:(BOOL)useNetwork
 { // initialize this data controller
     if (self = [super init])
-    {   // dummy initialization
+    {
+        if (useNetwork)
+        {
+            [self setList:[[NSMutableArray alloc] init]];
+            [self fetchWithUrl:tagsUrl
+                      intoList:self.list];
+        }
+        else // dummy initialization
         {
             [self initializeDefaultList];
         }
@@ -38,6 +43,35 @@ static NSString *apiVersion = @"v1/";
         tag = [[Tag alloc] initDummy];
         tag.tagID = i;
         [self addObjectToList:tag];
+    }
+}
+
+#pragma mark - Network Access
+
+- (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array
+{   // Call getJsonObjectWithUrl to access network,
+    // then read JSON result into the provided array
+    if (array == nil)
+    {
+        NSLog(@"nil array passed to fetchWithUrl");
+        return;
+    }
+    @try
+    {
+        NSArray *jsonArray = (NSArray*)[self getJsonObjectWithUrl:url];
+        
+        [array removeAllObjects];
+        for (int i = 0; i < jsonArray.count; i++)
+        {
+            // Individual JSON object
+            NSDictionary *jsonTag = (NSDictionary *) [jsonArray objectAtIndex:i];
+            Tag* newTag = [[Tag alloc] initFromJSON:jsonTag];
+            [array addObject:newTag];
+        }
+    }
+    @catch (NSException *exc)
+    {
+        NSLog(@"Error fetching all posts");
     }
 }
 

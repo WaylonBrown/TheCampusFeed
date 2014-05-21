@@ -8,18 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
-
+@class Votable;
 
 @interface DataController : NSObject
 
 @property (nonatomic, strong) NSMutableArray *list;
+
+- (id)initWithNetwork:(BOOL)useNetwork;
+
 
 - (void)initializeDefaultList;
 
 - (NSUInteger)countOfList;
 - (NSObject *)objectInListAtIndex:(NSUInteger)theIndex;
 - (void)addObjectToList:(NSObject *)obj;
-- (void)fetchAll;
+
+
+- (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array;
 - (id)getJsonObjectWithUrl:(NSURL*) url;
+
+- (void)addToServer:(Votable *)obj intoList:(NSMutableArray *)array;
+
 
 @end

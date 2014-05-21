@@ -9,18 +9,22 @@
 #import <Foundation/Foundation.h>
 #import "Votable.h"
 
+@class Post;
+
 @interface Comment : Votable
 
 @property (nonatomic) NSInteger commentID;
+
+// NOTE: Use this constructor!
+- (id)initWithCommentMessage:(NSString *)message
+                    withPost:(Post *)post;
+
 
 
 - (id)initWithCommentID:(NSInteger)newCommentID
               withScore:(NSInteger)newScore
             withMessage:(NSString *)newMessage
              withPostID:(NSInteger)newPostID;
-
-- (id)initWithCommentMessage:(NSString *)message
-                    withPost:(Post *)post;
 
 - (id)initWithPost:(Post *)post;
 
