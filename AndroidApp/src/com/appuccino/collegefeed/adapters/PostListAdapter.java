@@ -6,6 +6,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.Html;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -196,7 +199,34 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 		}
 	}
 
-	private void setMessageAndColorizeTags(String msg, PostHolder postHolder) 
+//    private void setMessageAndColorizeTags(String msg, PostHolder postHolder) 
+//    {
+//    	String tagColor = "#33B5E5";
+//    	String message = msg;
+//    	
+//    	String[] wordArray = message.split(" ");
+//    	//check for tags, colorize them
+//    	for(int i = 0; i < wordArray.length; i++)
+//    	{
+//    		if(wordArray[i].length() > 0 && wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
+//    		{
+//    			wordArray[i] = "<font color='" + tagColor + "'>" + wordArray[i] + "</font>";
+//    		}
+//    	}
+//    	
+//    	message = "";
+//    	//combine back to string
+//    	for(int i = 0; i < wordArray.length; i++)
+//    	{
+//    		message += wordArray[i] + " ";
+//    	}
+//    	
+//    	postHolder.messageText.setText(Html.fromHtml(message));
+//    	
+//		
+//	}
+    
+    private void setMessageAndColorizeTags(String msg, PostHolder postHolder) 
     {
     	String tagColor = "#33B5E5";
     	String message = msg;
@@ -218,6 +248,17 @@ public class PostListAdapter extends ArrayAdapter<Post>{
     		message += wordArray[i] + " ";
     	}
     	
+    	//TODO: implement clickable text in TextView
+//    	ClickableSpan span1 = new ClickableSpan() {
+//            @Override
+//            public void onClick(View textView) 
+//            {
+//                Toast.makeText(context, "test", Toast.LENGTH_SHORT).show();
+//            }
+//        };
+//    	SpannableString ss = new SpannableString(Html.fromHtml(message));
+//		ss.setSpan(span1, 5, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//    	postHolder.messageText.setText(Html.fromHtml(message));
     	postHolder.messageText.setText(Html.fromHtml(message));
 		
 	}
