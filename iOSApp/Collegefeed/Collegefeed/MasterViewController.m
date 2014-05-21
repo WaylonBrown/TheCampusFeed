@@ -21,8 +21,8 @@
     {
         // Custom initialization
         self.postDataController = [[PostDataController alloc] initWithNetwork:YES];
-        self.tagDataController = [[TagDataController alloc] init];
-        self.collegeDataController = [[CollegeDataController alloc] init];
+        self.tagDataController = [[TagDataController alloc] initWithNetwork:YES];
+        self.collegeDataController = [[CollegeDataController alloc] initWithNetwork:YES];
 //        self.commentViewController = [[CommentViewController alloc] init];
     }
     return self;

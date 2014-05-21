@@ -19,6 +19,7 @@
     
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
+    [self.tableView reloadData];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

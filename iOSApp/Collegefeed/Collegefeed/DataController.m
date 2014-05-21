@@ -22,7 +22,6 @@
 {   // add object to local list
     [self.list addObject:obj];
 }
-
 - (NSObject *)objectInListAtIndex:(NSUInteger)theIndex
 {   // return the object at theIndex
     return [self.list objectAtIndex:theIndex];
@@ -45,7 +44,6 @@
     urlData = [NSURLConnection sendSynchronousRequest:request
                                     returningResponse:&response
                                                 error:&error];
-    NSLog(@"%@", urlData);
     NSInteger code = [response statusCode];
     if (code != 200 || error != nil)
     {

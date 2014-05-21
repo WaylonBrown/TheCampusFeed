@@ -40,18 +40,30 @@
 
 // URLs for server requests
 
-#define requestUrl      @"http://cfeed.herokuapp.com/api/"
-#define apiVersion      @"v1/"
-#define postsUrl        [NSURL URLWithString:[NSString stringWithFormat: \
-                        @"%@%@%@", requestUrl, apiVersion, @"posts"]]
+#define requestUrl                  @"http://cfeed.herokuapp.com/api/"
+#define apiVersion                  @"v1/"
+#define postsUrl                    [NSURL URLWithString:[NSString \
+                                    stringWithFormat: @"%@%@%@", requestUrl, \
+                                    apiVersion, @"posts"]]
 
-#define commentsUrl     [NSURL URLWithString:[NSString \
-                        stringWithFormat: @"%@%@%@", \
-                        requestUrl, apiVersion, @"comments"]]
+#define commentsUrl                 [NSURL URLWithString:[NSString \
+                                    stringWithFormat: @"%@%@%@", \
+                                    requestUrl, apiVersion, @"comments"]]
 
+#define commentsUrlGet(postid)      [NSURL URLWithString:[NSString \
+                                    stringWithFormat: @"%@%@%@?postid=%d", \
+                                    requestUrl, apiVersion, @"comments", postid]]
 
-#define commentsUrlGet(postid)  [NSURL URLWithString:[NSString \
-                                stringWithFormat: @"%@%@%@?postid=%d", \
-                                requestUrl, apiVersion, @"comments", postid]]
+#define collegesUrlAll              [NSURL URLWithString:[NSString \
+                                    stringWithFormat: @"%@%@%@", \
+                                    requestUrl, apiVersion, @"colleges"]]
+
+#define collegesUrlNearby(lat, lon) [NSURL URLWithString:[NSString \
+                                    stringWithFormat: @"%@%@%@?lat=%f&lon=%f", \
+                                    requestUrl, apiVersion, @"colleges", lat, lon]]
+
+#define tagsUrl                     [NSURL URLWithString:[NSString \
+                                    stringWithFormat: @"%@%@%@", requestUrl, \
+                                    apiVersion, @"tags/trending"]]
 
 #endif
