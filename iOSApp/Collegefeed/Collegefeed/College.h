@@ -11,8 +11,8 @@
 @interface College : NSObject
 
 @property (nonatomic) NSInteger collegeID;
-@property (nonatomic) NSInteger lat;
-@property (nonatomic) NSInteger lon;
+@property (nonatomic) float lat;
+@property (nonatomic) float lon;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *shortName;
 

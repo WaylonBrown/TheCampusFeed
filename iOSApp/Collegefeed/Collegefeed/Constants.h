@@ -38,4 +38,20 @@
 #define logoImage @"collegefeedlogosmall.png"
 #define logoTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:logoImage]]
 
+// URLs for server requests
+
+#define requestUrl      @"http://cfeed.herokuapp.com/api/"
+#define apiVersion      @"v1/"
+#define postsUrl        [NSURL URLWithString:[NSString stringWithFormat: \
+                        @"%@%@%@", requestUrl, apiVersion, @"posts"]]
+
+#define commentsUrl     [NSURL URLWithString:[NSString \
+                        stringWithFormat: @"%@%@%@", \
+                        requestUrl, apiVersion, @"comments"]]
+
+
+#define commentsUrlGet(postid)  [NSURL URLWithString:[NSString \
+                                stringWithFormat: @"%@%@%@?postid=%@", \
+                                requestUrl, apiVersion, @"comments", postid]]
+
 #endif

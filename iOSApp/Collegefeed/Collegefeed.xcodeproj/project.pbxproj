@@ -340,8 +340,8 @@
 				5390A94219158E1A00ACD082 /* DataControllerTests.m */,
 				5390A94019158E0E00ACD082 /* ViewControllerTests.m */,
 				53F878C119133F60002A578B /* CollegefeedTests.m */,
-				53F878BC19133F60002A578B /* Supporting Files */,
 				53AE73C2192802BD00BE6B02 /* ModelTests.m */,
+				53F878BC19133F60002A578B /* Supporting Files */,
 			);
 			path = CollegefeedTests;
 			sourceTree = "<group>";

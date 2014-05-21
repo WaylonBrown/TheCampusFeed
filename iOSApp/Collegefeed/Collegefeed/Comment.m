@@ -13,6 +13,24 @@
 
 @implementation Comment
 
+- (id)initWithCommentMessage:(NSString *)message
+                    withPost:(Post *)post
+{   // NOTE: This constructor to be used when sending to server
+    // assign attributes required by the API's POST request
+    
+    self = [super init];
+    if (self)
+    {
+        [self setPostID:post.getID];
+        [self setMessage:message];
+        [self setPostUrl:commentsUrl];
+        
+        [self validate];
+        return self;
+    }
+    return nil;
+}
+
 - (id)initWithCommentID:(NSInteger)newCommentID
               withScore:(NSInteger)newScore
             withMessage:(NSString *)newMessage
@@ -53,20 +71,7 @@
     
     return self;
 }
-- (id)initWithCommentMessage:(NSString *)message
-                    withPost:(Post *)post
-{   // assign values from the post that was commented on
 
-    self = [self initWithCommentID:-1
-                         withScore:0
-                       withMessage:message
-                        withPostID:post.postID];
-
-    
-    [self setCollegeID:post.collegeID];
-    
-    return self;
-}
 - (id)initWithPost:(Post *)post
 {
     self = [self initDummy];
@@ -76,6 +81,25 @@
         [self setCollegeID:post.collegeID];
 
         [self validate];
+        return self;
+    }
+    return nil;
+}
+- (id)initFromJSON:(NSDictionary *)jsonObject
+{   // Initialize this Comment using a JSON object as an NSDictionary
+    self = [super init];
+    if (self)
+    {
+        NSString *commentID = (NSString*)[jsonObject valueForKey:@"id"];
+        NSString *text      = (NSString*)[jsonObject valueForKey:@"text"];
+        NSString *score     = (NSString*)[jsonObject valueForKey:@"score"];
+
+        if (score == (id)[NSNull null]) score = nil;
+        
+        [self setCommentID:[commentID integerValue]];
+        [self setScore:[score integerValue]];
+        [self setMessage:text];
+        
         return self;
     }
     return nil;
@@ -97,16 +121,15 @@
 //    }
 }
 - (NSData*)toJSON
-{   // Returns an NSData object representing this Comment in JSON
-    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                       [NSString stringWithFormat:@"%d", self.postID], @"post_id",
-                                       self.message, @"text", nil];
-    
-    NSError *error;
-    NSData *data = [NSJSONSerialization dataWithJSONObject:dictionary
-                                                   options:0 error:&error];
-    
-    return data;
+{   // Returns an NSData representation of this Comment in JSON
+    NSString *commentString = [NSString stringWithFormat:@"{\"post_id\":%d,\"text\":\"%@\"}",
+                            self.postID, self.message];
+    NSData *commentData = [commentString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    return commentData;
+}
+- (NSInteger)getID
+{   // Returns the ID for this Comment
+    return self.commentID;
 }
 
 @end

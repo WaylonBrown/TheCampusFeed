@@ -8,27 +8,28 @@
 
 #import "PostDataController.h"
 #import "Post.h"
-
-static NSString *requestUrlString = @"http://cfeed.herokuapp.com/api/";
-static NSString *apiVersion = @"v1/";
-
-// set to NO to use dummy initialization
-static BOOL useNetwork = NO;
+#import "Constants.h"
 
 @implementation PostDataController
 
-#pragma mark Initialization 
+#pragma mark - Initialization
 
-- (id)init
+- (id)initWithNetwork:(BOOL)useNetwork
 { // initialize this data controller
     if (self = [super init])
     {
+        [self setTopPostsAllColleges:[[NSMutableArray alloc] init]];
+//        [self setRecentPostsAllColleges:[[NSMutableArray alloc] init]];
+//        [self setUserPostsAllColleges:[[NSMutableArray alloc] init]];
+//        [self setTopPostsInCollege:[[NSMutableArray alloc] init]];
+//        [self setRecentPostsInCollege:[[NSMutableArray alloc] init]];
+//        [self setUserPostsInCollege:[[NSMutableArray alloc] init]];
+        
         if (useNetwork)
         {
             [self setList:[[NSMutableArray alloc] init]];
-            self.postURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",
-                                                 requestUrlString, apiVersion, @"posts"]];
-            [self fetchAll];
+            [self fetchWithUrl:postsUrl
+                      intoList:self.topPostsAllColleges];
         }
         else // dummy initialization
         {
@@ -52,142 +53,33 @@ static BOOL useNetwork = NO;
     }
 }
 
-#pragma mark Network Access (NEEDS WORK)
+#pragma mark - Network Access
 
-- (void)fetchAll
-{   // call getJsonObjectWithUrl to access network,
-    // then read JSON result into list of posts
-    
-    @try{
-        NSArray *allPosts = (NSArray*)[self getJsonObjectWithUrl:self.postURL];
+- (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array
+{   // Call getJsonObjectWithUrl to access network,
+    // then read JSON result into the provided array
+    if (array == nil)
+    {
+        NSLog(@"nil array passed to fetchWithUrl");
+        return;
+    }
+    @try
+    {
+        NSArray *jsonArray = (NSArray*)[self getJsonObjectWithUrl:url];
         
-        NSLog(@"%@", allPosts);
-        
-        [self.list removeAllObjects];
-        for (int i = 0; i < allPosts.count; i++)
+        [array removeAllObjects];
+        for (int i = 0; i < jsonArray.count; i++)
         {
-            // this post as a json object
-            NSDictionary *jsonPost = (NSDictionary *) [allPosts objectAtIndex:i];
-            NSLog(@"%@", jsonPost);
-            // values to pass to Post constructor
-
-            NSString *postID    = (NSString*)[jsonPost valueForKey:@"id"];
-            NSString *score     = (NSString*)[jsonPost valueForKey:@"score"];
-            if (score == (id)[NSNull null]) score = @"0";
-            NSString *message   = (NSString*)[jsonPost valueForKey:@"text"];
-            
-            // create post and add to the masterPostList Array
-            Post* newPost = [[Post alloc] initWithPostID:[postID integerValue]
-                                               withScore:[score integerValue]
-                                             withMessage:message];
-            [self addObjectToList:newPost];
+            // Individual JSON object
+            NSDictionary *jsonPost = (NSDictionary *) [jsonArray objectAtIndex:i];
+            Post* newPost = [[Post alloc] initFromJSON:jsonPost];
+            [array addObject:newPost];
         }
     }
     @catch (NSException *exc)
     {
         NSLog(@"Error fetching all posts");
     }
-}
-- (id)getJsonObjectWithUrl:(NSURL *)url
-{ // used to GET posts
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:url
-                                             cachePolicy:NSURLRequestReturnCacheDataElseLoad
-                                         timeoutInterval:30];
-    
-    // Fetch the JSON response
-    NSData *urlData;
-    NSHTTPURLResponse *response;
-    NSError *error;
-    
-    // Make synchronous request
-    urlData = [NSURLConnection sendSynchronousRequest:request
-                                    returningResponse:&response
-                                                error:&error];
-    
-    NSInteger code = [response statusCode];
-    if (code != 200 || error != nil)
-    {
-        NSString *excReason = [NSString stringWithFormat:@"Error accessing %@", url];
-        NSException *exc = [NSException exceptionWithName:@"NetworkRequestError"
-                                                   reason:excReason
-                                                 userInfo:nil];
-        @throw exc;
-    }
-    
-    return [NSJSONSerialization JSONObjectWithData:urlData
-                                           options:0
-                                             error:&error];
-}
-
-- (void)addPostToServer:(Post *)post
-{   // Serialize new post into JSON and send as POST request to url
-    @try
-    {
-        // Create the request.
-//        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:self.postURL];
-
-        // Convert post to data for HTTPBody
-//        NSString *stringData = [NSString stringWithFormat:@"text=%@", post.message];
-        
-        //TODO
-
-//        NSDictionary *requestData = [[NSDictionary alloc] initWithObjectsAndKeys:
-//                                     post.postMessage, @"text",
-//                                     nil];
-//        
-//        NSError *error;
-//        NSData *postData = [NSJSONSerialization dataWithJSONObject:requestData options:0 error:&error];
-//        
-//        // Set header field
-//        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-//
-//        // Specify that it will be a POST request
-//        [request setHTTPMethod:@"POST"];
-////        [request setHTTPBody:[NSData dataWithBytes:[stringData UTF8String] length:strlen([stringData UTF8String])]];
-//        [request setHTTPBody:postData];
-//        
-//        NSLog(@"%@", request);
-//        
-//        // Create url connection and fire request
-//        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request
-//                                                                      delegate:self];
-//
-//
-//        if (!connection)
-//        {
-//            NSLog(@"POST was unsuccessful");
-//        }
-//        else
-//        {
-//            [self addObjectToList:post];
-//        }
-        
-    }
-    @catch(NSException* e)
-    {
-        // TODO: handle invalid post
-        //          truncate? ignore?
-    }
-}
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    // should be called when connection received response
-    self.responseData = [NSMutableData data];
-}
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    [self.responseData appendData:data];
-
-}
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    
-}
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    NSLog(@"response data - %@", [[NSString alloc] initWithData:self.responseData encoding:NSUTF8StringEncoding]);
-
 }
 
 @end
