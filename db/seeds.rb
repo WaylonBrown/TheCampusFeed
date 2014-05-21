@@ -10,10 +10,14 @@ require 'csv'
 @@smallestSizeIncluded = 15
 def importFromFile(lim = -1)
   #imports from the 2012 
-  @i = 1
+  @i = 0
   @data = CSV.foreach("app/assets/hd2012.csv", encoding: "iso-8859-1:UTF-8" ){ |row|
+    if 0 == @i
+      @i += 1
+      next
+    end
 
-    if 1 == @i or row[49] < @@smallestSizeIncluded #don't use first row and don't use small schools
+    if Integer(row[49]) < @@smallestSizeIncluded #don't use first row and don't use small schools
       next
     end
 
