@@ -27,10 +27,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -54,16 +56,18 @@ import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Post;
+import com.astuetz.PagerSlidingTabStrip;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener, LocationListener 
 {
-
+	ViewPager viewPager;
+	PagerSlidingTabStrip tabs;
 	OneCollegeSectionsPagerAdapter oneCollegePagerAdapter;
 	AllCollegesSectionsPagerAdapter allCollegesPagerAdapter;
+	
 	ActionBar actionBar;
 	ImageView newPostButton;
 	public static Spinner spinner;
-	ViewPager viewPager;
 	ArrayList<Fragment> fragmentList;
 	boolean locationFound = false;
 	public static LocationManager mgr;
@@ -84,10 +88,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		tabs = (PagerSlidingTabStrip)findViewById(R.id.tabs);
+		viewPager = (ViewPager) findViewById(R.id.pager);
+		tabs.setIndicatorColor(getResources().getColor(R.color.tabunderlineblue));
 		
 		// Set up the action bar.
 		actionBar = getActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setCustomView(R.layout.actionbar_main);
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setDisplayShowCustomEnabled(true);
@@ -122,8 +128,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			
 		});
 		
-		//determinePermissions();
-		getLocation(); //This calls determine permissions now.
+		getLocation();
 	}
 	
 	protected void spinnerChanged(int which) 
@@ -138,83 +143,40 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			allCollegesPagerAdapter = new AllCollegesSectionsPagerAdapter(this, getSupportFragmentManager());
 
 			// Set up the ViewPager with the sections adapter.
-			viewPager = (ViewPager) findViewById(R.id.pager);
 			viewPager.setAdapter(allCollegesPagerAdapter);
 			viewPager.setOffscreenPageLimit(5);
-
-			// When swiping between different sections, select the corresponding
-			// tab. We can also use ActionBar.Tab#select() to do this if we have
-			// a reference to the Tab.
-			viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() 
-			{
-				@Override
-				public void onPageSelected(int position) {
-					actionBar.setSelectedNavigationItem(position);
-				}
-			});
-
-			actionBar.removeAllTabs();
-			// For each of the sections in the app, add a tab to the action bar.
-			for (int i = 0; i < allCollegesPagerAdapter.getCount(); i++) 
-			{
-				// Create a tab with text corresponding to the page title defined by
-				// the adapter. Also specify this Activity object, which implements
-				// the TabListener interface, as the callback (listener) for when
-				// this tab is selected.
-				actionBar.addTab(actionBar.newTab()
-						.setText(allCollegesPagerAdapter.getPageTitle(i))
-						.setTabListener(this));
-			}
+			tabs.setViewPager(viewPager);
 						
 		}
 		else //specific college
 		{
 			currentFeedCollegeID = 234234;
 			
-			if(hasPermissions(currentFeedCollegeID))
-			{
-				Toast.makeText(this, "Since you are near Texas A&M University, you can upvote, downvote, post, and comment", Toast.LENGTH_LONG).show();
-			}
-			else
-			{
-				Toast.makeText(this, "Since you aren't near Texas A&M University, you can only downvote", Toast.LENGTH_LONG).show();
-			}
+			showPermissionsToast();
 			
 			// Create the adapter that will return a fragment for each of the three
 			// primary sections of the app.
 			oneCollegePagerAdapter = new OneCollegeSectionsPagerAdapter(this, getSupportFragmentManager());
 
 			// Set up the ViewPager with the sections adapter.
-			viewPager = (ViewPager) findViewById(R.id.pager);
 			viewPager.setAdapter(oneCollegePagerAdapter);
 			viewPager.setOffscreenPageLimit(5);
-
-			// When swiping between different sections, select the corresponding
-			// tab. We can also use ActionBar.Tab#select() to do this if we have
-			// a reference to the Tab.
-			viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() 
-			{
-						@Override
-						public void onPageSelected(int position) {
-							actionBar.setSelectedNavigationItem(position);
-						}
-					});
-
-			actionBar.removeAllTabs();
-			// For each of the sections in the app, add a tab to the action bar.
-			for (int i = 0; i < oneCollegePagerAdapter.getCount(); i++) 
-			{
-				// Create a tab with text corresponding to the page title defined by
-				// the adapter. Also specify this Activity object, which implements
-				// the TabListener interface, as the callback (listener) for when
-				// this tab is selected.
-				actionBar.addTab(actionBar.newTab()
-						.setText(oneCollegePagerAdapter.getPageTitle(i))
-						.setTabListener(this));
-			}
+			tabs.setViewPager(viewPager);
 		}
 	}
 	
+	private void showPermissionsToast() 
+	{
+		if(hasPermissions(currentFeedCollegeID))
+		{
+			Toast.makeText(this, "Since you are near Texas A&M University, you can upvote, downvote, post, and comment", Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			Toast.makeText(this, "Since you aren't near Texas A&M University, you can only downvote", Toast.LENGTH_LONG).show();
+		}
+	}
+
 	public static boolean hasPermissions(int collegeID) 
 	{
 		if(permissions == null)

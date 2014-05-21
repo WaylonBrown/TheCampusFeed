@@ -339,14 +339,15 @@ containing a value of this type.
     }
     public static final class color {
         public static final int background_tab_pressed=0x7f050000;
-        public static final int blue=0x7f050004;
-        public static final int darkgray=0x7f050007;
+        public static final int blue=0x7f050005;
+        public static final int darkgray=0x7f050008;
         public static final int default_progress_bar_color=0x7f050002;
-        public static final int gray=0x7f050006;
+        public static final int gray=0x7f050007;
         public static final int lightblue=0x7f050003;
-        public static final int lightgray=0x7f050005;
+        public static final int lightgray=0x7f050006;
         public static final int spb_default_color=0x7f050001;
-        public static final int white=0x7f050008;
+        public static final int tabunderlineblue=0x7f050004;
+        public static final int white=0x7f050009;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
