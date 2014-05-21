@@ -57,7 +57,7 @@
     }
     
     // get the post and display in this cell
-    Tag *tagAtIndex = [self.tagDataController objectInListAtIndex:indexPath.row];
+    Tag *tagAtIndex = (Tag*)[self.tagDataController objectInListAtIndex:indexPath.row];
     [cell.textLabel setText:tagAtIndex.name];
     
     return cell;

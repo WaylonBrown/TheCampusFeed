@@ -14,16 +14,20 @@
 @class PostDataController;
 @class TagDataController;
 @class CollegeDataController;
+@class CommentViewController;
 
 @interface MasterViewController : UIViewController
 
 @property (strong, nonatomic) PostDataController *postDataController;
+@property (strong, nonatomic) CommentViewController *commentViewController;
 @property (strong, nonatomic) CollegeDataController *collegeDataController;
 @property (strong, nonatomic) TagDataController *tagDataController;
 
-
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *createButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-- (IBAction)createPost:(id)sender;
+- (IBAction)cancel:(id)sender;
+- (IBAction)create:(id)sender;
 
 @end
