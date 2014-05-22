@@ -134,8 +134,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		TextView chooseText = (TextView)findViewById(R.id.chooseText);
 		
 		collegeNameBottom.setTypeface(FontFetcher.light);
-		showingText.setTypeface(FontFetcher.bold);
+		showingText.setTypeface(FontFetcher.medium);
 		chooseText.setTypeface(FontFetcher.light);
+		
+		chooseText.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(getApplicationContext(), "make dialog", Toast.LENGTH_SHORT).show();
+			}
+			
+		});
 		
 	}
 

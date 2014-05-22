@@ -37,9 +37,10 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_marginLeft="4dp"
-	            android:layout_marginBottom="-8dp"
+	            android:layout_marginTop="2dp"
+	            android:layout_marginBottom="-6dp"
 	            android:text="Showing"
-	            android:textSize="14sp"
+	            android:textSize="16sp"
 	            android:textColor="@color/white"
 	            />
             
@@ -74,6 +75,7 @@
             android:text="Choose"
             android:textSize="18sp"
             android:textColor="@color/white"
+            android:clickable="true"
             />
         
     </LinearLayout>

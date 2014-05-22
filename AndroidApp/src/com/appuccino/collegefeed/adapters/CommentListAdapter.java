@@ -58,7 +58,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
             
             commentHolder.scoreText.setTypeface(FontFetcher.bold);
             commentHolder.messageText.setTypeface(FontFetcher.light);
-            commentHolder.timeText.setTypeface(FontFetcher.italic);
+            commentHolder.timeText.setTypeface(FontFetcher.medium);
             
             row.setTag(commentHolder);
         }
