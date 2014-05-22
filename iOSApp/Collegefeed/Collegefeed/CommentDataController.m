@@ -62,12 +62,11 @@
         return self.post.message;
     return @"[Post's message not found]";
 }
-- (void)addObjectToList:(NSObject *)obj
-{   // add comment to list maintained by this datacontroller and the post
-//    [super addObjectToList:obj];
-
-    [self.post.commentList addObject:obj];
-}
+//- (void)addObjectToList:(NSObject *)obj
+//{   // add comment to list maintained by this datacontroller and the post
+//
+//    [self.post.commentList addObject:obj];
+//}
 
 #pragma mark - Network Access
 

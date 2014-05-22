@@ -88,12 +88,15 @@
     
     static NSString *CellIdentifier = @"TableCell";
     TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
     if (cell == nil)
     {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
     
+    [cell setDelegate: self];
+
     if (indexPath.section == 0)
     {   // PostView table; get the original post to display in this table
         [cell assign:self.originalPost];
@@ -172,9 +175,8 @@
     
     Comment *newComment = [[Comment alloc] initWithCommentMessage:[[alertView textFieldAtIndex:0] text]
                                                          withPost:self.originalPost];
-    [self.dataController addObjectToList:newComment];
-//    [self.commentTable reloadData];
-//    [self.originalPostTable reloadData];
+    [self.dataController addToServer:newComment
+                            intoList:self.dataController.list];
     [self.tableView reloadData];
 }
 
@@ -197,4 +199,8 @@
     return [NSString stringWithFormat:@"%d seconds ago", commentAgeSeconds];
 }
 
+- (void)castVote:(Vote *)vote
+{
+    [super castVote:vote];
+}
 @end

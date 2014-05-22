@@ -154,32 +154,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		533475901922F66400E84CC8 /* Posts */ = {
-			isa = PBXGroup;
-			children = (
-				53963DE51916E5F50084E646 /* PostsViewController.h */,
-				53963DE61916E5F50084E646 /* PostsViewController.m */,
-				53D2AD0919189EC60097C840 /* Post.h */,
-				53D2AD0A19189EC60097C840 /* Post.m */,
-				532706E0191378EF00F5EAB9 /* PostDataController.h */,
-				532706E1191378EF00F5EAB9 /* PostDataController.m */,
-			);
-			name = Posts;
-			sourceTree = "<group>";
-		};
-		533475911922F69300E84CC8 /* Comments */ = {
-			isa = PBXGroup;
-			children = (
-				5390A939191552AE00ACD082 /* CommentViewController.h */,
-				5390A93A191552AE00ACD082 /* CommentViewController.m */,
-				53D2AD0519189E9E0097C840 /* Comment.h */,
-				53D2AD0619189E9E0097C840 /* Comment.m */,
-				5390A92A19153EBE00ACD082 /* CommentDataController.h */,
-				5390A92B19153EBE00ACD082 /* CommentDataController.m */,
-			);
-			name = Comments;
-			sourceTree = "<group>";
-		};
 		533475A019232A4A00E84CC8 /* TableCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,41 +178,89 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
-		53AE73671925CDA600BE6B02 /* Colleges */ = {
-			isa = PBXGroup;
-			children = (
-				53AE73681925CFA800BE6B02 /* CollegeDataController.h */,
-				53AE73691925CFA800BE6B02 /* CollegeDataController.m */,
-				53D2AD131918AAB80097C840 /* College.h */,
-				53D2AD141918AAB80097C840 /* College.m */,
-				53AE736B1925D46300BE6B02 /* CollegeViewController.h */,
-				53AE736C1925D46300BE6B02 /* CollegeViewController.m */,
-			);
-			name = Colleges;
-			sourceTree = "<group>";
-		};
 		53AE73BA1927EB8F00BE6B02 /* Interfaces */ = {
 			isa = PBXGroup;
 			children = (
-				53AE73BC1927ED6600BE6B02 /* DataController.h */,
-				53AE73C61928354F00BE6B02 /* DataController.m */,
 				53AE73BF1927FBA700BE6B02 /* Votable.h */,
 				53AE73C41928208100BE6B02 /* Votable.m */,
 			);
 			name = Interfaces;
 			sourceTree = "<group>";
 		};
-		53B1FDFB19254C8600905E49 /* Tags */ = {
+		53B090B5192DA13100E3D996 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				53B1FE0119254EB900905E49 /* MasterView */,
+				53963DE51916E5F50084E646 /* PostsViewController.h */,
+				53963DE61916E5F50084E646 /* PostsViewController.m */,
+				5390A939191552AE00ACD082 /* CommentViewController.h */,
+				5390A93A191552AE00ACD082 /* CommentViewController.m */,
 				5334758A1922D9B700E84CC8 /* TagViewController.h */,
 				5334758B1922D9B700E84CC8 /* TagViewController.m */,
+				53AE736B1925D46300BE6B02 /* CollegeViewController.h */,
+				53AE736C1925D46300BE6B02 /* CollegeViewController.m */,
+				533475A019232A4A00E84CC8 /* TableCell */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		53B090B6192DA13D00E3D996 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				53AE73BA1927EB8F00BE6B02 /* Interfaces */,
+				53D2AD0919189EC60097C840 /* Post.h */,
+				53D2AD0A19189EC60097C840 /* Post.m */,
+				53D2AD0519189E9E0097C840 /* Comment.h */,
+				53D2AD0619189E9E0097C840 /* Comment.m */,
+				53D2AD0C19189F740097C840 /* Vote.h */,
+				53D2AD0D19189F740097C840 /* Vote.m */,
+				53D2AD131918AAB80097C840 /* College.h */,
+				53D2AD141918AAB80097C840 /* College.m */,
 				53D2AD0F1918A22A0097C840 /* Tag.h */,
 				53D2AD101918A22A0097C840 /* Tag.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		53B090B7192DA14400E3D996 /* DataControllers */ = {
+			isa = PBXGroup;
+			children = (
+				53AE73BC1927ED6600BE6B02 /* DataController.h */,
+				53AE73C61928354F00BE6B02 /* DataController.m */,
+				532706E0191378EF00F5EAB9 /* PostDataController.h */,
+				532706E1191378EF00F5EAB9 /* PostDataController.m */,
+				5390A92A19153EBE00ACD082 /* CommentDataController.h */,
+				5390A92B19153EBE00ACD082 /* CommentDataController.m */,
+				53AE73C919283A9D00BE6B02 /* VoteDataController.h */,
+				53AE73CA19283A9D00BE6B02 /* VoteDataController.m */,
+				53AE73681925CFA800BE6B02 /* CollegeDataController.h */,
+				53AE73691925CFA800BE6B02 /* CollegeDataController.m */,
 				53AE735E1925B53900BE6B02 /* TagDataController.h */,
 				53AE735F1925B53900BE6B02 /* TagDataController.m */,
 			);
-			name = Tags;
+			name = DataControllers;
+			sourceTree = "<group>";
+		};
+		53B090B8192DA1FA00E3D996 /* Source Code */ = {
+			isa = PBXGroup;
+			children = (
+				53F8789F19133F60002A578B /* AppDelegate.h */,
+				53F878A019133F60002A578B /* AppDelegate.m */,
+				53B090B6192DA13D00E3D996 /* Models */,
+				53B090B7192DA14400E3D996 /* DataControllers */,
+				53B090B5192DA13100E3D996 /* Views */,
+			);
+			name = "Source Code";
+			sourceTree = "<group>";
+		};
+		53B090B9192DA21600E3D996 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				53F878AE19133F60002A578B /* Images.xcassets */,
+				53F8789719133F60002A578B /* Supporting Files */,
+				5390A9131914B76800ACD082 /* Images */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		53B1FE0119254EB900905E49 /* MasterView */ = {
@@ -249,26 +271,6 @@
 				53B1FDFF19254E8F00905E49 /* MasterViewController.m */,
 			);
 			name = MasterView;
-			sourceTree = "<group>";
-		};
-		53D2AD0819189EAB0097C840 /* Votes */ = {
-			isa = PBXGroup;
-			children = (
-				53D2AD0C19189F740097C840 /* Vote.h */,
-				53D2AD0D19189F740097C840 /* Vote.m */,
-				53AE73C919283A9D00BE6B02 /* VoteDataController.h */,
-				53AE73CA19283A9D00BE6B02 /* VoteDataController.m */,
-			);
-			name = Votes;
-			sourceTree = "<group>";
-		};
-		53F742F219259B6400A49A37 /* Shared Views */ = {
-			isa = PBXGroup;
-			children = (
-				53B1FE0119254EB900905E49 /* MasterView */,
-				533475A019232A4A00E84CC8 /* TableCell */,
-			);
-			name = "Shared Views";
 			sourceTree = "<group>";
 		};
 		53F8788419133F60002A578B = {
@@ -304,18 +306,8 @@
 		53F8789619133F60002A578B /* Collegefeed */ = {
 			isa = PBXGroup;
 			children = (
-				53AE73BA1927EB8F00BE6B02 /* Interfaces */,
-				53F742F219259B6400A49A37 /* Shared Views */,
-				533475911922F69300E84CC8 /* Comments */,
-				533475901922F66400E84CC8 /* Posts */,
-				53AE73671925CDA600BE6B02 /* Colleges */,
-				53B1FDFB19254C8600905E49 /* Tags */,
-				53D2AD0819189EAB0097C840 /* Votes */,
-				5390A9131914B76800ACD082 /* Images */,
-				53F8789719133F60002A578B /* Supporting Files */,
-				53F8789F19133F60002A578B /* AppDelegate.h */,
-				53F878A019133F60002A578B /* AppDelegate.m */,
-				53F878AE19133F60002A578B /* Images.xcassets */,
+				53B090B8192DA1FA00E3D996 /* Source Code */,
+				53B090B9192DA21600E3D996 /* Resources */,
 			);
 			path = Collegefeed;
 			sourceTree = "<group>";

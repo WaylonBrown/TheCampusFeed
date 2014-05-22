@@ -7,10 +7,12 @@
 //
 
 #import "MasterViewController.h"
+#import "CommentViewController.h"
+
 #import "PostDataController.h"
 #import "CollegeDataController.h"
 #import "TagDataController.h"
-#import "CommentViewController.h"
+#import "VoteDataController.h"
 
 @implementation MasterViewController
 
@@ -23,7 +25,7 @@
         self.postDataController = [[PostDataController alloc] initWithNetwork:YES];
         self.tagDataController = [[TagDataController alloc] initWithNetwork:YES];
         self.collegeDataController = [[CollegeDataController alloc] initWithNetwork:YES];
-//        self.commentViewController = [[CommentViewController alloc] init];
+        self.voteDataController = [[VoteDataController alloc] init];
     }
     return self;
 }
@@ -82,5 +84,14 @@
     
     
 }
+
+#pragma mark - Delegate Methods
+
+- (void)castVote:(Vote *)vote
+{
+    [self.voteDataController addToServer:vote
+                                intoList:self.voteDataController.list];
+}
+
 
 @end

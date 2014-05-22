@@ -66,4 +66,9 @@
                                     stringWithFormat: @"%@%@%@", requestUrl, \
                                     apiVersion, @"tags/trending"]]
 
+#define voteUrl                     [NSURL URLWithString:[NSString \
+                                    stringWithFormat: @"%@%@%@", requestUrl, \
+                                    apiVersion, @"votes"]]
+
+
 #endif

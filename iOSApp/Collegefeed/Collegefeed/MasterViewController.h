@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TableCell.h"
 
 // Controller to display a list of either:
 // Posts, Colleges, or Tags (Comment has unique one)
@@ -15,13 +16,15 @@
 @class TagDataController;
 @class CollegeDataController;
 @class CommentViewController;
+@class VoteDataController;
 
-@interface MasterViewController : UIViewController
+@interface MasterViewController : UIViewController <ChildCellDelegate>
 
 @property (strong, nonatomic) PostDataController *postDataController;
 @property (strong, nonatomic) CommentViewController *commentViewController;
 @property (strong, nonatomic) CollegeDataController *collegeDataController;
 @property (strong, nonatomic) TagDataController *tagDataController;
+@property (strong, nonatomic) VoteDataController *voteDataController;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *createButton;

@@ -64,13 +64,16 @@
     static NSString *CellIdentifier = @"TableCell";
     
     TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    
     if (cell == nil)
     {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier
                                                      owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
-    
+    [cell setDelegate: self];
+
     // get the post and display in this cell
     Post *postAtIndex = (Post*)[self.postDataController objectInListAtIndex:indexPath.row];
     [cell assign:postAtIndex];
@@ -104,9 +107,15 @@
     
     if (buttonIndex == 0) return;
     Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]];
-    [self.postDataController addObjectToList:newPost];
+    [self.postDataController addToServer:newPost
+                                intoList:self.postDataController.topPostsAllColleges];
+     
     [self.tableView reloadData];
-    
+}
+
+- (void)castVote:(Vote *)vote
+{
+    [super castVote:vote];
 }
 
 @end

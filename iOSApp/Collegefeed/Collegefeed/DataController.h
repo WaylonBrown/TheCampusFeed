@@ -14,19 +14,18 @@
 
 @property (nonatomic, strong) NSMutableArray *list;
 
+// Initializations
 - (id)initWithNetwork:(BOOL)useNetwork;
-
-
 - (void)initializeDefaultList;
 
+// Data Access
 - (NSUInteger)countOfList;
 - (NSObject *)objectInListAtIndex:(NSUInteger)theIndex;
 - (void)addObjectToList:(NSObject *)obj;
 
-
+// Network Access
 - (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array;
 - (id)getJsonObjectWithUrl:(NSURL*) url;
-
 - (void)addToServer:(Votable *)obj intoList:(NSMutableArray *)array;
 
 

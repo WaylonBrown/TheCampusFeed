@@ -16,7 +16,11 @@
 // votableID: ID of what was voted on
 @property (nonatomic) NSInteger votableID;
 
+@property (nonatomic, strong) NSURL *postUrl;
+
 - (id)initWithVotableID:(NSInteger)ID withUpvoteValue:(BOOL)isUpvote;
 - (id)initDummy;
+
+- (NSData*)toJSON;
 
 @end
