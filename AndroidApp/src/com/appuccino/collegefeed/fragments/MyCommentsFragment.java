@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -64,6 +65,8 @@ public class MyCommentsFragment extends Fragment implements OnRefreshListener
 		list = (ListView)rootView.findViewById(R.id.fragmentListView);
 		loadingText = (ShimmerTextView)rootView.findViewById(R.id.loadingText);
 		loadingText.setTypeface(FontFetcher.light);
+		
+		disableFooter(rootView);
 					
 		// Now give the find the PullToRefreshLayout and set it up
         pullToRefresh = (PullToRefreshLayout) rootView.findViewById(R.id.pullToRefresh);
@@ -107,6 +110,11 @@ public class MyCommentsFragment extends Fragment implements OnRefreshListener
 		});
 	    
 		return rootView;
+	}
+
+	private void disableFooter(View root) {
+		LinearLayout footer = (LinearLayout)root.findViewById(R.id.footer);
+		footer.setVisibility(View.GONE);
 	}
 
 	private void pullListFromServer() 

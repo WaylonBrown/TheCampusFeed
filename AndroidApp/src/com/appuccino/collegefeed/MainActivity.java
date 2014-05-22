@@ -69,7 +69,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	ActionBar actionBar;
 	ImageView newPostButton;
 	public static Spinner spinner;
-	TextView collegeNameBottom;
 	
 	ArrayList<Fragment> fragmentList;
 	boolean locationFound = false;
@@ -95,7 +94,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		tabs.setIndicatorColor(getResources().getColor(R.color.tabunderlineblue));
 		
 		FontFetcher.setup(this);
-		setupBottomView();
 		setupActionbar();
 		
 		locationFound = false;
@@ -126,26 +124,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		});
 		
 		getLocation();
-	}
-	
-	private void setupBottomView() {
-		collegeNameBottom = (TextView)findViewById(R.id.collegeNameBottomText);
-		TextView showingText = (TextView)findViewById(R.id.showingFeedText);
-		TextView chooseText = (TextView)findViewById(R.id.chooseText);
-		
-		collegeNameBottom.setTypeface(FontFetcher.light);
-		showingText.setTypeface(FontFetcher.medium);
-		chooseText.setTypeface(FontFetcher.light);
-		
-		chooseText.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "make dialog", Toast.LENGTH_SHORT).show();
-			}
-			
-		});
-		
 	}
 
 	private void setupActionbar() {

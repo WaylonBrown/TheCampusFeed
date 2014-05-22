@@ -338,18 +338,19 @@ containing a value of this type.
         public static final int spb_default_reversed=0x7f0a0000;
     }
     public static final class color {
+        public static final int alphablue=0x7f050006;
         public static final int background_tab_pressed=0x7f050000;
         public static final int blue=0x7f050005;
-        public static final int bottomviewgray=0x7f050006;
-        public static final int darkgray=0x7f05000a;
+        public static final int bottomviewgray=0x7f050007;
+        public static final int darkgray=0x7f05000b;
         public static final int default_progress_bar_color=0x7f050002;
-        public static final int dividergray=0x7f050008;
-        public static final int gray=0x7f050009;
+        public static final int dividergray=0x7f050009;
+        public static final int gray=0x7f05000a;
         public static final int lightblue=0x7f050003;
-        public static final int lightgray=0x7f050007;
+        public static final int lightgray=0x7f050008;
         public static final int spb_default_color=0x7f050001;
         public static final int tabunderlineblue=0x7f050004;
-        public static final int white=0x7f05000b;
+        public static final int white=0x7f05000c;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -388,51 +389,52 @@ containing a value of this type.
     public static final class id {
         public static final int arrowDown=0x7f06000f;
         public static final int arrowUp=0x7f06000d;
-        public static final int card=0x7f060026;
-        public static final int chooseText=0x7f060018;
-        public static final int collegeNameBottomText=0x7f060017;
-        public static final int collegeNameText=0x7f060029;
-        public static final int collegeText=0x7f06001f;
-        public static final int commentText=0x7f060028;
+        public static final int card=0x7f060027;
+        public static final int chooseText=0x7f060025;
+        public static final int collegeNameBottomText=0x7f060024;
+        public static final int collegeNameText=0x7f06002a;
+        public static final int collegeText=0x7f06001c;
+        public static final int commentText=0x7f060029;
         public static final int commentsList=0x7f060013;
         public static final int commentsText=0x7f060012;
-        public static final int fragmentListView=0x7f06001a;
-        public static final int gpsImage=0x7f06002a;
+        public static final int footer=0x7f060022;
+        public static final int fragmentListView=0x7f060017;
+        public static final int gpsImage=0x7f06002b;
         public static final int inside=0x7f060004;
-        public static final int loadingText=0x7f060024;
-        public static final int menu_GPS=0x7f06002e;
-        public static final int menu_help=0x7f06002d;
-        public static final int menu_settings=0x7f06002c;
+        public static final int loadingText=0x7f060021;
+        public static final int menu_GPS=0x7f06002f;
+        public static final int menu_help=0x7f06002e;
+        public static final int menu_settings=0x7f06002d;
         public static final int messageText=0x7f060010;
         public static final int newCommentButton=0x7f060009;
-        public static final int newCommentMessage=0x7f06001c;
-        public static final int newCommentTagsText=0x7f06001d;
-        public static final int newCommentTitle=0x7f06001b;
+        public static final int newCommentMessage=0x7f060019;
+        public static final int newCommentTagsText=0x7f06001a;
+        public static final int newCommentTitle=0x7f060018;
         public static final int newPostButton=0x7f06000b;
-        public static final int newPostMessage=0x7f060020;
-        public static final int newPostTagsText=0x7f060021;
-        public static final int newPostTitle=0x7f06001e;
+        public static final int newPostMessage=0x7f06001d;
+        public static final int newPostTagsText=0x7f06001e;
+        public static final int newPostTitle=0x7f06001b;
         public static final int outside=0x7f060005;
         public static final int pager=0x7f060015;
         public static final int postCard=0x7f06000c;
-        public static final int postDetails=0x7f060027;
+        public static final int postDetails=0x7f060028;
         public static final int ptr_content=0x7f060006;
         public static final int ptr_progress=0x7f060008;
         public static final int ptr_text=0x7f060007;
-        public static final int pullToRefresh=0x7f060023;
+        public static final int pullToRefresh=0x7f060020;
         public static final int scoreText=0x7f06000e;
-        public static final int searchTagEditText=0x7f060022;
-        public static final int showingFeedText=0x7f060016;
+        public static final int searchTagEditText=0x7f06001f;
+        public static final int showingFeedText=0x7f060023;
         public static final int spb_interpolator_accelerate=0x7f060000;
         public static final int spb_interpolator_acceleratedecelerate=0x7f060002;
         public static final int spb_interpolator_decelerate=0x7f060003;
         public static final int spb_interpolator_linear=0x7f060001;
         public static final int spinner=0x7f06000a;
         public static final int tabs=0x7f060014;
-        public static final int tagSearchText=0x7f060025;
-        public static final int tagText=0x7f06002b;
+        public static final int tagSearchText=0x7f060026;
+        public static final int tagText=0x7f06002c;
         public static final int timeText=0x7f060011;
-        public static final int topTagText=0x7f060019;
+        public static final int topTagText=0x7f060016;
     }
     public static final class integer {
         public static final int spb_default_interpolator=0x7f080001;

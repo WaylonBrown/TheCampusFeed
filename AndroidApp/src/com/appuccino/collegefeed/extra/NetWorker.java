@@ -97,6 +97,7 @@ public class NetWorker {
 				TopPostFragment.postList.addAll(result);
 				TopPostFragment.updateList();
 				TopPostFragment.makeLoadingIndicator(false);
+				TopPostFragment.setupFooterListView();
 			}
 			else if(whichFrag == 1)	//new posts
 			{
@@ -104,6 +105,7 @@ public class NetWorker {
 				NewPostFragment.postList.addAll(result);
 				NewPostFragment.updateList();
 				NewPostFragment.makeLoadingIndicator(false);
+				NewPostFragment.setupFooterListView();
 			}
 			else if(whichFrag == 2)	//my posts
 			{

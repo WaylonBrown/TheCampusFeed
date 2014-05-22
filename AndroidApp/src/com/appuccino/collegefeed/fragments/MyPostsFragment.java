@@ -7,7 +7,6 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -45,7 +45,8 @@ public class MyPostsFragment extends Fragment implements OnRefreshListener
 	static ShimmerTextView loadingText;
 	static Shimmer shimmer;
 	private static PullToRefreshLayout pullToRefresh;
-	
+	View rootView;
+
 	public MyPostsFragment()
 	{
 	}
@@ -58,13 +59,13 @@ public class MyPostsFragment extends Fragment implements OnRefreshListener
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_layout,
+		rootView = inflater.inflate(R.layout.fragment_layout,
 				container, false);
 		list = (ListView)rootView.findViewById(R.id.fragmentListView);
 		loadingText = (ShimmerTextView)rootView.findViewById(R.id.loadingText);
-		ViewGroup viewGroup = (ViewGroup)rootView;
-		
 		loadingText.setTypeface(FontFetcher.light);
+		
+		disableFooter(rootView);
 					
 		// Now give the find the PullToRefreshLayout and set it up
         pullToRefresh = (PullToRefreshLayout) rootView.findViewById(R.id.pullToRefresh);
@@ -108,6 +109,11 @@ public class MyPostsFragment extends Fragment implements OnRefreshListener
 		});
 	    
 		return rootView;
+	}
+	
+	private void disableFooter(View root) {
+		LinearLayout footer = (LinearLayout)root.findViewById(R.id.footer);
+		footer.setVisibility(View.GONE);
 	}
 
 	private void pullListFromServer() 
