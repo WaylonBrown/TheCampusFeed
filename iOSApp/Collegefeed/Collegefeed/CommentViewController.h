@@ -12,6 +12,7 @@
 @class CommentDataController;
 @class Post;
 
+
 @interface CommentViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) CommentDataController *dataController;
