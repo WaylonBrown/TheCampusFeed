@@ -48,6 +48,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.R;
+import com.appuccino.collegefeed.extra.FontFetcher;
 import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
 import com.appuccino.collegefeed.fragments.MyCommentsFragment;
@@ -68,6 +69,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	ActionBar actionBar;
 	ImageView newPostButton;
 	public static Spinner spinner;
+	TextView collegeNameBottom;
+	
 	ArrayList<Fragment> fragmentList;
 	boolean locationFound = false;
 	public static LocationManager mgr;
@@ -91,14 +94,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		tabs.setIndicatorColor(getResources().getColor(R.color.tabunderlineblue));
 		
-		// Set up the action bar.
-		actionBar = getActionBar();
-		actionBar.setCustomView(R.layout.actionbar_main);
-		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setDisplayShowCustomEnabled(true);
-		actionBar.setDisplayUseLogoEnabled(false);
-		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
-		actionBar.setIcon(R.drawable.logofake);
+		FontFetcher.setup(this);
+		setupBottomView();
+		setupActionbar();
 		
 		locationFound = false;
 		
@@ -130,6 +128,27 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		getLocation();
 	}
 	
+	private void setupBottomView() {
+		collegeNameBottom = (TextView)findViewById(R.id.collegeNameBottomText);
+		TextView showingText = (TextView)findViewById(R.id.showingFeedText);
+		TextView chooseText = (TextView)findViewById(R.id.chooseText);
+		
+		collegeNameBottom.setTypeface(FontFetcher.light);
+		showingText.setTypeface(FontFetcher.bold);
+		chooseText.setTypeface(FontFetcher.light);
+		
+	}
+
+	private void setupActionbar() {
+		actionBar = getActionBar();
+		actionBar.setCustomView(R.layout.actionbar_main);
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setDisplayShowCustomEnabled(true);
+		actionBar.setDisplayUseLogoEnabled(false);
+		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
+		actionBar.setIcon(R.drawable.logofake);
+	}
+
 	protected void spinnerChanged(int which) 
 	{
 		//all colleges section
@@ -375,14 +394,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			}
     	});
     	
-    	Typeface light = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
-    	Typeface italic = Typeface.createFromAsset(getAssets(), "fonts/Roboto-LightItalic.ttf");
     	TextView title = (TextView)postDialogLayout.findViewById(R.id.newPostTitle);
     	TextView college = (TextView)postDialogLayout.findViewById(R.id.collegeText);
-    	postMessage.setTypeface(light);
-    	college.setTypeface(italic);
-    	title.setTypeface(light);
-    	postButton.setTypeface(light);
+    	postMessage.setTypeface(FontFetcher.light);
+    	college.setTypeface(FontFetcher.italic);
+    	title.setTypeface(FontFetcher.light);
+    	postButton.setTypeface(FontFetcher.light);
     	
     	//ensure keyboard is brought up when dialog shows
     	postMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -395,7 +412,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     	});
    
     	final TextView tagsText = (TextView)postDialogLayout.findViewById(R.id.newPostTagsText);
-    	tagsText.setTypeface(light);
+    	tagsText.setTypeface(FontFetcher.light);
     	
     	//set listener for tags
     	postMessage.addTextChangedListener(new TextWatcher(){

@@ -17,71 +17,66 @@
         android:layout_below="@+id/tabs"
 	    android:background="@color/lightgray"
 	    tools:context=".MainActivity" />
-	
-	<LinearLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="54dp"
-	    android:layout_alignParentBottom="true"
-		android:background="@color/lightgray"
-		android:orientation="vertical">
-		
-	    <View
-	        android:layout_width="match_parent"
-	        android:layout_height="2dp"
-	        android:background="@color/dividergray"/>
-	    
-	    <LinearLayout
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:orientation="horizontal">
-	        
-	        <LinearLayout
-	            android:orientation="vertical"
-	            android:layout_width="0dp"
-	            android:layout_weight="1"
-	            android:layout_height="match_parent">
-	            
-	            <TextView
-		            android:id="@+id/showingFeedText"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_marginLeft="4dp"
-		            android:text="Showing"
-		            android:textSize="12sp"
-		            />
-	            
-	            <TextView
-		            android:id="@+id/collegeNameBottomText"
-		            android:gravity="center_vertical"
-		            android:layout_width="match_parent"
-		            android:layout_height="match_parent"
-		            android:layout_marginLeft="8dp"
-		            android:layout_marginRight="2dp"
-		            android:text="Texas A&amp;M University"
-		            android:textSize="20sp"/>
-	            
-	        </LinearLayout>
-	        
-	        <View
-	            android:layout_width="1dp"
-	            android:layout_height="match_parent"
-	            android:layout_marginTop="2dp"
-	            android:layout_marginBottom="2dp"
-	            android:background="@color/dividergray"/>
-	        
-	        <TextView
-	            android:id="@+id/chooseText"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:orientation="horizontal"
+        android:background="@color/blue"
+        android:layout_alignParentBottom="true"
+        android:clickable="true">
+        
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            
+            <TextView
+	            android:id="@+id/showingFeedText"
 	            android:layout_width="wrap_content"
-	            android:layout_height="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="4dp"
+	            android:layout_marginBottom="-8dp"
+	            android:text="Showing"
+	            android:textSize="14sp"
+	            android:textColor="@color/white"
+	            />
+            
+            <TextView
+	            android:id="@+id/collegeNameBottomText"
 	            android:gravity="center_vertical"
-	            android:text="Choose"
-	            android:textSize="15sp"
-	            android:layout_marginLeft="8dp"
-	            android:layout_marginRight="8dp"/>
-	        
-	    </LinearLayout>
-	    
-	</LinearLayout>
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:layout_marginLeft="14dp"
+	            android:layout_marginRight="2dp"
+	            android:text="Texas A&amp;M University"
+	            android:textSize="22sp"
+	            android:textColor="@color/white"
+	            />
+            
+        </LinearLayout>
+        
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"/>
+        
+        <TextView
+            android:id="@+id/chooseText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:gravity="center_vertical"
+            android:text="Choose"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            />
+        
+    </LinearLayout>
 	
 
 </RelativeLayout>

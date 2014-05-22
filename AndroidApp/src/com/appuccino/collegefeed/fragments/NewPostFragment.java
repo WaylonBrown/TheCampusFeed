@@ -24,6 +24,7 @@ import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.PostCommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.PostListAdapter;
+import com.appuccino.collegefeed.extra.FontFetcher;
 import com.appuccino.collegefeed.extra.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.extra.NetWorker.PostSelector;
 import com.appuccino.collegefeed.objects.Post;
@@ -63,8 +64,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		loadingText = (ShimmerTextView)rootView.findViewById(R.id.loadingText);
 		ViewGroup viewGroup = (ViewGroup)rootView;
 		
-		Typeface customfont = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/Roboto-Light.ttf");
-		loadingText.setTypeface(customfont);
+		loadingText.setTypeface(FontFetcher.light);
 					
 		// Now give the find the PullToRefreshLayout and set it up
         pullToRefresh = (PullToRefreshLayout) rootView.findViewById(R.id.pullToRefresh);

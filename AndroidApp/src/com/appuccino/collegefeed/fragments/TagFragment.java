@@ -27,6 +27,7 @@ import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
 import com.appuccino.collegefeed.adapters.TagListAdapter;
+import com.appuccino.collegefeed.extra.FontFetcher;
 import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Tag;
@@ -73,9 +74,8 @@ public class TagFragment extends Fragment
 	    fragList.setItemsCanFocus(true);
 	    
 	    //set bottom text typeface
-	    Typeface light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
 	    TextView tagSearchText = (TextView)rootView.findViewById(R.id.tagSearchText);
-	    tagSearchText.setTypeface(light);
+	    tagSearchText.setTypeface(FontFetcher.light);
 	    
 	    tagSearchText.setOnClickListener(new OnClickListener()
 	    {
@@ -141,9 +141,8 @@ public class TagFragment extends Fragment
 			}
     	});
     	
-    	Typeface light = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/Roboto-Light.ttf");
-    	searchTagEditText.setTypeface(light);
-    	searchButton.setTypeface(light);
+    	searchTagEditText.setTypeface(FontFetcher.light);
+    	searchButton.setTypeface(FontFetcher.light);
     	
     	searchTagEditText.setSelection(1);	//start cursor after #
     	//ensure keyboard is brought up when dialog shows
