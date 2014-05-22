@@ -20,7 +20,6 @@
 
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
-    [self.tableView reloadData];
 }
 
 #pragma mark - Navigation

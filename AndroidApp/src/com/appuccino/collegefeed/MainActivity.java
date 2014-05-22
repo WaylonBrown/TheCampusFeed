@@ -83,7 +83,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	 * http://www.movable-type.co.uk/scripts/latlong.html
 	 */
 	
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
