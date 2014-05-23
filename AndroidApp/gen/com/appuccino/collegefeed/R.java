@@ -410,7 +410,7 @@ containing a value of this type.
         public static final int newCommentMessage=0x7f060019;
         public static final int newCommentTagsText=0x7f06001a;
         public static final int newCommentTitle=0x7f060018;
-        public static final int newPostButton=0x7f06000b;
+        public static final int newPostButton=0x7f06000a;
         public static final int newPostMessage=0x7f06001d;
         public static final int newPostTagsText=0x7f06001e;
         public static final int newPostTitle=0x7f06001b;
@@ -429,7 +429,7 @@ containing a value of this type.
         public static final int spb_interpolator_acceleratedecelerate=0x7f060002;
         public static final int spb_interpolator_decelerate=0x7f060003;
         public static final int spb_interpolator_linear=0x7f060001;
-        public static final int spinner=0x7f06000a;
+        public static final int spinner=0x7f06000b;
         public static final int tabs=0x7f060014;
         public static final int tagSearchText=0x7f060026;
         public static final int tagText=0x7f06002c;

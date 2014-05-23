@@ -63,12 +63,9 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         	postHolder.commentText = (TextView)row.findViewById(R.id.commentText);
         	postHolder.arrowUp = (ImageView)row.findViewById(R.id.arrowUp);
         	postHolder.arrowDown = (ImageView)row.findViewById(R.id.arrowDown);
-        	//if All Colleges post
-        	if(MainActivity.spinner.getSelectedItemPosition() != 2)
-        	{
-        		postHolder.collegeName = (TextView)row.findViewById(R.id.collegeNameText);
-        		postHolder.gpsImage = (ImageView)row.findViewById(R.id.gpsImage);
-        	}
+        	//these two will return null if not showing posts with college names
+        	postHolder.collegeName = (TextView)row.findViewById(R.id.collegeNameText);
+        	postHolder.gpsImage = (ImageView)row.findViewById(R.id.gpsImage);
             
             postHolder.scoreText.setTypeface(FontFetcher.bold);
             postHolder.messageText.setTypeface(FontFetcher.light);
