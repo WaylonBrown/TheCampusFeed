@@ -32,6 +32,7 @@
 		53AE73CB19283A9D00BE6B02 /* VoteDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73CA19283A9D00BE6B02 /* VoteDataController.m */; };
 		53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B1FDFC19254E4700905E49 /* MasterView.xib */; };
 		53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B1FDFF19254E8F00905E49 /* MasterViewController.m */; };
+		53BDB4CE192F3E4400F45D5C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */; };
 		53D2AD0719189E9E0097C840 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0619189E9E0097C840 /* Comment.m */; };
 		53D2AD0B19189EC60097C840 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0A19189EC60097C840 /* Post.m */; };
 		53D2AD0E19189F740097C840 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0D19189F740097C840 /* Vote.m */; };
@@ -101,6 +102,7 @@
 		53B1FDFC19254E4700905E49 /* MasterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterView.xib; sourceTree = "<group>"; };
 		53B1FDFE19254E8F00905E49 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		53B1FDFF19254E8F00905E49 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		53D2AD0519189E9E0097C840 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
 		53D2AD0619189E9E0097C840 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		53D2AD0919189EC60097C840 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53BDB4CE192F3E4400F45D5C /* CoreLocation.framework in Frameworks */,
 				53F8789319133F60002A578B /* CoreGraphics.framework in Frameworks */,
 				53F8789519133F60002A578B /* UIKit.framework in Frameworks */,
 				53F8789119133F60002A578B /* Foundation.framework in Frameworks */,
@@ -295,6 +298,7 @@
 		53F8788F19133F60002A578B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */,
 				53F8789019133F60002A578B /* Foundation.framework */,
 				53F8789219133F60002A578B /* CoreGraphics.framework */,
 				53F8789419133F60002A578B /* UIKit.framework */,

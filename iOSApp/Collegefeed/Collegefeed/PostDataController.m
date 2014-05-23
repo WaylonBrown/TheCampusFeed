@@ -18,18 +18,31 @@
 { // initialize this data controller
     if (self = [super init])
     {
-//        [self setTopPostsAllColleges:[[NSMutableArray alloc] init]];
+        [self setTopPostsAllColleges:[[NSMutableArray alloc] init]];
 //        [self setRecentPostsAllColleges:[[NSMutableArray alloc] init]];
 //        [self setUserPostsAllColleges:[[NSMutableArray alloc] init]];
-//        [self setTopPostsInCollege:[[NSMutableArray alloc] init]];
+        [self setTopPostsInCollege:[[NSMutableArray alloc] init]];
 //        [self setRecentPostsInCollege:[[NSMutableArray alloc] init]];
 //        [self setUserPostsInCollege:[[NSMutableArray alloc] init]];
         
         if (useNetwork)
         {
+
+            self.locationManager = [[CLLocationManager alloc] init];
+            [self.locationManager setDistanceFilter:kCLDistanceFilterNone]; // whenever we move?
+            [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+            [self.locationManager startUpdatingLocation];
+            
+            CLLocationDegrees lat = self.locationManager.location.coordinate.latitude;
+            CLLocationDegrees lon = self.locationManager.location.coordinate.longitude;
+
             [self setList:[[NSMutableArray alloc] init]];
             [self fetchWithUrl:postsUrl
-                      intoList:self.list];
+                      intoList:self.topPostsAllColleges];
+            [self fetchWithUrl:postsUrlNearby(lat, lon)
+                      intoList:self.topPostsInCollege];
+            
+            [self setList:self.topPostsAllColleges.copy];
         }
         else // dummy initialization
         {

@@ -112,10 +112,18 @@
      
     [self.tableView reloadData];
 }
-
 - (void)castVote:(Vote *)vote
 {
     [super castVote:vote];
 }
-
+- (IBAction)changeFeed:(id)sender
+{
+    NSInteger index = [self.collegeSegmentControl selectedSegmentIndex];
+//    if (index == 0) // all colleges
+//        [self.postDataController setList:self.postDataController.topPostsAllColleges.copy];
+//    else if (index == 1) // Choose a college
+//    else if (index == 2) // My current college
+//    [self.tableView reloadData];
+    
+}
 @end

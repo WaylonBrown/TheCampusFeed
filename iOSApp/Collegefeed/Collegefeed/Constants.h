@@ -42,9 +42,14 @@
 
 #define requestUrl                  @"http://cfeed.herokuapp.com/api/"
 #define apiVersion                  @"v1/"
+
 #define postsUrl                    [NSURL URLWithString:[NSString \
                                     stringWithFormat: @"%@%@%@", requestUrl, \
                                     apiVersion, @"posts"]]
+
+#define postsUrlNearby(lat, lon)    [NSURL URLWithString:[NSString \
+                                    stringWithFormat: @"%@%@%@?lat=%f&lon=%f", \
+                                    requestUrl, apiVersion, @"posts", lat, lon]]
 
 #define commentsUrl                 [NSURL URLWithString:[NSString \
                                     stringWithFormat: @"%@%@%@", \

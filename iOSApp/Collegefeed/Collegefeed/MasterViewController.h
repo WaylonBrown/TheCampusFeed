@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TableCell.h"
 
-// Controller to display a list of either:
-// Posts, Colleges, or Tags (Comment has unique one)
+#import "TableCell.h"
 
 @class PostDataController;
 @class TagDataController;
@@ -26,11 +24,12 @@
 @property (strong, nonatomic) TagDataController *tagDataController;
 @property (strong, nonatomic) VoteDataController *voteDataController;
 
-@property (weak, nonatomic) IBOutlet UINavigationItem *myNavigationItem;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *collegeSegmentControl;
 @property (weak, nonatomic) IBOutlet UIImageView *logoView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *createButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 - (IBAction)create:(id)sender;
+- (IBAction)changeFeed:(id)sender;
 
 @end

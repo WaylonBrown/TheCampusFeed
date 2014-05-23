@@ -69,6 +69,8 @@
 //    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
 //    [alert show];
 }
+
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {   // Add new post if user submits on the alert view
     

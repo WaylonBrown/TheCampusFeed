@@ -21,27 +21,14 @@
     {
         if (useNetwork)
         {
-            [self setList:[[NSMutableArray alloc] init]];
-            [self fetchWithUrl:collegesUrlAll
-                      intoList:self.list];
-        }
-        else // dummy initialization
-        {
-            [self initializeDefaultList];
-        }
-        return self;
-    }
-    return nil;
+            self.locationManager = [[CLLocationManager alloc] init];
+            [self.locationManager setDistanceFilter:kCLDistanceFilterNone]; // whenever we move?
+            [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+            [self.locationManager startUpdatingLocation];
+            
+            CLLocationDegrees lat = self.locationManager.location.coordinate.latitude;
+            CLLocationDegrees lon = self.locationManager.location.coordinate.longitude;
 
-}
-- (id)initWithNetwork:(BOOL)useNetwork
-              nearLat:(float)lat
-              nearLon:(float)lon
-{
-    if (self = [super init])
-    {
-        if (useNetwork)
-        {
             [self setList:[[NSMutableArray alloc] init]];
             [self fetchWithUrl:collegesUrlNearby(lat, lon)
                       intoList:self.list];
@@ -53,6 +40,7 @@
         return self;
     }
     return nil;
+
 }
 - (id) init
 { // initialize this data controller
@@ -65,6 +53,12 @@
     }
     return nil;
 }
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    NSLog(@"didUpdateToLocation: %@", newLocation);
+    CLLocation *currentLocation = newLocation;
+}
+
 - (void)initializeDefaultList
 { // initialize the college array with placeholder elements
     

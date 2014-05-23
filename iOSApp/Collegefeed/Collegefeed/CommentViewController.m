@@ -44,6 +44,7 @@
     [self.navigationItem setLeftBarButtonItem:button];
     
     [super viewDidLoad];
+    
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
 
