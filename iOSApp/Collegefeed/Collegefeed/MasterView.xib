@@ -46,12 +46,11 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="All Colleges"/>
-                                <segment title="#HashTags"/>
-                                <segment title="Texas A&amp;M"/>
+                                <segment title="Choose a college"/>
                             </segments>
                             <connections>
                                 <action selector="changeFeed:" destination="-1" eventType="touchUpInside" id="E16-hY-sIm"/>
-                                <action selector="changeFeed:" destination="-1" eventType="valueChanged" id="vcR-Fs-TWA"/>
+                                <action selector="changeFeed:" destination="-1" eventType="valueChanged" id="HYI-GZ-96E"/>
                             </connections>
                         </segmentedControl>
                     </subviews>

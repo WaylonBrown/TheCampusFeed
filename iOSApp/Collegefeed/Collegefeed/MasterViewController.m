@@ -8,6 +8,7 @@
 
 #import "MasterViewController.h"
 #import "CommentViewController.h"
+#import "CollegePickerViewController.h"
 
 #import "PostDataController.h"
 #import "CollegeDataController.h"
@@ -26,6 +27,13 @@
         self.tagDataController = [[TagDataController alloc] initWithNetwork:YES];
         self.collegeDataController = [[CollegeDataController alloc] initWithNetwork:YES];
         self.voteDataController = [[VoteDataController alloc] init];
+        
+        UIFont *font = [UIFont boldSystemFontOfSize:8.0f];
+        NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
+                                                               forKey:NSFontAttributeName];
+
+        [self.collegeSegmentControl setTitleTextAttributes:attributes
+                                                  forState:UIControlStateSelected];
     }
     return self;
 }
@@ -81,9 +89,23 @@
 //    [self.tableView reloadData];
     
 }
-- (IBAction)cancel:(id)sender
+- (IBAction)changeFeed:(id)sender
 {
+    NSInteger index = [self.collegeSegmentControl selectedSegmentIndex];
+    if (index == 0) // all colleges
+        [self.postDataController setList:self.postDataController.topPostsAllColleges.copy];
     
+    else if (index == 1) // Choose a college
+    {
+        CollegePickerViewController *controller = [[CollegePickerViewController alloc] init];
+        [controller setCollegesList:self.collegeDataController.list];
+        [self presentViewController:controller animated:YES completion:^{  }];
+         
+         
+//         controller setCollegesList:self.collegeDataController.list];
+    }
+    //    else if (index == 2) // My current college
+    [self.tableView reloadData];
     
 }
 

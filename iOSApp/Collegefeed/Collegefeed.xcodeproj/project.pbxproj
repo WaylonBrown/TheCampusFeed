@@ -33,6 +33,8 @@
 		53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B1FDFC19254E4700905E49 /* MasterView.xib */; };
 		53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B1FDFF19254E8F00905E49 /* MasterViewController.m */; };
 		53BDB4CE192F3E4400F45D5C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */; };
+		53BDB4D3192F4E6700F45D5C /* CollegePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BDB4D1192F4E6600F45D5C /* CollegePickerViewController.m */; };
+		53BDB4D4192F4E6700F45D5C /* CollegePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D2192F4E6600F45D5C /* CollegePickerViewController.xib */; };
 		53D2AD0719189E9E0097C840 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0619189E9E0097C840 /* Comment.m */; };
 		53D2AD0B19189EC60097C840 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0A19189EC60097C840 /* Post.m */; };
 		53D2AD0E19189F740097C840 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0D19189F740097C840 /* Vote.m */; };
@@ -103,6 +105,9 @@
 		53B1FDFE19254E8F00905E49 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		53B1FDFF19254E8F00905E49 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		53BDB4D0192F4E6600F45D5C /* CollegePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollegePickerViewController.h; sourceTree = "<group>"; };
+		53BDB4D1192F4E6600F45D5C /* CollegePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollegePickerViewController.m; sourceTree = "<group>"; };
+		53BDB4D2192F4E6600F45D5C /* CollegePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollegePickerViewController.xib; sourceTree = "<group>"; };
 		53D2AD0519189E9E0097C840 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
 		53D2AD0619189E9E0097C840 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		53D2AD0919189EC60097C840 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
@@ -193,6 +198,7 @@
 		53B090B5192DA13100E3D996 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				53BDB4CF192F4E4300F45D5C /* CollegePicker */,
 				533475A019232A4A00E84CC8 /* TableCell */,
 				53B1FE0119254EB900905E49 /* MasterView */,
 				53963DE51916E5F50084E646 /* PostsViewController.h */,
@@ -274,6 +280,16 @@
 				53B1FDFF19254E8F00905E49 /* MasterViewController.m */,
 			);
 			name = MasterView;
+			sourceTree = "<group>";
+		};
+		53BDB4CF192F4E4300F45D5C /* CollegePicker */ = {
+			isa = PBXGroup;
+			children = (
+				53BDB4D0192F4E6600F45D5C /* CollegePickerViewController.h */,
+				53BDB4D1192F4E6600F45D5C /* CollegePickerViewController.m */,
+				53BDB4D2192F4E6600F45D5C /* CollegePickerViewController.xib */,
+			);
+			name = CollegePicker;
 			sourceTree = "<group>";
 		};
 		53F8788419133F60002A578B = {
@@ -428,6 +444,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */,
+				53BDB4D4192F4E6700F45D5C /* CollegePickerViewController.xib in Resources */,
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */,
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,
@@ -463,6 +480,7 @@
 				53AE73C51928208100BE6B02 /* Votable.m in Sources */,
 				532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */,
 				53D2AD111918A22A0097C840 /* Tag.m in Sources */,
+				53BDB4D3192F4E6700F45D5C /* CollegePickerViewController.m in Sources */,
 				53D2AD151918AAB80097C840 /* College.m in Sources */,
 				53AE736D1925D46300BE6B02 /* CollegeViewController.m in Sources */,
 				53AE73CB19283A9D00BE6B02 /* VoteDataController.m in Sources */,

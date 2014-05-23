@@ -11,7 +11,7 @@
 #import "PostDataController.h"
 #import "Post.h"
 #import "CommentViewController.h"
-
+#import "CollegeViewController.h"
 @implementation PostsViewController
 
 - (void)viewWillAppear:(BOOL)animated
@@ -36,6 +36,9 @@
 {   // A little preparation before navigation to different view
 
 }
+
+#pragma mark - Table View Override Functions
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Comment View for the selected post
     
@@ -48,9 +51,6 @@
     // if in a navigation controller
     // [self.navigationController pushViewController:controller animated:YES];
 }
-
-#pragma mark - Table View Override Functions
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
     
@@ -116,14 +116,5 @@
 {
     [super castVote:vote];
 }
-- (IBAction)changeFeed:(id)sender
-{
-    NSInteger index = [self.collegeSegmentControl selectedSegmentIndex];
-//    if (index == 0) // all colleges
-//        [self.postDataController setList:self.postDataController.topPostsAllColleges.copy];
-//    else if (index == 1) // Choose a college
-//    else if (index == 2) // My current college
-//    [self.tableView reloadData];
-    
-}
+
 @end
