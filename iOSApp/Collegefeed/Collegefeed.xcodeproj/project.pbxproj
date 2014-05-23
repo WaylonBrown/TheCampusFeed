@@ -190,6 +190,7 @@
 		53B090B5192DA13100E3D996 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				533475A019232A4A00E84CC8 /* TableCell */,
 				53B1FE0119254EB900905E49 /* MasterView */,
 				53963DE51916E5F50084E646 /* PostsViewController.h */,
 				53963DE61916E5F50084E646 /* PostsViewController.m */,
@@ -199,7 +200,6 @@
 				5334758B1922D9B700E84CC8 /* TagViewController.m */,
 				53AE736B1925D46300BE6B02 /* CollegeViewController.h */,
 				53AE736C1925D46300BE6B02 /* CollegeViewController.m */,
-				533475A019232A4A00E84CC8 /* TableCell */,
 			);
 			name = Views;
 			sourceTree = "<group>";

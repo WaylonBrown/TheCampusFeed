@@ -21,7 +21,7 @@
 
 #pragma mark - Initialization and view loading
 
-- (id)initWithOriginalPost:(Post*)post// withDelegate:(id)postSubViewDelegate
+- (id)initWithOriginalPost:(Post*)post
 {   // initialize a CommentsView provided info about the previously selected Post
 
     self = [super init];
@@ -33,27 +33,20 @@
     }
     return self;
 }
-//- (void)awakeFromNib
-//{
-//    [super awakeFromNib];
-////    self.dataController = [[CommentDataController alloc] init];
-//}
-//- (void)loadView
-//{   // Use CommentsView.xib to show comments on a post
-//    
-//    UIView* view = [[[NSBundle mainBundle] loadNibNamed:@"CommentsView"
-//                                                  owner:self
-//                                                options:nil]
-//                    objectAtIndex:0];
-//    
-//    [self setView:view];
-//}
 - (void)viewDidLoad
 {
+    [self.logoView setImage:nil];
+    UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithTitle: @"Back"
+                                                               style: UIBarButtonItemStyleBordered
+                                                              target: self
+                                                              action: @selector(cancel)];
+    [button setTintColor:[UIColor whiteColor]];
+    [self.navigationItem setLeftBarButtonItem:button];
+    
     [super viewDidLoad];
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
-    self.cancelButton.enabled = YES;
+
     [self.tableView reloadData];
 }
 - (void)didReceiveMemoryWarning
@@ -153,10 +146,9 @@
 
 #pragma mark - Actions
 
-- (IBAction)cancel:(id)sender
-{   // Called when user is done viewing comments, dismiss this view
+- (void)cancel
+{
     [self dismissViewControllerAnimated:YES completion:nil];
-  
 }
 - (IBAction)create:(id)sender
 {   // Display popup to let user type a new comment

@@ -6,8 +6,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MasterViewController">
             <connections>
-                <outlet property="cancelButton" destination="4vV-iL-rV4" id="DkG-gh-dlV"/>
                 <outlet property="createButton" destination="Nqn-8u-e9t" id="1CX-Qw-W8l"/>
+                <outlet property="logoView" destination="Sap-kY-JiW" id="JLQ-ow-pBv"/>
+                <outlet property="navigationItem" destination="H6V-0s-ead" id="77D-SI-MxE"/>
                 <outlet property="tableView" destination="aEV-VT-52H" id="gZ0-54-1eh"/>
                 <outlet property="view" destination="cKt-4a-JCZ" id="cpw-7Q-b8c"/>
             </connections>
@@ -22,12 +23,6 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <items>
                         <navigationItem id="H6V-0s-ead">
-                            <barButtonItem key="leftBarButtonItem" systemItem="stop" id="4vV-iL-rV4">
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <action selector="cancel:" destination="-1" id="oqI-a2-TKJ"/>
-                                </connections>
-                            </barButtonItem>
                             <barButtonItem key="rightBarButtonItem" systemItem="compose" id="Nqn-8u-e9t">
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -38,7 +33,7 @@
                     </items>
                 </navigationBar>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="collegefeedlogosmall.png" translatesAutoresizingMaskIntoConstraints="NO" id="Sap-kY-JiW">
-                    <rect key="frame" x="85" y="24" width="150" height="40"/>
+                    <rect key="frame" x="10" y="24" width="150" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="onw-bZ-Ayo">

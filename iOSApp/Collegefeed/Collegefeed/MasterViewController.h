@@ -26,11 +26,11 @@
 @property (strong, nonatomic) TagDataController *tagDataController;
 @property (strong, nonatomic) VoteDataController *voteDataController;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
+@property (weak, nonatomic) IBOutlet UINavigationItem *myNavigationItem;
+@property (weak, nonatomic) IBOutlet UIImageView *logoView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *createButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-- (IBAction)cancel:(id)sender;
 - (IBAction)create:(id)sender;
 
 @end

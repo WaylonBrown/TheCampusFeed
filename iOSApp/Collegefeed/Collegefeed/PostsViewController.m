@@ -26,7 +26,7 @@
     // Do any additional setup after loading the view.
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
-    self.cancelButton.enabled = NO;
+
     [self.tableView reloadData];
 }
 
