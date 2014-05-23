@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
+import com.appuccino.collegefeed.extra.FontFetcher;
 import com.appuccino.collegefeed.extra.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.extra.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.extra.NetWorker.PostSelector;
@@ -62,24 +63,16 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         	postHolder.commentText = (TextView)row.findViewById(R.id.commentText);
         	postHolder.arrowUp = (ImageView)row.findViewById(R.id.arrowUp);
         	postHolder.arrowDown = (ImageView)row.findViewById(R.id.arrowDown);
-        	//if All Colleges post
-        	if(MainActivity.spinner.getSelectedItemPosition() != 2)
-        	{
-        		postHolder.collegeName = (TextView)row.findViewById(R.id.collegeNameText);
-        		postHolder.gpsImage = (ImageView)row.findViewById(R.id.gpsImage);
-        	}
-            		
-        	Typeface light = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
-        	Typeface medium = Typeface.createFromAsset(context.getAssets(), "fonts/omnes_semibold.otf");
-            Typeface lightItalic = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-LightItalic.ttf");
-            Typeface bold = Typeface.createFromAsset(context.getAssets(), "fonts/mplus-2c-bold.ttf");
+        	//these two will return null if not showing posts with college names
+        	postHolder.collegeName = (TextView)row.findViewById(R.id.collegeNameText);
+        	postHolder.gpsImage = (ImageView)row.findViewById(R.id.gpsImage);
             
-            postHolder.scoreText.setTypeface(bold);
-            postHolder.messageText.setTypeface(light);
-            postHolder.timeText.setTypeface(medium);
-            postHolder.commentText.setTypeface(medium);
+            postHolder.scoreText.setTypeface(FontFetcher.bold);
+            postHolder.messageText.setTypeface(FontFetcher.light);
+            postHolder.timeText.setTypeface(FontFetcher.medium);
+            postHolder.commentText.setTypeface(FontFetcher.medium);
             if(postHolder.collegeName != null)
-            	postHolder.collegeName.setTypeface(lightItalic);
+            	postHolder.collegeName.setTypeface(FontFetcher.italic);
             
             row.setTag(postHolder);
         }

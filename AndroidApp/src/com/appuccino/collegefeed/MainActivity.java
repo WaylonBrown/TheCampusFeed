@@ -48,6 +48,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.R;
+import com.appuccino.collegefeed.extra.FontFetcher;
 import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
 import com.appuccino.collegefeed.fragments.MyCommentsFragment;
@@ -62,12 +63,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 {
 	ViewPager viewPager;
 	PagerSlidingTabStrip tabs;
-	OneCollegeSectionsPagerAdapter oneCollegePagerAdapter;
-	AllCollegesSectionsPagerAdapter allCollegesPagerAdapter;
+	PagerAdapter allCollegesPagerAdapter;
 	
 	ActionBar actionBar;
 	ImageView newPostButton;
-	public static Spinner spinner;
+	
 	ArrayList<Fragment> fragmentList;
 	boolean locationFound = false;
 	public static LocationManager mgr;
@@ -91,14 +91,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		tabs.setIndicatorColor(getResources().getColor(R.color.tabunderlineblue));
 		
-		// Set up the action bar.
-		actionBar = getActionBar();
-		actionBar.setCustomView(R.layout.actionbar_main);
-		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setDisplayShowCustomEnabled(true);
-		actionBar.setDisplayUseLogoEnabled(false);
-		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
-		actionBar.setIcon(R.drawable.logofake);
+		FontFetcher.setup(this);
+		setupActionbar();
 		
 		locationFound = false;
 		
@@ -109,59 +103,43 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				newPostClicked();
 			}
 		});
-
-		spinner = (Spinner)findViewById(R.id.spinner);
-		spinner.setOnItemSelectedListener(new OnItemSelectedListener(){
-
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				spinnerChanged(arg2);
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
 		
+		feedStyleChanged(0);
 		getLocation();
 	}
-	
-	protected void spinnerChanged(int which) 
+
+	private void setupActionbar() {
+		actionBar = getActionBar();
+		actionBar.setCustomView(R.layout.actionbar_main);
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setDisplayShowCustomEnabled(true);
+		actionBar.setDisplayUseLogoEnabled(false);
+		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
+		actionBar.setIcon(R.drawable.logofake);
+	}
+
+	//determined between All Colleges and a specific college
+	protected void feedStyleChanged(int which) 
 	{
 		//all colleges section
 		if(which == 0)
 		{
 			currentFeedCollegeID = 0;
-			
-			// Create the adapter that will return a fragment for each of the three
-			// primary sections of the app.
-			allCollegesPagerAdapter = new AllCollegesSectionsPagerAdapter(this, getSupportFragmentManager());
-
-			// Set up the ViewPager with the sections adapter.
-			viewPager.setAdapter(allCollegesPagerAdapter);
-			viewPager.setOffscreenPageLimit(5);
-			tabs.setViewPager(viewPager);
-						
 		}
 		else //specific college
 		{
 			currentFeedCollegeID = 234234;
-			
 			showPermissionsToast();
-			
-			// Create the adapter that will return a fragment for each of the three
-			// primary sections of the app.
-			oneCollegePagerAdapter = new OneCollegeSectionsPagerAdapter(this, getSupportFragmentManager());
-
-			// Set up the ViewPager with the sections adapter.
-			viewPager.setAdapter(oneCollegePagerAdapter);
-			viewPager.setOffscreenPageLimit(5);
-			tabs.setViewPager(viewPager);
 		}
+		
+		// Create the adapter that will return a fragment for each of the
+		// sections of the app.
+		allCollegesPagerAdapter = new PagerAdapter(this, getSupportFragmentManager());
+	
+		// Set up the ViewPager with the sections adapter.
+		viewPager.setAdapter(allCollegesPagerAdapter);
+		viewPager.setOffscreenPageLimit(5);
+		tabs.setViewPager(viewPager);
 	}
 	
 	private void showPermissionsToast() 
@@ -324,12 +302,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 	private void updateListsForGPS() 
 	{
+		Toast.makeText(this, "Remember to reimplement updateListsForGPS()", Toast.LENGTH_SHORT).show();
 		//if looking at All Colleges, update lists for GPS icon
-		if(spinner.getSelectedItemPosition() == 0)
-		{
-			TopPostFragment.updateList();
-			NewPostFragment.updateList();
-		}
+//		if(spinner.getSelectedItemPosition() == 0)
+//		{
+//			TopPostFragment.updateList();
+//			NewPostFragment.updateList();
+//		}
 	}
 
 
@@ -375,14 +354,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			}
     	});
     	
-    	Typeface light = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
-    	Typeface italic = Typeface.createFromAsset(getAssets(), "fonts/Roboto-LightItalic.ttf");
     	TextView title = (TextView)postDialogLayout.findViewById(R.id.newPostTitle);
     	TextView college = (TextView)postDialogLayout.findViewById(R.id.collegeText);
-    	postMessage.setTypeface(light);
-    	college.setTypeface(italic);
-    	title.setTypeface(light);
-    	postButton.setTypeface(light);
+    	postMessage.setTypeface(FontFetcher.light);
+    	college.setTypeface(FontFetcher.italic);
+    	title.setTypeface(FontFetcher.light);
+    	postButton.setTypeface(FontFetcher.light);
     	
     	//ensure keyboard is brought up when dialog shows
     	postMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -395,7 +372,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     	});
    
     	final TextView tagsText = (TextView)postDialogLayout.findViewById(R.id.newPostTagsText);
-    	tagsText.setTypeface(light);
+    	tagsText.setTypeface(FontFetcher.light);
     	
     	//set listener for tags
     	postMessage.addTextChangedListener(new TextWatcher(){
@@ -478,79 +455,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public void onTabReselected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
 	}
-
-	/**
-	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-	 * one of the sections/tabs/pages.
-	 */
-	public class OneCollegeSectionsPagerAdapter extends FragmentStatePagerAdapter {
-		MainActivity mainActivity;
-		
-		public OneCollegeSectionsPagerAdapter(MainActivity m, FragmentManager fm) {
-			super(fm);
-			mainActivity = m;
-		}
-		
-		@Override
-		public Fragment getItem(int position) {
-			// getItem is called to instantiate the fragment for the given page.
-			// Return a SectionFragment (defined as a static inner class
-			// below) with the page number as its lone argument.
-			Fragment fragment = null;
-			switch(position)
-			{
-			case 0:	//top posts
-				fragment = new TopPostFragment(mainActivity);
-				break;
-			case 1:	//new posts
-				fragment = new NewPostFragment(mainActivity);
-				break;
-			case 2:	//trending tags
-				fragment = new TagFragment(mainActivity);
-				break;
-			case 3:	//my posts
-				fragment = new MyPostsFragment(mainActivity);
-				break;
-			case 4:	//my comments
-				fragment = new MyCommentsFragment(mainActivity);
-				break;
-			}
-			
-			Bundle args = new Bundle();
-			args.putInt(TopPostFragment.ARG_TAB_NUMBER, position);
-			fragment.setArguments(args);
-			return fragment;
-		}
-
-		@Override
-		public int getCount() {
-			return 5;
-		}
-
-		@Override
-		public CharSequence getPageTitle(int position) {
-			Locale l = Locale.getDefault();
-			switch (position) {
-			case 0:
-				return getString(R.string.onecollege_section1).toUpperCase(l);
-			case 1:
-				return getString(R.string.onecollege_section2).toUpperCase(l);
-			case 2:
-				return getString(R.string.onecollege_section3).toUpperCase(l);
-			case 3:
-				return getString(R.string.onecollege_section4).toUpperCase(l);
-			case 4:
-				return getString(R.string.onecollege_section5).toUpperCase(l);
-			}
-			return null;
-		}
-		
-	}
 	
-	public class AllCollegesSectionsPagerAdapter extends FragmentStatePagerAdapter {
+	public class PagerAdapter extends FragmentStatePagerAdapter {
 		MainActivity mainActivity;
 		
-		public AllCollegesSectionsPagerAdapter(MainActivity m, FragmentManager fm) {
+		public PagerAdapter(MainActivity m, FragmentManager fm) {
 			super(fm);
 			mainActivity = m;
 		}

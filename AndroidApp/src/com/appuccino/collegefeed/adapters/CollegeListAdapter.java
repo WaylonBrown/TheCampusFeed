@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.appuccino.collegefeed.R;
+import com.appuccino.collegefeed.extra.FontFetcher;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
 import com.appuccino.collegefeed.objects.College;
 
@@ -42,10 +43,7 @@ public class CollegeListAdapter extends ArrayAdapter<College>{
         	
         	collegeHolder = new CollegeHolder();
         	collegeHolder.text = (TextView)row.findViewById(R.id.collegeText);
-            		
-            Typeface light = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
-            
-            collegeHolder.text.setTypeface(light);
+            collegeHolder.text.setTypeface(FontFetcher.light);
             
             row.setTag(collegeHolder);
         }
