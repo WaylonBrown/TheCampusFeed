@@ -57,7 +57,7 @@ public class TagListActivity extends Activity{
 			postList.add(new Post("Post with tag 8"));
 			listAdapter = new PostListAdapter(this, R.layout.list_row_post, postList, 0);
 			
-			//if doesnt havefooter, add it
+			//if doesnt have footer, add it
 			if(listView.getFooterViewsCount() == 0)
 			{
 				//for card UI
