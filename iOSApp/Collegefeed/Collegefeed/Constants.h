@@ -26,7 +26,7 @@
             blue:((float)(rgbValue & 0xFF))/255.0 \
            alpha:1.0]
 
-#define cf_lightblue   0x33B5E5
+#define cf_lightblue   0x33B5E5 // 51, 181, 229
 #define cf_blue        0x0099CC
 #define cf_lightgray   0xE6E6E6
 #define cf_gray        0x7C7C7C

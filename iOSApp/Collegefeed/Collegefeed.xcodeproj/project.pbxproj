@@ -35,6 +35,10 @@
 		53BDB4CE192F3E4400F45D5C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */; };
 		53BDB4D3192F4E6700F45D5C /* CollegePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BDB4D1192F4E6600F45D5C /* CollegePickerViewController.m */; };
 		53BDB4D4192F4E6700F45D5C /* CollegePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D2192F4E6600F45D5C /* CollegePickerViewController.xib */; };
+		53BDB4D61930669100F45D5C /* top.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D51930669100F45D5C /* top.png */; };
+		53BDB4DA1930688200F45D5C /* colleges.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D71930688200F45D5C /* colleges.png */; };
+		53BDB4DB1930688200F45D5C /* new.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D81930688200F45D5C /* new.png */; };
+		53BDB4DC1930688200F45D5C /* tags.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D91930688200F45D5C /* tags.png */; };
 		53D2AD0719189E9E0097C840 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0619189E9E0097C840 /* Comment.m */; };
 		53D2AD0B19189EC60097C840 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0A19189EC60097C840 /* Post.m */; };
 		53D2AD0E19189F740097C840 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0D19189F740097C840 /* Vote.m */; };
@@ -108,6 +112,10 @@
 		53BDB4D0192F4E6600F45D5C /* CollegePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollegePickerViewController.h; sourceTree = "<group>"; };
 		53BDB4D1192F4E6600F45D5C /* CollegePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollegePickerViewController.m; sourceTree = "<group>"; };
 		53BDB4D2192F4E6600F45D5C /* CollegePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollegePickerViewController.xib; sourceTree = "<group>"; };
+		53BDB4D51930669100F45D5C /* top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = top.png; sourceTree = "<group>"; };
+		53BDB4D71930688200F45D5C /* colleges.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colleges.png; sourceTree = "<group>"; };
+		53BDB4D81930688200F45D5C /* new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = new.png; sourceTree = "<group>"; };
+		53BDB4D91930688200F45D5C /* tags.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tags.png; sourceTree = "<group>"; };
 		53D2AD0519189E9E0097C840 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
 		53D2AD0619189E9E0097C840 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		53D2AD0919189EC60097C840 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
@@ -176,6 +184,10 @@
 		5390A9131914B76800ACD082 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				53BDB4D71930688200F45D5C /* colleges.png */,
+				53BDB4D81930688200F45D5C /* new.png */,
+				53BDB4D91930688200F45D5C /* tags.png */,
+				53BDB4D51930669100F45D5C /* top.png */,
 				5390A9141914B76800ACD082 /* arrowdown.png */,
 				5390A9151914B76800ACD082 /* arrowdownred.png */,
 				5390A9161914B76800ACD082 /* arrowup.png */,
@@ -451,7 +463,11 @@
 				5390A9201914B76800ACD082 /* arrowupblue.png in Resources */,
 				5390A9241914B76800ACD082 /* postbuttonclick.xml in Resources */,
 				53F878AF19133F60002A578B /* Images.xcassets in Resources */,
+				53BDB4DB1930688200F45D5C /* new.png in Resources */,
+				53BDB4DA1930688200F45D5C /* colleges.png in Resources */,
 				5390A91F1914B76800ACD082 /* arrowup.png in Resources */,
+				53BDB4DC1930688200F45D5C /* tags.png in Resources */,
+				53BDB4D61930669100F45D5C /* top.png in Resources */,
 				53F8789B19133F60002A578B /* InfoPlist.strings in Resources */,
 				533475A51923344100E84CC8 /* TableCell.xib in Resources */,
 			);

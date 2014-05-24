@@ -24,10 +24,11 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(cf_lightblue)];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-
+    
+    
     // *** Top Posts - PostsViewController *** //
     PostsViewController *topPostsController = [[PostsViewController alloc] init];
-    topPostsController.title = @"Top Posts";
+//    topPostsController.title = @"Top Posts";
     UINavigationController *topPostsNavController = [[UINavigationController alloc] initWithRootViewController:topPostsController];
     topPostsController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
                                                                                                          target:topPostsController
@@ -37,7 +38,7 @@
     
     // *** New Posts - PostsViewController *** //
     PostsViewController *newPostsController = [[PostsViewController alloc] init];
-    newPostsController.title = @"New Posts";
+//    newPostsController.title = @"New Posts";
 //    [newPostsController.navigationItem setTitleView:logoTitleView];
     UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:newPostsController];
     newPostsController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
@@ -47,7 +48,7 @@
     
     // *** Trending Tags - TagViewController *** //
     TagViewController *tagController = [[TagViewController alloc] init];
-    tagController.title = @"Trending Tags";
+//    tagController.title = @"Trending Tags";
     UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:tagController];
     tagController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
                                                                                                          target:topPostsController
@@ -56,7 +57,7 @@
     
     // *** Top Colleges - CollegeViewController *** //
     CollegeViewController *collegeController = [[CollegeViewController alloc] init];
-    collegeController.title = @"Top Colleges";
+//    collegeController.title = @"Top Colleges";
     UINavigationController *collegeNavController = [[UINavigationController alloc] initWithRootViewController:collegeController];
     collegeController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
                                                                                                         target:topPostsController
@@ -89,6 +90,17 @@
 //    [self setTabBarController:[[UITabBarController alloc] init]];
 //
 //    [self.tabBarController setViewControllers:viewControllers];
+    
+//    
+//    UITabBarItem *tabBarItem1 = [self.tabBarController.tabBar.items objectAtIndex:0];
+//    [tabBarItem1 setImage:[UIImage imageNamed:@"top.png"]];
+
+    [[self.tabBarController.tabBar.items objectAtIndex:0] setImage:[UIImage imageNamed:@"top.png"]];
+    [[self.tabBarController.tabBar.items objectAtIndex:1] setImage:[UIImage imageNamed:@"new.png"]];
+    [[self.tabBarController.tabBar.items objectAtIndex:2] setImage:[UIImage imageNamed:@"tags.png"]];
+    [[self.tabBarController.tabBar.items objectAtIndex:3] setImage:[UIImage imageNamed:@"colleges.png"]];
+
+    
     
     // finalize window specifications
     [self.window setRootViewController:self.tabBarController];
