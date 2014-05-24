@@ -9,10 +9,7 @@
 #import "CollegePickerViewController.h"
 #import "College.h"
 #import "Constants.h"
-
-@interface CollegePickerViewController ()
-
-@end
+#import "PostsViewController.h"
 
 @implementation CollegePickerViewController
 
@@ -25,12 +22,16 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
 - (void)viewDidLoad
 {
+    [self.navigationItem setTitleView:logoTitleView];
 
     // Do any additional setup after loading the view from its nib.
     [super viewDidLoad];
-//    [self.navigationItem setTitleView:logoTitleView];
 
     [self.tableView reloadData];
 }
@@ -77,18 +78,18 @@ shouldReloadTableForSearchString:(NSString *)searchString
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   //TODO: the code below is taken from PostViewController
-    
-    
-    // Present a Comment View for the selected post
-    
-//    self.selectedPost = (Post *)[self.postDataController objectInListAtIndex:indexPath.row];
-//    CommentViewController* controller = [[CommentViewController alloc] initWithOriginalPost:self.selectedPost];
-//    
-//    // when not in a navigation controller
-//    [self presentViewController:controller animated:YES completion:nil];
-//    
-//    // if in a navigation controller
-//    // [self.navigationController pushViewController:controller animated:YES];
+    College *college;
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+    {
+        college = (College *)[self.searchResults objectAtIndex:indexPath.row];
+    }
+    else
+    {
+        college = (College *)[self.list objectAtIndex:indexPath.row];
+    }
+    PostsViewController* controller = [[PostsViewController alloc] init];
+    [self.navigationController pushViewController:controller
+                                         animated:YES];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list

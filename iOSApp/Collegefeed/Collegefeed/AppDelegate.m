@@ -24,7 +24,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(cf_lightblue)];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    
+
     // *** Top Posts - PostsViewController *** //
     PostsViewController *topPostsController = [[PostsViewController alloc] init];
     topPostsController.title = @"Top Posts";
@@ -38,7 +38,7 @@
     // *** New Posts - PostsViewController *** //
     PostsViewController *newPostsController = [[PostsViewController alloc] init];
     newPostsController.title = @"New Posts";
-    [newPostsController.navigationItem setTitleView:logoTitleView];
+//    [newPostsController.navigationItem setTitleView:logoTitleView];
     UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:newPostsController];
     newPostsController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
                                                                                                          target:topPostsController

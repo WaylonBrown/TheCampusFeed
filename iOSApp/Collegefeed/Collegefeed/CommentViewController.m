@@ -35,7 +35,10 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-//    [self.collegeSegmentControl setSelectedSegmentIndex:0];
+    [self.navigationItem setTitleView:logoTitleView];
+
+    [super viewWillAppear:animated];
+
 }
 - (void)viewDidLoad
 {    
@@ -62,15 +65,6 @@
 {   // Number of rows in table views
     if (section == 0) return 1;
     else return [self.dataController countOfList];
-    
-//    if ([tableView.restorationIdentifier compare:@"CommentTableView"] == NSOrderedSame)
-//    {   // Comment Table has as many rows as number of comments
-//        return [self.dataController countOfList];
-//    }
-//    else // if ([tableView.restorationIdentifier compare:@"OriginalPostTableView"] == NSOrderedSame)
-//    {   // only one row in Post Table (the original Post)
-//        return 1;
-//    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Get the table view cell for the given row

@@ -17,7 +17,7 @@
 
 - (void)viewDidLoad
 {
-    [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
+//    [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
 
     // Do any additional setup after loading the view.
     [super viewDidLoad];
