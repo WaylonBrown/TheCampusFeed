@@ -51,7 +51,29 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - Table View Override Functions
+#pragma mark - Search Bar
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+    NSPredicate *resultPredicate = [NSPredicate
+                                    predicateWithFormat:@"SELF.name contains[cd] %@",
+                                    searchText];
+    
+    [self setSearchResults:(NSMutableArray*)[self.list filteredArrayUsingPredicate:resultPredicate]];
+}
+
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller
+shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContentForSearchText:searchString
+                               scope:[[self.searchDisplayController.searchBar scopeButtonTitles]
+                                      objectAtIndex:[self.searchDisplayController.searchBar
+                                                     selectedScopeButtonIndex]]];
+    
+    return YES;
+}
+
+#pragma mark - Table View Overrides
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   //TODO: the code below is taken from PostViewController
@@ -70,8 +92,14 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
-    
-    return self.list.count;
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+    {
+        return [self.searchResults count];
+    }
+    else
+    {
+        return self.list.count;
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Display
@@ -85,8 +113,17 @@
     }
 //    [cell setDelegate: self];
     
-    College *college = (College *)[self.list objectAtIndex:indexPath.row];
-    [cell.textLabel setText:college.name];
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+    {
+        College *college = (College *)[self.searchResults objectAtIndex:indexPath.row];
+        [cell.textLabel setText:college.name];    }
+    else
+    {
+        College *college = (College *)[self.list objectAtIndex:indexPath.row];
+        [cell.textLabel setText:college.name];
+    }
+    
+    
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

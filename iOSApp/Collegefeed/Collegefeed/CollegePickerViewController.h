@@ -11,8 +11,10 @@
 @interface CollegePickerViewController : UIViewController
 
 @property (strong, atomic) NSMutableArray *list;
+@property (strong, atomic) NSMutableArray *searchResults;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+
 
 - (void)setCollegesList:(NSMutableArray *)collegeList;
 
