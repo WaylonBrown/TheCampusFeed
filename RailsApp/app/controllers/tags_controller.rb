@@ -8,7 +8,7 @@ class TagsController < ApplicationController
   end
 
   def trending
-    index
+    @tags = Tag.top25
   end
 
   # GET /api/v1/tags/1
