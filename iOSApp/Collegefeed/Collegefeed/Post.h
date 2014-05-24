@@ -14,12 +14,16 @@
 @interface Post : Votable
 
 @property (nonatomic) NSMutableArray *commentList;
+@property (nonatomic) float lat;
+@property (nonatomic) float lon;
+
+// NOTE: Use this constructor!
+- (id)initWithMessage:(NSString *)newMessage;
 
 
 - (id)initWithPostID:(NSInteger)newPostID
            withScore:(NSInteger)newScore
          withMessage:(NSString *)newMessage;
 
-- (id)initWithMessage:(NSString *)newMessage;
 
 @end

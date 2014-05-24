@@ -16,6 +16,8 @@
 #import "PostDataController.h"
 #import "CommentDataController.h"
 #import "Post.h"
+#import "Comment.h"
+#import "Constants.h"
 
 @interface DataControllerTests : XCTestCase
 
@@ -29,8 +31,6 @@
 - (void)setUp
 {   // NOT called by default
     [super setUp];
-    self.PDC = [[PostDataController alloc] init];
-    self.CDC = [[CommentDataController alloc] init];
 }
 
 - (void)tearDown
@@ -41,44 +41,28 @@
 
 #pragma mark PostDataController Tests
 
-- (void)testPostDataControllerAddPostLocally
+- (void)testPostDataControllerGetAllPostsFromServer
 {
     // Assemble
-    [self.PDC.masterPostList removeAllObjects];
-
-    Post *post1 = [[Post alloc] initDummy];
-    Post *post2 = [[Post alloc] initDummy];
-    Post *post3 = [[Post alloc] initDummy];
-
-    // Act
-    [self.PDC addPost:post1];
-    [self.PDC addPost:post2];
-    [self.PDC addPost:post3];
-    
-    // Assert
-    XCTAssertEqual(3, self.PDC.countOfList, @"Wrong Post Array Size");
-}
-
-- (void)testPostDataControllerGetPostsFromServer
-{
-    // Assemble
-    self.PDC = [[PostDataController alloc] init];
+    self.PDC = [[PostDataController alloc] initWithNetwork:YES];
     
     // Act
-    [self.PDC fetchAllPosts];
+    [self.PDC fetchWithUrl:postsUrl
+                  intoList:self.PDC.topPostsAllColleges];
     
     // Assert
-    XCTAssertNotEqual(0, self.PDC.countOfList, @"No posts gathered during GET request");
+    XCTAssertNotEqual(0, self.PDC.topPostsAllColleges.count, @"No posts gathered during GET request");
 }
 
 - (void)testPostDataControllerAddPostToServer
 {
     // Assemble
-    Post *post = [[Post alloc] initDummy];
-    self.PDC = [[PostDataController alloc] init];
+    Post *post = [[Post alloc] initWithMessage:@"Test post from testPostDataControllerAddPostToServer"];
+    self.PDC = [[PostDataController alloc] initWithNetwork:YES];
     
     // Act
-    [self.PDC addPost:post];
+    [self.PDC addToServer:post
+                 intoList:self.PDC.topPostsAllColleges];
     
     // Assert
     
@@ -86,6 +70,42 @@
 
 
 #pragma mark CommentDataController Tests
+
+- (void)testCommentDataControllerGetAllCommentFromServer
+{
+    //TODO: comments from server, must access specific post_id
+    
+//    // Assemble
+//    self.CDC = [[CommentDataController alloc] initWithNetwork:YES withPost:<somePost>];
+    
+//    // Act
+//    [self.PDC fetchWithUrl:commmentsUrl(<somePostID>)
+//                  intoList:self.CDC.<someList>];
+//    
+//    // Assert
+//    XCTAssertNotEqual(0, self.PDC.topPostsAllColleges.count, @"No posts gathered during GET request");
+}
+
+- (void)testCommentDataControllerAddCommentToServer
+{
+    // Assemble
+    Post *post = [[Post alloc] initWithMessage:@"Test post from testCommentDataControllerAddCommentToServer"];
+    self.PDC = [[PostDataController alloc] initWithNetwork:YES];
+    self.CDC = [[CommentDataController alloc] initWithNetwork:YES];
+
+    // Act
+    [self.PDC addToServer:post
+                 intoList:self.PDC.topPostsAllColleges];
+    
+    Comment *comment = [[Comment alloc] initWithCommentMessage:@"Test Comment from testCommentDataControllerAddCommentToServer"
+                                                      withPost:post];
+    [self.CDC addToServer:comment intoList:self.CDC.list];
+    
+    // Assert
+    
+}
+
+
 - (void)testCommentDataControllerCommentsHaveSamePost
 {
     // Assemble

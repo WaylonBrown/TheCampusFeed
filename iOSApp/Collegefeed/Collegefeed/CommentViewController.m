@@ -21,40 +21,33 @@
 
 #pragma mark - Initialization and view loading
 
-- (id)initWithOriginalPost:(Post*)post// withDelegate:(id)postSubViewDelegate
+- (id)initWithOriginalPost:(Post*)post
 {   // initialize a CommentsView provided info about the previously selected Post
 
     self = [super init];
     if (self)
     {
         [self setOriginalPost:post];
-        [self setDataController:[[CommentDataController alloc] initWithPost:post]];
-        
-       
+        [self setDataController:[[CommentDataController alloc] initWithNetwork:YES
+                                                                      withPost:post]];
     }
     return self;
 }
-//- (void)awakeFromNib
-//{
-//    [super awakeFromNib];
-////    self.dataController = [[CommentDataController alloc] init];
-//}
-//- (void)loadView
-//{   // Use CommentsView.xib to show comments on a post
-//    
-//    UIView* view = [[[NSBundle mainBundle] loadNibNamed:@"CommentsView"
-//                                                  owner:self
-//                                                options:nil]
-//                    objectAtIndex:0];
-//    
-//    [self setView:view];
-//}
-- (void)viewDidLoad
+- (void)viewWillAppear:(BOOL)animated
 {
+    [self.navigationItem setTitleView:logoTitleView];
+
+    [super viewWillAppear:animated];
+
+}
+- (void)viewDidLoad
+{    
     [super viewDidLoad];
+    
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
-    self.cancelButton.enabled = YES;
+
+    [self.tableView reloadData];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -72,15 +65,6 @@
 {   // Number of rows in table views
     if (section == 0) return 1;
     else return [self.dataController countOfList];
-    
-//    if ([tableView.restorationIdentifier compare:@"CommentTableView"] == NSOrderedSame)
-//    {   // Comment Table has as many rows as number of comments
-//        return [self.dataController countOfList];
-//    }
-//    else // if ([tableView.restorationIdentifier compare:@"OriginalPostTableView"] == NSOrderedSame)
-//    {   // only one row in Post Table (the original Post)
-//        return 1;
-//    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Get the table view cell for the given row
@@ -88,13 +72,15 @@
     
     static NSString *CellIdentifier = @"TableCell";
     TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
     if (cell == nil)
     {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
     
-//    if ([tableView.restorationIdentifier compare:@"OriginalPostTableView"] == NSOrderedSame)
+    [cell setDelegate: self];
+
     if (indexPath.section == 0)
     {   // PostView table; get the original post to display in this table
         [cell assign:self.originalPost];
@@ -151,10 +137,9 @@
 
 #pragma mark - Actions
 
-- (IBAction)cancel:(id)sender
-{   // Called when user is done viewing comments, dismiss this view
-    [self dismissViewControllerAnimated:YES completion:nil];
-  
+- (void)cancel
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)create:(id)sender
 {   // Display popup to let user type a new comment
@@ -173,9 +158,8 @@
     
     Comment *newComment = [[Comment alloc] initWithCommentMessage:[[alertView textFieldAtIndex:0] text]
                                                          withPost:self.originalPost];
-    [self.dataController addObjectToList:newComment];
-//    [self.commentTable reloadData];
-//    [self.originalPostTable reloadData];
+    [self.dataController addToServer:newComment
+                            intoList:self.dataController.list];
     [self.tableView reloadData];
 }
 
@@ -197,5 +181,8 @@
     }
     return [NSString stringWithFormat:@"%d seconds ago", commentAgeSeconds];
 }
-
+- (void)castVote:(Vote *)vote
+{
+    [super castVote:vote];
+}
 @end

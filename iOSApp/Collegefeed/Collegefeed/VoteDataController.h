@@ -8,6 +8,12 @@
 
 #import "DataController.h"
 
+@class Vote;
+
 @interface VoteDataController : DataController
+
+- (void)addToServer:(Vote *)vote
+           intoList:(NSMutableArray *)array;
+
 
 @end

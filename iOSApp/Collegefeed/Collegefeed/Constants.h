@@ -26,7 +26,7 @@
             blue:((float)(rgbValue & 0xFF))/255.0 \
            alpha:1.0]
 
-#define cf_lightblue   0x33B5E5
+#define cf_lightblue   0x33B5E5 // 51, 181, 229
 #define cf_blue        0x0099CC
 #define cf_lightgray   0xE6E6E6
 #define cf_gray        0x7C7C7C
@@ -37,5 +37,43 @@
 
 #define logoImage @"collegefeedlogosmall.png"
 #define logoTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:logoImage]]
+
+// URLs for server requests
+
+#define requestUrl                  @"http://cfeed.herokuapp.com/api/"
+#define apiVersion                  @"v1/"
+
+#define postsUrl                    [NSURL URLWithString:[NSString \
+                                    stringWithFormat: @"%@%@%@", requestUrl, \
+                                    apiVersion, @"posts"]]
+
+#define postsUrlNearby(lat, lon)    [NSURL URLWithString:[NSString \
+                                    stringWithFormat: @"%@%@%@?lat=%f&lon=%f", \
+                                    requestUrl, apiVersion, @"posts", lat, lon]]
+
+#define commentsUrl                 [NSURL URLWithString:[NSString \
+                                    stringWithFormat: @"%@%@%@", \
+                                    requestUrl, apiVersion, @"comments"]]
+
+#define commentsUrlGet(postid)      [NSURL URLWithString:[NSString \
+                                    stringWithFormat: @"%@%@%@?postid=%d", \
+                                    requestUrl, apiVersion, @"comments", postid]]
+
+#define collegesUrlAll              [NSURL URLWithString:[NSString \
+                                    stringWithFormat: @"%@%@%@", \
+                                    requestUrl, apiVersion, @"colleges"]]
+
+#define collegesUrlNearby(lat, lon) [NSURL URLWithString:[NSString \
+                                    stringWithFormat: @"%@%@%@?lat=%f&lon=%f", \
+                                    requestUrl, apiVersion, @"colleges", lat, lon]]
+
+#define tagsUrl                     [NSURL URLWithString:[NSString \
+                                    stringWithFormat: @"%@%@%@", requestUrl, \
+                                    apiVersion, @"tags/trending"]]
+
+#define voteUrl                     [NSURL URLWithString:[NSString \
+                                    stringWithFormat: @"%@%@%@", requestUrl, \
+                                    apiVersion, @"votes"]]
+
 
 #endif

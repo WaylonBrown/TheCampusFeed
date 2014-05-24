@@ -7,10 +7,14 @@
 //
 
 #import "MasterViewController.h"
+#import "CommentViewController.h"
+#import "CollegePickerViewController.h"
+
 #import "PostDataController.h"
 #import "CollegeDataController.h"
 #import "TagDataController.h"
-#import "CommentViewController.h"
+#import "VoteDataController.h"
+#import "Constants.h"
 
 @implementation MasterViewController
 
@@ -20,16 +24,28 @@
     if (self)
     {
         // Custom initialization
-        self.postDataController = [[PostDataController alloc] init];
-        self.tagDataController = [[TagDataController alloc] init];
-        self.collegeDataController = [[CollegeDataController alloc] init];
-//        self.commentViewController = [[CommentViewController alloc] init];
+        self.postDataController = [[PostDataController alloc] initWithNetwork:YES];
+        self.tagDataController = [[TagDataController alloc] initWithNetwork:YES];
+        self.collegeDataController = [[CollegeDataController alloc] initWithNetwork:YES];
+        self.voteDataController = [[VoteDataController alloc] init];
+        
+        UIFont *font = [UIFont boldSystemFontOfSize:8.0f];
+        NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
+                                                               forKey:NSFontAttributeName];
+
+        [self.collegeSegmentControl setTitleTextAttributes:attributes
+                                                  forState:UIControlStateSelected];
+        [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
+
+
     }
     return self;
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
-    
+    [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
+    [self.navigationItem setTitleView:logoTitleView];
+
     [self.tableView reloadData];
 }
 - (void)viewDidLoad
@@ -50,37 +66,37 @@
     return 1;
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{   // User should not directly modify a PostTableCell
-    
+{   // User should not directly modify a TableCell
     return NO;
 }
 
 #pragma mark - Actions
 
-- (IBAction)create:(id)sender
-{   // Display popup to let user type a new post
-//    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
-//                                                    message:@"What's poppin?"
-//                                                   delegate:self
-//                                          cancelButtonTitle:@"nvm.."
-//                                          otherButtonTitles:@"Post!", nil];
-//    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-//    [alert show];
-}
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{   // Add new post if user submits on the alert view
-    
-//    if (buttonIndex == 0) return;
-    //TODO
-//    Post *newPost = [[Post alloc] initWithPostMessage:[[alertView textFieldAtIndex:0] text]];
-//    [self.postDataController addPost:newPost];
-//    [self.tableView reloadData];
-    
-}
-- (IBAction)cancel:(id)sender
+- (IBAction)changeFeed:(id)sender
 {
+    NSInteger index = [self.collegeSegmentControl selectedSegmentIndex];
+    if (index == 0) // all colleges
+        [self.postDataController setList:self.postDataController.topPostsAllColleges.copy];
     
+    else if (index == 1) // Choose a college
+    {
+        CollegePickerViewController *controller = [[CollegePickerViewController alloc] init];
+        [controller setCollegesList:self.collegeDataController.list];
+        [self.navigationController pushViewController:controller animated:YES];
+       
+    }
+    //    else if (index == 2) // My current college
+    [self.tableView reloadData];
     
 }
+
+#pragma mark - Delegate Methods
+
+- (void)castVote:(Vote *)vote
+{
+    [self.voteDataController addToServer:vote
+                                intoList:self.voteDataController.list];
+}
+
 
 @end

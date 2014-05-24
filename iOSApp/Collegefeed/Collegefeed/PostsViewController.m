@@ -11,6 +11,8 @@
 #import "PostDataController.h"
 #import "Post.h"
 #import "CommentViewController.h"
+#import "CollegeViewController.h"
+#import "Constants.h"
 
 @implementation PostsViewController
 
@@ -22,11 +24,14 @@
 }
 - (void)viewDidLoad
 {
+//    [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
+
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
-    self.cancelButton.enabled = NO;
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - Navigation
@@ -35,6 +40,9 @@
 {   // A little preparation before navigation to different view
 
 }
+
+#pragma mark - Table View Override Functions
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Comment View for the selected post
     
@@ -42,14 +50,12 @@
     CommentViewController* controller = [[CommentViewController alloc] initWithOriginalPost:self.selectedPost];
 
     // when not in a navigation controller
-    [self presentViewController:controller animated:YES completion:nil];
+//    [self presentViewController:controller animated:YES completion:nil];
 
     // if in a navigation controller
-    // [self.navigationController pushViewController:controller animated:YES];
+    [self.navigationController pushViewController:controller
+                                         animated:YES];
 }
-
-#pragma mark - Table View Override Functions
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
     
@@ -63,13 +69,16 @@
     static NSString *CellIdentifier = @"TableCell";
     
     TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    
     if (cell == nil)
     {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier
                                                      owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
-    
+    [cell setDelegate: self];
+
     // get the post and display in this cell
     Post *postAtIndex = (Post*)[self.postDataController objectInListAtIndex:indexPath.row];
     [cell assign:postAtIndex];
@@ -88,7 +97,7 @@
 
 #pragma mark - Actions
 
-- (IBAction)create:(id)sender
+- (IBAction)create//:(id)sender
 {   // Display popup to let user type a new post
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
                                                         message:@"What's poppin?"
@@ -98,14 +107,20 @@
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         [alert show];
 }
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {   // Add new post if user submits on the alert view
     
     if (buttonIndex == 0) return;
     Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]];
-    [self.postDataController addObjectToList:newPost];
+    [self.postDataController addToServer:newPost
+                                intoList:self.postDataController.topPostsAllColleges];
+     
     [self.tableView reloadData];
-    
+}
+- (void)castVote:(Vote *)vote
+{
+    [super castVote:vote];
 }
 
 @end

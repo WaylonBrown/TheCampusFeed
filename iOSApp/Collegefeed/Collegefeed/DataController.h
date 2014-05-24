@@ -7,19 +7,28 @@
 //
 
 #import <Foundation/Foundation.h>
-
-
+#import <CoreLocation/CoreLocation.h>
+ 
+@class Votable;
 
 @interface DataController : NSObject
 
 @property (nonatomic, strong) NSMutableArray *list;
+@property (strong, nonatomic) CLLocationManager *locationManager;
 
+// Initializations
+- (id)initWithNetwork:(BOOL)useNetwork;
 - (void)initializeDefaultList;
 
+// Data Access
 - (NSUInteger)countOfList;
 - (NSObject *)objectInListAtIndex:(NSUInteger)theIndex;
 - (void)addObjectToList:(NSObject *)obj;
-- (void)fetchAll;
+
+// Network Access
+- (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array;
 - (id)getJsonObjectWithUrl:(NSURL*) url;
+- (void)addToServer:(Votable *)obj intoList:(NSMutableArray *)array;
+
 
 @end

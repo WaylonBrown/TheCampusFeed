@@ -7,6 +7,7 @@
 //
 
 #import "Vote.h"
+#import "Constants.h"
 
 @implementation Vote
 
@@ -17,6 +18,7 @@
     {
         [self setVotableID:ID];
         [self setUpvote:isUpvote];
+        [self setPostUrl:voteUrl];
         return self;
     }
     return nil;
@@ -33,18 +35,12 @@
     return nil;
 }
 - (NSData*)toJSON
-{   // Returns an NSData representation of this Post in JSON
-    NSString* stringUpvote = self.upvote ? @"true" : @"false";
-    NSDictionary *requestData = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                 stringUpvote, @"upvote",
-                                 self.votableID, @"votable_id",
-                                 nil];
+{   // Returns an NSData representation of this Vote in JSON
     
-    NSError *error;
-    NSData *voteData = [NSJSONSerialization dataWithJSONObject:requestData
-                                                       options:0
-                                                         error:&error];
-    
+    NSString *voteString = [NSString stringWithFormat:@"{\"upvote\":%@,\"votable_id\":%d}",
+                            self.upvote == YES ? @"true" : @"false",
+                            self.votableID];
+    NSData *voteData = [voteString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     return voteData;
 }
 @end

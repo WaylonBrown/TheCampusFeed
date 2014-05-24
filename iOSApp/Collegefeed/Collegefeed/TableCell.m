@@ -37,7 +37,7 @@
                     format:@"Cell does not have a valid Votable reference"];
         return;
     }
-    
+
     [self setObject:obj];
     
     // assign cell's plain text labels
@@ -60,11 +60,19 @@
 {   // User clicked upvote button
     [self.object castVote:YES];
     [self updateVoteButtons];
+    
+    id<ChildCellDelegate> strongDelegate = self.delegate;
+    [strongDelegate castVote:[[Vote alloc] initWithVotableID:self.object.getID
+                                            withUpvoteValue:YES]];
 }
 - (IBAction)downVotePresed:(id)sender
 {   // User clicked downvote button
     [self.object castVote:NO];
     [self updateVoteButtons];
+    
+    id<ChildCellDelegate> strongDelegate = self.delegate;
+    [strongDelegate castVote:[[Vote alloc] initWithVotableID:self.object.getID
+                                             withUpvoteValue:YES]];
 }
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
 {
@@ -77,6 +85,8 @@
 - (NSString *)getAgeAsString:(NSDate *)creationDate
 {   // return string indicating how long ago the post was created
     
+    if (creationDate == nil) return @"";
+        
     int seconds = [[NSDate date] timeIntervalSinceDate:creationDate];
     int minutes = seconds / 60;
     int hours = minutes / 60;

@@ -7,7 +7,50 @@
 //
 
 #import "VoteDataController.h"
+#import "Votable.h"
+#import "Vote.h"
 
 @implementation VoteDataController
+
+- (id)init
+{
+    if (self = [super init])
+    {
+        [self setList:[[NSMutableArray alloc] init]];
+        return self;
+    }
+    return nil;
+}
+
+- (void)addToServer:(Vote *)vote intoList:(NSMutableArray *)array
+{   // Build a POST request for this vote, send to url, if successful, add to array
+
+    @try
+    {
+        // Build body
+        NSData *bodyData = [vote toJSON];
+        NSString *bodyLength = [NSString stringWithFormat:@"%d", [bodyData length]];
+        
+        // Build header
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        [request setURL:vote.postUrl];
+        [request setHTTPMethod:@"POST"];
+        [request setValue:bodyLength forHTTPHeaderField:@"Content-Length"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [request setHTTPBody:bodyData];
+        
+        // Send request and get the response
+        NSURLResponse *response;
+       [NSURLConnection sendSynchronousRequest:request
+                             returningResponse:&response
+                                         error:nil];
+
+        //NOTE: no response is sent back yet with a successful POST
+    }
+    @catch(NSException* e)
+    {
+        NSLog(@"Exception in POST request");
+    }
+}
 
 @end

@@ -5,29 +5,35 @@ import java.util.ArrayList;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.ConnectivityManager;
-import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-import android.provider.SyncStateContract.Constants;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.PostCommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.PostListAdapter;
+import com.appuccino.collegefeed.extra.FontFetcher;
 import com.appuccino.collegefeed.extra.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.extra.NetWorker.PostSelector;
+import com.appuccino.collegefeed.extra.QuickReturnListView;
 import com.appuccino.collegefeed.objects.Post;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
@@ -41,11 +47,24 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	static PostListAdapter listAdapter;
 	final int tabNumber = 0;
 	int spinnerNumber = 0;
-	static ListView list;
+	static QuickReturnListView list;
 	//library objects
 	static ShimmerTextView loadingText;
 	static Shimmer shimmer;
 	private static PullToRefreshLayout pullToRefresh;
+	View rootView;
+	
+	//values for footer
+	static LinearLayout footer;
+	private static int mQuickReturnHeight;
+	private static final int STATE_ONSCREEN = 0;
+	private static final int STATE_OFFSCREEN = 1;
+	private static final int STATE_RETURNING = 2;
+	private static int mState = STATE_ONSCREEN;
+	private static int mScrollY;
+	private static int mMinRawY = 0;
+	private static TranslateAnimation anim;
+	TextView collegeNameBottom;
 
 	public TopPostFragment()
 	{
@@ -59,13 +78,14 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_layout,
+		rootView = inflater.inflate(R.layout.fragment_layout,
 				container, false);
-		list = (ListView)rootView.findViewById(R.id.fragmentListView);
+		list = (QuickReturnListView)rootView.findViewById(R.id.fragmentListView);
 		loadingText = (ShimmerTextView)rootView.findViewById(R.id.loadingText);
+		footer = (LinearLayout)rootView.findViewById(R.id.footer);
 		
-		Typeface customfont = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/Roboto-Light.ttf");
-		loadingText.setTypeface(customfont);
+		loadingText.setTypeface(FontFetcher.light);
+		setupBottomViewUI();
 					
 		// Now give the find the PullToRefreshLayout and set it up
         pullToRefresh = (PullToRefreshLayout) rootView.findViewById(R.id.pullToRefresh);
@@ -94,17 +114,15 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		}		
 		
 		//if not in specific college feed, use layout with college name
-		if(MainActivity.spinner.getSelectedItemPosition() == 2)
-		{
-			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_post, postList, 0);
-		}
-		else
-		{
+//		if(MainActivity.spinner.getSelectedItemPosition() == 2)
+//		{
+//			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_post, postList, 0);
+//		}
+//		else
+//		{
 			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 0);
-		}
-		list.setAdapter(listAdapter);
-		
-		
+//		}
+		list.setAdapter(listAdapter);		
 
 		list.setOnItemClickListener(new OnItemClickListener()
 	    {
@@ -117,6 +135,110 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		});
 	    
 		return rootView;
+	}
+	
+	private void setupBottomViewUI() {
+		collegeNameBottom = (TextView)rootView.findViewById(R.id.collegeNameBottomText);
+		TextView showingText = (TextView)rootView.findViewById(R.id.showingFeedText);
+		TextView chooseText = (TextView)rootView.findViewById(R.id.chooseText);
+		
+		collegeNameBottom.setTypeface(FontFetcher.light);
+		showingText.setTypeface(FontFetcher.medium);
+		chooseText.setTypeface(FontFetcher.light);
+		
+		chooseText.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(mainActivity, "make dialog", Toast.LENGTH_SHORT).show();
+			}
+			
+		});
+		
+	}
+
+	public static void setupFooterListView() {
+		list.getViewTreeObserver().addOnGlobalLayoutListener(
+			new ViewTreeObserver.OnGlobalLayoutListener() {
+				@Override
+				public void onGlobalLayout() {
+					mQuickReturnHeight = footer.getHeight();
+					list.computeScrollY();
+				}
+		});
+		
+		list.setOnScrollListener(new OnScrollListener() {
+			@SuppressLint("NewApi")
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+
+				mScrollY = 0;
+				int translationY = 0;
+
+				if (list.scrollYIsComputed()) {
+					mScrollY = list.getComputedScrollY();
+				}
+
+				int rawY = mScrollY;
+
+				switch (mState) {
+				case STATE_OFFSCREEN:
+					if (rawY >= mMinRawY) {
+						mMinRawY = rawY;
+					} else {
+						mState = STATE_RETURNING;
+					}
+					translationY = rawY;
+					break;
+
+				case STATE_ONSCREEN:
+					if (rawY > mQuickReturnHeight) {
+						mState = STATE_OFFSCREEN;
+						mMinRawY = rawY;
+					}
+					translationY = rawY;
+					break;
+
+				case STATE_RETURNING:
+
+					translationY = (rawY - mMinRawY) + mQuickReturnHeight;
+
+					System.out.println(translationY);
+					if (translationY < 0) {
+						translationY = 0;
+						mMinRawY = rawY + mQuickReturnHeight;
+					}
+
+					if (rawY == 0) {
+						mState = STATE_ONSCREEN;
+						translationY = 0;
+					}
+
+					if (translationY > mQuickReturnHeight) {
+						mState = STATE_OFFSCREEN;
+						mMinRawY = rawY;
+					}
+					break;
+				}
+
+				/** this can be used if the build is below honeycomb **/
+				if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
+					anim = new TranslateAnimation(0, 0, translationY,
+							translationY);
+					anim.setFillAfter(true);
+					anim.setDuration(0);
+					footer.startAnimation(anim);
+				} else {
+					footer.setTranslationY(translationY);
+				}
+
+			}
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+			}
+		});
 	}
 
 	private void pullListFromServer() 

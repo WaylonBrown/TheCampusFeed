@@ -6,6 +6,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.Html;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
+import com.appuccino.collegefeed.extra.FontFetcher;
 import com.appuccino.collegefeed.extra.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.extra.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.extra.NetWorker.PostSelector;
@@ -59,24 +63,16 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         	postHolder.commentText = (TextView)row.findViewById(R.id.commentText);
         	postHolder.arrowUp = (ImageView)row.findViewById(R.id.arrowUp);
         	postHolder.arrowDown = (ImageView)row.findViewById(R.id.arrowDown);
-        	//if All Colleges post
-        	if(MainActivity.spinner.getSelectedItemPosition() != 2)
-        	{
-        		postHolder.collegeName = (TextView)row.findViewById(R.id.collegeNameText);
-        		postHolder.gpsImage = (ImageView)row.findViewById(R.id.gpsImage);
-        	}
-            		
-        	Typeface light = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
-        	Typeface medium = Typeface.createFromAsset(context.getAssets(), "fonts/omnes_semibold.otf");
-            Typeface lightItalic = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-LightItalic.ttf");
-            Typeface bold = Typeface.createFromAsset(context.getAssets(), "fonts/mplus-2c-bold.ttf");
+        	//these two will return null if not showing posts with college names
+        	postHolder.collegeName = (TextView)row.findViewById(R.id.collegeNameText);
+        	postHolder.gpsImage = (ImageView)row.findViewById(R.id.gpsImage);
             
-            postHolder.scoreText.setTypeface(bold);
-            postHolder.messageText.setTypeface(light);
-            postHolder.timeText.setTypeface(medium);
-            postHolder.commentText.setTypeface(medium);
+            postHolder.scoreText.setTypeface(FontFetcher.bold);
+            postHolder.messageText.setTypeface(FontFetcher.light);
+            postHolder.timeText.setTypeface(FontFetcher.medium);
+            postHolder.commentText.setTypeface(FontFetcher.medium);
             if(postHolder.collegeName != null)
-            	postHolder.collegeName.setTypeface(lightItalic);
+            	postHolder.collegeName.setTypeface(FontFetcher.italic);
             
             row.setTag(postHolder);
         }
@@ -196,7 +192,34 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 		}
 	}
 
-	private void setMessageAndColorizeTags(String msg, PostHolder postHolder) 
+//    private void setMessageAndColorizeTags(String msg, PostHolder postHolder) 
+//    {
+//    	String tagColor = "#33B5E5";
+//    	String message = msg;
+//    	
+//    	String[] wordArray = message.split(" ");
+//    	//check for tags, colorize them
+//    	for(int i = 0; i < wordArray.length; i++)
+//    	{
+//    		if(wordArray[i].length() > 0 && wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
+//    		{
+//    			wordArray[i] = "<font color='" + tagColor + "'>" + wordArray[i] + "</font>";
+//    		}
+//    	}
+//    	
+//    	message = "";
+//    	//combine back to string
+//    	for(int i = 0; i < wordArray.length; i++)
+//    	{
+//    		message += wordArray[i] + " ";
+//    	}
+//    	
+//    	postHolder.messageText.setText(Html.fromHtml(message));
+//    	
+//		
+//	}
+    
+    private void setMessageAndColorizeTags(String msg, PostHolder postHolder) 
     {
     	String tagColor = "#33B5E5";
     	String message = msg;
@@ -218,6 +241,17 @@ public class PostListAdapter extends ArrayAdapter<Post>{
     		message += wordArray[i] + " ";
     	}
     	
+    	//TODO: implement clickable text in TextView
+//    	ClickableSpan span1 = new ClickableSpan() {
+//            @Override
+//            public void onClick(View textView) 
+//            {
+//                Toast.makeText(context, "test", Toast.LENGTH_SHORT).show();
+//            }
+//        };
+//    	SpannableString ss = new SpannableString(Html.fromHtml(message));
+//		ss.setSpan(span1, 5, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//    	postHolder.messageText.setText(Html.fromHtml(message));
     	postHolder.messageText.setText(Html.fromHtml(message));
 		
 	}

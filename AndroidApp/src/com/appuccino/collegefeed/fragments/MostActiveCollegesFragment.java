@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,6 +40,8 @@ public class MostActiveCollegesFragment extends Fragment
 				container, false);
 		ListView fragList = (ListView)rootView.findViewById(R.id.fragmentListView);
 		
+		disableFooter(rootView);
+		
 		collegeList = new ArrayList<College>();
 		collegeList.add(new College("Texas A&M University"));
 		collegeList.add(new College("Harvard University"));
@@ -59,6 +62,11 @@ public class MostActiveCollegesFragment extends Fragment
 	    fragList.setItemsCanFocus(true);
 	    
 		return rootView;
+	}
+
+	private void disableFooter(View root) {
+		LinearLayout footer = (LinearLayout)root.findViewById(R.id.footer);
+		footer.setVisibility(View.GONE);
 	}
 
 	public static void collegeClicked(College thisCollege) 

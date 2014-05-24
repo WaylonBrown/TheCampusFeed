@@ -64,7 +64,10 @@
 	        android:layout_height="wrap_content"
 	        android:layout_marginTop="4dp"
 	        android:layout_marginRight="8dp"
-	        android:minHeight="67dp"/>
+	        android:minHeight="67dp"
+	        android:clickable="true"
+	        android:focusable="true"
+        	android:focusableInTouchMode="true"/>
 	    
 	    <LinearLayout 
 	        android:id="@+id/postDetails"

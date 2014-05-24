@@ -12,17 +12,12 @@
 @class CommentDataController;
 @class Post;
 
-//@interface CommentViewController : UIViewController
 
 @interface CommentViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) CommentDataController *dataController;
 @property (strong, nonatomic) Post *originalPost;
 
-//@property (weak, nonatomic) IBOutlet UITableView *originalPostTable;
-//@property (weak, nonatomic) IBOutlet UITableView *commentTable;
-
-- (id)initWithOriginalPost:(Post*)post;// withDelegate:(id)postSubViewDelegate;
-
+- (id)initWithOriginalPost:(Post*)post;
 
 @end

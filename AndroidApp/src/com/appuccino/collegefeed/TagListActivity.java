@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
 import com.appuccino.collegefeed.adapters.PostListAdapter;
+import com.appuccino.collegefeed.extra.FontFetcher;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.R;
 
@@ -37,15 +38,10 @@ public class TagListActivity extends Activity{
 		actionBar.setIcon(R.drawable.logofake);
 				
 		String tagText = getIntent().getStringExtra("TAG_ID");
-		
-		Typeface light = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
-        Typeface lightItalic = Typeface.createFromAsset(getAssets(), "fonts/Roboto-LightItalic.ttf");
-        Typeface bold = Typeface.createFromAsset(getAssets(), "fonts/mplus-2c-bold.ttf");
-        Typeface medium = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Medium.ttf");
         
         TextView topTagText = (TextView)findViewById(R.id.topTagText);
         topTagText.setText("Posts with " + tagText);
-        topTagText.setTypeface(light);
+        topTagText.setTypeface(FontFetcher.light);
 		
 		ListView listView = (ListView)findViewById(R.id.fragmentListView);
 		if(!tagText.equals("") && tagText != null)
@@ -61,7 +57,7 @@ public class TagListActivity extends Activity{
 			postList.add(new Post("Post with tag 8"));
 			listAdapter = new PostListAdapter(this, R.layout.list_row_post, postList, 0);
 			
-			//if doesnt havefooter, add it
+			//if doesnt have footer, add it
 			if(listView.getFooterViewsCount() == 0)
 			{
 				//for card UI

@@ -23,48 +23,54 @@
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(cf_lightblue)];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
     
     // *** Top Posts - PostsViewController *** //
     PostsViewController *topPostsController = [[PostsViewController alloc] init];
-    topPostsController.title = @"Top Posts";
-//    [topPostsController.navigationItem setTitleView:logoTitleView];
-//    UINavigationController *topPostsNavController = [[UINavigationController alloc] initWithRootViewController:topPostsController];
-//    [topPostsNavController.navigationBar.topItem setTitleView:logoTitleView];
-    
-    
-//    [topPostsController.navigationController.navigationItem setRightBarButtonItem:
-//                [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-//                                    target:topPostsController action:@selector(createPost:)]];
-    
+//    topPostsController.title = @"Top Posts";
+    UINavigationController *topPostsNavController = [[UINavigationController alloc] initWithRootViewController:topPostsController];
+    topPostsController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                                                                                                         target:topPostsController
+                                                                                                         action:@selector(create)];
     // *************************************** //
+    
     
     // *** New Posts - PostsViewController *** //
     PostsViewController *newPostsController = [[PostsViewController alloc] init];
-    newPostsController.title = @"New Posts";
-    [newPostsController.navigationItem setTitleView:logoTitleView];
+//    newPostsController.title = @"New Posts";
+//    [newPostsController.navigationItem setTitleView:logoTitleView];
     UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:newPostsController];
-    [newPostsNavController.navigationBar.topItem setTitleView:logoTitleView];
+    newPostsController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                                                                                                         target:topPostsController
+                                                                                                         action:@selector(create)];
     // *************************************** //
     
     // *** Trending Tags - TagViewController *** //
     TagViewController *tagController = [[TagViewController alloc] init];
-    tagController.title = @"Trending Tags";
+//    tagController.title = @"Trending Tags";
     UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:tagController];
-    [tagNavController.navigationBar.topItem setTitleView:logoTitleView];
+    tagController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                                                                                                         target:topPostsController
+                                                                                                         action:@selector(create)];
     // *************************************** //
     
     // *** Top Colleges - CollegeViewController *** //
     CollegeViewController *collegeController = [[CollegeViewController alloc] init];
-    collegeController.title = @"Top Colleges";
+//    collegeController.title = @"Top Colleges";
     UINavigationController *collegeNavController = [[UINavigationController alloc] initWithRootViewController:collegeController];
-    [collegeNavController.navigationBar.topItem setTitleView:logoTitleView];
+    collegeController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                                                                                                        target:topPostsController
+                                                                                                        action:@selector(create)];
     // *************************************** //
     
     // *** My Posts - PostsViewController *** //
     PostsViewController *myPostsController = [[PostsViewController alloc] init];
     myPostsController.title = @"My Posts";
     UINavigationController *myPostsNavController = [[UINavigationController alloc] initWithRootViewController:myPostsController];
-    [myPostsNavController.navigationBar.topItem setTitleView:logoTitleView];
+    myPostsController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                                                                                                        target:topPostsController
+                                                                                                        action:@selector(create)];
     // *************************************** //
     
     // *** My Comments - PostsViewController *** //
@@ -75,15 +81,26 @@
     // *************************************** //
     
     // assign all navigation controllers to the TabBar
-//    NSArray *navControllers = [NSArray arrayWithObjects:topPostsNavController, newPostsNavController, tagNavController,
-//                               collegeNavController, myPostsNavController, /*myCommentNavController, */ nil];
-//    [self setTabBarController:[[UITabBarController alloc] init]];
-//    [self.tabBarController setViewControllers:navControllers];
-    
-    NSArray *viewControllers = [NSArray arrayWithObjects:topPostsController, newPostsController, tagController, collegeController, myPostsController, nil];
+    NSArray *navControllers = [NSArray arrayWithObjects:topPostsNavController, newPostsNavController, tagNavController,
+                               collegeNavController, myPostsNavController, /*myCommentNavController, */ nil];
     [self setTabBarController:[[UITabBarController alloc] init]];
+    [self.tabBarController setViewControllers:navControllers];
+    
+//    NSArray *viewControllers = [NSArray arrayWithObjects:topPostsController, newPostsController, tagController, collegeController, myPostsController, nil];
+//    [self setTabBarController:[[UITabBarController alloc] init]];
+//
+//    [self.tabBarController setViewControllers:viewControllers];
+    
+//    
+//    UITabBarItem *tabBarItem1 = [self.tabBarController.tabBar.items objectAtIndex:0];
+//    [tabBarItem1 setImage:[UIImage imageNamed:@"top.png"]];
 
-    [self.tabBarController setViewControllers:viewControllers];
+    [[self.tabBarController.tabBar.items objectAtIndex:0] setImage:[UIImage imageNamed:@"top.png"]];
+    [[self.tabBarController.tabBar.items objectAtIndex:1] setImage:[UIImage imageNamed:@"new.png"]];
+    [[self.tabBarController.tabBar.items objectAtIndex:2] setImage:[UIImage imageNamed:@"tags.png"]];
+    [[self.tabBarController.tabBar.items objectAtIndex:3] setImage:[UIImage imageNamed:@"colleges.png"]];
+
+    
     
     // finalize window specifications
     [self.window setRootViewController:self.tabBarController];

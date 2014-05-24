@@ -2,10 +2,12 @@ package com.appuccino.collegefeed.fragments;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -13,20 +15,26 @@ import android.text.Html;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.animation.TranslateAnimation;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AbsListView.OnScrollListener;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
 import com.appuccino.collegefeed.adapters.TagListAdapter;
+import com.appuccino.collegefeed.extra.FontFetcher;
+import com.appuccino.collegefeed.extra.QuickReturnListView;
 import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Tag;
@@ -36,6 +44,20 @@ public class TagFragment extends Fragment
 	static MainActivity mainActivity;
 	public static final String ARG_SECTION_NUMBER = "section_number";
 	static ArrayList<Tag> tagList;
+	QuickReturnListView list;
+	View rootView;
+	
+	//values for footer
+	static LinearLayout footer;
+	private static int mQuickReturnHeight;
+	private static final int STATE_ONSCREEN = 0;
+	private static final int STATE_OFFSCREEN = 1;
+	private static final int STATE_RETURNING = 2;
+	private static int mState = STATE_ONSCREEN;
+	private static int mScrollY;
+	private static int mMinRawY = 0;
+	private static TranslateAnimation anim;
+	TextView collegeNameBottom;
 
 	public TagFragment()
 	{
@@ -49,11 +71,22 @@ public class TagFragment extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_layout_tag,
+		rootView = inflater.inflate(R.layout.fragment_layout_tag,
 				container, false);
-		ListView fragList = (ListView)rootView.findViewById(R.id.fragmentListView);
+		list = (QuickReturnListView)rootView.findViewById(R.id.fragmentListView);
+		footer = (LinearLayout)rootView.findViewById(R.id.footer);
+		setupBottomViewUI();
 		
 		tagList = new ArrayList<Tag>();
+		tagList.add(new Tag("#YOLO", 5));
+		tagList.add(new Tag("#bieberfever", 5));
+		tagList.add(new Tag("#tbt", 5));
+		tagList.add(new Tag("#YOLO", 5));
+		tagList.add(new Tag("#bieberfever", 5));
+		tagList.add(new Tag("#tbt", 5));
+		tagList.add(new Tag("#YOLO", 5));
+		tagList.add(new Tag("#bieberfever", 5));
+		tagList.add(new Tag("#tbt", 5));
 		tagList.add(new Tag("#YOLO", 5));
 		tagList.add(new Tag("#bieberfever", 5));
 		tagList.add(new Tag("#tbt", 5));
@@ -61,21 +94,20 @@ public class TagFragment extends Fragment
 		TagListAdapter adapter = new TagListAdapter(getActivity(), R.layout.list_row_tag, tagList);
 		
 		//if doesnt have header and footer, add them
-		if(fragList.getHeaderViewsCount() == 0)
+		if(list.getHeaderViewsCount() == 0)
 		{
 			//for card UI
 			View headerFooter = new View(getActivity());
 			headerFooter.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
-			fragList.addFooterView(headerFooter, null, false);
-			fragList.addHeaderView(headerFooter, null, false);
+			list.addFooterView(headerFooter, null, false);
+			list.addHeaderView(headerFooter, null, false);
 		}
-	    fragList.setAdapter(adapter);
-	    fragList.setItemsCanFocus(true);
+		list.setAdapter(adapter);
+		list.setItemsCanFocus(true);
 	    
 	    //set bottom text typeface
-	    Typeface light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
 	    TextView tagSearchText = (TextView)rootView.findViewById(R.id.tagSearchText);
-	    tagSearchText.setTypeface(light);
+	    tagSearchText.setTypeface(FontFetcher.light);
 	    
 	    tagSearchText.setOnClickListener(new OnClickListener()
 	    {
@@ -86,7 +118,114 @@ public class TagFragment extends Fragment
 			}
 	    });
 	    
+	    //when implementing NetWorking with the list, make sure to call this from that, 
+	    //not from here
+	    setupFooterListView();
+	    
 		return rootView;
+	}
+
+	private void setupBottomViewUI() {
+		collegeNameBottom = (TextView)rootView.findViewById(R.id.collegeNameBottomText);
+		TextView showingText = (TextView)rootView.findViewById(R.id.showingFeedText);
+		TextView chooseText = (TextView)rootView.findViewById(R.id.chooseText);
+		
+		collegeNameBottom.setTypeface(FontFetcher.light);
+		showingText.setTypeface(FontFetcher.medium);
+		chooseText.setTypeface(FontFetcher.light);
+		
+		chooseText.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(mainActivity, "make dialog", Toast.LENGTH_SHORT).show();
+			}
+			
+		});
+	}
+	
+	private void setupFooterListView() {
+		list.getViewTreeObserver().addOnGlobalLayoutListener(
+			new ViewTreeObserver.OnGlobalLayoutListener() {
+				@Override
+				public void onGlobalLayout() {
+					mQuickReturnHeight = footer.getHeight();
+					list.computeScrollY();
+				}
+		});
+		
+		list.setOnScrollListener(new OnScrollListener() {
+			@SuppressLint("NewApi")
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+
+				mScrollY = 0;
+				int translationY = 0;
+
+				if (list.scrollYIsComputed()) {
+					mScrollY = list.getComputedScrollY();
+				}
+
+				int rawY = mScrollY;
+
+				switch (mState) {
+				case STATE_OFFSCREEN:
+					if (rawY >= mMinRawY) {
+						mMinRawY = rawY;
+					} else {
+						mState = STATE_RETURNING;
+					}
+					translationY = rawY;
+					break;
+
+				case STATE_ONSCREEN:
+					if (rawY > mQuickReturnHeight) {
+						mState = STATE_OFFSCREEN;
+						mMinRawY = rawY;
+					}
+					translationY = rawY;
+					break;
+
+				case STATE_RETURNING:
+
+					translationY = (rawY - mMinRawY) + mQuickReturnHeight;
+
+					System.out.println(translationY);
+					if (translationY < 0) {
+						translationY = 0;
+						mMinRawY = rawY + mQuickReturnHeight;
+					}
+
+					if (rawY == 0) {
+						mState = STATE_ONSCREEN;
+						translationY = 0;
+					}
+
+					if (translationY > mQuickReturnHeight) {
+						mState = STATE_OFFSCREEN;
+						mMinRawY = rawY;
+					}
+					break;
+				}
+
+				/** this can be used if the build is below honeycomb **/
+				if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
+					anim = new TranslateAnimation(0, 0, translationY,
+							translationY);
+					anim.setFillAfter(true);
+					anim.setDuration(0);
+					footer.startAnimation(anim);
+				} else {
+					footer.setTranslationY(translationY);
+				}
+
+			}
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+			}
+		});
 	}
 
 	public static void tagClicked(Tag tag) 
@@ -141,9 +280,8 @@ public class TagFragment extends Fragment
 			}
     	});
     	
-    	Typeface light = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/Roboto-Light.ttf");
-    	searchTagEditText.setTypeface(light);
-    	searchButton.setTypeface(light);
+    	searchTagEditText.setTypeface(FontFetcher.light);
+    	searchButton.setTypeface(FontFetcher.light);
     	
     	searchTagEditText.setSelection(1);	//start cursor after #
     	//ensure keyboard is brought up when dialog shows

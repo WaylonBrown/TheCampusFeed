@@ -10,12 +10,16 @@
 #import "TTTAttributedLabel.h"
 
 @class Votable;
+@class Vote;
 
 @protocol SubViewDelegate;
+@protocol ChildCellDelegate;
 
 @interface TableCell : UITableViewCell <TTTAttributedLabelDelegate>
 
 @property (nonatomic, strong) Votable* object;
+
+@property (nonatomic, weak) id<ChildCellDelegate> delegate;
 
 @property (nonatomic, weak) IBOutlet TTTAttributedLabel *messageLabel;
 @property (nonatomic, weak) IBOutlet UILabel *scoreLabel;
@@ -28,5 +32,12 @@
 - (void)assign:(Votable *)votableObject;
 - (IBAction) upVotePressed:(id)sender;
 - (IBAction) downVotePresed:(id)sender;
+
+@end
+
+
+@protocol ChildCellDelegate <NSObject>
+
+- (void)castVote:(Vote *)vote;
 
 @end

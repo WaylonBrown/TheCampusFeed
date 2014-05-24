@@ -12,7 +12,7 @@
 @implementation Votable
 
 - (void)castVote:(BOOL)isUpVote
-{   // TODO: send vote to server also (maybe only in data controller?)
+{
     
     
     // Sets the vote for this Object and updates the score

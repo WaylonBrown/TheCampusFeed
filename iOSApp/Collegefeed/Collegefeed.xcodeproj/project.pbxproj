@@ -32,6 +32,13 @@
 		53AE73CB19283A9D00BE6B02 /* VoteDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73CA19283A9D00BE6B02 /* VoteDataController.m */; };
 		53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B1FDFC19254E4700905E49 /* MasterView.xib */; };
 		53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B1FDFF19254E8F00905E49 /* MasterViewController.m */; };
+		53BDB4CE192F3E4400F45D5C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */; };
+		53BDB4D3192F4E6700F45D5C /* CollegePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BDB4D1192F4E6600F45D5C /* CollegePickerViewController.m */; };
+		53BDB4D4192F4E6700F45D5C /* CollegePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D2192F4E6600F45D5C /* CollegePickerViewController.xib */; };
+		53BDB4D61930669100F45D5C /* top.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D51930669100F45D5C /* top.png */; };
+		53BDB4DA1930688200F45D5C /* colleges.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D71930688200F45D5C /* colleges.png */; };
+		53BDB4DB1930688200F45D5C /* new.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D81930688200F45D5C /* new.png */; };
+		53BDB4DC1930688200F45D5C /* tags.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D91930688200F45D5C /* tags.png */; };
 		53D2AD0719189E9E0097C840 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0619189E9E0097C840 /* Comment.m */; };
 		53D2AD0B19189EC60097C840 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0A19189EC60097C840 /* Post.m */; };
 		53D2AD0E19189F740097C840 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0D19189F740097C840 /* Vote.m */; };
@@ -101,6 +108,14 @@
 		53B1FDFC19254E4700905E49 /* MasterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterView.xib; sourceTree = "<group>"; };
 		53B1FDFE19254E8F00905E49 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		53B1FDFF19254E8F00905E49 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		53BDB4D0192F4E6600F45D5C /* CollegePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollegePickerViewController.h; sourceTree = "<group>"; };
+		53BDB4D1192F4E6600F45D5C /* CollegePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollegePickerViewController.m; sourceTree = "<group>"; };
+		53BDB4D2192F4E6600F45D5C /* CollegePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollegePickerViewController.xib; sourceTree = "<group>"; };
+		53BDB4D51930669100F45D5C /* top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = top.png; sourceTree = "<group>"; };
+		53BDB4D71930688200F45D5C /* colleges.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colleges.png; sourceTree = "<group>"; };
+		53BDB4D81930688200F45D5C /* new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = new.png; sourceTree = "<group>"; };
+		53BDB4D91930688200F45D5C /* tags.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tags.png; sourceTree = "<group>"; };
 		53D2AD0519189E9E0097C840 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
 		53D2AD0619189E9E0097C840 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		53D2AD0919189EC60097C840 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
@@ -135,6 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53BDB4CE192F3E4400F45D5C /* CoreLocation.framework in Frameworks */,
 				53F8789319133F60002A578B /* CoreGraphics.framework in Frameworks */,
 				53F8789519133F60002A578B /* UIKit.framework in Frameworks */,
 				53F8789119133F60002A578B /* Foundation.framework in Frameworks */,
@@ -154,32 +170,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		533475901922F66400E84CC8 /* Posts */ = {
-			isa = PBXGroup;
-			children = (
-				53963DE51916E5F50084E646 /* PostsViewController.h */,
-				53963DE61916E5F50084E646 /* PostsViewController.m */,
-				53D2AD0919189EC60097C840 /* Post.h */,
-				53D2AD0A19189EC60097C840 /* Post.m */,
-				532706E0191378EF00F5EAB9 /* PostDataController.h */,
-				532706E1191378EF00F5EAB9 /* PostDataController.m */,
-			);
-			name = Posts;
-			sourceTree = "<group>";
-		};
-		533475911922F69300E84CC8 /* Comments */ = {
-			isa = PBXGroup;
-			children = (
-				5390A939191552AE00ACD082 /* CommentViewController.h */,
-				5390A93A191552AE00ACD082 /* CommentViewController.m */,
-				53D2AD0519189E9E0097C840 /* Comment.h */,
-				53D2AD0619189E9E0097C840 /* Comment.m */,
-				5390A92A19153EBE00ACD082 /* CommentDataController.h */,
-				5390A92B19153EBE00ACD082 /* CommentDataController.m */,
-			);
-			name = Comments;
-			sourceTree = "<group>";
-		};
 		533475A019232A4A00E84CC8 /* TableCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -194,6 +184,10 @@
 		5390A9131914B76800ACD082 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				53BDB4D71930688200F45D5C /* colleges.png */,
+				53BDB4D81930688200F45D5C /* new.png */,
+				53BDB4D91930688200F45D5C /* tags.png */,
+				53BDB4D51930669100F45D5C /* top.png */,
 				5390A9141914B76800ACD082 /* arrowdown.png */,
 				5390A9151914B76800ACD082 /* arrowdownred.png */,
 				5390A9161914B76800ACD082 /* arrowup.png */,
@@ -204,41 +198,90 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
-		53AE73671925CDA600BE6B02 /* Colleges */ = {
-			isa = PBXGroup;
-			children = (
-				53AE73681925CFA800BE6B02 /* CollegeDataController.h */,
-				53AE73691925CFA800BE6B02 /* CollegeDataController.m */,
-				53D2AD131918AAB80097C840 /* College.h */,
-				53D2AD141918AAB80097C840 /* College.m */,
-				53AE736B1925D46300BE6B02 /* CollegeViewController.h */,
-				53AE736C1925D46300BE6B02 /* CollegeViewController.m */,
-			);
-			name = Colleges;
-			sourceTree = "<group>";
-		};
 		53AE73BA1927EB8F00BE6B02 /* Interfaces */ = {
 			isa = PBXGroup;
 			children = (
-				53AE73BC1927ED6600BE6B02 /* DataController.h */,
-				53AE73C61928354F00BE6B02 /* DataController.m */,
 				53AE73BF1927FBA700BE6B02 /* Votable.h */,
 				53AE73C41928208100BE6B02 /* Votable.m */,
 			);
 			name = Interfaces;
 			sourceTree = "<group>";
 		};
-		53B1FDFB19254C8600905E49 /* Tags */ = {
+		53B090B5192DA13100E3D996 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				53BDB4CF192F4E4300F45D5C /* CollegePicker */,
+				533475A019232A4A00E84CC8 /* TableCell */,
+				53B1FE0119254EB900905E49 /* MasterView */,
+				53963DE51916E5F50084E646 /* PostsViewController.h */,
+				53963DE61916E5F50084E646 /* PostsViewController.m */,
+				5390A939191552AE00ACD082 /* CommentViewController.h */,
+				5390A93A191552AE00ACD082 /* CommentViewController.m */,
 				5334758A1922D9B700E84CC8 /* TagViewController.h */,
 				5334758B1922D9B700E84CC8 /* TagViewController.m */,
+				53AE736B1925D46300BE6B02 /* CollegeViewController.h */,
+				53AE736C1925D46300BE6B02 /* CollegeViewController.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		53B090B6192DA13D00E3D996 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				53AE73BA1927EB8F00BE6B02 /* Interfaces */,
+				53D2AD0919189EC60097C840 /* Post.h */,
+				53D2AD0A19189EC60097C840 /* Post.m */,
+				53D2AD0519189E9E0097C840 /* Comment.h */,
+				53D2AD0619189E9E0097C840 /* Comment.m */,
+				53D2AD0C19189F740097C840 /* Vote.h */,
+				53D2AD0D19189F740097C840 /* Vote.m */,
+				53D2AD131918AAB80097C840 /* College.h */,
+				53D2AD141918AAB80097C840 /* College.m */,
 				53D2AD0F1918A22A0097C840 /* Tag.h */,
 				53D2AD101918A22A0097C840 /* Tag.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		53B090B7192DA14400E3D996 /* DataControllers */ = {
+			isa = PBXGroup;
+			children = (
+				53AE73BC1927ED6600BE6B02 /* DataController.h */,
+				53AE73C61928354F00BE6B02 /* DataController.m */,
+				532706E0191378EF00F5EAB9 /* PostDataController.h */,
+				532706E1191378EF00F5EAB9 /* PostDataController.m */,
+				5390A92A19153EBE00ACD082 /* CommentDataController.h */,
+				5390A92B19153EBE00ACD082 /* CommentDataController.m */,
+				53AE73C919283A9D00BE6B02 /* VoteDataController.h */,
+				53AE73CA19283A9D00BE6B02 /* VoteDataController.m */,
+				53AE73681925CFA800BE6B02 /* CollegeDataController.h */,
+				53AE73691925CFA800BE6B02 /* CollegeDataController.m */,
 				53AE735E1925B53900BE6B02 /* TagDataController.h */,
 				53AE735F1925B53900BE6B02 /* TagDataController.m */,
 			);
-			name = Tags;
+			name = DataControllers;
+			sourceTree = "<group>";
+		};
+		53B090B8192DA1FA00E3D996 /* Source Code */ = {
+			isa = PBXGroup;
+			children = (
+				53F8789F19133F60002A578B /* AppDelegate.h */,
+				53F878A019133F60002A578B /* AppDelegate.m */,
+				53B090B6192DA13D00E3D996 /* Models */,
+				53B090B7192DA14400E3D996 /* DataControllers */,
+				53B090B5192DA13100E3D996 /* Views */,
+			);
+			name = "Source Code";
+			sourceTree = "<group>";
+		};
+		53B090B9192DA21600E3D996 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				53F878AE19133F60002A578B /* Images.xcassets */,
+				53F8789719133F60002A578B /* Supporting Files */,
+				5390A9131914B76800ACD082 /* Images */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		53B1FE0119254EB900905E49 /* MasterView */ = {
@@ -251,24 +294,14 @@
 			name = MasterView;
 			sourceTree = "<group>";
 		};
-		53D2AD0819189EAB0097C840 /* Votes */ = {
+		53BDB4CF192F4E4300F45D5C /* CollegePicker */ = {
 			isa = PBXGroup;
 			children = (
-				53D2AD0C19189F740097C840 /* Vote.h */,
-				53D2AD0D19189F740097C840 /* Vote.m */,
-				53AE73C919283A9D00BE6B02 /* VoteDataController.h */,
-				53AE73CA19283A9D00BE6B02 /* VoteDataController.m */,
+				53BDB4D0192F4E6600F45D5C /* CollegePickerViewController.h */,
+				53BDB4D1192F4E6600F45D5C /* CollegePickerViewController.m */,
+				53BDB4D2192F4E6600F45D5C /* CollegePickerViewController.xib */,
 			);
-			name = Votes;
-			sourceTree = "<group>";
-		};
-		53F742F219259B6400A49A37 /* Shared Views */ = {
-			isa = PBXGroup;
-			children = (
-				53B1FE0119254EB900905E49 /* MasterView */,
-				533475A019232A4A00E84CC8 /* TableCell */,
-			);
-			name = "Shared Views";
+			name = CollegePicker;
 			sourceTree = "<group>";
 		};
 		53F8788419133F60002A578B = {
@@ -293,6 +326,7 @@
 		53F8788F19133F60002A578B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */,
 				53F8789019133F60002A578B /* Foundation.framework */,
 				53F8789219133F60002A578B /* CoreGraphics.framework */,
 				53F8789419133F60002A578B /* UIKit.framework */,
@@ -304,18 +338,8 @@
 		53F8789619133F60002A578B /* Collegefeed */ = {
 			isa = PBXGroup;
 			children = (
-				53AE73BA1927EB8F00BE6B02 /* Interfaces */,
-				53F742F219259B6400A49A37 /* Shared Views */,
-				533475911922F69300E84CC8 /* Comments */,
-				533475901922F66400E84CC8 /* Posts */,
-				53AE73671925CDA600BE6B02 /* Colleges */,
-				53B1FDFB19254C8600905E49 /* Tags */,
-				53D2AD0819189EAB0097C840 /* Votes */,
-				5390A9131914B76800ACD082 /* Images */,
-				53F8789719133F60002A578B /* Supporting Files */,
-				53F8789F19133F60002A578B /* AppDelegate.h */,
-				53F878A019133F60002A578B /* AppDelegate.m */,
-				53F878AE19133F60002A578B /* Images.xcassets */,
+				53B090B8192DA1FA00E3D996 /* Source Code */,
+				53B090B9192DA21600E3D996 /* Resources */,
 			);
 			path = Collegefeed;
 			sourceTree = "<group>";
@@ -340,8 +364,8 @@
 				5390A94219158E1A00ACD082 /* DataControllerTests.m */,
 				5390A94019158E0E00ACD082 /* ViewControllerTests.m */,
 				53F878C119133F60002A578B /* CollegefeedTests.m */,
-				53F878BC19133F60002A578B /* Supporting Files */,
 				53AE73C2192802BD00BE6B02 /* ModelTests.m */,
+				53F878BC19133F60002A578B /* Supporting Files */,
 			);
 			path = CollegefeedTests;
 			sourceTree = "<group>";
@@ -432,13 +456,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */,
+				53BDB4D4192F4E6700F45D5C /* CollegePickerViewController.xib in Resources */,
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */,
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,
 				5390A9201914B76800ACD082 /* arrowupblue.png in Resources */,
 				5390A9241914B76800ACD082 /* postbuttonclick.xml in Resources */,
 				53F878AF19133F60002A578B /* Images.xcassets in Resources */,
+				53BDB4DB1930688200F45D5C /* new.png in Resources */,
+				53BDB4DA1930688200F45D5C /* colleges.png in Resources */,
 				5390A91F1914B76800ACD082 /* arrowup.png in Resources */,
+				53BDB4DC1930688200F45D5C /* tags.png in Resources */,
+				53BDB4D61930669100F45D5C /* top.png in Resources */,
 				53F8789B19133F60002A578B /* InfoPlist.strings in Resources */,
 				533475A51923344100E84CC8 /* TableCell.xib in Resources */,
 			);
@@ -467,6 +496,7 @@
 				53AE73C51928208100BE6B02 /* Votable.m in Sources */,
 				532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */,
 				53D2AD111918A22A0097C840 /* Tag.m in Sources */,
+				53BDB4D3192F4E6700F45D5C /* CollegePickerViewController.m in Sources */,
 				53D2AD151918AAB80097C840 /* College.m in Sources */,
 				53AE736D1925D46300BE6B02 /* CollegeViewController.m in Sources */,
 				53AE73CB19283A9D00BE6B02 /* VoteDataController.m in Sources */,

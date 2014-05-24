@@ -19,5 +19,6 @@
 - (id) initWithPost:(Post*)post;
 - (NSString *)getPostMessage;
 
+- (id)initWithNetwork:(BOOL)useNetwork withPost:(Post*)post;
 
 @end
