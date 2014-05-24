@@ -8,6 +8,7 @@
 
 #import "CollegePickerViewController.h"
 #import "College.h"
+#import "Constants.h"
 
 @interface CollegePickerViewController ()
 
@@ -26,9 +27,10 @@
 
 - (void)viewDidLoad
 {
-    [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];
+
     // Do any additional setup after loading the view from its nib.
     [super viewDidLoad];
+//    [self.navigationItem setTitleView:logoTitleView];
 
     [self.tableView reloadData];
 }

@@ -99,8 +99,9 @@
     {
         CollegePickerViewController *controller = [[CollegePickerViewController alloc] init];
         [controller setCollegesList:self.collegeDataController.list];
-        [self presentViewController:controller animated:YES completion:^{  }];
-         
+        [self.navigationController pushViewController:controller animated:YES];
+//        [self presentViewController:controller animated:YES completion:^{  }];
+        
          
 //         controller setCollegesList:self.collegeDataController.list];
     }

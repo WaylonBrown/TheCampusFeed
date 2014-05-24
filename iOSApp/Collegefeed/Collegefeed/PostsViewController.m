@@ -12,6 +12,8 @@
 #import "Post.h"
 #import "CommentViewController.h"
 #import "CollegeViewController.h"
+#import "Constants.h"
+
 @implementation PostsViewController
 
 - (void)viewWillAppear:(BOOL)animated
@@ -22,11 +24,13 @@
 }
 - (void)viewDidLoad
 {
+    [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
+
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
-
+    
     [self.tableView reloadData];
 }
 
@@ -46,10 +50,11 @@
     CommentViewController* controller = [[CommentViewController alloc] initWithOriginalPost:self.selectedPost];
 
     // when not in a navigation controller
-    [self presentViewController:controller animated:YES completion:nil];
+//    [self presentViewController:controller animated:YES completion:nil];
 
     // if in a navigation controller
-    // [self.navigationController pushViewController:controller animated:YES];
+    [self.navigationController pushViewController:controller
+                                         animated:YES];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
@@ -92,7 +97,7 @@
 
 #pragma mark - Actions
 
-- (IBAction)create:(id)sender
+- (IBAction)create//:(id)sender
 {   // Display popup to let user type a new post
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
                                                         message:@"What's poppin?"
@@ -102,6 +107,7 @@
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         [alert show];
 }
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {   // Add new post if user submits on the alert view
     

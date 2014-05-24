@@ -11,11 +11,15 @@
 #import "TagViewController.h"
 #import "TagDataController.h"
 #import "PostsViewController.h"
+#import "Constants.h"
 
 @implementation TagViewController
 
 - (void)viewDidLoad
-{   // Do any additional setup after loading the view.
+{
+    [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
+
+    // Do any additional setup after loading the view.
     [super viewDidLoad];
 
     [self.tableView setDataSource:self];

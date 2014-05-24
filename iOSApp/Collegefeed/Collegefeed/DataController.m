@@ -86,8 +86,6 @@
         // initialize this object from the JSON in the response
         obj = [obj initFromJSON:jsonPost];
         [array addObject:obj];
-        //        Post* post = [[Post alloc] initFromJSON:jsonPost];
-        //        [array addObject:post];
     }
     @catch(NSException* e)
     {

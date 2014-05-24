@@ -33,16 +33,12 @@
     }
     return self;
 }
-- (void)viewDidLoad
+- (void)viewWillAppear:(BOOL)animated
 {
-    [self.logoView setImage:nil];
-    UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithTitle: @"Back"
-                                                               style: UIBarButtonItemStyleBordered
-                                                              target: self
-                                                              action: @selector(cancel)];
-    [button setTintColor:[UIColor whiteColor]];
-    [self.navigationItem setLeftBarButtonItem:button];
-    
+//    [self.collegeSegmentControl setSelectedSegmentIndex:0];
+}
+- (void)viewDidLoad
+{    
     [super viewDidLoad];
     
     [self.tableView setDataSource:self];
@@ -149,7 +145,7 @@
 
 - (void)cancel
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)create:(id)sender
 {   // Display popup to let user type a new comment
@@ -191,7 +187,6 @@
     }
     return [NSString stringWithFormat:@"%d seconds ago", commentAgeSeconds];
 }
-
 - (void)castVote:(Vote *)vote
 {
     [super castVote:vote];

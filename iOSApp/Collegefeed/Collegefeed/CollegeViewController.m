@@ -10,11 +10,15 @@
 #import "CollegeViewController.h"
 #import "CollegeDataController.h"
 #import "PostsViewController.h"
+#import "Constants.h"
 
 @implementation CollegeViewController
 
 - (void)viewDidLoad
-{   // Do any additional setup after loading the view.
+{
+    [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
+
+    // Do any additional setup after loading the view.
     [super viewDidLoad];
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
