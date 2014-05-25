@@ -10,6 +10,7 @@
 #import "Votable.h"
 #import "Post.h"
 #import "Vote.h"
+#import "PostsViewController.h"
 
 @implementation TableCell
 
@@ -77,6 +78,14 @@
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
 {
     NSString* tagMessage = [url absoluteString];
+    PostsViewController *controller = [[PostsViewController alloc] init];
+
+    
+    PostsViewController *strongDelegate = (PostsViewController*)self.delegate;
+    [strongDelegate.navigationController pushViewController:controller animated:YES];
+
+    // [self.navigationController pushViewController:controller animated:YES];
+
     NSLog(@"tag = %@", tagMessage);
 }
 

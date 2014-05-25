@@ -82,7 +82,7 @@
     
     // assign all navigation controllers to the TabBar
     NSArray *navControllers = [NSArray arrayWithObjects:topPostsNavController, newPostsNavController, tagNavController,
-                               collegeNavController, myPostsNavController, /*myCommentNavController, */ nil];
+                               collegeNavController, /* myPostsNavController, myCommentNavController, */ nil];
     [self setTabBarController:[[UITabBarController alloc] init]];
     [self.tabBarController setViewControllers:navControllers];
     
@@ -100,8 +100,6 @@
     [[self.tabBarController.tabBar.items objectAtIndex:2] setImage:[UIImage imageNamed:@"tags.png"]];
     [[self.tabBarController.tabBar.items objectAtIndex:3] setImage:[UIImage imageNamed:@"colleges.png"]];
 
-    
-    
     // finalize window specifications
     [self.window setRootViewController:self.tabBarController];
     [self.window makeKeyAndVisible];
