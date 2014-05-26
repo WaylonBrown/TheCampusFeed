@@ -49,8 +49,18 @@
           "groups": "all"
         },
         {
-          "description": "Listing posts",
-          "link": "posts/listing_posts.json",
+          "description": "Get posts by a tag:",
+          "link": "posts/get_posts_by_a_tag.json",
+          "groups": "all"
+        },
+        {
+          "description": "Listing all posts",
+          "link": "posts/listing_all_posts.json",
+          "groups": "all"
+        },
+        {
+          "description": "Use pagination:",
+          "link": "posts/use_pagination.json",
           "groups": "all"
         }
       ]
