@@ -1,0 +1,38 @@
+{
+  "resource": "Posts",
+  "http_method": "GET",
+  "route": "/api/v1/posts",
+  "description": "Listing all posts",
+  "explanation": null,
+  "parameters": [
+    {
+      "name": "lat",
+      "description": "Your current latitude."
+    },
+    {
+      "name": "lon",
+      "description": "Your current longitude."
+    }
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/v1/posts",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "[{\"id\":1654,\"text\":\"its a #test post 1\",\"score\":null,\"lat\":null,\"lon\":null},{\"id\":1655,\"text\":\"its a #test post 2\",\"score\":null,\"lat\":null,\"lon\":null},{\"id\":1656,\"text\":\"its a #test post 3\",\"score\":null,\"lat\":null,\"lon\":null},{\"id\":1657,\"text\":\"its a #test post 4\",\"score\":null,\"lat\":null,\"lon\":null},{\"id\":1658,\"text\":\"its a #test post 5\",\"score\":null,\"lat\":null,\"lon\":null},{\"id\":1659,\"text\":\"its a #test post 6\",\"score\":null,\"lat\":null,\"lon\":null},{\"id\":1660,\"text\":\"its a #test post 7\",\"score\":null,\"lat\":null,\"lon\":null}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"de4afdbe4b70874eadddab515034b0d0\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"62faed83-fa6c-4831-81a1-0af319b219a1","X-Runtime":"0.015743","Content-Length":"526"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "resource": "Posts",
+  "http_method": "GET",
+  "route": "/api/v1/posts/byTag/test",
+  "description": "Get posts by a tag:",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/v1/posts/byTag/test",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "[{\"id\":1662,\"text\":\"its a #test post 2\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-26T22:24:48.123Z\",\"updated_at\":\"2014-05-26T22:24:48.123Z\",\"college_id\":null},{\"id\":1663,\"text\":\"its a #test post 3\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-26T22:24:48.129Z\",\"updated_at\":\"2014-05-26T22:24:48.129Z\",\"college_id\":null},{\"id\":1664,\"text\":\"its a #test post 4\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-26T22:24:48.134Z\",\"updated_at\":\"2014-05-26T22:24:48.134Z\",\"college_id\":null},{\"id\":1665,\"text\":\"its a #test post 5\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-26T22:24:48.143Z\",\"updated_at\":\"2014-05-26T22:24:48.143Z\",\"college_id\":null},{\"id\":1666,\"text\":\"its a #test post 6\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-26T22:24:48.151Z\",\"updated_at\":\"2014-05-26T22:24:48.151Z\",\"college_id\":null},{\"id\":1667,\"text\":\"its a #test post 7\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-26T22:24:48.160Z\",\"updated_at\":\"2014-05-26T22:24:48.160Z\",\"college_id\":null}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Total":"6","Content-Type":"application/json; charset=utf-8","ETag":"\"862a4b70c89ba2377f6b5474e0975281\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"35779ad7-b915-420b-a976-06f995686688","X-Runtime":"0.021626","Content-Length":"1039"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}
