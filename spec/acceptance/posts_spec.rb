@@ -5,7 +5,9 @@ resource "Posts" do
   header "Content-Type", "application/json"
 
   before do
-    Post.create(:text => "Test post.");
+    (1..7).each do |i|
+      Post.create(:text => "its a #test post #{i}");
+    end
   end
 
   get "/api/v1/posts" do
@@ -13,11 +15,29 @@ resource "Posts" do
     parameter :lat, "Your current latitude."
     parameter :lon, "Your current longitude."
 
-    example "Listing posts" do
+    example "Listing all posts" do
       do_request
       status.should == 200
     end
+
   end
+
+  get '/api/v1/posts/byTag/test' do
+
+    example 'Get posts by a tag:' do
+      do_request
+      status.should == 200
+    end
+
+    example 'Use pagination:' do
+      do_request(
+        :page => 2,
+        :per_page => 3
+      )
+      status.should == 200
+    end
+  end
+
   post "/api/v1/posts" do
     let(:raw_post) { params.to_json }
 
