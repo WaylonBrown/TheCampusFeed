@@ -1,6 +1,18 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
+  def byTag
+    @tag = Tag.find_by(text: params[:tagText])
+
+    if @tag
+      #Paginate by 25
+      paginate json: @tag.posts
+    else
+      render json: {:tag => ["does not exist."]}, status: 400
+    end
+
+  end
+
   # GET /posts
   # GET /posts.json
   def index
@@ -37,7 +49,6 @@ class PostsController < ApplicationController
         elsif !@post.tags.include? @existing
           @post.tags << @existing
         end
-          puts @tag
       end
     }
 
