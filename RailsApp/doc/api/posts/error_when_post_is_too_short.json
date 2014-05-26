@@ -1,0 +1,35 @@
+{
+  "resource": "Posts",
+  "http_method": "POST",
+  "route": "/api/v1/posts",
+  "description": "Error when post is too short",
+  "explanation": null,
+  "parameters": [
+    {
+      "required": true,
+      "name": "post",
+      "description": "The new post."
+    }
+  ],
+  "requests": [
+    {
+      "request_method": "POST",
+      "request_path": "/api/v1/posts",
+      "request_body": "{\"text\":\"S\"}",
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 422,
+      "response_status_text": "Unprocessable Entity",
+      "response_body": "{\"text\":[\"is too short (minimum is 10 characters)\"]}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","Cache-Control":"no-cache","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"aca9ef46-1dd6-4575-b05f-2aa2f73e40a0","X-Runtime":"0.010194","Content-Length":"52"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

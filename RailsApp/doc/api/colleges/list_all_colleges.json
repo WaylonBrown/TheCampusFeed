@@ -22,8 +22,8 @@
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "[{\"id\":5,\"name\":\"Texas A\\u0026M University\",\"lat\":30.614997,\"lon\":-96.342311,\"size\":null,\"url\":\"http://example.org/api/v1/colleges/5\"},{\"id\":6,\"name\":\"University of Texas\",\"lat\":30.28496,\"lon\":-97.734239,\"size\":null,\"url\":\"http://example.org/api/v1/colleges/6\"}]",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"265841485450a0926abbd56bf49c1df3\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"60090ab9-63f4-4c00-8329-37339ee76de7","X-Runtime":"0.014830","Content-Length":"262"},
+      "response_body": "[{\"id\":13,\"name\":\"Texas A\\u0026M University\",\"lat\":30.614997,\"lon\":-96.342311},{\"id\":14,\"name\":\"University of Texas\",\"lat\":30.28496,\"lon\":-97.734239}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"e87fb5268403cbc915594237adc1e2f1\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"e8a156f2-8c3c-4b8c-80b8-b0064fa8e887","X-Runtime":"0.015812","Content-Length":"150"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }
