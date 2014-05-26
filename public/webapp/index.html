@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="app.min.css">
+    <style>
+      .app-topbar{
+        background-color: #33B5E5;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app-page" data-page="home">
+      <div class="app-topbar">
+        <div class="app-title">CollegeFeed</div>
+      </div>
+      <div class="app-content" id="postContent">
+        <div class="app-section">
+          <ul class="app-list" id="postList">
+            <label>Recent Posts</label>
+            <li>Dogs</li>
+            <li>Cats</li>
+            <li>Apples</li>
+            <li>Oranges</li>
+          </ul>
+        </div>
+        <div class="app-section">
+          <label id="loadingText">Loading</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-page" data-page="page2">
+      <div class="app-topbar">
+        <div class="app-button left" data-back data-autotitle></div>
+        <div class="app-title">Page 2</div>
+      </div>
+      <div class="app-content">
+        Page 2 is lonely
+      </div>
+    </div>
+
+    <script src="zepto.js"></script>
+    <script src="app.min.js"></script>
+    <script>
+      App.controller('home', function (page) {
+        // put stuff here
+      });
+
+      App.controller('page2', function (page) {
+        // put stuff here
+      });
+      
+      App.infiniteScroll($("ul#postContent"), {loading: $("label#loadingText")}, function (next) {
+        // dynamically fetch data
+        var list = [];
+        list.push("1");
+        // add html elements to list
+        next(list);
+      });
+
+      try {
+        App.restore();
+      } catch (err) {
+        App.load('home');
+      }
+    </script>
+  </body>
+</html>
