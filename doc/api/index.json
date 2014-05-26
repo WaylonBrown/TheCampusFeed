@@ -39,6 +39,16 @@
           "groups": "all"
         },
         {
+          "description": "Error when post is too long",
+          "link": "posts/error_when_post_is_too_long.json",
+          "groups": "all"
+        },
+        {
+          "description": "Error when post is too short",
+          "link": "posts/error_when_post_is_too_short.json",
+          "groups": "all"
+        },
+        {
           "description": "Listing posts",
           "link": "posts/listing_posts.json",
           "groups": "all"
