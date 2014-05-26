@@ -36,6 +36,9 @@ gem 'rspec_api_documentation'
 gem 'apitome'
 gem 'versioncake'
 
+gem 'kaminari'
+gem 'api-pagination'
+
 
 gem 'rails_12factor'
 
