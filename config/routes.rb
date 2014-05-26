@@ -11,6 +11,7 @@ Postfeed::Application.routes.draw do
 
       resources :comments
 
+      get '/posts/byTag/:tagText' => 'posts#byTag'
       resources :posts
 
 
