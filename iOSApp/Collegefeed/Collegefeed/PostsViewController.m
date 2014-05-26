@@ -50,7 +50,7 @@
     CommentViewController* controller = [[CommentViewController alloc] initWithOriginalPost:self.selectedPost];
 
     // when not in a navigation controller
-//    [self presentViewController:controller animated:YES completion:nil];
+    // [self presentViewController:controller animated:YES completion:nil];
 
     // if in a navigation controller
     [self.navigationController pushViewController:controller
