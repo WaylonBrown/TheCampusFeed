@@ -29,5 +29,19 @@ resource "Posts" do
       )
       status.should == 201
     end
+
+    example "Error when post is too short" do
+      do_request(
+        :text => "S"
+      )
+      status.should == 422
+    end
+
+    example "Error when post is too long" do
+      do_request(
+        :text => "test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_"
+      )
+      status.should == 422
+    end
   end
 end
