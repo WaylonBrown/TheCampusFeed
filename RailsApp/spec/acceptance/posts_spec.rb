@@ -24,12 +24,12 @@ resource "Posts" do
 
   get '/api/v1/posts/byTag/test' do
 
-    example 'Get posts by a tag:' do
+    example 'Get posts by a tag' do
       do_request
       status.should == 200
     end
 
-    example 'Use pagination:' do
+    example 'Use pagination' do
       do_request(
         :page => 2,
         :per_page => 3

@@ -38,19 +38,6 @@ class PostsController < ApplicationController
   def create
 
     @post = Post.new(post_params)
-    @words = @post.text.split(/[\r\n\t ]+/)
-    @words.each {|w|
-      if w.length > 0 && w[0] == "#" then
-        @text = w[1..-1]
-        @existing = Tag.find_by text: @text
-        if @existing.nil?
-          @tag = @post.tags.build({text: @text})
-          @tag.save
-        elsif !@post.tags.include? @existing
-          @post.tags << @existing
-        end
-      end
-    }
 
     respond_to do |format|
       if @post.save
