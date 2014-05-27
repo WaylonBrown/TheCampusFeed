@@ -72,6 +72,26 @@
           "description": "Listing all posts for college ID 2015",
           "link": "posts/listing_all_posts_for_college_id_.json",
           "groups": "all"
+        },
+        {
+          "description": "Listing all recent posts",
+          "link": "posts/listing_all_recent_posts.json",
+          "groups": "all"
+        },
+        {
+          "description": "Listing all recent posts for college ID 2015",
+          "link": "posts/listing_all_recent_posts_for_college_id_.json",
+          "groups": "all"
+        },
+        {
+          "description": "Listing all trending posts",
+          "link": "posts/listing_all_trending_posts.json",
+          "groups": "all"
+        },
+        {
+          "description": "Listing all trending posts for college ID 2015",
+          "link": "posts/listing_all_trending_posts_for_college_id_.json",
+          "groups": "all"
         }
       ]
     },

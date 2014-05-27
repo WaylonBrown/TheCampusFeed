@@ -9,18 +9,21 @@ Postfeed::Application.routes.draw do
       #get '/colleges/:id/within' => 'colleges#within'
       resources :colleges, only: [:index] do
         get '/posts/byTag/:tagText' => 'posts#byTag'
+        get '/posts/recent' => 'posts#recent'
+        get '/posts/trending' => 'posts#trending'
         resources :posts do
           resources :comments, except: [:show]
         end
       end
 
-      resources :posts, only: [:index]
 
       resources :votes
 
       resources :comments, only: [:show]
 
       get '/posts/byTag/:tagText' => 'posts#byTag'
+      get '/posts/recent' => 'posts#recent'
+      get '/posts/trending' => 'posts#trending'
       resources :posts do
         resources :comments, except: [:show]
       end
