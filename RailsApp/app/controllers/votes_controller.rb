@@ -1,5 +1,10 @@
 class VotesController < ApplicationController
   before_action :set_vote, only: [:show, :edit, :update, :destroy]
+  before_action :set_votable, only: [:create, :index, :score]
+
+  def score
+    render json: {:score => @votable.votes.length}
+  end
 
   # GET /votes
   # GET /votes.json
@@ -24,12 +29,12 @@ class VotesController < ApplicationController
   # POST /votes
   # POST /votes.json
   def create
-    @vote = Vote.new(vote_params)
+    @vote = @votable.votes.create(vote_params)
 
     respond_to do |format|
       if @vote.save
         format.html { redirect_to @vote, notice: 'Vote was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @vote }
+        format.json { render action: 'show', status: :created }
       else
         format.html { render action: 'new' }
         format.json { render json: @vote.errors, status: :unprocessable_entity }
@@ -62,6 +67,14 @@ class VotesController < ApplicationController
   end
 
   private
+    def set_votable
+      if params[:comment_id]
+        @votable = Comment.find(params[:comment_id])
+      elsif params[:post_id]
+        @votable = Post.find(params[:post_id])
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_vote
       @vote = Vote.find(params[:id])

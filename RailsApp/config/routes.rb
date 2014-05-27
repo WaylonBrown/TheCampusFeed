@@ -12,12 +12,16 @@ Postfeed::Application.routes.draw do
         get '/posts/recent' => 'posts#recent'
         get '/posts/trending' => 'posts#trending'
         resources :posts do
-          resources :comments, except: [:show]
+          resources :comments, except: [:show] do
+            get 'votes/score' => 'votes#score'
+            resources :votes
+          end
+          get 'votes/score' => 'votes#score'
+          resources :votes
         end
       end
 
 
-      resources :votes
 
       resources :comments, only: [:show]
 
@@ -25,7 +29,12 @@ Postfeed::Application.routes.draw do
       get '/posts/recent' => 'posts#recent'
       get '/posts/trending' => 'posts#trending'
       resources :posts do
-        resources :comments, except: [:show]
+        resources :comments, except: [:show] do
+          get 'votes/score' => 'votes#score'
+          resources :votes
+        end
+        get 'votes/score' => 'votes#score'
+        resources :votes
       end
 
 

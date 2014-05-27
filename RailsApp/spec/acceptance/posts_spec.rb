@@ -99,7 +99,7 @@ resource "Posts" do
   post "/api/v1/colleges/2015/posts" do
     let(:raw_post) { params.to_json }
 
-    parameter :post, "The new post.", :required => true
+    parameter :text, "The new post's text.", :required => true
 
     example "Creating a post (tags objects are created automatically)" do
       do_request(

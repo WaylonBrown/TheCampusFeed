@@ -5,19 +5,25 @@ resource "Votes" do
   header "Content-Type", "application/json"
 
   before do
-    @p = Post.create(:text => "Test post.");
+    @p = Post.create(:text => "Test post.", :id => 101);
     @p.votes.create(:upvote => true);
   end
 
-  post "/api/v1/votes" do
+  get "/api/v1/posts/101/votes/score" do
+    example "Get the score of post ID 101" do
+      do_request
+      status.should == 200
+    end
+  end
+
+  post "/api/v1/posts/101/votes" do
     let(:raw_post) { params.to_json }
 
-    parameter :vote, "The new vote.", :required => true
+    parameter :upvote, "The new vote's upvote or downvote status.", :required => true
 
-    example "Casting a vote on an item" do
+    example "Casting a vote on post ID 101" do
       do_request(
         :upvote => true,
-        :votable_id => @p.id
       )
       status.should == 201
     end
