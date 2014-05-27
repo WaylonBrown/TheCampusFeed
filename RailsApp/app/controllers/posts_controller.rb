@@ -2,14 +2,18 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   before_action :require_college, only: [:create]
-  before_action :set_college, only: [:index, :create]
+  before_action :set_college, only: [:index, :create, :byTag]
 
   def byTag
     @tag = Tag.find_by(text: params[:tagText])
 
     if @tag
       #Paginate by 25
-      paginate json: @tag.posts
+      if @college
+        paginate json: @tag.posts.select{ |p| p.college_id == @college.id }
+      else
+        paginate json: @tag.posts
+      end
     else
       render json: {:tag => ["does not exist."]}, status: 400
     end

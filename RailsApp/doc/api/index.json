@@ -34,7 +34,7 @@
       "name": "Posts",
       "examples": [
         {
-          "description": "Creating a post. Tags objects are created automatically.",
+          "description": "Creating a post (tags objects are created automatically)",
           "link": "posts/creating_a_post_tags_objects_are_created_automatically.json",
           "groups": "all"
         },
@@ -49,8 +49,18 @@
           "groups": "all"
         },
         {
-          "description": "Get posts by a tag",
-          "link": "posts/get_posts_by_a_tag.json",
+          "description": "Get all posts using tag #test from all colleges",
+          "link": "posts/get_all_posts_using_tag_test_from_all_colleges.json",
+          "groups": "all"
+        },
+        {
+          "description": "Get all posts using tag #test from college ID 2016",
+          "link": "posts/get_all_posts_using_tag_test_from_college_id_.json",
+          "groups": "all"
+        },
+        {
+          "description": "Get page 2 of all posts using tag #test from all colleges",
+          "link": "posts/get_page__of_all_posts_using_tag_test_from_all_colleges.json",
           "groups": "all"
         },
         {
@@ -61,11 +71,6 @@
         {
           "description": "Listing all posts for college ID 2015",
           "link": "posts/listing_all_posts_for_college_id_.json",
-          "groups": "all"
-        },
-        {
-          "description": "Use pagination",
-          "link": "posts/use_pagination.json",
           "groups": "all"
         }
       ]
