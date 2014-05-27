@@ -109,8 +109,13 @@
       "name": "Votes",
       "examples": [
         {
-          "description": "Casting a vote on an item",
-          "link": "votes/casting_a_vote_on_an_item.json",
+          "description": "Casting a vote on post ID 101",
+          "link": "votes/casting_a_vote_on_post_id_.json",
+          "groups": "all"
+        },
+        {
+          "description": "Get the score of post ID 101",
+          "link": "votes/get_the_score_of_post_id_.json",
           "groups": "all"
         }
       ]
