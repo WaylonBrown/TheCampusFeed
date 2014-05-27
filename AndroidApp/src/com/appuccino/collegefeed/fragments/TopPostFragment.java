@@ -150,9 +150,8 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(mainActivity, "make dialog", Toast.LENGTH_SHORT).show();
+				mainActivity.chooseFeedDialog();
 			}
-			
 		});
 		
 	}

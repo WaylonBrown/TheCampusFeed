@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/chooseFeedDialogTitle"
+        android:text="@string/chooseFeedDialogTitle"
+        style="@style/block"
+        android:textSize="30sp" 
+        android:textColor="@color/lightblue"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:gravity="center_horizontal"
+        />
+    
+    <LinearLayout
+        android:background="@drawable/card"
+        style="@style/block"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        >
+        
+        <TextView
+            android:id="@+id/allCollegesText"
+            style="@style/block"
+            android:gravity="center"
+            android:text="@string/allColleges"
+            android:textSize="24sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            />
+        
+    </LinearLayout>
+    
+    <TextView
+        android:id="@+id/nearYouTitle"
+        android:text="@string/nearYou"
+        style="@style/block"
+        android:textSize="16sp" 
+        android:textColor="@color/darkgray"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="center_horizontal"
+        />
+    
+    <ListView
+        android:id="@+id/nearYouDialogList"
+        style="@style/block"
+        />
+    
+    <TextView
+        android:id="@+id/otherTitle"
+        android:text="@string/other"
+        style="@style/block"
+        android:textSize="16sp" 
+        android:textColor="@color/darkgray"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="center_horizontal"
+        />
+    
+    <Spinner
+        android:id="@+id/collegeChoiceSpinner"
+        style="@style/block"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"/>"
+
+</LinearLayout>

@@ -43,6 +43,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -310,7 +311,39 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 //			NewPostFragment.updateList();
 //		}
 	}
+	
+	public void chooseFeedDialog() {
+		LayoutInflater inflater = getLayoutInflater();
+		View layout = inflater.inflate(R.layout.dialog_choose_feed, null);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	builder.setCancelable(true);
+    	builder.setView(layout);
+    	    	
+    	final AlertDialog dialog = builder.create();
+    	dialog.show();
+    	
+    	TextView chooseTitleText = (TextView)layout.findViewById(R.id.chooseFeedDialogTitle);
+    	TextView allCollegesText = (TextView)layout.findViewById(R.id.allCollegesText);
+    	TextView nearYouTitle = (TextView)layout.findViewById(R.id.nearYouTitle);
+    	TextView otherTitle = (TextView)layout.findViewById(R.id.otherTitle);
+    	chooseTitleText.setTypeface(FontFetcher.light);
+    	allCollegesText.setTypeface(FontFetcher.light);
+    	nearYouTitle.setTypeface(FontFetcher.light);
+    	otherTitle.setTypeface(FontFetcher.light);
+    	
+    	ListView nearYouList = (ListView)layout.findViewById(R.id.nearYouDialogList);
+    	populateNearYouList(nearYouList);
+	}
 
+	private void populateNearYouList(ListView list) {
+		String[] testCollegeString = {
+				"Texas A&M University",
+				"University of Texas in Austin"
+		};
+		
+		
+	}
 
 	public void newPostClicked() 
 	{

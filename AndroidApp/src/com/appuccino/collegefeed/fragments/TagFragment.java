@@ -138,9 +138,8 @@ public class TagFragment extends Fragment
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(mainActivity, "make dialog", Toast.LENGTH_SHORT).show();
+				mainActivity.chooseFeedDialog();
 			}
-			
 		});
 	}
 	

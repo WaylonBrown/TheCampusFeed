@@ -17,6 +17,11 @@
     <string name="allcollege_section5">My Posts</string>
     <string name="allcollege_section6">My Comments</string>
     
+    <string name="chooseFeedDialogTitle">Choose a Feed</string>
+    <string name="allColleges">All Colleges</string>
+    <string name="nearYou">Near You</string>
+    <string name="other">Other Colleges</string>
+    
     <string-array name="spinnerArray">
         <item>All Colleges</item>
         <item>Choose college...</item>
