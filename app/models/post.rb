@@ -15,8 +15,7 @@ class Post < ActiveRecord::Base
         @text = w[1..-1]
         @existing = Tag.find_by text: @text
         if @existing.nil?
-          @tag = tags.build({text: @text})
-          @tag.save
+          @tag = tags.create({text: @text})
         elsif !tags.include? @existing
           tags << @existing
         end

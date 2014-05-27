@@ -7,10 +7,15 @@ resource "Posts" do
 
   before do
     @c = College.create(:name => "Swag University", :id => 2015)
-    (1..2).each do |i|
-      @c.posts.build(:text => "its a #test post #{i}");
+    (1..3).each do |i|
+      @c.posts.create(:text => "its a #test post #{i}");
     end
-    @c.save
+
+    @c2 = College.create(:name => "Yolo University", :id => 2016)
+    (1..3).each do |i|
+      @c2.posts.create(:text => "its a #test post 2.0 #{i}");
+    end
+    
   end
 
   get "/api/v1/posts" do
@@ -33,16 +38,24 @@ resource "Posts" do
 
   get '/api/v1/posts/byTag/test' do
 
-    example 'Get posts by a tag' do
+    example 'Get all posts using tag #test from all colleges' do
       do_request
       status.should == 200
     end
 
-    example 'Use pagination' do
+    example 'Get page 2 of all posts using tag #test from all colleges' do
       do_request(
         :page => 2,
         :per_page => 3
       )
+      status.should == 200
+    end
+  end
+
+  get '/api/v1/colleges/2015/posts/byTag/test' do
+    example 'Get all posts using tag #test from college ID 2016' do
+      do_request
+      JSON.parse(response_body).length.should == 3
       status.should == 200
     end
   end
@@ -52,7 +65,7 @@ resource "Posts" do
 
     parameter :post, "The new post.", :required => true
 
-    example "Creating a post. Tags objects are created automatically." do
+    example "Creating a post (tags objects are created automatically)" do
       do_request(
         :text => "This is a #comment #wtih #tag #testing #yo #yo #yo"
       )

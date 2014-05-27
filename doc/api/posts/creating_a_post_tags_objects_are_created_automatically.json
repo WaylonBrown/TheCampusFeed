@@ -2,7 +2,7 @@
   "resource": "Posts",
   "http_method": "POST",
   "route": "/api/v1/colleges/2015/posts",
-  "description": "Creating a post. Tags objects are created automatically.",
+  "description": "Creating a post (tags objects are created automatically)",
   "explanation": null,
   "parameters": [
     {
@@ -26,8 +26,8 @@
       "request_content_type": "application/json",
       "response_status": 201,
       "response_status_text": "Created",
-      "response_body": "{\"id\":2405,\"text\":\"This is a #comment #wtih #tag #testing #yo #yo #yo\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T06:53:07.696Z\",\"updated_at\":\"2014-05-27T06:53:07.696Z\"}",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/posts/2405","Content-Type":"application/json; charset=utf-8","ETag":"\"7ee2ad60157e3b694a687428852f29fc\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"5eb6fc1f-879f-48ae-a729-dfa22954ad72","X-Runtime":"0.051996","Content-Length":"186"},
+      "response_body": "{\"id\":3050,\"text\":\"This is a #comment #wtih #tag #testing #yo #yo #yo\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T07:18:23.088Z\",\"updated_at\":\"2014-05-27T07:18:23.088Z\"}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/posts/3050","Content-Type":"application/json; charset=utf-8","ETag":"\"8c47066d3b617e2cb93b87a017958ea2\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"6c8992db-3458-4785-a5b9-97cffd5e65b6","X-Runtime":"0.057713","Content-Length":"186"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

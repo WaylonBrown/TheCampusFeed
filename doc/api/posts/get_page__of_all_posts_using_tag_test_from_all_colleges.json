@@ -1,0 +1,33 @@
+{
+  "resource": "Posts",
+  "http_method": "GET",
+  "route": "/api/v1/posts/byTag/test",
+  "description": "Get page 2 of all posts using tag #test from all colleges",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/v1/posts/byTag/test?page=2&per_page=3",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+        "page": "2",
+        "per_page": "3"
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "[{\"id\":3029,\"text\":\"its a #test post 2.0 1\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T07:18:22.694Z\",\"updated_at\":\"2014-05-27T07:18:22.694Z\",\"college_id\":2016},{\"id\":3030,\"text\":\"its a #test post 2.0 2\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T07:18:22.706Z\",\"updated_at\":\"2014-05-27T07:18:22.706Z\",\"college_id\":2016},{\"id\":3031,\"text\":\"its a #test post 2.0 3\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T07:18:22.721Z\",\"updated_at\":\"2014-05-27T07:18:22.721Z\",\"college_id\":2016}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Link":"\u003Chttp://example.org/api/v1/posts/byTag/test?page=1\u0026per_page=3\u003E; rel=\"first\", \u003Chttp://example.org/api/v1/posts/byTag/test?page=1\u0026per_page=3\u003E; rel=\"prev\"","Total":"6","Content-Type":"application/json; charset=utf-8","ETag":"\"ae58ecf3a65e2458475e2b25b0bce732\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"68a654dd-06d2-4af4-b6ae-bf4880229883","X-Runtime":"0.018231","Content-Length":"532"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}
