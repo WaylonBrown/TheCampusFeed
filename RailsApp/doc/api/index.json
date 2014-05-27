@@ -19,13 +19,13 @@
           "groups": "all"
         },
         {
-          "description": "Listing comments for a different post",
-          "link": "comments/listing_comments_for_a_different_post.json",
+          "description": "Listing comments for post ID 1",
+          "link": "comments/listing_comments_for_post_id_.json",
           "groups": "all"
         },
         {
-          "description": "Listing comments for a given post",
-          "link": "comments/listing_comments_for_a_given_post.json",
+          "description": "Listing comments for post ID 2",
+          "link": "comments/listing_comments_for_post_id_.json",
           "groups": "all"
         }
       ]

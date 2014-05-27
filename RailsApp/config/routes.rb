@@ -7,7 +7,12 @@ Postfeed::Application.routes.draw do
 
       #get '/colleges/listNearby' => 'colleges#listNearby'
       #get '/colleges/:id/within' => 'colleges#within'
-      resources :colleges, only: [:index]
+      resources :colleges, only: [:index] do
+        get '/posts/byTag/:tagText' => 'posts#byTag'
+        resources :posts do
+          resources :comments, except: [:show]
+        end
+      end
 
       resources :votes
 

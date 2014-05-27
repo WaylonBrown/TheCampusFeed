@@ -4,13 +4,16 @@ require 'rspec_api_documentation/dsl'
 resource "Posts" do
   header "Content-Type", "application/json"
 
+
   before do
+    @c = College.create(:name => "Swag University", :id => 2015)
     (1..7).each do |i|
-      Post.create(:text => "its a #test post #{i}");
+      @c.posts.build(:text => "its a #test post #{i}");
     end
+    @c.save
   end
 
-  get "/api/v1/posts" do
+  get "/api/v1/colleges/2015/posts" do
 
     parameter :lat, "Your current latitude."
     parameter :lon, "Your current longitude."
@@ -38,7 +41,7 @@ resource "Posts" do
     end
   end
 
-  post "/api/v1/posts" do
+  post "/api/v1/colleges/2015/posts" do
     let(:raw_post) { params.to_json }
 
     parameter :post, "The new post.", :required => true
@@ -58,8 +61,11 @@ resource "Posts" do
     end
 
     example "Error when post is too long" do
+      o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+      longString = (0...150).map { o[rand(o.length)] }.join
+
       do_request(
-        :text => "test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_test_"
+        :text => longString 
       )
       status.should == 422
     end
