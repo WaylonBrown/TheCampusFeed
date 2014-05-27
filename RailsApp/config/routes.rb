@@ -1,12 +1,13 @@
 Postfeed::Application.routes.draw do
 
 
+  resources :users
+
     scope '/api/v1', defaults: {format: :json} do
 
-      get '/colleges/listNearby' => 'colleges#listNearby'
-      get '/colleges/:id/within' => 'colleges#within'
-      get '/colleges/import' => 'colleges#import'
-      resources :colleges
+      #get '/colleges/listNearby' => 'colleges#listNearby'
+      #get '/colleges/:id/within' => 'colleges#within'
+      resources :colleges, only: [:index]
 
       resources :votes
 
