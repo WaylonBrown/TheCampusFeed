@@ -39,6 +39,8 @@ gem 'versioncake'
 gem 'kaminari'
 gem 'api-pagination'
 
+gem 'font-awesome-rails'
+
 
 gem 'rails_12factor'
 
