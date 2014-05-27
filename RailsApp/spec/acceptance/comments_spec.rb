@@ -5,25 +5,40 @@ resource "Comments" do
   header "Content-Type", "application/json"
 
   before do
-    @p = Post.create(:text => "Test post.");
+    @p = Post.create(:text => "Test post.", :id => 1);
     @p.comments.create(:text => "Test comment.");
     @p.comments.create(:text => "Test comment number 2.");
+
+    @p2 = Post.create(:text => "Test post number 2.", :id => 2);
+    @p2.comments.create(:text => "Test comment number 3.");
+    @p2.comments.create(:text => "Test comment number 4.");
   end
   get "/api/v1/posts/1/comments" do
 
     #parameter :postid, "The post id you are getting comments from.", :required => true
 
-    example "Listing comments" do
+    example "Listing comments for a given post" do
       do_request()
       status.should == 200
     end
+
+  end
+  get "/api/v1/posts/2/comments" do
+
+    #parameter :postid, "The post id you are getting comments from.", :required => true
+
+    example "Listing comments for a different post" do
+      do_request()
+      status.should == 200
+    end
+
   end
   post "/api/v1/posts/1/comments" do
     let(:raw_post) { params.to_json }
 
     parameter :comment, "The new comment.", :required => true
 
-    example "Creating a comment" do
+    example "Creating a comment for a given post" do
 
       do_request(:text => "This is my comment on post id 1")
       status.should == 201
