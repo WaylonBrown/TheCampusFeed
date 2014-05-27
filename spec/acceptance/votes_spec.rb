@@ -16,11 +16,9 @@ resource "Votes" do
 
     example "Casting a vote on an item" do
       do_request(
-        :format => "json",
-        :vote => {
         :upvote => true,
         :votable_id => @p.id
-      })
+      )
       status.should == 201
     end
 

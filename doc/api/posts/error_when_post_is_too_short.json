@@ -1,7 +1,7 @@
 {
   "resource": "Posts",
   "http_method": "POST",
-  "route": "/api/v1/posts",
+  "route": "/api/v1/colleges/2015/posts",
   "description": "Error when post is too short",
   "explanation": null,
   "parameters": [
@@ -14,7 +14,7 @@
   "requests": [
     {
       "request_method": "POST",
-      "request_path": "/api/v1/posts",
+      "request_path": "/api/v1/colleges/2015/posts",
       "request_body": "{\"text\":\"S\"}",
       "request_headers": {
         "Content-Type": "application/json",
@@ -27,7 +27,7 @@
       "response_status": 422,
       "response_status_text": "Unprocessable Entity",
       "response_body": "{\"text\":[\"is too short (minimum is 10 characters)\"]}",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","Cache-Control":"no-cache","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"5cd90e77-005d-4fc3-a5c9-d8f1b480bb52","X-Runtime":"0.009090","Content-Length":"52"},
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","Cache-Control":"no-cache","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"540f6c9f-eb9c-4b10-928a-f5badd9be711","X-Runtime":"0.012150","Content-Length":"52"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

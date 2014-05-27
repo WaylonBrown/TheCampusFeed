@@ -17,7 +17,7 @@ resource "Comments" do
 
     #parameter :postid, "The post id you are getting comments from.", :required => true
 
-    example "Listing comments for a given post" do
+    example "Listing comments for post ID 1" do
       do_request()
       status.should == 200
     end
@@ -27,7 +27,7 @@ resource "Comments" do
 
     #parameter :postid, "The post id you are getting comments from.", :required => true
 
-    example "Listing comments for a different post" do
+    example "Listing comments for post ID 2" do
       do_request()
       status.should == 200
     end

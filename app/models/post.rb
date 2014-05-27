@@ -4,7 +4,7 @@ class Post < ActiveRecord::Base
   has_and_belongs_to_many :tags
   belongs_to :college, inverse_of: :posts
 
-  validates :text, length: {minimum: 10, maximum: 100}
+  validates :text, length: {minimum: 10, maximum: 140}
 
   after_save :make_tags
 

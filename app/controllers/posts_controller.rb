@@ -1,6 +1,9 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
+  before_action :require_college, only: [:create]
+  before_action :set_college, only: [:index, :create]
+
   def byTag
     @tag = Tag.find_by(text: params[:tagText])
 
@@ -15,8 +18,14 @@ class PostsController < ApplicationController
 
   # GET /posts
   # GET /posts.json
+  # GET /colleges/1/posts
   def index
-    @posts = Post.all
+    if !@college.nil?
+      @posts = @college.posts
+    else 
+      @posts = Post.all
+    end
+    
     paginate json: @posts
   end
 
@@ -38,7 +47,7 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
 
-    @post = Post.new(post_params)
+    @post = @college.posts.build(post_params)
 
     respond_to do |format|
       if @post.save
@@ -77,12 +86,18 @@ class PostsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_college 
+      @college = College.find(params[:college_id])
+    end
     def set_post
       @post = Post.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:text, :score, :lat, :lon)
+      params.require(:post).permit(:text, :score, :lat, :lon, :college_id)
+    end
+    def require_college
+      params.require(:college_id)
     end
 end
