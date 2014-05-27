@@ -1,0 +1,31 @@
+{
+  "resource": "Posts",
+  "http_method": "GET",
+  "route": "/api/v1/colleges/2015/posts/trending",
+  "description": "Listing all trending posts for college ID 2015",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/v1/colleges/2015/posts/trending",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "[{\"id\":3155,\"text\":\"its a #test post 3\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T07:35:40.440Z\",\"updated_at\":\"2014-05-27T07:35:40.440Z\",\"college_id\":2015},{\"id\":3154,\"text\":\"its a #test post 2\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T07:35:40.428Z\",\"updated_at\":\"2014-05-27T07:35:40.428Z\",\"college_id\":2015},{\"id\":3153,\"text\":\"its a #test post 1\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T07:35:40.415Z\",\"updated_at\":\"2014-05-27T07:35:40.415Z\",\"college_id\":2015}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Total":"3","Content-Type":"application/json; charset=utf-8","ETag":"\"ea897e055aeee69b6907b75ccc07155e\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"165de51c-a669-4d93-8109-96a2ac34b2bb","X-Runtime":"0.015152","Content-Length":"520"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

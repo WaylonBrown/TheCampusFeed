@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   before_action :require_college, only: [:create]
-  before_action :set_college, only: [:index, :create, :byTag]
+  before_action :set_college, only: [:index, :create, :byTag, :recent, :trending]
 
   def byTag
     @tag = Tag.find_by(text: params[:tagText])
@@ -17,7 +17,6 @@ class PostsController < ApplicationController
     else
       render json: {:tag => ["does not exist."]}, status: 400
     end
-
   end
 
   # GET /posts
@@ -28,6 +27,26 @@ class PostsController < ApplicationController
       @posts = @college.posts
     else 
       @posts = Post.all
+    end
+    
+    paginate json: @posts
+  end
+
+  def recent
+    if !@college.nil?
+      @posts = Post.where('college_id = '+@college.id.to_s).order('created_at desc')
+    else 
+      @posts = Post.order('created_at desc')
+    end
+    
+    paginate json: @posts
+  end
+
+  def trending
+    if !@college.nil?
+      @posts = Post.where('college_id = '+@college.id.to_s).order('score desc')
+    else 
+      @posts = Post.order('created_at desc')
     end
     
     paginate json: @posts

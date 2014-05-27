@@ -27,9 +27,45 @@ resource "Posts" do
 
   end
 
+  get "/api/v1/posts/recent" do
+
+    example "Listing all recent posts" do
+      do_request
+      status.should == 200
+    end
+
+  end
+
+  get "/api/v1/posts/trending" do
+
+    example "Listing all trending posts" do
+      do_request
+      status.should == 200
+    end
+
+  end
+
   get "/api/v1/colleges/2015/posts" do
 
     example "Listing all posts for college ID 2015" do
+      do_request
+      status.should == 200
+    end
+
+  end
+
+  get "/api/v1/colleges/2015/posts/recent" do
+
+    example "Listing all recent posts for college ID 2015" do
+      do_request
+      status.should == 200
+    end
+
+  end
+
+  get "/api/v1/colleges/2015/posts/trending" do
+
+    example "Listing all trending posts for college ID 2015" do
       do_request
       status.should == 200
     end
