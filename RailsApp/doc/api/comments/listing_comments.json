@@ -1,20 +1,16 @@
 {
   "resource": "Comments",
   "http_method": "GET",
-  "route": "/api/v1/comments",
+  "route": "/api/v1/posts/1/comments",
   "description": "Listing comments",
   "explanation": null,
   "parameters": [
-    {
-      "required": true,
-      "name": "postid",
-      "description": "The post id you are getting comments from."
-    }
+
   ],
   "requests": [
     {
       "request_method": "GET",
-      "request_path": "/api/v1/comments?postid=1840",
+      "request_path": "/api/v1/posts/1/comments",
       "request_body": null,
       "request_headers": {
         "Content-Type": "application/json",
@@ -22,13 +18,12 @@
         "Cookie": ""
       },
       "request_query_parameters": {
-        "postid": "1840"
       },
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "[{\"id\":136,\"text\":\"Test comment.\",\"score\":null},{\"id\":137,\"text\":\"Test comment number 2.\",\"score\":null}]",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"81dd120ba7a01a77a232ee0c31cdcef1\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"ff9a3cc8-3ad4-45fc-baff-4d7d6ddf0210","X-Runtime":"0.016480","Content-Length":"104"},
+      "response_body": "[{\"id\":151,\"text\":\"Test comment.\",\"score\":null},{\"id\":152,\"text\":\"Test comment number 2.\",\"score\":null}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"982117f3257898e2a1d1da1a1609dbff\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"a9c17487-62a6-4cc1-894d-ce06aa8b9b0e","X-Runtime":"0.053275","Content-Length":"104"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

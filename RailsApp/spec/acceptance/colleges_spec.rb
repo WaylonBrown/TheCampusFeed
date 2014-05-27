@@ -18,7 +18,7 @@ resource "Colleges" do
     end
 
   end
-
+=begin
   get "/api/v1/colleges/listNearby" do
 
     parameter :lat, "Your current latitude.", :required => true
@@ -31,5 +31,6 @@ resource "Colleges" do
       status.should == 200
     end
   end
+=end
 
 end
