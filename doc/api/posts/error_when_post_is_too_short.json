@@ -27,7 +27,7 @@
       "response_status": 422,
       "response_status_text": "Unprocessable Entity",
       "response_body": "{\"text\":[\"is too short (minimum is 10 characters)\"]}",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","Cache-Control":"no-cache","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"540f6c9f-eb9c-4b10-928a-f5badd9be711","X-Runtime":"0.012150","Content-Length":"52"},
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","Cache-Control":"no-cache","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"29b86e7e-cc42-42d8-a261-49c35149479b","X-Runtime":"0.006431","Content-Length":"52"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }
