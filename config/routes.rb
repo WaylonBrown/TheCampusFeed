@@ -11,10 +11,12 @@ Postfeed::Application.routes.draw do
 
       resources :votes
 
-      resources :comments
+      resources :comments, only: [:show]
 
       get '/posts/byTag/:tagText' => 'posts#byTag'
-      resources :posts
+      resources :posts do
+        resources :comments, except: [:show]
+      end
 
 
       get '/tags/trending' => 'tags#trending'

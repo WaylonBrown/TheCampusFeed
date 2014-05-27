@@ -9,23 +9,23 @@ resource "Comments" do
     @p.comments.create(:text => "Test comment.");
     @p.comments.create(:text => "Test comment number 2.");
   end
-  get "/api/v1/comments" do
+  get "/api/v1/posts/1/comments" do
 
-    parameter :postid, "The post id you are getting comments from.", :required => true
+    #parameter :postid, "The post id you are getting comments from.", :required => true
 
     example "Listing comments" do
-      do_request(:postid => @p.id)
+      do_request()
       status.should == 200
     end
   end
-  post "/api/v1/comments" do
+  post "/api/v1/posts/1/comments" do
     let(:raw_post) { params.to_json }
 
     parameter :comment, "The new comment.", :required => true
 
     example "Creating a comment" do
 
-      do_request(:post_id => @p.id, :text => "I lold so hard I shat myself.")
+      do_request(:text => "This is my comment on post id 1")
       status.should == 201
     end
   end
