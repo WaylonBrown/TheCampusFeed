@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My App</title>
+    <title>CollegeFeed</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
     <link rel="stylesheet" href="app.min.css">
     <style>
@@ -15,18 +15,13 @@
     <div class="app-page" data-page="home">
       <div class="app-topbar">
         <div class="app-title">CollegeFeed</div>
+        <div class="app-button right" id="postButton"><%= fa_icon 'pencil-square-o 3x' %></div>
       </div>
       <div class="app-content" id="postContent">
-        <div class="app-section">
-          <ul class="app-list" id="postList">
-            <label>Recent Posts</label>
-            <li>Dogs</li>
-            <li>Cats</li>
-            <li>Apples</li>
-            <li>Oranges</li>
-          </ul>
-        </div>
-        <div class="app-section">
+        <ul class="app-section app-list" id="postList">
+          <label>Recent Posts</label>
+        </ul>
+        <div class="app-section" style="display:none;">
           <label id="loadingText">Loading</label>
         </div>
       </div>
@@ -45,21 +40,35 @@
     <script src="zepto.js"></script>
     <script src="app.min.js"></script>
     <script>
+
       App.controller('home', function (page) {
         // put stuff here
+        $(page).find('#postButton').on('click', function(){
+          console.log('asfd');
+        });
       });
 
       App.controller('page2', function (page) {
         // put stuff here
       });
       
-      App.infiniteScroll($("ul#postContent"), {loading: $("label#loadingText")}, function (next) {
-        // dynamically fetch data
-        var list = [];
-        list.push("1");
-        // add html elements to list
-        next(list);
+      App.populator('home', function (page) {
+        var pageNum = 0;
+        App.infiniteScroll($(page).find('#postList'), {loading: $(page).find('#loadingText')}, function (next) {
+          pageNum++;
+          $.getJSON('api/v1/posts?page='+pageNum+'&per_page=1',function(data){
+            console.log(pageNum);
+            // dynamically fetch data
+            // add html elements to list
+            var list = [];
+            data.forEach(function(p){
+              list.push($("<li><div>" + p.text + "</div></li>"));
+            });
+            next(list);
+          });
+        });
       });
+      
 
       try {
         App.restore();

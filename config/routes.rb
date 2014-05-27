@@ -1,5 +1,6 @@
 Postfeed::Application.routes.draw do
 
+
     scope '/api/v1', defaults: {format: :json} do
 
       get '/colleges/listNearby' => 'colleges#listNearby'
@@ -19,6 +20,7 @@ Postfeed::Application.routes.draw do
       resources :tags
     end
 
+    root to: 'static_pages#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
