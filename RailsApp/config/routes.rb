@@ -14,6 +14,8 @@ Postfeed::Application.routes.draw do
         end
       end
 
+      resources :posts, only: [:index]
+
       resources :votes
 
       resources :comments, only: [:show]

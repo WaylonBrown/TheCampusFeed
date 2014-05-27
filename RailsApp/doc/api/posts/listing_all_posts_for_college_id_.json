@@ -1,0 +1,31 @@
+{
+  "resource": "Posts",
+  "http_method": "GET",
+  "route": "/api/v1/colleges/2015/posts",
+  "description": "Listing all posts for college ID 2015",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/v1/colleges/2015/posts",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "[{\"id\":2411,\"text\":\"its a #test post 2\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T06:53:07.870Z\",\"updated_at\":\"2014-05-27T06:53:07.870Z\",\"college_id\":2015},{\"id\":2410,\"text\":\"its a #test post 1\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T06:53:07.862Z\",\"updated_at\":\"2014-05-27T06:53:07.862Z\",\"college_id\":2015}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Total":"2","Content-Type":"application/json; charset=utf-8","ETag":"\"24fae9d0fb4b7108258d24cc68c1e6ca\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"86619e50-0d2f-46b1-8959-930c6533957f","X-Runtime":"0.014107","Content-Length":"347"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

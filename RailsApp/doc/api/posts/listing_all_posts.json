@@ -1,23 +1,16 @@
 {
   "resource": "Posts",
   "http_method": "GET",
-  "route": "/api/v1/colleges/2015/posts",
+  "route": "/api/v1/posts",
   "description": "Listing all posts",
   "explanation": null,
   "parameters": [
-    {
-      "name": "lat",
-      "description": "Your current latitude."
-    },
-    {
-      "name": "lon",
-      "description": "Your current longitude."
-    }
+
   ],
   "requests": [
     {
       "request_method": "GET",
-      "request_path": "/api/v1/colleges/2015/posts",
+      "request_path": "/api/v1/posts",
       "request_body": null,
       "request_headers": {
         "Content-Type": "application/json",
@@ -29,8 +22,8 @@
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "[{\"id\":2294,\"text\":\"its a #test post 7\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T06:38:16.195Z\",\"updated_at\":\"2014-05-27T06:38:16.195Z\",\"college_id\":2015},{\"id\":2293,\"text\":\"its a #test post 6\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T06:38:16.185Z\",\"updated_at\":\"2014-05-27T06:38:16.185Z\",\"college_id\":2015},{\"id\":2292,\"text\":\"its a #test post 5\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T06:38:16.175Z\",\"updated_at\":\"2014-05-27T06:38:16.175Z\",\"college_id\":2015},{\"id\":2291,\"text\":\"its a #test post 4\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T06:38:16.166Z\",\"updated_at\":\"2014-05-27T06:38:16.166Z\",\"college_id\":2015},{\"id\":2290,\"text\":\"its a #test post 3\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T06:38:16.151Z\",\"updated_at\":\"2014-05-27T06:38:16.151Z\",\"college_id\":2015},{\"id\":2289,\"text\":\"its a #test post 2\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T06:38:16.143Z\",\"updated_at\":\"2014-05-27T06:38:16.143Z\",\"college_id\":2015},{\"id\":2288,\"text\":\"its a #test post 1\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T06:38:16.137Z\",\"updated_at\":\"2014-05-27T06:38:16.137Z\",\"college_id\":2015}]",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Total":"7","Content-Type":"application/json; charset=utf-8","ETag":"\"3242546cffe91b16e3367debc4b8e9c2\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"d807ac00-4c18-4d52-a626-43dc6d6f60d4","X-Runtime":"0.019694","Content-Length":"1212"},
+      "response_body": "[{\"id\":2401,\"text\":\"its a #test post 1\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T06:53:07.630Z\",\"updated_at\":\"2014-05-27T06:53:07.630Z\",\"college_id\":2015},{\"id\":2402,\"text\":\"its a #test post 2\",\"score\":null,\"lat\":null,\"lon\":null,\"created_at\":\"2014-05-27T06:53:07.635Z\",\"updated_at\":\"2014-05-27T06:53:07.635Z\",\"college_id\":2015}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Total":"2","Content-Type":"application/json; charset=utf-8","ETag":"\"2bc8fe89ba772665c66dcd490c83f889\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"da24eb1c-f0c3-41b2-8cd8-2e02a5bca4a5","X-Runtime":"0.014671","Content-Length":"347"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

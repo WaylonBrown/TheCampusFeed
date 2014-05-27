@@ -87,7 +87,9 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_college 
-      @college = College.find(params[:college_id])
+      if params[:college_id]
+        @college = College.find(params[:college_id])
+      end
     end
     def set_post
       @post = Post.find(params[:id])

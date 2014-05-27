@@ -1,8 +1,8 @@
 {
   "resource": "Comments",
   "http_method": "GET",
-  "route": "/api/v1/posts/1/comments",
-  "description": "Listing comments for post ID 1",
+  "route": "/api/v1/posts/2/comments",
+  "description": "Listing comments for post ID 2",
   "explanation": null,
   "parameters": [
 
@@ -10,7 +10,7 @@
   "requests": [
     {
       "request_method": "GET",
-      "request_path": "/api/v1/posts/1/comments",
+      "request_path": "/api/v1/posts/2/comments",
       "request_body": null,
       "request_headers": {
         "Content-Type": "application/json",
@@ -22,8 +22,8 @@
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "[{\"id\":345,\"text\":\"Test comment number 2.\",\"score\":null,\"post_id\":\"1\"},{\"id\":344,\"text\":\"Test comment.\",\"score\":null,\"post_id\":\"1\"}]",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"514738b8375ea07606a17d11b5f89de1\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"8b972f71-1cc3-4388-b7f5-eb56577be085","X-Runtime":"0.007112","Content-Length":"132"},
+      "response_body": "[{\"id\":386,\"text\":\"Test comment number 4.\",\"score\":null,\"post_id\":\"2\"},{\"id\":385,\"text\":\"Test comment number 3.\",\"score\":null,\"post_id\":\"2\"}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"9d6194213ab631f6dc4e5943329d140d\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"74d1df54-a49e-480a-b357-dfe0d5993c5f","X-Runtime":"0.011458","Content-Length":"141"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

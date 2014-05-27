@@ -34,8 +34,8 @@
       "name": "Posts",
       "examples": [
         {
-          "description": "Creating a post. This method scans the post text and discovers tags, creating post_tag relationships for each tag",
-          "link": "posts/creating_a_post_this_method_scans_the_post_text_and_discovers_tags_creating_post_tag_relationships_for_each_tag.json",
+          "description": "Creating a post. Tags objects are created automatically.",
+          "link": "posts/creating_a_post_tags_objects_are_created_automatically.json",
           "groups": "all"
         },
         {
@@ -56,6 +56,11 @@
         {
           "description": "Listing all posts",
           "link": "posts/listing_all_posts.json",
+          "groups": "all"
+        },
+        {
+          "description": "Listing all posts for college ID 2015",
+          "link": "posts/listing_all_posts_for_college_id_.json",
           "groups": "all"
         },
         {

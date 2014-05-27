@@ -7,18 +7,24 @@ resource "Posts" do
 
   before do
     @c = College.create(:name => "Swag University", :id => 2015)
-    (1..7).each do |i|
+    (1..2).each do |i|
       @c.posts.build(:text => "its a #test post #{i}");
     end
     @c.save
   end
 
-  get "/api/v1/colleges/2015/posts" do
-
-    parameter :lat, "Your current latitude."
-    parameter :lon, "Your current longitude."
+  get "/api/v1/posts" do
 
     example "Listing all posts" do
+      do_request
+      status.should == 200
+    end
+
+  end
+
+  get "/api/v1/colleges/2015/posts" do
+
+    example "Listing all posts for college ID 2015" do
       do_request
       status.should == 200
     end
@@ -46,9 +52,9 @@ resource "Posts" do
 
     parameter :post, "The new post.", :required => true
 
-    example "Creating a post. This method scans the post text and discovers tags, creating post_tag relationships for each tag" do
+    example "Creating a post. Tags objects are created automatically." do
       do_request(
-        :text => "I yolo'd so hard I swagged myself #lol #swuggedmyself"
+        :text => "This is a #comment #wtih #tag #testing #yo #yo #yo"
       )
       status.should == 201
     end
