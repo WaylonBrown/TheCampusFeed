@@ -14,13 +14,18 @@
       "name": "Comments",
       "examples": [
         {
-          "description": "Creating a comment",
-          "link": "comments/creating_a_comment.json",
+          "description": "Creating a comment for a given post",
+          "link": "comments/creating_a_comment_for_a_given_post.json",
           "groups": "all"
         },
         {
-          "description": "Listing comments",
-          "link": "comments/listing_comments.json",
+          "description": "Listing comments for a different post",
+          "link": "comments/listing_comments_for_a_different_post.json",
+          "groups": "all"
+        },
+        {
+          "description": "Listing comments for a given post",
+          "link": "comments/listing_comments_for_a_given_post.json",
           "groups": "all"
         }
       ]
