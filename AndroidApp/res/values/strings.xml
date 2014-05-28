@@ -4,18 +4,12 @@
     <string name="app_name">CollegeFeed</string>
     <string name="action_settings">Settings</string>
     
-    <string name="onecollege_section1">Top Posts</string>
-    <string name="onecollege_section2">New Posts</string>
-    <string name="onecollege_section3">Trending Tags</string>
-    <string name="onecollege_section4">My Posts</string>
-    <string name="onecollege_section5">My Comments</string>
-    
-    <string name="allcollege_section1">Top Posts</string>
-    <string name="allcollege_section2">New Posts</string>
-    <string name="allcollege_section3">Trending Tags</string>
-    <string name="allcollege_section4">Most Active Colleges</string>
-    <string name="allcollege_section5">My Posts</string>
-    <string name="allcollege_section6">My Comments</string>
+    <string name="section1">Top Posts</string>
+    <string name="section2">New Posts</string>
+    <string name="section3">Trending Tags</string>
+    <string name="section4">Most Active Colleges</string>
+    <string name="section5">My Posts</string>
+    <string name="section6">My Comments</string>
     
     <string name="chooseFeedDialogTitle">Choose a Feed</string>
     <string name="allColleges">All Colleges</string>

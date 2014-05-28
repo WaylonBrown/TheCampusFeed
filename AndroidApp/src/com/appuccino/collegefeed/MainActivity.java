@@ -5,14 +5,11 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.location.Criteria;
@@ -24,7 +21,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -32,24 +28,19 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appuccino.collegefeed.R;
-import com.appuccino.collegefeed.extra.FontFetcher;
+import com.appuccino.collegefeed.extra.FontManager;
 import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
 import com.appuccino.collegefeed.fragments.MyCommentsFragment;
@@ -64,10 +55,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 {
 	ViewPager viewPager;
 	PagerSlidingTabStrip tabs;
-	PagerAdapter allCollegesPagerAdapter;
-	
+	PagerAdapter pagerAdapter;
 	ActionBar actionBar;
 	ImageView newPostButton;
+	
+	final static int ALL_COLLEGES = 0;
 	
 	ArrayList<Fragment> fragmentList;
 	boolean locationFound = false;
@@ -92,7 +84,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		tabs.setIndicatorColor(getResources().getColor(R.color.tabunderlineblue));
 		
-		FontFetcher.setup(this);
+		FontManager.setup(this);
 		setupActionbar();
 		
 		locationFound = false;
@@ -105,7 +97,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			}
 		});
 		
-		feedStyleChanged(0);
+		feedStyleChanged(ALL_COLLEGES);
 		getLocation();
 	}
 
@@ -123,9 +115,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	protected void feedStyleChanged(int which) 
 	{
 		//all colleges section
-		if(which == 0)
+		if(which == ALL_COLLEGES)
 		{
-			currentFeedCollegeID = 0;
+			currentFeedCollegeID = ALL_COLLEGES;
 		}
 		else //specific college
 		{
@@ -135,12 +127,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		
 		// Create the adapter that will return a fragment for each of the
 		// sections of the app.
-		allCollegesPagerAdapter = new PagerAdapter(this, getSupportFragmentManager());
+		pagerAdapter = new PagerAdapter(this, getSupportFragmentManager());
 	
 		// Set up the ViewPager with the sections adapter.
-		viewPager.setAdapter(allCollegesPagerAdapter);
+		viewPager.setAdapter(pagerAdapter);
 		viewPager.setOffscreenPageLimit(5);
 		tabs.setViewPager(viewPager);
+		
 	}
 	
 	private void showPermissionsToast() 
@@ -327,10 +320,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     	TextView allCollegesText = (TextView)layout.findViewById(R.id.allCollegesText);
     	TextView nearYouTitle = (TextView)layout.findViewById(R.id.nearYouTitle);
     	TextView otherTitle = (TextView)layout.findViewById(R.id.otherTitle);
-    	chooseTitleText.setTypeface(FontFetcher.light);
-    	allCollegesText.setTypeface(FontFetcher.light);
-    	nearYouTitle.setTypeface(FontFetcher.light);
-    	otherTitle.setTypeface(FontFetcher.light);
+    	chooseTitleText.setTypeface(FontManager.light);
+    	allCollegesText.setTypeface(FontManager.light);
+    	nearYouTitle.setTypeface(FontManager.light);
+    	otherTitle.setTypeface(FontManager.light);
     	
     	ListView nearYouList = (ListView)layout.findViewById(R.id.nearYouDialogList);
     	populateNearYouList(nearYouList);
@@ -389,10 +382,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     	
     	TextView title = (TextView)postDialogLayout.findViewById(R.id.newPostTitle);
     	TextView college = (TextView)postDialogLayout.findViewById(R.id.collegeText);
-    	postMessage.setTypeface(FontFetcher.light);
-    	college.setTypeface(FontFetcher.italic);
-    	title.setTypeface(FontFetcher.light);
-    	postButton.setTypeface(FontFetcher.light);
+    	postMessage.setTypeface(FontManager.light);
+    	college.setTypeface(FontManager.italic);
+    	title.setTypeface(FontManager.light);
+    	postButton.setTypeface(FontManager.light);
     	
     	//ensure keyboard is brought up when dialog shows
     	postMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -405,7 +398,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     	});
    
     	final TextView tagsText = (TextView)postDialogLayout.findViewById(R.id.newPostTagsText);
-    	tagsText.setTypeface(FontFetcher.light);
+    	tagsText.setTypeface(FontManager.light);
     	
     	//set listener for tags
     	postMessage.addTextChangedListener(new TextWatcher(){
@@ -543,17 +536,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-				return getString(R.string.allcollege_section1).toUpperCase(l);
+				return getString(R.string.section1).toUpperCase(l);
 			case 1:
-				return getString(R.string.allcollege_section2).toUpperCase(l);
+				return getString(R.string.section2).toUpperCase(l);
 			case 2:
-				return getString(R.string.allcollege_section3).toUpperCase(l);
+				return getString(R.string.section3).toUpperCase(l);
 			case 3:
-				return getString(R.string.allcollege_section4).toUpperCase(l);
+				return getString(R.string.section4).toUpperCase(l);
 			case 4:
-				return getString(R.string.allcollege_section5).toUpperCase(l);
+				return getString(R.string.section5).toUpperCase(l);
 			case 5:
-				return getString(R.string.allcollege_section6).toUpperCase(l);
+				return getString(R.string.section6).toUpperCase(l);
 			}
 			return null;
 		}

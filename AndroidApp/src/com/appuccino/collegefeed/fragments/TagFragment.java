@@ -33,7 +33,7 @@ import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
 import com.appuccino.collegefeed.adapters.TagListAdapter;
-import com.appuccino.collegefeed.extra.FontFetcher;
+import com.appuccino.collegefeed.extra.FontManager;
 import com.appuccino.collegefeed.extra.QuickReturnListView;
 import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.objects.Post;
@@ -107,7 +107,7 @@ public class TagFragment extends Fragment
 	    
 	    //set bottom text typeface
 	    TextView tagSearchText = (TextView)rootView.findViewById(R.id.tagSearchText);
-	    tagSearchText.setTypeface(FontFetcher.light);
+	    tagSearchText.setTypeface(FontManager.light);
 	    
 	    tagSearchText.setOnClickListener(new OnClickListener()
 	    {
@@ -130,9 +130,9 @@ public class TagFragment extends Fragment
 		TextView showingText = (TextView)rootView.findViewById(R.id.showingFeedText);
 		TextView chooseText = (TextView)rootView.findViewById(R.id.chooseText);
 		
-		collegeNameBottom.setTypeface(FontFetcher.light);
-		showingText.setTypeface(FontFetcher.medium);
-		chooseText.setTypeface(FontFetcher.light);
+		collegeNameBottom.setTypeface(FontManager.light);
+		showingText.setTypeface(FontManager.medium);
+		chooseText.setTypeface(FontManager.light);
 		
 		chooseText.setOnClickListener(new OnClickListener(){
 
@@ -279,8 +279,8 @@ public class TagFragment extends Fragment
 			}
     	});
     	
-    	searchTagEditText.setTypeface(FontFetcher.light);
-    	searchButton.setTypeface(FontFetcher.light);
+    	searchTagEditText.setTypeface(FontManager.light);
+    	searchButton.setTypeface(FontManager.light);
     	
     	searchTagEditText.setSelection(1);	//start cursor after #
     	//ensure keyboard is brought up when dialog shows

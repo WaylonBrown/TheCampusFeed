@@ -20,7 +20,7 @@ import com.appuccino.collegefeed.PostCommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
 import com.appuccino.collegefeed.adapters.PostListAdapter.PostHolder;
-import com.appuccino.collegefeed.extra.FontFetcher;
+import com.appuccino.collegefeed.extra.FontManager;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Comment;
@@ -56,9 +56,9 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         	commentHolder.arrowUp = (ImageView)row.findViewById(R.id.arrowUp);
         	commentHolder.arrowDown = (ImageView)row.findViewById(R.id.arrowDown);
             
-            commentHolder.scoreText.setTypeface(FontFetcher.bold);
-            commentHolder.messageText.setTypeface(FontFetcher.light);
-            commentHolder.timeText.setTypeface(FontFetcher.medium);
+            commentHolder.scoreText.setTypeface(FontManager.bold);
+            commentHolder.messageText.setTypeface(FontManager.light);
+            commentHolder.timeText.setTypeface(FontManager.medium);
             
             row.setTag(commentHolder);
         }

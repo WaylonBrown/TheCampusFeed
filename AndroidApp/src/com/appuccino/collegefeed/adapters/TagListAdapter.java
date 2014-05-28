@@ -13,7 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.appuccino.collegefeed.R;
-import com.appuccino.collegefeed.extra.FontFetcher;
+import com.appuccino.collegefeed.extra.FontManager;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.objects.Tag;
 
@@ -43,7 +43,7 @@ public class TagListAdapter extends ArrayAdapter<Tag>{
         	
         	tagHolder = new TagHolder();
         	tagHolder.text = (TextView)row.findViewById(R.id.tagText);
-            tagHolder.text.setTypeface(FontFetcher.light);
+            tagHolder.text.setTypeface(FontManager.light);
             
             row.setTag(tagHolder);
         }

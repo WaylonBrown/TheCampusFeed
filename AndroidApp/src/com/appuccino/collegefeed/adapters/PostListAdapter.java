@@ -21,7 +21,7 @@ import android.widget.Toast;
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
-import com.appuccino.collegefeed.extra.FontFetcher;
+import com.appuccino.collegefeed.extra.FontManager;
 import com.appuccino.collegefeed.extra.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.extra.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.extra.NetWorker.PostSelector;
@@ -67,12 +67,12 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         	postHolder.collegeName = (TextView)row.findViewById(R.id.collegeNameText);
         	postHolder.gpsImage = (ImageView)row.findViewById(R.id.gpsImage);
             
-            postHolder.scoreText.setTypeface(FontFetcher.bold);
-            postHolder.messageText.setTypeface(FontFetcher.light);
-            postHolder.timeText.setTypeface(FontFetcher.medium);
-            postHolder.commentText.setTypeface(FontFetcher.medium);
+            postHolder.scoreText.setTypeface(FontManager.bold);
+            postHolder.messageText.setTypeface(FontManager.light);
+            postHolder.timeText.setTypeface(FontManager.medium);
+            postHolder.commentText.setTypeface(FontManager.medium);
             if(postHolder.collegeName != null)
-            	postHolder.collegeName.setTypeface(FontFetcher.italic);
+            	postHolder.collegeName.setTypeface(FontManager.italic);
             
             row.setTag(postHolder);
         }

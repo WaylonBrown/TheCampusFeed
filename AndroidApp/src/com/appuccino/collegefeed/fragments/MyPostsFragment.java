@@ -24,7 +24,7 @@ import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.PostCommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.PostListAdapter;
-import com.appuccino.collegefeed.extra.FontFetcher;
+import com.appuccino.collegefeed.extra.FontManager;
 import com.appuccino.collegefeed.extra.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.extra.NetWorker.PostSelector;
 import com.appuccino.collegefeed.objects.Post;
@@ -63,7 +63,7 @@ public class MyPostsFragment extends Fragment implements OnRefreshListener
 				container, false);
 		list = (ListView)rootView.findViewById(R.id.fragmentListView);
 		loadingText = (ShimmerTextView)rootView.findViewById(R.id.loadingText);
-		loadingText.setTypeface(FontFetcher.light);
+		loadingText.setTypeface(FontManager.light);
 		
 		disableFooter(rootView);
 					
@@ -87,12 +87,7 @@ public class MyPostsFragment extends Fragment implements OnRefreshListener
 		if(postList == null)
 		{
 			pullListFromServer();
-			//postList.add()
-			/*postList.add(new Post(100, "Top message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
-			postList.add(new Post(70, "Top message 2 test message 2 test message #onetag #twotag", 10));
-			postList.add(new Post(15, "Top message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));*/
 		}		
-		
 		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_post, postList, 0);
 		list.setAdapter(listAdapter);
 		
