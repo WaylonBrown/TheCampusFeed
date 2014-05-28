@@ -90,9 +90,6 @@ shouldReloadTableForSearchString:(NSString *)searchString
     
     [self.delegate selectedCollege:college];
 
-//    PostsViewController* controller = [[PostsViewController alloc] init];
-//    [self.navigationController pushViewController:controller
-//                                         animated:YES];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list

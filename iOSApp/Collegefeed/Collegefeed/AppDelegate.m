@@ -41,22 +41,20 @@
 #pragma mark - Create ViewControllers
     
     // *** Top Posts - PostsViewController *** //
-    PostsViewController *topPostsController = [[PostsViewController alloc] initWithDataControllers:dataControllers];
-    UINavigationController *topPostsNavController =
-            [[UINavigationController alloc] initWithRootViewController:topPostsController];
+    PostsViewController *topPostsController = [[PostsViewController alloc] initAsTopPostsWithDataControllers:dataControllers];
+    UINavigationController *topPostsNavController = [[UINavigationController alloc] initWithRootViewController:topPostsController];
     // *************************************** //
     
     
     // *** New Posts - PostsViewController *** //
-    PostsViewController *newPostsController = [[PostsViewController alloc] initWithDataControllers:dataControllers];
-    UINavigationController *newPostsNavController =
-            [[UINavigationController alloc] initWithRootViewController:newPostsController];
+    PostsViewController *newPostsController = [[PostsViewController alloc] initAsNewPostsWithDataControllers:dataControllers];
+    UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:newPostsController];
     // *************************************** //
+    
     
     // *** Trending Tags - TagViewController *** //
     TagViewController *tagController = [[TagViewController alloc] initWithDataControllers:dataControllers];
-    UINavigationController *tagNavController =
-            [[UINavigationController alloc] initWithRootViewController:tagController];
+    UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:tagController];
     tagController.navigationItem.rightBarButtonItem =
             [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
                                                           target:topPostsController

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class College;
+@class Vote;
 
 @protocol ChildCellDelegate;
 
@@ -32,6 +33,7 @@
 @protocol ChildCellDelegate <NSObject>
 
 - (void)selectedCollege:(College*)college;
+- (void)castVote:(Vote *)vote;
 
 @end
 

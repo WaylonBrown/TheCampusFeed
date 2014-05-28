@@ -79,7 +79,7 @@
 #pragma mark - Actions
 
 - (IBAction)changeFeed:(id)sender
-{
+{   // User changed the feed (all colleges or a specific one)
     NSInteger index = [self.collegeSegmentControl selectedSegmentIndex];
     if (index == 0) // all colleges
         [self.postDataController setList:self.postDataController.topPostsAllColleges.copy];
@@ -90,7 +90,6 @@
         [controller setCollegesList:self.collegeDataController.list];
         [controller setDelegate:self];
         [self.navigationController pushViewController:controller animated:YES];
-       
     }
     //    else if (index == 2) // My current college
     [self.tableView reloadData];
@@ -110,6 +109,8 @@
     [self.navigationController popViewControllerAnimated:YES];
     [self.collegeSegmentControl insertSegmentWithTitle:college.name
                                                atIndex:2 animated:NO];
+    [self setCurrentCollege:college];
+    [self.tableView reloadData];
 }
 
 @end

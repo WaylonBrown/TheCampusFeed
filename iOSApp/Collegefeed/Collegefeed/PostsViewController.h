@@ -15,8 +15,21 @@
 @interface PostsViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) Post* selectedPost;
-
 @property (strong, nonatomic) CommentViewController* commentViewController;
+
+// should equal YES if looking at 'Top' posts
+@property (nonatomic) BOOL topPosts;
+
+// should equal YES if looking at 'New' posts
+@property (nonatomic) BOOL recentPosts;
+
+// should equal YES if looking at 'My' posts
+@property (nonatomic) BOOL myPosts;
+
+
+- (id)initAsTopPostsWithDataControllers:(NSArray *)dataControllers;
+- (id)initAsNewPostsWithDataControllers:(NSArray *)dataControllers;
+- (id)initAsMyPostsWithDataControllers:(NSArray *)dataControllers;
 
 @end
 

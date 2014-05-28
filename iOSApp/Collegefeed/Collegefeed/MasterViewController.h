@@ -10,6 +10,7 @@
 
 #import "TableCell.h"
 
+@class College;
 @class PostDataController;
 @class TagDataController;
 @class CollegeDataController;
@@ -29,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem    *createButton;
 @property (weak, nonatomic) IBOutlet UITableView        *tableView;
 
+@property (strong, nonatomic) College *currentCollege;
 
 - (id)initWithDataControllers:(NSArray *)dataControllers;
 

@@ -31,19 +31,20 @@ static int locationDistanceFilter = 150000; // 15km
     return self;
 }
 
+#pragma mark Data Access
+
 - (NSUInteger)countOfList
 {   // return the number of objects in this list
     return [self.list count];
 }
-
-#pragma mark Data Access
-
 - (NSObject *)objectInListAtIndex:(NSUInteger)theIndex
 {   // return the object at theIndex
     return [self.list objectAtIndex:theIndex];
 }
-- (void)addObjectToList:(NSObject *)obj{}
-
+- (void)addObjectToList:(NSObject *)obj
+{}
+- (void)refresh
+{}
 
 #pragma mark - Network Access
 
@@ -114,8 +115,10 @@ static int locationDistanceFilter = 150000; // 15km
         NSLog(@"Exception in POST request");
     }
 }
+- (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array
+{
 
-- (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array{}
+}
 
 
 @end

@@ -25,16 +25,15 @@
 
 
 - (void)fetchTopPosts;
-- (void)fetchTopPostsWithCollegeId:(NSInteger*)cID;
+- (void)fetchTopPostsWithCollegeId:(long)collegeId;
 
-
-// TODO: these not implemented yet (waiting on server endpoints)
 - (void)fetchNewPosts;
-- (void)fetchUserPostsWithUserId:(NSInteger)uID;
+- (void)fetchNewPostsWithCollegeId:(long)collegeId;
 
-- (void)fetchNewPostsWithCollegeId:(NSInteger)cID;
-- (void)fetchUserPostsWithUserId:(NSInteger)uID
-                   WithCollegeId:(NSInteger)cID;
+// TODO: these not implemented yet
+- (void)fetchUserPostsWithUserId:(long)userId;
+- (void)fetchUserPostsWithUserId:(long)userId
+                   WithCollegeId:(long)collegeId;
 
 
 

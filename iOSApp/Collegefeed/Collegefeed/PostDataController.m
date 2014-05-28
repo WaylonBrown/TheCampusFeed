@@ -26,14 +26,19 @@
         [self setUserPostsInCollege:    [[NSMutableArray alloc] init]];
         
         [self fetchTopPosts];
+        [self fetchNewPosts];
         
-       return self;
+        return self;
     }
     return nil;
 }
 
 #pragma mark - Network Access
 
+- (void)refresh
+{
+    
+}
 - (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array
 {   // Call getJsonObjectWithUrl to access network,
     // then read JSON result into the provided array
@@ -63,11 +68,27 @@
 
 - (void)fetchTopPosts
 {
-    [self fetchWithUrl:[Shared GETAllPosts]
+    [self fetchWithUrl:[Shared GETTrendingPosts]
               intoList:self.topPostsAllColleges];
     
-    [self setList:self.topPostsAllColleges];
+//    [self setList:self.topPostsAllColleges];
 }
-
+- (void)fetchTopPostsWithCollegeId:(long)collegeId
+{
+    [self fetchWithUrl:[Shared GETTrendingPostsWithCollegeId:collegeId ]
+              intoList:self.topPostsInCollege];
+    
+//    [self setList:self.topPostsInCollege];
+}
+- (void)fetchNewPosts
+{
+    [self fetchWithUrl:[Shared GETRecentPosts]
+              intoList:self.recentPostsAllColleges];
+}
+- (void)fetchNewPostsWithCollegeId:(long)collegeId
+{
+    [self fetchWithUrl:[Shared GETRecentPostsWithCollegeId:collegeId]
+              intoList:self.recentPostsInCollege];
+}
 
 @end

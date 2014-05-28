@@ -16,11 +16,53 @@
 
 @implementation PostsViewController
 
+#pragma mark - Initializations
+
+- (id)initAsTopPostsWithDataControllers:(NSArray *)dataControllers
+{
+    self = [super initWithDataControllers:dataControllers];
+    if (self)
+    {
+        [self setTopPosts:YES];
+        [self setRecentPosts:NO];
+        [self setMyPosts:NO];
+        
+        [self.postDataController setList:self.postDataController.topPostsAllColleges];
+    }
+    return self;
+}
+- (id)initAsNewPostsWithDataControllers:(NSArray *)dataControllers
+{
+    self = [super initWithDataControllers:dataControllers];
+    if (self)
+    {
+        [self setTopPosts:NO];
+        [self setRecentPosts:YES];
+        [self setMyPosts:NO];
+        
+        [self.postDataController setList:self.postDataController.recentPostsAllColleges];
+    }
+    return self;
+}
+- (id)initAsMyPostsWithDataControllers:(NSArray *)dataControllers
+{
+    self = [super initWithDataControllers:dataControllers];
+    if (self)
+    {
+        [self setTopPosts:NO];
+        [self setRecentPosts:NO];
+        [self setMyPosts:YES];
+        
+        [self.postDataController setList:self.postDataController.userPostsAllColleges];
+    }
+    return self;
+}
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
     
     [super viewWillAppear:animated];
-    //TODO: refresh dataController?    
+    [self.postDataController refresh];
+    [self.tableView reloadData];
 }
 - (void)viewDidLoad
 {
@@ -28,8 +70,6 @@
     // Do any additional setup after loading the view.
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
-    
-    [self.tableView reloadData];
 }
 - (void)loadView
 {

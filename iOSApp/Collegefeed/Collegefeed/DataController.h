@@ -25,11 +25,11 @@
 - (NSUInteger)countOfList;
 - (NSObject *)objectInListAtIndex:(NSUInteger)theIndex;
 - (void)addObjectToList:(NSObject *)obj;
+- (void)refresh;
 
 // Network Access
-- (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array;
 - (id)getJsonObjectWithUrl:(NSURL*) url;
+- (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array;
 - (void)addToServer:(Votable *)obj intoList:(NSMutableArray *)array;
-
 
 @end
