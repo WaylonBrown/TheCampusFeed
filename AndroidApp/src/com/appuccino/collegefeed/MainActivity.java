@@ -40,6 +40,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appuccino.collegefeed.dialogs.ChooseFeedDialog;
+import com.appuccino.collegefeed.dialogs.NewPostDialog;
 import com.appuccino.collegefeed.extra.FontManager;
 import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
@@ -66,9 +68,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public static LocationManager mgr;
 	public static ArrayList<Integer> permissions = new ArrayList<Integer>();	//0 = no perms, otherwise the college ID is the perm IDs
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
-	static final double milesForPermissions = 15.0;
-	final int locationTimeoutSeconds = 10;
-	final int minPostLength = 10;
+	static final double MILES_FOR_PERMISSION = 15.0;
+	static final int LOCATION_TIMEOUT_SECONDS = 10;
+	public static final int MIN_POST_LENGTH = 10;
 	
 	/*
 	 * TODO:
@@ -246,7 +248,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 							
 						}							
 					}		    		
-		    	}, locationTimeoutSeconds * 1000);
+		    	}, LOCATION_TIMEOUT_SECONDS * 1000);
 //			}
 //		    else{
 //		    	determinePermissions(lastKnownLoc);
@@ -256,7 +258,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 	private void determinePermissions(Location loc) 
 	{
-		double degreesForPermissions = milesForPermissions / 50.0;	//roughly 50 miles per degree
+		double degreesForPermissions = MILES_FOR_PERMISSION / 50.0;	//roughly 50 miles per degree
 		
 		//USED FOR TESTING, ALL OF OUR CITIES RETURN A&M
 		double tamuLatitude = 30.614942;
@@ -308,153 +310,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public void chooseFeedDialog() {
 		LayoutInflater inflater = getLayoutInflater();
 		View layout = inflater.inflate(R.layout.dialog_choose_feed, null);
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    	builder.setCancelable(true);
-    	builder.setView(layout);
-    	    	
-    	final AlertDialog dialog = builder.create();
-    	dialog.show();
-    	
-    	TextView chooseTitleText = (TextView)layout.findViewById(R.id.chooseFeedDialogTitle);
-    	TextView allCollegesText = (TextView)layout.findViewById(R.id.allCollegesText);
-    	TextView nearYouTitle = (TextView)layout.findViewById(R.id.nearYouTitle);
-    	TextView otherTitle = (TextView)layout.findViewById(R.id.otherTitle);
-    	chooseTitleText.setTypeface(FontManager.light);
-    	allCollegesText.setTypeface(FontManager.light);
-    	nearYouTitle.setTypeface(FontManager.light);
-    	otherTitle.setTypeface(FontManager.light);
-    	
-    	ListView nearYouList = (ListView)layout.findViewById(R.id.nearYouDialogList);
-    	populateNearYouList(nearYouList);
+		new ChooseFeedDialog(this, layout);
 	}
 
-	private void populateNearYouList(ListView list) {
-		String[] testCollegeString = {
-				"Texas A&M University",
-				"University of Texas in Austin"
-		};
-		
-		
-	}
+	
 
 	public void newPostClicked() 
 	{
 		LayoutInflater inflater = getLayoutInflater();
 		View postDialogLayout = inflater.inflate(R.layout.dialog_post, null);
-		final EditText postMessage = (EditText)postDialogLayout.findViewById(R.id.newPostMessage);
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    	builder.setCancelable(true);
-    	builder.setView(postDialogLayout)
-    	.setPositiveButton("Post", new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-                //do nothing here since overridden below to be able to click button and not dismiss dialog
-            }
-        });
-    	    	
-    	final AlertDialog dialog = builder.create();
-    	dialog.show();
-    	
-    	Button postButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-    	postButton.setOnClickListener(new View.OnClickListener()
-    	{
-    		@Override
-			public void onClick(View v) 
-    		{				
-    			if(postMessage.getText().toString().length() >= minPostLength)
-    			{
-    				Post newPost = new Post(postMessage.getText().toString());
-        			NewPostFragment.postList.add(newPost);
-        			TopPostFragment.postList.add(newPost);
-        			new MakePostTask().execute(newPost);
-        			dialog.dismiss();
-    			}
-    			else
-    			{
-    				Toast.makeText(getApplicationContext(), "Post must be at least 10 characters long.", Toast.LENGTH_LONG).show();
-    			}
-			}
-    	});
-    	
-    	TextView title = (TextView)postDialogLayout.findViewById(R.id.newPostTitle);
-    	TextView college = (TextView)postDialogLayout.findViewById(R.id.collegeText);
-    	postMessage.setTypeface(FontManager.light);
-    	college.setTypeface(FontManager.italic);
-    	title.setTypeface(FontManager.light);
-    	postButton.setTypeface(FontManager.light);
-    	
-    	//ensure keyboard is brought up when dialog shows
-    	postMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-    	    @Override
-    	    public void onFocusChange(View v, boolean hasFocus) {
-    	        if (hasFocus) {
-    	            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-    	        }
-    	    }
-    	});
-   
-    	final TextView tagsText = (TextView)postDialogLayout.findViewById(R.id.newPostTagsText);
-    	tagsText.setTypeface(FontManager.light);
-    	
-    	//set listener for tags
-    	postMessage.addTextChangedListener(new TextWatcher(){
-
-			@Override
-			public void afterTextChanged(Editable s) {
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-			}
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-				String message = postMessage.getText().toString();
-				String currentTags = "Tags: <font color='#33B5E5'>";
-				
-				String[] wordArray = message.split(" ");
-				if(wordArray.length > 0)
-				{
-					for(int i = 0; i < wordArray.length; i++)
-					{
-						//prevent indexoutofboundsexception
-						if(wordArray[i].length() > 0)
-						{
-							if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
-							{
-								currentTags += wordArray[i] + " ";
-							}
-						}
-					}
-				}
-				
-				currentTags += "</font>";
-				//if there aren't any tags and view is shown, remove view
-				if(currentTags.equals("Tags: <font color='#33B5E5'></font>") && tagsText.isShown())
-				{
-					tagsText.setVisibility(View.GONE);
-					//tagsText.setLayoutParams(new android.widget.LinearLayout.LayoutParams(0, 0));
-					//tagsText.setHeight(0);
-				}					
-				else if(!currentTags.equals("Tags: <font color='#33B5E5'></font>") && !tagsText.isShown())
-				{
-					tagsText.setVisibility(View.VISIBLE);
-//					//tagsText.setLayoutParams(new android.widget.LinearLayout.LayoutParams(android.widget.LinearLayout.LayoutParams.MATCH_PARENT, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT));
-//					Resources r = getApplicationContext().getResources();
-//					Toast.makeText(getApplicationContext(), Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, r.getDisplayMetrics())), Toast.LENGTH_LONG).show();
-//					tagsText.setHeight(100);
-				}
-					
-				tagsText.setText(Html.fromHtml((currentTags)));
-			}
-    		
-    	});
+		new NewPostDialog(this, postDialogLayout);
 	}
 
 	@Override
