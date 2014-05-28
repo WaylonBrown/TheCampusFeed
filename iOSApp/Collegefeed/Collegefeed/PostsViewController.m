@@ -12,7 +12,7 @@
 #import "Post.h"
 #import "CommentViewController.h"
 #import "CollegeViewController.h"
-#import "Constants.h"
+#import "Shared.h"
 
 @implementation PostsViewController
 
@@ -20,12 +20,10 @@
 {   // View is about to appear after being inactive
     
     [super viewWillAppear:animated];
-    // refresh dataController?
+    //TODO: refresh dataController?    
 }
 - (void)viewDidLoad
 {
-//    [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
-
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.tableView setDataSource:self];
@@ -33,11 +31,17 @@
     
     [self.tableView reloadData];
 }
+- (void)loadView
+{
+    [self setCommentViewController:[[CommentViewController alloc]
+                                    initWithDataControllers:self.getDataControllers]];
 
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{   // A little preparation before navigation to different view
+    self.navigationItem.rightBarButtonItem =
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                                                  target:self
+                                                  action:@selector(create)];
+    
+    [super loadView];
 
 }
 
@@ -47,13 +51,10 @@
 {   // Present a Comment View for the selected post
     
     self.selectedPost = (Post *)[self.postDataController objectInListAtIndex:indexPath.row];
-    CommentViewController* controller = [[CommentViewController alloc] initWithOriginalPost:self.selectedPost];
 
-    // when not in a navigation controller
-    // [self presentViewController:controller animated:YES completion:nil];
-
-    // if in a navigation controller
-    [self.navigationController pushViewController:controller
+    [self.commentViewController setOriginalPost:self.selectedPost];
+        
+    [self.navigationController pushViewController:self.commentViewController
                                          animated:YES];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -97,7 +98,7 @@
 
 #pragma mark - Actions
 
-- (IBAction)create//:(id)sender
+- (void)create
 {   // Display popup to let user type a new post
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
                                                         message:@"What's poppin?"
@@ -107,12 +108,12 @@
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         [alert show];
 }
-
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {   // Add new post if user submits on the alert view
     
     if (buttonIndex == 0) return;
-    Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]];
+    Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]
+                                    withCollegeId:0];
     [self.postDataController addToServer:newPost
                                 intoList:self.postDataController.topPostsAllColleges];
      

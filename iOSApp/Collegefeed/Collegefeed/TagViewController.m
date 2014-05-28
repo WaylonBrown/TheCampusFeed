@@ -11,7 +11,7 @@
 #import "TagViewController.h"
 #import "TagDataController.h"
 #import "PostsViewController.h"
-#import "Constants.h"
+#import "Shared.h"
 
 @implementation TagViewController
 
@@ -28,10 +28,6 @@
 
 #pragma mark - Navigation
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{   // A little preparation before navigation to different view
-    
-}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Comment View for the selected post
     

@@ -13,21 +13,27 @@
 @class PostDataController;
 @class TagDataController;
 @class CollegeDataController;
-@class CommentViewController;
+@class CommentDataController;
 @class VoteDataController;
 
 @interface MasterViewController : UIViewController <ChildCellDelegate>
 
-@property (strong, nonatomic) PostDataController *postDataController;
-@property (strong, nonatomic) CommentViewController *commentViewController;
+@property (strong, nonatomic) PostDataController    *postDataController;
+@property (strong, nonatomic) CommentDataController *commentDataController;
 @property (strong, nonatomic) CollegeDataController *collegeDataController;
-@property (strong, nonatomic) TagDataController *tagDataController;
-@property (strong, nonatomic) VoteDataController *voteDataController;
+@property (strong, nonatomic) TagDataController     *tagDataController;
+@property (strong, nonatomic) VoteDataController    *voteDataController;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *collegeSegmentControl;
-@property (weak, nonatomic) IBOutlet UIImageView *logoView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *createButton;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIImageView        *logoView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem    *createButton;
+@property (weak, nonatomic) IBOutlet UITableView        *tableView;
+
+
+- (id)initWithDataControllers:(NSArray *)dataControllers;
+
+- (NSArray *)getDataControllers;
+
 
 - (IBAction)create:(id)sender;
 - (IBAction)changeFeed:(id)sender;

@@ -15,10 +15,11 @@
 
 @property (nonatomic, strong) NSMutableArray *list;
 @property (strong, nonatomic) CLLocationManager *locationManager;
+@property (nonatomic) CLLocationDegrees lat;
+@property (nonatomic) CLLocationDegrees lon;
 
 // Initializations
-- (id)initWithNetwork:(BOOL)useNetwork;
-- (void)initializeDefaultList;
+- (id)initWithNetwork;
 
 // Data Access
 - (NSUInteger)countOfList;

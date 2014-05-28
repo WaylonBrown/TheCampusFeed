@@ -8,62 +8,28 @@
 
 #import "PostDataController.h"
 #import "Post.h"
-#import "Constants.h"
+#import "Shared.h"
 
 @implementation PostDataController
 
 #pragma mark - Initialization
 
-- (id)initWithNetwork:(BOOL)useNetwork
+- (id)initWithNetwork
 { // initialize this data controller
-    if (self = [super init])
+    if (self = [super initWithNetwork])
     {
-        [self setTopPostsAllColleges:[[NSMutableArray alloc] init]];
-//        [self setRecentPostsAllColleges:[[NSMutableArray alloc] init]];
-//        [self setUserPostsAllColleges:[[NSMutableArray alloc] init]];
-        [self setTopPostsInCollege:[[NSMutableArray alloc] init]];
-//        [self setRecentPostsInCollege:[[NSMutableArray alloc] init]];
-//        [self setUserPostsInCollege:[[NSMutableArray alloc] init]];
+        [self setTopPostsAllColleges:   [[NSMutableArray alloc] init]];
+        [self setRecentPostsAllColleges:[[NSMutableArray alloc] init]];
+        [self setUserPostsAllColleges:  [[NSMutableArray alloc] init]];
+        [self setTopPostsInCollege:     [[NSMutableArray alloc] init]];
+        [self setRecentPostsInCollege:  [[NSMutableArray alloc] init]];
+        [self setUserPostsInCollege:    [[NSMutableArray alloc] init]];
         
-        if (useNetwork)
-        {
-
-            self.locationManager = [[CLLocationManager alloc] init];
-            [self.locationManager setDistanceFilter:kCLDistanceFilterNone]; // whenever we move?
-            [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
-            [self.locationManager startUpdatingLocation];
-            
-            CLLocationDegrees lat = self.locationManager.location.coordinate.latitude;
-            CLLocationDegrees lon = self.locationManager.location.coordinate.longitude;
-
-            [self setList:[[NSMutableArray alloc] init]];
-            [self fetchWithUrl:postsUrl
-                      intoList:self.topPostsAllColleges];
-            [self fetchWithUrl:postsUrlNearby(lat, lon)
-                      intoList:self.topPostsInCollege];
-            
-            [self setList:self.topPostsAllColleges.copy];
-        }
-        else // dummy initialization
-        {
-            [self initializeDefaultList];
-        }
-        return self;
+        [self fetchTopPosts];
+        
+       return self;
     }
     return nil;
-}
-- (void)initializeDefaultList
-{ // initialize the post array with placeholder elements
-
-    [self setList:[[NSMutableArray alloc] init]];
-
-    for (int i = 0; i < 3; i++)
-    {
-        Post *post;
-        post = [[Post alloc] initDummy];
-        post.postID = i;
-        [self addObjectToList:post];
-    }
 }
 
 #pragma mark - Network Access
@@ -93,6 +59,14 @@
     {
         NSLog(@"Error fetching all posts");
     }
+}
+
+- (void)fetchTopPosts
+{
+    [self fetchWithUrl:[Shared GETAllPosts]
+              intoList:self.topPostsAllColleges];
+    
+    [self setList:self.topPostsAllColleges];
 }
 
 

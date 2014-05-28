@@ -8,42 +8,22 @@
 
 #import "TagDataController.h"
 #import "Tag.h"
-#import "Constants.h"
+#import "Shared.h"
 
 @implementation TagDataController
 
 #pragma mark Initialization
 
-- (id) initWithNetwork:(BOOL)useNetwork
+- (id) initWithNetwork
 { // initialize this data controller
-    if (self = [super init])
+    if (self = [super initWithNetwork])
     {
-        if (useNetwork)
-        {
-            [self setList:[[NSMutableArray alloc] init]];
-            [self fetchWithUrl:tagsUrl
-                      intoList:self.list];
-        }
-        else // dummy initialization
-        {
-            [self initializeDefaultList];
-        }
+        [self fetchWithUrl:[Shared GETTagsTrending]
+                  intoList:self.list];
+
         return self;
     }
     return nil;
-}
-- (void)initializeDefaultList
-{ // initialize the tag array with placeholder elements
-    
-    [self setList:[[NSMutableArray alloc] init]];
-    
-    for (int i = 0; i < 4; i++)
-    {
-        Tag *tag;
-        tag = [[Tag alloc] initDummy];
-        tag.tagID = i;
-        [self addObjectToList:tag];
-    }
 }
 
 #pragma mark - Network Access

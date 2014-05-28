@@ -8,55 +8,24 @@
 
 #import "CollegeDataController.h"
 #import "College.h"
-#import "Constants.h"
+#import "Shared.h"
 
 @implementation CollegeDataController
 
 
 #pragma mark - Initialization
 
-- (id)initWithNetwork:(BOOL)useNetwork
+- (id)initWithNetwork
 {
-    if (self = [super init])
+    if (self = [super initWithNetwork])
     {
-        if (useNetwork)
-        {
-            self.locationManager = [[CLLocationManager alloc] init];
-            [self.locationManager setDistanceFilter:kCLDistanceFilterNone]; // whenever we move?
-            [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
-            [self.locationManager startUpdatingLocation];
-            
-            CLLocationDegrees lat = self.locationManager.location.coordinate.latitude;
-            CLLocationDegrees lon = self.locationManager.location.coordinate.longitude;
-
-            [self setList:[[NSMutableArray alloc] init]];
-            [self fetchWithUrl:collegesUrlNearby(lat, lon)
-                      intoList:self.list];
-        }
-        else // dummy initialization
-        {
-            [self initializeDefaultList];
-        }
+        [self fetchWithUrl:[Shared GETAllColleges]
+                  intoList:self.list];
+        
         return self;
     }
     return nil;
 
-}
-- (id) init
-{ // initialize this data controller
-    if (self = [super init])
-    {   // dummy initialization
-        {
-            [self initializeDefaultList];
-        }
-        return self;
-    }
-    return nil;
-}
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
-    NSLog(@"didUpdateToLocation: %@", newLocation);
-    CLLocation *currentLocation = newLocation;
 }
 
 - (void)initializeDefaultList
@@ -94,7 +63,7 @@
             NSString *name      = (NSString*)[jsonCollege valueForKey:@"name"];
             NSString *lat       = (NSString*)[jsonCollege valueForKey:@"lat"];
             NSString *lon       = (NSString*)[jsonCollege valueForKey:@"lon"];
-            NSString *size      = (NSString*)[jsonCollege valueForKey:@"size"];
+//            NSString *size      = (NSString*)[jsonCollege valueForKey:@"size"];
             
             // create college and add to the provided array
             College* newCollege = [[College alloc] initWithCollegeID:[collegeID integerValue]

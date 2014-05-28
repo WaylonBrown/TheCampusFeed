@@ -8,7 +8,7 @@
 
 #import "Comment.h"
 #import "Post.h"
-#import "Constants.h"
+#import "Shared.h"
 #import "Vote.h"
 
 @implementation Comment
@@ -23,7 +23,8 @@
     {
         [self setPostID:post.getID];
         [self setMessage:message];
-        [self setPostUrl:commentsUrl];
+        
+        [self setPostUrl:[Shared POSTCommentWithPostId:(long)post.getID]];
         
         [self validate];
         return self;
@@ -93,12 +94,14 @@
         NSString *commentID = (NSString*)[jsonObject valueForKey:@"id"];
         NSString *text      = (NSString*)[jsonObject valueForKey:@"text"];
         NSString *score     = (NSString*)[jsonObject valueForKey:@"score"];
+        NSString *postID    = (NSString*)[jsonObject valueForKey:@"post_id"];
 
         if (score == (id)[NSNull null]) score = nil;
         
         [self setCommentID:[commentID integerValue]];
         [self setScore:[score integerValue]];
         [self setMessage:text];
+        [self setPostID:[postID integerValue]];
         
         return self;
     }
@@ -122,12 +125,11 @@
 }
 - (NSData*)toJSON
 {   // Returns an NSData representation of this Comment in JSON
-    NSString *commentString = [NSString stringWithFormat:@"{\"post_id\":%d,\"text\":\"%@\"}",
-                            self.postID, self.message];
+    NSString *commentString = [NSString stringWithFormat:@"{\"text\":\"%@\"}", self.message];
     NSData *commentData = [commentString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     return commentData;
 }
-- (NSInteger)getID
+- (long)getID
 {   // Returns the ID for this Comment
     return self.commentID;
 }

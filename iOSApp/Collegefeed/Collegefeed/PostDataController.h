@@ -12,9 +12,6 @@
 
 @interface PostDataController : DataController
 
-// Arrays for six possible GET requests: Top, New, and User posts for:
-//          all colleges, or the user's college
-
 @property (nonatomic, strong) NSMutableArray *topPostsAllColleges;
 @property (nonatomic, strong) NSMutableArray *recentPostsAllColleges;
 @property (nonatomic, strong) NSMutableArray *userPostsAllColleges;
@@ -25,5 +22,21 @@
 
 @property (nonatomic) NSURL *postURL;
 @property (nonatomic) NSMutableData *responseData;
+
+
+- (void)fetchTopPosts;
+- (void)fetchTopPostsWithCollegeId:(NSInteger*)cID;
+
+
+// TODO: these not implemented yet (waiting on server endpoints)
+- (void)fetchNewPosts;
+- (void)fetchUserPostsWithUserId:(NSInteger)uID;
+
+- (void)fetchNewPostsWithCollegeId:(NSInteger)cID;
+- (void)fetchUserPostsWithUserId:(NSInteger)uID
+                   WithCollegeId:(NSInteger)cID;
+
+
+
 
 @end

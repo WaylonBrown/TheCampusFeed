@@ -8,7 +8,7 @@
 
 #import "CollegePickerViewController.h"
 #import "College.h"
-#import "Constants.h"
+#import "Shared.h"
 #import "PostsViewController.h"
 
 @implementation CollegePickerViewController

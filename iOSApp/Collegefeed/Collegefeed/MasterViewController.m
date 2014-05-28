@@ -10,55 +10,59 @@
 #import "CommentViewController.h"
 #import "CollegePickerViewController.h"
 
+#import "DataController.h"
 #import "PostDataController.h"
 #import "CollegeDataController.h"
 #import "TagDataController.h"
 #import "VoteDataController.h"
-#import "Constants.h"
+#import "Shared.h"
 
 @implementation MasterViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithDataControllers:(NSArray *)dataControllers
 {
-    self = [super initWithNibName:@"MasterView" bundle:nibBundleOrNil];
+    self = [super initWithNibName:@"MasterView" bundle:nil];
     if (self)
     {
         // Custom initialization
-        self.postDataController = [[PostDataController alloc] initWithNetwork:YES];
-        self.tagDataController = [[TagDataController alloc] initWithNetwork:YES];
-        self.collegeDataController = [[CollegeDataController alloc] initWithNetwork:YES];
-        self.voteDataController = [[VoteDataController alloc] init];
+        [self setPostDataController     :[dataControllers objectAtIndex:0]];
+        [self setCommentDataController  :[dataControllers objectAtIndex:1]];
+        [self setVoteDataController     :[dataControllers objectAtIndex:2]];
+        [self setCollegeDataController  :[dataControllers objectAtIndex:3]];
+        [self setTagDataController      :[dataControllers objectAtIndex:4]];
+
         
         UIFont *font = [UIFont boldSystemFontOfSize:8.0f];
         NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
                                                                forKey:NSFontAttributeName];
-
+        
         [self.collegeSegmentControl setTitleTextAttributes:attributes
                                                   forState:UIControlStateSelected];
-        [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
-
-
+        
+        
     }
     return self;
 }
+- (void)loadView
+{
+    [super loadView];
+    [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
+}
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
-    [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
-    [self.navigationItem setTitleView:logoTitleView];
-
     [self.tableView reloadData];
 }
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+- (NSArray *)getDataControllers
+{   // return an array of all 5 universal data controllers
+    NSArray *dataControllers = [[NSArray alloc]initWithObjects:
+                                self.postDataController,
+                                self.commentDataController,
+                                self.voteDataController,
+                                self.collegeDataController,
+                                self.tagDataController, nil];
+    
+    return dataControllers;
 }
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Navigation
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

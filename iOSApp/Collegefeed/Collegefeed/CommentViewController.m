@@ -15,33 +15,32 @@
 #import "CommentDataController.h"
 #import "Comment.h"
 #import "TTTAttributedLabel.h"
-#import "Constants.h"
+#import "Shared.h"
 
 @implementation CommentViewController
 
 #pragma mark - Initialization and view loading
 
-- (id)initWithOriginalPost:(Post*)post
-{   // initialize a CommentsView provided info about the previously selected Post
-
-    self = [super init];
-    if (self)
-    {
-        [self setOriginalPost:post];
-        [self setDataController:[[CommentDataController alloc] initWithNetwork:YES
-                                                                      withPost:post]];
-    }
-    return self;
-}
 - (void)viewWillAppear:(BOOL)animated
-{
-    [self.navigationItem setTitleView:logoTitleView];
-
+{   // this function called right before the comments view appears
     [super viewWillAppear:animated];
+
+    [self.navigationItem setTitleView:logoTitleView];
+    
+    if (self.originalPost != nil)
+    {
+        [self.commentDataController setPost:self.originalPost];
+        long postID = (long)self.originalPost.postID;
+        
+        [self.commentDataController fetchWithUrl:[Shared GETCommentsWithPostId:postID]
+                                        intoList:self.commentDataController.list];
+        
+        [self.tableView reloadData];
+    }
 
 }
 - (void)viewDidLoad
-{    
+{   // called once the comment view has loaded
     [super viewDidLoad];
     
     [self.tableView setDataSource:self];
@@ -49,22 +48,28 @@
 
     [self.tableView reloadData];
 }
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)loadView
+{   // called when the comment view is initially loaded
+  
+    [super loadView];
+    
+    self.navigationItem.rightBarButtonItem =
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                                                  target:self
+                                                  action:@selector(create)];
+    
 }
 
 #pragma mark - Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+{   // first section is the original post, second is the post's comments
     return 2;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Number of rows in table views
     if (section == 0) return 1;
-    else return [self.dataController countOfList];
+    else return [self.commentDataController countOfList];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Get the table view cell for the given row
@@ -88,7 +93,7 @@
     }
     else
     {   // CommentView table; get the comment to be displayed in this cell
-        Comment *commentAtIndex = (Comment*)[self.dataController objectInListAtIndex:indexPath.row];
+        Comment *commentAtIndex = (Comment*)[self.commentDataController objectInListAtIndex:indexPath.row];
         [cell assign:commentAtIndex];
         return cell;
     }
@@ -118,7 +123,7 @@
     [commentHeader setText:@"Comments"];
     [commentHeader setTextAlignment:NSTextAlignmentCenter];
     [commentHeader setFont:[UIFont systemFontOfSize:12]];
-    [commentHeader setBackgroundColor:UIColorFromRGB(cf_lightgray)];
+    [commentHeader setBackgroundColor:[Shared getCustomUIColor:cf_lightgray]];
     
     return commentHeader;
 }
@@ -127,7 +132,6 @@
     if (section == 1) return 25.0;
     else return 5.0;
 }
-
 
 #pragma mark - Navigation
 
@@ -141,7 +145,7 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
-- (IBAction)create:(id)sender
+- (void)create
 {   // Display popup to let user type a new comment
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Comment"
                                                     message:@"You got an opinion?"
@@ -158,8 +162,8 @@
     
     Comment *newComment = [[Comment alloc] initWithCommentMessage:[[alertView textFieldAtIndex:0] text]
                                                          withPost:self.originalPost];
-    [self.dataController addToServer:newComment
-                            intoList:self.dataController.list];
+    [self.commentDataController addToServer:newComment
+                                   intoList:self.commentDataController.list];
     [self.tableView reloadData];
 }
 

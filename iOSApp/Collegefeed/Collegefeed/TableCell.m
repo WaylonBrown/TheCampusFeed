@@ -84,8 +84,6 @@
     PostsViewController *strongDelegate = (PostsViewController*)self.delegate;
     [strongDelegate.navigationController pushViewController:controller animated:YES];
 
-    // [self.navigationController pushViewController:controller animated:YES];
-
     NSLog(@"tag = %@", tagMessage);
 }
 

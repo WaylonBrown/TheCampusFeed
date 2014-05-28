@@ -13,8 +13,6 @@
 
 - (void)castVote:(BOOL)isUpVote
 {
-    
-    
     // Sets the vote for this Object and updates the score
     // Removes the vote if the same one is given
     // e.g. If (isUpVote && already upvoted) then (remove upvote/decrease score)
@@ -48,5 +46,19 @@
     ? self.score + 1
     : self.score - 1;
 }
+
+- (id)initFromJSON:(NSDictionary *)jsonObject
+{
+    return nil;
+}
+- (NSData*)toJSON
+{
+    return nil;
+}
+- (long)getID
+{
+    return -1;
+}
+- (void)validate{}
 
 @end

@@ -10,21 +10,19 @@
 #import "CollegeViewController.h"
 #import "CollegeDataController.h"
 #import "PostsViewController.h"
-#import "Constants.h"
+#import "Shared.h"
 
 @implementation CollegeViewController
 
 - (void)viewDidLoad
-{
-
-    // Do any additional setup after loading the view.
+{    // Do any additional setup after loading the view.
     [super viewDidLoad];
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{   // Present a Comment View for the selected post
+{   // Present a Post View for the selected college
     
     self.selectedCollege = (College *)[self.collegeDataController objectInListAtIndex:indexPath.row];
     PostsViewController* controller = [[PostsViewController alloc] init];

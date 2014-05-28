@@ -18,8 +18,8 @@
 @property (nonatomic) float lon;
 
 // NOTE: Use this constructor!
-- (id)initWithMessage:(NSString *)newMessage;
-
+- (id)initWithMessage:(NSString *)newMessage
+        withCollegeId:(long)collegeId;
 
 - (id)initWithPostID:(NSInteger)newPostID
            withScore:(NSInteger)newScore

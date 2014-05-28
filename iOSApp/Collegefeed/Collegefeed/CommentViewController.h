@@ -15,9 +15,8 @@
 
 @interface CommentViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) CommentDataController *dataController;
 @property (strong, nonatomic) Post *originalPost;
 
-- (id)initWithOriginalPost:(Post*)post;
+//- (id)initWithOriginalPost:(Post*)post;
 
 @end

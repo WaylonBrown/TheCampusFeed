@@ -10,11 +10,13 @@
 #import "MasterViewController.h"
 
 @class Post;
+@class CommentViewController;
 
 @interface PostsViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate>
 
-@property (weak, nonatomic) Post* selectedPost;
+@property (strong, nonatomic) Post* selectedPost;
 
+@property (strong, nonatomic) CommentViewController* commentViewController;
 
 @end
 
