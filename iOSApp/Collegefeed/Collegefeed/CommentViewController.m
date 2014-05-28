@@ -37,7 +37,6 @@
         
         [self.tableView reloadData];
     }
-
 }
 - (void)viewDidLoad
 {   // called once the comment view has loaded

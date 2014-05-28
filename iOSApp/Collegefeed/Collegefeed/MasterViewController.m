@@ -17,6 +17,8 @@
 #import "VoteDataController.h"
 #import "Shared.h"
 
+#import "College.h"
+
 @implementation MasterViewController
 
 - (id)initWithDataControllers:(NSArray *)dataControllers
@@ -86,6 +88,7 @@
     {
         CollegePickerViewController *controller = [[CollegePickerViewController alloc] init];
         [controller setCollegesList:self.collegeDataController.list];
+        [controller setDelegate:self];
         [self.navigationController pushViewController:controller animated:YES];
        
     }
@@ -97,10 +100,16 @@
 #pragma mark - Delegate Methods
 
 - (void)castVote:(Vote *)vote
-{
+{   // vote was cast in a table cell
     [self.voteDataController addToServer:vote
                                 intoList:self.voteDataController.list];
 }
 
+- (void)selectedCollege:(College *)college
+{   // A college was selected in the College Picker View
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.collegeSegmentControl insertSegmentWithTitle:college.name
+                                               atIndex:2 animated:NO];
+}
 
 @end

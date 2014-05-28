@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class College;
+
+@protocol ChildCellDelegate;
+
 @interface CollegePickerViewController : UIViewController
+
+@property (nonatomic, weak) id<ChildCellDelegate> delegate;
 
 @property (strong, atomic) NSMutableArray *list;
 @property (strong, atomic) NSMutableArray *searchResults;
@@ -21,3 +27,11 @@
 - (IBAction)cancel:(id)sender;
 
 @end
+
+
+@protocol ChildCellDelegate <NSObject>
+
+- (void)selectedCollege:(College*)college;
+
+@end
+

@@ -28,20 +28,6 @@
 
 }
 
-- (void)initializeDefaultList
-{ // initialize the college array with placeholder elements
-    
-    [self setList:[[NSMutableArray alloc] init]];
-    
-    for (int i = 0; i < 4; i++)
-    {
-        College *college;
-        college = [[College alloc] initDummy];
-        college.collegeID = i;
-        [self addObjectToList:college];
-    }
-}
-
 #pragma mark - Network Access
 
 - (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array
