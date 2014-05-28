@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardContainer"
+    style="@style/block">
+    
+    <LinearLayout 
+        android:background="@drawable/card"
+        style="@style/block"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        >
+        
+        <TextView
+            android:id="@+id/collegeText"
+            style="@style/block"
+            android:gravity="center"
+            android:text="@string/allColleges"
+            android:textSize="22sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            />
+        
+    </LinearLayout>
+    
+</LinearLayout>
+
+    

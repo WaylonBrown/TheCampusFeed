@@ -7,9 +7,7 @@ import java.util.TimerTask;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.location.Criteria;
@@ -23,34 +21,23 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.text.Editable;
-import android.text.Html;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.dialogs.ChooseFeedDialog;
 import com.appuccino.collegefeed.dialogs.NewPostDialog;
 import com.appuccino.collegefeed.extra.FontManager;
-import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
 import com.appuccino.collegefeed.fragments.MyCommentsFragment;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
-import com.appuccino.collegefeed.objects.Post;
 import com.astuetz.PagerSlidingTabStrip;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener, LocationListener 
@@ -169,36 +156,36 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		}
 	}
 
-	private void fadeActionBarColor(ColorDrawable to){
-		ColorDrawable[] colors = {new ColorDrawable(getResources().getColor(R.color.blue)), to};
-	    
-		if (android.os.Build.VERSION.SDK_INT >= 16){
-			fadeActionBarColorCurrent(colors);
-        }
-		else{
-			fadeActionBarColorDeprecated(colors);
-		}
-	}
-	
-	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-	private void fadeActionBarColorCurrent(ColorDrawable[] colors){
-		TransitionDrawable trans = new TransitionDrawable(colors); //ok so this doesn't work yet its so weird.
-		TransitionDrawable trans2 = new TransitionDrawable(colors); //so ridiculous that i have to make two transitions
-	    actionBar.setBackgroundDrawable(trans);						//must be doing something wrong lol.
-	    actionBar.getCustomView().setBackground(trans2);
-	    trans.startTransition(1000);
-	    trans2.startTransition(2000);
-	}
-	
-	@SuppressWarnings("deprecation")
-	private void fadeActionBarColorDeprecated(ColorDrawable[] colors){
-		TransitionDrawable trans = new TransitionDrawable(colors);
-		TransitionDrawable trans2 = new TransitionDrawable(colors);
-	    actionBar.setBackgroundDrawable(trans);
-	    actionBar.getCustomView().setBackgroundDrawable(trans2);
-	    trans.startTransition(1000);
-	    trans2.startTransition(1000);
-	}
+//	private void fadeActionBarColor(ColorDrawable to){
+//		ColorDrawable[] colors = {new ColorDrawable(getResources().getColor(R.color.blue)), to};
+//	    
+//		if (android.os.Build.VERSION.SDK_INT >= 16){
+//			fadeActionBarColorCurrent(colors);
+//        }
+//		else{
+//			fadeActionBarColorDeprecated(colors);
+//		}
+//	}
+//	
+//	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+//	private void fadeActionBarColorCurrent(ColorDrawable[] colors){
+//		TransitionDrawable trans = new TransitionDrawable(colors); //ok so this doesn't work yet its so weird.
+//		TransitionDrawable trans2 = new TransitionDrawable(colors); //so ridiculous that i have to make two transitions
+//	    actionBar.setBackgroundDrawable(trans);						//must be doing something wrong lol.
+//	    actionBar.getCustomView().setBackground(trans2);
+//	    trans.startTransition(1000);
+//	    trans2.startTransition(2000);
+//	}
+//	
+//	@SuppressWarnings("deprecation")
+//	private void fadeActionBarColorDeprecated(ColorDrawable[] colors){
+//		TransitionDrawable trans = new TransitionDrawable(colors);
+//		TransitionDrawable trans2 = new TransitionDrawable(colors);
+//	    actionBar.setBackgroundDrawable(trans);
+//	    actionBar.getCustomView().setBackgroundDrawable(trans2);
+//	    trans.startTransition(1000);
+//	    trans2.startTransition(1000);
+//	}
 	
 	private void getLocation(){
 		mgr = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -309,7 +296,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	
 	public void chooseFeedDialog() {
 		LayoutInflater inflater = getLayoutInflater();
-		View layout = inflater.inflate(R.layout.dialog_choose_feed, null);
+		View layout = inflater.inflate(R.layout.dialog_choosefeed, null);
 		new ChooseFeedDialog(this, layout);
 	}
 

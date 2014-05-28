@@ -17,6 +17,10 @@ import com.appuccino.collegefeed.extra.FontManager;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
 import com.appuccino.collegefeed.objects.College;
 
+/*
+ * Used in the ViewPager's Most Active College fragment, as well as the
+ * Choose Feed Dialog
+ */
 public class CollegeListAdapter extends ArrayAdapter<College>{
 
 	Context context; 

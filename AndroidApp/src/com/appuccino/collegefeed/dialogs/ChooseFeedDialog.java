@@ -1,7 +1,11 @@
 package com.appuccino.collegefeed.dialogs;
 
+import java.util.ArrayList;
+
 import com.appuccino.collegefeed.R;
+import com.appuccino.collegefeed.adapters.CollegeListAdapter;
 import com.appuccino.collegefeed.extra.FontManager;
+import com.appuccino.collegefeed.objects.College;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -23,6 +27,7 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 		final AlertDialog dialog = create();
 		dialog.show();
 		
+		ListView nearYouList = (ListView)layout.findViewById(R.id.nearYouDialogList);
 		TextView chooseTitleText = (TextView)layout.findViewById(R.id.chooseFeedDialogTitle);
     	TextView allCollegesText = (TextView)layout.findViewById(R.id.allCollegesText);
     	TextView nearYouTitle = (TextView)layout.findViewById(R.id.nearYouTitle);
@@ -32,17 +37,16 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
     	nearYouTitle.setTypeface(FontManager.light);
     	otherTitle.setTypeface(FontManager.light);
     	
-    	ListView nearYouList = (ListView)layout.findViewById(R.id.nearYouDialogList);
     	populateNearYouList(nearYouList);
 	}
 	
 	private void populateNearYouList(ListView list) {
-		String[] testCollegeString = {
-				"Texas A&M University",
-				"University of Texas in Austin"
-		};
+		ArrayList<College> collegeList = new ArrayList<College>();
+		collegeList.add(new College("Texas A&M University"));
+		collegeList.add(new College("University of Texas in Austin"));
 		
-		
+		CollegeListAdapter adapter = new CollegeListAdapter(context, R.layout.list_row_choosefeed_college, collegeList);
+		list.setAdapter(adapter);
 	}
 
 }
