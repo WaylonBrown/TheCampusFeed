@@ -86,7 +86,12 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 		{
 			for(College c : MainActivity.collegeList)
 			{
-				if(!nearYouList.contains(c.getID()))
+				if(MainActivity.permissions != null)
+				{
+					if(!MainActivity.permissions.contains(c.getID()))
+						otherColleges.add(c);
+				}
+				else
 					otherColleges.add(c);
 			}
 		}
