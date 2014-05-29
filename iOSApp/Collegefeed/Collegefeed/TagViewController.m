@@ -26,6 +26,14 @@
 
 #pragma mark - Navigation
 
+//- (void)switchToAllColleges
+//{
+//    [super switchToAllColleges];
+//}
+//- (void)switchToSpecificCollege
+//{
+//    [super switchToSpecificCollege];
+//}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Comment View for the selected post
     

@@ -13,6 +13,8 @@
 #import "CommentViewController.h"
 #import "CollegeViewController.h"
 #import "Shared.h"
+#import "College.h"
+
 
 @implementation PostsViewController
 
@@ -27,7 +29,7 @@
         [self setRecentPosts:NO];
         [self setMyPosts:NO];
         
-        [self.postDataController setList:self.postDataController.topPostsAllColleges];
+        [self switchToAllColleges];
     }
     return self;
 }
@@ -40,7 +42,7 @@
         [self setRecentPosts:YES];
         [self setMyPosts:NO];
         
-        [self.postDataController setList:self.postDataController.recentPostsAllColleges];
+        [self switchToAllColleges];
     }
     return self;
 }
@@ -53,7 +55,7 @@
         [self setRecentPosts:NO];
         [self setMyPosts:YES];
         
-        [self.postDataController setList:self.postDataController.userPostsAllColleges];
+        [self switchToAllColleges];
     }
     return self;
 }
@@ -61,8 +63,7 @@
 {   // View is about to appear after being inactive
     
     [super viewWillAppear:animated];
-    [self.postDataController refresh];
-    [self.tableView reloadData];
+    [self refresh];
 }
 - (void)viewDidLoad
 {
@@ -106,7 +107,6 @@
 {   // invoked every time a table row needs to be shown.
     // this specifies the prototype (PostTableCell) and assigns the labels
     
-    //TODO: check if these cells should be of type PostTableCellWithCollege instead
     static NSString *CellIdentifier = @"TableCell";
     
     TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -127,13 +127,34 @@
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{   // TODO: This should probably not be hardcoded; revist
+{   // TODO: This should not be hardcoded; revist
     
-    // if not showing college name
     return 100;
-    
-    // if showing college name
-//    return 120;
+}
+
+#pragma mark - Navigation
+
+- (void)switchToAllColleges
+{
+    if (self.topPosts)
+    {
+        [self.postDataController fetchTopPosts];
+    }
+    else if (self.recentPosts)
+    {
+        [self.postDataController fetchNewPosts];
+    }
+}
+- (void)switchToSpecificCollege
+{
+    if (self.topPosts)
+    {
+        [self.postDataController fetchTopPostsWithCollegeId:[self.delegate getCurrentCollege].collegeID];
+    }
+    else if (self.recentPosts)
+    {
+        [self.postDataController fetchNewPostsWithCollegeId:[self.delegate getCurrentCollege].collegeID];
+    }
 }
 
 #pragma mark - Actions
@@ -159,9 +180,29 @@
      
     [self.tableView reloadData];
 }
-- (void)castVote:(Vote *)vote
+- (void)refresh
 {
-    [super castVote:vote];
+    if ([self.delegate getIsAllColleges])
+    {
+        [self.collegeSegmentControl setSelectedSegmentIndex:0];
+        [self switchToAllColleges];
+    }
+    else if ([self.delegate getIsSpecificCollege])
+    {
+        if (self.collegeSegmentControl.numberOfSegments < 3)
+        {
+            [self.collegeSegmentControl insertSegmentWithTitle:[self.delegate getCurrentCollege].name
+                                                       atIndex:2 animated:NO];
+        }
+        else
+        {
+            [self.collegeSegmentControl setTitle:[self.delegate getCurrentCollege].name
+                               forSegmentAtIndex:2];
+        }
+        
+        [self.collegeSegmentControl setSelectedSegmentIndex:2];
+        [self switchToSpecificCollege];
+    }
+    [self.tableView reloadData];
 }
-
 @end

@@ -16,6 +16,7 @@
 #import "TagDataController.h"
 #import "VoteDataController.h"
 #import "Shared.h"
+#import "AppDelegate.h"
 
 #import "College.h"
 
@@ -41,7 +42,6 @@
         [self.collegeSegmentControl setTitleTextAttributes:attributes
                                                   forState:UIControlStateSelected];
         
-        
     }
     return self;
 }
@@ -52,6 +52,16 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
+    [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
+
+    if ([self.delegate getIsAllColleges] == YES)
+    {
+        [self.collegeSegmentControl setSelectedSegmentIndex:0];
+    }
+    else if ([self.delegate getIsSpecificCollege] == NO)
+    {
+        [self.collegeSegmentControl setSelectedSegmentIndex:2];
+    }
     [self.tableView reloadData];
 }
 - (NSArray *)getDataControllers
@@ -65,6 +75,7 @@
     
     return dataControllers;
 }
+
 #pragma mark - Navigation
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -75,6 +86,14 @@
 {   // User should not directly modify a TableCell
     return NO;
 }
+//- (void)switchToAllColleges
+//{
+//    [self.delegate switchedToSpecificCollegeOrNil:nil];
+//}
+//- (void)switchToSpecificCollege
+//{
+//    [self.delegate switchedToSpecificCollegeOrNil:self.currentCollege];
+//}
 
 #pragma mark - Actions
 
@@ -82,8 +101,9 @@
 {   // User changed the feed (all colleges or a specific one)
     NSInteger index = [self.collegeSegmentControl selectedSegmentIndex];
     if (index == 0) // all colleges
-        [self.postDataController setList:self.postDataController.topPostsAllColleges.copy];
-    
+    {
+        [self.delegate switchedToSpecificCollegeOrNil:nil];
+    }
     else if (index == 1) // Choose a college
     {
         CollegePickerViewController *controller = [[CollegePickerViewController alloc] init];
@@ -91,8 +111,12 @@
         [controller setDelegate:self];
         [self.navigationController pushViewController:controller animated:YES];
     }
-    //    else if (index == 2) // My current college
-    [self.tableView reloadData];
+    else if (index == 2) // My current college
+    {
+        [self.delegate switchedToSpecificCollegeOrNil:[self.delegate getCurrentCollege]]; 
+    }
+    [self refresh];
+    //    [self.tableView reloadData];
     
 }
 
@@ -103,14 +127,25 @@
     [self.voteDataController addToServer:vote
                                 intoList:self.voteDataController.list];
 }
-
 - (void)selectedCollege:(College *)college
 {   // A college was selected in the College Picker View
     [self.navigationController popViewControllerAnimated:YES];
-    [self.collegeSegmentControl insertSegmentWithTitle:college.name
-                                               atIndex:2 animated:NO];
-    [self setCurrentCollege:college];
-    [self.tableView reloadData];
+
+    if (self.collegeSegmentControl.numberOfSegments < 3)
+    {
+        [self.collegeSegmentControl insertSegmentWithTitle:college.name
+                                                   atIndex:2 animated:NO];
+    }
+    else
+    {
+        [self.collegeSegmentControl setTitle:college.name
+                           forSegmentAtIndex:2];
+    }
+
+    [self.collegeSegmentControl setSelectedSegmentIndex:2];
+
+    [self.delegate switchedToSpecificCollegeOrNil:college];
+    [self refresh];
 }
 
 @end

@@ -12,6 +12,7 @@
 #import "CollegeViewController.h"
 #import "TagViewController.h"
 #import "Shared.h"
+#import "College.h"
 
 
 @implementation AppDelegate
@@ -42,18 +43,21 @@
     
     // *** Top Posts - PostsViewController *** //
     PostsViewController *topPostsController = [[PostsViewController alloc] initAsTopPostsWithDataControllers:dataControllers];
+    [topPostsController setDelegate:self];
     UINavigationController *topPostsNavController = [[UINavigationController alloc] initWithRootViewController:topPostsController];
     // *************************************** //
     
     
     // *** New Posts - PostsViewController *** //
     PostsViewController *newPostsController = [[PostsViewController alloc] initAsNewPostsWithDataControllers:dataControllers];
+    [newPostsController setDelegate:self];
     UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:newPostsController];
     // *************************************** //
     
     
     // *** Trending Tags - TagViewController *** //
     TagViewController *tagController = [[TagViewController alloc] initWithDataControllers:dataControllers];
+    [tagController setDelegate:self];
     UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:tagController];
     tagController.navigationItem.rightBarButtonItem =
             [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
@@ -63,6 +67,7 @@
     
     // *** Top Colleges - CollegeViewController *** //
     CollegeViewController *collegeController = [[CollegeViewController alloc] initWithDataControllers:dataControllers];
+    [collegeController setDelegate:self];
     UINavigationController *collegeNavController =
             [[UINavigationController alloc] initWithRootViewController:collegeController];
     collegeController.navigationItem.rightBarButtonItem =
@@ -117,5 +122,32 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)switchedToSpecificCollegeOrNil:(College *)college
+{
+    if (college == nil)
+    {
+        [self setAllColleges:YES];
+        [self setSpecificCollege:NO];
+    }
+    else
+    {
+        [self setCurrentCollege:college];
+        [self setAllColleges:NO];
+        [self setSpecificCollege:YES];
+    }
+}
+- (College*)getCurrentCollege
+{
+    return self.currentCollege;
+}
+- (BOOL)getIsAllColleges
+{
+    return self.allColleges;
+}
+- (BOOL)getIsSpecificCollege
+{
+    return self.specificCollege;
 }
 @end

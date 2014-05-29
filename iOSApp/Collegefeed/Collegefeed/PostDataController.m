@@ -71,24 +71,26 @@
     [self fetchWithUrl:[Shared GETTrendingPosts]
               intoList:self.topPostsAllColleges];
     
-//    [self setList:self.topPostsAllColleges];
+    [self setList:self.topPostsAllColleges];
 }
 - (void)fetchTopPostsWithCollegeId:(long)collegeId
 {
     [self fetchWithUrl:[Shared GETTrendingPostsWithCollegeId:collegeId ]
               intoList:self.topPostsInCollege];
     
-//    [self setList:self.topPostsInCollege];
+    [self setList:self.topPostsInCollege];
 }
 - (void)fetchNewPosts
 {
     [self fetchWithUrl:[Shared GETRecentPosts]
               intoList:self.recentPostsAllColleges];
+    [self setList:self.recentPostsAllColleges];
 }
 - (void)fetchNewPostsWithCollegeId:(long)collegeId
 {
     [self fetchWithUrl:[Shared GETRecentPostsWithCollegeId:collegeId]
               intoList:self.recentPostsInCollege];
+    [self setList:self.recentPostsInCollege];
 }
 
 @end
