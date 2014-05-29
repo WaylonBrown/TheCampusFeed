@@ -286,16 +286,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	{
 		double degreesForPermissions = MILES_FOR_PERMISSION / 50.0;	//roughly 50 miles per degree
 		
-//		//USED FOR TESTING, ALL OF OUR CITIES RETURN A&M
-//		double tamuLatitude = 30.614942;
-//		double tamuLongitude = -96.342316;
-//		double austinLatitude = 30.270664;
-//		double austinLongitude = -97.741064;
-//		double seattleLatitude = 0;	//JAMES fill these in
-//		double seattleLongitude = 0;
-////		
-//		int tamuID = 234234;
-		
 		if(collegeList != null)
 		{
 			if(permissions != null)
@@ -303,12 +293,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			else
 				permissions = new ArrayList<Integer>();
 			
+			//add IDs to permissions list
 			for(College c : collegeList)
 			{
 				//TODO: change to formula James is using that takes into account the roundness of the earth
 				double degreesAway = Math.sqrt(Math.pow((loc.getLatitude() - c.getLatitude()), 2) + Math.pow((loc.getLongitude() - c.getLongitude()), 2));
 				
-				if(degreesAway < degreesForPermissions)
+				if(degreesAway <= degreesForPermissions)
 				{
 					permissions.add(c.getID());
 					if(!newPostButton.isShown())
@@ -347,16 +338,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				updateListsForGPS();	//so that GPS icon can be set
 			}
 			
-		}
-		
-//		double degreesAway1 = Math.sqrt(Math.pow((loc.getLatitude() - tamuLatitude), 2) + Math.pow((loc.getLongitude() - tamuLongitude), 2));
-//		double degreesAway2 = Math.sqrt(Math.pow((loc.getLatitude() - austinLatitude), 2) + Math.pow((loc.getLongitude() - austinLongitude), 2));
-//		double degreesAway3 = Math.sqrt(Math.pow((loc.getLatitude() - seattleLatitude), 2) + Math.pow((loc.getLongitude() - seattleLongitude), 2));
-		
-//		//gets which is least of the three
-//		double degreesAway = Math.min(degreesAway1, degreesAway2);
-//		degreesAway = Math.min(degreesAway, degreesAway3);
-		
+		}		
 	}
 
 	private static College getCollegeByID(Integer id) {
