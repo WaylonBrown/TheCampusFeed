@@ -7,6 +7,14 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 require 'csv'
 
+def sanitizeName(name)
+  if name.start_with? "The "
+    return name[4..-1] #chop that off!
+  else
+    return name
+  end
+end
+
 @@smallestSizeIncluded = 15
 def importFromFile(lim = -1)
   #imports from the 2012 
@@ -23,7 +31,9 @@ def importFromFile(lim = -1)
 
 
     @params = Hash.new
-    @params[:name] = row[1]
+    name = row[1]
+    sanitizedName = sanitizeName(name)
+    @params[:name] = sanitizedName
     @params[:lat] = row[-1]
     @params[:lon] = row[-2] # database provided as lon then lat.. wtf
     @cur = College.new(@params)
