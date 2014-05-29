@@ -20,7 +20,6 @@
            withName:(NSString*)name;
 - (id)initDummy;
 - (id)initFromJSON:(NSDictionary *)jsonObject;
-- (NSData*)toJSON;
 - (void)validate;
 
 @end

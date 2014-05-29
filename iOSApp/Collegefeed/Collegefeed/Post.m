@@ -8,12 +8,13 @@
 
 #import "Post.h"
 #import "Comment.h"
-#import "Constants.h"
+#import "Shared.h"
 #import "Vote.h"
 
 @implementation Post
 
 - (id)initWithMessage:(NSString *)newMessage
+        withCollegeId:(long)collegeId
 {   // NOTE: This constructor to be used when sending to server
     // initializer to create a new post
     
@@ -21,7 +22,9 @@
     if (self)
     {
         [self setMessage:newMessage];
-        [self setPostUrl:postsUrl];
+        [self setCollegeID:collegeId];
+        
+        [self setPostUrl:[Shared POSTPostWithCollegeId:collegeId]];
         
         return self;
     }
@@ -50,50 +53,18 @@
     return nil;
 }
 
-- (id)initDummy
-{   // dummy initializer for dev/testing
-
-    self = [super init];
-    if (self)
-    {
-        [self setPostID:arc4random() % 999];
-        [self setCollegeID:arc4random() % 999];
-        [self setScore:arc4random() % 999];
-        [self setCollegeName:@"University of America, Bitch"];
-        [self setDate:[NSDate date]];
-        
-        switch (self.postID % 6)
-        {
-            case 0: [self setMessage:@"Post: If you're hungry for a hunk of #fat and #juicy meat"]; break;
-            case 1: [self setMessage:@"Post: Eat my buddy #Pumba here because he is a treat"]; break;
-            case 2: [self setMessage:@"Post: Come on down and dine"]; break;
-            case 3: [self setMessage:@"Post: On this #tastyswine"]; break;
-            case 4: [self setMessage:@"Post: All you have to do is get in line"]; break;
-            default: [self setMessage:@"Post: #LUAU!"]; break;
-        }
-        
-        
-        self.commentList = [[NSMutableArray alloc] init];
-        for (int i = 0; i < 3; i++)
-        {   // populate commentList
-            Comment *comment = [[Comment alloc] initDummy];
-            [self.commentList addObject:comment];
-        }
-        [self validate];
-        return self;
-    }
-    return nil;
-}
 - (id)initFromJSON:(NSDictionary *)jsonObject
 {   // Initialize this Post using a JSON object as an NSDictionary
     self = [super init];
     if (self)
     {
         NSString *postID    = (NSString*)[jsonObject valueForKey:@"id"];
-        NSString *score     = (NSString*)[jsonObject valueForKey:@"score"];
         NSString *text      = (NSString*)[jsonObject valueForKey:@"text"];
+        NSString *score     = (NSString*)[jsonObject valueForKey:@"score"];
         NSString *lat       = (NSString*)[jsonObject valueForKey:@"lat"];
         NSString *lon       = (NSString*)[jsonObject valueForKey:@"lon"];
+        //TODO: createdAt
+        
         
         if (score == (id)[NSNull null]) score = nil;
         if (lat == (id)[NSNull null]) lat = nil;
@@ -127,7 +98,7 @@
     NSData *postData = [postString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     return postData;
 }
-- (NSInteger)getID
+- (long)getID
 {   // Returns the ID for this Post
     return self.postID;
 }

@@ -27,7 +27,6 @@ import android.widget.Toast;
 
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
-import com.appuccino.collegefeed.extra.FontFetcher;
 import com.appuccino.collegefeed.extra.NetWorker;
 import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.extra.NetWorker.MakeVoteTask;
@@ -37,6 +36,7 @@ import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
+import com.appuccino.collegefeed.utils.FontManager;
 
 public class PostCommentsActivity extends Activity{
 
@@ -82,10 +82,10 @@ public class PostCommentsActivity extends Activity{
 		TextView messageText = (TextView)findViewById(R.id.messageText);
 		TextView timeText = (TextView)findViewById(R.id.timeText);
 		TextView commentsText = (TextView)findViewById(R.id.commentsText);
-		scoreText.setTypeface(FontFetcher.bold);
-		messageText.setTypeface(FontFetcher.light);
-		timeText.setTypeface(FontFetcher.italic);
-		commentsText.setTypeface(FontFetcher.light);
+		scoreText.setTypeface(FontManager.bold);
+		messageText.setTypeface(FontManager.light);
+		timeText.setTypeface(FontManager.italic);
+		commentsText.setTypeface(FontManager.light);
 		
 		ListView commentsListView = (ListView)findViewById(R.id.commentsList);
 		if(post != null)
@@ -243,9 +243,9 @@ public class PostCommentsActivity extends Activity{
     	});
     	
     	TextView title = (TextView)postDialogLayout.findViewById(R.id.newCommentTitle);
-    	commentMessage.setTypeface(FontFetcher.light);
-    	title.setTypeface(FontFetcher.light);
-    	postButton.setTypeface(FontFetcher.light);
+    	commentMessage.setTypeface(FontManager.light);
+    	title.setTypeface(FontManager.light);
+    	postButton.setTypeface(FontManager.light);
     	
     	//ensure keyboard is brought up when dialog shows
     	commentMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -258,7 +258,7 @@ public class PostCommentsActivity extends Activity{
     	});
    
     	final TextView tagsText = (TextView)postDialogLayout.findViewById(R.id.newCommentTagsText);
-    	tagsText.setTypeface(FontFetcher.light);
+    	tagsText.setTypeface(FontManager.light);
     	
     	//set listener for tags
     	commentMessage.addTextChangedListener(new TextWatcher(){

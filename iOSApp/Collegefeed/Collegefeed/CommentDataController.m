@@ -9,49 +9,9 @@
 #import "CommentDataController.h"
 #import "Comment.h"
 #import "Post.h"
-#import "Constants.h"
+#import "Shared.h"
 
 @implementation CommentDataController
-
-#pragma mark - Initialization
-
-- (id)initWithNetwork:(BOOL)useNetwork
-{   // Initialize with default list
-    return [self initWithNetwork:useNetwork withPost:nil];
-}
-- (id)initWithNetwork:(BOOL)useNetwork withPost:(Post*)post
-{   // Initialize using the post's comment list
-    if (self = [super init])
-    {
-        [self setPost:post];
-        if (useNetwork)
-        {
-            [self setList:[[NSMutableArray alloc] init]];
-            [self fetchWithUrl:commentsUrlGet(post.postID)
-                      intoList:self.list];
-        }
-        else
-        {
-            [self initializeDefaultList];
-        }
-        return self;
-    }
-    return nil;
-}
-- (void)initializeDefaultList
-{   // initialize the comment array with placeholder elements
- 
-    NSMutableArray *commentList = [[NSMutableArray alloc] init];
-    self.list = commentList;
-    Post *post = [[Post alloc] initDummy];
-
-    for (int i = 0; i < 4; i++)
-    {
-        Comment *comment;
-        comment = [[Comment alloc] initWithPost:post];
-        [self addObjectToList:comment];
-    }
-}
 
 #pragma mark - Data Access
 
@@ -62,11 +22,6 @@
         return self.post.message;
     return @"[Post's message not found]";
 }
-//- (void)addObjectToList:(NSObject *)obj
-//{   // add comment to list maintained by this datacontroller and the post
-//
-//    [self.post.commentList addObject:obj];
-//}
 
 #pragma mark - Network Access
 

@@ -18,7 +18,8 @@
 
 @property (nonatomic, strong) NSURL *postUrl;
 
-- (id)initWithVotableID:(NSInteger)ID withUpvoteValue:(BOOL)isUpvote;
+- (id)initWithVotableID:(NSInteger)ID
+        withUpvoteValue:(BOOL)isUpvote;
 - (id)initDummy;
 
 - (NSData*)toJSON;

@@ -93,43 +93,6 @@ public class Post implements Votable{
 		return ret;
 	}
 	
-	public static ArrayList<Post> postsFromJson(String json) throws IOException{
-		ArrayList<Post> ret = new ArrayList<Post>();
-		JsonReader reader = new JsonReader(new StringReader(json));
-		
-		try {
-			reader.beginArray();
-			while(reader.hasNext()){
-				
-				Integer id = null;
-				String text = null;
-				Integer score = null;
-				
-				reader.beginObject();
-				while(reader.hasNext()){
-					String name = reader.nextName(); //property name of next property.
-					if(name.equals("id")){
-						id = reader.nextInt();
-					}
-					else if(name.equals("text")){
-						text = reader.nextString();
-					}
-					else{
-						reader.skipValue();
-					}
-				}
-				reader.endObject();
-				
-				ret.add(new Post(0,text,2));
-			}
-			reader.endArray();
-		} finally{
-			reader.close();
-		}
-		
-		return ret;
-	}
-	
 	public void setVote(int vote)
 	{
 		this.vote = vote;

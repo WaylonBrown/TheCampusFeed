@@ -30,11 +30,11 @@ import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.PostCommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.PostListAdapter;
-import com.appuccino.collegefeed.extra.FontFetcher;
 import com.appuccino.collegefeed.extra.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.extra.NetWorker.PostSelector;
 import com.appuccino.collegefeed.extra.QuickReturnListView;
 import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.utils.FontManager;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
 
@@ -84,7 +84,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		loadingText = (ShimmerTextView)rootView.findViewById(R.id.loadingText);
 		footer = (LinearLayout)rootView.findViewById(R.id.footer);
 		
-		loadingText.setTypeface(FontFetcher.light);
+		loadingText.setTypeface(FontManager.light);
 		setupBottomViewUI();
 					
 		// Now give the find the PullToRefreshLayout and set it up
@@ -107,21 +107,8 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		if(postList == null)
 		{
 			pullListFromServer();
-			//postList.add()
-			/*postList.add(new Post(100, "Top message 1 test message 1 test message 1 test message 1 test message 1 #testtag", 5));
-			postList.add(new Post(70, "Top message 2 test message 2 test message #onetag #twotag", 10));
-			postList.add(new Post(15, "Top message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));*/
-		}		
-		
-		//if not in specific college feed, use layout with college name
-//		if(MainActivity.spinner.getSelectedItemPosition() == 2)
-//		{
-//			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_post, postList, 0);
-//		}
-//		else
-//		{
-			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 0);
-//		}
+		}	
+		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 0);
 		list.setAdapter(listAdapter);		
 
 		list.setOnItemClickListener(new OnItemClickListener()
@@ -142,15 +129,15 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		TextView showingText = (TextView)rootView.findViewById(R.id.showingFeedText);
 		TextView chooseText = (TextView)rootView.findViewById(R.id.chooseText);
 		
-		collegeNameBottom.setTypeface(FontFetcher.light);
-		showingText.setTypeface(FontFetcher.medium);
-		chooseText.setTypeface(FontFetcher.light);
+		collegeNameBottom.setTypeface(FontManager.light);
+		showingText.setTypeface(FontManager.medium);
+		chooseText.setTypeface(FontManager.light);
 		
 		chooseText.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(mainActivity, "make dialog", Toast.LENGTH_SHORT).show();
+				mainActivity.chooseFeedDialog();
 			}
 			
 		});

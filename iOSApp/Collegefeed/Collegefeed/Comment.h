@@ -13,7 +13,7 @@
 
 @interface Comment : Votable
 
-@property (nonatomic) NSInteger commentID;
+@property (nonatomic) long commentID;
 
 // NOTE: Use this constructor!
 - (id)initWithCommentMessage:(NSString *)message

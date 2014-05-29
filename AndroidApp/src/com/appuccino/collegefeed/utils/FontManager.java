@@ -1,9 +1,9 @@
-package com.appuccino.collegefeed.extra;
+package com.appuccino.collegefeed.utils;
 
 import android.content.Context;
 import android.graphics.Typeface;
 
-public class FontFetcher {
+public class FontManager {
 	public static Typeface light;
 	public static Typeface italic;
 	public static Typeface medium;

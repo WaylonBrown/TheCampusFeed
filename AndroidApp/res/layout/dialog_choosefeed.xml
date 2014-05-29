@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/lightlightgray">
+    
+    <View 
+        android:id="@+id/autoCompleteAnchor"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+    
+    <TextView
+        android:id="@+id/chooseFeedDialogTitle"
+        android:text="@string/chooseFeedDialogTitle"
+        style="@style/block"
+        android:textSize="30sp" 
+        android:textColor="@color/lightblue"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:gravity="center_horizontal"
+        />
+    
+    <LinearLayout
+        android:background="@drawable/card"
+        style="@style/block"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        >
+        
+        <TextView
+            android:id="@+id/allCollegesText"
+            style="@style/block"
+            android:gravity="center"
+            android:text="@string/allColleges"
+            android:textSize="22sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        style="@style/block"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="center">
+        
+        <TextView
+	        android:id="@+id/nearYouTitle"
+	        android:text="@string/nearYou"
+	        style="@style/wrap"
+	        android:textSize="16sp" 
+	        android:textColor="@color/darkgray"/>
+        
+        <ImageView
+	        android:id="@+id/gpsImage"
+	        android:src="@drawable/gps"
+	        android:layout_width="20dp"
+	        android:layout_height="20dp"
+	        android:layout_marginTop="1dp"
+	        android:layout_marginLeft="1dp"
+	        />
+        
+    </LinearLayout>
+    
+    <ListView
+        android:id="@+id/nearYouDialogList"
+        style="@style/block"
+        android:divider="@android:color/transparent"
+		android:dividerHeight="6dp"
+		android:listSelector="@android:color/transparent" 
+        />
+    
+    <TextView
+        android:id="@+id/otherTitle"
+        android:text="@string/other"
+        style="@style/block"
+        android:textSize="16sp" 
+        android:textColor="@color/darkgray"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="center_horizontal"
+        />
+    
+    <AutoCompleteTextView
+        android:id="@+id/otherCollegesText"
+        style="@style/block"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:hint="Type a college's name..."
+        android:dropDownHeight="210dp"
+        android:dropDownAnchor="@id/autoCompleteAnchor"/>
+
+</LinearLayout>

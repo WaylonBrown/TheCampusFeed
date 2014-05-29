@@ -13,21 +13,32 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.appuccino.collegefeed.R;
-import com.appuccino.collegefeed.extra.FontFetcher;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
 import com.appuccino.collegefeed.objects.College;
+import com.appuccino.collegefeed.utils.FontManager;
 
+/*
+ * Used in the ViewPager's Most Active College fragment, as well as the
+ * Choose Feed Dialog
+ */
 public class CollegeListAdapter extends ArrayAdapter<College>{
 
 	Context context; 
     int layoutResourceId;    
     List<College> collegeList = null;
+    boolean enableListClicking;
     
-    public CollegeListAdapter(Context context, int layoutResourceId, List<College> list) {
+    public CollegeListAdapter(Context context, int layoutResourceId, List<College> list, boolean enableListClicking) {
         super(context, layoutResourceId, list);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         collegeList = list;
+        this.enableListClicking = enableListClicking;
+    }
+    
+    @Override
+    public boolean isEnabled(int position) {
+        return enableListClicking;
     }
     
     @Override
@@ -43,7 +54,7 @@ public class CollegeListAdapter extends ArrayAdapter<College>{
         	
         	collegeHolder = new CollegeHolder();
         	collegeHolder.text = (TextView)row.findViewById(R.id.collegeText);
-            collegeHolder.text.setTypeface(FontFetcher.light);
+            collegeHolder.text.setTypeface(FontManager.light);
             
             row.setTag(collegeHolder);
         }

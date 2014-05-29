@@ -43,17 +43,18 @@ public class QuickReturnListView extends ListView {
 	public void computeScrollY() {
 		mHeight = 0;
 		mItemCount = getAdapter().getCount();
-		if (mItemOffsetY == null) {
+		if (mItemOffsetY == null || mItemOffsetY.length != mItemCount) {
 			mItemOffsetY = new int[mItemCount];
 		}
+		int dividerHeight = getDividerHeight();
 		for (int i = 0; i < mItemCount; i++) {
 			View view = getAdapter().getView(i, null, this);
 			view.measure(
 					MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
 					MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
 			mItemOffsetY[i] = mHeight;
-			mHeight += view.getMeasuredHeight();
-			System.out.println(mHeight);
+			mHeight += view.getMeasuredHeight() + dividerHeight;
+			//System.out.println(mHeight);
 		}
 		scrollIsComputed = true;
 	}

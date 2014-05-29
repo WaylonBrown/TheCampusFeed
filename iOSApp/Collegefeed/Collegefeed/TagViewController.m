@@ -11,14 +11,12 @@
 #import "TagViewController.h"
 #import "TagDataController.h"
 #import "PostsViewController.h"
-#import "Constants.h"
+#import "Shared.h"
 
 @implementation TagViewController
 
 - (void)viewDidLoad
 {
-//    [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
-
     // Do any additional setup after loading the view.
     [super viewDidLoad];
 
@@ -28,10 +26,14 @@
 
 #pragma mark - Navigation
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{   // A little preparation before navigation to different view
-    
-}
+//- (void)switchToAllColleges
+//{
+//    [super switchToAllColleges];
+//}
+//- (void)switchToSpecificCollege
+//{
+//    [super switchToSpecificCollege];
+//}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Comment View for the selected post
     
@@ -66,35 +68,5 @@
     
     return cell;
 }
-
-// Code when testing the attributed label
-
-/*
--(IBAction) something
-{
-    NSArray *words = [self.tagsLabel.text componentsSeparatedByString:@" "];
-    for (NSString *word in words)
-    {
-        if ([word hasPrefix:@"#"])
-        {
-            NSRange range = [self.tagsLabel.text rangeOfString:word];
-            
-            [self.tagsLabel addLinkToURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", word]] withRange:range];
-        }
-    }
-}
-
-- (void)showTagsList:(NSString *)tag
-{
-    UIViewController* controller = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil]  instantiateViewControllerWithIdentifier:@"tagView"];
-    [self presentViewController:controller animated:YES completion:nil];
-    
-}
-
-- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
-    NSString* tagMessage = [url absoluteString];
-    NSLog(@"tag = %@", tagMessage);
-}
-*/
 
 @end

@@ -7,18 +7,19 @@
 //
 
 #import "Vote.h"
-#import "Constants.h"
+#import "Shared.h"
 
 @implementation Vote
 
-- (id)initWithVotableID:(NSInteger)ID withUpvoteValue:(BOOL)isUpvote;
+- (id)initWithVotableID:(NSInteger)ID
+        withUpvoteValue:(BOOL)isUpvote;
 {
     self = [super init];
     if (self)
     {
         [self setVotableID:ID];
         [self setUpvote:isUpvote];
-        [self setPostUrl:voteUrl];
+        [self setPostUrl:[Shared POSTVoteWithPostId:ID]];
         return self;
     }
     return nil;

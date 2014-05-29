@@ -1,18 +1,15 @@
 package com.appuccino.collegefeed;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.location.Criteria;
@@ -24,64 +21,54 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.text.Editable;
-import android.text.Html;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appuccino.collegefeed.R;
-import com.appuccino.collegefeed.extra.FontFetcher;
-import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
+import com.appuccino.collegefeed.dialogs.ChooseFeedDialog;
+import com.appuccino.collegefeed.dialogs.NewPostDialog;
+import com.appuccino.collegefeed.extra.AllCollegeJSONString;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
 import com.appuccino.collegefeed.fragments.MyCommentsFragment;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
-import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.objects.College;
+import com.appuccino.collegefeed.utils.FontManager;
+import com.appuccino.collegefeed.utils.JSONParser;
+import com.appuccino.collegefeed.utils.ListComparator;
+import com.appuccino.collegefeed.utils.PrefManager;
 import com.astuetz.PagerSlidingTabStrip;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener, LocationListener 
 {
+	//views and widgets
 	ViewPager viewPager;
 	PagerSlidingTabStrip tabs;
-	PagerAdapter allCollegesPagerAdapter;
-	
+	PagerAdapter pagerAdapter;
 	ActionBar actionBar;
 	ImageView newPostButton;
+	
+	//final values
+	static final int ALL_COLLEGES = 0;	//used for permissions
+	static final String PREFERENCE_KEY_COLLEGE_LIST = "all_colleges_preference_key";
+	static final double MILES_FOR_PERMISSION = 15.0;
+	static final int LOCATION_TIMEOUT_SECONDS = 10;
+	public static final int MIN_POST_LENGTH = 10;
 	
 	ArrayList<Fragment> fragmentList;
 	boolean locationFound = false;
 	public static LocationManager mgr;
-	public static ArrayList<Integer> permissions = new ArrayList<Integer>();	//0 = no perms, otherwise the college ID is the perm IDs
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
-	static final double milesForPermissions = 15.0;
-	final int locationTimeoutSeconds = 10;
-	final int minPostLength = 10;
-	
-	/*
-	 * TODO:
-	 * Implement Haversine function to calculate shortest distance between two spherical points.
-	 * http://www.movable-type.co.uk/scripts/latlong.html
-	 */
+	public static ArrayList<Integer> permissions = new ArrayList<Integer>();	//length of 0 or null = no perms, otherwise the college ID is the perm IDs
+	public static ArrayList<College> collegeList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +78,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		tabs.setIndicatorColor(getResources().getColor(R.color.tabunderlineblue));
 		
-		FontFetcher.setup(this);
+		FontManager.setup(this);
+		PrefManager.setup(this);
 		setupActionbar();
+		setupCollegeList();
 		
 		locationFound = false;
 		
@@ -104,8 +93,34 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			}
 		});
 		
-		feedStyleChanged(0);
+		feedStyleChanged(ALL_COLLEGES);
 		getLocation();
+	}
+
+	private void setupCollegeList() {
+		collegeList = new ArrayList<College>();
+		String storedCollegeListJSON = PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST, "default_value");
+		
+		//should only happen very first time, store the backup college string to SharedPrefs
+		if(storedCollegeListJSON.equals("default_value"))
+		{
+			PrefManager.putString(PREFERENCE_KEY_COLLEGE_LIST, AllCollegeJSONString.ALL_COLLEGES_JSON);
+			storedCollegeListJSON = PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST, "default_value");
+		}
+		
+		try {
+			collegeList = JSONParser.collegeListFromJSON(storedCollegeListJSON);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		if(collegeList != null)
+		{
+			//sort list by name
+			Collections.sort(collegeList, new ListComparator());
+		}
+		else
+			Toast.makeText(this, "Error fetching college list.", Toast.LENGTH_LONG).show();
 	}
 
 	private void setupActionbar() {
@@ -122,9 +137,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	protected void feedStyleChanged(int which) 
 	{
 		//all colleges section
-		if(which == 0)
+		if(which == ALL_COLLEGES)
 		{
-			currentFeedCollegeID = 0;
+			currentFeedCollegeID = ALL_COLLEGES;
 		}
 		else //specific college
 		{
@@ -134,12 +149,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		
 		// Create the adapter that will return a fragment for each of the
 		// sections of the app.
-		allCollegesPagerAdapter = new PagerAdapter(this, getSupportFragmentManager());
+		pagerAdapter = new PagerAdapter(this, getSupportFragmentManager());
 	
 		// Set up the ViewPager with the sections adapter.
-		viewPager.setAdapter(allCollegesPagerAdapter);
+		viewPager.setAdapter(pagerAdapter);
 		viewPager.setOffscreenPageLimit(5);
 		tabs.setViewPager(viewPager);
+		
 	}
 	
 	private void showPermissionsToast() 
@@ -173,36 +189,36 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		}
 	}
 
-	private void fadeActionBarColor(ColorDrawable to){
-		ColorDrawable[] colors = {new ColorDrawable(getResources().getColor(R.color.blue)), to};
-	    
-		if (android.os.Build.VERSION.SDK_INT >= 16){
-			fadeActionBarColorCurrent(colors);
-        }
-		else{
-			fadeActionBarColorDeprecated(colors);
-		}
-	}
-	
-	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-	private void fadeActionBarColorCurrent(ColorDrawable[] colors){
-		TransitionDrawable trans = new TransitionDrawable(colors); //ok so this doesn't work yet its so weird.
-		TransitionDrawable trans2 = new TransitionDrawable(colors); //so ridiculous that i have to make two transitions
-	    actionBar.setBackgroundDrawable(trans);						//must be doing something wrong lol.
-	    actionBar.getCustomView().setBackground(trans2);
-	    trans.startTransition(1000);
-	    trans2.startTransition(2000);
-	}
-	
-	@SuppressWarnings("deprecation")
-	private void fadeActionBarColorDeprecated(ColorDrawable[] colors){
-		TransitionDrawable trans = new TransitionDrawable(colors);
-		TransitionDrawable trans2 = new TransitionDrawable(colors);
-	    actionBar.setBackgroundDrawable(trans);
-	    actionBar.getCustomView().setBackgroundDrawable(trans2);
-	    trans.startTransition(1000);
-	    trans2.startTransition(1000);
-	}
+//	private void fadeActionBarColor(ColorDrawable to){
+//		ColorDrawable[] colors = {new ColorDrawable(getResources().getColor(R.color.blue)), to};
+//	    
+//		if (android.os.Build.VERSION.SDK_INT >= 16){
+//			fadeActionBarColorCurrent(colors);
+//        }
+//		else{
+//			fadeActionBarColorDeprecated(colors);
+//		}
+//	}
+//	
+//	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+//	private void fadeActionBarColorCurrent(ColorDrawable[] colors){
+//		TransitionDrawable trans = new TransitionDrawable(colors); //ok so this doesn't work yet its so weird.
+//		TransitionDrawable trans2 = new TransitionDrawable(colors); //so ridiculous that i have to make two transitions
+//	    actionBar.setBackgroundDrawable(trans);						//must be doing something wrong lol.
+//	    actionBar.getCustomView().setBackground(trans2);
+//	    trans.startTransition(1000);
+//	    trans2.startTransition(2000);
+//	}
+//	
+//	@SuppressWarnings("deprecation")
+//	private void fadeActionBarColorDeprecated(ColorDrawable[] colors){
+//		TransitionDrawable trans = new TransitionDrawable(colors);
+//		TransitionDrawable trans2 = new TransitionDrawable(colors);
+//	    actionBar.setBackgroundDrawable(trans);
+//	    actionBar.getCustomView().setBackgroundDrawable(trans2);
+//	    trans.startTransition(1000);
+//	    trans2.startTransition(1000);
+//	}
 	
 	private void getLocation(){
 		mgr = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -252,7 +268,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 							
 						}							
 					}		    		
-		    	}, locationTimeoutSeconds * 1000);
+		    	}, LOCATION_TIMEOUT_SECONDS * 1000);
 //			}
 //		    else{
 //		    	determinePermissions(lastKnownLoc);
@@ -262,42 +278,75 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 	private void determinePermissions(Location loc) 
 	{
-		double degreesForPermissions = milesForPermissions / 50.0;	//roughly 50 miles per degree
+		double degreesForPermissions = MILES_FOR_PERMISSION / 50.0;	//roughly 50 miles per degree
 		
-		//USED FOR TESTING, ALL OF OUR CITIES RETURN A&M
-		double tamuLatitude = 30.614942;
-		double tamuLongitude = -96.342316;
-		double austinLatitude = 30.270664;
-		double austinLongitude = -97.741064;
-		double seattleLatitude = 0;	//JAMES fill these in
-		double seattleLongitude = 0;
-		
-		int tamuID = 234234;
-		
-		double degreesAway1 = Math.sqrt(Math.pow((loc.getLatitude() - tamuLatitude), 2) + Math.pow((loc.getLongitude() - tamuLongitude), 2));
-		double degreesAway2 = Math.sqrt(Math.pow((loc.getLatitude() - austinLatitude), 2) + Math.pow((loc.getLongitude() - austinLongitude), 2));
-		double degreesAway3 = Math.sqrt(Math.pow((loc.getLatitude() - seattleLatitude), 2) + Math.pow((loc.getLongitude() - seattleLongitude), 2));
-		
-		//gets which is least of the three
-		double degreesAway = Math.min(degreesAway1, degreesAway2);
-		degreesAway = Math.min(degreesAway, degreesAway3);
-		if(degreesAway < degreesForPermissions)
+		if(collegeList != null)
 		{
-			permissions.clear();
-			permissions.add(tamuID);
-			if(!newPostButton.isShown())
-				newPostButton.setVisibility(View.VISIBLE);
-			Toast.makeText(this, "You're near Texas A&M University", Toast.LENGTH_LONG).show();
-			Toast.makeText(this, "You can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
-			updateListsForGPS();	//so that GPS icon can be set
-		}
-		else
+			if(permissions != null)
+				permissions.clear();
+			else
+				permissions = new ArrayList<Integer>();
+			
+			//add IDs to permissions list
+			for(College c : collegeList)
+			{
+				//TODO: change to formula James is using that takes into account the roundness of the earth
+				double degreesAway = Math.sqrt(Math.pow((loc.getLatitude() - c.getLatitude()), 2) + Math.pow((loc.getLongitude() - c.getLongitude()), 2));
+				
+				if(degreesAway <= degreesForPermissions)
+				{
+					permissions.add(c.getID());
+					if(!newPostButton.isShown())
+						newPostButton.setVisibility(View.VISIBLE);
+				}
+			}
+			
+			//no nearby colleges found
+			if(permissions == null || permissions.size() == 0)
+			{
+				if(newPostButton.isShown())
+					newPostButton.setVisibility(View.INVISIBLE);
+				Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
+			}
+			else	//near a college
+			{
+				if(permissions.size() == 1)
+				{
+					Toast.makeText(this, "You're near " + getCollegeByID(permissions.get(0)).getName(), Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "You can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
+				}
+				else
+				{
+					String toastMessage = "You're near ";
+					for(int id : permissions)
+					{
+						toastMessage += getCollegeByID(id).getName() + " and ";
+					}
+					//remove last "and"
+					toastMessage = toastMessage.substring(0, toastMessage.length() - 5);
+					Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "You can upvote, downvote, post, and comment on those colleges' posts", Toast.LENGTH_LONG).show();
+				}
+				
+				updateListsForGPS();	//so that GPS icon can be set
+			}
+			
+		}		
+	}
+
+	public static College getCollegeByID(Integer id) {
+		if(collegeList != null)
 		{
-			permissions.clear();
-			if(newPostButton.isShown())
-				newPostButton.setVisibility(View.INVISIBLE);
-			Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
+			if(collegeList.size() > 0)
+			{
+				for(College c : collegeList)
+				{
+					if(c.getID() == id)
+						return c;
+				}
+			}
 		}
+		return null;
 	}
 
 	private void updateListsForGPS() 
@@ -310,125 +359,20 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 //			NewPostFragment.updateList();
 //		}
 	}
+	
+	public void chooseFeedDialog() {
+		LayoutInflater inflater = getLayoutInflater();
+		View layout = inflater.inflate(R.layout.dialog_choosefeed, null);
+		new ChooseFeedDialog(this, layout);
+	}
 
+	
 
 	public void newPostClicked() 
 	{
 		LayoutInflater inflater = getLayoutInflater();
 		View postDialogLayout = inflater.inflate(R.layout.dialog_post, null);
-		final EditText postMessage = (EditText)postDialogLayout.findViewById(R.id.newPostMessage);
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    	builder.setCancelable(true);
-    	builder.setView(postDialogLayout)
-    	.setPositiveButton("Post", new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-                //do nothing here since overridden below to be able to click button and not dismiss dialog
-            }
-        });
-    	    	
-    	final AlertDialog dialog = builder.create();
-    	dialog.show();
-    	
-    	Button postButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-    	postButton.setOnClickListener(new View.OnClickListener()
-    	{
-    		@Override
-			public void onClick(View v) 
-    		{				
-    			if(postMessage.getText().toString().length() >= minPostLength)
-    			{
-    				Post newPost = new Post(postMessage.getText().toString());
-        			NewPostFragment.postList.add(newPost);
-        			TopPostFragment.postList.add(newPost);
-        			new MakePostTask().execute(newPost);
-        			dialog.dismiss();
-    			}
-    			else
-    			{
-    				Toast.makeText(getApplicationContext(), "Post must be at least 10 characters long.", Toast.LENGTH_LONG).show();
-    			}
-			}
-    	});
-    	
-    	TextView title = (TextView)postDialogLayout.findViewById(R.id.newPostTitle);
-    	TextView college = (TextView)postDialogLayout.findViewById(R.id.collegeText);
-    	postMessage.setTypeface(FontFetcher.light);
-    	college.setTypeface(FontFetcher.italic);
-    	title.setTypeface(FontFetcher.light);
-    	postButton.setTypeface(FontFetcher.light);
-    	
-    	//ensure keyboard is brought up when dialog shows
-    	postMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-    	    @Override
-    	    public void onFocusChange(View v, boolean hasFocus) {
-    	        if (hasFocus) {
-    	            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-    	        }
-    	    }
-    	});
-   
-    	final TextView tagsText = (TextView)postDialogLayout.findViewById(R.id.newPostTagsText);
-    	tagsText.setTypeface(FontFetcher.light);
-    	
-    	//set listener for tags
-    	postMessage.addTextChangedListener(new TextWatcher(){
-
-			@Override
-			public void afterTextChanged(Editable s) {
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-			}
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-				String message = postMessage.getText().toString();
-				String currentTags = "Tags: <font color='#33B5E5'>";
-				
-				String[] wordArray = message.split(" ");
-				if(wordArray.length > 0)
-				{
-					for(int i = 0; i < wordArray.length; i++)
-					{
-						//prevent indexoutofboundsexception
-						if(wordArray[i].length() > 0)
-						{
-							if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
-							{
-								currentTags += wordArray[i] + " ";
-							}
-						}
-					}
-				}
-				
-				currentTags += "</font>";
-				//if there aren't any tags and view is shown, remove view
-				if(currentTags.equals("Tags: <font color='#33B5E5'></font>") && tagsText.isShown())
-				{
-					tagsText.setVisibility(View.GONE);
-					//tagsText.setLayoutParams(new android.widget.LinearLayout.LayoutParams(0, 0));
-					//tagsText.setHeight(0);
-				}					
-				else if(!currentTags.equals("Tags: <font color='#33B5E5'></font>") && !tagsText.isShown())
-				{
-					tagsText.setVisibility(View.VISIBLE);
-//					//tagsText.setLayoutParams(new android.widget.LinearLayout.LayoutParams(android.widget.LinearLayout.LayoutParams.MATCH_PARENT, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT));
-//					Resources r = getApplicationContext().getResources();
-//					Toast.makeText(getApplicationContext(), Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, r.getDisplayMetrics())), Toast.LENGTH_LONG).show();
-//					tagsText.setHeight(100);
-				}
-					
-				tagsText.setText(Html.fromHtml((currentTags)));
-			}
-    		
-    	});
+		new NewPostDialog(this, postDialogLayout);
 	}
 
 	@Override
@@ -510,17 +454,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-				return getString(R.string.allcollege_section1).toUpperCase(l);
+				return getString(R.string.section1).toUpperCase(l);
 			case 1:
-				return getString(R.string.allcollege_section2).toUpperCase(l);
+				return getString(R.string.section2).toUpperCase(l);
 			case 2:
-				return getString(R.string.allcollege_section3).toUpperCase(l);
+				return getString(R.string.section3).toUpperCase(l);
 			case 3:
-				return getString(R.string.allcollege_section4).toUpperCase(l);
+				return getString(R.string.section4).toUpperCase(l);
 			case 4:
-				return getString(R.string.allcollege_section5).toUpperCase(l);
+				return getString(R.string.section5).toUpperCase(l);
 			case 5:
-				return getString(R.string.allcollege_section6).toUpperCase(l);
+				return getString(R.string.section6).toUpperCase(l);
 			}
 			return null;
 		}

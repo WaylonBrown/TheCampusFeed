@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
 import com.appuccino.collegefeed.adapters.PostListAdapter;
-import com.appuccino.collegefeed.extra.FontFetcher;
 import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.R;
 
 import android.app.ActionBar;
@@ -41,7 +41,7 @@ public class TagListActivity extends Activity{
         
         TextView topTagText = (TextView)findViewById(R.id.topTagText);
         topTagText.setText("Posts with " + tagText);
-        topTagText.setTypeface(FontFetcher.light);
+        topTagText.setTypeface(FontManager.light);
 		
 		ListView listView = (ListView)findViewById(R.id.fragmentListView);
 		if(!tagText.equals("") && tagText != null)

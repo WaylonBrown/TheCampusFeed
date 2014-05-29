@@ -12,16 +12,6 @@
 
 @implementation VoteDataController
 
-- (id)init
-{
-    if (self = [super init])
-    {
-        [self setList:[[NSMutableArray alloc] init]];
-        return self;
-    }
-    return nil;
-}
-
 - (void)addToServer:(Vote *)vote intoList:(NSMutableArray *)array
 {   // Build a POST request for this vote, send to url, if successful, add to array
 
@@ -44,7 +34,7 @@
        [NSURLConnection sendSynchronousRequest:request
                              returningResponse:&response
                                          error:nil];
-
+        
         //NOTE: no response is sent back yet with a successful POST
     }
     @catch(NSException* e)

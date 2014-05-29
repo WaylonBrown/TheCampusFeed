@@ -17,7 +17,7 @@
 #import "CommentDataController.h"
 #import "Post.h"
 #import "Comment.h"
-#import "Constants.h"
+#import "Shared.h"
 
 @interface DataControllerTests : XCTestCase
 

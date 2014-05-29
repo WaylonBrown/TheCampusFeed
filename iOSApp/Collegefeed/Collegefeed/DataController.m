@@ -11,52 +11,64 @@
 
 @implementation DataController
 
-- (NSUInteger)countOfList
-{   // return the number of objects in this list
-    return [self.list count];
+static int locationDistanceFilter = 150000; // 15km
+
+- (id)initWithNetwork
+{
+    self = [super init];
+    if (self)
+    {
+        [self setList:[[NSMutableArray alloc] init]];
+        
+        [self setLocationManager:[[CLLocationManager alloc] init]];
+        [self.locationManager setDistanceFilter:locationDistanceFilter];
+        [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+        [self.locationManager startUpdatingLocation];
+        
+        [self setLat:self.locationManager.location.coordinate.latitude];
+        [self setLon:self.locationManager.location.coordinate.longitude];
+    }
+    return self;
 }
 
 #pragma mark Data Access
 
-- (void)addObjectToList:(NSObject *)obj
-{   // add object to local list
-    [self.list addObject:obj];
+- (NSUInteger)countOfList
+{   // return the number of objects in this list
+    return [self.list count];
 }
 - (NSObject *)objectInListAtIndex:(NSUInteger)theIndex
 {   // return the object at theIndex
     return [self.list objectAtIndex:theIndex];
 }
+- (void)addObjectToList:(NSObject *)obj
+{}
+- (void)refresh
+{}
 
 #pragma mark - Network Access
 
 - (id)getJsonObjectWithUrl:(NSURL *)url
 { // used to GET a JSON object from a url
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:url
-                                             cachePolicy:NSURLRequestReturnCacheDataElseLoad
-                                         timeoutInterval:30];
-    // Fetch the JSON response
-    NSData *urlData;
-    NSHTTPURLResponse *response;
-    NSError *error;
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     
-    // Make synchronous request
-    urlData = [NSURLConnection sendSynchronousRequest:request
-                                    returningResponse:&response
-                                                error:&error];
-    NSInteger code = [response statusCode];
-    if (code != 200 || error != nil)
-    {
-        NSString *excReason = [NSString stringWithFormat:@"Error accessing %@", url];
-        NSException *exc = [NSException exceptionWithName:@"NetworkRequestError"
-                                                   reason:excReason
-                                                 userInfo:nil];
-        @throw exc;
-    }
+    [request setURL:url];
+    [request setHTTPMethod:@"GET"];
+    [request setValue:@"application/json;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+    
+    // Fetch the JSON response
+    NSURLResponse *response;
+    NSData *urlData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+    NSString *theReply = [[NSString alloc] initWithBytes:[urlData bytes]
+                                                  length:[urlData length]
+                                                encoding:NSASCIIStringEncoding];
+
+    //TODO: check for error code;
     
     return [NSJSONSerialization JSONObjectWithData:urlData
                                            options:0
-                                             error:&error];
+                                             error:nil];
 }
 - (void)addToServer:(Votable *)obj intoList:(NSMutableArray *)array
 {   // Build a POST request for this obj, send to url, if successful, add to array
@@ -64,6 +76,11 @@
     {
         // Build body
         NSData *bodyData = [obj toJSON];
+        NSString *bodyString = [[NSString alloc] initWithBytes:[bodyData bytes]
+                                                        length:[bodyData length]
+                                                      encoding:NSASCIIStringEncoding];
+        NSLog(@"bodyString: %@", bodyString);
+        
         NSString *bodyLength = [NSString stringWithFormat:@"%d", [bodyData length]];
         
         // Build header
@@ -79,6 +96,12 @@
         NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request
                                                   returningResponse:&response
                                                               error:nil];
+        
+        NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes]
+                                                      length:[POSTReply length]
+                                                    encoding: NSASCIIStringEncoding];
+        NSLog(@"Reply: %@", theReply);
+        
         NSError *error;
         NSDictionary *jsonPost = [NSJSONSerialization JSONObjectWithData:POSTReply
                                                                  options:0 error:&error];
@@ -92,5 +115,10 @@
         NSLog(@"Exception in POST request");
     }
 }
+- (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array
+{
+
+}
+
 
 @end

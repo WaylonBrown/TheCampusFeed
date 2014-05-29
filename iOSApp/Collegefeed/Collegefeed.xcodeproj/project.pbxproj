@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5308D2BD193552C600D70C1A /* Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 5308D2BC193552C600D70C1A /* Shared.m */; };
 		532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706E1191378EF00F5EAB9 /* PostDataController.m */; };
 		533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 533475881922B88300E84CC8 /* TTTAttributedLabel.m */; };
 		5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5334758B1922D9B700E84CC8 /* TagViewController.m */; };
@@ -69,6 +70,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5308D2BB193552C600D70C1A /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
+		5308D2BC193552C600D70C1A /* Shared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shared.m; sourceTree = "<group>"; };
 		532706E0191378EF00F5EAB9 /* PostDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDataController.h; sourceTree = "<group>"; };
 		532706E1191378EF00F5EAB9 /* PostDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PostDataController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		533475871922B88300E84CC8 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
@@ -287,9 +290,9 @@
 		53B1FE0119254EB900905E49 /* MasterView */ = {
 			isa = PBXGroup;
 			children = (
-				53B1FDFC19254E4700905E49 /* MasterView.xib */,
 				53B1FDFE19254E8F00905E49 /* MasterViewController.h */,
 				53B1FDFF19254E8F00905E49 /* MasterViewController.m */,
+				53B1FDFC19254E4700905E49 /* MasterView.xib */,
 			);
 			name = MasterView;
 			sourceTree = "<group>";
@@ -347,6 +350,8 @@
 		53F8789719133F60002A578B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5308D2BB193552C600D70C1A /* Shared.h */,
+				5308D2BC193552C600D70C1A /* Shared.m */,
 				53D2AD121918A7760097C840 /* Constants.h */,
 				533475871922B88300E84CC8 /* TTTAttributedLabel.h */,
 				533475881922B88300E84CC8 /* TTTAttributedLabel.m */,
@@ -491,6 +496,7 @@
 				5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */,
 				53D2AD0719189E9E0097C840 /* Comment.m in Sources */,
 				53AE736A1925CFA800BE6B02 /* CollegeDataController.m in Sources */,
+				5308D2BD193552C600D70C1A /* Shared.m in Sources */,
 				5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */,
 				53F878A119133F60002A578B /* AppDelegate.m in Sources */,
 				53AE73C51928208100BE6B02 /* Votable.m in Sources */,

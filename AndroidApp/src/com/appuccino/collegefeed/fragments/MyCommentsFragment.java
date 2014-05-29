@@ -25,11 +25,11 @@ import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.PostCommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
-import com.appuccino.collegefeed.extra.FontFetcher;
 import com.appuccino.collegefeed.extra.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.extra.NetWorker.PostSelector;
 import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.utils.FontManager;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
 
@@ -64,7 +64,7 @@ public class MyCommentsFragment extends Fragment implements OnRefreshListener
 				container, false);
 		list = (ListView)rootView.findViewById(R.id.fragmentListView);
 		loadingText = (ShimmerTextView)rootView.findViewById(R.id.loadingText);
-		loadingText.setTypeface(FontFetcher.light);
+		loadingText.setTypeface(FontManager.light);
 		
 		disableFooter(rootView);
 					

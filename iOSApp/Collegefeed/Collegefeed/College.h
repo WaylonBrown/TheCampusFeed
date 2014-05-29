@@ -23,7 +23,6 @@
 - (id)initWithCollegeID:(NSInteger)cID withName:(NSString*)cName
           withShortName:(NSString*)cShortName;
 
-- (id)initDummy;
 - (void)validateCollege;
 
 

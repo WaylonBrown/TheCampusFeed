@@ -8,7 +8,7 @@
 
 #import "CollegePickerViewController.h"
 #import "College.h"
-#import "Constants.h"
+#import "Shared.h"
 #import "PostsViewController.h"
 
 @implementation CollegePickerViewController
@@ -87,9 +87,9 @@ shouldReloadTableForSearchString:(NSString *)searchString
     {
         college = (College *)[self.list objectAtIndex:indexPath.row];
     }
-    PostsViewController* controller = [[PostsViewController alloc] init];
-    [self.navigationController pushViewController:controller
-                                         animated:YES];
+    
+    [self.delegate selectedCollege:college];
+
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list

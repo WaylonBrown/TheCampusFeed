@@ -3,12 +3,15 @@
     <color name="lightblue">#33B5E5</color>
     <color name="tabunderlineblue">#11AADD</color>
     <color name="blue">#0099CC</color>
-    <color name="alphablue">#EE0099CC</color>
+    <color name="alphablue">#DD0099CC</color>
+    
+    <color name="lightlightgray">#F5F5F5</color>
     <color name="bottomviewgray">#EAEAEA</color>
     <color name="lightgray">#E6E6E6</color>
-    <color name="alphalightgray">#EEE6E6E6</color>
+    <color name="alphalightgray">#DDE6E6E6</color>
     <color name="dividergray">#D3D3D3</color>
     <color name="gray">#7C7C7C</color>
     <color name="darkgray">#444444</color>
+    
     <color name="white">#FFFFFF</color>
 </resources>
