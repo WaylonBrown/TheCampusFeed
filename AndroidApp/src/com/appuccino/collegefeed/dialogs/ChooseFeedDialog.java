@@ -80,6 +80,7 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 	private void populateOtherCollegesSpinner(Spinner otherCollegesSpinner) {
 		otherColleges = new ArrayList<College>();
 		List<String> otherCollegesStringList = new ArrayList<String>();
+		otherCollegesStringList.add("Choose...");
 		
 		//add colleges that aren't already nearby
 		if(MainActivity.collegeList != null)
@@ -107,7 +108,7 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 		
 		//populate spinner
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, otherCollegesStringList);
-	    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	    otherCollegesSpinner.setAdapter(adapter);
 		
 	}
