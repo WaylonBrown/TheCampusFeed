@@ -2,6 +2,7 @@ package com.appuccino.collegefeed;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -42,6 +43,7 @@ import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.JSONParser;
+import com.appuccino.collegefeed.utils.ListComparator;
 import com.appuccino.collegefeed.utils.PrefManager;
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -114,10 +116,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		
 		if(collegeList != null)
 		{
-			for(College c : collegeList)
-			{
-				Log.i("wbbug",c.toString());
-			}
+			//sort list by name
+			Collections.sort(collegeList, new ListComparator());
 		}
 		else
 			Toast.makeText(this, "Error fetching college list.", Toast.LENGTH_LONG).show();
