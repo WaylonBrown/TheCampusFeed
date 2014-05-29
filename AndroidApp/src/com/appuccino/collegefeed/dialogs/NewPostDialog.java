@@ -5,8 +5,8 @@ import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
-import com.appuccino.collegefeed.managers.FontManager;
 import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.utils.FontManager;
 
 import android.app.AlertDialog;
 import android.content.Context;

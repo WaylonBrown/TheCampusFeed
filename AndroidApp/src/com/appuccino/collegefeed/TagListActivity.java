@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
 import com.appuccino.collegefeed.adapters.PostListAdapter;
-import com.appuccino.collegefeed.managers.FontManager;
 import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.R;
 
 import android.app.ActionBar;

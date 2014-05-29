@@ -34,8 +34,8 @@ import com.appuccino.collegefeed.adapters.PostListAdapter;
 import com.appuccino.collegefeed.extra.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.extra.NetWorker.PostSelector;
 import com.appuccino.collegefeed.extra.QuickReturnListView;
-import com.appuccino.collegefeed.managers.FontManager;
 import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.utils.FontManager;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
 

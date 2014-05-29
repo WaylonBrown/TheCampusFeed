@@ -1,5 +1,6 @@
 package com.appuccino.collegefeed;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Timer;
@@ -31,15 +32,17 @@ import android.widget.Toast;
 
 import com.appuccino.collegefeed.dialogs.ChooseFeedDialog;
 import com.appuccino.collegefeed.dialogs.NewPostDialog;
+import com.appuccino.collegefeed.extra.AllCollegeJSONString;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
 import com.appuccino.collegefeed.fragments.MyCommentsFragment;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
-import com.appuccino.collegefeed.managers.FontManager;
-import com.appuccino.collegefeed.managers.PrefManager;
 import com.appuccino.collegefeed.objects.College;
+import com.appuccino.collegefeed.utils.FontManager;
+import com.appuccino.collegefeed.utils.JSONParser;
+import com.appuccino.collegefeed.utils.PrefManager;
 import com.astuetz.PagerSlidingTabStrip;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener, LocationListener 
@@ -100,7 +103,30 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 	private void setupCollegeList() {
 		collegeList = new ArrayList<College>();
-		if(PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST, defaultVal))
+		String storedCollegeListJSON = PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST, "default_value");
+		
+		//should only happen very first time, store the backup college string to SharedPrefs
+		if(storedCollegeListJSON.equals("default_value"))
+		{
+			PrefManager.putString(PREFERENCE_KEY_COLLEGE_LIST, AllCollegeJSONString.ALL_COLLEGES_JSON);
+			storedCollegeListJSON = PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST, "default_value");
+		}
+		
+		try {
+			collegeList = JSONParser.collegeListFromJSON(storedCollegeListJSON);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		if(collegeList != null)
+		{
+			for(College c : collegeList)
+			{
+				Log.i("wbbug",c.toString());
+			}
+		}
+		else
+			Toast.makeText(this, "Error fetching college list.", Toast.LENGTH_LONG).show();
 	}
 
 	private void setupActionbar() {

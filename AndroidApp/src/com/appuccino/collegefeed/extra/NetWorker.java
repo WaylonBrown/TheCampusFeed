@@ -3,7 +3,6 @@ package com.appuccino.collegefeed.extra;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.apache.http.Header;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -22,6 +21,7 @@ import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
+import com.appuccino.collegefeed.utils.JSONParser;
 
 public class NetWorker {
 	
@@ -80,7 +80,7 @@ public class NetWorker {
 				Log.d("http", response);
 			ArrayList<Post> ret = null;
 			try {
-				ret = Post.postsFromJson(response);
+				ret = JSONParser.postListFromJSON(response);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

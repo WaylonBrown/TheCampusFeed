@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.CollegeListAdapter;
-import com.appuccino.collegefeed.managers.FontManager;
 import com.appuccino.collegefeed.objects.College;
+import com.appuccino.collegefeed.utils.FontManager;
 
 import android.app.AlertDialog;
 import android.content.Context;

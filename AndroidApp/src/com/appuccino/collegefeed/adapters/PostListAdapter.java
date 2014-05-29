@@ -26,9 +26,9 @@ import com.appuccino.collegefeed.extra.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.extra.NetWorker.PostSelector;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
-import com.appuccino.collegefeed.managers.FontManager;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
+import com.appuccino.collegefeed.utils.FontManager;
 
 public class PostListAdapter extends ArrayAdapter<Post>{
 

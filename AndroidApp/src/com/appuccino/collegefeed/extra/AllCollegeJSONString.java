@@ -1,4 +1,4 @@
-package com.appuccino.collegefeed.utils;
+package com.appuccino.collegefeed.extra;
 
 public class AllCollegeJSONString {
 	

@@ -1,4 +1,4 @@
-package com.appuccino.collegefeed.managers;
+package com.appuccino.collegefeed.utils;
 
 import android.content.Context;
 import android.graphics.Typeface;
