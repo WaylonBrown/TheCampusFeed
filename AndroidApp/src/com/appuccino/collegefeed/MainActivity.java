@@ -64,8 +64,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	ArrayList<Fragment> fragmentList;
 	boolean locationFound = false;
 	public static LocationManager mgr;
-	public static ArrayList<Integer> permissions = new ArrayList<Integer>();	//length of 0 or null = no perms, otherwise the college ID is the perm IDs
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
+	public static ArrayList<Integer> permissions = new ArrayList<Integer>();	//length of 0 or null = no perms, otherwise the college ID is the perm IDs
 	public static ArrayList<College> collegeList;
 	
 	@Override
@@ -334,7 +334,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		}		
 	}
 
-	private static College getCollegeByID(Integer id) {
+	public static College getCollegeByID(Integer id) {
 		if(collegeList != null)
 		{
 			if(collegeList.size() > 0)

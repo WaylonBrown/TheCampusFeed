@@ -26,12 +26,19 @@ public class CollegeListAdapter extends ArrayAdapter<College>{
 	Context context; 
     int layoutResourceId;    
     List<College> collegeList = null;
+    boolean enableListClicking;
     
-    public CollegeListAdapter(Context context, int layoutResourceId, List<College> list) {
+    public CollegeListAdapter(Context context, int layoutResourceId, List<College> list, boolean enableListClicking) {
         super(context, layoutResourceId, list);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         collegeList = list;
+        this.enableListClicking = enableListClicking;
+    }
+    
+    @Override
+    public boolean isEnabled(int position) {
+        return enableListClicking;
     }
     
     @Override

@@ -2,6 +2,7 @@ package com.appuccino.collegefeed.dialogs;
 
 import java.util.ArrayList;
 
+import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.CollegeListAdapter;
 import com.appuccino.collegefeed.objects.College;
@@ -41,11 +42,31 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 	}
 	
 	private void populateNearYouList(ListView list) {
-		ArrayList<College> collegeList = new ArrayList<College>();
-		collegeList.add(new College("Texas A&M University"));
-		collegeList.add(new College("University of Texas in Austin"));
+		ArrayList<College> nearYouList = new ArrayList<College>();
+		boolean enableListClicking = true;	//false if no colleges so that the item can't be clicked
 		
-		CollegeListAdapter adapter = new CollegeListAdapter(context, R.layout.list_row_choosefeed_college, collegeList);
+		if(MainActivity.permissions != null)
+		{
+			if(MainActivity.permissions.size() > 0)
+			{
+				for(int id : MainActivity.permissions)
+				{
+					nearYouList.add(MainActivity.getCollegeByID(id));
+				}
+			}
+			else
+			{
+				nearYouList.add(new College("(none)"));
+				enableListClicking = false;
+			}
+		}
+		else
+		{
+			nearYouList.add(new College("(none)"));
+			enableListClicking = false;
+		}
+		
+		CollegeListAdapter adapter = new CollegeListAdapter(context, R.layout.list_row_choosefeed_college, nearYouList, enableListClicking);
 		list.setAdapter(adapter);
 	}
 
