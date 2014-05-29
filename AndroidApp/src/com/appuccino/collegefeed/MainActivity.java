@@ -286,40 +286,92 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	{
 		double degreesForPermissions = MILES_FOR_PERMISSION / 50.0;	//roughly 50 miles per degree
 		
-		//USED FOR TESTING, ALL OF OUR CITIES RETURN A&M
-		double tamuLatitude = 30.614942;
-		double tamuLongitude = -96.342316;
-		double austinLatitude = 30.270664;
-		double austinLongitude = -97.741064;
-		double seattleLatitude = 0;	//JAMES fill these in
-		double seattleLongitude = 0;
+//		//USED FOR TESTING, ALL OF OUR CITIES RETURN A&M
+//		double tamuLatitude = 30.614942;
+//		double tamuLongitude = -96.342316;
+//		double austinLatitude = 30.270664;
+//		double austinLongitude = -97.741064;
+//		double seattleLatitude = 0;	//JAMES fill these in
+//		double seattleLongitude = 0;
+////		
+//		int tamuID = 234234;
 		
-		int tamuID = 234234;
-		
-		double degreesAway1 = Math.sqrt(Math.pow((loc.getLatitude() - tamuLatitude), 2) + Math.pow((loc.getLongitude() - tamuLongitude), 2));
-		double degreesAway2 = Math.sqrt(Math.pow((loc.getLatitude() - austinLatitude), 2) + Math.pow((loc.getLongitude() - austinLongitude), 2));
-		double degreesAway3 = Math.sqrt(Math.pow((loc.getLatitude() - seattleLatitude), 2) + Math.pow((loc.getLongitude() - seattleLongitude), 2));
-		
-		//gets which is least of the three
-		double degreesAway = Math.min(degreesAway1, degreesAway2);
-		degreesAway = Math.min(degreesAway, degreesAway3);
-		if(degreesAway < degreesForPermissions)
+		if(collegeList != null)
 		{
-			permissions.clear();
-			permissions.add(tamuID);
-			if(!newPostButton.isShown())
-				newPostButton.setVisibility(View.VISIBLE);
-			Toast.makeText(this, "You're near Texas A&M University", Toast.LENGTH_LONG).show();
-			Toast.makeText(this, "You can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
-			updateListsForGPS();	//so that GPS icon can be set
+			if(permissions != null)
+				permissions.clear();
+			else
+				permissions = new ArrayList<Integer>();
+			
+			for(College c : collegeList)
+			{
+				//TODO: change to formula James is using that takes into account the roundness of the earth
+				double degreesAway = Math.sqrt(Math.pow((loc.getLatitude() - c.getLatitude()), 2) + Math.pow((loc.getLongitude() - c.getLongitude()), 2));
+				
+				if(degreesAway < degreesForPermissions)
+				{
+					permissions.add(c.getID());
+					if(!newPostButton.isShown())
+						newPostButton.setVisibility(View.VISIBLE);
+				}
+			}
+			
+			//no nearby colleges found
+			if(permissions == null || permissions.size() == 0)
+			{
+				if(newPostButton.isShown())
+					newPostButton.setVisibility(View.INVISIBLE);
+				Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
+			}
+			else	//near a college
+			{
+				if(permissions.size() == 1)
+				{
+					Toast.makeText(this, "You're near " + getCollegeByID(permissions.get(0)).getName(), Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "You can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
+				}
+				else
+				{
+					String toastMessage = "You're near ";
+					for(int id : permissions)
+					{
+						toastMessage += getCollegeByID(id).getName() + " and ";
+					}
+					//remove last "and"
+					toastMessage = toastMessage.substring(0, toastMessage.length() - 5);
+					Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "You can upvote, downvote, post, and comment on those colleges' posts", Toast.LENGTH_LONG).show();
+				}
+				
+				
+				updateListsForGPS();	//so that GPS icon can be set
+			}
+			
 		}
-		else
+		
+//		double degreesAway1 = Math.sqrt(Math.pow((loc.getLatitude() - tamuLatitude), 2) + Math.pow((loc.getLongitude() - tamuLongitude), 2));
+//		double degreesAway2 = Math.sqrt(Math.pow((loc.getLatitude() - austinLatitude), 2) + Math.pow((loc.getLongitude() - austinLongitude), 2));
+//		double degreesAway3 = Math.sqrt(Math.pow((loc.getLatitude() - seattleLatitude), 2) + Math.pow((loc.getLongitude() - seattleLongitude), 2));
+		
+//		//gets which is least of the three
+//		double degreesAway = Math.min(degreesAway1, degreesAway2);
+//		degreesAway = Math.min(degreesAway, degreesAway3);
+		
+	}
+
+	private static College getCollegeByID(Integer id) {
+		if(collegeList != null)
 		{
-			permissions.clear();
-			if(newPostButton.isShown())
-				newPostButton.setVisibility(View.INVISIBLE);
-			Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
+			if(collegeList.size() > 0)
+			{
+				for(College c : collegeList)
+				{
+					if(c.getID() == id)
+						return c;
+				}
+			}
 		}
+		return null;
 	}
 
 	private void updateListsForGPS() 

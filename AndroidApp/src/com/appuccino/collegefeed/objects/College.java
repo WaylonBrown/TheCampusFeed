@@ -25,7 +25,22 @@ public class College
 	{
 		return name;
 	}
+	
+	public int getID()
+	{
+		return id;
+	}
+	
+	public double getLatitude()
+	{
+		return latitude;
+	}
 
+	public double getLongitude()
+	{
+		return longitude;
+	}
+	
 	@Override
 	public String toString() {
 		return "College name=" + name + ", shortName=" + shortName + ", id="
