@@ -20,10 +20,10 @@ import com.appuccino.collegefeed.PostCommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
 import com.appuccino.collegefeed.adapters.PostListAdapter.PostHolder;
-import com.appuccino.collegefeed.extra.FontManager;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Comment;
+import com.appuccino.collegefeed.utils.FontManager;
 
 public class CommentListAdapter extends ArrayAdapter<Comment>{
 

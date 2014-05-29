@@ -1,22 +1,28 @@
 package com.appuccino.collegefeed.dialogs;
 
 import java.util.ArrayList;
-
-import com.appuccino.collegefeed.R;
-import com.appuccino.collegefeed.adapters.CollegeListAdapter;
-import com.appuccino.collegefeed.extra.FontManager;
-import com.appuccino.collegefeed.objects.College;
+import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.appuccino.collegefeed.MainActivity;
+import com.appuccino.collegefeed.R;
+import com.appuccino.collegefeed.adapters.CollegeListAdapter;
+import com.appuccino.collegefeed.objects.College;
+import com.appuccino.collegefeed.utils.FontManager;
 
 public class ChooseFeedDialog extends AlertDialog.Builder{
 	
 	Context context;
+	ArrayList<College> otherColleges;
+	ArrayList<College> nearYouList;
 	
 	public ChooseFeedDialog(Context context, View layout) {
 		super(context);
@@ -32,21 +38,88 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
     	TextView allCollegesText = (TextView)layout.findViewById(R.id.allCollegesText);
     	TextView nearYouTitle = (TextView)layout.findViewById(R.id.nearYouTitle);
     	TextView otherTitle = (TextView)layout.findViewById(R.id.otherTitle);
+    	AutoCompleteTextView otherCollegesText = (AutoCompleteTextView)layout.findViewById(R.id.otherCollegesText);
+    	
     	chooseTitleText.setTypeface(FontManager.light);
     	allCollegesText.setTypeface(FontManager.light);
     	nearYouTitle.setTypeface(FontManager.light);
     	otherTitle.setTypeface(FontManager.light);
     	
     	populateNearYouList(nearYouList);
+    	setupAutoCompleteTextView(otherCollegesText);
 	}
 	
 	private void populateNearYouList(ListView list) {
-		ArrayList<College> collegeList = new ArrayList<College>();
-		collegeList.add(new College("Texas A&M University"));
-		collegeList.add(new College("University of Texas in Austin"));
+		nearYouList = new ArrayList<College>();
+		boolean enableListClicking = true;	//false if no colleges so that the item can't be clicked
 		
-		CollegeListAdapter adapter = new CollegeListAdapter(context, R.layout.list_row_choosefeed_college, collegeList);
+		if(MainActivity.permissions != null)
+		{
+			if(MainActivity.permissions.size() > 0)
+			{
+				for(int id : MainActivity.permissions)
+				{
+					nearYouList.add(MainActivity.getCollegeByID(id));
+				}
+			}
+			else
+			{
+				nearYouList.add(new College("(none)"));
+				enableListClicking = false;
+			}
+		}
+		else
+		{
+			nearYouList.add(new College("(none)"));
+			enableListClicking = false;
+		}
+		
+		CollegeListAdapter adapter = new CollegeListAdapter(context, R.layout.list_row_choosefeed_college, nearYouList, enableListClicking);
 		list.setAdapter(adapter);
 	}
 
+	private void setupAutoCompleteTextView(AutoCompleteTextView textView) {
+		//CODE FROM WHEN IT WAS A SPINNER, LEAVE FOR NOW IN CASE CHANGING BACK
+//		otherColleges = new ArrayList<College>();
+//		List<String> otherCollegesStringList = new ArrayList<String>();
+//		otherCollegesStringList.add("Choose...");
+//		
+//		//add colleges that aren't already nearby
+//		if(MainActivity.collegeList != null)
+//		{
+//			for(College c : MainActivity.collegeList)
+//			{
+//				if(MainActivity.permissions != null)
+//				{
+//					if(!MainActivity.permissions.contains(c.getID()))
+//						otherColleges.add(c);
+//				}
+//				else
+//					otherColleges.add(c);
+//			}
+//		}
+//		
+//		//make list into strings for spinner
+//		if(otherColleges.size() > 0)
+//		{
+//			for(College c : otherColleges)
+//			{
+//				otherCollegesStringList.add(c.getName());
+//			}
+//		}
+//		
+//		//populate spinner
+//		ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.list_row_spinner, otherCollegesStringList);
+//	    adapter.setDropDownViewResource(R.layout.list_row_spinner);
+//	    otherCollegesSpinner.setAdapter(adapter);
+		
+		List<String> allCollegesList = new ArrayList<String>();
+		for(College c : MainActivity.collegeList)
+		{
+			allCollegesList.add(c.getName());
+		}
+		
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, allCollegesList);
+        textView.setAdapter(adapter);
+	}
 }

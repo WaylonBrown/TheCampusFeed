@@ -47,7 +47,7 @@ public class MostActiveCollegesFragment extends Fragment
 		collegeList.add(new College("Harvard University"));
 		collegeList.add(new College("University of Texas at Austin"));
 		
-		CollegeListAdapter adapter = new CollegeListAdapter(getActivity(), R.layout.list_row_college, collegeList);
+		CollegeListAdapter adapter = new CollegeListAdapter(getActivity(), R.layout.list_row_college, collegeList, true);
 		
 		//if doesnt have header and footer, add them
 		if(fragList.getHeaderViewsCount() == 0)

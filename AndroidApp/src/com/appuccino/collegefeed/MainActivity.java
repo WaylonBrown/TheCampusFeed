@@ -1,6 +1,8 @@
 package com.appuccino.collegefeed;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,39 +33,42 @@ import android.widget.Toast;
 
 import com.appuccino.collegefeed.dialogs.ChooseFeedDialog;
 import com.appuccino.collegefeed.dialogs.NewPostDialog;
-import com.appuccino.collegefeed.extra.FontManager;
+import com.appuccino.collegefeed.extra.AllCollegeJSONString;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
 import com.appuccino.collegefeed.fragments.MyCommentsFragment;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
+import com.appuccino.collegefeed.objects.College;
+import com.appuccino.collegefeed.utils.FontManager;
+import com.appuccino.collegefeed.utils.JSONParser;
+import com.appuccino.collegefeed.utils.ListComparator;
+import com.appuccino.collegefeed.utils.PrefManager;
 import com.astuetz.PagerSlidingTabStrip;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener, LocationListener 
 {
+	//views and widgets
 	ViewPager viewPager;
 	PagerSlidingTabStrip tabs;
 	PagerAdapter pagerAdapter;
 	ActionBar actionBar;
 	ImageView newPostButton;
 	
-	final static int ALL_COLLEGES = 0;
-	
-	ArrayList<Fragment> fragmentList;
-	boolean locationFound = false;
-	public static LocationManager mgr;
-	public static ArrayList<Integer> permissions = new ArrayList<Integer>();	//0 = no perms, otherwise the college ID is the perm IDs
-	public static int currentFeedCollegeID;	//0 if viewing all colleges
+	//final values
+	static final int ALL_COLLEGES = 0;	//used for permissions
+	static final String PREFERENCE_KEY_COLLEGE_LIST = "all_colleges_preference_key";
 	static final double MILES_FOR_PERMISSION = 15.0;
 	static final int LOCATION_TIMEOUT_SECONDS = 10;
 	public static final int MIN_POST_LENGTH = 10;
 	
-	/*
-	 * TODO:
-	 * Implement Haversine function to calculate shortest distance between two spherical points.
-	 * http://www.movable-type.co.uk/scripts/latlong.html
-	 */
+	ArrayList<Fragment> fragmentList;
+	boolean locationFound = false;
+	public static LocationManager mgr;
+	public static int currentFeedCollegeID;	//0 if viewing all colleges
+	public static ArrayList<Integer> permissions = new ArrayList<Integer>();	//length of 0 or null = no perms, otherwise the college ID is the perm IDs
+	public static ArrayList<College> collegeList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +79,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		tabs.setIndicatorColor(getResources().getColor(R.color.tabunderlineblue));
 		
 		FontManager.setup(this);
+		PrefManager.setup(this);
 		setupActionbar();
+		setupCollegeList();
 		
 		locationFound = false;
 		
@@ -88,6 +95,32 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		
 		feedStyleChanged(ALL_COLLEGES);
 		getLocation();
+	}
+
+	private void setupCollegeList() {
+		collegeList = new ArrayList<College>();
+		String storedCollegeListJSON = PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST, "default_value");
+		
+		//should only happen very first time, store the backup college string to SharedPrefs
+		if(storedCollegeListJSON.equals("default_value"))
+		{
+			PrefManager.putString(PREFERENCE_KEY_COLLEGE_LIST, AllCollegeJSONString.ALL_COLLEGES_JSON);
+			storedCollegeListJSON = PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST, "default_value");
+		}
+		
+		try {
+			collegeList = JSONParser.collegeListFromJSON(storedCollegeListJSON);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		if(collegeList != null)
+		{
+			//sort list by name
+			Collections.sort(collegeList, new ListComparator());
+		}
+		else
+			Toast.makeText(this, "Error fetching college list.", Toast.LENGTH_LONG).show();
 	}
 
 	private void setupActionbar() {
@@ -247,40 +280,73 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	{
 		double degreesForPermissions = MILES_FOR_PERMISSION / 50.0;	//roughly 50 miles per degree
 		
-		//USED FOR TESTING, ALL OF OUR CITIES RETURN A&M
-		double tamuLatitude = 30.614942;
-		double tamuLongitude = -96.342316;
-		double austinLatitude = 30.270664;
-		double austinLongitude = -97.741064;
-		double seattleLatitude = 0;	//JAMES fill these in
-		double seattleLongitude = 0;
-		
-		int tamuID = 234234;
-		
-		double degreesAway1 = Math.sqrt(Math.pow((loc.getLatitude() - tamuLatitude), 2) + Math.pow((loc.getLongitude() - tamuLongitude), 2));
-		double degreesAway2 = Math.sqrt(Math.pow((loc.getLatitude() - austinLatitude), 2) + Math.pow((loc.getLongitude() - austinLongitude), 2));
-		double degreesAway3 = Math.sqrt(Math.pow((loc.getLatitude() - seattleLatitude), 2) + Math.pow((loc.getLongitude() - seattleLongitude), 2));
-		
-		//gets which is least of the three
-		double degreesAway = Math.min(degreesAway1, degreesAway2);
-		degreesAway = Math.min(degreesAway, degreesAway3);
-		if(degreesAway < degreesForPermissions)
+		if(collegeList != null)
 		{
-			permissions.clear();
-			permissions.add(tamuID);
-			if(!newPostButton.isShown())
-				newPostButton.setVisibility(View.VISIBLE);
-			Toast.makeText(this, "You're near Texas A&M University", Toast.LENGTH_LONG).show();
-			Toast.makeText(this, "You can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
-			updateListsForGPS();	//so that GPS icon can be set
-		}
-		else
+			if(permissions != null)
+				permissions.clear();
+			else
+				permissions = new ArrayList<Integer>();
+			
+			//add IDs to permissions list
+			for(College c : collegeList)
+			{
+				//TODO: change to formula James is using that takes into account the roundness of the earth
+				double degreesAway = Math.sqrt(Math.pow((loc.getLatitude() - c.getLatitude()), 2) + Math.pow((loc.getLongitude() - c.getLongitude()), 2));
+				
+				if(degreesAway <= degreesForPermissions)
+				{
+					permissions.add(c.getID());
+					if(!newPostButton.isShown())
+						newPostButton.setVisibility(View.VISIBLE);
+				}
+			}
+			
+			//no nearby colleges found
+			if(permissions == null || permissions.size() == 0)
+			{
+				if(newPostButton.isShown())
+					newPostButton.setVisibility(View.INVISIBLE);
+				Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
+			}
+			else	//near a college
+			{
+				if(permissions.size() == 1)
+				{
+					Toast.makeText(this, "You're near " + getCollegeByID(permissions.get(0)).getName(), Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "You can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
+				}
+				else
+				{
+					String toastMessage = "You're near ";
+					for(int id : permissions)
+					{
+						toastMessage += getCollegeByID(id).getName() + " and ";
+					}
+					//remove last "and"
+					toastMessage = toastMessage.substring(0, toastMessage.length() - 5);
+					Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "You can upvote, downvote, post, and comment on those colleges' posts", Toast.LENGTH_LONG).show();
+				}
+				
+				updateListsForGPS();	//so that GPS icon can be set
+			}
+			
+		}		
+	}
+
+	public static College getCollegeByID(Integer id) {
+		if(collegeList != null)
 		{
-			permissions.clear();
-			if(newPostButton.isShown())
-				newPostButton.setVisibility(View.INVISIBLE);
-			Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
+			if(collegeList.size() > 0)
+			{
+				for(College c : collegeList)
+				{
+					if(c.getID() == id)
+						return c;
+				}
+			}
 		}
+		return null;
 	}
 
 	private void updateListsForGPS() 

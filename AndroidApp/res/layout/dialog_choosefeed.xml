@@ -5,6 +5,11 @@
     android:orientation="vertical" 
     android:background="@color/lightlightgray">
     
+    <View 
+        android:id="@+id/autoCompleteAnchor"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+    
     <TextView
         android:id="@+id/chooseFeedDialogTitle"
         android:text="@string/chooseFeedDialogTitle"
@@ -35,16 +40,30 @@
         
     </LinearLayout>
     
-    <TextView
-        android:id="@+id/nearYouTitle"
-        android:text="@string/nearYou"
+    <LinearLayout
         style="@style/block"
-        android:textSize="16sp" 
-        android:textColor="@color/darkgray"
+        android:orientation="horizontal"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
-        android:gravity="center_horizontal"
-        />
+        android:gravity="center">
+        
+        <TextView
+	        android:id="@+id/nearYouTitle"
+	        android:text="@string/nearYou"
+	        style="@style/wrap"
+	        android:textSize="16sp" 
+	        android:textColor="@color/darkgray"/>
+        
+        <ImageView
+	        android:id="@+id/gpsImage"
+	        android:src="@drawable/gps"
+	        android:layout_width="20dp"
+	        android:layout_height="20dp"
+	        android:layout_marginTop="1dp"
+	        android:layout_marginLeft="1dp"
+	        />
+        
+    </LinearLayout>
     
     <ListView
         android:id="@+id/nearYouDialogList"
@@ -65,10 +84,14 @@
         android:gravity="center_horizontal"
         />
     
-    <Spinner
-        android:id="@+id/collegeChoiceSpinner"
+    <AutoCompleteTextView
+        android:id="@+id/otherCollegesText"
         style="@style/block"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"/>"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:hint="Type a college's name..."
+        android:dropDownHeight="210dp"
+        android:dropDownAnchor="@id/autoCompleteAnchor"/>
 
 </LinearLayout>

@@ -33,11 +33,11 @@ import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
 import com.appuccino.collegefeed.adapters.TagListAdapter;
-import com.appuccino.collegefeed.extra.FontManager;
 import com.appuccino.collegefeed.extra.QuickReturnListView;
 import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Tag;
+import com.appuccino.collegefeed.utils.FontManager;
 
 public class TagFragment extends Fragment
 {
