@@ -31,33 +31,39 @@ import android.widget.Toast;
 
 import com.appuccino.collegefeed.dialogs.ChooseFeedDialog;
 import com.appuccino.collegefeed.dialogs.NewPostDialog;
-import com.appuccino.collegefeed.extra.FontManager;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
 import com.appuccino.collegefeed.fragments.MyCommentsFragment;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
+import com.appuccino.collegefeed.managers.FontManager;
+import com.appuccino.collegefeed.managers.PrefManager;
+import com.appuccino.collegefeed.objects.College;
 import com.astuetz.PagerSlidingTabStrip;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener, LocationListener 
 {
+	//views and widgets
 	ViewPager viewPager;
 	PagerSlidingTabStrip tabs;
 	PagerAdapter pagerAdapter;
 	ActionBar actionBar;
 	ImageView newPostButton;
 	
-	final static int ALL_COLLEGES = 0;
+	//final values
+	static final int ALL_COLLEGES = 0;	//used for permissions
+	static final String PREFERENCE_KEY_COLLEGE_LIST = "all_colleges_preference_key";
+	static final double MILES_FOR_PERMISSION = 15.0;
+	static final int LOCATION_TIMEOUT_SECONDS = 10;
+	public static final int MIN_POST_LENGTH = 10;
 	
 	ArrayList<Fragment> fragmentList;
 	boolean locationFound = false;
 	public static LocationManager mgr;
-	public static ArrayList<Integer> permissions = new ArrayList<Integer>();	//0 = no perms, otherwise the college ID is the perm IDs
+	public static ArrayList<Integer> permissions = new ArrayList<Integer>();	//length of 0 or null = no perms, otherwise the college ID is the perm IDs
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
-	static final double MILES_FOR_PERMISSION = 15.0;
-	static final int LOCATION_TIMEOUT_SECONDS = 10;
-	public static final int MIN_POST_LENGTH = 10;
+	public static ArrayList<College> collegeList;
 	
 	/*
 	 * TODO:
@@ -74,7 +80,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		tabs.setIndicatorColor(getResources().getColor(R.color.tabunderlineblue));
 		
 		FontManager.setup(this);
+		PrefManager.setup(this);
 		setupActionbar();
+		setupCollegeList();
 		
 		locationFound = false;
 		
@@ -88,6 +96,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		
 		feedStyleChanged(ALL_COLLEGES);
 		getLocation();
+	}
+
+	private void setupCollegeList() {
+		collegeList = new ArrayList<College>();
+		if(PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST, defaultVal))
 	}
 
 	private void setupActionbar() {

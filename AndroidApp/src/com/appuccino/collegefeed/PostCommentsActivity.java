@@ -27,13 +27,13 @@ import android.widget.Toast;
 
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
-import com.appuccino.collegefeed.extra.FontManager;
 import com.appuccino.collegefeed.extra.NetWorker;
 import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.extra.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
+import com.appuccino.collegefeed.managers.FontManager;
 import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
