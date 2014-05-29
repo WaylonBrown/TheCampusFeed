@@ -68,12 +68,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
 	public static ArrayList<College> collegeList;
 	
-	/*
-	 * TODO:
-	 * Implement Haversine function to calculate shortest distance between two spherical points.
-	 * http://www.movable-type.co.uk/scripts/latlong.html
-	 */
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -333,7 +327,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
 					Toast.makeText(this, "You can upvote, downvote, post, and comment on those colleges' posts", Toast.LENGTH_LONG).show();
 				}
-				
 				
 				updateListsForGPS();	//so that GPS icon can be set
 			}

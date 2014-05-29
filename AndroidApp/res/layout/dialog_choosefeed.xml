@@ -35,16 +35,30 @@
         
     </LinearLayout>
     
-    <TextView
-        android:id="@+id/nearYouTitle"
-        android:text="@string/nearYou"
+    <LinearLayout
         style="@style/block"
-        android:textSize="16sp" 
-        android:textColor="@color/darkgray"
+        android:orientation="horizontal"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
-        android:gravity="center_horizontal"
-        />
+        android:gravity="center">
+        
+        <TextView
+	        android:id="@+id/nearYouTitle"
+	        android:text="@string/nearYou"
+	        style="@style/wrap"
+	        android:textSize="16sp" 
+	        android:textColor="@color/darkgray"/>
+        
+        <ImageView
+	        android:id="@+id/gpsImage"
+	        android:src="@drawable/gps"
+	        android:layout_width="20dp"
+	        android:layout_height="20dp"
+	        android:layout_marginTop="1dp"
+	        android:layout_marginLeft="1dp"
+	        />
+        
+    </LinearLayout>
     
     <ListView
         android:id="@+id/nearYouDialogList"
