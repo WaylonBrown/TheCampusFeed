@@ -1,14 +1,28 @@
 class TagsController < ApplicationController
   before_action :set_tag, only: [:show, :edit, :update, :destroy]
+  before_action :set_college, only: [:index, :trending]
 
   # GET /api/v1/tags
   # GET /api/v1/tags.json
   def index
-    @tags = Tag.all
+    if @college.nil?
+      @tags = Tag.all
+    else
+      #@tags = 
+    end
   end
 
   def trending
-    @tags = Tag.top25
+    if @college.nil?
+      @tags = Tag.top25
+    else
+      @tags = Tag.select('tags.id, tags.text, count(posts.id) AS posts_count').
+        joins(:posts).
+        where('college_id = '+@college.id.to_s).
+        group('tags.id').
+        order('posts_count DESC').
+        limit(25)
+    end
   end
 
   # GET /api/v1/tags/1
@@ -69,6 +83,10 @@ class TagsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_tag
       @tag = Tag.find(params[:id])
+    end
+
+    def set_college
+      @college = College.find(params[:college_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

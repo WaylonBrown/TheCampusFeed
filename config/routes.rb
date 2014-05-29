@@ -19,11 +19,17 @@ Postfeed::Application.routes.draw do
           get 'votes/score' => 'votes#score'
           resources :votes
         end
+
+        get '/tags/trending' => 'tags#trending'
+        resources :tags
       end
 
 
 
+
       resources :comments, only: [:show]
+
+
 
       get '/posts/byTag/:tagText' => 'posts#byTag'
       get '/posts/recent' => 'posts#recent'
@@ -36,7 +42,6 @@ Postfeed::Application.routes.draw do
         get 'votes/score' => 'votes#score'
         resources :votes
       end
-
 
       get '/tags/trending' => 'tags#trending'
       resources :tags
