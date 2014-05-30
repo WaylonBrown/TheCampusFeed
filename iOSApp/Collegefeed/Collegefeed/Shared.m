@@ -62,19 +62,23 @@ static NSString *apiVersion = @"v1";
     return url;
 }
 
-+ (NSURL*)GETPostsWithTag:(NSString*)tagName
++ (NSURL*)GETPostsWithTagName:(NSString*)tagName
 {
+    NSString* tagWithoutHash = [tagName stringByReplacingOccurrencesOfString:@"#"
+                                                                  withString:@""];
     NSURL *url = [[NSURL alloc] initWithString:
                   [NSString stringWithFormat:@"%@/%@/posts/byTag/%@",
-                   requestURL, apiVersion, tagName]];
+                   requestURL, apiVersion, tagWithoutHash]];
     return url;
 }
-+ (NSURL*)GETPostsWithCollegeId:(long)collegeId
-                        withTag:(NSString*)tagName
++ (NSURL*)GETPostsWithTagName:(NSString*)tagName
+                withCollegeId:(long)collegeId
 {
+    NSString* tagWithoutHash = [tagName stringByReplacingOccurrencesOfString:@"#"
+                                                                  withString:@""];
     NSURL *url = [[NSURL alloc] initWithString:
                   [NSString stringWithFormat:@"%@/%@/colleges/%ld/posts/byTag/%@",
-                   requestURL, apiVersion, collegeId, tagName]];
+                   requestURL, apiVersion, collegeId, tagWithoutHash]];
     return url;
 }
 
@@ -143,6 +147,7 @@ static NSString *apiVersion = @"v1";
 }
 
 #pragma mark - Votes
+
 + (NSURL*)POSTVoteWithPostId:(long)postId
 {
     NSURL *url = [[NSURL alloc] initWithString:

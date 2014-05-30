@@ -13,10 +13,11 @@
 #import "VoteDataController.h"
 #import "CollegeDataController.h"
 #import "TagDataController.h"
+#import "MasterViewController.h"
 
 @class College;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, MasterViewDelegate>
 
 @property (strong, nonatomic) UIWindow              *window;
 @property (strong, nonatomic) UITabBarController    *tabBarController;

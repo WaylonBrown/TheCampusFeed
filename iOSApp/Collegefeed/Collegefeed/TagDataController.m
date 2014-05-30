@@ -54,5 +54,30 @@
         NSLog(@"Error fetching all posts");
     }
 }
+- (void)fetchAllTags
+{   // fetch tags trending across all colleges
+    [self setAllTags:[[NSMutableArray alloc] init]];
+    
+    [self fetchWithUrl:[Shared GETTagsTrending]
+              intoList:self.allTags];
+    
+    [self setList:self.allTags];
+}
+- (void)fetchAllTagsWithCollegeId:(long)collegeId
+{   // fetch tags trending in a particular college
+    [self setAllTagsInCollege:[[NSMutableArray alloc] init]];
+    
+    //TODO: need a url to get all trending tags for a school, but waiting on a server endpoint
+    [self fetchWithUrl:[Shared GETTagsTrending]
+              intoList:self.allTagsInCollege];
+    
+    [self setList:self.allTagsInCollege];
+
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notice"
+                                                    message:@"Cannot currently fetch all tags for specific college. Using all tags instead"
+                                                   delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
+
+}
 
 @end

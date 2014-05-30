@@ -17,6 +17,5 @@
 
 @property (strong, nonatomic) Post *originalPost;
 
-//- (id)initWithOriginalPost:(Post*)post;
 
 @end

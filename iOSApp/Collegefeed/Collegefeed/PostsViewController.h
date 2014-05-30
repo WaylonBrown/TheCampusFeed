@@ -16,6 +16,7 @@
 
 @property (strong, nonatomic) Post* selectedPost;
 @property (strong, nonatomic) CommentViewController* commentViewController;
+@property (nonatomic, strong) NSString* tagMessage;
 
 // should equal YES if looking at 'Top' posts
 @property (nonatomic) BOOL topPosts;
@@ -26,10 +27,15 @@
 // should equal YES if looking at 'My' posts
 @property (nonatomic) BOOL myPosts;
 
+// should equal YES if looking at tag-filtered posts
+@property (nonatomic) BOOL tagPosts;
+
 
 - (id)initAsTopPostsWithDataControllers:(NSArray *)dataControllers;
 - (id)initAsNewPostsWithDataControllers:(NSArray *)dataControllers;
 - (id)initAsMyPostsWithDataControllers:(NSArray *)dataControllers;
+- (id)initAsTagPostsWithDataControllers:(NSArray *)dataControllers
+                         withTagMessage:(NSString*)tagMessage;
 
 @end
 

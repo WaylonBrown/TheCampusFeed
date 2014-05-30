@@ -11,6 +11,7 @@
 #import "Post.h"
 #import "Vote.h"
 #import "PostsViewController.h"
+#import "ChildCellDelegate.h"
 
 @implementation TableCell
 
@@ -163,7 +164,7 @@
                              forState:UIControlStateNormal];
     }
     
-    [self.scoreLabel setText:[NSString stringWithFormat:@"%d", self.object.score]];
+    [self.scoreLabel setText:[NSString stringWithFormat:@"%ld", self.object.score]];
 }
 
 @end

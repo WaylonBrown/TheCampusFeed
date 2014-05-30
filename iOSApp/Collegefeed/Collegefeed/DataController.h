@@ -13,10 +13,10 @@
 
 @interface DataController : NSObject
 
-@property (nonatomic, strong) NSMutableArray *list;
+@property (nonatomic, strong) NSMutableArray    *list;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (nonatomic) CLLocationDegrees lat;
-@property (nonatomic) CLLocationDegrees lon;
+@property (nonatomic) CLLocationDegrees         lat;
+@property (nonatomic) CLLocationDegrees         lon;
 
 // Initializations
 - (id)initWithNetwork;
@@ -25,7 +25,6 @@
 - (NSUInteger)countOfList;
 - (NSObject *)objectInListAtIndex:(NSUInteger)theIndex;
 - (void)addObjectToList:(NSObject *)obj;
-- (void)refresh;
 
 // Network Access
 - (id)getJsonObjectWithUrl:(NSURL*) url;

@@ -11,16 +11,8 @@
 
 @class Tag;
 
-@interface TagViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate>     //, TTTAttributedLabel>
-
+@interface TagViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) Tag* selectedTag;
-
-
-//@property (weak, nonatomic) IBOutlet TTTAttributedLabel *tagsLabel;
-
-//- (IBAction)something;
-//- (void)showTagsList:(NSString *)tag;
-//- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url;
 
 @end

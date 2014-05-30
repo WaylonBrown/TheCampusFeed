@@ -60,9 +60,9 @@ static int locationDistanceFilter = 150000; // 15km
     // Fetch the JSON response
     NSURLResponse *response;
     NSData *urlData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
-    NSString *theReply = [[NSString alloc] initWithBytes:[urlData bytes]
-                                                  length:[urlData length]
-                                                encoding:NSASCIIStringEncoding];
+//    NSString *theReply = [[NSString alloc] initWithBytes:[urlData bytes]
+//                                                  length:[urlData length]
+//                                                encoding:NSASCIIStringEncoding];
 
     //TODO: check for error code;
     

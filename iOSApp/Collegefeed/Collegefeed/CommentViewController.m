@@ -134,14 +134,6 @@
 
 #pragma mark - Navigation
 
-//- (void)switchToAllColleges
-//{
-//    [super switchToAllColleges];
-//}
-//- (void)switchToSpecificCollege
-//{
-//    [super switchToSpecificCollege];
-//}
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {   // In a storyboard-based application, you will often want to do a little preparation before navigation
 }

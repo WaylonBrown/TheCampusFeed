@@ -7,6 +7,7 @@
 //
 
 
+#import "College.h"
 #import "Tag.h"
 #import "TagViewController.h"
 #import "TagDataController.h"
@@ -26,24 +27,18 @@
 
 #pragma mark - Navigation
 
-//- (void)switchToAllColleges
-//{
-//    [super switchToAllColleges];
-//}
-//- (void)switchToSpecificCollege
-//{
-//    [super switchToSpecificCollege];
-//}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{   // Present a Comment View for the selected post
-    
+{   // Present a Post view of all posts with the selected tag
     self.selectedTag = (Tag *)[self.tagDataController objectInListAtIndex:indexPath.row];
-    PostsViewController* controller = [[PostsViewController alloc] init];
+    PostsViewController* controller = [[PostsViewController alloc] initAsTagPostsWithDataControllers:[self getDataControllers]
+                                                                                      withTagMessage:self.selectedTag.name];
+    
+    
     [self.navigationController pushViewController:controller
                                          animated:YES];
 }
 
-#pragma mark - Table View Override Functions
+#pragma mark - UITableView Functions
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
@@ -67,6 +62,34 @@
     [cell.textLabel setText:tagAtIndex.name];
     
     return cell;
+}
+
+#pragma mark - Actions
+
+- (void)refresh
+{   // refresh this tag view
+    if ([self.delegate getIsAllColleges])
+    {
+        [self.collegeSegmentControl setSelectedSegmentIndex:0];
+        [self.tagDataController fetchAllTags];
+    }
+    else if ([self.delegate getIsSpecificCollege])
+    {
+        if (self.collegeSegmentControl.numberOfSegments < 3)
+        {
+            [self.collegeSegmentControl insertSegmentWithTitle:[self.delegate getCurrentCollege].name
+                                                       atIndex:2 animated:NO];
+        }
+        else
+        {
+            [self.collegeSegmentControl setTitle:[self.delegate getCurrentCollege].name
+                               forSegmentAtIndex:2];
+        }
+        
+        [self.collegeSegmentControl setSelectedSegmentIndex:2];
+        [self.tagDataController fetchAllTagsWithCollegeId:[self.delegate getCurrentCollege].collegeID];
+    }
+    [super refresh];
 }
 
 @end

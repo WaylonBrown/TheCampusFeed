@@ -45,9 +45,9 @@
 // Posts
 + (NSURL*)POSTPostWithCollegeId:(long)collegeId;
 
-+ (NSURL*)GETPostsWithTag:(NSString*)tagName;
-+ (NSURL*)GETPostsWithCollegeId:(long)collegeId
-                        withTag:(NSString*)tagName;
++ (NSURL*)GETPostsWithTagName:(NSString*)tagName;
++ (NSURL*)GETPostsWithTagName:(NSString*)tagName
+                withCollegeId:(long)collegeId;
 
 + (NSURL*)GETAllPostsWithTag:(NSString*)tagName
               withPageNumber:(long)page

@@ -146,6 +146,8 @@
 		53F878BD19133F60002A578B /* CollegefeedTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CollegefeedTests-Info.plist"; sourceTree = "<group>"; };
 		53F878BF19133F60002A578B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		53F878C119133F60002A578B /* CollegefeedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollegefeedTests.m; sourceTree = "<group>"; };
+		53FA791219381A4F00EF246E /* ChildCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildCellDelegate.h; sourceTree = "<group>"; };
+		53FA791419381B2C00EF246E /* MasterViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -350,6 +352,7 @@
 		53F8789719133F60002A578B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				53FA791319381A5F00EF246E /* Protocols */,
 				5308D2BB193552C600D70C1A /* Shared.h */,
 				5308D2BC193552C600D70C1A /* Shared.m */,
 				53D2AD121918A7760097C840 /* Constants.h */,
@@ -382,6 +385,15 @@
 				53F878BE19133F60002A578B /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		53FA791319381A5F00EF246E /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				53FA791219381A4F00EF246E /* ChildCellDelegate.h */,
+				53FA791419381B2C00EF246E /* MasterViewDelegate.h */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

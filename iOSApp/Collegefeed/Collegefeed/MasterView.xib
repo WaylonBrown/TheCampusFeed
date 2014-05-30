@@ -44,8 +44,7 @@
                                 <segment title="Choose a college"/>
                             </segments>
                             <connections>
-                                <action selector="changeFeed:" destination="-1" eventType="touchUpInside" id="E16-hY-sIm"/>
-                                <action selector="changeFeed:" destination="-1" eventType="valueChanged" id="HYI-GZ-96E"/>
+                                <action selector="changeFeed" destination="-1" eventType="valueChanged" id="NMZ-IN-OnM"/>
                             </connections>
                         </segmentedControl>
                     </subviews>

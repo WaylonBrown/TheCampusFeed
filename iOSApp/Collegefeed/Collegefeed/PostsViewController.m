@@ -28,6 +28,7 @@
         [self setTopPosts:YES];
         [self setRecentPosts:NO];
         [self setMyPosts:NO];
+        [self setTagPosts:NO];
         
         [self switchToAllColleges];
     }
@@ -41,6 +42,7 @@
         [self setTopPosts:NO];
         [self setRecentPosts:YES];
         [self setMyPosts:NO];
+        [self setTagPosts:NO];
         
         [self switchToAllColleges];
     }
@@ -54,15 +56,33 @@
         [self setTopPosts:NO];
         [self setRecentPosts:NO];
         [self setMyPosts:YES];
+        [self setTagPosts:NO];
         
+        [self switchToAllColleges];
+    }
+    return self;
+}
+- (id)initAsTagPostsWithDataControllers:(NSArray *)dataControllers
+                         withTagMessage:(NSString*)tagMessage
+{
+    self = [super initWithDataControllers:dataControllers];
+    if (self)
+    {
+        [self setTopPosts:NO];
+        [self setRecentPosts:NO];
+        [self setMyPosts:NO];
+        [self setTagPosts:YES];
+        [self setTagMessage:tagMessage];
         [self switchToAllColleges];
     }
     return self;
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
-    
+
     [super viewWillAppear:animated];
+    [self.navigationItem setTitleView:logoTitleView];
+
     [self refresh];
 }
 - (void)viewDidLoad
@@ -144,6 +164,10 @@
     {
         [self.postDataController fetchNewPosts];
     }
+    else if (self.tagPosts && self.tagMessage != nil)
+    {
+        [self.postDataController fetchAllPostsWithTagMessage:self.tagMessage];
+    }
 }
 - (void)switchToSpecificCollege
 {
@@ -155,33 +179,59 @@
     {
         [self.postDataController fetchNewPostsWithCollegeId:[self.delegate getCurrentCollege].collegeID];
     }
+    else if (self.tagPosts && self.tagMessage != nil)
+    {
+        [self.postDataController fetchAllPostsWithTagMessage:self.tagMessage
+                                               withCollegeId:[self.delegate getCurrentCollege].collegeID];
+    }
 }
 
 #pragma mark - Actions
 
 - (void)create
 {   // Display popup to let user type a new post
+    College *currentCollege = [self.delegate getCurrentCollege];
+    if (currentCollege == nil)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"You must have a college selected before being able to post"
+                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    else
+    {
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
-                                                        message:@"What's poppin?"
+                                                        message:[NSString stringWithFormat:@"Posting to %@", currentCollege.name]
                                                        delegate:self
                                               cancelButtonTitle:@"nvm.."
-                                              otherButtonTitles:@"Post!", nil];
+                                              otherButtonTitles:@"Post dis bitch!", nil];
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         [alert show];
+    }
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {   // Add new post if user submits on the alert view
     
     if (buttonIndex == 0) return;
-    Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]
-                                    withCollegeId:0];
-    [self.postDataController addToServer:newPost
-                                intoList:self.postDataController.topPostsAllColleges];
+    College *currentCollege = [self.delegate getCurrentCollege];
+    if (currentCollege != nil)
+    {
+        Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]
+                                    withCollegeId:currentCollege.collegeID];
+        [self.postDataController addToServer:newPost
+                                    intoList:self.postDataController.topPostsAllColleges];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"A college must be selected to post to"
+                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
      
     [self.tableView reloadData];
 }
 - (void)refresh
-{
+{   // refresh this post view
     if ([self.delegate getIsAllColleges])
     {
         [self.collegeSegmentControl setSelectedSegmentIndex:0];
@@ -203,6 +253,7 @@
         [self.collegeSegmentControl setSelectedSegmentIndex:2];
         [self switchToSpecificCollege];
     }
-    [self.tableView reloadData];
+    [super refresh];
 }
+
 @end

@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "TableCell.h"
+#import "ChildCellDelegate.h"
+#import "MasterViewDelegate.h"
 
 @class College;
 @class PostDataController;
@@ -16,44 +17,34 @@
 @class CollegeDataController;
 @class CommentDataController;
 @class VoteDataController;
-@protocol MasterViewDelegate;
+
 
 @interface MasterViewController : UIViewController <ChildCellDelegate>
 
+// delegate to allow all subclass ViewControllers to access the shared objects in AppDelegate.h (e.g. DataControllers, universal selection of college, etc.
 @property (nonatomic, weak) id<MasterViewDelegate> delegate;
 
+// data controllers
 @property (strong, nonatomic) PostDataController    *postDataController;
 @property (strong, nonatomic) CommentDataController *commentDataController;
 @property (strong, nonatomic) CollegeDataController *collegeDataController;
 @property (strong, nonatomic) TagDataController     *tagDataController;
 @property (strong, nonatomic) VoteDataController    *voteDataController;
 
+// outlet properties connected to the view
 @property (weak, nonatomic) IBOutlet UISegmentedControl *collegeSegmentControl;
-@property (weak, nonatomic) IBOutlet UIImageView        *logoView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem    *createButton;
 @property (weak, nonatomic) IBOutlet UITableView        *tableView;
 
-//@property (strong, nonatomic) College *currentCollege;
-//@property (nonatomic) BOOL allColleges;
-//@property (nonatomic) BOOL specificCollege;
-
+// Initialization
 - (id)initWithDataControllers:(NSArray *)dataControllers;
 
+// Data Access
 - (NSArray *)getDataControllers;
-//- (void)switchToAllColleges;
-//- (void)switchToSpecificCollege;
 
-- (IBAction)create:(id)sender;
-- (IBAction)changeFeed:(id)sender;
+// Actions
+- (IBAction)changeFeed;
+- (void)create;
 - (void)refresh;
-
-@end
-
-@protocol MasterViewDelegate <NSObject>
-
-- (void)switchedToSpecificCollegeOrNil:(College *)college;
-- (College*)getCurrentCollege;
-- (BOOL)getIsAllColleges;
-- (BOOL)getIsSpecificCollege;
 
 @end

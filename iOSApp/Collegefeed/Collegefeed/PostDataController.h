@@ -15,10 +15,12 @@
 @property (nonatomic, strong) NSMutableArray *topPostsAllColleges;
 @property (nonatomic, strong) NSMutableArray *recentPostsAllColleges;
 @property (nonatomic, strong) NSMutableArray *userPostsAllColleges;
+@property (nonatomic, strong) NSMutableArray *allPostsWithTag;
 
 @property (nonatomic, strong) NSMutableArray *topPostsInCollege;
 @property (nonatomic, strong) NSMutableArray *recentPostsInCollege;
 @property (nonatomic, strong) NSMutableArray *userPostsInCollege;
+@property (nonatomic, strong) NSMutableArray *allPostsWithTagInCollege;
 
 @property (nonatomic) NSURL *postURL;
 @property (nonatomic) NSMutableData *responseData;
@@ -29,6 +31,10 @@
 
 - (void)fetchNewPosts;
 - (void)fetchNewPostsWithCollegeId:(long)collegeId;
+
+- (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage;
+- (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage
+                      withCollegeId:(long)collegeId;
 
 // TODO: these not implemented yet
 - (void)fetchUserPostsWithUserId:(long)userId;

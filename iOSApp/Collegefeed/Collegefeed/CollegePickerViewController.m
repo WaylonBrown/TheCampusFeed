@@ -10,6 +10,7 @@
 #import "College.h"
 #import "Shared.h"
 #import "PostsViewController.h"
+#import "ChildCellDelegate.h"
 
 @implementation CollegePickerViewController
 

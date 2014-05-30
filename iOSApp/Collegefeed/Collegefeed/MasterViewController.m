@@ -10,6 +10,8 @@
 #import "CommentViewController.h"
 #import "CollegePickerViewController.h"
 
+#import "TableCell.h"
+
 #import "DataController.h"
 #import "PostDataController.h"
 #import "CollegeDataController.h"
@@ -22,8 +24,10 @@
 
 @implementation MasterViewController
 
+#pragma mark - Initialization
+
 - (id)initWithDataControllers:(NSArray *)dataControllers
-{
+{   // initialize this view with references to the shared data controllers
     self = [super initWithNibName:@"MasterView" bundle:nil];
     if (self)
     {
@@ -46,7 +50,7 @@
     return self;
 }
 - (void)loadView
-{
+{   // called when this view is initially loaded
     [super loadView];
     [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
 }
@@ -62,8 +66,11 @@
     {
         [self.collegeSegmentControl setSelectedSegmentIndex:2];
     }
-    [self.tableView reloadData];
+    [self refresh];
 }
+
+#pragma mark - Data Access
+
 - (NSArray *)getDataControllers
 {   // return an array of all 5 universal data controllers
     NSArray *dataControllers = [[NSArray alloc]initWithObjects:
@@ -76,28 +83,20 @@
     return dataControllers;
 }
 
-#pragma mark - Navigation
+#pragma mark - UITableView Functions
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+{   // return the number of sections in the table view
     return 1;
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {   // User should not directly modify a TableCell
     return NO;
 }
-//- (void)switchToAllColleges
-//{
-//    [self.delegate switchedToSpecificCollegeOrNil:nil];
-//}
-//- (void)switchToSpecificCollege
-//{
-//    [self.delegate switchedToSpecificCollegeOrNil:self.currentCollege];
-//}
 
 #pragma mark - Actions
 
-- (IBAction)changeFeed:(id)sender
+- (IBAction)changeFeed;
 {   // User changed the feed (all colleges or a specific one)
     NSInteger index = [self.collegeSegmentControl selectedSegmentIndex];
     if (index == 0) // all colleges
@@ -116,8 +115,14 @@
         [self.delegate switchedToSpecificCollegeOrNil:[self.delegate getCurrentCollege]]; 
     }
     [self refresh];
-    //    [self.tableView reloadData];
+}
+- (void)create
+{
     
+}
+- (void)refresh
+{   // refresh the current view
+    [self.tableView reloadData];
 }
 
 #pragma mark - Delegate Methods

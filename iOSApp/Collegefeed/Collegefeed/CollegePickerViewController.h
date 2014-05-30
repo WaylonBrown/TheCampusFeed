@@ -30,10 +30,10 @@
 @end
 
 
-@protocol ChildCellDelegate <NSObject>
-
-- (void)selectedCollege:(College*)college;
-- (void)castVote:(Vote *)vote;
-
-@end
+//@protocol ChildCellDelegate <NSObject>
+//
+//- (void)selectedCollege:(College*)college;
+//- (void)castVote:(Vote *)vote;
+//
+//@end
 
