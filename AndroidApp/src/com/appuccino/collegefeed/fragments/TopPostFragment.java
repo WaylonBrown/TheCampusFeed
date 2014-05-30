@@ -105,7 +105,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 			list.addHeaderView(headerFooter, null, false);
 		}
 		
-		if(postList == null)
+		if(postList == null && mainActivity != null)
 		{
 			pullListFromServer();
 		}		
@@ -231,7 +231,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	private void pullListFromServer() 
 	{
 		postList = new ArrayList<Post>();
-		ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);		
 		if(cm.getActiveNetworkInfo() != null)
 			new GetPostsTask(0).execute(new PostSelector());
 		else

@@ -26,6 +26,7 @@ import android.widget.Toast;
 public class NewPostDialog extends AlertDialog.Builder{
 	
 	Context context;
+	private int selectedCollegeID = -1;
 	
 	public NewPostDialog(final Context context, View layout) {
 		super(context);
@@ -126,21 +127,32 @@ public class NewPostDialog extends AlertDialog.Builder{
 				if(currentTags.equals("Tags: <font color='#33B5E5'></font>") && tagsText.isShown())
 				{
 					tagsText.setVisibility(View.GONE);
-					//tagsText.setLayoutParams(new android.widget.LinearLayout.LayoutParams(0, 0));
-					//tagsText.setHeight(0);
 				}					
 				else if(!currentTags.equals("Tags: <font color='#33B5E5'></font>") && !tagsText.isShown())
 				{
 					tagsText.setVisibility(View.VISIBLE);
-//					//tagsText.setLayoutParams(new android.widget.LinearLayout.LayoutParams(android.widget.LinearLayout.LayoutParams.MATCH_PARENT, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT));
-//					Resources r = getApplicationContext().getResources();
-//					Toast.makeText(getApplicationContext(), Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, r.getDisplayMetrics())), Toast.LENGTH_LONG).show();
-//					tagsText.setHeight(100);
 				}
 					
 				tagsText.setText(Html.fromHtml((currentTags)));
 			}
     		
     	});
+    	
+    	setupCollege(college);
+	}
+
+	private void setupCollege(TextView college) {
+		String collegeString = "Posting to ";
+		if(MainActivity.permissions != null)
+		{
+			if(MainActivity.permissions.size() == 1)
+			{
+				collegeString += MainActivity.getCollegeByID(MainActivity.permissions.get(0)).getName();
+				college.setText(collegeString);
+				selectedCollegeID = college.getId();
+			}else{
+				//TODO: implement this
+			}
+		}
 	}
 }

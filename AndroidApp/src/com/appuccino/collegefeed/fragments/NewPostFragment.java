@@ -104,7 +104,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 			list.addHeaderView(headerFooter, null, false);
 		}
 		
-		if(postList == null)
+		if(postList == null && mainActivity != null)
 		{
 			pullListFromServer();
 		}	
