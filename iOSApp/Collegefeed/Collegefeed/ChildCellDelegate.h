@@ -10,10 +10,11 @@
 
 @class College;
 @class Vote;
+@class CollegePickerViewController;
 
 @protocol ChildCellDelegate <NSObject>
 
-- (void)selectedCollege:(College*)college;
+- (void)selectedCollege:(College *)college from:(CollegePickerViewController *)sender;
 - (void)castVote:(Vote *)vote;
 
 @end

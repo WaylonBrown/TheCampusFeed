@@ -11,7 +11,6 @@
 #import "PostDataController.h"
 #import "Post.h"
 #import "CommentViewController.h"
-#import "CollegeViewController.h"
 #import "Shared.h"
 #import "College.h"
 #import "MasterViewDelegate.h"

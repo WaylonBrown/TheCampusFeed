@@ -26,7 +26,6 @@
 		53963DE71916E5F50084E646 /* PostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53963DE61916E5F50084E646 /* PostsViewController.m */; };
 		53AE73601925B53900BE6B02 /* TagDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE735F1925B53900BE6B02 /* TagDataController.m */; };
 		53AE736A1925CFA800BE6B02 /* CollegeDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73691925CFA800BE6B02 /* CollegeDataController.m */; };
-		53AE736D1925D46300BE6B02 /* CollegeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE736C1925D46300BE6B02 /* CollegeViewController.m */; };
 		53AE73C3192802BD00BE6B02 /* ModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73C2192802BD00BE6B02 /* ModelTests.m */; };
 		53AE73C51928208100BE6B02 /* Votable.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73C41928208100BE6B02 /* Votable.m */; };
 		53AE73C71928354F00BE6B02 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73C61928354F00BE6B02 /* DataController.m */; };
@@ -99,8 +98,6 @@
 		53AE735F1925B53900BE6B02 /* TagDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagDataController.m; sourceTree = "<group>"; };
 		53AE73681925CFA800BE6B02 /* CollegeDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollegeDataController.h; sourceTree = "<group>"; };
 		53AE73691925CFA800BE6B02 /* CollegeDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollegeDataController.m; sourceTree = "<group>"; };
-		53AE736B1925D46300BE6B02 /* CollegeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollegeViewController.h; sourceTree = "<group>"; };
-		53AE736C1925D46300BE6B02 /* CollegeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollegeViewController.m; sourceTree = "<group>"; };
 		53AE73BC1927ED6600BE6B02 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
 		53AE73BF1927FBA700BE6B02 /* Votable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Votable.h; sourceTree = "<group>"; };
 		53AE73C2192802BD00BE6B02 /* ModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelTests.m; sourceTree = "<group>"; };
@@ -224,8 +221,6 @@
 				5390A93A191552AE00ACD082 /* CommentViewController.m */,
 				5334758A1922D9B700E84CC8 /* TagViewController.h */,
 				5334758B1922D9B700E84CC8 /* TagViewController.m */,
-				53AE736B1925D46300BE6B02 /* CollegeViewController.h */,
-				53AE736C1925D46300BE6B02 /* CollegeViewController.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -516,7 +511,6 @@
 				53D2AD111918A22A0097C840 /* Tag.m in Sources */,
 				53BDB4D3192F4E6700F45D5C /* CollegePickerViewController.m in Sources */,
 				53D2AD151918AAB80097C840 /* College.m in Sources */,
-				53AE736D1925D46300BE6B02 /* CollegeViewController.m in Sources */,
 				53AE73CB19283A9D00BE6B02 /* VoteDataController.m in Sources */,
 				53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */,
 				53AE73601925B53900BE6B02 /* TagDataController.m in Sources */,

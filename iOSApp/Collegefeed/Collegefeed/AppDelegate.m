@@ -9,10 +9,10 @@
 #import "AppDelegate.h"
 #import "PostsViewController.h"
 #import "CommentViewController.h"
-#import "CollegeViewController.h"
 #import "TagViewController.h"
 #import "Shared.h"
 #import "College.h"
+#import "CollegePickerViewController.h"
 
 
 @implementation AppDelegate
@@ -55,8 +55,12 @@
                                                           action:@selector(create)];
     // *************************************** //
     
-    // *** Top Colleges - CollegeViewController *** //
-    CollegeViewController *collegeController = [[CollegeViewController alloc] initWithDelegateId:self];
+    
+    // *** Top Colleges - CollegePickerViewController *** //
+    CollegePickerViewController *collegeController = [[CollegePickerViewController alloc] initAsTopColleges];
+    [collegeController setCollegesList:self.collegeDataController.list];
+    [collegeController setDelegate:topPostsController];
+
     UINavigationController *collegeNavController =
             [[UINavigationController alloc] initWithRootViewController:collegeController];
     collegeController.navigationItem.rightBarButtonItem =

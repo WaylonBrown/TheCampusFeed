@@ -14,15 +14,34 @@
 
 @implementation CollegePickerViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initAsTopColleges
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    self = [super init];
+    if (self)
+    {
+        [self setTopColleges:YES];
+        [self setAllColleges:NO];
     }
     return self;
 }
-
+- (id)initAsAllColleges
+{
+    self = [super init];
+    if (self)
+    {
+        [self setTopColleges:NO];
+        [self setAllColleges:YES];
+    }
+    return self;
+}
+//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+//{
+//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+//    if (self) {
+//        // Custom initialization
+//    }
+//    return self;
+//}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -89,7 +108,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
         college = (College *)[self.list objectAtIndex:indexPath.row];
     }
     
-    [self.delegate selectedCollege:college];
+    [self.delegate selectedCollege:college from:self];
 
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -113,8 +132,6 @@ shouldReloadTableForSearchString:(NSString *)searchString
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-//    [cell setDelegate: self];
-    
     if (tableView == self.searchDisplayController.searchResultsTableView)
     {
         College *college = (College *)[self.searchResults objectAtIndex:indexPath.row];

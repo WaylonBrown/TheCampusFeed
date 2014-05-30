@@ -22,18 +22,14 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
+@property (nonatomic) BOOL topColleges;
+@property (nonatomic) BOOL allColleges;
+
+- (id)initAsTopColleges;
+- (id)initAsAllColleges;
 
 - (void)setCollegesList:(NSMutableArray *)collegeList;
 
 - (IBAction)cancel:(id)sender;
 
 @end
-
-
-//@protocol ChildCellDelegate <NSObject>
-//
-//- (void)selectedCollege:(College*)college;
-//- (void)castVote:(Vote *)vote;
-//
-//@end
-
