@@ -13,7 +13,7 @@
 
 static int locationDistanceFilter = 150000; // 15km
 
-- (id)initWithNetwork
+- (id)init
 {
     self = [super init];
     if (self)

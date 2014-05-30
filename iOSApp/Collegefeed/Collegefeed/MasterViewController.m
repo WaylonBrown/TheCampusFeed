@@ -26,18 +26,12 @@
 
 #pragma mark - Initialization
 
-- (id)initWithDataControllers:(NSArray *)dataControllers
-{   // initialize this view with references to the shared data controllers
+- (id)initWithDelegateId:(id<MasterViewDelegate>)delegate
+{
     self = [super initWithNibName:@"MasterView" bundle:nil];
     if (self)
     {
-        // Custom initialization
-        [self setPostDataController     :[dataControllers objectAtIndex:0]];
-        [self setCommentDataController  :[dataControllers objectAtIndex:1]];
-        [self setVoteDataController     :[dataControllers objectAtIndex:2]];
-        [self setCollegeDataController  :[dataControllers objectAtIndex:3]];
-        [self setTagDataController      :[dataControllers objectAtIndex:4]];
-
+        [self setAppDelegate:delegate];
         
         UIFont *font = [UIFont boldSystemFontOfSize:8.0f];
         NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
@@ -45,7 +39,6 @@
         
         [self.collegeSegmentControl setTitleTextAttributes:attributes
                                                   forState:UIControlStateSelected];
-        
     }
     return self;
 }
@@ -58,29 +51,15 @@
 {   // View is about to appear after being inactive
     [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
 
-    if ([self.delegate getIsAllColleges] == YES)
+    if ([self.appDelegate getIsAllColleges] == YES)
     {
         [self.collegeSegmentControl setSelectedSegmentIndex:0];
     }
-    else if ([self.delegate getIsSpecificCollege] == NO)
+    else if ([self.appDelegate getIsSpecificCollege] == NO)
     {
         [self.collegeSegmentControl setSelectedSegmentIndex:2];
     }
     [self refresh];
-}
-
-#pragma mark - Data Access
-
-- (NSArray *)getDataControllers
-{   // return an array of all 5 universal data controllers
-    NSArray *dataControllers = [[NSArray alloc]initWithObjects:
-                                self.postDataController,
-                                self.commentDataController,
-                                self.voteDataController,
-                                self.collegeDataController,
-                                self.tagDataController, nil];
-    
-    return dataControllers;
 }
 
 #pragma mark - UITableView Functions
@@ -101,18 +80,18 @@
     NSInteger index = [self.collegeSegmentControl selectedSegmentIndex];
     if (index == 0) // all colleges
     {
-        [self.delegate switchedToSpecificCollegeOrNil:nil];
+        [self.appDelegate switchedToSpecificCollegeOrNil:nil];
     }
     else if (index == 1) // Choose a college
     {
         CollegePickerViewController *controller = [[CollegePickerViewController alloc] init];
-        [controller setCollegesList:self.collegeDataController.list];
+        [controller setCollegesList:self.appDelegate.collegeDataController.list];
         [controller setDelegate:self];
         [self.navigationController pushViewController:controller animated:YES];
     }
     else if (index == 2) // My current college
     {
-        [self.delegate switchedToSpecificCollegeOrNil:[self.delegate getCurrentCollege]]; 
+        [self.appDelegate switchedToSpecificCollegeOrNil:[self.appDelegate getCurrentCollege]]; 
     }
     [self refresh];
 }
@@ -129,8 +108,8 @@
 
 - (void)castVote:(Vote *)vote
 {   // vote was cast in a table cell
-    [self.voteDataController addToServer:vote
-                                intoList:self.voteDataController.list];
+    [self.appDelegate.voteDataController addToServer:vote
+                                intoList:self.appDelegate.voteDataController.list];
 }
 - (void)selectedCollege:(College *)college
 {   // A college was selected in the College Picker View
@@ -149,7 +128,7 @@
 
     [self.collegeSegmentControl setSelectedSegmentIndex:2];
 
-    [self.delegate switchedToSpecificCollegeOrNil:college];
+    [self.appDelegate switchedToSpecificCollegeOrNil:college];
     [self refresh];
 }
 

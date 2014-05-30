@@ -26,38 +26,28 @@
     
 #pragma mark - Data Controller Initializations - start collecting network data
     
-    [self setPostDataController:    [[PostDataController alloc]     initWithNetwork]];
-    [self setCommentDataController: [[CommentDataController alloc]  initWithNetwork]];
-    [self setVoteDataController:    [[VoteDataController alloc]     initWithNetwork]];
-    [self setCollegeDataController: [[CollegeDataController alloc]  initWithNetwork]];
-    [self setTagDataController:     [[TagDataController alloc]      initWithNetwork]];
-    
-    NSArray *dataControllers = [[NSArray alloc]initWithObjects:
-                                self.postDataController,
-                                self.commentDataController,
-                                self.voteDataController,
-                                self.collegeDataController,
-                                self.tagDataController, nil];
+    [self setPostDataController:    [[PostDataController alloc]     init]];
+    [self setCommentDataController: [[CommentDataController alloc]  init]];
+    [self setVoteDataController:    [[VoteDataController alloc]     init]];
+    [self setCollegeDataController: [[CollegeDataController alloc]  init]];
+    [self setTagDataController:     [[TagDataController alloc]      init]];
     
 #pragma mark - Create ViewControllers
     
     // *** Top Posts - PostsViewController *** //
-    PostsViewController *topPostsController = [[PostsViewController alloc] initAsTopPostsWithDataControllers:dataControllers];
-    [topPostsController setDelegate:self];
+    PostsViewController *topPostsController = [[PostsViewController alloc] initAsTopPostsWithDelegateId:self];
     UINavigationController *topPostsNavController = [[UINavigationController alloc] initWithRootViewController:topPostsController];
     // *************************************** //
     
     
     // *** New Posts - PostsViewController *** //
-    PostsViewController *newPostsController = [[PostsViewController alloc] initAsNewPostsWithDataControllers:dataControllers];
-    [newPostsController setDelegate:self];
+    PostsViewController *newPostsController = [[PostsViewController alloc] initAsNewPostsWithDelegateId:self];
     UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:newPostsController];
     // *************************************** //
     
     
     // *** Trending Tags - TagViewController *** //
-    TagViewController *tagController = [[TagViewController alloc] initWithDataControllers:dataControllers];
-    [tagController setDelegate:self];
+    TagViewController *tagController = [[TagViewController alloc] initWithDelegateId:self];
     UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:tagController];
     tagController.navigationItem.rightBarButtonItem =
             [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
@@ -66,8 +56,7 @@
     // *************************************** //
     
     // *** Top Colleges - CollegeViewController *** //
-    CollegeViewController *collegeController = [[CollegeViewController alloc] initWithDataControllers:dataControllers];
-    [collegeController setDelegate:self];
+    CollegeViewController *collegeController = [[CollegeViewController alloc] initWithDelegateId:self];
     UINavigationController *collegeNavController =
             [[UINavigationController alloc] initWithRootViewController:collegeController];
     collegeController.navigationItem.rightBarButtonItem =

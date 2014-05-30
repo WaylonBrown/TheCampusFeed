@@ -29,11 +29,11 @@
     
     if (self.originalPost != nil)
     {
-        [self.commentDataController setPost:self.originalPost];
+        [self.appDelegate.commentDataController setPost:self.originalPost];
         long postID = (long)self.originalPost.postID;
         
-        [self.commentDataController fetchWithUrl:[Shared GETCommentsWithPostId:postID]
-                                        intoList:self.commentDataController.list];
+        [self.appDelegate.commentDataController fetchWithUrl:[Shared GETCommentsWithPostId:postID]
+                                        intoList:self.appDelegate.commentDataController.list];
         
         [self.tableView reloadData];
     }
@@ -68,7 +68,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Number of rows in table views
     if (section == 0) return 1;
-    else return [self.commentDataController countOfList];
+    else return [self.appDelegate.commentDataController countOfList];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Get the table view cell for the given row
@@ -92,7 +92,7 @@
     }
     else
     {   // CommentView table; get the comment to be displayed in this cell
-        Comment *commentAtIndex = (Comment*)[self.commentDataController objectInListAtIndex:indexPath.row];
+        Comment *commentAtIndex = (Comment*)[self.appDelegate.commentDataController objectInListAtIndex:indexPath.row];
         [cell assign:commentAtIndex];
         return cell;
     }
@@ -161,8 +161,8 @@
     
     Comment *newComment = [[Comment alloc] initWithCommentMessage:[[alertView textFieldAtIndex:0] text]
                                                          withPost:self.originalPost];
-    [self.commentDataController addToServer:newComment
-                                   intoList:self.commentDataController.list];
+    [self.appDelegate.commentDataController addToServer:newComment
+                                   intoList:self.appDelegate.commentDataController.list];
     [self.tableView reloadData];
 }
 

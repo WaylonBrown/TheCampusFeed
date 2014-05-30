@@ -94,7 +94,7 @@
 		5390A94019158E0E00ACD082 /* ViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerTests.m; sourceTree = "<group>"; };
 		5390A94219158E1A00ACD082 /* DataControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataControllerTests.m; sourceTree = "<group>"; };
 		53963DE51916E5F50084E646 /* PostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostsViewController.h; sourceTree = "<group>"; };
-		53963DE61916E5F50084E646 /* PostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostsViewController.m; sourceTree = "<group>"; };
+		53963DE61916E5F50084E646 /* PostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PostsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53AE735E1925B53900BE6B02 /* TagDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagDataController.h; sourceTree = "<group>"; };
 		53AE735F1925B53900BE6B02 /* TagDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagDataController.m; sourceTree = "<group>"; };
 		53AE73681925CFA800BE6B02 /* CollegeDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollegeDataController.h; sourceTree = "<group>"; };

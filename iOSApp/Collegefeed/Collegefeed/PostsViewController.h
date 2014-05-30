@@ -31,11 +31,11 @@
 @property (nonatomic) BOOL tagPosts;
 
 
-- (id)initAsTopPostsWithDataControllers:(NSArray *)dataControllers;
-- (id)initAsNewPostsWithDataControllers:(NSArray *)dataControllers;
-- (id)initAsMyPostsWithDataControllers:(NSArray *)dataControllers;
-- (id)initAsTagPostsWithDataControllers:(NSArray *)dataControllers
-                         withTagMessage:(NSString*)tagMessage;
+- (id)initAsTopPostsWithDelegateId:(id<MasterViewDelegate>)delegate;
+- (id)initAsNewPostsWithDelegateId:(id<MasterViewDelegate>)delegate;
+- (id)initAsMyPostsWithDelegateId:(id<MasterViewDelegate>)delegate;
+- (id)initAsTagPostsWithDelegateId:(id<MasterViewDelegate>)delegate
+                    withTagMessage:(NSString*)tagMessage;
 
 @end
 

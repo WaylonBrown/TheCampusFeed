@@ -14,15 +14,15 @@
 #import "CollegeViewController.h"
 #import "Shared.h"
 #import "College.h"
-
+#import "MasterViewDelegate.h"
 
 @implementation PostsViewController
 
 #pragma mark - Initializations
 
-- (id)initAsTopPostsWithDataControllers:(NSArray *)dataControllers
+- (id)initAsTopPostsWithDelegateId:(id<MasterViewDelegate>)delegate
 {
-    self = [super initWithDataControllers:dataControllers];
+    self = [super initWithDelegateId:delegate];
     if (self)
     {
         [self setTopPosts:YES];
@@ -34,9 +34,9 @@
     }
     return self;
 }
-- (id)initAsNewPostsWithDataControllers:(NSArray *)dataControllers
+- (id)initAsNewPostsWithDelegateId:(id<MasterViewDelegate>)delegate
 {
-    self = [super initWithDataControllers:dataControllers];
+    self = [super initWithDelegateId:delegate];
     if (self)
     {
         [self setTopPosts:NO];
@@ -48,9 +48,9 @@
     }
     return self;
 }
-- (id)initAsMyPostsWithDataControllers:(NSArray *)dataControllers
+- (id)initAsMyPostsWithDelegateId:(id<MasterViewDelegate>)delegate
 {
-    self = [super initWithDataControllers:dataControllers];
+    self = [super initWithDelegateId:delegate];
     if (self)
     {
         [self setTopPosts:NO];
@@ -62,10 +62,10 @@
     }
     return self;
 }
-- (id)initAsTagPostsWithDataControllers:(NSArray *)dataControllers
-                         withTagMessage:(NSString*)tagMessage
+- (id)initAsTagPostsWithDelegateId:(id<MasterViewDelegate>)delegate
+                    withTagMessage:(NSString*)tagMessage
 {
-    self = [super initWithDataControllers:dataControllers];
+    self = [super initWithDelegateId:delegate];
     if (self)
     {
         [self setTopPosts:NO];
@@ -95,7 +95,7 @@
 - (void)loadView
 {
     [self setCommentViewController:[[CommentViewController alloc]
-                                    initWithDataControllers:self.getDataControllers]];
+                                    initWithDelegateId:self.appDelegate]];
 
     self.navigationItem.rightBarButtonItem =
     [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
@@ -111,7 +111,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Comment View for the selected post
     
-    self.selectedPost = (Post *)[self.postDataController objectInListAtIndex:indexPath.row];
+    self.selectedPost = (Post *)[self.appDelegate.postDataController objectInListAtIndex:indexPath.row];
 
     [self.commentViewController setOriginalPost:self.selectedPost];
         
@@ -121,7 +121,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
     
-    return [self.postDataController countOfList];
+    return [self.appDelegate.postDataController countOfList];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
@@ -141,7 +141,7 @@
     [cell setDelegate: self];
 
     // get the post and display in this cell
-    Post *postAtIndex = (Post*)[self.postDataController objectInListAtIndex:indexPath.row];
+    Post *postAtIndex = (Post*)[self.appDelegate.postDataController objectInListAtIndex:indexPath.row];
     [cell assign:postAtIndex];
     
     return cell;
@@ -158,31 +158,31 @@
 {
     if (self.topPosts)
     {
-        [self.postDataController fetchTopPosts];
+        [self.appDelegate.postDataController fetchTopPosts];
     }
     else if (self.recentPosts)
     {
-        [self.postDataController fetchNewPosts];
+        [self.appDelegate.postDataController fetchNewPosts];
     }
     else if (self.tagPosts && self.tagMessage != nil)
     {
-        [self.postDataController fetchAllPostsWithTagMessage:self.tagMessage];
+        [self.appDelegate.postDataController fetchAllPostsWithTagMessage:self.tagMessage];
     }
 }
 - (void)switchToSpecificCollege
 {
     if (self.topPosts)
     {
-        [self.postDataController fetchTopPostsWithCollegeId:[self.delegate getCurrentCollege].collegeID];
+        [self.appDelegate.postDataController fetchTopPostsWithCollegeId:[self.appDelegate getCurrentCollege].collegeID];
     }
     else if (self.recentPosts)
     {
-        [self.postDataController fetchNewPostsWithCollegeId:[self.delegate getCurrentCollege].collegeID];
+        [self.appDelegate.postDataController fetchNewPostsWithCollegeId:[self.appDelegate getCurrentCollege].collegeID];
     }
     else if (self.tagPosts && self.tagMessage != nil)
     {
-        [self.postDataController fetchAllPostsWithTagMessage:self.tagMessage
-                                               withCollegeId:[self.delegate getCurrentCollege].collegeID];
+        [self.appDelegate.postDataController fetchAllPostsWithTagMessage:self.tagMessage
+                                               withCollegeId:[self.appDelegate getCurrentCollege].collegeID];
     }
 }
 
@@ -190,7 +190,7 @@
 
 - (void)create
 {   // Display popup to let user type a new post
-    College *currentCollege = [self.delegate getCurrentCollege];
+    College *currentCollege = [self.appDelegate getCurrentCollege];
     if (currentCollege == nil)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
@@ -213,13 +213,13 @@
 {   // Add new post if user submits on the alert view
     
     if (buttonIndex == 0) return;
-    College *currentCollege = [self.delegate getCurrentCollege];
+    College *currentCollege = [self.appDelegate getCurrentCollege];
     if (currentCollege != nil)
     {
         Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]
                                     withCollegeId:currentCollege.collegeID];
-        [self.postDataController addToServer:newPost
-                                    intoList:self.postDataController.topPostsAllColleges];
+        [self.appDelegate.postDataController addToServer:newPost
+                                    intoList:self.appDelegate.postDataController.topPostsAllColleges];
     }
     else
     {
@@ -232,21 +232,21 @@
 }
 - (void)refresh
 {   // refresh this post view
-    if ([self.delegate getIsAllColleges])
+    if ([self.appDelegate getIsAllColleges])
     {
         [self.collegeSegmentControl setSelectedSegmentIndex:0];
         [self switchToAllColleges];
     }
-    else if ([self.delegate getIsSpecificCollege])
+    else if ([self.appDelegate getIsSpecificCollege])
     {
         if (self.collegeSegmentControl.numberOfSegments < 3)
         {
-            [self.collegeSegmentControl insertSegmentWithTitle:[self.delegate getCurrentCollege].name
+            [self.collegeSegmentControl insertSegmentWithTitle:[self.appDelegate getCurrentCollege].name
                                                        atIndex:2 animated:NO];
         }
         else
         {
-            [self.collegeSegmentControl setTitle:[self.delegate getCurrentCollege].name
+            [self.collegeSegmentControl setTitle:[self.appDelegate getCurrentCollege].name
                                forSegmentAtIndex:2];
         }
         

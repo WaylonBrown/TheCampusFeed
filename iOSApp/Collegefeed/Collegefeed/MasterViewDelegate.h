@@ -8,7 +8,24 @@
 
 #import <Foundation/Foundation.h>
 
+@class PostDataController;
+@class CommentDataController;
+@class VoteDataController;
+@class CollegeDataController;
+@class TagDataController;
+
 @protocol MasterViewDelegate <NSObject>
+
+@property (strong, nonatomic) PostDataController    *postDataController;
+@property (strong, nonatomic) CommentDataController *commentDataController;
+@property (strong, nonatomic) VoteDataController    *voteDataController;
+@property (strong, nonatomic) CollegeDataController *collegeDataController;
+@property (strong, nonatomic) TagDataController     *tagDataController;
+
+@property (strong, nonatomic) College *currentCollege;
+@property (nonatomic) BOOL allColleges;
+@property (nonatomic) BOOL specificCollege;
+
 
 - (void)switchedToSpecificCollegeOrNil:(College *)college;
 - (College*)getCurrentCollege;

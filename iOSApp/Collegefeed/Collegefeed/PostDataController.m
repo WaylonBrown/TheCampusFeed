@@ -14,9 +14,9 @@
 
 #pragma mark - Initialization
 
-- (id)initWithNetwork
+- (id)init
 { // initialize this data controller
-    if (self = [super initWithNetwork])
+    if (self = [super init])
     {
         [self fetchTopPosts];
         [self fetchNewPosts];

@@ -19,7 +19,7 @@
 @property (nonatomic) CLLocationDegrees         lon;
 
 // Initializations
-- (id)initWithNetwork;
+- (id)init;
 
 // Data Access
 - (NSUInteger)countOfList;

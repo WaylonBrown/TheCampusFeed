@@ -15,9 +15,9 @@
 
 #pragma mark - Initialization
 
-- (id)initWithNetwork
+- (id)init
 {
-    if (self = [super initWithNetwork])
+    if (self = [super init])
     {
         [self fetchWithUrl:[Shared GETAllColleges]
                   intoList:self.list];
