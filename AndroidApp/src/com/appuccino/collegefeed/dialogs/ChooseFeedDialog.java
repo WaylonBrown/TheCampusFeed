@@ -5,6 +5,9 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
@@ -126,9 +130,39 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 			    }
 			});
 			
+			otherCollegesText.addTextChangedListener(new TextWatcher(){
+				@Override
+				public void beforeTextChanged(CharSequence s, int start,
+						int count, int after) {
+					// TODO Auto-generated method stub
+					
+				}
+				@Override
+				public void onTextChanged(CharSequence s, int start,
+						int before, int count) {
+					if(s.length() > 8)
+					{
+						checkCollegeNameEntered(s);
+					}
+				}
+				@Override
+				public void afterTextChanged(Editable s) {
+				}
+			});
 			setupAutoCompleteTextView(otherCollegesText);
 		}
 		
+		protected void checkCollegeNameEntered(CharSequence s) {
+			for(College c : MainActivity.collegeList)
+			{
+				if(s.toString().equals(c.getName()))
+				{
+					Toast.makeText(main, "College clicked", Toast.LENGTH_LONG).show();
+					break;
+				}
+			}
+		}
+
 		private void setupAutoCompleteTextView(AutoCompleteTextView textView) {
 			//CODE FROM WHEN IT WAS A SPINNER, LEAVE FOR NOW IN CASE CHANGING BACK
 //			otherColleges = new ArrayList<College>();

@@ -6,21 +6,10 @@
     
     <AutoCompleteTextView
         android:id="@+id/otherCollegesText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        style="@style/block"
         android:hint="Type a college's name..."
         android:layout_marginTop="2dp"/>
     
-    <LinearLayout 
-    	android:layout_width="50dp"
-    	android:layout_height="match_parent">
-        
-        <View
-            android:id="@+id/finalSearchCollegeButton"
-            style="@style/fill"
-            android:layout_margin="4ddp"/>"
-        
-    </LinearLayout>
+    
 
 </LinearLayout>
