@@ -8,6 +8,8 @@
 	    android:id="@+id/dropDownText"
 	    style="@style/block"
 	    android:textSize="20sp"
-	    android:layout_marginLeft="4dp"/>
+	    android:layout_marginLeft="8dp"
+	    android:layout_marginTop="4dp"
+	    android:layout_marginBottom="4dp"/>
 	"
 </LinearLayout>
