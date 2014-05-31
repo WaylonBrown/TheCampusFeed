@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
+import com.appuccino.collegefeed.adapters.AutoCompleteDropdownAdapter;
 import com.appuccino.collegefeed.adapters.CollegeListAdapter;
 import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.utils.FontManager;
@@ -172,7 +173,9 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 			{
 				allCollegesList.add(c.getName());
 			}
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(main, android.R.layout.simple_dropdown_item_1line, allCollegesList);
+			AutoCompleteDropdownAdapter adapter = new AutoCompleteDropdownAdapter(main, R.layout.list_row_dropdown, allCollegesList);
+			//the old way of using the adapter, which worked fine
+			//ArrayAdapter<String> adapter = new ArrayAdapter<String>(main, android.R.layout.simple_dropdown_item_1line, allCollegesList);
 	        textView.setAdapter(adapter);
 		}
 	}

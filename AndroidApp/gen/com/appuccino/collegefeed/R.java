@@ -403,14 +403,15 @@ containing a value of this type.
         public static final int commentText=0x7f060034;
         public static final int commentsList=0x7f060013;
         public static final int commentsText=0x7f060012;
+        public static final int dropDownText=0x7f060036;
         public static final int footer=0x7f06002c;
         public static final int fragmentListView=0x7f060017;
         public static final int gpsImage=0x7f06001c;
         public static final int inside=0x7f060004;
         public static final int loadingText=0x7f06002b;
-        public static final int menu_GPS=0x7f060039;
-        public static final int menu_help=0x7f060038;
-        public static final int menu_settings=0x7f060037;
+        public static final int menu_GPS=0x7f06003a;
+        public static final int menu_help=0x7f060039;
+        public static final int menu_settings=0x7f060038;
         public static final int messageText=0x7f060010;
         public static final int nearYouDialogList=0x7f06001d;
         public static final int nearYouTitle=0x7f06001b;
@@ -444,7 +445,7 @@ containing a value of this type.
         public static final int spinner=0x7f06000b;
         public static final int tabs=0x7f060014;
         public static final int tagSearchText=0x7f060030;
-        public static final int tagText=0x7f060036;
+        public static final int tagText=0x7f060037;
         public static final int timeText=0x7f060011;
         public static final int topTagText=0x7f060016;
     }
@@ -471,9 +472,10 @@ containing a value of this type.
         public static final int list_row_choosefeed_college=0x7f03000f;
         public static final int list_row_college=0x7f030010;
         public static final int list_row_collegepost=0x7f030011;
-        public static final int list_row_post=0x7f030012;
-        public static final int list_row_spinner=0x7f030013;
-        public static final int list_row_tag=0x7f030014;
+        public static final int list_row_dropdown=0x7f030012;
+        public static final int list_row_post=0x7f030013;
+        public static final int list_row_spinner=0x7f030014;
+        public static final int list_row_tag=0x7f030015;
     }
     public static final class menu {
         public static final int main=0x7f0d0000;
