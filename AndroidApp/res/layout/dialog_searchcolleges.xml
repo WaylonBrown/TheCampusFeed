@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+    
+    <AutoCompleteTextView
+        android:id="@+id/otherCollegesText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="Type a college's name..."
+        android:layout_marginTop="2dp"/>
+    
+    <LinearLayout 
+    	android:layout_width="50dp"
+    	android:layout_height="match_parent">
+        
+        <View
+            android:id="@+id/finalSearchCollegeButton"
+            style="@style/fill"
+            android:layout_margin="4dp"/>"
+        
+    </LinearLayout>
+
+</LinearLayout>

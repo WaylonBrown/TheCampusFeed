@@ -64,14 +64,15 @@
 	        />
         
     </LinearLayout>
-    
+
     <ListView
         android:id="@+id/nearYouDialogList"
         style="@style/block"
+        android:layout_width="match_parent"
         android:divider="@android:color/transparent"
-		android:dividerHeight="6dp"
-		android:listSelector="@android:color/transparent" 
-        />
+        android:dividerHeight="6dp"
+        android:listSelector="@android:color/transparent" >
+    </ListView>
     
     <TextView
         android:id="@+id/otherTitle"
@@ -84,14 +85,26 @@
         android:gravity="center_horizontal"
         />
     
-    <AutoCompleteTextView
-        android:id="@+id/otherCollegesText"
+    <LinearLayout
+        android:id="@+id/searchCollegesButton"
+        android:background="@drawable/card"
         style="@style/block"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:hint="Type a college's name..."
-        android:dropDownHeight="210dp"
-        android:dropDownAnchor="@id/autoCompleteAnchor"/>
+        android:layout_marginBottom="6dp"
+        android:clickable="true"
+        >
+        
+        <TextView
+            android:id="@+id/otherCollegesButtonText"
+            style="@style/block"
+            android:gravity="center"
+            android:text="@string/searchColleges"
+            android:textSize="22sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            />
+        
+    </LinearLayout>
 
 </LinearLayout>

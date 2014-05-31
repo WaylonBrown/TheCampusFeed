@@ -13,6 +13,7 @@
     
     <string name="chooseFeedDialogTitle">Choose a Feed</string>
     <string name="allColleges">All Colleges</string>
+    <string name="searchColleges">Choose a College</string>
     <string name="nearYou">Near You</string>
     <string name="other">Other Colleges</string>
     

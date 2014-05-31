@@ -5,9 +5,16 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,13 +27,13 @@ import com.appuccino.collegefeed.utils.FontManager;
 
 public class ChooseFeedDialog extends AlertDialog.Builder{
 	
-	Context context;
+	MainActivity main;
 	ArrayList<College> otherColleges;
 	ArrayList<College> nearYouList;
 	
-	public ChooseFeedDialog(Context context, View layout) {
-		super(context);
-		this.context = context;
+	public ChooseFeedDialog(MainActivity main, View layout) {
+		super(main);
+		this.main = main;
 		setCancelable(true);
 		setView(layout);
 		
@@ -38,17 +45,28 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
     	TextView allCollegesText = (TextView)layout.findViewById(R.id.allCollegesText);
     	TextView nearYouTitle = (TextView)layout.findViewById(R.id.nearYouTitle);
     	TextView otherTitle = (TextView)layout.findViewById(R.id.otherTitle);
-    	AutoCompleteTextView otherCollegesText = (AutoCompleteTextView)layout.findViewById(R.id.otherCollegesText);
+    	TextView otherCollegesText = (TextView)layout.findViewById(R.id.otherCollegesButtonText);
+    	LinearLayout searchColleges = (LinearLayout)layout.findViewById(R.id.searchCollegesButton);
     	
     	chooseTitleText.setTypeface(FontManager.light);
     	allCollegesText.setTypeface(FontManager.light);
     	nearYouTitle.setTypeface(FontManager.light);
     	otherTitle.setTypeface(FontManager.light);
+    	otherCollegesText.setTypeface(FontManager.light);
     	
     	populateNearYouList(nearYouList);
-    	setupAutoCompleteTextView(otherCollegesText);
+    	setupClickListeners(searchColleges);
 	}
 	
+	private void setupClickListeners(LinearLayout searchColleges) {
+		searchColleges.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				new SearchCollegesDialog(main);
+			}
+		});
+	}
+
 	private void populateNearYouList(ListView list) {
 		nearYouList = new ArrayList<College>();
 		boolean enableListClicking = true;	//false if no colleges so that the item can't be clicked
@@ -74,52 +92,86 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 			enableListClicking = false;
 		}
 		
-		CollegeListAdapter adapter = new CollegeListAdapter(context, R.layout.list_row_choosefeed_college, nearYouList, enableListClicking);
+		CollegeListAdapter adapter = new CollegeListAdapter(main, R.layout.list_row_choosefeed_college, nearYouList, enableListClicking);
 		list.setAdapter(adapter);
 	}
 
-	private void setupAutoCompleteTextView(AutoCompleteTextView textView) {
-		//CODE FROM WHEN IT WAS A SPINNER, LEAVE FOR NOW IN CASE CHANGING BACK
-//		otherColleges = new ArrayList<College>();
-//		List<String> otherCollegesStringList = new ArrayList<String>();
-//		otherCollegesStringList.add("Choose...");
-//		
-//		//add colleges that aren't already nearby
-//		if(MainActivity.collegeList != null)
-//		{
-//			for(College c : MainActivity.collegeList)
-//			{
-//				if(MainActivity.permissions != null)
-//				{
-//					if(!MainActivity.permissions.contains(c.getID()))
-//						otherColleges.add(c);
-//				}
-//				else
-//					otherColleges.add(c);
-//			}
-//		}
-//		
-//		//make list into strings for spinner
-//		if(otherColleges.size() > 0)
-//		{
-//			for(College c : otherColleges)
-//			{
-//				otherCollegesStringList.add(c.getName());
-//			}
-//		}
-//		
-//		//populate spinner
-//		ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.list_row_spinner, otherCollegesStringList);
-//	    adapter.setDropDownViewResource(R.layout.list_row_spinner);
-//	    otherCollegesSpinner.setAdapter(adapter);
+	public class SearchCollegesDialog extends AlertDialog.Builder{
 		
-		List<String> allCollegesList = new ArrayList<String>();
-		for(College c : MainActivity.collegeList)
-		{
-			allCollegesList.add(c.getName());
+		public SearchCollegesDialog(MainActivity main) {
+			super(main);
+			setCancelable(true);
+			LayoutInflater inflater = main.getLayoutInflater();
+			View layout = inflater.inflate(R.layout.dialog_searchcolleges, null);
+			setView(layout);
+			
+			final AlertDialog dialog = create();
+			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		    WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
+
+		    wmlp.gravity = Gravity.TOP;// | Gravity.LEFT;
+		    //wmlp.x = 100;   //x position
+		    //wmlp.y = 100;   //y position
+			dialog.show();
+			
+			AutoCompleteTextView otherCollegesText = (AutoCompleteTextView)layout.findViewById(R.id.otherCollegesText);
+			otherCollegesText.setTypeface(FontManager.light);
+			//show keyboard automatically
+			otherCollegesText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			    @Override
+			    public void onFocusChange(View v, boolean hasFocus) {
+			        if (hasFocus) {
+			            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+			        }
+			    }
+			});
+			
+			setupAutoCompleteTextView(otherCollegesText);
 		}
 		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, allCollegesList);
-        textView.setAdapter(adapter);
+		private void setupAutoCompleteTextView(AutoCompleteTextView textView) {
+			//CODE FROM WHEN IT WAS A SPINNER, LEAVE FOR NOW IN CASE CHANGING BACK
+//			otherColleges = new ArrayList<College>();
+//			List<String> otherCollegesStringList = new ArrayList<String>();
+//			otherCollegesStringList.add("Choose...");
+//			
+//			//add colleges that aren't already nearby
+//			if(MainActivity.collegeList != null)
+//			{
+//				for(College c : MainActivity.collegeList)
+//				{
+//					if(MainActivity.permissions != null)
+//					{
+//						if(!MainActivity.permissions.contains(c.getID()))
+//							otherColleges.add(c);
+//					}
+//					else
+//						otherColleges.add(c);
+//				}
+//			}
+//			
+//			//make list into strings for spinner
+//			if(otherColleges.size() > 0)
+//			{
+//				for(College c : otherColleges)
+//				{
+//					otherCollegesStringList.add(c.getName());
+//				}
+//			}
+//			
+//			//populate spinner
+//			ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.list_row_spinner, otherCollegesStringList);
+//		    adapter.setDropDownViewResource(R.layout.list_row_spinner);
+//		    otherCollegesSpinner.setAdapter(adapter);
+			
+			List<String> allCollegesList = new ArrayList<String>();
+			for(College c : MainActivity.collegeList)
+			{
+				allCollegesList.add(c.getName());
+			}
+			
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(main, android.R.layout.simple_dropdown_item_1line, allCollegesList);
+	        textView.setAdapter(adapter);
+		}
 	}
 }
