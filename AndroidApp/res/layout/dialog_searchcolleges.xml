@@ -19,7 +19,7 @@
         <View
             android:id="@+id/finalSearchCollegeButton"
             style="@style/fill"
-            android:layout_margin="4dp"/>"
+            android:layout_margin="4ddp"/>"
         
     </LinearLayout>
 
