@@ -13,34 +13,72 @@
 @implementation VoteDataController
 
 - (void)POSTtoServer:(Vote *)vote intoList:(NSMutableArray *)array
-{   // Build a POST request for this vote, send to url, if successful, add to array
-
-    @try
+{   // Build a POST request for to cast this vote to the server, and add it to the array
+    
+    // Build request's body
+    NSData      *bodyData = [vote toJSON];
+    NSString    *bodyString = [[NSString alloc] initWithBytes:[bodyData bytes]
+                                                       length:[bodyData length]
+                                                     encoding:NSASCIIStringEncoding];
+    NSString    *bodyLength = [NSString stringWithFormat:@"%d", [bodyData length]];
+    
+    // Build request's header
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:vote.POSTurl];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:bodyLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:bodyData];
+    
+    // Send request and get the response
+    NSHTTPURLResponse *response;
+    NSError     *error1;
+    NSData      *POSTReply = [NSURLConnection sendSynchronousRequest:request
+                                                   returningResponse:&response
+                                                               error:&error1];
+    NSString    *stringReply = [[NSString alloc] initWithBytes:[POSTReply bytes]
+                                                        length:[POSTReply length]
+                                                      encoding: NSASCIIStringEncoding];
+    NSInteger   statusCode = [response statusCode];
+    
+    if (error1)
     {
-        // Build body
-        NSData *bodyData = [vote toJSON];
-        NSString *bodyLength = [NSString stringWithFormat:@"%d", [bodyData length]];
-        
-        // Build header
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-        [request setURL:vote.POSTurl];
-        [request setHTTPMethod:@"POST"];
-        [request setValue:bodyLength forHTTPHeaderField:@"Content-Length"];
-        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        [request setHTTPBody:bodyData];
-        
-        // Send request and get the response
-        NSHTTPURLResponse *response;
-       [NSURLConnection sendSynchronousRequest:request
-                             returningResponse:&response
-                                         error:nil];
-        
-        //NOTE: no response is sent back yet with a successful POST
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"An error occurred attempting to send a vote to the server."
+                                                       delegate:self cancelButtonTitle:@"Whoops" otherButtonTitles:nil, nil];
+        NSLog(@"Error in VoteDataController's POSTtoServer with: \nPost body: %@\nResponse: %@\nError message: %@",
+                                                        bodyString, stringReply, [error1 localizedDescription]);
+        [alert show];
     }
-    @catch(NSException* e)
+    
+    if (statusCode == 201)
     {
-        NSLog(@"Exception in POST request");
+        NSError      *error2;
+        NSDictionary *jsonPost = [NSJSONSerialization JSONObjectWithData:POSTReply
+                                                                 options:0 error:&error2];
+        
+        if (error2)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                            message:@"An error occurred attempting to send information to the server."
+                                                           delegate:self cancelButtonTitle:@"Whoops" otherButtonTitles:nil, nil];
+            NSLog(@"Error in POSTtoServer during NSJSONSerialization with: \nPost body: %@\nResponse: %@\njsonPost: %@\nError message: %@",
+                  bodyString, stringReply, jsonPost, [error1 localizedDescription]);
+            [alert show];
+        }
+        // initialize this object from the JSON in the response
+        vote = [vote initFromJSON:jsonPost];
+        [array addObject:vote];
+    }
+    else // if (statusCode != 201)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"An error occurred attempting to retrieve information from the server."
+                                                       delegate:self cancelButtonTitle:@"Whoops" otherButtonTitles:nil, nil];
+        NSLog(@"Unexpected status code. Expected=201, actual=%d", statusCode);
+        [alert show];
     }
 }
+
 
 @end

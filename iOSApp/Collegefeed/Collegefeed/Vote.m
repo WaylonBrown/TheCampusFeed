@@ -17,31 +17,41 @@
     self = [super init];
     if (self)
     {
-        [self setVotableID:ID];
+        [self setParentID:ID];
         [self setUpvote:isUpvote];
         [self setPOSTurl:[Shared POSTVoteWithPostId:ID]];
         return self;
     }
     return nil;
 }
-- (id)initDummy
-{
+- (id)initFromJSON:(NSDictionary *)jsonObject
+{   // Initialize this Vote using a JSON object as an NSDictionary
     self = [super init];
     if (self)
     {
-        [self setVotableID:-1];
-        [self setUpvote:NO];
+        NSString *voteID    = (NSString*)[jsonObject valueForKey:@"id"];
+        NSString *upvote    = (NSString*)[jsonObject valueForKey:@"upvote"];
+        NSString *parentID  = (NSString*)[jsonObject valueForKey:@"votable_ID"];
+        NSString *type      = (NSString*)[jsonObject valueForKey:@"votable_type"];
+        
+        [self setVoteID:[voteID integerValue]];
+        [self setParentID:[parentID integerValue]];
+        [self setUpvote:(upvote ? YES : NO)];
+        [self setVotableType:type];
+
         return self;
     }
     return nil;
 }
+
 - (NSData*)toJSON
 {   // Returns an NSData representation of this Vote in JSON
     
-    NSString *voteString = [NSString stringWithFormat:@"{\"upvote\":%@,\"votable_id\":%d}",
-                            self.upvote == YES ? @"true" : @"false",
-                            self.votableID];
-    NSData *voteData = [voteString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSString *voteString = [NSString stringWithFormat:@"{\"upvote\":%@}",
+                            self.upvote == YES ? @"true" : @"false"];
+    
+    NSData *voteData = [voteString dataUsingEncoding:NSASCIIStringEncoding
+                                allowLossyConversion:YES];
     return voteData;
 }
 @end

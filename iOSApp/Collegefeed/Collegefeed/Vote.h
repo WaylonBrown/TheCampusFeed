@@ -10,18 +10,26 @@
 
 @interface Vote : NSObject
 
+// voteID: ID of this vote
+@property (nonatomic) long voteID;
+
 // upvote: {YES=upvote, NO=downvote}
 @property (nonatomic) BOOL upvote;
 
-// votableID: ID of what was voted on
-@property (nonatomic) NSInteger votableID;
+// parentID: ID of what was voted on (comment/post)
+@property (nonatomic) long parentID;
+
+// votableType: "Post" or "Comment"
+@property (nonatomic, strong) NSString *votableType;
 
 @property (nonatomic, strong) NSURL *POSTurl;
 
 - (id)initWithVotableID:(NSInteger)ID
         withUpvoteValue:(BOOL)isUpvote;
-- (id)initDummy;
+
+- (id)initFromJSON:(NSDictionary *)jsonObject;
 
 - (NSData*)toJSON;
+
 
 @end
