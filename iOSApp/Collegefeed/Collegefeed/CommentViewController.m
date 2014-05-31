@@ -161,7 +161,7 @@
     
     Comment *newComment = [[Comment alloc] initWithCommentMessage:[[alertView textFieldAtIndex:0] text]
                                                          withPost:self.originalPost];
-    [self.appDelegate.commentDataController addToServer:newComment
+    [self.appDelegate.commentDataController POSTtoServer:newComment
                                    intoList:self.appDelegate.commentDataController.list];
     [self.tableView reloadData];
 }

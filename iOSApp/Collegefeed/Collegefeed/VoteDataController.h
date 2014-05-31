@@ -12,7 +12,7 @@
 
 @interface VoteDataController : DataController
 
-- (void)addToServer:(Vote *)vote
+- (void)POSTtoServer:(Vote *)vote
            intoList:(NSMutableArray *)array;
 
 

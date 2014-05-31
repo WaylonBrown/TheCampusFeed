@@ -108,7 +108,7 @@
 
 - (void)castVote:(Vote *)vote
 {   // vote was cast in a table cell
-    [self.appDelegate.voteDataController addToServer:vote
+    [self.appDelegate.voteDataController POSTtoServer:vote
                                 intoList:self.appDelegate.voteDataController.list];
 }
 - (void)selectedCollege:(College *)college

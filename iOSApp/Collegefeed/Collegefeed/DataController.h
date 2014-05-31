@@ -27,8 +27,8 @@
 - (void)addObjectToList:(NSObject *)obj;
 
 // Network Access
-- (id)getJsonObjectWithUrl:(NSURL*) url;
+- (id)GETfromServer:(NSURL*) url;
 - (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array;
-- (void)addToServer:(Votable *)obj intoList:(NSMutableArray *)array;
+- (void)POSTtoServer:(Votable *)obj intoList:(NSMutableArray *)array;
 
 @end

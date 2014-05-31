@@ -12,7 +12,7 @@
 
 @implementation VoteDataController
 
-- (void)addToServer:(Vote *)vote intoList:(NSMutableArray *)array
+- (void)POSTtoServer:(Vote *)vote intoList:(NSMutableArray *)array
 {   // Build a POST request for this vote, send to url, if successful, add to array
 
     @try
@@ -23,7 +23,7 @@
         
         // Build header
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-        [request setURL:vote.postUrl];
+        [request setURL:vote.POSTurl];
         [request setHTTPMethod:@"POST"];
         [request setValue:bodyLength forHTTPHeaderField:@"Content-Length"];
         [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];

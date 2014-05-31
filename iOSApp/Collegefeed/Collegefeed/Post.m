@@ -24,7 +24,7 @@
         [self setMessage:newMessage];
         [self setCollegeID:collegeId];
         
-        [self setPostUrl:[Shared POSTPostWithCollegeId:collegeId]];
+        [self setPOSTurl:[Shared POSTPostWithCollegeId:collegeId]];
         
         return self;
     }

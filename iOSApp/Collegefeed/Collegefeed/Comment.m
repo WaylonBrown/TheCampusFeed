@@ -24,7 +24,7 @@
         [self setPostID:post.getID];
         [self setMessage:message];
         
-        [self setPostUrl:[Shared POSTCommentWithPostId:(long)post.getID]];
+        [self setPOSTurl:[Shared POSTCommentWithPostId:(long)post.getID]];
         
         [self validate];
         return self;

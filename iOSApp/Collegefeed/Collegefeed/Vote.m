@@ -19,7 +19,7 @@
     {
         [self setVotableID:ID];
         [self setUpvote:isUpvote];
-        [self setPostUrl:[Shared POSTVoteWithPostId:ID]];
+        [self setPOSTurl:[Shared POSTVoteWithPostId:ID]];
         return self;
     }
     return nil;

@@ -29,8 +29,8 @@
         
         // undo the original vote
         self.score = self.vote.upvote
-        ? self.score - 1
-        : self.score + 1;
+                    ? self.score - 1
+                    : self.score + 1;
         
         if (self.vote.upvote == isUpVote)
         {   // if a duplicate vote was cast, remove the vote
@@ -43,8 +43,8 @@
     
     // update score with new vote
     self.score = self.vote.upvote
-    ? self.score + 1
-    : self.score - 1;
+                ? self.score + 1
+                : self.score - 1;
 }
 
 - (id)initFromJSON:(NSDictionary *)jsonObject

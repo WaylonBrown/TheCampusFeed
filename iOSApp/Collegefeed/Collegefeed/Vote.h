@@ -16,7 +16,7 @@
 // votableID: ID of what was voted on
 @property (nonatomic) NSInteger votableID;
 
-@property (nonatomic, strong) NSURL *postUrl;
+@property (nonatomic, strong) NSURL *POSTurl;
 
 - (id)initWithVotableID:(NSInteger)ID
         withUpvoteValue:(BOOL)isUpvote;

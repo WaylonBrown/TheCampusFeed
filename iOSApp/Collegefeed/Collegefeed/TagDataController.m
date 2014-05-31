@@ -29,7 +29,7 @@
 #pragma mark - Network Access
 
 - (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array
-{   // Call getJsonObjectWithUrl to access network,
+{   // Call GETfromServer to access network,
     // then read JSON result into the provided array
     if (array == nil)
     {
@@ -38,7 +38,7 @@
     }
     @try
     {
-        NSArray *jsonArray = (NSArray*)[self getJsonObjectWithUrl:url];
+        NSArray *jsonArray = (NSArray*)[self GETfromServer:url];
         
         [array removeAllObjects];
         for (int i = 0; i < jsonArray.count; i++)

@@ -217,7 +217,7 @@
     {
         Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]
                                     withCollegeId:currentCollege.collegeID];
-        [self.appDelegate.postDataController addToServer:newPost
+        [self.appDelegate.postDataController POSTtoServer:newPost
                                     intoList:self.appDelegate.postDataController.topPostsAllColleges];
     }
     else

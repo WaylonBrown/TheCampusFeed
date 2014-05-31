@@ -74,7 +74,7 @@
     
     id<ChildCellDelegate> strongDelegate = self.delegate;
     [strongDelegate castVote:[[Vote alloc] initWithVotableID:self.object.getID
-                                             withUpvoteValue:YES]];
+                                             withUpvoteValue:NO]];
 }
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
 {

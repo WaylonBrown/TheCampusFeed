@@ -61,7 +61,7 @@
     self.PDC = [[PostDataController alloc] initWithNetwork:YES];
     
     // Act
-    [self.PDC addToServer:post
+    [self.PDC POSTtoServer:post
                  intoList:self.PDC.topPostsAllColleges];
     
     // Assert
@@ -94,12 +94,12 @@
     self.CDC = [[CommentDataController alloc] initWithNetwork:YES];
 
     // Act
-    [self.PDC addToServer:post
+    [self.PDC POSTtoServer:post
                  intoList:self.PDC.topPostsAllColleges];
     
     Comment *comment = [[Comment alloc] initWithCommentMessage:@"Test Comment from testCommentDataControllerAddCommentToServer"
                                                       withPost:post];
-    [self.CDC addToServer:comment intoList:self.CDC.list];
+    [self.CDC POSTtoServer:comment intoList:self.CDC.list];
     
     // Assert
     

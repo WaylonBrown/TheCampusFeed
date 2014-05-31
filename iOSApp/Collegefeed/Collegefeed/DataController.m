@@ -48,7 +48,7 @@ static int locationDistanceFilter = 150000; // 15km
 
 #pragma mark - Network Access
 
-- (id)getJsonObjectWithUrl:(NSURL *)url
+- (id)GETfromServer:(NSURL *)url
 { // used to GET a JSON object from a url
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -64,13 +64,14 @@ static int locationDistanceFilter = 150000; // 15km
 //                                                  length:[urlData length]
 //                                                encoding:NSASCIIStringEncoding];
 
-    //TODO: check for error code;
     
+    
+    //TODO: check for error code;
     return [NSJSONSerialization JSONObjectWithData:urlData
                                            options:0
                                              error:nil];
 }
-- (void)addToServer:(Votable *)obj intoList:(NSMutableArray *)array
+- (void)POSTtoServer:(Votable *)obj intoList:(NSMutableArray *)array
 {   // Build a POST request for this obj, send to url, if successful, add to array
     @try
     {
@@ -85,7 +86,7 @@ static int locationDistanceFilter = 150000; // 15km
         
         // Build header
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-        [request setURL:obj.postUrl];
+        [request setURL:obj.POSTurl];
         [request setHTTPMethod:@"POST"];
         [request setValue:bodyLength forHTTPHeaderField:@"Content-Length"];
         [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];

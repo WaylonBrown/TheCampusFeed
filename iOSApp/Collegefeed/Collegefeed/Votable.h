@@ -25,8 +25,7 @@
 @property (nonatomic, strong) NSDate *createdAt;
 @property (nonatomic, strong) NSDate *updatedAt;
 
-@property (nonatomic, strong) NSURL *postUrl;
-@property (nonatomic, strong) NSURL *getUrl;
+@property (nonatomic, strong) NSURL *POSTurl;
 
 - (id)initFromJSON:(NSDictionary *)jsonObject;
 - (NSData*)toJSON;
