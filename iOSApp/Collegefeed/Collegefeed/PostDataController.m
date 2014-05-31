@@ -36,22 +36,16 @@
         NSLog(@"nil array passed to fetchWithUrl");
         return;
     }
-    @try
+    NSArray *jsonArray = (NSArray*)[self GETfromServer:url];
+    if (jsonArray == nil) return;
+    
+    [array removeAllObjects];
+    for (int i = 0; i < jsonArray.count; i++)
     {
-        NSArray *jsonArray = (NSArray*)[self GETfromServer:url];
-        
-        [array removeAllObjects];
-        for (int i = 0; i < jsonArray.count; i++)
-        {
-            // Individual JSON object
-            NSDictionary *jsonPost = (NSDictionary *) [jsonArray objectAtIndex:i];
-            Post* newPost = [[Post alloc] initFromJSON:jsonPost];
-            [array addObject:newPost];
-        }
-    }
-    @catch (NSException *exc)
-    {
-        NSLog(@"Error fetching all posts");
+        // Individual JSON object
+        NSDictionary *jsonPost = (NSDictionary *) [jsonArray objectAtIndex:i];
+        Post* newPost = [[Post alloc] initFromJSON:jsonPost];
+        [array addObject:newPost];
     }
 }
 

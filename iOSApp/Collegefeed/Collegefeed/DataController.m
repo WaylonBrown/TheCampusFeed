@@ -49,7 +49,7 @@ static int locationDistanceFilter = 150000; // 15km
 #pragma mark - Network Access
 
 - (id)GETfromServer:(NSURL *)url
-{ // used to GET a JSON object from a url
+{ // GETs a JSON-formatted response from the server, given a url
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     
@@ -57,19 +57,42 @@ static int locationDistanceFilter = 150000; // 15km
     [request setHTTPMethod:@"GET"];
     [request setValue:@"application/json;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
     
-    // Fetch the JSON response
-    NSURLResponse *response;
-    NSData *urlData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
-//    NSString *theReply = [[NSString alloc] initWithBytes:[urlData bytes]
-//                                                  length:[urlData length]
-//                                                encoding:NSASCIIStringEncoding];
+    // Fetch the response from the server in JSON format
+    NSHTTPURLResponse   *response;
+    NSError     *error;
+    NSData      *urlData = [NSURLConnection sendSynchronousRequest:request
+                                                         returningResponse:&response
+                                                                     error:&error];
+    NSString    *stringReply = [[NSString alloc] initWithBytes:[urlData bytes]
+                                                                length:[urlData length]
+                                                              encoding:NSASCIIStringEncoding];
+    NSInteger   statusCode = [response statusCode];
+    
+    if (error)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"An error occurred attempting to retrieve information from the server."
+                                                       delegate:self cancelButtonTitle:@"Whoops" otherButtonTitles:nil, nil];
+        NSLog(@"Error in GETfromServer with: \nURL: %@\nError message: %@\nresponse: %@",
+              url, [error localizedDescription], stringReply);
+        [alert show];
+    }
 
-    
-    
-    //TODO: check for error code;
-    return [NSJSONSerialization JSONObjectWithData:urlData
-                                           options:0
-                                             error:nil];
+    if (statusCode == 200)
+    {
+        return [NSJSONSerialization JSONObjectWithData:urlData
+                                               options:0
+                                                 error:nil];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"An error occurred attempting to retrieve information from the server."
+                                                       delegate:self cancelButtonTitle:@"Whoops" otherButtonTitles:nil, nil];
+        NSLog(@"Unexpected status code. Expected=200, actual=%d", statusCode);
+        [alert show];
+    }
+    return nil;
 }
 - (void)POSTtoServer:(Votable *)obj intoList:(NSMutableArray *)array
 {   // Build a POST request for this obj, send to url, if successful, add to array
@@ -93,7 +116,7 @@ static int locationDistanceFilter = 150000; // 15km
         [request setHTTPBody:bodyData];
         
         // Send request and get the response
-        NSURLResponse *response;
+        NSHTTPURLResponse *response;
         NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request
                                                   returningResponse:&response
                                                               error:nil];

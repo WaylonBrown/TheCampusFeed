@@ -30,7 +30,7 @@
         [request setHTTPBody:bodyData];
         
         // Send request and get the response
-        NSURLResponse *response;
+        NSHTTPURLResponse *response;
        [NSURLConnection sendSynchronousRequest:request
                              returningResponse:&response
                                          error:nil];
