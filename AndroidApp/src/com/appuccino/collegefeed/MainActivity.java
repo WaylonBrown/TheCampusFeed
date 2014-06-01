@@ -63,7 +63,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	static final int LOCATION_TIMEOUT_SECONDS = 10;
 	public static final int MIN_POST_LENGTH = 10;
 	
-	ArrayList<Fragment> fragmentList;
 	boolean locationFound = false;
 	public static LocationManager mgr;
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
@@ -493,5 +492,21 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public static int getIdByCollegeName(String name) {
+		for(College c: collegeList)
+		{
+			if(c.getName().equals(name))
+				return c.getID();
+		}
+		
+		return -1;
+	}
+
+	public void changeFeed(int id) {
+		TopPostFragment.changeFeed(id);
+		NewPostFragment.changeFeed(id);
+		TagFragment.changeFeed(id);
 	}
 }

@@ -35,6 +35,7 @@ import com.appuccino.collegefeed.TagListActivity;
 import com.appuccino.collegefeed.adapters.TagListAdapter;
 import com.appuccino.collegefeed.extra.QuickReturnListView;
 import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
+import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Tag;
 import com.appuccino.collegefeed.utils.FontManager;
@@ -57,7 +58,7 @@ public class TagFragment extends Fragment
 	private static int mScrollY;
 	private static int mMinRawY = 0;
 	private static TranslateAnimation anim;
-	TextView collegeNameBottom;
+	static TextView collegeNameBottom;
 
 	public TagFragment()
 	{
@@ -274,7 +275,7 @@ public class TagFragment extends Fragment
     			}
     			else
     			{
-    				Toast.makeText(mainActivity, "Must be 3 characters long.", Toast.LENGTH_LONG).show();
+    				Toast.makeText(mainActivity, "Must be at least 3 characters long.", Toast.LENGTH_LONG).show();
     			}
 			}
     	});
@@ -292,5 +293,13 @@ public class TagFragment extends Fragment
     	        }
     	    }
     	});
+	}
+	
+	public static void changeFeed(int id) {
+		College newFeed = MainActivity.getCollegeByID(id);
+		if(collegeNameBottom != null)
+		{
+			collegeNameBottom.setText(newFeed.getName());
+		}
 	}
 }

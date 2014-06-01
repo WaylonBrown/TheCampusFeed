@@ -62,7 +62,7 @@
 	            android:layout_height="match_parent"
 	            android:layout_marginLeft="14dp"
 	            android:layout_marginRight="2dp"
-	            android:text="Texas A&amp;M University"
+	            android:text="@string/allColleges"
 	            android:textSize="22sp"
 	            android:textColor="@color/white"
 	            />

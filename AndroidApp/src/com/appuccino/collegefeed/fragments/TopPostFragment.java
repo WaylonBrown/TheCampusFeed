@@ -34,6 +34,7 @@ import com.appuccino.collegefeed.adapters.PostListAdapter;
 import com.appuccino.collegefeed.extra.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.extra.NetWorker.PostSelector;
 import com.appuccino.collegefeed.extra.QuickReturnListView;
+import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
 import com.romainpiel.shimmer.Shimmer;
@@ -65,7 +66,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	private static int mScrollY;
 	private static int mMinRawY = 0;
 	private static TranslateAnimation anim;
-	TextView collegeNameBottom;
+	static TextView collegeNameBottom;
 
 	public TopPostFragment()
 	{
@@ -304,5 +305,13 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	public void onRefreshStarted(View arg0) 
 	{
 		pullListFromServer();
+	}
+
+	public static void changeFeed(int id) {
+		College newFeed = MainActivity.getCollegeByID(id);
+		if(collegeNameBottom != null)
+		{
+			collegeNameBottom.setText(newFeed.getName());
+		}
 	}
 }

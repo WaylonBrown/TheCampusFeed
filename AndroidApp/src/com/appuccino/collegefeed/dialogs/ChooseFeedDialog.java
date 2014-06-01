@@ -35,6 +35,7 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 	MainActivity main;
 	ArrayList<College> otherColleges;
 	ArrayList<College> nearYouList;
+	AlertDialog dialog;
 	
 	public ChooseFeedDialog(MainActivity main, View layout) {
 		super(main);
@@ -42,7 +43,7 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 		setCancelable(true);
 		setView(layout);
 		
-		final AlertDialog dialog = create();
+		dialog = create();
 		dialog.show();
 		
 		ListView nearYouList = (ListView)layout.findViewById(R.id.nearYouDialogList);
@@ -67,7 +68,7 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 		searchColleges.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				new SearchCollegesDialog(main);
+				new SearchCollegesDialog(main, dialog);
 			}
 		});
 	}
@@ -103,20 +104,22 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 
 	public class SearchCollegesDialog extends AlertDialog.Builder{
 		
-		public SearchCollegesDialog(MainActivity main) {
+		AlertDialog dialog;
+		AlertDialog previousDialog;
+		
+		public SearchCollegesDialog(MainActivity main, AlertDialog previousDialog) {
 			super(main);
+			this.previousDialog = previousDialog;
 			setCancelable(true);
 			LayoutInflater inflater = main.getLayoutInflater();
 			View layout = inflater.inflate(R.layout.dialog_searchcolleges, null);
 			setView(layout);
 			
-			final AlertDialog dialog = create();
+			dialog = create();
 			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		    WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
 
-		    wmlp.gravity = Gravity.TOP;// | Gravity.LEFT;
-		    //wmlp.x = 100;   //x position
-		    //wmlp.y = 100;   //y position
+		    wmlp.gravity = Gravity.TOP;
 			dialog.show();
 			
 			AutoCompleteTextView otherCollegesText = (AutoCompleteTextView)layout.findViewById(R.id.otherCollegesText);
@@ -129,7 +132,9 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 			{
 				if(s.toString().equals(c.getName()))
 				{
-					Toast.makeText(main, "College clicked", Toast.LENGTH_LONG).show();
+					main.changeFeed(MainActivity.getIdByCollegeName(s.toString()));
+					dialog.dismiss();
+					previousDialog.dismiss();
 					break;
 				}
 			}
@@ -174,8 +179,6 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 				allCollegesList.add(c.getName());
 			}
 			AutoCompleteDropdownAdapter adapter = new AutoCompleteDropdownAdapter(main, R.layout.list_row_dropdown, allCollegesList);
-			//the old way of using the adapter, which worked fine
-			//ArrayAdapter<String> adapter = new ArrayAdapter<String>(main, android.R.layout.simple_dropdown_item_1line, allCollegesList);
 	        textView.setAdapter(adapter);
 		}
 	}
