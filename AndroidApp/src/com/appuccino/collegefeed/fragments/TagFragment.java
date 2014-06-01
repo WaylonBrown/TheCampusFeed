@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -103,7 +104,10 @@ public class TagFragment extends Fragment
 			list.addFooterView(headerFooter, null, false);
 			list.addHeaderView(headerFooter, null, false);
 		}
-		list.setAdapter(adapter);
+		if(list != null)
+			list.setAdapter(adapter);	
+		else
+			Log.e("cfeed", "TopPostFragment list adapter wasn't set.");
 		list.setItemsCanFocus(true);
 	    
 	    //set bottom text typeface

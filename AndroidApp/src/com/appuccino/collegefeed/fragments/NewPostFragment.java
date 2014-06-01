@@ -12,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -110,7 +111,10 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 			pullListFromServer();
 		}	
 		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 0);
-		list.setAdapter(listAdapter);		
+		if(list != null)
+			list.setAdapter(listAdapter);	
+		else
+			Log.e("cfeed", "TopPostFragment list adapter wasn't set.");		
 
 		list.setOnItemClickListener(new OnItemClickListener()
 	    {

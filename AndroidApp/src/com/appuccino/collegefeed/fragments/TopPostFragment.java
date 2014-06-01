@@ -111,7 +111,10 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 			pullListFromServer();
 		}		
 		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 0);
-		list.setAdapter(listAdapter);		
+		if(list != null)
+			list.setAdapter(listAdapter);	
+		else
+			Log.e("cfeed", "TopPostFragment list adapter wasn't set.");
 
 		list.setOnItemClickListener(new OnItemClickListener()
 	    {

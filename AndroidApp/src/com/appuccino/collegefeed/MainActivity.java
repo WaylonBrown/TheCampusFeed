@@ -187,37 +187,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			}
 		}
 	}
-
-//	private void fadeActionBarColor(ColorDrawable to){
-//		ColorDrawable[] colors = {new ColorDrawable(getResources().getColor(R.color.blue)), to};
-//	    
-//		if (android.os.Build.VERSION.SDK_INT >= 16){
-//			fadeActionBarColorCurrent(colors);
-//        }
-//		else{
-//			fadeActionBarColorDeprecated(colors);
-//		}
-//	}
-//	
-//	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-//	private void fadeActionBarColorCurrent(ColorDrawable[] colors){
-//		TransitionDrawable trans = new TransitionDrawable(colors); //ok so this doesn't work yet its so weird.
-//		TransitionDrawable trans2 = new TransitionDrawable(colors); //so ridiculous that i have to make two transitions
-//	    actionBar.setBackgroundDrawable(trans);						//must be doing something wrong lol.
-//	    actionBar.getCustomView().setBackground(trans2);
-//	    trans.startTransition(1000);
-//	    trans2.startTransition(2000);
-//	}
-//	
-//	@SuppressWarnings("deprecation")
-//	private void fadeActionBarColorDeprecated(ColorDrawable[] colors){
-//		TransitionDrawable trans = new TransitionDrawable(colors);
-//		TransitionDrawable trans2 = new TransitionDrawable(colors);
-//	    actionBar.setBackgroundDrawable(trans);
-//	    actionBar.getCustomView().setBackgroundDrawable(trans2);
-//	    trans.startTransition(1000);
-//	    trans2.startTransition(1000);
-//	}
 	
 	private void getLocation(){
 		mgr = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -369,9 +338,20 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 	public void newPostClicked() 
 	{
-		LayoutInflater inflater = getLayoutInflater();
-		View postDialogLayout = inflater.inflate(R.layout.dialog_post, null);
-		new NewPostDialog(this, postDialogLayout);
+		if(permissions != null)
+		{
+			if(permissions.size() == 1)
+			{
+				LayoutInflater inflater = getLayoutInflater();
+				View postDialogLayout = inflater.inflate(R.layout.dialog_post, null);
+				new NewPostDialog(this, postDialogLayout);
+			}
+			else
+			{
+				
+			}
+		}
+		
 	}
 
 	@Override

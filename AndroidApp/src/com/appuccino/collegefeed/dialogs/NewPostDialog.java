@@ -41,6 +41,26 @@ public class NewPostDialog extends AlertDialog.Builder{
             }
         });
 		
+		if(MainActivity.permissions != null)
+		{
+			if(MainActivity.permissions.size() == 1)
+			{
+				selectedCollegeID = MainActivity.permissions.get(0);
+				createDialog(layout);
+			}
+			else	//in range of multiple colleges
+			{
+				createCollegeChooser();
+			}
+		}
+		
+	}
+
+	private void createCollegeChooser() {
+		//make dialog to choose college
+	}
+
+	private void createDialog(View layout) {
 		final AlertDialog dialog = create();
 		dialog.show();
 		
@@ -53,7 +73,7 @@ public class NewPostDialog extends AlertDialog.Builder{
     		{				
     			if(postMessage.getText().toString().length() >= MainActivity.MIN_POST_LENGTH)
     			{
-    				Post newPost = new Post(postMessage.getText().toString());
+    				Post newPost = new Post(postMessage.getText().toString(), selectedCollegeID);
         			NewPostFragment.postList.add(newPost);
         			TopPostFragment.postList.add(newPost);
         			NewPostFragment.updateList();
