@@ -86,7 +86,9 @@ class TagsController < ApplicationController
     end
 
     def set_college
-      @college = College.find(params[:college_id])
+      if params[:college_id]
+        @college = College.find(params[:college_id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
