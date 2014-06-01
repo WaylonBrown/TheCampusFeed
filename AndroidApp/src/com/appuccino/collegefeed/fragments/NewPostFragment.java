@@ -311,7 +311,11 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		College newFeed = MainActivity.getCollegeByID(id);
 		if(collegeNameBottom != null)
 		{
-			collegeNameBottom.setText(newFeed.getName());
+			//chose an actual college
+			if(newFeed != null)
+				collegeNameBottom.setText(newFeed.getName());
+			else
+				collegeNameBottom.setText(mainActivity.getResources().getString(R.string.allColleges));
 		}
 	}
 }

@@ -50,7 +50,7 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
     	TextView otherTitle = (TextView)layout.findViewById(R.id.otherTitle);
     	TextView otherCollegesText = (TextView)layout.findViewById(R.id.otherCollegesButtonText);
     	LinearLayout searchColleges = (LinearLayout)layout.findViewById(R.id.searchCollegesButton);
-    	LinearLayout allColleges = (LinearLayout)layout.findViewById(R.id.searchCollegesButton);
+    	LinearLayout allColleges = (LinearLayout)layout.findViewById(R.id.allCollegesButton);
     	
     	chooseTitleText.setTypeface(FontManager.light);
     	allCollegesText.setTypeface(FontManager.light);
@@ -59,14 +59,22 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
     	otherCollegesText.setTypeface(FontManager.light);
     	
     	populateNearYouList(nearYouList);
-    	setupClickListeners(searchColleges);
+    	setupClickListeners(searchColleges, allColleges);
 	}
 	
-	private void setupClickListeners(LinearLayout searchColleges) {
+	private void setupClickListeners(LinearLayout searchColleges, LinearLayout allColleges) {
 		searchColleges.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
 				new SearchCollegesDialog(main, dialog);
+			}
+		});
+		
+		allColleges.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+				main.changeFeed(MainActivity.ALL_COLLEGES);
 			}
 		});
 	}

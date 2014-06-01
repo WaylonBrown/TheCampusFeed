@@ -57,7 +57,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	ImageView newPostButton;
 	
 	//final values
-	static final int ALL_COLLEGES = 0;	//used for permissions
+	public static final int ALL_COLLEGES = 0;	//used for permissions
 	static final String PREFERENCE_KEY_COLLEGE_LIST = "all_colleges_preference_key";
 	static final double MILES_FOR_PERMISSION = 15.0;
 	static final int LOCATION_TIMEOUT_SECONDS = 10;
