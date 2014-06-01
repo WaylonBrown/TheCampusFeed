@@ -14,7 +14,7 @@ Postfeed::Application.routes.draw do
         resources :posts do
           resources :comments, except: [:show] do
             get 'votes/score' => 'votes#score'
-            resources :votes
+            resources :votes, only: [:create]
           end
           get 'votes/score' => 'votes#score'
           resources :votes
@@ -37,7 +37,7 @@ Postfeed::Application.routes.draw do
       resources :posts do
         resources :comments, except: [:show] do
           get 'votes/score' => 'votes#score'
-          resources :votes
+          resources :votes, only: [:create]
         end
         get 'votes/score' => 'votes#score'
         resources :votes
