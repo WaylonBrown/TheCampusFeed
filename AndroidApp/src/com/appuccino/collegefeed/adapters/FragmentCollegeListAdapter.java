@@ -17,18 +17,14 @@ import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
 import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.utils.FontManager;
 
-/*
- * Used in the ViewPager's Most Active College fragment, as well as the
- * Choose Feed Dialog
- */
-public class CollegeListAdapter extends ArrayAdapter<College>{
+public class FragmentCollegeListAdapter extends ArrayAdapter<College>{
 
 	Context context; 
     int layoutResourceId;    
     List<College> collegeList = null;
     boolean enableListClicking;
     
-    public CollegeListAdapter(Context context, int layoutResourceId, List<College> list, boolean enableListClicking) {
+    public FragmentCollegeListAdapter(Context context, int layoutResourceId, List<College> list, boolean enableListClicking) {
         super(context, layoutResourceId, list);
         this.layoutResourceId = layoutResourceId;
         this.context = context;

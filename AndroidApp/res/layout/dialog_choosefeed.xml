@@ -22,6 +22,7 @@
         />
     
     <LinearLayout
+        android:id="@+id/allCollegesButton"
         android:background="@drawable/card"
         style="@style/block"
         android:layout_marginLeft="8dp"

@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
-import com.appuccino.collegefeed.adapters.CollegeListAdapter;
+import com.appuccino.collegefeed.adapters.FragmentCollegeListAdapter;
 import com.appuccino.collegefeed.objects.College;
 
 public class MostActiveCollegesFragment extends Fragment
@@ -47,7 +47,7 @@ public class MostActiveCollegesFragment extends Fragment
 		collegeList.add(new College("Harvard University"));
 		collegeList.add(new College("University of Texas at Austin"));
 		
-		CollegeListAdapter adapter = new CollegeListAdapter(getActivity(), R.layout.list_row_college, collegeList, true);
+		FragmentCollegeListAdapter adapter = new FragmentCollegeListAdapter(getActivity(), R.layout.list_row_college, collegeList, true);
 		
 		//if doesnt have header and footer, add them
 		if(fragList.getHeaderViewsCount() == 0)

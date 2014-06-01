@@ -4,29 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.AutoCompleteDropdownAdapter;
-import com.appuccino.collegefeed.adapters.CollegeListAdapter;
+import com.appuccino.collegefeed.adapters.DialogCollegeListAdapter;
 import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.utils.FontManager;
 
@@ -53,6 +50,7 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
     	TextView otherTitle = (TextView)layout.findViewById(R.id.otherTitle);
     	TextView otherCollegesText = (TextView)layout.findViewById(R.id.otherCollegesButtonText);
     	LinearLayout searchColleges = (LinearLayout)layout.findViewById(R.id.searchCollegesButton);
+    	LinearLayout allColleges = (LinearLayout)layout.findViewById(R.id.searchCollegesButton);
     	
     	chooseTitleText.setTypeface(FontManager.light);
     	allCollegesText.setTypeface(FontManager.light);
@@ -98,8 +96,17 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 			enableListClicking = false;
 		}
 		
-		CollegeListAdapter adapter = new CollegeListAdapter(main, R.layout.list_row_choosefeed_college, nearYouList, enableListClicking);
+		DialogCollegeListAdapter adapter = new DialogCollegeListAdapter(main, R.layout.list_row_choosefeed_college, nearYouList, enableListClicking);
 		list.setAdapter(adapter);
+		
+		list.setOnItemClickListener(new OnItemClickListener(){
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				dialog.dismiss();
+				main.changeFeed(nearYouList.get(position).getID());
+			}
+		});
 	}
 
 	public class SearchCollegesDialog extends AlertDialog.Builder{
@@ -132,9 +139,9 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 			{
 				if(s.toString().equals(c.getName()))
 				{
-					main.changeFeed(MainActivity.getIdByCollegeName(s.toString()));
 					dialog.dismiss();
 					previousDialog.dismiss();
+					main.changeFeed(MainActivity.getIdByCollegeName(s.toString()));
 					break;
 				}
 			}
