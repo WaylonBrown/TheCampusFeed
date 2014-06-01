@@ -11,7 +11,7 @@ class VotesController < ApplicationController
   # GET /votes
   # GET /votes.json
   def index
-    @votes = Vote.all
+    @votes = @votable.votes
   end
 
   # GET /votes/1
