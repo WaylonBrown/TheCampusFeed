@@ -71,7 +71,7 @@ static int locationDistanceFilter = 150000; // 15km
     if (error)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:@"An error occurred attempting to retrieve information from the server."
+                                                        message:[NSString stringWithFormat:@"An error occurred attempting to retrieve information from %@.", url]
                                                        delegate:self cancelButtonTitle:@"Whoops" otherButtonTitles:nil, nil];
         NSLog(@"Error in GETfromServer with: \nURL: %@\nResponse: %@\nError message: %@",
               url, stringReply, [error localizedDescription]);
@@ -87,9 +87,9 @@ static int locationDistanceFilter = 150000; // 15km
     else
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:@"An error occurred attempting to retrieve information from the server."
+                                                        message:[NSString stringWithFormat:@"An error occurred attempting to retrieve information from %@.", url]
                                                        delegate:self cancelButtonTitle:@"Whoops" otherButtonTitles:nil, nil];
-        NSLog(@"Unexpected status code. Expected=200, actual=%d", statusCode);
+        NSLog(@"Unexpected status code. Expected=200, actual=%d\nwith: \nURL: %@", statusCode, url);
         [alert show];
     }
     return nil;
@@ -127,7 +127,7 @@ static int locationDistanceFilter = 150000; // 15km
     if (error1)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:@"An error occurred attempting to send information to the server."
+                                                        message:[NSString stringWithFormat:@"An error occurred attempting to retrieve information from %@.", obj.POSTurl]
                                                        delegate:self cancelButtonTitle:@"Whoops" otherButtonTitles:nil, nil];
         NSLog(@"Error in POSTtoServer with: \nPost body: %@\nResponse: %@\nError message: %@",
                                                 bodyString, stringReply, [error1 localizedDescription]);
@@ -156,7 +156,7 @@ static int locationDistanceFilter = 150000; // 15km
     else // if (statusCode != 201)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:@"An error occurred attempting to retrieve information from the server."
+                                                        message:[NSString stringWithFormat:@"An error occurred attempting to retrieve information from %@.", obj.POSTurl]
                                                        delegate:self cancelButtonTitle:@"Whoops" otherButtonTitles:nil, nil];
         NSLog(@"Unexpected status code. Expected=201, actual=%d", statusCode);
         [alert show];

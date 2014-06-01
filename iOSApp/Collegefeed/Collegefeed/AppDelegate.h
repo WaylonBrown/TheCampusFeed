@@ -28,9 +28,10 @@
 @property (strong, nonatomic) CollegeDataController *collegeDataController;
 @property (strong, nonatomic) TagDataController     *tagDataController;
 
-@property (strong, nonatomic) College *currentCollege;
-@property (nonatomic) BOOL allColleges;
-@property (nonatomic) BOOL specificCollege;
+@property (strong, nonatomic) NSString  *deviceId;
+@property (strong, nonatomic) College   *currentCollege;
+@property (nonatomic) BOOL              allColleges;
+@property (nonatomic) BOOL              specificCollege;
 
 - (void)switchedToSpecificCollegeOrNil:(College *)college;
 - (College*)getCurrentCollege;

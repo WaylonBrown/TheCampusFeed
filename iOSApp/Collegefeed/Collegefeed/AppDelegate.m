@@ -23,6 +23,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:cf_lightblue]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [self setDeviceId:[[[UIDevice currentDevice] identifierForVendor] UUIDString]];
+    [self displayDeviceId];
     
 #pragma mark - Data Controller Initializations - start collecting network data
     
@@ -142,5 +144,16 @@
 - (BOOL)getIsSpecificCollege
 {
     return self.specificCollege;
+}
+- (void)displayDeviceId
+{
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Device ID"
+                                                    message:self.deviceId
+                                                   delegate:self
+                                          cancelButtonTitle:@"Dirty"
+                                          otherButtonTitles:@"Butthole", nil];
+    
+    [alert show];
+
 }
 @end

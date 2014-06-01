@@ -16,16 +16,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Collegefeed/AppDelegate.m"
-            timestampString = "423118843.214676"
+            filePath = "Collegefeed/DataController.m"
+            timestampString = "423269752.88116"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
-            landmarkName = "-switchedToSpecificCollegeOrNil:"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
+            landmarkName = "-POSTtoServer:intoList:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -35,13 +35,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Collegefeed/MasterViewController.m"
-            timestampString = "423260721.840363"
+            filePath = "Collegefeed/DataController.m"
+            timestampString = "423269777.683111"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
-            landmarkName = "-castVote:"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "-GETfromServer:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Collegefeed/DataController.m"
+            timestampString = "423269786.238855"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "-POSTtoServer:intoList:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

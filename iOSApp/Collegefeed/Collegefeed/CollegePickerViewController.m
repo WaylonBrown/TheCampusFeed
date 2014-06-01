@@ -14,6 +14,8 @@
 
 @implementation CollegePickerViewController
 
+#pragma mark - Initializations
+
 - (id)initAsTopColleges
 {
     self = [super init];
@@ -34,14 +36,8 @@
     }
     return self;
 }
-//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-//{
-//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-//    if (self) {
-//        // Custom initialization
-//    }
-//    return self;
-//}
+
+#pragma mark - View Loading and Refreshing
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -56,20 +52,11 @@
     [self.tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+#pragma mark - Data Access
 
 - (void)setCollegesList:(NSMutableArray *)collegeList
 {
     self.list = [[NSMutableArray alloc] initWithArray:collegeList];
-}
-
-- (IBAction)cancel:(id)sender
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Search Bar
@@ -97,7 +84,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
 #pragma mark - Table View Overrides
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{   //TODO: the code below is taken from PostViewController
+{   // User selected a college from the list, call delegate's selectedCollege function
     College *college;
     if (tableView == self.searchDisplayController.searchResultsTableView)
     {
@@ -109,6 +96,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
     }
     
     [self.delegate selectedCollege:college from:self];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

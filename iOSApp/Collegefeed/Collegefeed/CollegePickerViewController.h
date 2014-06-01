@@ -30,6 +30,4 @@
 
 - (void)setCollegesList:(NSMutableArray *)collegeList;
 
-- (IBAction)cancel:(id)sender;
-
 @end
