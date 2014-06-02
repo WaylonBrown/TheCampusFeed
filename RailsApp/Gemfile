@@ -42,6 +42,7 @@ gem 'api-pagination'
 gem 'font-awesome-rails'
 
 gem 'oauth-plugin'
+gem 'image_suckr'
 
 
 gem 'rails_12factor'
