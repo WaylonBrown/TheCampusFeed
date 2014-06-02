@@ -1,7 +1,13 @@
 include CollegesHelper
 
 class CollegesController < ApplicationController
-  before_action :set_college, only: [:show, :edit, :update, :destroy, :within]
+  before_action :set_college, only: [:show, :edit, :update, :destroy, :within, :image]
+
+  def image
+    suckr = ImageSuckr::GoogleSuckr.new
+    send_file suckr.get_image_file({"q" => @college.name + " logo", "as_filetype" => 'png'}),
+      type: 'image/png', disposition: 'inline'
+  end
 
   # GET /colleges
   # GET /colleges.json
