@@ -19,8 +19,9 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, MasterViewDelegate>
 
-@property (strong, nonatomic) UIWindow              *window;
-@property (strong, nonatomic) UITabBarController    *tabBarController;
+@property (strong, nonatomic) UIWindow                *window;
+@property (strong, nonatomic) UITabBarController      *tabBarController;
+//@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 
 @property (strong, nonatomic) PostDataController    *postDataController;
 @property (strong, nonatomic) CommentDataController *commentDataController;
@@ -28,13 +29,12 @@
 @property (strong, nonatomic) CollegeDataController *collegeDataController;
 @property (strong, nonatomic) TagDataController     *tagDataController;
 
-@property (strong, nonatomic) NSString  *deviceId;
-@property (strong, nonatomic) College   *currentCollege;
-@property (nonatomic) BOOL              allColleges;
-@property (nonatomic) BOOL              specificCollege;
+@property (strong, nonatomic) College *currentCollege;
+@property (nonatomic) BOOL allColleges;
+@property (nonatomic) BOOL specificCollege;
 
 - (void)switchedToSpecificCollegeOrNil:(College *)college;
-- (College*)getCurrentCollege;
+- (College*)getUsersCurrentCollege;
 - (BOOL)getIsAllColleges;
 - (BOOL)getIsSpecificCollege;
 

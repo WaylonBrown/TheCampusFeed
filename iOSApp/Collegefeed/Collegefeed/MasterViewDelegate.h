@@ -28,7 +28,7 @@
 
 
 - (void)switchedToSpecificCollegeOrNil:(College *)college;
-- (College*)getCurrentCollege;
+- (College*)getUsersCurrentCollege;
 - (BOOL)getIsAllColleges;
 - (BOOL)getIsSpecificCollege;
 

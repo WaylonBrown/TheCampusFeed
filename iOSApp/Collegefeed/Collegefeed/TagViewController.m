@@ -77,17 +77,17 @@
     {
         if (self.collegeSegmentControl.numberOfSegments < 3)
         {
-            [self.collegeSegmentControl insertSegmentWithTitle:[self.appDelegate getCurrentCollege].name
+            [self.collegeSegmentControl insertSegmentWithTitle:[self.appDelegate getUsersCurrentCollege].name
                                                        atIndex:2 animated:NO];
         }
         else
         {
-            [self.collegeSegmentControl setTitle:[self.appDelegate getCurrentCollege].name
+            [self.collegeSegmentControl setTitle:[self.appDelegate getUsersCurrentCollege].name
                                forSegmentAtIndex:2];
         }
         
         [self.collegeSegmentControl setSelectedSegmentIndex:2];
-        [self.appDelegate.tagDataController fetchAllTagsWithCollegeId:[self.appDelegate getCurrentCollege].collegeID];
+        [self.appDelegate.tagDataController fetchAllTagsWithCollegeId:[self.appDelegate getUsersCurrentCollege].collegeID];
     }
     [super refresh];
 }

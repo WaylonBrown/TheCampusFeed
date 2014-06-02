@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "TableCell.h"
 #import "PostsViewController.h"
 #import "PostDataController.h"
@@ -81,7 +82,11 @@
 
     [super viewWillAppear:animated];
     [self.navigationItem setTitleView:logoTitleView];
-
+    NSMutableArray *toolbarButtons = [self.toolbarItems mutableCopy];
+    
+    [toolbarButtons removeAllObjects];
+    [toolbarButtons addObject: [[UIActivityIndicatorView alloc] init]];
+    [self setToolbarItems:toolbarButtons];
     [self refresh];
 }
 - (void)viewDidLoad
@@ -172,16 +177,16 @@
 {
     if (self.topPosts)
     {
-        [self.appDelegate.postDataController fetchTopPostsWithCollegeId:[self.appDelegate getCurrentCollege].collegeID];
+        [self.appDelegate.postDataController fetchTopPostsWithCollegeId:[self.appDelegate getUsersCurrentCollege].collegeID];
     }
     else if (self.recentPosts)
     {
-        [self.appDelegate.postDataController fetchNewPostsWithCollegeId:[self.appDelegate getCurrentCollege].collegeID];
+        [self.appDelegate.postDataController fetchNewPostsWithCollegeId:[self.appDelegate getUsersCurrentCollege].collegeID];
     }
     else if (self.tagPosts && self.tagMessage != nil)
     {
         [self.appDelegate.postDataController fetchAllPostsWithTagMessage:self.tagMessage
-                                               withCollegeId:[self.appDelegate getCurrentCollege].collegeID];
+                                               withCollegeId:[self.appDelegate getUsersCurrentCollege].collegeID];
     }
 }
 
@@ -189,7 +194,7 @@
 
 - (void)create
 {   // Display popup to let user type a new post
-    College *currentCollege = [self.appDelegate getCurrentCollege];
+    College *currentCollege = [self.appDelegate getUsersCurrentCollege];
     if (currentCollege == nil)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
@@ -212,7 +217,7 @@
 {   // Add new post if user submits on the alert view
     
     if (buttonIndex == 0) return;
-    College *currentCollege = [self.appDelegate getCurrentCollege];
+    College *currentCollege = [self.appDelegate getUsersCurrentCollege];
     if (currentCollege != nil)
     {
         Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]
@@ -240,12 +245,12 @@
     {
         if (self.collegeSegmentControl.numberOfSegments < 3)
         {
-            [self.collegeSegmentControl insertSegmentWithTitle:[self.appDelegate getCurrentCollege].name
+            [self.collegeSegmentControl insertSegmentWithTitle:[self.appDelegate getUsersCurrentCollege].name
                                                        atIndex:2 animated:NO];
         }
         else
         {
-            [self.collegeSegmentControl setTitle:[self.appDelegate getCurrentCollege].name
+            [self.collegeSegmentControl setTitle:[self.appDelegate getUsersCurrentCollege].name
                                forSegmentAtIndex:2];
         }
         

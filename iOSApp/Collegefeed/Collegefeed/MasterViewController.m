@@ -91,7 +91,7 @@
     }
     else if (index == 2) // My current college
     {
-        [self.appDelegate switchedToSpecificCollegeOrNil:[self.appDelegate getCurrentCollege]]; 
+        [self.appDelegate switchedToSpecificCollegeOrNil:[self.appDelegate getUsersCurrentCollege]]; 
     }
     [self refresh];
 }
