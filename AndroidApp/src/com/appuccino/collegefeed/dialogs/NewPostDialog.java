@@ -78,7 +78,7 @@ public class NewPostDialog extends AlertDialog.Builder{
         			TopPostFragment.postList.add(newPost);
         			NewPostFragment.updateList();
         			TopPostFragment.updateList();
-        			new MakePostTask().execute(newPost);
+        			new MakePostTask(context).execute(newPost);
         			dialog.dismiss();
     			}
     			else
