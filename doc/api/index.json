@@ -49,23 +49,8 @@
           "groups": "all"
         },
         {
-          "description": "Get all posts using tag #test from all colleges",
-          "link": "posts/get_all_posts_using_tag_test_from_all_colleges.json",
-          "groups": "all"
-        },
-        {
           "description": "Get all posts using tag #test from college ID 2016",
           "link": "posts/get_all_posts_using_tag_test_from_college_id_.json",
-          "groups": "all"
-        },
-        {
-          "description": "Get page 2 of all posts using tag #test from all colleges",
-          "link": "posts/get_page__of_all_posts_using_tag_test_from_all_colleges.json",
-          "groups": "all"
-        },
-        {
-          "description": "Listing all posts",
-          "link": "posts/listing_all_posts.json",
           "groups": "all"
         },
         {
@@ -74,33 +59,13 @@
           "groups": "all"
         },
         {
-          "description": "Listing all recent posts",
-          "link": "posts/listing_all_recent_posts.json",
-          "groups": "all"
-        },
-        {
           "description": "Listing all recent posts for college ID 2015",
           "link": "posts/listing_all_recent_posts_for_college_id_.json",
           "groups": "all"
         },
         {
-          "description": "Listing all trending posts",
-          "link": "posts/listing_all_trending_posts.json",
-          "groups": "all"
-        },
-        {
           "description": "Listing all trending posts for college ID 2015",
           "link": "posts/listing_all_trending_posts_for_college_id_.json",
-          "groups": "all"
-        }
-      ]
-    },
-    {
-      "name": "Tags",
-      "examples": [
-        {
-          "description": "Get the currently trending tags",
-          "link": "tags/get_the_currently_trending_tags.json",
           "groups": "all"
         }
       ]
