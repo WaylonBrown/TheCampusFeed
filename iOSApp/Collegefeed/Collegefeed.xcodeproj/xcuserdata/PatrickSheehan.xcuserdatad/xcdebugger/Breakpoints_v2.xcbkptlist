@@ -64,16 +64,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Collegefeed/PostsViewController.m"
-            timestampString = "423278669.742211"
+            filePath = "Collegefeed/MasterViewController.m"
+            timestampString = "423448821.572162"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
-            landmarkName = "-viewWillAppear:"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "-selectedCollege:from:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

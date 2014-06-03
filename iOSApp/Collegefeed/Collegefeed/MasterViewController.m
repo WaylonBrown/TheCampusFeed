@@ -81,6 +81,7 @@
     if (index == 0) // all colleges
     {
         [self.appDelegate switchedToSpecificCollegeOrNil:nil];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
     else if (index == 1) // Choose from list of all colleges
     {
@@ -91,7 +92,8 @@
     }
     else if (index == 2) // My current college
     {
-        [self.appDelegate switchedToSpecificCollegeOrNil:[self.appDelegate getUsersCurrentCollege]]; 
+        [self.appDelegate switchedToSpecificCollegeOrNil:[self.appDelegate getUsersCurrentCollege]];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
     [self refresh];
 }
@@ -115,6 +117,14 @@
                    from:(CollegePickerViewController *)sender
 {   // A college was selected in either the segmented college picker or the tab bar controller
     
+    [self.appDelegate switchedToSpecificCollegeOrNil:college];
+    
+    if (sender.topColleges)
+    {
+        [self.tabBarController setSelectedIndex:0];
+    }
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
     if (self.collegeSegmentControl.numberOfSegments < 3)
     {
         [self.collegeSegmentControl insertSegmentWithTitle:college.name
@@ -127,20 +137,6 @@
     }
     
     [self.collegeSegmentControl setSelectedSegmentIndex:2];
-    
-    [self.appDelegate switchedToSpecificCollegeOrNil:college];
-    
-    if (sender.topColleges)
-    {
-        [self.tabBarController setSelectedIndex:0];
-    }
-    if (sender.allColleges)
-    {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    
-    
-    
     
 }
 

@@ -84,6 +84,7 @@
     [self.navigationItem setTitleView:logoTitleView];
     NSMutableArray *toolbarButtons = [self.toolbarItems mutableCopy];
     
+    //TODO: activity indicator
     [toolbarButtons removeAllObjects];
     [toolbarButtons addObject: [[UIActivityIndicatorView alloc] init]];
     [self setToolbarItems:toolbarButtons];
@@ -231,8 +232,7 @@
                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }
-     
-    [self.tableView reloadData];
+    [self refresh];
 }
 - (void)refresh
 {   // refresh this post view
