@@ -82,12 +82,6 @@
 
     [super viewWillAppear:animated];
     [self.navigationItem setTitleView:logoTitleView];
-    NSMutableArray *toolbarButtons = [self.toolbarItems mutableCopy];
-    
-    //TODO: activity indicator
-    [toolbarButtons removeAllObjects];
-    [toolbarButtons addObject: [[UIActivityIndicatorView alloc] init]];
-    [self setToolbarItems:toolbarButtons];
     [self refresh];
 }
 - (void)viewDidLoad
@@ -101,11 +95,11 @@
 {
     [self setCommentViewController:[[CommentViewController alloc]
                                     initWithDelegateId:self.appDelegate]];
-
-    self.navigationItem.rightBarButtonItem =
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-                                                  target:self
-                                                  action:@selector(create)];
+    
+//    self.navigationItem.rightBarButtonItem =
+//    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+//                                                  target:self
+//                                                  action:@selector(create)];
     
     [super loadView];
 
@@ -192,48 +186,47 @@
 }
 
 #pragma mark - Actions
-
-- (void)create
-{   // Display popup to let user type a new post
-    College *currentCollege = [self.appDelegate getUsersCurrentCollege];
-    if (currentCollege == nil)
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:@"You must have a college selected before being able to post"
-                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-    }
-    else
-    {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
-                                                        message:[NSString stringWithFormat:@"Posting to %@", currentCollege.name]
-                                                       delegate:self
-                                              cancelButtonTitle:@"nvm.."
-                                              otherButtonTitles:@"Post dis bitch!", nil];
-        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-        [alert show];
-    }
-}
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{   // Add new post if user submits on the alert view
-    
-    if (buttonIndex == 0) return;
-    College *currentCollege = [self.appDelegate getUsersCurrentCollege];
-    if (currentCollege != nil)
-    {
-        Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]
-                                    withCollegeId:currentCollege.collegeID];
-        [self.appDelegate.postDataController POSTtoServer:newPost
-                                    intoList:self.appDelegate.postDataController.topPostsAllColleges];
-    }
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"A college must be selected to post to"
-                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-    }
-    [self refresh];
-}
+//- (void)create
+//{   // Display popup to let user type a new post
+//    College *currentCollege = [self.appDelegate getUsersCurrentCollege];
+//    if (currentCollege == nil)
+//    {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+//                                                        message:@"You must have a college selected before being able to post"
+//                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        [alert show];
+//    }
+//    else
+//    {
+//        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
+//                                                        message:[NSString stringWithFormat:@"Posting to %@", currentCollege.name]
+//                                                       delegate:self
+//                                              cancelButtonTitle:@"nvm.."
+//                                              otherButtonTitles:@"Post dis bitch!", nil];
+//        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+//        [alert show];
+//    }
+//}
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{   // Add new post if user submits on the alert view
+//    
+//    if (buttonIndex == 0) return;
+//    College *currentCollege = [self.appDelegate getUsersCurrentCollege];
+//    if (currentCollege != nil)
+//    {
+//        Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]
+//                                        withCollegeId:currentCollege.collegeID];
+//        [self.appDelegate.postDataController POSTtoServer:newPost
+//                                                 intoList:self.appDelegate.postDataController.topPostsAllColleges];
+//    }
+//    else
+//    {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"A college must be selected to post to"
+//                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        [alert show];
+//    }
+//    [self refresh];
+//}
 - (void)refresh
 {   // refresh this post view
     if ([self.appDelegate getIsAllColleges])

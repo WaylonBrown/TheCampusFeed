@@ -21,7 +21,6 @@
 
 @property (strong, nonatomic) UIWindow                *window;
 @property (strong, nonatomic) UITabBarController      *tabBarController;
-//@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 
 @property (strong, nonatomic) PostDataController    *postDataController;
 @property (strong, nonatomic) CommentDataController *commentDataController;

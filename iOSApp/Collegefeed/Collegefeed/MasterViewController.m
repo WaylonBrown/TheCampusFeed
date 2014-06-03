@@ -9,9 +9,8 @@
 #import "MasterViewController.h"
 #import "CommentViewController.h"
 #import "CollegePickerViewController.h"
-
 #import "TableCell.h"
-
+#import "Post.h"
 #import "DataController.h"
 #import "PostDataController.h"
 #import "CollegeDataController.h"
@@ -19,12 +18,11 @@
 #import "VoteDataController.h"
 #import "Shared.h"
 #import "AppDelegate.h"
-
 #import "College.h"
 
 @implementation MasterViewController
 
-#pragma mark - Initialization
+#pragma mark - Initialization and View Loading
 
 - (id)initWithDelegateId:(id<MasterViewDelegate>)delegate
 {
@@ -44,8 +42,32 @@
 }
 - (void)loadView
 {   // called when this view is initially loaded
-    [super loadView];
+    
+    // place logo at the top of the navigation bar
     [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
+    
+    // initialize a loading indicator and place it in top right corner
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    [self placeLoadingIndicator];
+    
+    [super loadView];
+}
+- (void)placeLoadingIndicator
+{   // Place the loading indicator in the navigation bar (instead of create post button)
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
+    
+    [self.navigationItem setRightBarButtonItem:button];
+    [self.activityIndicator startAnimating];
+    [self refresh];
+}
+- (void)placeCreatePost
+{   // Place the create post button in the navigation bar (instead of loading indicator)
+
+    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                                                                                           target:self action:@selector(create)]];
+    
+    [self.activityIndicator stopAnimating];
+    [self refresh];
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
@@ -97,12 +119,55 @@
     }
     [self refresh];
 }
+
 - (void)create
-{
-    
+{   // Display popup to let user type a new post
+    College *currentCollege = [self.appDelegate getUsersCurrentCollege];
+    if (currentCollege == nil)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"You must have a college selected before being able to post"
+                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    else
+    {
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
+                                                        message:[NSString stringWithFormat:@"Posting to %@", currentCollege.name]
+                                                       delegate:self
+                                              cancelButtonTitle:@"nvm.."
+                                              otherButtonTitles:@"Post dis bitch!", nil];
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        [alert show];
+    }
 }
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{   // Add new post if user submits on the alert view
+    
+    if (buttonIndex == 0)
+    {
+        return;
+    }
+    College *currentCollege = [self.appDelegate getUsersCurrentCollege];
+    if (currentCollege != nil)
+    {
+        Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]
+                                        withCollegeId:currentCollege.collegeID];
+        [self.appDelegate.postDataController POSTtoServer:newPost
+                                                 intoList:self.appDelegate.postDataController.topPostsAllColleges];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"A college must be selected to post to"
+                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    [self refresh];
+}
+
 - (void)refresh
 {   // refresh the current view
+
     [self.tableView reloadData];
 }
 

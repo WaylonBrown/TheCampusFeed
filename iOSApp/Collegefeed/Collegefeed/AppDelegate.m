@@ -21,7 +21,6 @@
 {   // Set up ViewControllers and DataControllers
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//    self.activityIndicator = [[UIActivityIndicatorView alloc] init];
     [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:cf_lightblue]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
@@ -50,10 +49,10 @@
     // *** Trending Tags - TagViewController *** //
     TagViewController *tagController = [[TagViewController alloc] initWithDelegateId:self];
     UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:tagController];
-    tagController.navigationItem.rightBarButtonItem =
-            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-                                                          target:topPostsController
-                                                          action:@selector(create)];
+//    tagController.navigationItem.rightBarButtonItem =
+//            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+//                                                          target:topPostsController
+//                                                          action:@selector(create)];
     // *************************************** //
     
     
@@ -64,10 +63,10 @@
 
     UINavigationController *collegeNavController =
             [[UINavigationController alloc] initWithRootViewController:collegeController];
-    collegeController.navigationItem.rightBarButtonItem =
-            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-                                                          target:topPostsController
-                                                          action:@selector(create)];
+//    collegeController.navigationItem.rightBarButtonItem =
+//            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+//                                                          target:topPostsController
+//                                                          action:@selector(create)];
     // *************************************** //
 
     

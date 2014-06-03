@@ -18,11 +18,16 @@
 
 // outlet properties connected to the view
 @property (weak, nonatomic) IBOutlet UISegmentedControl *collegeSegmentControl;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem    *createButton;
 @property (weak, nonatomic) IBOutlet UITableView        *tableView;
+
+//@property (strong, nonatomic) UIBarButtonItem           *createButton;
+@property (strong, nonatomic) UIActivityIndicatorView   *activityIndicator;
 
 // Initialization
 - (id)initWithDelegateId:(id<MasterViewDelegate>)delegate;
+
+- (void)placeLoadingIndicator;
+- (void)placeCreatePost;
 
 // Actions
 - (IBAction)changeFeed;
