@@ -1,4 +1,4 @@
-package com.appuccino.collegefeed.extra;
+package com.appuccino.collegefeed.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,13 +23,12 @@ import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
-import com.appuccino.collegefeed.utils.JSONParser;
 
 public class NetWorker {
 	
-	public static String serverUrl = "http://cfeed.herokuapp.com/api/";
-	public static String apiVersion = "v1/";
-	public static String requestUrl = serverUrl + apiVersion;
+	public final static String SERVER_URL = "http://cfeed.herokuapp.com/api/";
+	public final static String API_VERSION = "v1/";
+	public final static String REQUEST_URL = SERVER_URL + API_VERSION;
 	
 	public static HttpClient client = new DefaultHttpClient();
 	
@@ -65,7 +64,7 @@ public class NetWorker {
 
 		@Override
 		protected ArrayList<Post> doInBackground(PostSelector... arg0) {
-			HttpGet request = new HttpGet(requestUrl + "posts");
+			HttpGet request = new HttpGet(REQUEST_URL + "posts");
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String response = null;
 			try {
@@ -142,7 +141,7 @@ public class NetWorker {
 		protected Boolean doInBackground(Post... posts) {
 			try{
 
-				HttpPost request = new HttpPost(requestUrl + "posts");
+				HttpPost request = new HttpPost(REQUEST_URL + "/colleges/" + posts[0].getCollegeID() + "/posts");
 				request.setHeader("Content-Type", "application/json");
 				request.setEntity(new ByteArrayEntity(posts[0].toJSONString().toByteArray()));
 				ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -174,7 +173,7 @@ public class NetWorker {
 		public Boolean doInBackground(Vote... votes){
 			try{
 
-				HttpGet request = new HttpGet(requestUrl + "votes");
+				HttpGet request = new HttpGet(REQUEST_URL + "votes");
 				//request.setEntity(new ByteArrayEntity(
 				  //  votes[0].toString().getBytes("UTF8")));
 				ResponseHandler<String> responseHandler = new BasicResponseHandler();
