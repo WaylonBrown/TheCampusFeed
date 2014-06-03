@@ -26,8 +26,8 @@
       "request_content_type": "application/json",
       "response_status": 201,
       "response_status_text": "Created",
-      "response_body": "{\"id\":833,\"text\":\"This is my comment on post id 1\",\"score\":null,\"post_id\":1,\"created_at\":\"2014-06-01T20:32:49.107Z\",\"updated_at\":\"2014-06-01T20:32:49.107Z\"}",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/comments/833","Content-Type":"application/json; charset=utf-8","ETag":"\"98620db0915a681ce4242e0bb0f1ad53\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"1736030d-bba4-4fe6-a982-45a13f30a1d6","X-Runtime":"0.025610","Content-Length":"156"},
+      "response_body": "{\"id\":883,\"text\":\"This is my comment on post id 1\",\"score\":null,\"post_id\":1,\"created_at\":\"2014-06-02T04:45:59.714Z\",\"updated_at\":\"2014-06-02T04:45:59.714Z\"}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/comments/883","Content-Type":"application/json; charset=utf-8","ETag":"\"23e561cf875ba3a7e34f8163730012ed\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"0b204f45-ae1b-45aa-806b-23f972754643","X-Runtime":"0.019618","Content-Length":"156"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }
