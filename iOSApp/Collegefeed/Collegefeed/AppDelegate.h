@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
 #import "PostDataController.h"
 #import "CommentDataController.h"
@@ -17,7 +18,7 @@
 
 @class College;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, MasterViewDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, MasterViewDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) UIWindow                *window;
 @property (strong, nonatomic) UITabBarController      *tabBarController;
@@ -29,6 +30,11 @@
 @property (strong, nonatomic) TagDataController     *tagDataController;
 
 @property (strong, nonatomic) College *currentCollege;
+
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (nonatomic) CLLocationDegrees         lat;
+@property (nonatomic) CLLocationDegrees         lon;
+
 @property (nonatomic) BOOL allColleges;
 @property (nonatomic) BOOL specificCollege;
 

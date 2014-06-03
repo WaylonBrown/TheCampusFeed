@@ -20,6 +20,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {   // Set up ViewControllers and DataControllers
 
+    // ***SIMULATE YOUR LOCATION***
+    
+    [self setLocationManager:[[CLLocationManager alloc] init]];
+    [self.locationManager setDelegate:self];
+    //        [self.locationManager setDistanceFilter:locationDistanceFilter];
+    //        [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+    [self.locationManager startUpdatingLocation];
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:cf_lightblue]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
@@ -49,10 +58,6 @@
     // *** Trending Tags - TagViewController *** //
     TagViewController *tagController = [[TagViewController alloc] initWithDelegateId:self];
     UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:tagController];
-//    tagController.navigationItem.rightBarButtonItem =
-//            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-//                                                          target:topPostsController
-//                                                          action:@selector(create)];
     // *************************************** //
     
     
@@ -60,13 +65,8 @@
     CollegePickerViewController *collegeController = [[CollegePickerViewController alloc] initAsTopColleges];
     [collegeController setCollegesList:self.collegeDataController.list];
     [collegeController setDelegate:topPostsController];
-
     UINavigationController *collegeNavController =
             [[UINavigationController alloc] initWithRootViewController:collegeController];
-//    collegeController.navigationItem.rightBarButtonItem =
-//            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-//                                                          target:topPostsController
-//                                                          action:@selector(create)];
     // *************************************** //
 
     
@@ -142,5 +142,16 @@
 - (BOOL)getIsSpecificCollege
 {
     return self.specificCollege;
+}
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    [self setLat:self.locationManager.location.coordinate.latitude];
+    [self setLon:self.locationManager.location.coordinate.longitude];
+    [self.locationManager stopUpdatingLocation];
+    NSLog(@"updated");
+}
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"Failed");
 }
 @end

@@ -11,22 +11,12 @@
 
 @implementation DataController
 
-static int locationDistanceFilter = 150000; // 15km
-
 - (id)init
 {
     self = [super init];
     if (self)
     {
         [self setList:[[NSMutableArray alloc] init]];
-        
-        [self setLocationManager:[[CLLocationManager alloc] init]];
-        [self.locationManager setDistanceFilter:locationDistanceFilter];
-        [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
-        [self.locationManager startUpdatingLocation];
-        
-        [self setLat:self.locationManager.location.coordinate.latitude];
-        [self setLon:self.locationManager.location.coordinate.longitude];
     }
     return self;
 }
