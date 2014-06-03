@@ -39,10 +39,18 @@ gem 'versioncake'
 gem 'kaminari'
 gem 'api-pagination'
 
-gem 'font-awesome-rails'
 
 gem 'oauth-plugin'
 gem 'image_suckr'
+
+#webapp gems
+gem 'bootstrap-sass'
+gem 'angularjs-rails'
+gem 'angular-ui-bootstrap-rails'
+gem 'font-awesome-rails'
+
+
+
 
 
 gem 'rails_12factor'
