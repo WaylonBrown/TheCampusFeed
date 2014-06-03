@@ -44,11 +44,10 @@
 - (void)testPostDataControllerGetAllPostsFromServer
 {
     // Assemble
-    self.PDC = [[PostDataController alloc] initWithNetwork:YES];
+    self.PDC = [[PostDataController alloc] init];
     
     // Act
-    [self.PDC fetchWithUrl:postsUrl
-                  intoList:self.PDC.topPostsAllColleges];
+    [self.PDC fetchTopPosts];
     
     // Assert
     XCTAssertNotEqual(0, self.PDC.topPostsAllColleges.count, @"No posts gathered during GET request");
@@ -57,8 +56,9 @@
 - (void)testPostDataControllerAddPostToServer
 {
     // Assemble
-    Post *post = [[Post alloc] initWithMessage:@"Test post from testPostDataControllerAddPostToServer"];
-    self.PDC = [[PostDataController alloc] initWithNetwork:YES];
+    Post *post = [[Post alloc] initWithMessage:@"Test post from testPostDataControllerAddPostToServer"
+                                 withCollegeId:1];
+    self.PDC = [[PostDataController alloc] init];
     
     // Act
     [self.PDC POSTtoServer:post
@@ -89,9 +89,10 @@
 - (void)testCommentDataControllerAddCommentToServer
 {
     // Assemble
-    Post *post = [[Post alloc] initWithMessage:@"Test post from testCommentDataControllerAddCommentToServer"];
-    self.PDC = [[PostDataController alloc] initWithNetwork:YES];
-    self.CDC = [[CommentDataController alloc] initWithNetwork:YES];
+    Post *post = [[Post alloc] initWithMessage:@"Test post from testCommentDataControllerAddCommentToServer"
+                                 withCollegeId:1];
+    self.PDC = [[PostDataController alloc] init];
+    self.CDC = [[CommentDataController alloc] init];
 
     // Act
     [self.PDC POSTtoServer:post
@@ -109,7 +110,7 @@
 - (void)testCommentDataControllerCommentsHaveSamePost
 {
     // Assemble
-    [self.CDC initializeDefaultList];
+    self.CDC = [[CommentDataController alloc] init];;
     NSString* postMessage;
     
     // Act

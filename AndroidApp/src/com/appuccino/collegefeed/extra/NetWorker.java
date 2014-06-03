@@ -12,8 +12,10 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.appuccino.collegefeed.fragments.MyCommentsFragment;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
@@ -130,6 +132,12 @@ public class NetWorker {
 	
 	public static class MakePostTask extends AsyncTask<Post, Void, Boolean>{
 
+		Context c;
+		
+		public MakePostTask(Context context) {
+			c = context;
+		}
+
 		@Override
 		protected Boolean doInBackground(Post... posts) {
 			try{
@@ -140,7 +148,7 @@ public class NetWorker {
 				ResponseHandler<String> responseHandler = new BasicResponseHandler();
 				String response = client.execute(request, responseHandler);
 				
-				Log.d("http", response);
+				Log.d("cfeed", "Server response: " + response);
 				return true;
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
@@ -155,7 +163,8 @@ public class NetWorker {
 
 		@Override
 		protected void onPostExecute(Boolean result) {
-			// TODO Auto-generated method stub
+			if(!result)
+				Toast.makeText(c, "Failed to post.", Toast.LENGTH_LONG).show();
 			super.onPostExecute(result);
 		}
 		

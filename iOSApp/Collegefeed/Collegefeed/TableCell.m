@@ -79,10 +79,9 @@
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
 {
     NSString* tagMessage = [url absoluteString];
-    NSLog(@"tag = %@", tagMessage);
     MasterViewController *mvc = (MasterViewController*)self.delegate;
-    PostsViewController* controller = [[PostsViewController alloc] initAsTagPostsWithDelegateId:mvc.appDelegate
-                                                                                 withTagMessage:tagMessage];
+    PostsViewController* controller = [[PostsViewController alloc] initAsTagPostsWithAppData:mvc.appData
+                                                                              withTagMessage:tagMessage];
     [mvc.navigationController pushViewController:controller
                                         animated:YES];
 }

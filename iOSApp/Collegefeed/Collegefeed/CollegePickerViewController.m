@@ -94,7 +94,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
     {
         college = (College *)[self.list objectAtIndex:indexPath.row];
     }
-    
+
     [self.delegate selectedCollege:college from:self];
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 

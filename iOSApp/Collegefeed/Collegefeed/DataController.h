@@ -7,16 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreLocation/CoreLocation.h>
  
 @class Votable;
 
 @interface DataController : NSObject
 
-@property (nonatomic, strong) NSMutableArray    *list;
-@property (strong, nonatomic) CLLocationManager *locationManager;
-@property (nonatomic) CLLocationDegrees         lat;
-@property (nonatomic) CLLocationDegrees         lon;
+@property (nonatomic, strong) NSMutableArray *list;
 
 // Initializations
 - (id)init;

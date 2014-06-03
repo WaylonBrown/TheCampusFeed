@@ -48,7 +48,6 @@
         [array addObject:newPost];
     }
 }
-
 - (void)fetchTopPosts
 {
     [self setTopPostsAllColleges:[[NSMutableArray alloc] init]];

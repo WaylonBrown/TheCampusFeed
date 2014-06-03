@@ -74,7 +74,7 @@
     [self setList:self.allTagsInCollege];
 
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notice"
-                                                    message:@"Cannot currently fetch all tags for specific college. Using all tags instead"
+                                                    message:@"Cannot currently fetch tags for specific college. Showing all tags instead"
                                                    delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alert show];
 

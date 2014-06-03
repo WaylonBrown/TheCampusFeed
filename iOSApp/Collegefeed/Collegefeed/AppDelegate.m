@@ -20,55 +20,40 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {   // Set up ViewControllers and DataControllers
 
+    // ***SIMULATE YOUR LOCATION***
+    
+    self.appData = [[AppData alloc] init];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:cf_lightblue]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [self setDeviceId:[[[UIDevice currentDevice] identifierForVendor] UUIDString]];
-    [self displayDeviceId];
-    
-#pragma mark - Data Controller Initializations - start collecting network data
-    
-    [self setPostDataController:    [[PostDataController alloc]     init]];
-    [self setCommentDataController: [[CommentDataController alloc]  init]];
-    [self setVoteDataController:    [[VoteDataController alloc]     init]];
-    [self setCollegeDataController: [[CollegeDataController alloc]  init]];
-    [self setTagDataController:     [[TagDataController alloc]      init]];
     
 #pragma mark - Create ViewControllers
     
     // *** Top Posts - PostsViewController *** //
-    PostsViewController *topPostsController = [[PostsViewController alloc] initAsTopPostsWithDelegateId:self];
+    PostsViewController *topPostsController = [[PostsViewController alloc] initAsTopPostsWithAppData:self.appData];
     UINavigationController *topPostsNavController = [[UINavigationController alloc] initWithRootViewController:topPostsController];
     // *************************************** //
     
     
     // *** New Posts - PostsViewController *** //
-    PostsViewController *newPostsController = [[PostsViewController alloc] initAsNewPostsWithDelegateId:self];
+    PostsViewController *newPostsController = [[PostsViewController alloc] initAsNewPostsWithAppData:self.appData];
     UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:newPostsController];
     // *************************************** //
     
     
     // *** Trending Tags - TagViewController *** //
-    TagViewController *tagController = [[TagViewController alloc] initWithDelegateId:self];
+    TagViewController *tagController = [[TagViewController alloc] initWithAppData:self.appData];
     UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:tagController];
-    tagController.navigationItem.rightBarButtonItem =
-            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-                                                          target:topPostsController
-                                                          action:@selector(create)];
     // *************************************** //
     
     
     // *** Top Colleges - CollegePickerViewController *** //
     CollegePickerViewController *collegeController = [[CollegePickerViewController alloc] initAsTopColleges];
-    [collegeController setCollegesList:self.collegeDataController.list];
+    [collegeController setCollegesList:self.appData.collegeDataController.list];
     [collegeController setDelegate:topPostsController];
-
     UINavigationController *collegeNavController =
             [[UINavigationController alloc] initWithRootViewController:collegeController];
-    collegeController.navigationItem.rightBarButtonItem =
-            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-                                                          target:topPostsController
-                                                          action:@selector(create)];
     // *************************************** //
 
     
@@ -119,41 +104,4 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (void)switchedToSpecificCollegeOrNil:(College *)college
-{
-    if (college == nil)
-    {
-        [self setAllColleges:YES];
-        [self setSpecificCollege:NO];
-    }
-    else
-    {
-        [self setCurrentCollege:college];
-        [self setAllColleges:NO];
-        [self setSpecificCollege:YES];
-    }
-}
-- (College*)getCurrentCollege
-{
-    return self.currentCollege;
-}
-- (BOOL)getIsAllColleges
-{
-    return self.allColleges;
-}
-- (BOOL)getIsSpecificCollege
-{
-    return self.specificCollege;
-}
-- (void)displayDeviceId
-{
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Device ID"
-                                                    message:self.deviceId
-                                                   delegate:self
-                                          cancelButtonTitle:@"Dirty"
-                                          otherButtonTitles:@"Butthole", nil];
-    
-    [alert show];
-
-}
 @end
