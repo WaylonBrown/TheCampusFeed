@@ -22,17 +22,18 @@
 
 app = angular.module('cfeed', ["ui.bootstrap"])
 
-function SectionAccordion($scope, $http) {
-  $scope.oneAtATime = false;
-  $http.get('api/v1/posts')
-   .then(function(res){
-     console.log(res.data)
-      $scope.posts = res.data
-    });
+app.controller('SectionAccordion', ['$scope', '$http', function($scope, $http) {
+    $scope.oneAtATime = false;
+    $http.get('api/v1/posts')
+     .then(function(res){
+       console.log(res.data)
+        $scope.posts = res.data
+      });
 
-  $scope.status = {
-    isFirstOpen: true,
-    isFirstDisabled: false
-  };
+    $scope.status = {
+      isFirstOpen: true,
+      isFirstDisabled: false
+    };
 
-}
+  }]
+);
