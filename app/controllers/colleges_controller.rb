@@ -5,8 +5,7 @@ class CollegesController < ApplicationController
 
   def image
     suckr = ImageSuckr::GoogleSuckr.new
-    send_file suckr.get_image_file({"q" => @college.name + " logo", "as_filetype" => 'png'}),
-      type: 'image/png', disposition: 'inline'
+    render json: suckr.get_image_url({"q" => @college.name + " logo", "as_filetype" => 'png'})
   end
 
   # GET /colleges

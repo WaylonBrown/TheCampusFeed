@@ -1,14 +1,32 @@
 Postfeed::Application.routes.draw do
 
 
-  resources :users
-
+=begin
     scope '/api/v1', defaults: {format: :json} do
-
+      shallow do
+        get '/colleges/:id/image' => 'colleges#image'
+        resources :colleges do
+          get '/posts/byTag/:tagText' => 'posts#byTag'
+          get '/posts/recent' => 'posts#recent'
+          get '/posts/trending' => 'posts#trending'
+          resource :posts do
+            resources :comments do
+              get 'votes/score' => 'votes#score'
+              resources :votes do
+              end
+            end
+          end
+          get '/tags/trending' => 'tags#trending'
+          resources :tags
+        end
+      end
+    end
+=end
+    scope '/api/v1', defaults: {format: :json}, shallow_path: '/api/v1' do
       #get '/colleges/listNearby' => 'colleges#listNearby'
       #get '/colleges/:id/within' => 'colleges#within'
       get '/colleges/:id/image' => 'colleges#image'
-      resources :colleges, only: [:index] do
+      resources :colleges, only: [:index], shallow: true do
 
         get '/posts/byTag/:tagText' => 'posts#byTag'
         get '/posts/recent' => 'posts#recent'
@@ -26,12 +44,7 @@ Postfeed::Application.routes.draw do
         resources :tags
       end
 
-
-
-
       resources :comments, only: [:show]
-
-
 
       get '/posts/byTag/:tagText' => 'posts#byTag'
       get '/posts/recent' => 'posts#recent'
@@ -46,10 +59,53 @@ Postfeed::Application.routes.draw do
       end
 
       get '/tags/trending' => 'tags#trending'
-      resources :tags
+
+#====================== PLANNED USER ROUTES BELOW ====================
+
+      resources :users do
+        #get '/colleges/listNearby' => 'colleges#listNearby'
+        #get '/colleges/:id/within' => 'colleges#within'
+        get '/colleges/:id/image' => 'colleges#image'
+        resources :colleges, only: [:index] do
+
+          get '/posts/byTag/:tagText' => 'posts#byTag'
+          get '/posts/recent' => 'posts#recent'
+          get '/posts/trending' => 'posts#trending'
+          resources :posts do
+            resources :comments, except: [:show] do
+              get 'votes/score' => 'votes#score'
+              resources :votes, only: [:create]
+            end
+            get 'votes/score' => 'votes#score'
+            resources :votes
+          end
+
+          get '/tags/trending' => 'tags#trending'
+          resources :tags
+        end
+
+        resources :comments, only: [:show]
+
+        get '/posts/byTag/:tagText' => 'posts#byTag'
+        get '/posts/recent' => 'posts#recent'
+        get '/posts/trending' => 'posts#trending'
+        resources :posts do
+          resources :comments, except: [:show] do
+            get 'votes/score' => 'votes#score'
+            resources :votes, only: [:create]
+          end
+          get 'votes/score' => 'votes#score'
+          resources :votes
+        end
+
+        get '/tags/trending' => 'tags#trending'
+        resources :tags
+      end
     end
 
     root to: 'static_pages#index'
+
+    get '/admin' => 'static_pages#admin'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
