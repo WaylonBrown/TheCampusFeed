@@ -22,48 +22,35 @@
 
     // ***SIMULATE YOUR LOCATION***
     
-    [self setLocationManager:[[CLLocationManager alloc] init]];
-    [self.locationManager setDelegate:self];
-    //        [self.locationManager setDistanceFilter:locationDistanceFilter];
-    //        [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
-    [self.locationManager startUpdatingLocation];
-    
+    self.appData = [[AppData alloc] init];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:cf_lightblue]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
-#pragma mark - Data Controller Initializations - start collecting network data
-    
-    [self setPostDataController:    [[PostDataController alloc]     init]];
-    [self setCommentDataController: [[CommentDataController alloc]  init]];
-    [self setVoteDataController:    [[VoteDataController alloc]     init]];
-    [self setCollegeDataController: [[CollegeDataController alloc]  init]];
-    [self setTagDataController:     [[TagDataController alloc]      init]];
-    
 #pragma mark - Create ViewControllers
     
     // *** Top Posts - PostsViewController *** //
-    PostsViewController *topPostsController = [[PostsViewController alloc] initAsTopPostsWithDelegateId:self];
+    PostsViewController *topPostsController = [[PostsViewController alloc] initAsTopPostsWithAppData:self.appData];
     UINavigationController *topPostsNavController = [[UINavigationController alloc] initWithRootViewController:topPostsController];
     // *************************************** //
     
     
     // *** New Posts - PostsViewController *** //
-    PostsViewController *newPostsController = [[PostsViewController alloc] initAsNewPostsWithDelegateId:self];
+    PostsViewController *newPostsController = [[PostsViewController alloc] initAsNewPostsWithAppData:self.appData];
     UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:newPostsController];
     // *************************************** //
     
     
     // *** Trending Tags - TagViewController *** //
-    TagViewController *tagController = [[TagViewController alloc] initWithDelegateId:self];
+    TagViewController *tagController = [[TagViewController alloc] initWithAppData:self.appData];
     UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:tagController];
     // *************************************** //
     
     
     // *** Top Colleges - CollegePickerViewController *** //
     CollegePickerViewController *collegeController = [[CollegePickerViewController alloc] initAsTopColleges];
-    [collegeController setCollegesList:self.collegeDataController.list];
+    [collegeController setCollegesList:self.appData.collegeDataController.list];
     [collegeController setDelegate:topPostsController];
     UINavigationController *collegeNavController =
             [[UINavigationController alloc] initWithRootViewController:collegeController];
@@ -117,41 +104,4 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (void)switchedToSpecificCollegeOrNil:(College *)college
-{
-    if (college == nil)
-    {
-        [self setAllColleges:YES];
-        [self setSpecificCollege:NO];
-    }
-    else
-    {
-        [self setCurrentCollege:college];
-        [self setAllColleges:NO];
-        [self setSpecificCollege:YES];
-    }
-}
-- (College*)getUsersCurrentCollege
-{
-    return self.currentCollege;
-}
-- (BOOL)getIsAllColleges
-{
-    return self.allColleges;
-}
-- (BOOL)getIsSpecificCollege
-{
-    return self.specificCollege;
-}
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
-    [self setLat:self.locationManager.location.coordinate.latitude];
-    [self setLon:self.locationManager.location.coordinate.longitude];
-    [self.locationManager stopUpdatingLocation];
-    NSLog(@"updated");
-}
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    NSLog(@"Failed");
-}
 @end

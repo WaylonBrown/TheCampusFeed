@@ -24,12 +24,12 @@
 
 #pragma mark - Initialization and View Loading
 
-- (id)initWithDelegateId:(id<MasterViewDelegate>)delegate
+- (id)initWithAppData:(AppData *)data
 {
     self = [super initWithNibName:@"MasterView" bundle:nil];
     if (self)
     {
-        [self setAppDelegate:delegate];
+        [self setAppData:data];
         
         UIFont *font = [UIFont boldSystemFontOfSize:8.0f];
         NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
@@ -73,11 +73,11 @@
 {   // View is about to appear after being inactive
     [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
 
-    if ([self.appDelegate getIsAllColleges] == YES)
+    if (self.appData.allColleges == YES)
     {
         [self.collegeSegmentControl setSelectedSegmentIndex:0];
     }
-    else if ([self.appDelegate getIsSpecificCollege] == NO)
+    else if (self.appData.specificCollege == NO)
     {
         [self.collegeSegmentControl setSelectedSegmentIndex:2];
     }
@@ -102,19 +102,19 @@
     NSInteger index = [self.collegeSegmentControl selectedSegmentIndex];
     if (index == 0) // all colleges
     {
-        [self.appDelegate switchedToSpecificCollegeOrNil:nil];
+        [self.appData switchedToSpecificCollegeOrNil:nil];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
     else if (index == 1) // Choose from list of all colleges
     {
         CollegePickerViewController *controller = [[CollegePickerViewController alloc] initAsAllColleges];
-        [controller setCollegesList:self.appDelegate.collegeDataController.list];
+        [controller setCollegesList:self.appData.collegeDataController.list];
         [controller setDelegate:self];
         [self.navigationController pushViewController:controller animated:YES];
     }
     else if (index == 2) // My current college
     {
-        [self.appDelegate switchedToSpecificCollegeOrNil:[self.appDelegate getUsersCurrentCollege]];
+        [self.appData switchedToSpecificCollegeOrNil:self.appData.currentCollege];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
     [self refresh];
@@ -122,7 +122,7 @@
 
 - (void)create
 {   // Display popup to let user type a new post
-    College *currentCollege = [self.appDelegate getUsersCurrentCollege];
+    College *currentCollege = self.appData.currentCollege;
     if (currentCollege == nil)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
@@ -148,13 +148,13 @@
     {
         return;
     }
-    College *currentCollege = [self.appDelegate getUsersCurrentCollege];
+    College *currentCollege = self.appData.currentCollege;
     if (currentCollege != nil)
     {
         Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]
                                         withCollegeId:currentCollege.collegeID];
-        [self.appDelegate.postDataController POSTtoServer:newPost
-                                                 intoList:self.appDelegate.postDataController.topPostsAllColleges];
+        [self.appData.postDataController POSTtoServer:newPost
+                                             intoList:self.appData.postDataController.topPostsAllColleges];
     }
     else
     {
@@ -175,14 +175,14 @@
 
 - (void)castVote:(Vote *)vote
 {   // vote was cast in a table cell
-    [self.appDelegate.voteDataController POSTtoServer:vote
-                                intoList:self.appDelegate.voteDataController.list];
+    [self.appData.voteDataController POSTtoServer:vote
+                                         intoList:self.appData.voteDataController.list];
 }
 - (void)selectedCollege:(College *)college
                    from:(CollegePickerViewController *)sender
 {   // A college was selected in either the segmented college picker or the tab bar controller
     
-    [self.appDelegate switchedToSpecificCollegeOrNil:college];
+    [self.appData switchedToSpecificCollegeOrNil:college];
     
     if (sender.topColleges)
     {

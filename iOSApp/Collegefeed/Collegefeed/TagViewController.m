@@ -29,9 +29,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Post view of all posts with the selected tag
-    self.selectedTag = (Tag *)[self.appDelegate.tagDataController objectInListAtIndex:indexPath.row];
-    PostsViewController* controller = [[PostsViewController alloc] initAsTagPostsWithDelegateId:self.appDelegate
-                                                                                 withTagMessage:self.selectedTag.name];
+    self.selectedTag = (Tag *)[self.appData.tagDataController objectInListAtIndex:indexPath.row];
+    PostsViewController* controller = [[PostsViewController alloc] initAsTagPostsWithAppData:self.appData
+                                                                              withTagMessage:self.selectedTag.name];
     
     
     [self.navigationController pushViewController:controller
@@ -43,7 +43,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
     
-    return [self.appDelegate.tagDataController countOfList];
+    return [self.appData.tagDataController countOfList];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
@@ -58,7 +58,7 @@
     }
     
     // get the post and display in this cell
-    Tag *tagAtIndex = (Tag*)[self.appDelegate.tagDataController objectInListAtIndex:indexPath.row];
+    Tag *tagAtIndex = (Tag*)[self.appData.tagDataController objectInListAtIndex:indexPath.row];
     [cell.textLabel setText:tagAtIndex.name];
     
     return cell;
@@ -68,26 +68,26 @@
 
 - (void)refresh
 {   // refresh this tag view
-    if ([self.appDelegate getIsAllColleges])
+    if (self.appData.allColleges)
     {
         [self.collegeSegmentControl setSelectedSegmentIndex:0];
-        [self.appDelegate.tagDataController fetchAllTags];
+        [self.appData.tagDataController fetchAllTags];
     }
-    else if ([self.appDelegate getIsSpecificCollege])
+    else if (self.appData.specificCollege)
     {
         if (self.collegeSegmentControl.numberOfSegments < 3)
         {
-            [self.collegeSegmentControl insertSegmentWithTitle:[self.appDelegate getUsersCurrentCollege].name
+            [self.collegeSegmentControl insertSegmentWithTitle:self.appData.currentCollege.name
                                                        atIndex:2 animated:NO];
         }
         else
         {
-            [self.collegeSegmentControl setTitle:[self.appDelegate getUsersCurrentCollege].name
+            [self.collegeSegmentControl setTitle:self.appData.currentCollege.name
                                forSegmentAtIndex:2];
         }
         
         [self.collegeSegmentControl setSelectedSegmentIndex:2];
-        [self.appDelegate.tagDataController fetchAllTagsWithCollegeId:[self.appDelegate getUsersCurrentCollege].collegeID];
+        [self.appData.tagDataController fetchAllTagsWithCollegeId:self.appData.currentCollege.collegeID];
     }
     [super refresh];
 }

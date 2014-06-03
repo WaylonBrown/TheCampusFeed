@@ -1,12 +1,12 @@
 //
-//  AppDelegate.h
+//  AppData.h
 //  Collegefeed
 //
-//  Created by Patrick Sheehan on 5/1/14.
+//  Created by Patrick Sheehan on 6/2/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
 #import "PostDataController.h"
@@ -16,12 +16,7 @@
 #import "TagDataController.h"
 #import "MasterViewController.h"
 
-@class College;
-
-@interface AppDelegate : UIResponder <UIApplicationDelegate, MasterViewDelegate, CLLocationManagerDelegate>
-
-@property (strong, nonatomic) UIWindow                *window;
-@property (strong, nonatomic) UITabBarController      *tabBarController;
+@interface AppData : NSObject<CLLocationManagerDelegate>
 
 @property (strong, nonatomic) PostDataController    *postDataController;
 @property (strong, nonatomic) CommentDataController *commentDataController;
@@ -38,9 +33,7 @@
 @property (nonatomic) BOOL allColleges;
 @property (nonatomic) BOOL specificCollege;
 
+
 - (void)switchedToSpecificCollegeOrNil:(College *)college;
-- (College*)getUsersCurrentCollege;
-- (BOOL)getIsAllColleges;
-- (BOOL)getIsSpecificCollege;
 
 @end

@@ -9,12 +9,11 @@
 #import <UIKit/UIKit.h>
 
 #import "ChildCellDelegate.h"
-#import "MasterViewDelegate.h"
+#import "AppData.h"
 
 @interface MasterViewController : UIViewController <ChildCellDelegate>
 
-// delegate to allow all subclass ViewControllers to access the shared objects in AppDelegate.h (e.g. DataControllers, universal selection of college, etc.
-@property (nonatomic, weak) id<MasterViewDelegate> appDelegate;
+@property (strong, nonatomic) AppData *appData;
 
 // outlet properties connected to the view
 @property (weak, nonatomic) IBOutlet UISegmentedControl *collegeSegmentControl;
@@ -24,7 +23,7 @@
 @property (strong, nonatomic) UIActivityIndicatorView   *activityIndicator;
 
 // Initialization
-- (id)initWithDelegateId:(id<MasterViewDelegate>)delegate;
+- (id)initWithAppData:(AppData *)data;
 
 - (void)placeLoadingIndicator;
 - (void)placeCreatePost;
