@@ -66,18 +66,43 @@ public class JSONParser {
 			reader.beginArray();
 			while(reader.hasNext()){
 				
-				Integer id = null;
+				int id = -1;
 				String text = null;
-				Integer score = null;
+				int score = 0;
+				int collegeID = -1;
 				
 				reader.beginObject();
 				while(reader.hasNext()){
 					String name = reader.nextName(); //property name of next property.
 					if(name.equals("id")){
-						id = reader.nextInt();
+						//use in case null is passed in, which prim types can't take
+						try{
+							id = reader.nextInt();
+						}catch(Exception e){
+							reader.skipValue();
+							e.printStackTrace();
+						}
 					}
 					else if(name.equals("text")){
 						text = reader.nextString();
+					}
+					else if(name.equals("score")){
+						//use in case null is passed in, which prim types can't take
+						try{
+							score = reader.nextInt();
+						}catch(Exception e){
+							reader.skipValue();
+							e.printStackTrace();
+						}
+					}
+					else if(name.equals("college_id")){
+						//use in case null is passed in, which prim types can't take
+						try{
+							collegeID = reader.nextInt();
+						}catch(Exception e){
+							reader.skipValue();
+							e.printStackTrace();
+						}
 					}
 					else{
 						reader.skipValue();
@@ -85,7 +110,7 @@ public class JSONParser {
 				}
 				reader.endObject();
 				
-				ret.add(new Post(0,text,2));
+				ret.add(new Post(id, text, score, collegeID));
 			}
 			reader.endArray();
 		} finally{
@@ -93,6 +118,13 @@ public class JSONParser {
 		}
 		
 		return ret;
+	}
+
+	private static Integer passIntWithNull(Integer nextInt) {
+		if(nextInt != null)
+			return nextInt;
+		
+		return 0;
 	}
 
 }

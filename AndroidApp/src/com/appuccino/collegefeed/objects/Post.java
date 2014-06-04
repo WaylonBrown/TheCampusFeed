@@ -77,6 +77,20 @@ public class Post implements Votable{
 			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
 	}
 	
+	public Post(int id, String message, int score, int collegeID)
+	{
+		this.score = score;
+		this.message = message;
+		hoursAgo = 0;
+		this.id = id;
+		this.collegeID = collegeID;
+		collegeName = MainActivity.getCollegeByID(collegeID).getName();
+		
+		int numberOfComments = (int)(Math.random() * 15);
+		for(int i = 0; i < numberOfComments; i++)
+			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
+	}
+	
 	public void addComment(Comment comment)
 	{
 		commentList.add(comment);
