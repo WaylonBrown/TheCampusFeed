@@ -22,18 +22,31 @@
 
 app = angular.module('cfeed', ["ui.bootstrap"])
 
-app.controller('SectionAccordion', ['$scope', '$http', function($scope, $http) {
-    $scope.oneAtATime = false;
-    $http.get('api/v1/posts')
-     .then(function(res){
-       console.log(res.data)
-        $scope.posts = res.data
-      });
+app.controller('PostSection', ['$scope', '$http', function($scope, $http) {
 
-    $scope.status = {
-      isFirstOpen: true,
-      isFirstDisabled: false
-    };
-
+    $scope.populatePosts = function(){
+      $http.get('api/v1/posts')
+       .then(function(res){
+         console.log(res.data)
+          $scope.posts = res.data
+        });
+    }
+    /*$scope.$on('show.bs.collapse', function(){
+      console.log('asdf');
+    });*/
   }]
 );
+
+app.directive('hastooltip', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attrs) {
+      element.tooltip();
+    }
+  };
+});
+
+angular.element(document).ready(function () {
+  //$("i.tip").tooltip();
+});
+
