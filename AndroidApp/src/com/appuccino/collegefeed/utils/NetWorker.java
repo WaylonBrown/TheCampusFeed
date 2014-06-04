@@ -140,8 +140,8 @@ public class NetWorker {
 		@Override
 		protected Boolean doInBackground(Post... posts) {
 			try{
-
-				HttpPost request = new HttpPost(REQUEST_URL + "/colleges/" + posts[0].getCollegeID() + "/posts");
+				Log.i("cfeed","Request URL: " + REQUEST_URL + "colleges/" + posts[0].getCollegeID() + "/posts");
+				HttpPost request = new HttpPost(REQUEST_URL + "colleges/" + posts[0].getCollegeID() + "/posts");
 				request.setHeader("Content-Type", "application/json");
 				request.setEntity(new ByteArrayEntity(posts[0].toJSONString().toByteArray()));
 				ResponseHandler<String> responseHandler = new BasicResponseHandler();

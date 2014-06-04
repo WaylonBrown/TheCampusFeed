@@ -264,6 +264,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				if(degreesAway <= degreesForPermissions)
 				{
 					permissions.add(c.getID());
+					Log.i("cfeed","Permissions college data: " + c.toString());
 					if(!newPostButton.isShown())
 						newPostButton.setVisibility(View.VISIBLE);
 				}
