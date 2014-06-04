@@ -6,6 +6,8 @@ import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.util.ArrayList;
 
+import com.appuccino.collegefeed.MainActivity;
+
 import android.util.JsonReader;
 import android.util.JsonWriter;
 
@@ -54,7 +56,7 @@ public class Post implements Votable{
 		hoursAgo = 0;
 		id = (int)(Math.random() * Integer.MAX_VALUE);
 		this.collegeID = collegeID;
-		collegeName = "Texas A&M University";
+		collegeName = MainActivity.getCollegeByID(collegeID).getName();
 		
 		int numberOfComments = (int)(Math.random() * 15);
 		for(int i = 0; i < numberOfComments; i++)

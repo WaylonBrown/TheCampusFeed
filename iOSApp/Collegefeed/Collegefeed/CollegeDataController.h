@@ -17,4 +17,7 @@
 @property (nonatomic) NSURL *collegeURL;
 @property (nonatomic) NSMutableData *responseData;
 
+- (NSArray *)findNearbyCollegesWithLat:(float)userLat
+                               withLon:(float)userLon;
+
 @end

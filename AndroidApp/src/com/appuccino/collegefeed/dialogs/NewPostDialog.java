@@ -2,11 +2,11 @@ package com.appuccino.collegefeed.dialogs;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
-import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
+import com.appuccino.collegefeed.utils.NetWorker.MakePostTask;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -46,6 +47,7 @@ public class NewPostDialog extends AlertDialog.Builder{
 			if(MainActivity.permissions.size() == 1)
 			{
 				selectedCollegeID = MainActivity.permissions.get(0);
+				Log.i("cfeed","SelctedCollegeID: " + selectedCollegeID);
 				createDialog(layout);
 			}
 			else	//in range of multiple colleges
@@ -169,7 +171,6 @@ public class NewPostDialog extends AlertDialog.Builder{
 			{
 				collegeString += MainActivity.getCollegeByID(MainActivity.permissions.get(0)).getName();
 				college.setText(collegeString);
-				selectedCollegeID = college.getId();
 			}else{
 				//TODO: implement this
 			}

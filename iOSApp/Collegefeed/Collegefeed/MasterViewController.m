@@ -37,6 +37,11 @@
         
         [self.collegeSegmentControl setTitleTextAttributes:attributes
                                                   forState:UIControlStateSelected];
+        
+        // initialize a loading indicator and place it in top right corner
+        self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        [self placeLoadingIndicator];
+        
     }
     return self;
 }
@@ -45,34 +50,13 @@
     
     // place logo at the top of the navigation bar
     [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
-    
-    // initialize a loading indicator and place it in top right corner
-    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    [self placeLoadingIndicator];
-    
-    [super loadView];
-}
-- (void)placeLoadingIndicator
-{   // Place the loading indicator in the navigation bar (instead of create post button)
-    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
-    
-    [self.navigationItem setRightBarButtonItem:button];
-    [self.activityIndicator startAnimating];
-    [self refresh];
-}
-- (void)placeCreatePost
-{   // Place the create post button in the navigation bar (instead of loading indicator)
 
-    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-                                                                                           target:self action:@selector(create)]];
-    
-    [self.activityIndicator stopAnimating];
-    [self refresh];
+    [super loadView];
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
     [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
-
+    
     if (self.appData.allColleges == YES)
     {
         [self.collegeSegmentControl setSelectedSegmentIndex:0];
@@ -82,6 +66,37 @@
         [self.collegeSegmentControl setSelectedSegmentIndex:2];
     }
     [self refresh];
+}
+- (void)placeLoadingIndicator
+{   // Place the loading indicator in the navigation bar (instead of create post button)
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
+    
+    [self.navigationItem setRightBarButtonItem:button];
+    
+    [self.activityIndicator startAnimating];
+    [self refresh];
+}
+- (void)placeCreatePost
+{   // Place the create post button in the navigation bar (instead of loading indicator)
+
+    [self.activityIndicator stopAnimating];
+
+    UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                                                                                  target:self action:@selector(create)];
+    [self.navigationItem setRightBarButtonItem:createButton];
+    
+    [self refresh];
+}
+- (void)foundLocation
+{
+    if (self.appData.nearbyColleges.count > 0)
+    {
+        [self placeCreatePost];
+    }
+    else
+    {
+        [self.navigationItem setRightBarButtonItem:nil];
+    }
 }
 
 #pragma mark - UITableView Functions

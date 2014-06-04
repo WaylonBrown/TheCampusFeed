@@ -26,6 +26,17 @@
     return nil;
 }
 
+- (void)initDummyPostsIntoList:(NSMutableArray *)array
+{
+    [array removeAllObjects];
+    for (int i = 0 ; i < 3; i++)
+    {
+        Post* p = [[Post alloc] initWithPostID:i withScore:i
+                                   withMessage:[NSString stringWithFormat:@"#DUMMY Test #postNumber_%d", i]];
+        [array addObject:p];
+    }
+}
+
 #pragma mark - Network Access
 
 - (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array
@@ -37,7 +48,12 @@
         return;
     }
     NSArray *jsonArray = (NSArray*)[self GETfromServer:url];
-    if (jsonArray == nil) return;
+    
+    if (jsonArray == nil)
+    {
+        [self initDummyPostsIntoList:array];
+        return;
+    }
     
     [array removeAllObjects];
     for (int i = 0; i < jsonArray.count; i++)

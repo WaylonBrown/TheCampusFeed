@@ -25,9 +25,9 @@
 	    
 	    <ImageView
 	        android:id="@+id/newPostButton"
-	        android:layout_width="50dp"
+	        android:layout_width="60dp"
 	        android:layout_height="40dp"
-	        android:src="@drawable/newpost"
+	        android:src="@drawable/social_send_now"
 	        android:background="@drawable/postbuttonclick"
 	        android:layout_gravity="center_vertical"
 	        android:clickable="true"

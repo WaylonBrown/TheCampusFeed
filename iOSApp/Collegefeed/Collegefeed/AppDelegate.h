@@ -9,14 +9,21 @@
 #import <UIKit/UIKit.h>
 
 #import "AppData.h"
-#import "AppDataDelegateProtocol.h"
 
 @class College;
+@class PostsViewController;
+@class TagViewController;
+@class CollegePickerViewController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, AppDataDelegateProtocol>
 
 @property (strong, nonatomic) UIWindow              *window;
 @property (strong, nonatomic) UITabBarController    *tabBarController;
 @property (strong, nonatomic) AppData               *appData;
+
+@property (strong, nonatomic) PostsViewController *topPostsController;
+@property (strong, nonatomic) PostsViewController *recentPostsController;
+@property (strong, nonatomic) TagViewController *tagController;
+@property (strong, nonatomic) CollegePickerViewController *collegeController;
 
 @end

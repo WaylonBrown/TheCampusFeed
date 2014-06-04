@@ -23,6 +23,7 @@
     // ***SIMULATE YOUR LOCATION***
     
     self.appData = [[AppData alloc] init];
+    [self.appData setAppDelegate:self];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:cf_lightblue]];
@@ -31,29 +32,28 @@
 #pragma mark - Create ViewControllers
     
     // *** Top Posts - PostsViewController *** //
-    PostsViewController *topPostsController = [[PostsViewController alloc] initAsTopPostsWithAppData:self.appData];
-    UINavigationController *topPostsNavController = [[UINavigationController alloc] initWithRootViewController:topPostsController];
+    self.topPostsController = [[PostsViewController alloc] initAsTopPostsWithAppData:self.appData];
+    UINavigationController *topPostsNavController = [[UINavigationController alloc] initWithRootViewController:self.topPostsController];
     // *************************************** //
     
-    
     // *** New Posts - PostsViewController *** //
-    PostsViewController *newPostsController = [[PostsViewController alloc] initAsNewPostsWithAppData:self.appData];
-    UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:newPostsController];
+    self.recentPostsController = [[PostsViewController alloc] initAsNewPostsWithAppData:self.appData];
+    UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:self.recentPostsController];
     // *************************************** //
     
     
     // *** Trending Tags - TagViewController *** //
-    TagViewController *tagController = [[TagViewController alloc] initWithAppData:self.appData];
-    UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:tagController];
+    self.tagController = [[TagViewController alloc] initWithAppData:self.appData];
+    UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:self.tagController];
     // *************************************** //
     
     
     // *** Top Colleges - CollegePickerViewController *** //
-    CollegePickerViewController *collegeController = [[CollegePickerViewController alloc] initAsTopColleges];
-    [collegeController setCollegesList:self.appData.collegeDataController.list];
-    [collegeController setDelegate:topPostsController];
+    self.collegeController = [[CollegePickerViewController alloc] initAsTopColleges];
+    [self.collegeController setCollegesList:self.appData.collegeDataController.list];
+    [self.collegeController setDelegate:self.topPostsController];
     UINavigationController *collegeNavController =
-            [[UINavigationController alloc] initWithRootViewController:collegeController];
+            [[UINavigationController alloc] initWithRootViewController:self.collegeController];
     // *************************************** //
 
     
@@ -102,6 +102,11 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+- (void)foundLocationWithLat:(float)lat withLon:(float)lon
+{
+    [self.topPostsController foundLocation];
+    NSLog(@"\nlat: %f\nlon: %f\n", lat, lon);
 }
 
 @end

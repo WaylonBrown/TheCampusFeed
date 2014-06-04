@@ -30,7 +30,6 @@
 // should equal YES if looking at tag-filtered posts
 @property (nonatomic) BOOL tagPosts;
 
-
 - (id)initAsTopPostsWithAppData:(AppData *)data;
 - (id)initAsNewPostsWithAppData:(AppData *)data;
 - (id)initAsMyPostsWithAppData:(AppData *)data;

@@ -27,9 +27,6 @@ import android.widget.Toast;
 
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
-import com.appuccino.collegefeed.extra.NetWorker;
-import com.appuccino.collegefeed.extra.NetWorker.MakePostTask;
-import com.appuccino.collegefeed.extra.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
@@ -37,6 +34,9 @@ import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
 import com.appuccino.collegefeed.utils.FontManager;
+import com.appuccino.collegefeed.utils.NetWorker;
+import com.appuccino.collegefeed.utils.NetWorker.MakePostTask;
+import com.appuccino.collegefeed.utils.NetWorker.MakeVoteTask;
 
 public class PostCommentsActivity extends Activity{
 
