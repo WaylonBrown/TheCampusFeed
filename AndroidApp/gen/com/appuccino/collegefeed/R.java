@@ -385,8 +385,9 @@ containing a value of this type.
         public static final int postbuttonclick=0x7f02000e;
         public static final int postfeedlogosmall=0x7f02000f;
         public static final int searchtagbuttonclick=0x7f020010;
-        public static final int spot_mask=0x7f020011;
-        public static final int tabs_pattern=0x7f020012;
+        public static final int social_send_now=0x7f020011;
+        public static final int spot_mask=0x7f020012;
+        public static final int tabs_pattern=0x7f020013;
     }
     public static final class id {
         public static final int allCollegesButton=0x7f06001a;
@@ -416,6 +417,7 @@ containing a value of this type.
         public static final int messageText=0x7f060010;
         public static final int nearYouDialogList=0x7f06001e;
         public static final int nearYouTitle=0x7f06001c;
+        public static final int newCollege=0x7f06003c;
         public static final int newCommentButton=0x7f060009;
         public static final int newCommentMessage=0x7f060023;
         public static final int newCommentTagsText=0x7f060024;
