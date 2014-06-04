@@ -29,6 +29,7 @@
 @property (strong, nonatomic) CollegeDataController *collegeDataController;
 @property (strong, nonatomic) TagDataController     *tagDataController;
 
+@property (strong, nonatomic) NSArray *nearbyColleges;
 @property (strong, nonatomic) College *currentCollege;
 
 @property (strong, nonatomic) CLLocationManager *locationManager;

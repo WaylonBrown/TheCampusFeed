@@ -36,13 +36,13 @@
     [self setLon:self.locationManager.location.coordinate.longitude];
     [self.locationManager stopUpdatingLocation];
 
+    [self findNearbyColleges];
     [self.appDelegate foundLocationWithLat:self.lat withLon:self.lon];
     
-    NSLog(@"updated");
 }
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    NSLog(@"Failed");
+    NSLog(@"Failed to get location (with error...)");
 }
 - (void)switchedToSpecificCollegeOrNil:(College *)college
 {
@@ -58,4 +58,12 @@
         [self setSpecificCollege:YES];
     }
 }
+- (void)findNearbyColleges
+{   // Populate the nearbyColleges array appropriately using current location
+
+    self.nearbyColleges = [[NSArray alloc] initWithArray:[self.collegeDataController
+                                    findNearbyCollegesWithLat:self.lat withLon:self.lon]];
+
+}
+    
 @end

@@ -65,4 +65,23 @@
         NSLog(@"Error fetching all posts");
     }
 }
+- (NSArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon
+{
+    NSMutableArray *colleges = [[NSMutableArray alloc] init];
+    
+    double degreesForPermissions = MILES_FOR_PERMISSION / 50.0;	//roughly 50 miles per degree
+
+    for (College *college in self.list)
+    {
+        //TODO: change to formula James is using that takes into account the roundness of the earth
+        double degreesAway = sqrt(pow((userLat - college.lat), 2) + pow((userLon - college.lon), 2));
+        
+        if(degreesAway <= degreesForPermissions)
+        {
+            [colleges addObject:college];
+        }
+        
+    }
+    return colleges;
+}
 @end
