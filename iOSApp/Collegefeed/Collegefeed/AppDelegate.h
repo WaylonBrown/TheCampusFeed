@@ -9,11 +9,10 @@
 #import <UIKit/UIKit.h>
 
 #import "AppData.h"
-#import "AppDataDelegateProtocol.h"
 
 @class College;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, AppDataDelegateProtocol>
 
 @property (strong, nonatomic) UIWindow              *window;
 @property (strong, nonatomic) UITabBarController    *tabBarController;

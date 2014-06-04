@@ -8,15 +8,20 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import <UIKit/UIKit.h>
 
 #import "PostDataController.h"
 #import "CommentDataController.h"
 #import "VoteDataController.h"
 #import "CollegeDataController.h"
 #import "TagDataController.h"
-#import "MasterViewController.h"
+
+
+@protocol AppDataDelegateProtocol;
 
 @interface AppData : NSObject<CLLocationManagerDelegate>
+
+@property (strong, nonatomic) id<AppDataDelegateProtocol> appDelegate;
 
 @property (strong, nonatomic) PostDataController    *postDataController;
 @property (strong, nonatomic) CommentDataController *commentDataController;
@@ -35,5 +40,11 @@
 
 
 - (void)switchedToSpecificCollegeOrNil:(College *)college;
+
+@end
+
+@protocol AppDataDelegateProtocol <NSObject>
+
+- (void)foundLocationWithLat:(float)lat withLon:(float)lon;
 
 @end

@@ -23,6 +23,7 @@
     // ***SIMULATE YOUR LOCATION***
     
     self.appData = [[AppData alloc] init];
+    [self.appData setAppDelegate:self];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:cf_lightblue]];
@@ -102,6 +103,10 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+- (void)foundLocationWithLat:(float)lat withLon:(float)lon
+{
+    NSLog(@"\nlat: %f\nlon: %f\n", lat, lon);
 }
 
 @end

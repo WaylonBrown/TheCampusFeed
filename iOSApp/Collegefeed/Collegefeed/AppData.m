@@ -35,6 +35,9 @@
     [self setLat:self.locationManager.location.coordinate.latitude];
     [self setLon:self.locationManager.location.coordinate.longitude];
     [self.locationManager stopUpdatingLocation];
+
+    [self.appDelegate foundLocationWithLat:self.lat withLon:self.lon];
+    
     NSLog(@"updated");
 }
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
