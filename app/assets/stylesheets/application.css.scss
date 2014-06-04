@@ -15,7 +15,11 @@
 
 @import "bootstrap";
 
+/* Fix links */
+
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+/* Change Colors */
 
 nav.navbar{
   background-color: #33B5E5;
@@ -27,4 +31,11 @@ nav.navbar{
 
 .navbar-default .navbar-brand{
   color: #EFEFEF
+}
+
+/* Change Animations */
+
+.collapsing {
+    -webkit-transition: none;
+    transition: none;
 }
