@@ -49,7 +49,7 @@
     
     
     // *** Top Colleges - CollegePickerViewController *** //
-    self.collegeController = [[CollegePickerViewController alloc] initAsTopColleges];
+    self.collegeController = [[CollegePickerViewController alloc] initAsTopCollegesWithAppData:self.appData];
     [self.collegeController setCollegesList:self.appData.collegeDataController.list];
     [self.collegeController setDelegate:self.topPostsController];
     UINavigationController *collegeNavController =
@@ -103,10 +103,28 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-- (void)foundLocationWithLat:(float)lat withLon:(float)lon
+- (void)foundLocation
 {
     [self.topPostsController foundLocation];
-    NSLog(@"\nlat: %f\nlon: %f\n", lat, lon);
+    [self.recentPostsController foundLocation];
+    [self.tagController foundLocation];
+    NSString *message = @"Location determined";
+    
+    NSArray *colleges = [self.appData nearbyColleges];
+    if (colleges.count > 0)
+    {
+        message = [NSString stringWithFormat:@"%@. Colleges allowed: ", message];
+        for (College* college in colleges)
+        {
+            message = [NSString stringWithFormat:@"%@%@, ", message, college.name];
+        }
+    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention"
+                                                    message:message
+                                                   delegate:self
+                                          cancelButtonTitle:@"I don't care"
+                                          otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 @end

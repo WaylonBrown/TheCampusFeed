@@ -122,7 +122,7 @@
     }
     else if (index == 1) // Choose from list of all colleges
     {
-        CollegePickerViewController *controller = [[CollegePickerViewController alloc] initAsAllColleges];
+        CollegePickerViewController *controller = [[CollegePickerViewController alloc] initAsAllCollegesWithAppData:self.appData];
         [controller setCollegesList:self.appData.collegeDataController.list];
         [controller setDelegate:self];
         [self.navigationController pushViewController:controller animated:YES];

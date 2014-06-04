@@ -37,7 +37,7 @@
     [self.locationManager stopUpdatingLocation];
 
     [self findNearbyColleges];
-    [self.appDelegate foundLocationWithLat:self.lat withLon:self.lon];
+    [self.appDelegate foundLocation];
     
 }
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error

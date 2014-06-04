@@ -46,6 +46,6 @@
 
 @protocol AppDataDelegateProtocol <NSObject>
 
-- (void)foundLocationWithLat:(float)lat withLon:(float)lon;
+- (void)foundLocation;
 
 @end
