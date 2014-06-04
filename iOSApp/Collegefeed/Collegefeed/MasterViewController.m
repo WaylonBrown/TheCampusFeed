@@ -31,7 +31,7 @@
     {
         [self setAppData:data];
         
-        UIFont *font = [UIFont boldSystemFontOfSize:8.0f];
+        UIFont *font = [UIFont boldSystemFontOfSize:3.0f];
         NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
                                                                forKey:NSFontAttributeName];
         
@@ -137,11 +137,12 @@
 
 - (void)create
 {   // Display popup to let user type a new post
-    College *currentCollege = self.appData.currentCollege;
-    if (currentCollege == nil)
+//    College *currentCollege = self.appData.currentCollege;
+    College *currentCollege = [self.appData.nearbyColleges objectAtIndex:0];
+    if (self.appData.nearbyColleges.count == 0 || currentCollege == nil)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:@"You must have a college selected before being able to post"
+                                                        message:@"You cannot post because you are not within range of any known colleges"
                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }
@@ -163,7 +164,8 @@
     {
         return;
     }
-    College *currentCollege = self.appData.currentCollege;
+//    College *currentCollege = self.appData.currentCollege;
+    College *currentCollege = [self.appData.nearbyColleges objectAtIndex:0];
     if (currentCollege != nil)
     {
         Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]

@@ -114,7 +114,14 @@ shouldReloadTableForSearchString:(NSString *)searchString
     }
     else
     {
-        college = (College *)[self.list objectAtIndex:indexPath.row];
+        if (tableView.numberOfSections == 2 && indexPath.section == 0)
+        {
+            college = [self.appData.nearbyColleges objectAtIndex:indexPath.row];
+        }
+        else
+        {
+            college = [self.list objectAtIndex:indexPath.row];
+        }
     }
 
     [self.delegate selectedCollege:college from:self];
