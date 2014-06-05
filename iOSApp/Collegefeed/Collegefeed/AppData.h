@@ -44,6 +44,7 @@
 
 
 - (void)switchedToSpecificCollegeOrNil:(College *)college;
+- (BOOL)isNearCollege;
 
 @end
 

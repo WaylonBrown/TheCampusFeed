@@ -69,5 +69,8 @@
                                     findNearbyCollegesWithLat:self.lat withLon:self.lon]];
 
 }
-    
+- (BOOL)isNearCollege
+{
+    return self.nearbyColleges.count > 0;
+}
 @end

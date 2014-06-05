@@ -75,7 +75,7 @@
 }
 - (void)foundLocation
 {   // Called when the user's location is determined. Allow them to create posts
-    if (self.appData.nearbyColleges.count > 0)
+    if ([self.appData isNearCollege])
     {
         [self placeCreatePost];
     }

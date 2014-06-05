@@ -82,6 +82,14 @@
     MasterViewController *mvc        = (MasterViewController*)self.delegate;
     PostsViewController  *controller = [[PostsViewController alloc] initAsTagPostsWithAppData:mvc.appData
                                                                                withTagMessage:tagMessage];
+    if (mvc.appData.nearbyColleges.count > 0)
+    {
+        [controller placeCreatePost];
+    }
+    else
+    {
+        controller.navigationItem.rightBarButtonItem = nil;
+    }
     [mvc.navigationController pushViewController:controller
                                         animated:YES];
 }
