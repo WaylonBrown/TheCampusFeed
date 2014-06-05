@@ -1,5 +1,6 @@
 package com.appuccino.collegefeed.adapters;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,7 +32,7 @@ import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.utils.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
-import com.appuccino.collegefeed.utils.TimeParser;
+import com.appuccino.collegefeed.utils.TimeManager;
 
 public class PostListAdapter extends ArrayAdapter<Post>{
 
@@ -94,7 +96,12 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         postHolder.commentText.setText(commentString);
         
         setMessageAndColorizeTags(thisPost.getMessage(), postHolder);
-        setTime(thisPost.getTime(), postHolder.timeText);
+        try {
+			setTime(thisPost, postHolder.timeText);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         //arrow click listeners
         postHolder.arrowUp.setOnClickListener(new OnClickListener(){
@@ -177,8 +184,8 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         return row;
     }
         
-    private void setTime(String time, TextView timeText) {
-    	Calendar thisPostTime = TimeParser.toCalendar(time);
+    private void setTime(Post thisPost, TextView timeText) throws ParseException {
+    	Calendar thisPostTime = TimeManager.toCalendar(thisPost.getTime());
     	Calendar now = Calendar.getInstance();
     	
     	int yearsDiff;
@@ -197,6 +204,9 @@ public class PostListAdapter extends ArrayAdapter<Post>{
     	minutesDiff = now.get(Calendar.MINUTE) - thisPostTime.get(Calendar.MINUTE);
     	secondsDiff = now.get(Calendar.SECOND) - thisPostTime.get(Calendar.SECOND);
     	
+    	Log.i("cfeed","Time difference for post " + thisPost.getMessage().substring(0, 10) + ": Years: " + yearsDiff + " Months: " + monthsDiff +
+    			" Weeks: " + weeksDiff + " Days: " + daysDiff + " Hours: " + hoursDiff + " Minutes: " + minutesDiff + " Seconds: " + secondsDiff);
+    	
     	String timeOutputText = "";
     	if(yearsDiff > 0){
     		timeOutputText = yearsDiff + " year";
@@ -210,7 +220,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
     		if(monthsDiff > 1){
     			timeOutputText += "s";
     		}
-    		
+    		timeOutputText += " ago";
     	}
     	else if(weeksDiff > 0){
     		timeOutputText = weeksDiff + " week";

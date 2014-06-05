@@ -7,6 +7,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 
 import com.appuccino.collegefeed.MainActivity;
+import com.appuccino.collegefeed.utils.TimeManager;
 
 import android.util.JsonReader;
 import android.util.JsonWriter;
@@ -20,6 +21,45 @@ public class Post implements Votable{
 	int vote = 0;		//-1 = downvote, 0 = nothing, 1 = upvote
 	int collegeID;
 	String collegeName;
+	
+	public Post()
+	{
+		score = 0;
+		message = "";
+		id = (int)(Math.random() * Integer.MAX_VALUE);
+		collegeID = 234234;
+		collegeName = "Texas A&M University";
+		
+		int numberOfComments = (int)(Math.random() * 15);
+		for(int i = 0; i < numberOfComments; i++)
+			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
+	}
+	
+	public Post(String m)
+	{
+		message = m;
+		score = 0;
+		id = (int)(Math.random() * Integer.MAX_VALUE);
+		collegeID = 234234;
+		collegeName = "Texas A&M University";
+		
+		int numberOfComments = (int)(Math.random() * 15);
+		for(int i = 0; i < numberOfComments; i++)
+			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
+	}
+	
+	public Post(String message, int collegeID)
+	{
+		this.score = 1;
+		this.message = message;
+		this.time = TimeManager.now();
+		this.collegeID = collegeID;
+		collegeName = MainActivity.getCollegeByID(collegeID).getName();
+		
+		int numberOfComments = (int)(Math.random() * 15);
+		for(int i = 0; i < numberOfComments; i++)
+			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
+	}
 	
 	public Post(int id, String message, int score, int collegeID, String time)
 	{
