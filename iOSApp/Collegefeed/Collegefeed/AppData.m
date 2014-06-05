@@ -20,6 +20,10 @@
         [self setVoteDataController:    [[VoteDataController alloc]     init]];
         [self setCollegeDataController: [[CollegeDataController alloc]  init]];
         [self setTagDataController:     [[TagDataController alloc]      init]];
+        [self setCollegeFeedPicker:     [[CollegePickerViewController alloc]
+                                         initAsAllCollegesWithAppData:self]];
+        
+        
         [self switchedToSpecificCollegeOrNil:nil];
         
         [self setLocationManager:[[CLLocationManager alloc] init]];

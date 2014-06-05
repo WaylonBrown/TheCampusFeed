@@ -31,14 +31,7 @@
     {
         [self setAppData:data];
         
-        UIFont *font = [UIFont boldSystemFontOfSize:3.0f];
-        NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
-                                                               forKey:NSFontAttributeName];
-        
-        [self.collegeSegmentControl setTitleTextAttributes:attributes
-                                                  forState:UIControlStateSelected];
-        
-        // initialize a loading indicator and place it in top right corner
+        // initialize a loading indicator and place it in top right corner (placeholder for create post button)
         self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         [self placeLoadingIndicator];
         
@@ -50,6 +43,7 @@
     
     // place logo at the top of the navigation bar
     [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
+    [self.currentFeedLabel setAdjustsFontSizeToFitWidth:YES];
 
     [super loadView];
 }
@@ -57,14 +51,6 @@
 {   // View is about to appear after being inactive
     [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
     
-    if (self.appData.allColleges == YES)
-    {
-        [self.collegeSegmentControl setSelectedSegmentIndex:0];
-    }
-    else if (self.appData.specificCollege == NO)
-    {
-        [self.collegeSegmentControl setSelectedSegmentIndex:2];
-    }
     [self refresh];
 }
 - (void)placeLoadingIndicator
@@ -118,28 +104,13 @@
 #pragma mark - Actions
 
 - (IBAction)changeFeed;
-{   // User changed the feed (all colleges or a specific one)
-    NSInteger index = [self.collegeSegmentControl selectedSegmentIndex];
-    if (index == 0) // all colleges
-    {
-        [self.appData switchedToSpecificCollegeOrNil:nil];
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
-    else if (index == 1) // Choose from list of all colleges
-    {
-        CollegePickerViewController *controller = [[CollegePickerViewController alloc] initAsAllCollegesWithAppData:self.appData];
-        [controller setCollegesList:self.appData.collegeDataController.list];
-        [controller setDelegate:self];
-        [self.navigationController pushViewController:controller animated:YES];
-    }
-    else if (index == 2) // My current college
-    {
-        [self.appData switchedToSpecificCollegeOrNil:self.appData.currentCollege];
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
+{   // User wants to change the feed (all colleges, nearby college, or other)
+    
+    CollegePickerViewController *controller = self.appData.collegeFeedPicker;
+    [controller setDelegate:self];
+    [self.navigationController pushViewController:controller animated:YES];
     [self refresh];
 }
-
 - (void)create
 {   // Display popup to let user type a new post
 //    College *currentCollege = self.appData.currentCollege;
@@ -186,10 +157,14 @@
     }
     [self refresh];
 }
-
 - (void)refresh
 {   // refresh the current view
-
+    NSString *feedName = self.appData.currentCollege.name;
+    if (feedName == nil)
+    {
+        feedName = @"All Colleges";
+    }
+    [self.currentFeedLabel setText:feedName];
     [self.tableView reloadData];
 }
 
@@ -200,31 +175,18 @@
     [self.appData.voteDataController POSTtoServer:vote
                                          intoList:self.appData.voteDataController.list];
 }
-- (void)selectedCollege:(College *)college
-                   from:(CollegePickerViewController *)sender
-{   // A college was selected in either the segmented college picker or the tab bar controller
+- (void)selectedCollegeOrNil:(College *)college
+                        from:(CollegePickerViewController *)sender
+{   // A feed was selected from either the 'top colleges' in tab bar or from the 'change' button on toolbar
     
     [self.appData switchedToSpecificCollegeOrNil:college];
     
     if (sender.topColleges)
-    {
+    {   // change to 'top posts' tab if selection made from 'top colleges' tab
         [self.tabBarController setSelectedIndex:0];
     }
     [self.navigationController popToRootViewControllerAnimated:YES];
-    
-    if (self.collegeSegmentControl.numberOfSegments < 3)
-    {
-        [self.collegeSegmentControl insertSegmentWithTitle:college.name
-                                                   atIndex:2 animated:NO];
-    }
-    else
-    {
-        [self.collegeSegmentControl setTitle:college.name
-                           forSegmentAtIndex:2];
-    }
-    
-    [self.collegeSegmentControl setSelectedSegmentIndex:2];
-    
+    [self.currentFeedLabel setText:college.name];
 }
 
 @end

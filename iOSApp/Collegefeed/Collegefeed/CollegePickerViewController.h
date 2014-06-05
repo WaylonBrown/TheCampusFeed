@@ -31,6 +31,4 @@
 - (id)initAsTopCollegesWithAppData:(AppData*)data;
 - (id)initAsAllCollegesWithAppData:(AppData*)data;
 
-- (void)setCollegesList:(NSMutableArray *)collegeList;
-
 @end

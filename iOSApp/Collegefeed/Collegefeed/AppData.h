@@ -15,6 +15,7 @@
 #import "VoteDataController.h"
 #import "CollegeDataController.h"
 #import "TagDataController.h"
+#import "CollegePickerViewController.h"
 
 
 @protocol AppDataDelegateProtocol;
@@ -28,6 +29,8 @@
 @property (strong, nonatomic) VoteDataController    *voteDataController;
 @property (strong, nonatomic) CollegeDataController *collegeDataController;
 @property (strong, nonatomic) TagDataController     *tagDataController;
+
+@property (strong, nonatomic) CollegePickerViewController *collegeFeedPicker;
 
 @property (strong, nonatomic) NSArray *nearbyColleges;
 @property (strong, nonatomic) College *currentCollege;

@@ -70,23 +70,10 @@
 {   // refresh this tag view
     if (self.appData.allColleges)
     {
-        [self.collegeSegmentControl setSelectedSegmentIndex:0];
         [self.appData.tagDataController fetchAllTags];
     }
     else if (self.appData.specificCollege)
     {
-        if (self.collegeSegmentControl.numberOfSegments < 3)
-        {
-            [self.collegeSegmentControl insertSegmentWithTitle:self.appData.currentCollege.name
-                                                       atIndex:2 animated:NO];
-        }
-        else
-        {
-            [self.collegeSegmentControl setTitle:self.appData.currentCollege.name
-                               forSegmentAtIndex:2];
-        }
-        
-        [self.collegeSegmentControl setSelectedSegmentIndex:2];
         [self.appData.tagDataController fetchAllTagsWithCollegeId:self.appData.currentCollege.collegeID];
     }
     [super refresh];

@@ -14,7 +14,8 @@
 
 @protocol ChildCellDelegate <NSObject>
 
-- (void)selectedCollege:(College *)college from:(CollegePickerViewController *)sender;
+- (void)selectedCollegeOrNil:(College *)college
+                        from:(CollegePickerViewController *)sender;
 - (void)castVote:(Vote *)vote;
 
 @end

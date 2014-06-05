@@ -25,6 +25,7 @@
         [self setTopColleges:YES];
         [self setAllColleges:NO];
         [self setAppData:data];
+        [self setList:self.appData.collegeDataController.list];
     }
     return self;
 }
@@ -36,6 +37,7 @@
         [self setTopColleges:NO];
         [self setAllColleges:YES];
         [self setAppData:data];
+        [self setList:self.appData.collegeDataController.list];
     }
     return self;
 }
@@ -54,13 +56,6 @@
     [super viewDidLoad];
 
     [self.tableView reloadData];
-}
-
-#pragma mark - Data Access
-
-- (void)setCollegesList:(NSMutableArray *)collegeList
-{
-    self.list = [[NSMutableArray alloc] initWithArray:collegeList];
 }
 
 #pragma mark - Search Bar
@@ -124,7 +119,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
         }
     }
 
-    [self.delegate selectedCollege:college from:self];
+    [self.delegate selectedCollegeOrNil:college from:self];
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 
 }
