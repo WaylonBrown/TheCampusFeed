@@ -50,7 +50,6 @@
     
     // *** Top Colleges - CollegePickerViewController *** //
     self.collegeController = [[CollegePickerViewController alloc] initAsTopCollegesWithAppData:self.appData];
-//    [self.collegeController setCollegesList:self.appData.collegeDataController.list];
     [self.collegeController setDelegate:self.topPostsController];
     UINavigationController *collegeNavController =
             [[UINavigationController alloc] initWithRootViewController:self.collegeController];

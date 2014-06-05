@@ -24,8 +24,8 @@
     {
         [self setTopColleges:YES];
         [self setAllColleges:NO];
-        [self setAppData:data];
-        [self setList:self.appData.collegeDataController.list];
+//        [self setAppData:data];
+        [self setList:data.collegeDataController.list];
     }
     return self;
 }
@@ -123,7 +123,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
     {
         college = (College *)[self.searchResults objectAtIndex:indexPath.row];
     }
-    else
+    else if (self.allColleges)
     {
         if (indexPath.section == 0)
         {
@@ -137,6 +137,10 @@ shouldReloadTableForSearchString:(NSString *)searchString
         {   // last section is of all colleges
             college = [self.list objectAtIndex:indexPath.row];
         }
+    }
+    else // if showing top colleges
+    {
+        college = [self.list objectAtIndex:indexPath.row];
     }
 
     [self.delegate selectedCollegeOrNil:college from:self];
@@ -182,25 +186,31 @@ shouldReloadTableForSearchString:(NSString *)searchString
         College *college = (College *)[self.searchResults objectAtIndex:indexPath.row];
         [cell.textLabel setText:college.name];
     }
-    else
+    
+    else if (self.allColleges)
     {   // if searching all colleges
-        College *college;
         if (indexPath.section == 0)
         {
             [cell.textLabel setText:@"All Colleges"];
         }
         else if (indexPath.section == 1 && [self.appData isNearCollege])
         {   // section of colleges 'near you'
-            college = [self.appData.nearbyColleges objectAtIndex:indexPath.row];
+            College *college = [self.appData.nearbyColleges objectAtIndex:indexPath.row];
             [cell.textLabel setText:college.name];
         }
-        
         else
-        {   // last section is of all colleges
-            college = (College *)[self.list objectAtIndex:indexPath.row];
+        {   // last section always is of all colleges
+            College *college = (College *)[self.list objectAtIndex:indexPath.row];
             [cell.textLabel setText:college.name];
         }
     }
+    else
+    {   // last section always is of all colleges
+        College *college = (College *)[self.list objectAtIndex:indexPath.row];
+        [cell.textLabel setText:college.name];  
+    }
+
+    
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

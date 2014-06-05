@@ -113,7 +113,6 @@
 }
 - (void)create
 {   // Display popup to let user type a new post
-//    College *currentCollege = self.appData.currentCollege;
     College *currentCollege = [self.appData.nearbyColleges objectAtIndex:0];
     if (self.appData.nearbyColleges.count == 0 || currentCollege == nil)
     {
@@ -140,7 +139,6 @@
     {
         return;
     }
-//    College *currentCollege = self.appData.currentCollege;
     College *currentCollege = [self.appData.nearbyColleges objectAtIndex:0];
     if (currentCollege != nil)
     {
