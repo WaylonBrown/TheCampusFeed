@@ -26,6 +26,7 @@
 - (void)placeLoadingIndicator;
 - (void)placeCreatePost;
 - (void)foundLocation;
+- (void)didNotFindLocation;
 
 // Actions
 - (IBAction)changeFeed;

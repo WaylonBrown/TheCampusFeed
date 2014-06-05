@@ -20,6 +20,7 @@
         [self setVoteDataController:    [[VoteDataController alloc]     init]];
         [self setCollegeDataController: [[CollegeDataController alloc]  init]];
         [self setTagDataController:     [[TagDataController alloc]      init]];
+        [self switchedToSpecificCollegeOrNil:nil];
         
         [self setLocationManager:[[CLLocationManager alloc] init]];
         [self.locationManager setDelegate:self];
@@ -38,11 +39,10 @@
 
     [self findNearbyColleges];
     [self.appDelegate foundLocation];
-    
 }
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    NSLog(@"Failed to get location (with error...)");
+    [self.appDelegate didNotFindLocation];
 }
 - (void)switchedToSpecificCollegeOrNil:(College *)college
 {
