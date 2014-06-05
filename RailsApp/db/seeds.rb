@@ -15,7 +15,7 @@ def sanitizeName(name)
   end
 end
 
-@@smallestSizeIncluded = 15
+@@smallestSizeIncluded = 12
 def importFromFile(lim = -1)
   #imports from the 2012 
   @i = 0
