@@ -88,7 +88,7 @@
     [self refresh];
 }
 - (void)foundLocation
-{
+{   // Called when the user's location is determined. Allow them to create posts
     if (self.appData.nearbyColleges.count > 0)
     {
         [self placeCreatePost];
@@ -97,6 +97,11 @@
     {
         [self.navigationItem setRightBarButtonItem:nil];
     }
+}
+- (void)didNotFindLocation
+{   // Called when the user's location cannot be determined. Stop and remove activity indicator
+    [self.activityIndicator stopAnimating];
+    [self.navigationItem setRightBarButtonItem:nil];
 }
 
 #pragma mark - UITableView Functions

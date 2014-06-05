@@ -47,5 +47,6 @@
 @protocol AppDataDelegateProtocol <NSObject>
 
 - (void)foundLocation;
+- (void)didNotFindLocation;
 
 @end

@@ -60,12 +60,8 @@
     
     if (error)
     {
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-//                                                        message:[NSString stringWithFormat:@"An error occurred attempting to retrieve information from %@.", url]
-//                                                       delegate:self cancelButtonTitle:@"Whoops" otherButtonTitles:nil, nil];
-        NSLog(@"Error in GETfromServer with: \nURL: %@\nResponse: %@\nError message: %@",
+        NSLog(@"\nError in GETfromServer with URL: %@\nResponse: %@\nError message: %@\n",
               url, stringReply, [error localizedDescription]);
-//        [alert show];
     }
 
     if (statusCode == 200)
@@ -76,11 +72,7 @@
     }
     else
     {
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-//                                                        message:[NSString stringWithFormat:@"An error occurred attempting to retrieve information from %@.", url]
-//                                                       delegate:self cancelButtonTitle:@"Whoops" otherButtonTitles:nil, nil];
-        NSLog(@"Unexpected status code. Expected=200, actual=%d\nwith: \nURL: %@", statusCode, url);
-//        [alert show];
+        NSLog(@"\nUnexpected status code in GETfromServer with URL: %@\n", url);
     }
     return nil;
 }

@@ -39,11 +39,10 @@
 
     [self findNearbyColleges];
     [self.appDelegate foundLocation];
-    
 }
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    NSLog(@"Failed to get location (with error...)");
+    [self.appDelegate didNotFindLocation];
 }
 - (void)switchedToSpecificCollegeOrNil:(College *)college
 {
