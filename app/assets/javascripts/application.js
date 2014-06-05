@@ -25,15 +25,24 @@ app = angular.module('cfeed', ["ui.bootstrap"])
 app.controller('PostSection', ['$scope', '$http', function($scope, $http) {
 
     $scope.populatePosts = function(){
-      $http.get('api/v1/posts')
+      $scope.posts = [];
+      console.log($scope.currentPage)
+      $http.get('api/v1/posts?page='+$scope.curPage+'&per_page=6')
        .then(function(res){
-         console.log(res.data)
+          console.log(res.data)
           $scope.posts = res.data
         });
     }
-    /*$scope.$on('show.bs.collapse', function(){
+
+    $scope.$on('show.bs.collapse', function(){
       console.log('asdf');
-    });*/
+    });
+
+    $scope.populatePosts();
+
+    $scope.setPage = function (pageNo) {
+      $scope.curPage = pageNo;
+    };
   }]
 );
 
