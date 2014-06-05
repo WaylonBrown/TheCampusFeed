@@ -70,6 +70,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         	//these two will return null if not showing posts with college names
         	postHolder.collegeName = (TextView)row.findViewById(R.id.collegeNameText);
         	postHolder.gpsImage = (ImageView)row.findViewById(R.id.gpsImage);
+        	postHolder.gpsImageGap = (View)row.findViewById(R.id.gpsImageGapFiller);
             
             postHolder.scoreText.setTypeface(FontManager.bold);
             postHolder.messageText.setTypeface(FontManager.light);
@@ -87,8 +88,9 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         postHolder.scoreText.setText(String.valueOf(thisPost.getScore()));
         if(postHolder.collegeName != null)
         	postHolder.collegeName.setText(thisPost.getCollegeName());
-        if(postHolder.gpsImage != null)
+        if(postHolder.gpsImage != null){
         	setGPSImageVisibility(postHolder, thisPost);
+        }
         
         String commentString = thisPost.getCommentList().size() + " comment";
         if(thisPost.getCommentList().size() != 1)
@@ -269,14 +271,17 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 		if(MainActivity.permissions == null)
 		{
 			holder.gpsImage.setVisibility(View.GONE);
+			holder.gpsImageGap.setVisibility(View.GONE);
 		}
 		else if(!MainActivity.hasPermissions(thisPost.getCollegeID()))
 		{
 			holder.gpsImage.setVisibility(View.GONE);
+			holder.gpsImageGap.setVisibility(View.GONE);
 		}
 		else
 		{
 			holder.gpsImage.setVisibility(View.VISIBLE);
+			holder.gpsImageGap.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -354,5 +359,6 @@ public class PostListAdapter extends ArrayAdapter<Post>{
     	ImageView arrowUp;
     	ImageView arrowDown;
     	ImageView gpsImage;
+    	View gpsImageGap;
     }
 }
