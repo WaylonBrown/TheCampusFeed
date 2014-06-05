@@ -70,6 +70,7 @@ public class JSONParser {
 				String text = null;
 				int score = 0;
 				int collegeID = -1;
+				String time = null;
 				
 				reader.beginObject();
 				while(reader.hasNext()){
@@ -104,13 +105,16 @@ public class JSONParser {
 							e.printStackTrace();
 						}
 					}
+					else if(name.equals("created_at")){
+						time = reader.nextString();
+					}
 					else{
 						reader.skipValue();
 					}
 				}
 				reader.endObject();
 				
-				ret.add(new Post(id, text, score, collegeID));
+				ret.add(new Post(id, text, score, collegeID, time));
 			}
 			reader.endArray();
 		} finally{

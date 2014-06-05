@@ -1,5 +1,6 @@
 package com.appuccino.collegefeed.adapters;
 
+import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
@@ -29,6 +30,7 @@ import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.utils.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
+import com.appuccino.collegefeed.utils.TimeParser;
 
 public class PostListAdapter extends ArrayAdapter<Post>{
 
@@ -81,10 +83,8 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         
         final Post thisPost = postList.get(position);
         postHolder.scoreText.setText(String.valueOf(thisPost.getScore()));
-        postHolder.timeText.setText(String.valueOf(thisPost.getHoursAgo()) + " hours ago");
         if(postHolder.collegeName != null)
         	postHolder.collegeName.setText(thisPost.getCollegeName());
-        
         if(postHolder.gpsImage != null)
         	setGPSImageVisibility(postHolder, thisPost);
         
@@ -94,6 +94,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         postHolder.commentText.setText(commentString);
         
         setMessageAndColorizeTags(thisPost.getMessage(), postHolder);
+        setTime(thisPost.getTime(), postHolder.timeText);
         
         //arrow click listeners
         postHolder.arrowUp.setOnClickListener(new OnClickListener(){
@@ -176,7 +177,14 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         return row;
     }
         
-    private void setGPSImageVisibility(PostHolder holder, Post thisPost) 
+    private void setTime(String time, TextView timeText) {
+    	Calendar thisPostTime = TimeParser.toCalendar(time);
+    	Calendar now = Calendar.getInstance();
+    	
+    	
+	}
+
+	private void setGPSImageVisibility(PostHolder holder, Post thisPost) 
     {
 		if(MainActivity.permissions == null)
 		{
