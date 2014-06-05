@@ -10,12 +10,15 @@
 
 @class College;
 @class Vote;
+@class AppData;
 
 @protocol ChildCellDelegate;
 
 @interface CollegePickerViewController : UIViewController
 
 @property (nonatomic, weak) id<ChildCellDelegate> delegate;
+
+@property (strong, nonatomic) AppData *appData;
 
 @property (strong, atomic) NSMutableArray *list;
 @property (strong, atomic) NSMutableArray *searchResults;
@@ -25,9 +28,7 @@
 @property (nonatomic) BOOL topColleges;
 @property (nonatomic) BOOL allColleges;
 
-- (id)initAsTopColleges;
-- (id)initAsAllColleges;
-
-- (void)setCollegesList:(NSMutableArray *)collegeList;
+- (id)initAsTopCollegesWithAppData:(AppData*)data;
+- (id)initAsAllCollegesWithAppData:(AppData*)data;
 
 @end

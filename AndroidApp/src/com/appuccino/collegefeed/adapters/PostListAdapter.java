@@ -1,5 +1,7 @@
 package com.appuccino.collegefeed.adapters;
 
+import java.text.ParseException;
+import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
@@ -9,6 +11,7 @@ import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,6 +32,7 @@ import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.utils.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
+import com.appuccino.collegefeed.utils.TimeManager;
 
 public class PostListAdapter extends ArrayAdapter<Post>{
 
@@ -66,6 +70,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         	//these two will return null if not showing posts with college names
         	postHolder.collegeName = (TextView)row.findViewById(R.id.collegeNameText);
         	postHolder.gpsImage = (ImageView)row.findViewById(R.id.gpsImage);
+        	postHolder.gpsImageGap = (View)row.findViewById(R.id.gpsImageGapFiller);
             
             postHolder.scoreText.setTypeface(FontManager.bold);
             postHolder.messageText.setTypeface(FontManager.light);
@@ -81,12 +86,11 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         
         final Post thisPost = postList.get(position);
         postHolder.scoreText.setText(String.valueOf(thisPost.getScore()));
-        postHolder.timeText.setText(String.valueOf(thisPost.getHoursAgo()) + " hours ago");
         if(postHolder.collegeName != null)
         	postHolder.collegeName.setText(thisPost.getCollegeName());
-        
-        if(postHolder.gpsImage != null)
+        if(postHolder.gpsImage != null){
         	setGPSImageVisibility(postHolder, thisPost);
+        }
         
         String commentString = thisPost.getCommentList().size() + " comment";
         if(thisPost.getCommentList().size() != 1)
@@ -94,6 +98,12 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         postHolder.commentText.setText(commentString);
         
         setMessageAndColorizeTags(thisPost.getMessage(), postHolder);
+        try {
+			setTime(thisPost, postHolder.timeText);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         //arrow click listeners
         postHolder.arrowUp.setOnClickListener(new OnClickListener(){
@@ -176,19 +186,102 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         return row;
     }
         
-    private void setGPSImageVisibility(PostHolder holder, Post thisPost) 
+    private void setTime(Post thisPost, TextView timeText) throws ParseException {
+    	Calendar thisPostTime = TimeManager.toCalendar(thisPost.getTime());
+    	Calendar now = Calendar.getInstance();
+    	
+    	int yearsDiff;
+    	int monthsDiff;
+    	int weeksDiff;
+    	int daysDiff;
+    	int hoursDiff;
+    	int minutesDiff;
+    	int secondsDiff;
+    	
+    	yearsDiff = now.get(Calendar.YEAR) - thisPostTime.get(Calendar.YEAR);
+    	monthsDiff = now.get(Calendar.MONTH) - thisPostTime.get(Calendar.MONTH);
+    	weeksDiff = now.get(Calendar.WEEK_OF_YEAR) - thisPostTime.get(Calendar.WEEK_OF_YEAR);
+    	daysDiff = now.get(Calendar.DAY_OF_YEAR) - thisPostTime.get(Calendar.DAY_OF_YEAR);
+    	hoursDiff = now.get(Calendar.HOUR_OF_DAY) - thisPostTime.get(Calendar.HOUR_OF_DAY);
+    	minutesDiff = now.get(Calendar.MINUTE) - thisPostTime.get(Calendar.MINUTE);
+    	secondsDiff = now.get(Calendar.SECOND) - thisPostTime.get(Calendar.SECOND);
+    	
+    	Log.i("cfeed","Time difference for post " + thisPost.getMessage().substring(0, 10) + ": Years: " + yearsDiff + " Months: " + monthsDiff +
+    			" Weeks: " + weeksDiff + " Days: " + daysDiff + " Hours: " + hoursDiff + " Minutes: " + minutesDiff + " Seconds: " + secondsDiff);
+    	
+    	String timeOutputText = "";
+    	if(yearsDiff > 0){
+    		timeOutputText = yearsDiff + " year";
+    		if(yearsDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else if(monthsDiff > 0){
+    		timeOutputText = monthsDiff + " month";
+    		if(monthsDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else if(weeksDiff > 0){
+    		timeOutputText = weeksDiff + " week";
+    		if(weeksDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else if(daysDiff > 0){
+    		timeOutputText = daysDiff + " day";
+    		if(daysDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else if(hoursDiff > 0){
+    		timeOutputText = hoursDiff + " hour";
+    		if(hoursDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else if(minutesDiff > 0){
+    		timeOutputText = minutesDiff + " minute";
+    		if(minutesDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else if(secondsDiff > 0){
+    		timeOutputText = secondsDiff + " second";
+    		if(secondsDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else{
+    		timeOutputText = "Just now";
+    	}
+    	
+    	timeText.setText(timeOutputText);
+	}
+
+	private void setGPSImageVisibility(PostHolder holder, Post thisPost) 
     {
 		if(MainActivity.permissions == null)
 		{
 			holder.gpsImage.setVisibility(View.GONE);
+			holder.gpsImageGap.setVisibility(View.GONE);
 		}
 		else if(!MainActivity.hasPermissions(thisPost.getCollegeID()))
 		{
 			holder.gpsImage.setVisibility(View.GONE);
+			holder.gpsImageGap.setVisibility(View.GONE);
 		}
 		else
 		{
 			holder.gpsImage.setVisibility(View.VISIBLE);
+			holder.gpsImageGap.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -266,5 +359,6 @@ public class PostListAdapter extends ArrayAdapter<Post>{
     	ImageView arrowUp;
     	ImageView arrowDown;
     	ImageView gpsImage;
+    	View gpsImageGap;
     }
 }

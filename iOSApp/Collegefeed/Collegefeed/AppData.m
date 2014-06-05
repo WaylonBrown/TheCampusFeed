@@ -20,6 +20,11 @@
         [self setVoteDataController:    [[VoteDataController alloc]     init]];
         [self setCollegeDataController: [[CollegeDataController alloc]  init]];
         [self setTagDataController:     [[TagDataController alloc]      init]];
+        [self setCollegeFeedPicker:     [[CollegePickerViewController alloc]
+                                         initAsAllCollegesWithAppData:self]];
+        
+        
+        [self switchedToSpecificCollegeOrNil:nil];
         
         [self setLocationManager:[[CLLocationManager alloc] init]];
         [self.locationManager setDelegate:self];
@@ -37,12 +42,11 @@
     [self.locationManager stopUpdatingLocation];
 
     [self findNearbyColleges];
-    [self.appDelegate foundLocationWithLat:self.lat withLon:self.lon];
-    
+    [self.appDelegate foundLocation];
 }
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    NSLog(@"Failed to get location (with error...)");
+    [self.appDelegate didNotFindLocation];
 }
 - (void)switchedToSpecificCollegeOrNil:(College *)college
 {
@@ -65,5 +69,8 @@
                                     findNearbyCollegesWithLat:self.lat withLon:self.lon]];
 
 }
-    
+- (BOOL)isNearCollege
+{
+    return self.nearbyColleges.count > 0;
+}
 @end

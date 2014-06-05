@@ -7,6 +7,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 
 import com.appuccino.collegefeed.MainActivity;
+import com.appuccino.collegefeed.utils.TimeManager;
 
 import android.util.JsonReader;
 import android.util.JsonWriter;
@@ -14,7 +15,7 @@ import android.util.JsonWriter;
 public class Post implements Votable{
 	public int score;
 	String message;
-	int hoursAgo;
+	String time;
 	int id;
 	ArrayList<Comment> commentList = new ArrayList<Comment>();
 	int vote = 0;		//-1 = downvote, 0 = nothing, 1 = upvote
@@ -25,7 +26,6 @@ public class Post implements Votable{
 	{
 		score = 0;
 		message = "";
-		hoursAgo = 0;
 		id = (int)(Math.random() * Integer.MAX_VALUE);
 		collegeID = 234234;
 		collegeName = "Texas A&M University";
@@ -39,7 +39,6 @@ public class Post implements Votable{
 	{
 		message = m;
 		score = 0;
-		hoursAgo = 0;
 		id = (int)(Math.random() * Integer.MAX_VALUE);
 		collegeID = 234234;
 		collegeName = "Texas A&M University";
@@ -49,12 +48,11 @@ public class Post implements Votable{
 			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
 	}
 	
-	public Post(String m, int collegeID)
+	public Post(String message, int collegeID)
 	{
-		message = m;
-		score = 0;
-		hoursAgo = 0;
-		id = (int)(Math.random() * Integer.MAX_VALUE);
+		this.score = 1;
+		this.message = message;
+		this.time = TimeManager.now();
 		this.collegeID = collegeID;
 		collegeName = MainActivity.getCollegeByID(collegeID).getName();
 		
@@ -63,14 +61,14 @@ public class Post implements Votable{
 			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
 	}
 	
-	public Post(int s, String m, int h)
+	public Post(int id, String message, int score, int collegeID, String time)
 	{
-		score = s;
-		message = m;
-		hoursAgo = h;
-		id = (int)(Math.random() * Integer.MAX_VALUE);
-		collegeID = 234234;
-		collegeName = "Texas A&M University";
+		this.score = score;
+		this.message = message;
+		this.time = time;
+		this.id = id;
+		this.collegeID = collegeID;
+		collegeName = MainActivity.getCollegeByID(collegeID).getName();
 		
 		int numberOfComments = (int)(Math.random() * 15);
 		for(int i = 0; i < numberOfComments; i++)
@@ -134,9 +132,9 @@ public class Post implements Votable{
 		return collegeID;
 	}
 	
-	public int getHoursAgo()
+	public String getTime()
 	{
-		return hoursAgo;
+		return time;
 	}
 	
 	@Override

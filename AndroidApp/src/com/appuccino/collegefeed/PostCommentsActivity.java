@@ -1,5 +1,7 @@
 package com.appuccino.collegefeed;
 
+import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -35,6 +37,7 @@ import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
 import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.NetWorker;
+import com.appuccino.collegefeed.utils.TimeManager;
 import com.appuccino.collegefeed.utils.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.utils.NetWorker.MakeVoteTask;
 
@@ -91,7 +94,12 @@ public class PostCommentsActivity extends Activity{
 		if(post != null)
 		{
 			scoreText.setText(String.valueOf(post.getScore()));
-			timeText.setText(String.valueOf(post.getHoursAgo()) + " hours ago");
+			try {
+				setTime(post.getTime(), timeText);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			//change text if no comments from post
 			if(post.getCommentList().size() == 0)
@@ -200,6 +208,83 @@ public class PostCommentsActivity extends Activity{
 		}
 	}
 	
+	private void setTime(String time, TextView timeText) throws ParseException {
+    	Calendar thisPostTime = TimeManager.toCalendar(time);
+    	Calendar now = Calendar.getInstance();
+    	
+    	int yearsDiff;
+    	int monthsDiff;
+    	int weeksDiff;
+    	int daysDiff;
+    	int hoursDiff;
+    	int minutesDiff;
+    	int secondsDiff;
+    	
+    	yearsDiff = now.get(Calendar.YEAR) - thisPostTime.get(Calendar.YEAR);
+    	monthsDiff = now.get(Calendar.MONTH) - thisPostTime.get(Calendar.MONTH);
+    	weeksDiff = now.get(Calendar.WEEK_OF_YEAR) - thisPostTime.get(Calendar.WEEK_OF_YEAR);
+    	daysDiff = now.get(Calendar.DAY_OF_YEAR) - thisPostTime.get(Calendar.DAY_OF_YEAR);
+    	hoursDiff = now.get(Calendar.HOUR_OF_DAY) - thisPostTime.get(Calendar.HOUR_OF_DAY);
+    	minutesDiff = now.get(Calendar.MINUTE) - thisPostTime.get(Calendar.MINUTE);
+    	secondsDiff = now.get(Calendar.SECOND) - thisPostTime.get(Calendar.SECOND);
+    	
+    	String timeOutputText = "";
+    	if(yearsDiff > 0){
+    		timeOutputText = yearsDiff + " year";
+    		if(yearsDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else if(monthsDiff > 0){
+    		timeOutputText = monthsDiff + " month";
+    		if(monthsDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else if(weeksDiff > 0){
+    		timeOutputText = weeksDiff + " week";
+    		if(weeksDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else if(daysDiff > 0){
+    		timeOutputText = daysDiff + " day";
+    		if(daysDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else if(hoursDiff > 0){
+    		timeOutputText = hoursDiff + " hour";
+    		if(hoursDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else if(minutesDiff > 0){
+    		timeOutputText = minutesDiff + " minute";
+    		if(minutesDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else if(secondsDiff > 0){
+    		timeOutputText = secondsDiff + " second";
+    		if(secondsDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else{
+    		timeOutputText = "Just now";
+    	}
+    	
+    	timeText.setText(timeOutputText);
+	}
+
 	protected void newCommentDialog() 
 	{
 		LayoutInflater inflater = getLayoutInflater();

@@ -52,6 +52,8 @@
     if (jsonArray == nil)
     {
         [self initDummyPostsIntoList:array];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention" message:[NSString stringWithFormat:@"Dummy init in PostDataController. Error with %@", url] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
         return;
     }
     
@@ -68,7 +70,7 @@
 {
     [self setTopPostsAllColleges:[[NSMutableArray alloc] init]];
 
-    [self fetchWithUrl:[Shared GETTrendingPosts]
+    [self fetchWithUrl:[Shared GETAllPosts]
               intoList:self.topPostsAllColleges];
     
     [self setList:self.topPostsAllColleges];
@@ -86,7 +88,7 @@
 {
     [self setRecentPostsAllColleges:[[NSMutableArray alloc] init]];
 
-    [self fetchWithUrl:[Shared GETRecentPosts]
+    [self fetchWithUrl:[Shared GETAllPosts]
               intoList:self.recentPostsAllColleges];
     [self setList:self.recentPostsAllColleges];
 }
