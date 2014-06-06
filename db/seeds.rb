@@ -70,3 +70,12 @@ if Rails.env.production?
 else
   importFromFile 10
 end
+
+
+Post.create({text: "This1 #is a #test post!"})
+Post.create({text: "This2 is a #test post!"})
+Post.create({text: "This3 #is a #test post!"})
+Post.create({text: "This4 is a #test post!"})
+Comment.create({post_id: 1, text: "hello I comment."})
+Comment.create({post_id: 2, text: "hello I comment."})
+Comment.create({post_id: 2, text: "hello I comment."})
