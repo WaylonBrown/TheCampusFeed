@@ -23,6 +23,27 @@ Postfeed::Application.routes.draw do
     end
 =end
     scope '/api/v1', defaults: {format: :json}, shallow_path: '/api/v1' do
+
+
+      resources :comments, only: [:show]
+
+      get '/posts/byTag/:tagText' => 'posts#byTag'
+      get '/posts/recent' => 'posts#recent'
+      get '/posts/trending' => 'posts#trending'
+      resources :posts do
+        resources :comments, except: [:show] do
+          get 'votes/score' => 'votes#score'
+          resources :votes, only: [:create]
+        end
+        get 'votes/score' => 'votes#score'
+        resources :votes
+      end
+
+      get '/tags/trending' => 'tags#trending'
+      resources :tags
+
+
+
       #get '/colleges/listNearby' => 'colleges#listNearby'
       #get '/colleges/:id/within' => 'colleges#within'
       get '/colleges/:id/image' => 'colleges#image'
@@ -44,24 +65,11 @@ Postfeed::Application.routes.draw do
         resources :tags
       end
 
-      resources :comments, only: [:show]
 
-      get '/posts/byTag/:tagText' => 'posts#byTag'
-      get '/posts/recent' => 'posts#recent'
-      get '/posts/trending' => 'posts#trending'
-      resources :posts do
-        resources :comments, except: [:show] do
-          get 'votes/score' => 'votes#score'
-          resources :votes, only: [:create]
-        end
-        get 'votes/score' => 'votes#score'
-        resources :votes
-      end
-
-      get '/tags/trending' => 'tags#trending'
+    end
 
 #====================== PLANNED USER ROUTES BELOW ====================
-
+=begin
       resources :users do
         #get '/colleges/listNearby' => 'colleges#listNearby'
         #get '/colleges/:id/within' => 'colleges#within'
@@ -102,7 +110,7 @@ Postfeed::Application.routes.draw do
         resources :tags
       end
     end
-
+=end
     root to: 'static_pages#index'
 
     get '/admin' => 'static_pages#admin'
