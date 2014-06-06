@@ -1,0 +1,31 @@
+{
+  "resource": "Posts",
+  "http_method": "GET",
+  "route": "/api/v1/posts/byTag/test",
+  "description": "Get all posts using tag #test from all colleges",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/v1/posts/byTag/test",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "[{\"id\":56,\"text\":\"its a #test post 1\",\"score\":null,\"created_at\":\"2014-06-06T04:26:57.377Z\",\"updated_at\":\"2014-06-06T04:26:57.377Z\",\"college_id\":2015},{\"id\":57,\"text\":\"its a #test post 2\",\"score\":null,\"created_at\":\"2014-06-06T04:26:57.389Z\",\"updated_at\":\"2014-06-06T04:26:57.389Z\",\"college_id\":2015},{\"id\":58,\"text\":\"its a #test post 3\",\"score\":null,\"created_at\":\"2014-06-06T04:26:57.400Z\",\"updated_at\":\"2014-06-06T04:26:57.400Z\",\"college_id\":2015},{\"id\":59,\"text\":\"its a #test post 2.0 1\",\"score\":null,\"created_at\":\"2014-06-06T04:26:57.416Z\",\"updated_at\":\"2014-06-06T04:26:57.416Z\",\"college_id\":2016},{\"id\":60,\"text\":\"its a #test post 2.0 2\",\"score\":null,\"created_at\":\"2014-06-06T04:26:57.428Z\",\"updated_at\":\"2014-06-06T04:26:57.428Z\",\"college_id\":2016},{\"id\":61,\"text\":\"its a #test post 2.0 3\",\"score\":null,\"created_at\":\"2014-06-06T04:26:57.438Z\",\"updated_at\":\"2014-06-06T04:26:57.438Z\",\"college_id\":2016}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Total":"6","Content-Type":"application/json; charset=utf-8","ETag":"\"31f16afd13286edc1f580af84266cbe0\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"319493df-d28d-4ee8-96d7-cbc67a1d644c","X-Runtime":"0.020962","Content-Length":"907"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

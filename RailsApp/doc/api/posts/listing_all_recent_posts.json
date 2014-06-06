@@ -1,0 +1,31 @@
+{
+  "resource": "Posts",
+  "http_method": "GET",
+  "route": "/api/v1/posts/recent",
+  "description": "Listing all recent posts",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/v1/posts/recent",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "[{\"id\":6,\"text\":\"its a #test post 2.0 3\",\"score\":null,\"created_at\":\"2014-06-06T04:26:56.461Z\",\"updated_at\":\"2014-06-06T04:26:56.461Z\",\"college_id\":2016},{\"id\":5,\"text\":\"its a #test post 2.0 2\",\"score\":null,\"created_at\":\"2014-06-06T04:26:56.450Z\",\"updated_at\":\"2014-06-06T04:26:56.450Z\",\"college_id\":2016},{\"id\":4,\"text\":\"its a #test post 2.0 1\",\"score\":null,\"created_at\":\"2014-06-06T04:26:56.439Z\",\"updated_at\":\"2014-06-06T04:26:56.439Z\",\"college_id\":2016},{\"id\":3,\"text\":\"its a #test post 3\",\"score\":null,\"created_at\":\"2014-06-06T04:26:56.422Z\",\"updated_at\":\"2014-06-06T04:26:56.422Z\",\"college_id\":2015},{\"id\":2,\"text\":\"its a #test post 2\",\"score\":null,\"created_at\":\"2014-06-06T04:26:56.370Z\",\"updated_at\":\"2014-06-06T04:26:56.370Z\",\"college_id\":2015},{\"id\":1,\"text\":\"its a #test post 1\",\"score\":null,\"created_at\":\"2014-06-06T04:26:56.326Z\",\"updated_at\":\"2014-06-06T04:26:56.326Z\",\"college_id\":2015}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Total":"6","Content-Type":"application/json; charset=utf-8","ETag":"\"c400b1e76a2c9d5eaceee8e3020a2952\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"b31cf5e3-c02b-4ba9-91c5-0a3c18f8deba","X-Runtime":"0.042531","Content-Length":"901"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

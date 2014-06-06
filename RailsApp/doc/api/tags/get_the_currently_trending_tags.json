@@ -1,0 +1,31 @@
+{
+  "resource": "Tags",
+  "http_method": "GET",
+  "route": "/api/v1/tags/trending",
+  "description": "Get the currently trending tags",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/v1/tags/trending",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "[{\"id\":19,\"text\":\"swag\",\"posts_count\":1},{\"id\":18,\"text\":\"yolo\",\"posts_count\":1}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"2fdf1a6fc14678d22ce787ac777ae1bd\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"c624f42e-c9d8-4823-8112-af53ce220dbf","X-Runtime":"0.017230","Content-Length":"81"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}
