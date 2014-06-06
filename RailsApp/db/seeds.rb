@@ -36,6 +36,7 @@ def importFromFile(lim = -1)
     @params[:name] = sanitizedName
     @params[:lat] = row[-1]
     @params[:lon] = row[-2] # database provided as lon then lat.. wtf
+    @params[:size] = row[49]
     @cur = College.new(@params)
     if !@cur.save
       puts 'shit shit shit' #this shouldn't happen ;)
