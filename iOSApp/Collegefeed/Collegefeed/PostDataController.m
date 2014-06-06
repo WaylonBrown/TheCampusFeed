@@ -52,8 +52,8 @@
     if (jsonArray == nil)
     {
         [self initDummyPostsIntoList:array];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention" message:[NSString stringWithFormat:@"Dummy init in PostDataController. Error with %@", url] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention" message:[NSString stringWithFormat:@"Dummy init in PostDataController. Error with %@", url] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        [alert show];
         return;
     }
     
