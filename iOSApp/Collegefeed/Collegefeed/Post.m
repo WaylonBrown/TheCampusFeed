@@ -63,18 +63,23 @@
         NSString *score     = (NSString*)[jsonObject valueForKey:@"score"];
         NSString *lat       = (NSString*)[jsonObject valueForKey:@"lat"];
         NSString *lon       = (NSString*)[jsonObject valueForKey:@"lon"];
-        //TODO: createdAt
-        
+        NSString *created   = (NSString*)[jsonObject valueForKey:@"created_at"];
         
         if (score == (id)[NSNull null]) score = nil;
         if (lat == (id)[NSNull null]) lat = nil;
         if (lon == (id)[NSNull null]) lon = nil;
         
+        //"created_at":"2014-06-03T00:09:22.621Z
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+        NSDate *createdDate = [dateFormatter dateFromString: created];
+
         [self setPostID:[postID integerValue]];
         [self setScore:[score integerValue]];
         [self setMessage:text];
         [self setLat:[lat floatValue]];
         [self setLon:[lon floatValue]];
+        [self setCreatedAt:createdDate];
         
         return self;
     }

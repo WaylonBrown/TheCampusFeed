@@ -95,13 +95,18 @@
         NSString *text      = (NSString*)[jsonObject valueForKey:@"text"];
         NSString *score     = (NSString*)[jsonObject valueForKey:@"score"];
         NSString *postID    = (NSString*)[jsonObject valueForKey:@"post_id"];
+        NSString *created   = (NSString*)[jsonObject valueForKey:@"created_at"];
 
         if (score == (id)[NSNull null]) score = nil;
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+        NSDate *createdDate = [dateFormatter dateFromString: created];
         
         [self setCommentID:[commentID integerValue]];
         [self setScore:[score integerValue]];
         [self setMessage:text];
         [self setPostID:[postID integerValue]];
+        [self setCreatedAt:createdDate];
         
         return self;
     }
