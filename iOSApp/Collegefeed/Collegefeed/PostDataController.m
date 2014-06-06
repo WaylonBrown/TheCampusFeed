@@ -29,7 +29,7 @@
 - (void)initDummyPostsIntoList:(NSMutableArray *)array
 {
     [array removeAllObjects];
-    for (int i = 0 ; i < 3; i++)
+    for (int i = 0 ; i < 8; i++)
     {
         Post* p = [[Post alloc] initWithPostID:i withScore:i
                                    withMessage:[NSString stringWithFormat:@"#DUMMY Test #postNumber_%d", i]];
@@ -49,7 +49,7 @@
     }
     NSArray *jsonArray = (NSArray*)[self GETfromServer:url];
     
-    if (jsonArray == nil)
+//    if (jsonArray == nil)
     {
         [self initDummyPostsIntoList:array];
 //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention" message:[NSString stringWithFormat:@"Dummy init in PostDataController. Error with %@", url] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];

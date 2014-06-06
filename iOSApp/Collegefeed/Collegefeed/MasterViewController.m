@@ -44,7 +44,7 @@
     // place logo at the top of the navigation bar
     [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
     [self.currentFeedLabel setAdjustsFontSizeToFitWidth:YES];
-
+   
     [super loadView];
 }
 - (void)viewWillAppear:(BOOL)animated

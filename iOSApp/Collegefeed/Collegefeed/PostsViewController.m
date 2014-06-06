@@ -89,6 +89,7 @@
     // Do any additional setup after loading the view.
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
+    
 }
 - (void)loadView
 {
