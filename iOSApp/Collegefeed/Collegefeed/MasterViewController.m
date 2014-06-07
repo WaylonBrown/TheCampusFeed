@@ -19,6 +19,8 @@
 #import "Shared.h"
 #import "AppDelegate.h"
 #import "College.h"
+#import "CustomIOS7AlertView.h"
+
 
 @implementation MasterViewController
 
@@ -34,7 +36,6 @@
         // initialize a loading indicator and place it in top right corner (placeholder for create post button)
         self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         [self placeLoadingIndicator];
-        
     }
     return self;
 }
@@ -44,8 +45,17 @@
     // place logo at the top of the navigation bar
     [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
     [self.currentFeedLabel setAdjustsFontSizeToFitWidth:YES];
-   
+    
     [super loadView];
+}
+- (void)viewDidLoad
+{
+    [self.navigationController.navigationBar setTranslucent:YES];
+    [self.navigationController.navigationBar setAlpha:0.87f];
+    
+    CustomIOS7AlertView *alertView = [[CustomIOS7AlertView alloc] init];
+    [alertView show];
+    
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
@@ -56,7 +66,7 @@
 - (void)placeLoadingIndicator
 {   // Place the loading indicator in the navigation bar (instead of create post button)
     UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
-    
+
     [self.navigationItem setRightBarButtonItem:button];
     
     [self.activityIndicator startAnimating];
@@ -128,6 +138,7 @@
                                                        delegate:self
                                               cancelButtonTitle:@"nvm.."
                                               otherButtonTitles:@"Post dis bitch!", nil];
+
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         [alert show];
     }

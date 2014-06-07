@@ -37,6 +37,7 @@
     }
 }
 
+
 #pragma mark - Network Access
 
 - (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array
@@ -49,7 +50,7 @@
     }
     NSArray *jsonArray = (NSArray*)[self GETfromServer:url];
     
-//    if (jsonArray == nil)
+    if (jsonArray == nil)
     {
         [self initDummyPostsIntoList:array];
 //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention" message:[NSString stringWithFormat:@"Dummy init in PostDataController. Error with %@", url] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
