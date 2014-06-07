@@ -10,8 +10,9 @@
 
 #import "AppData.h"
 #import "ChildCellDelegate.h"
+#import "CustomIOS7AlertView.h"
 
-@interface MasterViewController : UIViewController <ChildCellDelegate>
+@interface MasterViewController : UIViewController <ChildCellDelegate, CustomIOS7AlertViewDelegate>
 
 @property (strong, nonatomic) AppData *appData;
 

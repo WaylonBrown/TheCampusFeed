@@ -19,7 +19,6 @@
 #import "Shared.h"
 #import "AppDelegate.h"
 #import "College.h"
-#import "CustomIOS7AlertView.h"
 
 
 @implementation MasterViewController
@@ -52,10 +51,6 @@
 {
     [self.navigationController.navigationBar setTranslucent:YES];
     [self.navigationController.navigationBar setAlpha:0.87f];
-    
-    CustomIOS7AlertView *alertView = [[CustomIOS7AlertView alloc] init];
-    [alertView show];
-    
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
@@ -123,25 +118,85 @@
 }
 - (void)create
 {   // Display popup to let user type a new post
-    College *currentCollege = [self.appData.nearbyColleges objectAtIndex:0];
-    if (self.appData.nearbyColleges.count == 0 || currentCollege == nil)
+    NSArray *nearbyColleges = self.appData.nearbyColleges;
+    if (nearbyColleges.count == 0)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                         message:@"You cannot post because you are not within range of any known colleges"
                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }
+    else if (nearbyColleges.count == 1 && [nearbyColleges objectAtIndex:0] != nil)
+    {
+        [self displayPostAlertForCollege:[nearbyColleges objectAtIndex:0]];
+    }
     else
     {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
-                                                        message:[NSString stringWithFormat:@"Posting to %@", currentCollege.name]
-                                                       delegate:self
-                                              cancelButtonTitle:@"nvm.."
-                                              otherButtonTitles:@"Post dis bitch!", nil];
-
-        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-        [alert show];
+        [self displaySelectorForNearbyColleges:nearbyColleges];
     }
+    
+}
+- (void)displaySelectorForNearbyColleges:(NSArray *)colleges
+{   // If the user is near multiple colleges, display a custom alert view to select one
+    
+    CustomIOS7AlertView *alertView = [[CustomIOS7AlertView alloc] init];
+    
+    int numColleges = colleges.count;
+    
+    UIView *buttonsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 290, numColleges * 30)];
+    
+    for (int i = 0; i < numColleges; i++)
+    {
+        College *college = [colleges objectAtIndex:i];
+        
+        float y = 25 * i + 10;
+        
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(10, y, 250, 20)];
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setTitle:college.name forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(displayPostAlertForCollege:) forControlEvents:UIControlEventTouchUpInside];
+        [button setTag:i];
+        [buttonsView addSubview:button];
+    }
+    
+    
+    [alertView setContainerView:buttonsView];
+    
+    [alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"nvm...", nil]];
+    [alertView setDelegate:self];
+    
+    [alertView show];
+
+}
+- (void)customIOS7dialogButtonTouchUpInside: (CustomIOS7AlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [alertView close];
+}
+- (void)displayPostAlertForCollege:(UIButton*)sender//(College *)college
+{   // Prompt the user to post to the provided college
+    
+    College *college;
+    if ([sender class] == [College class])
+    {
+        college = (College *)sender;
+    }
+    else if ([sender.superview.superview.superview class] == [CustomIOS7AlertView class])
+    {
+        [(CustomIOS7AlertView *)sender.superview.superview.superview close];
+        college = [self.appData.nearbyColleges objectAtIndex:sender.tag];
+    }
+    else
+    {
+        return;
+    }
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
+                                                    message:[NSString stringWithFormat:@"Posting to %@", college.name]
+                                                   delegate:self
+                                          cancelButtonTitle:@"nvm.."
+                                          otherButtonTitles:@"Post dis bitch!", nil];
+    
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert show];
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {   // Add new post if user submits on the alert view

@@ -25,7 +25,6 @@
     }
     return nil;
 }
-
 - (void)initDummyPostsIntoList:(NSMutableArray *)array
 {
     [array removeAllObjects];
@@ -37,6 +36,7 @@
     }
 }
 
+#pragma mark - 
 
 #pragma mark - Network Access
 
