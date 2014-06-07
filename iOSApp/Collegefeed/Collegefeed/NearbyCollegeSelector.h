@@ -7,16 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
+
 #import "CustomIOS7AlertView.h"
 
 @class AppData;
+@class College;
 
-@interface NearbyCollegeSelector : UIView<CustomIOS7AlertViewDelegate>
+@interface NearbyCollegeSelector : UIView<CustomIOS7AlertViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) AppData* appData;
 
 - (id)initWithAppData:(AppData *)appData;
 - (void)displaySelectorForNearbyColleges:(NSArray *)colleges;
-- (void)displayPostToCollege:(UIButton*)sender;
+- (void)displayPostToCollege:(College *)college;
 
 @end

@@ -97,6 +97,7 @@
     
     [super loadView];
 }
+
 #pragma mark - Table View Override Functions
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

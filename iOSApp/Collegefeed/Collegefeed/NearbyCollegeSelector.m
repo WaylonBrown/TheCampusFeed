@@ -10,6 +10,7 @@
 #import "College.h"
 #import "AppData.h"
 #import "Post.h"
+#import "Shared.h"
 
 @implementation NearbyCollegeSelector
 
@@ -33,35 +34,41 @@
 - (void)displaySelectorForNearbyColleges:(NSArray *)colleges
 {   // If the user is near multiple colleges, display a custom alert view to select one
     
-    if (colleges.count < 1) return;
-    if (colleges.count == 1)
+    int numColleges = colleges.count;
+    if (numColleges < 1) return;
+    if (numColleges == 1)
     {
         [self displayPostToCollege:[colleges objectAtIndex:0]];
         return;
     }
     
+    float width = 290;
+    float titleHeight = 50;
+    float tableHeight = (numColleges > 3)
+                        ? 132
+                        : numColleges * 44;
+    float totalHeight = titleHeight + tableHeight;
+
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, titleHeight)];
+    titleLabel.layer.cornerRadius = 10;
+    titleLabel.clipsToBounds = YES;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    [titleLabel setText:@"Select a college to post to"];
+    [titleLabel setFont:[UIFont systemFontOfSize:17]];
+    [titleLabel setBackgroundColor:[Shared getCustomUIColor:cf_lightgray]];
+
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, titleHeight, width, tableHeight)];
+    tableView.layer.cornerRadius = 10;
+    tableView.clipsToBounds = YES;
+    [tableView setDataSource:self];
+    [tableView setDelegate:self];
+    
+    UIView *fullView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, totalHeight)];
+    [fullView addSubview:titleLabel];
+    [fullView addSubview:tableView];
+    
     CustomIOS7AlertView *alertView = [[CustomIOS7AlertView alloc] init];
-    
-    int numColleges = colleges.count;
-    
-    UIView *buttonsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 290, numColleges * 30)];
-    
-    for (int i = 0; i < numColleges; i++)
-    {
-        College *college = [colleges objectAtIndex:i];
-        
-        float y = 25 * i + 10;
-        
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(10, y, 250, 20)];
-        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [button setTitle:college.name forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(displayPostToCollege:) forControlEvents:UIControlEventTouchUpInside];
-        [button setTag:i];
-        [buttonsView addSubview:button];
-    }
-    
-    
-    [alertView setContainerView:buttonsView];
+    [alertView setContainerView:fullView];
     
     [alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"nvm...", nil]];
     [alertView setDelegate:self];
@@ -73,23 +80,8 @@
 {
     [alertView close];
 }
-- (void)displayPostToCollege:(UIButton*)sender
+- (void)displayPostToCollege:(College *)college
 {   // Prompt the user to post a college
-    
-    College *college;
-    if ([sender class] == [College class])
-    {
-        college = (College *)sender;
-    }
-    else if ([sender.superview.superview.superview class] == [CustomIOS7AlertView class])
-    {
-        [(CustomIOS7AlertView *)sender.superview.superview.superview close];
-        college = [self.appData.nearbyColleges objectAtIndex:sender.tag];
-    }
-    else
-    {
-        return;
-    }
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
                                                     message:[NSString stringWithFormat:@"Posting to %@", college.name]
                                                    delegate:self
@@ -120,6 +112,41 @@
                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }
+}
+
+#pragma mark - Table View
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{   // User selected a college from the list, call delegate's selectedCollege function
+    
+    [(CustomIOS7AlertView *)tableView.superview.superview.superview close];
+    
+    College *college = [self.appData.nearbyColleges objectAtIndex:indexPath.row];
+    [self displayPostToCollege:college];
+    
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{   // Return the number of rows for each section.
+    return self.appData.nearbyColleges.count;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{   // Display a cell representing a college that links to its feed
+    static NSString *CellIdentifier = @"TableCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
+    College *college = [self.appData.nearbyColleges objectAtIndex:indexPath.row];
+    [cell.textLabel setText:college.name];
+    
+    return cell;
 }
 
 /*

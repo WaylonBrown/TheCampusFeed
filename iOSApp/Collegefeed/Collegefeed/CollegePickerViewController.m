@@ -99,7 +99,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
     }
 
     [headerLabel setTextAlignment:NSTextAlignmentCenter];
-    [headerLabel setFont:[UIFont systemFontOfSize:12]];
+    [headerLabel setFont:[UIFont systemFontOfSize:14]];
     [headerLabel setBackgroundColor:[Shared getCustomUIColor:cf_lightgray]];
     
     return headerLabel;
