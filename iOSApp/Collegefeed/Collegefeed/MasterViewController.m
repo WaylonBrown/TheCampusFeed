@@ -19,6 +19,7 @@
 #import "Shared.h"
 #import "AppDelegate.h"
 #import "College.h"
+#import "NearbyCollegeSelector.h"
 
 @implementation MasterViewController
 
@@ -34,7 +35,7 @@
         // initialize a loading indicator and place it in top right corner (placeholder for create post button)
         self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         [self placeLoadingIndicator];
-        
+        [self setSelector:[[NearbyCollegeSelector alloc] initWithAppData:self.appData]];
     }
     return self;
 }
@@ -44,8 +45,13 @@
     // place logo at the top of the navigation bar
     [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
     [self.currentFeedLabel setAdjustsFontSizeToFitWidth:YES];
-
+    
     [super loadView];
+}
+- (void)viewDidLoad
+{
+    [self.navigationController.navigationBar setTranslucent:YES];
+    [self.navigationController.navigationBar setAlpha:0.87f];
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
@@ -56,7 +62,7 @@
 - (void)placeLoadingIndicator
 {   // Place the loading indicator in the navigation bar (instead of create post button)
     UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
-    
+
     [self.navigationItem setRightBarButtonItem:button];
     
     [self.activityIndicator startAnimating];
@@ -113,48 +119,18 @@
 }
 - (void)create
 {   // Display popup to let user type a new post
-    College *currentCollege = [self.appData.nearbyColleges objectAtIndex:0];
-    if (self.appData.nearbyColleges.count == 0 || currentCollege == nil)
+    NSArray *nearbyColleges = self.appData.nearbyColleges;
+    if (nearbyColleges.count == 0)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                         message:@"You cannot post because you are not within range of any known colleges"
                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }
-    else
-    {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
-                                                        message:[NSString stringWithFormat:@"Posting to %@", currentCollege.name]
-                                                       delegate:self
-                                              cancelButtonTitle:@"nvm.."
-                                              otherButtonTitles:@"Post dis bitch!", nil];
-        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-        [alert show];
-    }
-}
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{   // Add new post if user submits on the alert view
     
-    if (buttonIndex == 0)
-    {
-        return;
-    }
-    College *currentCollege = [self.appData.nearbyColleges objectAtIndex:0];
-    if (currentCollege != nil)
-    {
-        Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]
-                                        withCollegeId:currentCollege.collegeID];
-        [self.appData.postDataController POSTtoServer:newPost
-                                             intoList:self.appData.postDataController.topPostsAllColleges];
-    }
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"A college must be selected to post to"
-                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-    }
-    [self refresh];
+    [self.selector displaySelectorForNearbyColleges:nearbyColleges];
 }
+
 - (void)refresh
 {   // refresh the current view
     NSString *feedName = self.appData.currentCollege.name;

@@ -25,17 +25,18 @@
     }
     return nil;
 }
-
 - (void)initDummyPostsIntoList:(NSMutableArray *)array
 {
     [array removeAllObjects];
-    for (int i = 0 ; i < 3; i++)
+    for (int i = 0 ; i < 8; i++)
     {
         Post* p = [[Post alloc] initWithPostID:i withScore:i
                                    withMessage:[NSString stringWithFormat:@"#DUMMY Test #postNumber_%d", i]];
         [array addObject:p];
     }
 }
+
+#pragma mark - 
 
 #pragma mark - Network Access
 

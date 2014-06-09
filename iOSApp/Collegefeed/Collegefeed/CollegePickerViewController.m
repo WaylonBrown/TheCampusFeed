@@ -85,7 +85,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
 {   // return the section header titles when selecting a college
     if (section == 0)
     {
-        return nil;
+        return [[UIView alloc] initWithFrame:CGRectMake(0,0,20,1)];
     }
     UILabel *headerLabel = [[UILabel alloc] init];
 
@@ -99,7 +99,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
     }
 
     [headerLabel setTextAlignment:NSTextAlignmentCenter];
-    [headerLabel setFont:[UIFont systemFontOfSize:12]];
+    [headerLabel setFont:[UIFont systemFontOfSize:14]];
     [headerLabel setBackgroundColor:[Shared getCustomUIColor:cf_lightgray]];
     
     return headerLabel;

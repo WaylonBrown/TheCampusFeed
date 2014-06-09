@@ -32,6 +32,9 @@
 		53AE73C51928208100BE6B02 /* Votable.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73C41928208100BE6B02 /* Votable.m */; };
 		53AE73C71928354F00BE6B02 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73C61928354F00BE6B02 /* DataController.m */; };
 		53AE73CB19283A9D00BE6B02 /* VoteDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73CA19283A9D00BE6B02 /* VoteDataController.m */; };
+		53AF23E719438C35003A5074 /* CustomIOS7AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF23E619438C35003A5074 /* CustomIOS7AlertView.m */; };
+		53AF23EA19439D79003A5074 /* Sandbox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53AF23E919439D79003A5074 /* Sandbox.xib */; };
+		53AF23ED1943A58D003A5074 /* NearbyCollegeSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF23EC1943A58D003A5074 /* NearbyCollegeSelector.m */; };
 		53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B1FDFC19254E4700905E49 /* MasterView.xib */; };
 		53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B1FDFF19254E8F00905E49 /* MasterViewController.m */; };
 		53BDB4CE192F3E4400F45D5C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */; };
@@ -110,6 +113,11 @@
 		53AE73C61928354F00BE6B02 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DataController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53AE73C919283A9D00BE6B02 /* VoteDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = VoteDataController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		53AE73CA19283A9D00BE6B02 /* VoteDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = VoteDataController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		53AF23E519438C35003A5074 /* CustomIOS7AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOS7AlertView.h; sourceTree = "<group>"; };
+		53AF23E619438C35003A5074 /* CustomIOS7AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOS7AlertView.m; sourceTree = "<group>"; };
+		53AF23E919439D79003A5074 /* Sandbox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Sandbox.xib; sourceTree = "<group>"; };
+		53AF23EB1943A58D003A5074 /* NearbyCollegeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyCollegeSelector.h; sourceTree = "<group>"; };
+		53AF23EC1943A58D003A5074 /* NearbyCollegeSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyCollegeSelector.m; sourceTree = "<group>"; };
 		53B1FDFC19254E4700905E49 /* MasterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterView.xib; sourceTree = "<group>"; };
 		53B1FDFE19254E8F00905E49 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MasterViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		53B1FDFF19254E8F00905E49 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MasterViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -215,9 +223,20 @@
 			name = Interfaces;
 			sourceTree = "<group>";
 		};
+		53AF23E819438CF3003A5074 /* CustomAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				53AF23E519438C35003A5074 /* CustomIOS7AlertView.h */,
+				53AF23E619438C35003A5074 /* CustomIOS7AlertView.m */,
+			);
+			name = CustomAlertView;
+			sourceTree = "<group>";
+		};
 		53B090B5192DA13100E3D996 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				53AF23E919439D79003A5074 /* Sandbox.xib */,
+				53AF23E819438CF3003A5074 /* CustomAlertView */,
 				53BDB4CF192F4E4300F45D5C /* CollegePicker */,
 				533475A019232A4A00E84CC8 /* TableCell */,
 				53B1FE0119254EB900905E49 /* MasterView */,
@@ -227,6 +246,8 @@
 				5390A93A191552AE00ACD082 /* CommentViewController.m */,
 				5334758A1922D9B700E84CC8 /* TagViewController.h */,
 				5334758B1922D9B700E84CC8 /* TagViewController.m */,
+				53AF23EB1943A58D003A5074 /* NearbyCollegeSelector.h */,
+				53AF23EC1943A58D003A5074 /* NearbyCollegeSelector.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -481,6 +502,7 @@
 				53BDB4DB1930688200F45D5C /* new.png in Resources */,
 				53BDB4DA1930688200F45D5C /* colleges.png in Resources */,
 				5390A91F1914B76800ACD082 /* arrowup.png in Resources */,
+				53AF23EA19439D79003A5074 /* Sandbox.xib in Resources */,
 				53BDB4DC1930688200F45D5C /* tags.png in Resources */,
 				53BDB4D61930669100F45D5C /* top.png in Resources */,
 				53F8789B19133F60002A578B /* InfoPlist.strings in Resources */,
@@ -503,6 +525,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53AF23E719438C35003A5074 /* CustomIOS7AlertView.m in Sources */,
+				53AF23ED1943A58D003A5074 /* NearbyCollegeSelector.m in Sources */,
 				5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */,
 				53D2AD0719189E9E0097C840 /* Comment.m in Sources */,
 				53AE736A1925CFA800BE6B02 /* CollegeDataController.m in Sources */,

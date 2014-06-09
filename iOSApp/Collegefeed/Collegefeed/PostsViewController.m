@@ -89,6 +89,7 @@
     // Do any additional setup after loading the view.
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
+    
 }
 - (void)loadView
 {
@@ -96,6 +97,7 @@
     
     [super loadView];
 }
+
 #pragma mark - Table View Override Functions
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

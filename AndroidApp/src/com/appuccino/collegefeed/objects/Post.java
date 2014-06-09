@@ -68,7 +68,9 @@ public class Post implements Votable{
 		this.time = time;
 		this.id = id;
 		this.collegeID = collegeID;
-		collegeName = MainActivity.getCollegeByID(collegeID).getName();
+		College thisCollege = MainActivity.getCollegeByID(collegeID);
+		if(thisCollege != null)	//in case college isn't in list
+			collegeName = thisCollege.getName();
 		
 		int numberOfComments = (int)(Math.random() * 15);
 		for(int i = 0; i < numberOfComments; i++)
