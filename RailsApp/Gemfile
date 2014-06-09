@@ -42,6 +42,7 @@ gem 'api-pagination'
 
 gem 'oauth-plugin'
 gem 'image_suckr'
+gem 'pg_search'
 
 #webapp gems
 gem 'bootstrap-sass'

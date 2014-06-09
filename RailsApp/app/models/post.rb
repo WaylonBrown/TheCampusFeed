@@ -1,4 +1,7 @@
 class Post < ActiveRecord::Base
+  include PgSearch
+  pg_search_scope :search_by_text, :against => :text
+
   has_many :comments
   has_many :votes, as: :votable
   has_and_belongs_to_many :tags

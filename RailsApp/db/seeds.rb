@@ -72,10 +72,13 @@ else
 end
 
 
-Post.create({text: "This1 #is a #test post!"})
-Post.create({text: "This2 is a #test post!"})
-Post.create({text: "This3 #is a #test post!"})
-Post.create({text: "This4 is a #test post!"})
-Comment.create({post_id: 1, text: "hello I comment."})
-Comment.create({post_id: 2, text: "hello I comment."})
-Comment.create({post_id: 2, text: "hello I comment."})
+Post.destroy_all
+Comment.destroy_all
+
+cid = College.first.id
+(1..50).each {|e|
+  curPost = Post.create({college_id: cid, text: "This is ##{e}, a #test post!"})
+  (1..10).each {|f|
+    Comment.create({post_id: curPost.id, text: "Hi this is a comment."})
+  }
+}

@@ -4,6 +4,19 @@ class PostsController < ApplicationController
   before_action :require_college, only: [:create]
   before_action :set_college, only: [:index, :create, :byTag, :recent, :trending]
 
+  def search
+    posts = Post.search_by_text(params[:searchText])
+    paginate json: posts
+  end
+
+  def searchCount
+    render json: Post.search_by_text(params[:searchText]).count
+  end
+
+  def count
+    render json: Post.all.count
+  end
+
   def byTag
     @tag = Tag.find_by(text: params[:tagText])
 

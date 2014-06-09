@@ -1,5 +1,6 @@
 Postfeed::Application.routes.draw do
 
+  #get '/fragments/:fragmentName' => 'page_fragments#byName'
 
 =begin
     scope '/api/v1', defaults: {format: :json} do
@@ -27,6 +28,9 @@ Postfeed::Application.routes.draw do
 
       resources :comments, only: [:show]
 
+      get '/posts/search/:searchText' => 'posts#search'
+      get '/posts/search/:searchText/count' => 'posts#searchCount'
+      get '/posts/count' => 'posts#count'
       get '/posts/byTag/:tagText' => 'posts#byTag'
       get '/posts/recent' => 'posts#recent'
       get '/posts/trending' => 'posts#trending'
