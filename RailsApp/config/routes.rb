@@ -1,6 +1,7 @@
 Postfeed::Application.routes.draw do
 
-  #get '/fragments/:fragmentName' => 'page_fragments#byName'
+
+  get '/partials/:partialName' => 'partials#byName'
 
 =begin
     scope '/api/v1', defaults: {format: :json} do
