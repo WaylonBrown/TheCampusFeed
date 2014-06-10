@@ -53,9 +53,12 @@ angular.module('cfeed')
       controller: 'NewPostController',
     })
     modal.result.then(function(newPost) {
-      $http.post('api/v1/colleges/'+newPost.college_id+'/posts', {post: newPost})
+      console.log(newPost)
+      $http.post('api/v1/colleges/'+newPost.college_id+'/posts', {post: {text: newPost.text}})
         .then(function(res){
           $scope.updateTotalAndPopulate();
+        }, function(){
+          console.log('Error sending new post.')
         })
     },
     function () {
