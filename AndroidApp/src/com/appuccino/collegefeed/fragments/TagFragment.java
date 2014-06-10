@@ -267,19 +267,19 @@ public class TagFragment extends Fragment
     	{
     		@Override
 			public void onClick(View v) 
-    		{				
-    			if(searchTagEditText.getText().toString().length() >= 3)
-    			{
+    		{		
+    			String text = searchTagEditText.getText().toString().trim();
+    			if(text.length() < 4)
+    				Toast.makeText(mainActivity, "Must be at least 4 characters long.", Toast.LENGTH_LONG).show();
+    			else if(!text.substring(0, 1).equals("#"))
+    				Toast.makeText(mainActivity, "Must start with #", Toast.LENGTH_LONG).show();
+    			else{
     				Intent intent = new Intent(mainActivity, TagListActivity.class);
     				intent.putExtra("TAG_ID", searchTagEditText.getText().toString());
     				
     				mainActivity.startActivity(intent);
     				mainActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         			dialog.dismiss();
-    			}
-    			else
-    			{
-    				Toast.makeText(mainActivity, "Must be at least 3 characters long.", Toast.LENGTH_LONG).show();
     			}
 			}
     	});
