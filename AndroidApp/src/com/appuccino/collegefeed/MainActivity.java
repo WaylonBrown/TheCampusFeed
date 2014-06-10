@@ -29,6 +29,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.dialogs.ChooseFeedDialog;
@@ -55,6 +56,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	PagerAdapter pagerAdapter;
 	ActionBar actionBar;
 	ImageView newPostButton;
+	ProgressBar permissionsProgress;
 	
 	//final values
 	public static final int ALL_COLLEGES = 0;	//used for permissions
@@ -84,6 +86,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		
 		locationFound = false;
 		
+		permissionsProgress = (ProgressBar)findViewById(R.id.permissionsLoadingIcon);
 		newPostButton = (ImageView)findViewById(R.id.newPostButton);
 		newPostButton.setOnClickListener(new OnClickListener(){
 			@Override
@@ -198,7 +201,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		    //ask user to enable at least one of the Location Providers
 			permissions.clear();	//no permissions
 			if(newPostButton.isShown())
-				newPostButton.setVisibility(View.INVISIBLE);
+			{
+				newPostButton.setVisibility(View.GONE);
+				permissionsProgress.setVisibility(View.VISIBLE);
+			}
 			Toast.makeText(this, "Location Services are turned off.", Toast.LENGTH_LONG).show();
 			Toast.makeText(this, "You can upvote, but nothing else.", Toast.LENGTH_LONG).show();
 		} else {
@@ -266,7 +272,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					permissions.add(c.getID());
 					Log.i("cfeed","Permissions college data: " + c.toString());
 					if(!newPostButton.isShown())
+					{
+						permissionsProgress.setVisibility(View.GONE);
 						newPostButton.setVisibility(View.VISIBLE);
+					}
+						
 				}
 			}
 			
@@ -274,7 +284,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			if(permissions == null || permissions.size() == 0)
 			{
 				if(newPostButton.isShown())
+				{
+					permissionsProgress.setVisibility(View.GONE);
 					newPostButton.setVisibility(View.INVISIBLE);
+				}
 				Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
 			}
 			else	//near a college

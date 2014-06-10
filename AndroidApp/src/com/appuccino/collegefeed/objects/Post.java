@@ -71,6 +71,11 @@ public class Post implements Votable{
 		College thisCollege = MainActivity.getCollegeByID(collegeID);
 		if(thisCollege != null)	//in case college isn't in list
 			collegeName = thisCollege.getName();
+		else
+		{
+			//TODO: make call to get updated college list here
+			collegeName = "";
+		}
 		
 		int numberOfComments = (int)(Math.random() * 15);
 		for(int i = 0; i < numberOfComments; i++)
