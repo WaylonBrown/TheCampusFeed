@@ -48,11 +48,18 @@ angular.module('cfeed')
 
   $scope.openCreateModal = function($event){
     $event.stopPropagation()
-    $modal.open({
+    var modal = $modal.open({
       templateUrl: 'partials/newPost',
       controller: 'NewPostController',
-      resolve: {
-      }
+    })
+    modal.result.then(function(newPost) {
+      $http.post('api/v1/colleges/'+newPost.college_id+'/posts', {post: newPost})
+        .then(function(res){
+          $scope.updateTotalAndPopulate();
+        })
+    },
+    function () {
+      //Modal dismissed
     })
   }
 
