@@ -1,5 +1,5 @@
 angular.module('cfeed')
-  .controller('PostSectionController', ['$scope', '$http', '$modal', '$timeout', function($scope, $http, $modal, $timeout) {
+  .controller('CollegeSectionController', ['$scope', '$http', '$modal', function($scope, $http, $modal) {
 
   $scope.postOptions = {};
   $scope.postOptions.pageNo = 1;
@@ -64,42 +64,6 @@ angular.module('cfeed')
     function () {
       //Modal dismissed
     })
-  }
-
-  /*$scope.closeInMs = function(post, time){
-    console.log('left')
-    console.log(post)
-    $timeout(function(){
-      post.isOpen = false;
-      $scope.$apply();
-    }, time)
-  }*/
-
-  $scope.editPost = function($event, post){
-    $event.stopPropagation()
-    $($event.currentTarget).parents('.panel').children('.panel-collapse').height('auto');
-    console.log($($event.currentTarget).parents('.panel').children('.panel-collapse'));
-    console.log($event)
-    post.isEditing = true;
-  }
-
-  $scope.finishedEditing = function(post, sendChanges){
-    post.isEditing = false;
-    if(sendChanges){
-      console.log('asdff')
-      $http.put('api/v1/colleges/'+post.college_id+'/posts/'+post.id, post)
-        .then(function(res){
-          $scope.updateTotalAndPopulate();
-        });
-    }
-  }
-
-  $scope.deletePost = function($event, post){
-    $event.stopPropagation()
-    $http.delete('api/v1/colleges/'+post.college_id+'/posts/'+post.id)
-      .then(function(res){
-        $scope.updateTotalAndPopulate();
-      });
   }
 
   $scope.$on('show.bs.collapse', function(){
