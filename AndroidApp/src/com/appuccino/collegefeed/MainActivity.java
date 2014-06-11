@@ -60,7 +60,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	
 	//final values
 	public static final int ALL_COLLEGES = 0;	//used for permissions
-	static final String PREFERENCE_KEY_COLLEGE_LIST = "all_colleges_preference_key";
+	static final String PREFERENCE_KEY_COLLEGE_LIST1 = "all_colleges_preference_key1";
+	static final String PREFERENCE_KEY_COLLEGE_LIST2 = "all_colleges_preference_key2";
 	static final double MILES_FOR_PERMISSION = 15.0;
 	static final int LOCATION_TIMEOUT_SECONDS = 10;
 	public static final int MIN_POST_LENGTH = 10;
@@ -95,23 +96,38 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			}
 		});
 		
-		feedStyleChanged(ALL_COLLEGES);
+		setupAdapter();
+		//changeFeed(ALL_COLLEGES);
 		getLocation();
+	}
+
+	private void setupAdapter() {
+		// Create the adapter that will return a fragment for each of the
+		// sections of the app.
+		pagerAdapter = new PagerAdapter(this, getSupportFragmentManager());
+	
+		// Set up the ViewPager with the sections adapter.
+		viewPager.setAdapter(pagerAdapter);
+		viewPager.setOffscreenPageLimit(5);
+		tabs.setViewPager(viewPager);
 	}
 
 	private void setupCollegeList() {
 		collegeList = new ArrayList<College>();
-		String storedCollegeListJSON = PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST, "default_value");
+		String storedCollegeListJSON1 = PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST1, "default_value");
+		String storedCollegeListJSON2 = PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST2, "default_value");
 		
 		//should only happen very first time, store the backup college string to SharedPrefs
-		if(storedCollegeListJSON.equals("default_value"))
+		if(storedCollegeListJSON1.equals("default_value"))
 		{
-			PrefManager.putString(PREFERENCE_KEY_COLLEGE_LIST, AllCollegeJSONString.ALL_COLLEGES_JSON);
-			storedCollegeListJSON = PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST, "default_value");
+			PrefManager.putString(PREFERENCE_KEY_COLLEGE_LIST1, AllCollegeJSONString.ALL_COLLEGES_JSON1);
+			PrefManager.putString(PREFERENCE_KEY_COLLEGE_LIST2, AllCollegeJSONString.ALL_COLLEGES_JSON2);
+			storedCollegeListJSON1 = PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST1, "default_value");
+			storedCollegeListJSON2 = PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST2, "default_value");
 		}
 		
 		try {
-			collegeList = JSONParser.collegeListFromJSON(storedCollegeListJSON);
+			collegeList = JSONParser.collegeListFromJSON(storedCollegeListJSON1, storedCollegeListJSON2);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -135,40 +151,29 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		actionBar.setIcon(R.drawable.logofake);
 	}
 
-	//determined between All Colleges and a specific college
-	protected void feedStyleChanged(int which) 
-	{
-		//all colleges section
-		if(which == ALL_COLLEGES)
+	public void changeFeed(int id) {
+		Log.i("cfeed","Changing to feed with ID " + id);
+		currentFeedCollegeID = id;
+		if(id != ALL_COLLEGES)
 		{
-			currentFeedCollegeID = ALL_COLLEGES;
-		}
-		else //specific college
-		{
-			currentFeedCollegeID = 234234;
 			showPermissionsToast();
 		}
-		
-		// Create the adapter that will return a fragment for each of the
-		// sections of the app.
-		pagerAdapter = new PagerAdapter(this, getSupportFragmentManager());
-	
-		// Set up the ViewPager with the sections adapter.
-		viewPager.setAdapter(pagerAdapter);
-		viewPager.setOffscreenPageLimit(5);
-		tabs.setViewPager(viewPager);
-		
+			
+		TopPostFragment.changeFeed(id);
+		NewPostFragment.changeFeed(id);
+		TagFragment.changeFeed(id);
 	}
 	
 	private void showPermissionsToast() 
 	{
+		String collegeName = getCollegeByID(currentFeedCollegeID).getName();
 		if(hasPermissions(currentFeedCollegeID))
 		{
-			Toast.makeText(this, "Since you are near Texas A&M University, you can upvote, downvote, post, and comment", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Since you are near " + collegeName + ", you can upvote, downvote, post, and comment", Toast.LENGTH_LONG).show();
 		}
 		else
 		{
-			Toast.makeText(this, "Since you aren't near Texas A&M University, you can only downvote", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Since you aren't near " + collegeName + ", you can only downvote", Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -496,11 +501,5 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		}
 		
 		return -1;
-	}
-
-	public void changeFeed(int id) {
-		TopPostFragment.changeFeed(id);
-		NewPostFragment.changeFeed(id);
-		TagFragment.changeFeed(id);
 	}
 }

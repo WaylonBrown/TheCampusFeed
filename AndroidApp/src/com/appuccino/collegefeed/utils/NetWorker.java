@@ -17,6 +17,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.fragments.MyCommentsFragment;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
@@ -39,14 +40,16 @@ public class NetWorker {
 	public static class GetPostsTask extends AsyncTask<PostSelector, Void, ArrayList<Post> >
 	{
 		int whichFrag = 0;
+		int feedID = 0;
 		
 		public GetPostsTask()
 		{
 		}
 		
-		public GetPostsTask(int whichFrag)
+		public GetPostsTask(int whichFrag, int feedID)
 		{
 			this.whichFrag = whichFrag;
+			this.feedID = feedID;
 		}
 		
 		@Override
@@ -57,14 +60,29 @@ public class NetWorker {
 				NewPostFragment.makeLoadingIndicator(true);
 			else if (whichFrag == 2)	//my posts
 				MyPostsFragment.makeLoadingIndicator(true);
-			else if (whichFrag == 2)	//my comments
-				MyCommentsFragment.makeLoadingIndicator(true);
 			super.onPreExecute();
 		}
 
 		@Override
 		protected ArrayList<Post> doInBackground(PostSelector... arg0) {
-			HttpGet request = new HttpGet(REQUEST_URL + "posts");
+			switch(whichFrag){
+			case 0:
+				return fetchTopPostsFrag();
+			case 1:
+				return fetchNewPostsFrag();
+			default:
+				return fetchMyPostsFrag();
+			}
+		}
+		
+		private ArrayList<Post> fetchTopPostsFrag() {
+			ArrayList<Post> ret = new ArrayList<Post>();
+			HttpGet request = null;
+			if(feedID == MainActivity.ALL_COLLEGES)
+				request = new HttpGet(REQUEST_URL + "posts");
+			else
+				request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/posts");
+			
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String response = null;
 			try {
@@ -78,8 +96,8 @@ public class NetWorker {
 			}
 			
 			if(response != null)
-				Log.d("http", response);
-			ArrayList<Post> ret = null;
+				Log.d("cfeed", response);
+			
 			try {
 				ret = JSONParser.postListFromJSON(response);
 			} catch (IOException e) {
@@ -88,7 +106,17 @@ public class NetWorker {
 			}
 			return ret;
 		}
+
+		private ArrayList<Post> fetchNewPostsFrag() {
+			ArrayList<Post> ret = new ArrayList<Post>();
+			return ret;
+		}
 		
+		private ArrayList<Post> fetchMyPostsFrag() {
+			ArrayList<Post> ret = new ArrayList<Post>();
+			return ret;
+		}
+
 		@Override
 		protected void onPostExecute(ArrayList<Post> result) {
 			if(whichFrag == 0)		//top posts
@@ -96,6 +124,7 @@ public class NetWorker {
 				//activityContext.getFragment
 				TopPostFragment.postList.clear();
 				TopPostFragment.postList.addAll(result);
+				Log.i("cfeed", "New list size: " + TopPostFragment.postList.size());
 				TopPostFragment.updateList();
 				TopPostFragment.makeLoadingIndicator(false);
 				TopPostFragment.setupFooterListView();
@@ -115,18 +144,7 @@ public class NetWorker {
 				MyPostsFragment.updateList();
 				MyPostsFragment.makeLoadingIndicator(false);
 			}
-			//IMPLEMENT WHEN SERVER IS SET UP
-//			else if(whichFrag == 2)	//my comments
-//			{
-//				MyCommentsFragment.commentList.clear();
-//				MyCommentsFragment.commentList.addAll(result);
-//				MyPostsFragment.updateList();
-//				MyPostsFragment.makeLoadingIndicator(false);
-//			}
-		}
-
-		
-		
+		}		
 	}
 	
 	public static class MakePostTask extends AsyncTask<Post, Void, Boolean>{

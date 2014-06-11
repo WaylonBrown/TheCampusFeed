@@ -14,9 +14,9 @@ import com.appuccino.collegefeed.objects.Post;
 
 public class JSONParser {
 
-	public static ArrayList<College> collegeListFromJSON(String storedCollegeListJSON) throws IOException {
+	public static ArrayList<College> collegeListFromJSON(String storedCollegeListJSON1, String storedCollegeListJSON2) throws IOException {
 		ArrayList<College> ret = new ArrayList<College>();
-		JsonReader reader = new JsonReader(new StringReader(storedCollegeListJSON));
+		JsonReader reader = new JsonReader(new StringReader(storedCollegeListJSON1 + storedCollegeListJSON2));
 		
 		try {
 			reader.beginArray();
@@ -60,9 +60,9 @@ public class JSONParser {
 	
 	public static ArrayList<Post> postListFromJSON(String json) throws IOException{
 		ArrayList<Post> ret = new ArrayList<Post>();
-		JsonReader reader = new JsonReader(new StringReader(json));
-		
+		JsonReader reader = new JsonReader(new StringReader(""));
 		try {
+			reader = new JsonReader(new StringReader(json));
 			reader.beginArray();
 			while(reader.hasNext()){
 				

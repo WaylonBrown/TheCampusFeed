@@ -38,8 +38,6 @@ public class MyPostsFragment extends Fragment implements OnRefreshListener
 	public static final String ARG_SPINNER_NUMBER = "tab_number";
 	public static ArrayList<Post> postList;
 	static PostListAdapter listAdapter;
-	final int tabNumber = 2;
-	int spinnerNumber = 0;
 	static ListView list;
 	//library objects
 	static ShimmerTextView loadingText;
@@ -116,7 +114,7 @@ public class MyPostsFragment extends Fragment implements OnRefreshListener
 		postList = new ArrayList<Post>();
 		ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
 		if(cm.getActiveNetworkInfo() != null)
-			new GetPostsTask(2).execute(new PostSelector());
+			new GetPostsTask(2, 0).execute(new PostSelector());
 		else
 			Toast.makeText(getActivity(), "You have no internet connection. Pull down to refresh and try again.", Toast.LENGTH_LONG).show();
 	}
@@ -126,7 +124,6 @@ public class MyPostsFragment extends Fragment implements OnRefreshListener
 		Intent intent = new Intent(getActivity(), PostCommentsActivity.class);
 		intent.putExtra("COLLEGE_ID", post.getCollegeID());
 		intent.putExtra("POST_ID", post.getID());
-		intent.putExtra("SECTION_NUMBER", tabNumber);
 		
 		startActivity(intent);
 		getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

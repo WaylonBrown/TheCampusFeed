@@ -65,7 +65,6 @@ Postfeed::Application.routes.draw do
           get 'votes/score' => 'votes#score'
           resources :votes
         end
-    $($event.currentTarget).parents('.panel').children('panel-collapse').height('auto');
 
         get '/tags/trending' => 'tags#trending'
         resources :tags
