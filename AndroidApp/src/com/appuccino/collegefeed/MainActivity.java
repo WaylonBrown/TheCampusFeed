@@ -96,7 +96,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		});
 		
 		setupAdapter();
-		changeFeed(ALL_COLLEGES);
+		//changeFeed(ALL_COLLEGES);
 		getLocation();
 	}
 
@@ -152,7 +152,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		{
 			showPermissionsToast();
 		}
-				
+			
 		TopPostFragment.changeFeed(id);
 		NewPostFragment.changeFeed(id);
 		TagFragment.changeFeed(id);

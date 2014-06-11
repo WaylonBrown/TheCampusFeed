@@ -107,17 +107,15 @@ public class NetWorker {
 			return ret;
 		}
 
-		private ArrayList<Post> fetchMyPostsFrag() {
-			ArrayList<Post> ret = new ArrayList<Post>();
-			return ret;
-		}
-
 		private ArrayList<Post> fetchNewPostsFrag() {
 			ArrayList<Post> ret = new ArrayList<Post>();
 			return ret;
 		}
-
 		
+		private ArrayList<Post> fetchMyPostsFrag() {
+			ArrayList<Post> ret = new ArrayList<Post>();
+			return ret;
+		}
 
 		@Override
 		protected void onPostExecute(ArrayList<Post> result) {

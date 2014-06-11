@@ -60,9 +60,9 @@ public class JSONParser {
 	
 	public static ArrayList<Post> postListFromJSON(String json) throws IOException{
 		ArrayList<Post> ret = new ArrayList<Post>();
-		JsonReader reader = new JsonReader(new StringReader(json));
 		
 		try {
+			JsonReader reader = new JsonReader(new StringReader(json));
 			reader.beginArray();
 			while(reader.hasNext()){
 				
