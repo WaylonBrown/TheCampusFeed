@@ -152,6 +152,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	}
 
 	public void changeFeed(int id) {
+		currentFeedCollegeID = id;
 		if(id != ALL_COLLEGES)
 		{
 			showPermissionsToast();
@@ -164,13 +165,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	
 	private void showPermissionsToast() 
 	{
+		String collegeName = getCollegeByID(currentFeedCollegeID).getName();
 		if(hasPermissions(currentFeedCollegeID))
 		{
-			Toast.makeText(this, "Since you are near Texas A&M University, you can upvote, downvote, post, and comment", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Since you are near " + collegeName + ", you can upvote, downvote, post, and comment", Toast.LENGTH_LONG).show();
 		}
 		else
 		{
-			Toast.makeText(this, "Since you aren't near Texas A&M University, you can only downvote", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Since you aren't near " + collegeName + ", you can only downvote", Toast.LENGTH_LONG).show();
 		}
 	}
 
