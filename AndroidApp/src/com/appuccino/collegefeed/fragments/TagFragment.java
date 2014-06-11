@@ -306,8 +306,11 @@ public class TagFragment extends Fragment
 			//chose an actual college
 			if(newFeed != null)
 				collegeNameBottom.setText(newFeed.getName());
-			else
+			else if(id == MainActivity.ALL_COLLEGES)
 				collegeNameBottom.setText(mainActivity.getResources().getString(R.string.allColleges));
+			//TODO: load college list here
+			else
+				collegeNameBottom.setText("");
 		}
 	}
 }

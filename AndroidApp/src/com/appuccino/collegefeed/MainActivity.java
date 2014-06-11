@@ -95,8 +95,20 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			}
 		});
 		
-		feedStyleChanged(ALL_COLLEGES);
+		setupAdapter();
+		changeFeed(ALL_COLLEGES);
 		getLocation();
+	}
+
+	private void setupAdapter() {
+		// Create the adapter that will return a fragment for each of the
+		// sections of the app.
+		pagerAdapter = new PagerAdapter(this, getSupportFragmentManager());
+	
+		// Set up the ViewPager with the sections adapter.
+		viewPager.setAdapter(pagerAdapter);
+		viewPager.setOffscreenPageLimit(5);
+		tabs.setViewPager(viewPager);
 	}
 
 	private void setupCollegeList() {
@@ -135,29 +147,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		actionBar.setIcon(R.drawable.logofake);
 	}
 
-	//determined between All Colleges and a specific college
-	protected void feedStyleChanged(int which) 
-	{
-		//all colleges section
-		if(which == ALL_COLLEGES)
+	public void changeFeed(int id) {
+		if(id != ALL_COLLEGES)
 		{
-			currentFeedCollegeID = ALL_COLLEGES;
-		}
-		else //specific college
-		{
-			currentFeedCollegeID = 234234;
 			showPermissionsToast();
 		}
-		
-		// Create the adapter that will return a fragment for each of the
-		// sections of the app.
-		pagerAdapter = new PagerAdapter(this, getSupportFragmentManager());
-	
-		// Set up the ViewPager with the sections adapter.
-		viewPager.setAdapter(pagerAdapter);
-		viewPager.setOffscreenPageLimit(5);
-		tabs.setViewPager(viewPager);
-		
+				
+		TopPostFragment.changeFeed(id);
+		NewPostFragment.changeFeed(id);
+		TagFragment.changeFeed(id);
 	}
 	
 	private void showPermissionsToast() 
@@ -496,11 +494,5 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		}
 		
 		return -1;
-	}
-
-	public void changeFeed(int id) {
-		TopPostFragment.changeFeed(id);
-		NewPostFragment.changeFeed(id);
-		TagFragment.changeFeed(id);
 	}
 }
