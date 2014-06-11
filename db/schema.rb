@@ -35,12 +35,6 @@ ActiveRecord::Schema.define(version: 20140610050943) do
 
   add_index "comments", ["post_id"], name: "index_comments_on_post_id", using: :btree
 
-  create_table "page_fragments", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "partials", force: true do |t|
     t.string   "name"
     t.datetime "created_at"

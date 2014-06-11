@@ -1,4 +1,4 @@
-<div ng-controller="PostSectionController">
+<div ng-controller="CollegeSectionController">
   <accordion-group>
     <accordion-heading>
       Posts
@@ -21,30 +21,22 @@
     </form>
 
     <alert ng-show="postOptions.error" type="danger">Error in query.</alert>
-    <accordion close-others="true">
-      <accordion-group ng-repeat="post in postOptions.posts" 
-          ng-mouseenter="post.isOpen = true" 
-          is-open="post.isOpen">
+    <accordion close-others="oneAtATime">
+      <accordion-group ng-repeat="post in postOptions.posts" ng-mouseenter="post.isOpen = true" ng-mouseleave="post.isOpen = false" is-open="post.isOpen">
         <accordion-heading>
           {{post.text}}
-          <%= fa_icon 'trash-o', class: 'pull-right tip',
+          <%= fa_icon 'trash-o', class: 'pull-right tip', 
             'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 
-            title: 'delete', 'hasTooltip' => '', 'ng-click' => 'deletePost($event, post)' %>
+            title: 'delete', 'hasTooltip' => '' %>
           <%= fa_icon 'edit', class: 'pull-right tip', 
             'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 
-            title: 'edit', 'hasTooltip' => '', 'ng-click' => 'editPost($event, post)' %>
+            title: 'edit', 'hasTooltip' => '' %>
         </accordion-heading>
-        <form>
-          <div class="row">
-            <div class="col-md-3" ng-repeat="(key,value) in post">
-              <b>{{key}}:</b> 
-              <u ng-hide="post.isEditing" class="pull-right postValue">{{value}}</u>
-              <input type="text" ng-value="value" ng-show="post.isEditing" class="" />
-            </div>
+        <div class="row">
+          <div class="col-md-3" ng-repeat="(key,value) in post">
+            <b>{{key}}:</b> <u class="pull-right">{{value}}</u>
           </div>
-          <input type="button" ng-click="finishedEditing(post, true)" ng-show="post.isEditing" class="btn btn-info" value="Done">
-          <input type="button" ng-click="finishedEditing(post, false)" ng-show="post.isEditing" class="btn btn-warning" value="Cancel">
-        </form>
+        </div>
       </accordion-group>
     </accordion>
     <pagination total-items="postOptions.total" ng-model="postOptions.pageNo" 
