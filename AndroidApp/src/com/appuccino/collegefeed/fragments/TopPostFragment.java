@@ -107,7 +107,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		
 		if(postList == null && mainActivity != null)
 		{
-			pullListFromServer();
+			changeFeed(MainActivity.ALL_COLLEGES);
 		}		
 		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 0);
 		if(list != null)
@@ -124,7 +124,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 				postClicked(postList.get(position - 1));
 			}			
 		});
-	    
+	    	
 		return rootView;
 	}
 	
@@ -268,15 +268,12 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	}
 
 	public static void updateList() 
-	{
-		listAdapter = new PostListAdapter(mainActivity, R.layout.list_row_collegepost, postList, 0);
-		if(list != null)
-			list.setAdapter(listAdapter);	
-		else
-			Log.e("cfeed", "TopPostFragment list adapter wasn't set.");
-		
+	{	
 		if(listAdapter != null)
 		{
+			listAdapter.clear();
+			Log.i("cfeed","updateList with size of " + postList.size());
+			listAdapter.addAll(postList);
 			listAdapter.notifyDataSetChanged();
 		}			
 	}
