@@ -269,6 +269,12 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 
 	public static void updateList() 
 	{
+		listAdapter = new PostListAdapter(mainActivity, R.layout.list_row_collegepost, postList, 0);
+		if(list != null)
+			list.setAdapter(listAdapter);	
+		else
+			Log.e("cfeed", "TopPostFragment list adapter wasn't set.");
+		
 		if(listAdapter != null)
 		{
 			listAdapter.notifyDataSetChanged();

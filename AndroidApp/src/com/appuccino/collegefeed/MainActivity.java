@@ -152,6 +152,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	}
 
 	public void changeFeed(int id) {
+		Log.i("cfeed","Changing to feed with ID " + id);
 		currentFeedCollegeID = id;
 		if(id != ALL_COLLEGES)
 		{

@@ -96,7 +96,7 @@ public class NetWorker {
 			}
 			
 			if(response != null)
-				Log.d("http", response);
+				Log.d("cfeed", response);
 			
 			try {
 				ret = JSONParser.postListFromJSON(response);
@@ -124,6 +124,7 @@ public class NetWorker {
 				//activityContext.getFragment
 				TopPostFragment.postList.clear();
 				TopPostFragment.postList.addAll(result);
+				Log.i("cfeed", "New list size: " + TopPostFragment.postList.size());
 				TopPostFragment.updateList();
 				TopPostFragment.makeLoadingIndicator(false);
 				TopPostFragment.setupFooterListView();
