@@ -69,14 +69,20 @@ public class NewPostDialog extends AlertDialog.Builder{
 		final CharSequence[] items = stringPermissionsList.toArray(new CharSequence[stringPermissionsList.size()]);
 
 	    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-	    builder.setTitle("Choose a Feed");
+	    
+	    final TextView title = new TextView(context);
+	    title.setText("Choose a Feed");
+	    title.setTextSize(30);
+	    title.setTextColor(context.getResources().getColor(R.color.lightblue));
+	    title.setTypeface(FontManager.light);
+	    title.setPadding(20, 12, 12, 12);
+	    builder.setCustomTitle(title);
 	    builder.setItems(items, new DialogInterface.OnClickListener() {
 	        public void onClick(DialogInterface dialog, int item) {
 	        	selectedCollegeID = MainActivity.permissions.get(item);
 	        	createDialog(layout);
 	        }
 	    }).show();
-		
 	}
 
 	private void createDialog(View layout) {
