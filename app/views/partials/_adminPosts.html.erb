@@ -39,7 +39,7 @@
             <div class="col-md-3" ng-repeat="(key,value) in post">
               <b>{{key}}:</b> 
               <u ng-hide="post.isEditing" class="pull-right postValue">{{value}}</u>
-              <input type="text" ng-value="value" ng-show="post.isEditing" class="" />
+              <input type="text" ng-model="post[key]" ng-show="post.isEditing" class="" />
             </div>
           </div>
           <input type="button" ng-click="finishedEditing(post, true)" ng-show="post.isEditing" class="btn btn-info" value="Done">
