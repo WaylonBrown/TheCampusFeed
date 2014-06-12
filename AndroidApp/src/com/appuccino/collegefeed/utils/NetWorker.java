@@ -121,10 +121,8 @@ public class NetWorker {
 		protected void onPostExecute(ArrayList<Post> result) {
 			if(whichFrag == 0)		//top posts
 			{
-				//activityContext.getFragment
-				TopPostFragment.postList.clear();
-				TopPostFragment.postList.addAll(result);
-				Log.i("cfeed", "New list size: " + TopPostFragment.postList.size());
+				Log.i("cfeed","Fetched with size of " + result.size());
+				TopPostFragment.postList = new ArrayList<Post>(result);
 				TopPostFragment.updateList();
 				TopPostFragment.makeLoadingIndicator(false);
 				TopPostFragment.setupFooterListView();
@@ -158,6 +156,7 @@ public class NetWorker {
 		@Override
 		protected Boolean doInBackground(Post... posts) {
 			try{
+				Log.i("cfeed","Posting to feed with ID of " + posts[0].getCollegeID());
 				Log.i("cfeed","Request URL: " + REQUEST_URL + "colleges/" + posts[0].getCollegeID() + "/posts");
 				HttpPost request = new HttpPost(REQUEST_URL + "colleges/" + posts[0].getCollegeID() + "/posts");
 				request.setHeader("Content-Type", "application/json");

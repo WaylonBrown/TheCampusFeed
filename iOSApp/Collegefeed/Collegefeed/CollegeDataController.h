@@ -19,5 +19,5 @@
 
 - (NSArray *)findNearbyCollegesWithLat:(float)userLat
                                withLon:(float)userLon;
-
+- (void)getHardCodedCollegeList;
 @end

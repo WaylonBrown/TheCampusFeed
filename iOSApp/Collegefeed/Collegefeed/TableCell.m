@@ -43,7 +43,7 @@
     [self setObject:obj];
     
     // assign cell's plain text labels
-    [self.ageLabel setText: [self getAgeAsString:(NSDate*)[obj date]]];
+    [self.ageLabel setText: [self getAgeAsString:obj.createdAt]];
     [self.scoreLabel setText:[NSString stringWithFormat:@"%d", (int)obj.score]];
     [self.messageLabel setText:obj.message];
     [self.commentCountLabel setText:[self getCommentLabelString]];
@@ -104,14 +104,31 @@
     int seconds = [[NSDate date] timeIntervalSinceDate:creationDate];
     int minutes = seconds / 60;
     int hours = minutes / 60;
-    
-    if (hours >= 1)
+    int days = hours / 24;
+
+    if (days > 1)
+    {
+        return [NSString stringWithFormat:@"%d days ago", days];
+    }
+    else if (days == 1)
+    {
+        return @"Yesterday";
+    }
+    else if (hours > 1)
     {
         return [NSString stringWithFormat:@"%d hours ago", hours];
     }
-    else if (minutes >= 1)
+    else if (hours == 1)
+    {
+        return @"One hour ago";
+    }
+    else if (minutes > 1)
     {
         return [NSString stringWithFormat:@"%d minutes ago", minutes];
+    }
+    else if (minutes == 1)
+    {
+        return @"One minute ago";
     }
     return [NSString stringWithFormat:@"%d seconds ago", seconds];
 }

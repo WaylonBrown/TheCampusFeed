@@ -33,7 +33,6 @@
 		53AE73C71928354F00BE6B02 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73C61928354F00BE6B02 /* DataController.m */; };
 		53AE73CB19283A9D00BE6B02 /* VoteDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73CA19283A9D00BE6B02 /* VoteDataController.m */; };
 		53AF23E719438C35003A5074 /* CustomIOS7AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF23E619438C35003A5074 /* CustomIOS7AlertView.m */; };
-		53AF23EA19439D79003A5074 /* Sandbox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53AF23E919439D79003A5074 /* Sandbox.xib */; };
 		53AF23ED1943A58D003A5074 /* NearbyCollegeSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF23EC1943A58D003A5074 /* NearbyCollegeSelector.m */; };
 		53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B1FDFC19254E4700905E49 /* MasterView.xib */; };
 		53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B1FDFF19254E8F00905E49 /* MasterViewController.m */; };
@@ -49,6 +48,7 @@
 		53D2AD0E19189F740097C840 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0D19189F740097C840 /* Vote.m */; };
 		53D2AD111918A22A0097C840 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD101918A22A0097C840 /* Tag.m */; };
 		53D2AD151918AAB80097C840 /* College.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD141918AAB80097C840 /* College.m */; };
+		53D51E35194950FA00A8BA81 /* CollegeList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53D51E34194950FA00A8BA81 /* CollegeList.txt */; };
 		53F85731193D6CFF0004D35F /* AppData.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F85730193D6CFF0004D35F /* AppData.m */; };
 		53F8789119133F60002A578B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789019133F60002A578B /* Foundation.framework */; };
 		53F8789319133F60002A578B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789219133F60002A578B /* CoreGraphics.framework */; };
@@ -115,7 +115,6 @@
 		53AE73CA19283A9D00BE6B02 /* VoteDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = VoteDataController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53AF23E519438C35003A5074 /* CustomIOS7AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOS7AlertView.h; sourceTree = "<group>"; };
 		53AF23E619438C35003A5074 /* CustomIOS7AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOS7AlertView.m; sourceTree = "<group>"; };
-		53AF23E919439D79003A5074 /* Sandbox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Sandbox.xib; sourceTree = "<group>"; };
 		53AF23EB1943A58D003A5074 /* NearbyCollegeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyCollegeSelector.h; sourceTree = "<group>"; };
 		53AF23EC1943A58D003A5074 /* NearbyCollegeSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyCollegeSelector.m; sourceTree = "<group>"; };
 		53B1FDFC19254E4700905E49 /* MasterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterView.xib; sourceTree = "<group>"; };
@@ -140,6 +139,7 @@
 		53D2AD121918A7760097C840 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		53D2AD131918AAB80097C840 /* College.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = College.h; sourceTree = "<group>"; };
 		53D2AD141918AAB80097C840 /* College.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = College.m; sourceTree = "<group>"; };
+		53D51E34194950FA00A8BA81 /* CollegeList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CollegeList.txt; sourceTree = "<group>"; };
 		53F8572F193D6CFF0004D35F /* AppData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppData.h; sourceTree = "<group>"; };
 		53F85730193D6CFF0004D35F /* AppData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppData.m; sourceTree = "<group>"; };
 		53F8788D19133F60002A578B /* Collegefeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collegefeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -235,7 +235,6 @@
 		53B090B5192DA13100E3D996 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				53AF23E919439D79003A5074 /* Sandbox.xib */,
 				53AF23E819438CF3003A5074 /* CustomAlertView */,
 				53BDB4CF192F4E4300F45D5C /* CollegePicker */,
 				533475A019232A4A00E84CC8 /* TableCell */,
@@ -306,6 +305,7 @@
 		53B090B9192DA21600E3D996 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				53D51E34194950FA00A8BA81 /* CollegeList.txt */,
 				53F878AE19133F60002A578B /* Images.xcassets */,
 				53F8789719133F60002A578B /* Supporting Files */,
 				5390A9131914B76800ACD082 /* Images */,
@@ -491,6 +491,7 @@
 			files = (
 				5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */,
 				53BDB4D4192F4E6700F45D5C /* CollegePickerViewController.xib in Resources */,
+				53D51E35194950FA00A8BA81 /* CollegeList.txt in Resources */,
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */,
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,
@@ -502,7 +503,6 @@
 				53BDB4DB1930688200F45D5C /* new.png in Resources */,
 				53BDB4DA1930688200F45D5C /* colleges.png in Resources */,
 				5390A91F1914B76800ACD082 /* arrowup.png in Resources */,
-				53AF23EA19439D79003A5074 /* Sandbox.xib in Resources */,
 				53BDB4DC1930688200F45D5C /* tags.png in Resources */,
 				53BDB4D61930669100F45D5C /* top.png in Resources */,
 				53F8789B19133F60002A578B /* InfoPlist.strings in Resources */,

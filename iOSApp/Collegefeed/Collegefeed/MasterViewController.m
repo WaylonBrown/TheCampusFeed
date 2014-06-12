@@ -34,7 +34,14 @@
         
         // initialize a loading indicator and place it in top right corner (placeholder for create post button)
         self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        [self placeLoadingIndicator];
+        if ([self.appData isNearCollege])
+        {
+            [self placeCreatePost];
+        }
+        else
+        {
+            [self placeLoadingIndicator];
+        }
         [self setSelector:[[NearbyCollegeSelector alloc] initWithAppData:self.appData]];
     }
     return self;

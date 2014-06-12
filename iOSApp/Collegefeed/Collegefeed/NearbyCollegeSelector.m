@@ -34,7 +34,7 @@
 - (void)displaySelectorForNearbyColleges:(NSArray *)colleges
 {   // If the user is near multiple colleges, display a custom alert view to select one
     
-    int numColleges = colleges.count;
+    NSUInteger numColleges = colleges.count;
     if (numColleges < 1) return;
     if (numColleges == 1)
     {
