@@ -19,8 +19,7 @@
 {
     if (self = [super init])
     {
-//        [self fetchWithUrl:[Shared GETAllColleges]
-//                  intoList:self.list];
+//        [self getNetworkCollegeList];
         [self getHardCodedCollegeList];
         return self;
     }
@@ -30,6 +29,11 @@
 
 #pragma mark - Network Access
 
+- (void)getNetworkCollegeList
+{
+    [self fetchWithUrl:[Shared GETAllColleges]
+              intoList:self.list];
+}
 - (void)getHardCodedCollegeList
 {   // Populate the college list with a recent
     // list of colleges instead of accessing the network

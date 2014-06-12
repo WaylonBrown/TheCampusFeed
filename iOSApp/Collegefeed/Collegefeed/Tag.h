@@ -10,9 +10,9 @@
 
 @interface Tag : NSObject
 
-@property (nonatomic) NSInteger tagID;
-@property (nonatomic) NSInteger postID;
-@property (nonatomic) NSInteger score;
+@property (nonatomic) long tagID;
+@property (nonatomic) long postID;
+@property (nonatomic) long score;
 @property (nonatomic, strong) NSString *name;
 
 - (id)initWithTagID:(NSInteger)tID

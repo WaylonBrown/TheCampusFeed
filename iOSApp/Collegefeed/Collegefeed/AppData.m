@@ -25,7 +25,6 @@
         
         [self switchedToSpecificCollegeOrNil:nil];
         
-        
         [self setLocationManager:[[CLLocationManager alloc] init]];
         [self.locationManager setDelegate:self];
 //        [self.locationManager setDistanceFilter:locationDistanceFilter];
@@ -50,6 +49,8 @@
 }
 - (void)switchedToSpecificCollegeOrNil:(College *)college
 {
+    [self setCurrentCollege:college];
+
     if (college == nil)
     {
         [self setAllColleges:YES];
@@ -57,7 +58,6 @@
     }
     else
     {
-        [self setCurrentCollege:college];
         [self setAllColleges:NO];
         [self setSpecificCollege:YES];
     }

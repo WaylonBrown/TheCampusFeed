@@ -49,6 +49,8 @@
 		53D2AD111918A22A0097C840 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD101918A22A0097C840 /* Tag.m */; };
 		53D2AD151918AAB80097C840 /* College.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD141918AAB80097C840 /* College.m */; };
 		53D51E35194950FA00A8BA81 /* CollegeList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53D51E34194950FA00A8BA81 /* CollegeList.txt */; };
+		53D51E391949625300A8BA81 /* SimpleTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D51E371949625300A8BA81 /* SimpleTableCell.m */; };
+		53D51E3A1949625300A8BA81 /* SimpleTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D51E381949625300A8BA81 /* SimpleTableCell.xib */; };
 		53F85731193D6CFF0004D35F /* AppData.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F85730193D6CFF0004D35F /* AppData.m */; };
 		53F8789119133F60002A578B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789019133F60002A578B /* Foundation.framework */; };
 		53F8789319133F60002A578B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789219133F60002A578B /* CoreGraphics.framework */; };
@@ -140,6 +142,9 @@
 		53D2AD131918AAB80097C840 /* College.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = College.h; sourceTree = "<group>"; };
 		53D2AD141918AAB80097C840 /* College.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = College.m; sourceTree = "<group>"; };
 		53D51E34194950FA00A8BA81 /* CollegeList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CollegeList.txt; sourceTree = "<group>"; };
+		53D51E361949625300A8BA81 /* SimpleTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleTableCell.h; path = Collegefeed/SimpleTableCell.h; sourceTree = "<group>"; };
+		53D51E371949625300A8BA81 /* SimpleTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleTableCell.m; path = Collegefeed/SimpleTableCell.m; sourceTree = "<group>"; };
+		53D51E381949625300A8BA81 /* SimpleTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SimpleTableCell.xib; path = Collegefeed/SimpleTableCell.xib; sourceTree = "<group>"; };
 		53F8572F193D6CFF0004D35F /* AppData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppData.h; sourceTree = "<group>"; };
 		53F85730193D6CFF0004D35F /* AppData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppData.m; sourceTree = "<group>"; };
 		53F8788D19133F60002A578B /* Collegefeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collegefeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -186,14 +191,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		533475A019232A4A00E84CC8 /* TableCell */ = {
+		533475A019232A4A00E84CC8 /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
 				533475A11923344100E84CC8 /* TableCell.h */,
 				533475A21923344100E84CC8 /* TableCell.m */,
 				533475A31923344100E84CC8 /* TableCell.xib */,
+				53D51E361949625300A8BA81 /* SimpleTableCell.h */,
+				53D51E371949625300A8BA81 /* SimpleTableCell.m */,
+				53D51E381949625300A8BA81 /* SimpleTableCell.xib */,
 			);
-			name = TableCell;
+			name = "Custom Cells";
 			path = ..;
 			sourceTree = "<group>";
 		};
@@ -236,8 +244,8 @@
 			isa = PBXGroup;
 			children = (
 				53AF23E819438CF3003A5074 /* CustomAlertView */,
-				53BDB4CF192F4E4300F45D5C /* CollegePicker */,
-				533475A019232A4A00E84CC8 /* TableCell */,
+				53BDB4CF192F4E4300F45D5C /* College Selection */,
+				533475A019232A4A00E84CC8 /* Custom Cells */,
 				53B1FE0119254EB900905E49 /* MasterView */,
 				53963DE51916E5F50084E646 /* PostsViewController.h */,
 				53963DE61916E5F50084E646 /* PostsViewController.m */,
@@ -245,8 +253,6 @@
 				5390A93A191552AE00ACD082 /* CommentViewController.m */,
 				5334758A1922D9B700E84CC8 /* TagViewController.h */,
 				5334758B1922D9B700E84CC8 /* TagViewController.m */,
-				53AF23EB1943A58D003A5074 /* NearbyCollegeSelector.h */,
-				53AF23EC1943A58D003A5074 /* NearbyCollegeSelector.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -305,7 +311,6 @@
 		53B090B9192DA21600E3D996 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				53D51E34194950FA00A8BA81 /* CollegeList.txt */,
 				53F878AE19133F60002A578B /* Images.xcassets */,
 				53F8789719133F60002A578B /* Supporting Files */,
 				5390A9131914B76800ACD082 /* Images */,
@@ -323,14 +328,16 @@
 			name = MasterView;
 			sourceTree = "<group>";
 		};
-		53BDB4CF192F4E4300F45D5C /* CollegePicker */ = {
+		53BDB4CF192F4E4300F45D5C /* College Selection */ = {
 			isa = PBXGroup;
 			children = (
+				53AF23EB1943A58D003A5074 /* NearbyCollegeSelector.h */,
+				53AF23EC1943A58D003A5074 /* NearbyCollegeSelector.m */,
 				53BDB4D0192F4E6600F45D5C /* CollegePickerViewController.h */,
 				53BDB4D1192F4E6600F45D5C /* CollegePickerViewController.m */,
 				53BDB4D2192F4E6600F45D5C /* CollegePickerViewController.xib */,
 			);
-			name = CollegePicker;
+			name = "College Selection";
 			sourceTree = "<group>";
 		};
 		53F8788419133F60002A578B = {
@@ -376,6 +383,7 @@
 		53F8789719133F60002A578B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				53D51E34194950FA00A8BA81 /* CollegeList.txt */,
 				533FCA4C193EDE3B00754C07 /* aggieland.gpx */,
 				533FCA4E193FCD8200754C07 /* austin.gpx */,
 				53FA791219381A4F00EF246E /* ChildCellDelegate.h */,
@@ -501,6 +509,7 @@
 				5390A9241914B76800ACD082 /* postbuttonclick.xml in Resources */,
 				53F878AF19133F60002A578B /* Images.xcassets in Resources */,
 				53BDB4DB1930688200F45D5C /* new.png in Resources */,
+				53D51E3A1949625300A8BA81 /* SimpleTableCell.xib in Resources */,
 				53BDB4DA1930688200F45D5C /* colleges.png in Resources */,
 				5390A91F1914B76800ACD082 /* arrowup.png in Resources */,
 				53BDB4DC1930688200F45D5C /* tags.png in Resources */,
@@ -549,6 +558,7 @@
 				53963DE71916E5F50084E646 /* PostsViewController.m in Sources */,
 				53F8789D19133F60002A578B /* main.m in Sources */,
 				53D2AD0E19189F740097C840 /* Vote.m in Sources */,
+				53D51E391949625300A8BA81 /* SimpleTableCell.m in Sources */,
 				533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

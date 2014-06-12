@@ -50,7 +50,7 @@
 {   // called when this view is initially loaded
     
     // place logo at the top of the navigation bar
-    [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
+    [self.navigationItem setTitleView:logoTitleView ];
     [self.currentFeedLabel setAdjustsFontSizeToFitWidth:YES];
     
     [super loadView];
@@ -59,12 +59,11 @@
 {
     [self.navigationController.navigationBar setTranslucent:YES];
     [self.navigationController.navigationBar setAlpha:0.87f];
+    [self refresh];
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
-    [self.navigationController.navigationBar.topItem setTitleView:logoTitleView];
-    
-    [self refresh];
+    [super viewWillAppear:animated];
 }
 - (void)placeLoadingIndicator
 {   // Place the loading indicator in the navigation bar (instead of create post button)
@@ -167,7 +166,15 @@
         [self.tabBarController setSelectedIndex:0];
     }
     [self.navigationController popToRootViewControllerAnimated:YES];
-    [self.currentFeedLabel setText:college.name];
+    [self refresh];
+    //    if (college == nil)
+//    {
+//        [self.currentFeedLabel setText:@"All Colleges"];
+//    }
+//    else
+//    {
+//        [self.currentFeedLabel setText:college.name];
+//    }
 }
 
 @end

@@ -13,6 +13,7 @@
 #import "TagDataController.h"
 #import "PostsViewController.h"
 #import "Shared.h"
+#import "SimpleTableCell.h"
 
 @implementation TagViewController
 
@@ -20,7 +21,7 @@
 {
     // Do any additional setup after loading the view.
     [super viewDidLoad];
-
+    [self.view setBackgroundColor:[Shared getCustomUIColor:cf_lightgray]];
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
 }
@@ -42,26 +43,30 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
-    
     return [self.appData.tagDataController countOfList];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
     
-    static NSString *CellIdentifier = @"BasicTableCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
+    static NSString *CellIdentifier = @"SimpleTableCell";
+    SimpleTableCell *cell = (SimpleTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
     if (cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:CellIdentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier
+                                                     owner:self options:nil];
+        cell = [nib objectAtIndex:0];
     }
     
     // get the post and display in this cell
     Tag *tagAtIndex = (Tag*)[self.appData.tagDataController objectInListAtIndex:indexPath.row];
-    [cell.textLabel setText:tagAtIndex.name];
-    
+    [cell assignTag:tagAtIndex];
     return cell;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{   // TODO: This should not be hardcoded; revist
+    
+    return 56;
 }
 
 #pragma mark - Actions

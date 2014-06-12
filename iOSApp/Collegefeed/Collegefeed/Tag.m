@@ -60,7 +60,7 @@
         NSString *tagID     = (NSString*)[jsonObject valueForKey:@"id"];
         NSString *text      = (NSString*)[jsonObject valueForKey:@"text"];
         NSString *postID    = (NSString*)[jsonObject valueForKey:@"post_id"];
-        NSString *postCount = (NSString*)[jsonObject valueForKey:@"post_count"];
+        NSString *postCount = (NSString*)[jsonObject valueForKey:@"posts_count"];
         
         if (postID == (id)[NSNull null]) postID = nil;
         if (postCount == (id)[NSNull null]) postCount = nil;

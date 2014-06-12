@@ -25,7 +25,6 @@
 {   // this function called right before the comments view appears
     [super viewWillAppear:animated];
 
-    [self.navigationItem setTitleView:logoTitleView];
     
     if (self.originalPost != nil)
     {
@@ -51,7 +50,7 @@
 {   // called when the comment view is initially loaded
   
     [super loadView];
-    
+
     self.navigationItem.rightBarButtonItem =
     [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
                                                   target:self
