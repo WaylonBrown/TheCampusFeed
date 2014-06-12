@@ -23,8 +23,8 @@
         [self setCollegeFeedPicker:     [[CollegePickerViewController alloc]
                                          initAsAllCollegesWithAppData:self]];
         
-        
         [self switchedToSpecificCollegeOrNil:nil];
+        
         
         [self setLocationManager:[[CLLocationManager alloc] init]];
         [self.locationManager setDelegate:self];

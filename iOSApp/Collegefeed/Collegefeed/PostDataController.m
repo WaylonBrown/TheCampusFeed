@@ -36,8 +36,6 @@
     }
 }
 
-#pragma mark - 
-
 #pragma mark - Network Access
 
 - (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array

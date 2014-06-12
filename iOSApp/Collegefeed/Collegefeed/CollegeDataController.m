@@ -19,9 +19,9 @@
 {
     if (self = [super init])
     {
-        [self fetchWithUrl:[Shared GETAllColleges]
-                  intoList:self.list];
-        
+//        [self fetchWithUrl:[Shared GETAllColleges]
+//                  intoList:self.list];
+        [self getHardCodedCollegeList];
         return self;
     }
     return nil;
@@ -30,6 +30,44 @@
 
 #pragma mark - Network Access
 
+- (void)getHardCodedCollegeList
+{   // Populate the college list with a recent
+    // list of colleges instead of accessing the network
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"CollegeList" ofType:@"txt"];
+    NSData *myData = [NSData dataWithContentsOfFile:filePath];
+    
+    if (myData == nil)
+    {
+        NSLog(@"Could not get hard-coded list in CollegeList.txt");
+        return;
+    }
+    NSArray *jsonCollegesArray = [NSJSONSerialization JSONObjectWithData:myData
+                                                                 options:0
+                                                                   error:nil];
+    
+    [self.list removeAllObjects];
+    for (int i = 0; i < jsonCollegesArray.count; i++)
+    {
+        // this college as a json object
+        NSDictionary *jsonCollege = (NSDictionary *) [jsonCollegesArray objectAtIndex:i];
+        
+        // values to pass to College constructor
+        NSString *collegeID = (NSString*)[jsonCollege valueForKey:@"id"];
+        NSString *name      = (NSString*)[jsonCollege valueForKey:@"name"];
+        NSString *lat       = (NSString*)[jsonCollege valueForKey:@"lat"];
+        NSString *lon       = (NSString*)[jsonCollege valueForKey:@"lon"];
+        //            NSString *size      = (NSString*)[jsonCollege valueForKey:@"size"];
+        
+        // create college and add to the provided array
+        College* newCollege = [[College alloc] initWithCollegeID:[collegeID integerValue]
+                                                        withName:name
+                                                         withLat:[lat floatValue]
+                                                         withLon:[lon floatValue]];
+        
+        [self.list addObject:newCollege];
+    }
+    
+}
 - (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array
 {   // Call GETfromServer to access network,
     // then read JSON result into the provided array
