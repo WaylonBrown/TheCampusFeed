@@ -272,7 +272,6 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		if(listAdapter != null)
 		{
 			listAdapter.clear();
-			Log.i("cfeed","updateList with size of " + postList.size());
 			listAdapter.addAll(postList);
 			listAdapter.notifyDataSetChanged();
 		}			

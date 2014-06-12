@@ -149,6 +149,8 @@ public class MyPostsFragment extends Fragment implements OnRefreshListener
 	{
 		if(listAdapter != null)
 		{
+			listAdapter.clear();
+			listAdapter.addAll(postList);
 			listAdapter.notifyDataSetChanged();
 		}			
 	}

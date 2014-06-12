@@ -122,8 +122,7 @@ public class NetWorker {
 			if(whichFrag == 0)		//top posts
 			{
 				Log.i("cfeed","Fetched with size of " + result.size());
-				TopPostFragment.postList.clear();
-				TopPostFragment.postList.addAll(result);
+				TopPostFragment.postList = new ArrayList<Post>(result);
 				TopPostFragment.updateList();
 				TopPostFragment.makeLoadingIndicator(false);
 				TopPostFragment.setupFooterListView();
