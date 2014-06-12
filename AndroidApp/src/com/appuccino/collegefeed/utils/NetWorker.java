@@ -156,6 +156,7 @@ public class NetWorker {
 		@Override
 		protected Boolean doInBackground(Post... posts) {
 			try{
+				Log.i("cfeed","Posting to feed with ID of " + posts[0].getCollegeID());
 				Log.i("cfeed","Request URL: " + REQUEST_URL + "colleges/" + posts[0].getCollegeID() + "/posts");
 				HttpPost request = new HttpPost(REQUEST_URL + "colleges/" + posts[0].getCollegeID() + "/posts");
 				request.setHeader("Content-Type", "application/json");

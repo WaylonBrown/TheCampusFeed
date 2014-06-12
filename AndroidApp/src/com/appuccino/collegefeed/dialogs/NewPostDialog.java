@@ -1,5 +1,8 @@
 package com.appuccino.collegefeed.dialogs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
@@ -52,14 +55,28 @@ public class NewPostDialog extends AlertDialog.Builder{
 			}
 			else	//in range of multiple colleges
 			{
-				createCollegeChooser();
+				createCollegeChooser(layout);
 			}
 		}
 		
 	}
 
-	private void createCollegeChooser() {
-		//make dialog to choose college
+	private void createCollegeChooser(final View layout) {
+		List<String> stringPermissionsList = new ArrayList<String>();
+		for(int collegeID : MainActivity.permissions){
+			stringPermissionsList.add(MainActivity.getCollegeByID(collegeID).getName());
+		}
+		final CharSequence[] items = stringPermissionsList.toArray(new CharSequence[stringPermissionsList.size()]);
+
+	    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+	    builder.setTitle("Choose a Feed");
+	    builder.setItems(items, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int item) {
+	        	selectedCollegeID = MainActivity.permissions.get(item);
+	        	createDialog(layout);
+	        }
+	    }).show();
+		
 	}
 
 	private void createDialog(View layout) {
@@ -76,10 +93,11 @@ public class NewPostDialog extends AlertDialog.Builder{
     			if(postMessage.getText().toString().length() >= MainActivity.MIN_POST_LENGTH)
     			{
     				Post newPost = new Post(postMessage.getText().toString(), selectedCollegeID);
-        			NewPostFragment.postList.add(newPost);
-        			TopPostFragment.postList.add(newPost);
-        			NewPostFragment.updateList();
-        			TopPostFragment.updateList();
+    				//instantly add to new posts
+    				if(MainActivity.currentFeedCollegeID == MainActivity.ALL_COLLEGES || MainActivity.currentFeedCollegeID == selectedCollegeID){
+    					NewPostFragment.postList.add(newPost);
+            			NewPostFragment.updateList();
+    				}
         			new MakePostTask(context).execute(newPost);
         			dialog.dismiss();
     			}
@@ -167,13 +185,8 @@ public class NewPostDialog extends AlertDialog.Builder{
 		String collegeString = "Posting to ";
 		if(MainActivity.permissions != null)
 		{
-			if(MainActivity.permissions.size() == 1)
-			{
-				collegeString += MainActivity.getCollegeByID(MainActivity.permissions.get(0)).getName();
-				college.setText(collegeString);
-			}else{
-				//TODO: implement this
-			}
+			collegeString += MainActivity.getCollegeByID(selectedCollegeID).getName();
+			college.setText(collegeString);
 		}
 	}
 }

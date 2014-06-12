@@ -359,16 +359,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	{
 		if(permissions != null)
 		{
-			if(permissions.size() == 1)
-			{
-				LayoutInflater inflater = getLayoutInflater();
-				View postDialogLayout = inflater.inflate(R.layout.dialog_post, null);
-				new NewPostDialog(this, postDialogLayout);
-			}
-			else
-			{
-				
-			}
+			LayoutInflater inflater = getLayoutInflater();
+			View postDialogLayout = inflater.inflate(R.layout.dialog_post, null);
+			new NewPostDialog(this, postDialogLayout);
 		}
 		
 	}
