@@ -60,6 +60,11 @@
     [self.navigationController.navigationBar setTranslucent:YES];
     [self.navigationController.navigationBar setAlpha:0.87f];
     [self refresh];
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(refresh)
+                  forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:self.refreshControl];
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
@@ -136,7 +141,6 @@
     
     [self.selector displaySelectorForNearbyColleges:nearbyColleges];
 }
-
 - (void)refresh
 {   // refresh the current view
     NSString *feedName = self.appData.currentCollege.name;
@@ -146,6 +150,7 @@
     }
     [self.currentFeedLabel setText:feedName];
     [self.tableView reloadData];
+    [self.refreshControl endRefreshing];
 }
 
 #pragma mark - Delegate Methods

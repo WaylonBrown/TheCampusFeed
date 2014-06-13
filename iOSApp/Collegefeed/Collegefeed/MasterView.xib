@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MasterViewController">
             <connections>
                 <outlet property="currentFeedLabel" destination="SXB-AF-c0g" id="r7O-QH-CUk"/>
+                <outlet property="feedToolbar" destination="onw-bZ-Ayo" id="guM-k8-k3E"/>
                 <outlet property="tableView" destination="aEV-VT-52H" id="gZ0-54-1eh"/>
                 <outlet property="view" destination="cKt-4a-JCZ" id="cpw-7Q-b8c"/>
             </connections>
