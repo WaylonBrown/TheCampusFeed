@@ -49,6 +49,7 @@
 		53BDB4DC1930688200F45D5C /* tags.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D91930688200F45D5C /* tags.png */; };
 		53CF3254194E2A56008BB733 /* NewPostAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CF3253194E2A56008BB733 /* NewPostAlertView.m */; };
 		53CF3257194E2A8A008BB733 /* NewPostAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53CF3256194E2A8A008BB733 /* NewPostAlertView.xib */; };
+		53CF330E194E53DB008BB733 /* libNetworker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CF3309194E53B6008BB733 /* libNetworker.a */; };
 		53D2AD0719189E9E0097C840 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0619189E9E0097C840 /* Comment.m */; };
 		53D2AD0B19189EC60097C840 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0A19189EC60097C840 /* Post.m */; };
 		53D2AD0E19189F740097C840 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0D19189F740097C840 /* Vote.m */; };
@@ -73,6 +74,55 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		53CF3308194E53B6008BB733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53CF3303194E53B6008BB733 /* Networker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53CF32DA194E5341008BB733;
+			remoteInfo = Networker;
+		};
+		53CF330A194E53B6008BB733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53CF3303194E53B6008BB733 /* Networker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53CF32EA194E5341008BB733;
+			remoteInfo = NetworkerTests;
+		};
+		53CF330C194E53D8008BB733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53CF3303194E53B6008BB733 /* Networker.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 53CF32D9194E5341008BB733;
+			remoteInfo = Networker;
+		};
+		53CF3378194E571C008BB733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53CF3373194E571B008BB733 /* Models.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53CF334A194E56F7008BB733;
+			remoteInfo = Models;
+		};
+		53CF337A194E571C008BB733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53CF3373194E571B008BB733 /* Models.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53CF335A194E56F7008BB733;
+			remoteInfo = ModelsTests;
+		};
+		53CF3381194E5721008BB733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53CF337C194E5721008BB733 /* DataController.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53CF3318194E5640008BB733;
+			remoteInfo = DataController;
+		};
+		53CF3383194E5721008BB733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53CF337C194E5721008BB733 /* DataController.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53CF3328194E5640008BB733;
+			remoteInfo = DataControllerTests;
+		};
 		53F878B919133F60002A578B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 53F8788519133F60002A578B /* Project object */;
@@ -143,6 +193,9 @@
 		53CF3252194E2A56008BB733 /* NewPostAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPostAlertView.h; sourceTree = "<group>"; };
 		53CF3253194E2A56008BB733 /* NewPostAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPostAlertView.m; sourceTree = "<group>"; };
 		53CF3256194E2A8A008BB733 /* NewPostAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewPostAlertView.xib; sourceTree = "<group>"; };
+		53CF3303194E53B6008BB733 /* Networker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Networker.xcodeproj; path = Collegefeed/Networker/Networker.xcodeproj; sourceTree = "<group>"; };
+		53CF3373194E571B008BB733 /* Models.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Models.xcodeproj; path = Collegefeed/Models/Models.xcodeproj; sourceTree = "<group>"; };
+		53CF337C194E5721008BB733 /* DataController.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DataController.xcodeproj; path = Collegefeed/DataController/DataController.xcodeproj; sourceTree = "<group>"; };
 		53D2AD0519189E9E0097C840 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
 		53D2AD0619189E9E0097C840 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		53D2AD0919189EC60097C840 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
@@ -183,6 +236,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53CF330E194E53DB008BB733 /* libNetworker.a in Frameworks */,
 				53BDB4CE192F3E4400F45D5C /* CoreLocation.framework in Frameworks */,
 				53F8789319133F60002A578B /* CoreGraphics.framework in Frameworks */,
 				53F8789519133F60002A578B /* UIKit.framework in Frameworks */,
@@ -398,9 +452,39 @@
 			name = NewPostAlertView;
 			sourceTree = "<group>";
 		};
+		53CF3304194E53B6008BB733 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				53CF3309194E53B6008BB733 /* libNetworker.a */,
+				53CF330B194E53B6008BB733 /* NetworkerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		53CF3374194E571B008BB733 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				53CF3379194E571C008BB733 /* libModels.a */,
+				53CF337B194E571C008BB733 /* ModelsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		53CF337D194E5721008BB733 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				53CF3382194E5721008BB733 /* libDataController.a */,
+				53CF3384194E5721008BB733 /* DataControllerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		53F8788419133F60002A578B = {
 			isa = PBXGroup;
 			children = (
+				53CF337C194E5721008BB733 /* DataController.xcodeproj */,
+				53CF3373194E571B008BB733 /* Models.xcodeproj */,
+				53CF3303194E53B6008BB733 /* Networker.xcodeproj */,
 				53F8789619133F60002A578B /* Collegefeed */,
 				53F878BB19133F60002A578B /* CollegefeedTests */,
 				53F8788F19133F60002A578B /* Frameworks */,
@@ -485,6 +569,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				53CF330D194E53D8008BB733 /* PBXTargetDependency */,
 			);
 			name = Collegefeed;
 			productName = Collegefeed;
@@ -534,6 +619,20 @@
 			mainGroup = 53F8788419133F60002A578B;
 			productRefGroup = 53F8788E19133F60002A578B /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 53CF337D194E5721008BB733 /* Products */;
+					ProjectRef = 53CF337C194E5721008BB733 /* DataController.xcodeproj */;
+				},
+				{
+					ProductGroup = 53CF3374194E571B008BB733 /* Products */;
+					ProjectRef = 53CF3373194E571B008BB733 /* Models.xcodeproj */;
+				},
+				{
+					ProductGroup = 53CF3304194E53B6008BB733 /* Products */;
+					ProjectRef = 53CF3303194E53B6008BB733 /* Networker.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				53F8788C19133F60002A578B /* Collegefeed */,
@@ -541,6 +640,51 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		53CF3309194E53B6008BB733 /* libNetworker.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libNetworker.a;
+			remoteRef = 53CF3308194E53B6008BB733 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		53CF330B194E53B6008BB733 /* NetworkerTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = NetworkerTests.xctest;
+			remoteRef = 53CF330A194E53B6008BB733 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		53CF3379194E571C008BB733 /* libModels.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libModels.a;
+			remoteRef = 53CF3378194E571C008BB733 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		53CF337B194E571C008BB733 /* ModelsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ModelsTests.xctest;
+			remoteRef = 53CF337A194E571C008BB733 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		53CF3382194E5721008BB733 /* libDataController.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDataController.a;
+			remoteRef = 53CF3381194E5721008BB733 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		53CF3384194E5721008BB733 /* DataControllerTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = DataControllerTests.xctest;
+			remoteRef = 53CF3383194E5721008BB733 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		53F8788B19133F60002A578B /* Resources */ = {
@@ -633,6 +777,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		53CF330D194E53D8008BB733 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Networker;
+			targetProxy = 53CF330C194E53D8008BB733 /* PBXContainerItemProxy */;
+		};
 		53F878BA19133F60002A578B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 53F8788C19133F60002A578B /* Collegefeed */;
@@ -742,6 +891,7 @@
 				GCC_PREFIX_HEADER = "Collegefeed/Collegefeed-Prefix.pch";
 				INFOPLIST_FILE = "Collegefeed/Collegefeed-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -758,6 +908,7 @@
 				GCC_PREFIX_HEADER = "Collegefeed/Collegefeed-Prefix.pch";
 				INFOPLIST_FILE = "Collegefeed/Collegefeed-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

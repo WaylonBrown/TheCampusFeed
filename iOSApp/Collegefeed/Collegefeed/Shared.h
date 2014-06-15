@@ -41,42 +41,4 @@
 #define logoImage @"collegefeedlogosmall.png"
 #define logoTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:logoImage]]
 
-
-+ (UIColor*)getCustomUIColor:(int)hexValue;
-
-// Colleges
-+ (NSURL*)GETAllColleges;
-
-// Comments
-+ (NSURL*)POSTCommentWithPostId:(long)postId;
-
-+ (NSURL*)GETCommentsWithPostId:(long)postId;
-
-// Posts
-+ (NSURL*)POSTPostWithCollegeId:(long)collegeId;
-
-+ (NSURL*)GETPostsWithTagName:(NSString*)tagName;
-+ (NSURL*)GETPostsWithTagName:(NSString*)tagName
-                withCollegeId:(long)collegeId;
-
-+ (NSURL*)GETAllPostsWithTag:(NSString*)tagName
-              withPageNumber:(long)page
-           withNumberPerPage:(long)perPage;
-
-+ (NSURL*)GETAllPosts;
-+ (NSURL*)GETPostsWithCollegeId:(long)collegeId;
-
-+ (NSURL*)GETRecentPosts;
-+ (NSURL*)GETRecentPostsWithCollegeId:(long)collegeId;
-
-+ (NSURL*)GETTrendingPosts;
-+ (NSURL*)GETTrendingPostsWithCollegeId:(long)collegeId;
-
-// Tags
-+ (NSURL*)GETTagsTrending;
-
-// Votes
-+ (NSURL*)POSTVoteWithPostId:(long)postId;
-+ (NSURL*)GETVoteScoreWithPostId:(long)postId;
-
 @end

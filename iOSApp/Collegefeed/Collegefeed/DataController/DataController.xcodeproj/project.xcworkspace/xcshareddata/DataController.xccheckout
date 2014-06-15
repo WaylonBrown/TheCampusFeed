@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>171B2FB9-8465-4D51-AFD5-631C79DB4267</string>
+	<key>IDESourceControlProjectName</key>
+	<string>DataController</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>FF26BC6A-BA2C-4BE6-B498-D765A466A705</key>
+		<string>https://github.com/AggieDev/Collegefeed.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>iOSApp/Collegefeed/Collegefeed/DataController/DataController.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>FF26BC6A-BA2C-4BE6-B498-D765A466A705</key>
+		<string>../../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/AggieDev/Collegefeed.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>FF26BC6A-BA2C-4BE6-B498-D765A466A705</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>FF26BC6A-BA2C-4BE6-B498-D765A466A705</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Collegefeed</string>
+		</dict>
+	</array>
+</dict>
+</plist>

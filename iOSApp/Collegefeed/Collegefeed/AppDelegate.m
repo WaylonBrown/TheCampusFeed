@@ -13,6 +13,7 @@
 #import "Shared.h"
 #import "College.h"
 #import "CollegePickerViewController.h"
+#import "Networker/Networker.h"
 
 @implementation AppDelegate
 
@@ -20,7 +21,6 @@
 {   // Set up ViewControllers and DataControllers
 
     // ***SIMULATE YOUR LOCATION***
-
     self.appData = [[AppData alloc] init];
     [self.appData setAppDelegate:self];
     
