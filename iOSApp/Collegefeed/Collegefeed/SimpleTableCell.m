@@ -9,12 +9,17 @@
 #import "SimpleTableCell.h"
 #import "Tag.h"
 #import "College.h"
+#import "Shared.h"
 
 @implementation SimpleTableCell
 
 - (void)awakeFromNib
 {
     // Initialization code
+    
+    // Set font styles
+    [self.messageLabel  setFont:CF_FONT_LIGHT(16)];
+    [self.countLabel    setFont:CF_FONT_MEDIUM(12)];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -41,7 +46,6 @@
 {
     if (college != nil)
     {
-        [self.messageLabel setFont:[UIFont fontWithName:@"System" size:12]];
         [self.messageLabel setText:college.name];
         [self.countLabel setText:@""];
     }

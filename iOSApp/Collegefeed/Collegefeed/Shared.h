@@ -14,20 +14,28 @@
 #define MAX_POST_LENGTH      140
 #define MAX_COMMENT_LENGTH   140
 #define MAX_TAG_LENGTH       50
-
 #define MIN_POST_LENGTH      10
 #define MIN_COMMENT_LENGTH   10
 #define MIN_TAG_LENGTH       2
-
 #define MILES_FOR_PERMISSION 15
 
 // Custom colors
-#define cf_lightblue   0x33B5E5 // 51, 181, 229
-#define cf_blue        0x0099CC
-#define cf_lightgray   0xE6E6E6
-#define cf_gray        0x7C7C7C
-#define cf_darkgray    0x444444
-#define cf_white       0xFFFFFF
+#define CF_LIGHTBLUE   0x33B5E5 // 51, 181, 229
+#define CF_BLUE        0x0099CC
+#define CF_LIGHTGRAY   0xE6E6E6
+#define CF_GRAY        0x7C7C7C
+#define CF_DARKGRAY    0x444444
+#define CF_WHITE       0xFFFFFF
+
+// Custom fonts
+#define CF_FONT_LIGHT(s)    [UIFont fontWithName:@"Roboto-Light" size:s]
+#define CF_FONT_ITALIC(s)   [UIFont fontWithName:@"Roboto-LightItalic" size:s]
+
+//#define CF_FONT_MEDIUM(s)   [UIFont fontWithName:@"Omnes_Semibold" size:s]
+#define CF_FONT_MEDIUM(s)   [UIFont fontWithName:@"mplus-2c-bold" size:s]
+
+#define CF_FONT_BOLD(s)     [UIFont fontWithName:@"mplus-2c-bold" size:s]
+
 
 // Title view for navigation bar
 #define logoImage @"collegefeedlogosmall.png"

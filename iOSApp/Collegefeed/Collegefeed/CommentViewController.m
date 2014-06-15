@@ -121,7 +121,7 @@
     [commentHeader setText:@"Comments"];
     [commentHeader setTextAlignment:NSTextAlignmentCenter];
     [commentHeader setFont:[UIFont systemFontOfSize:12]];
-    [commentHeader setBackgroundColor:[Shared getCustomUIColor:cf_lightgray]];
+    [commentHeader setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
     
     return commentHeader;
 }

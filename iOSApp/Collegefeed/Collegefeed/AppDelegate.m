@@ -25,7 +25,7 @@
     [self.appData setAppDelegate:self];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:cf_lightblue]];
+    [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
 #pragma mark - Create ViewControllers

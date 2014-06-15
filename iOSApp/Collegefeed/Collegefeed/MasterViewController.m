@@ -20,6 +20,7 @@
 #import "AppDelegate.h"
 #import "College.h"
 #import "NearbyCollegeSelector.h"
+#import "NewPostAlertView.h"
 
 @implementation MasterViewController
 
@@ -32,39 +33,49 @@
     {
         [self setAppData:data];
         
-        // initialize a loading indicator and place it in top right corner (placeholder for create post button)
-        self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        if ([self.appData isNearCollege])
-        {
-            [self placeCreatePost];
-        }
-        else
-        {
-            [self placeLoadingIndicator];
-        }
-        [self setSelector:[[NearbyCollegeSelector alloc] initWithAppData:self.appData]];
+        // Initialize a loading indicator, refresh control, and nearby college selector
+        self.refreshControl     = [[UIRefreshControl alloc] init];
+        self.selector           = [[NearbyCollegeSelector alloc] initWithAppData:self.appData];
+        self.activityIndicator  = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+
+        [self.refreshControl addTarget:self action:@selector(refresh)
+                      forControlEvents:UIControlEventValueChanged];
     }
     return self;
 }
 - (void)loadView
 {   // called when this view is initially loaded
     
-    // place logo at the top of the navigation bar
-    [self.navigationItem setTitleView:logoTitleView ];
-    [self.currentFeedLabel setAdjustsFontSizeToFitWidth:YES];
-    
     [super loadView];
+
+    // Show loading indicator until a nearby college is found,
+    // then replace it with a create post button
+    if ([self.appData isNearCollege])
+    {
+        [self placeCreatePost];
+    }
+    else
+    {
+        [self placeLoadingIndicator];
+    }
+    
+    [self.tableView addSubview:self.refreshControl];
+
+    // Place logo at the top of the navigation bar
+    [self.navigationItem setTitleView:logoTitleView ];
+
+    // Assign fonts
+    [self.currentFeedLabel      setAdjustsFontSizeToFitWidth:YES];
+    [self.currentFeedLabel      setFont:CF_FONT_LIGHT(20)];
+    [self.showingLabel          setFont:CF_FONT_MEDIUM(11)];
+    [self.feedButton.titleLabel setFont:CF_FONT_LIGHT(15)];
+    
 }
 - (void)viewDidLoad
 {
     [self.navigationController.navigationBar setTranslucent:YES];
-    [self.navigationController.navigationBar setAlpha:0.87f];
+    [self.navigationController.navigationBar setAlpha:0.9f];
     [self refresh];
-    
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(refresh)
-                  forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:self.refreshControl];
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive

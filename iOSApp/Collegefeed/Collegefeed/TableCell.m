@@ -12,6 +12,7 @@
 #import "Vote.h"
 #import "PostsViewController.h"
 #import "ChildCellDelegate.h"
+#import "Shared.h"
 
 @implementation TableCell
 
@@ -20,6 +21,14 @@
 - (void)awakeFromNib
 {
     // Initialization code
+    
+    // Set font styles
+    [self.messageLabel      setFont:CF_FONT_LIGHT(16)];
+    [self.commentCountLabel setFont:CF_FONT_MEDIUM(12)];
+    [self.ageLabel          setFont:CF_FONT_MEDIUM(12)];
+    [self.scoreLabel        setFont:CF_FONT_BOLD(12)];
+    [self.collegeLabel      setFont:CF_FONT_ITALIC(12)];
+
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
@@ -43,11 +52,11 @@
     [self setObject:obj];
     
     // assign cell's plain text labels
-    [self.ageLabel setText: [self getAgeAsString:obj.createdAt]];
-    [self.scoreLabel setText:[NSString stringWithFormat:@"%d", (int)obj.score]];
-    [self.messageLabel setText:obj.message];
+    [self.messageLabel      setText:obj.message];
     [self.commentCountLabel setText:[self getCommentLabelString]];
-    [self.collegeLabel setText:obj.collegeName];
+    [self.ageLabel          setText:[self getAgeAsString:obj.createdAt]];
+    [self.scoreLabel        setText:[NSString stringWithFormat:@"%d", (int)obj.score]];
+    [self.collegeLabel      setText:obj.collegeName];
     
     // Parse message for Tags
     [self findHashTags];

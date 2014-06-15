@@ -21,7 +21,7 @@
 {
     // Do any additional setup after loading the view.
     [super viewDidLoad];
-    [self.view setBackgroundColor:[Shared getCustomUIColor:cf_lightgray]];
+    [self.view setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
 }
