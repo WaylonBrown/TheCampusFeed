@@ -12,7 +12,7 @@
 @class Post;
 @class Vote;
 
-@interface Comment : Model
+@interface Comment : Model<PostAndCommentProtocol>
 
 @property (nonatomic) long commentID;
 @property (nonatomic) long postID;

@@ -11,7 +11,7 @@
 #import "CommentViewController.h"
 #import "TagViewController.h"
 #import "Shared.h"
-#import "College.h"
+#import "Models/Models/College.h"
 #import "CollegePickerViewController.h"
 #import "Networker/Networker.h"
 

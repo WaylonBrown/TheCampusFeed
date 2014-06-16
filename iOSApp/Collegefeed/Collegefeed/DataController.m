@@ -11,6 +11,7 @@
 #import "Models/Models/College.h"
 #import "Models/Models/Comment.h"
 #import "Models/Models/Post.h"
+#import "Models/Models/Tag.h"
 #import "Models/Models/Vote.h"
 #import "Networker/Networker/Networker.h"
 
@@ -32,20 +33,7 @@
 {
     self.collegeList = [[NSMutableArray alloc] init];
     NSData *data = [Networker GETAllColleges];
-    [self parseData:data intoList:self.collegeList];
-}
-- (void)getHardCodedCollegeList
-{   // Populate the college list with a recent
-    // list of colleges instead of accessing the network
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"CollegeList" ofType:@"txt"];
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    
-    if (data == nil)
-    {
-        NSLog(@"Could not get hard-coded list in CollegeList.txt");
-        return;
-    }
-    [self parseData:data intoList:self.collegeList];
+    [self parseData:data asClass:[College class] intoList:self.collegeList];
 }
 
 #pragma mark - Networker Access - Comments
@@ -55,13 +43,13 @@
     NSData *result = [Networker POSTCommentData:[comment toJSON]
                                      WithPostId:comment.postID];
     
-    return [self parseData:result intoList:self.commentList];
+    return [self parseData:result asClass:[Comment class] intoList:self.commentList];
 }
 - (void)fetchCommentsWithPostId:(long)postId
 {
     self.commentList = [[NSMutableArray alloc] init];
     NSData *data = [Networker GETCommentsWithPostId:postId];
-    [self parseData:data intoList:self.commentList];
+    [self parseData:data asClass:[Comment class] intoList:self.commentList];
 }
 
 #pragma mark - Networker Access - Posts
@@ -71,44 +59,45 @@
     NSData *result = [Networker POSTPostData:[post toJSON]
                                WithCollegeId:post.collegeID];
     
-    return [self parseData:result intoList:self.recentPostsAllColleges];
+    [self parseData:result asClass:[Post class] intoList:self.topPostsAllColleges];
+    return [self parseData:result asClass:[Post class] intoList:self.recentPostsAllColleges];
 }
 - (void)fetchTopPosts
 {
     self.topPostsAllColleges = [[NSMutableArray alloc] init];
     NSData* data = [Networker GETAllPosts];
-    [self parseData:data intoList:self.topPostsAllColleges];
+    [self parseData:data asClass:[Post class] intoList:self.topPostsAllColleges];
 }
 - (void)fetchTopPostsWithCollegeId:(long)collegeId
 {
     self.topPostsInCollege = [[NSMutableArray alloc] init];
     NSData* data = [Networker GETTrendingPostsWithCollegeId:collegeId];
-    [self parseData:data intoList:self.topPostsInCollege];
+    [self parseData:data asClass:[Post class] intoList:self.topPostsInCollege];
 }
 - (void)fetchNewPosts
 {
     [self setRecentPostsAllColleges:[[NSMutableArray alloc] init]];
     NSData* data = [Networker GETAllPosts];
-    [self parseData:data intoList:self.recentPostsAllColleges];
+    [self parseData:data asClass:[Post class] intoList:self.recentPostsAllColleges];
 }
 - (void)fetchNewPostsWithCollegeId:(long)collegeId
 {
     [self setRecentPostsInCollege:[[NSMutableArray alloc] init]];
     NSData* data = [Networker GETRecentPostsWithCollegeId:collegeId];
-    [self parseData:data intoList:self.recentPostsInCollege];
+    [self parseData:data asClass:[Post class] intoList:self.recentPostsInCollege];
 }
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage
 {
     [self setAllPostsWithTag:[[NSMutableArray alloc] init]];
     NSData* data = [Networker GETPostsWithTagName:tagMessage];
-    [self parseData:data intoList:self.allPostsWithTag];
+    [self parseData:data asClass:[Post class] intoList:self.allPostsWithTag];
 }
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage
                       withCollegeId:(long)collegeId
 {
     [self setAllPostsWithTagInCollege:[[NSMutableArray alloc] init]];
     NSData* data = [Networker GETPostsWithTagName:tagMessage withCollegeId:collegeId];
-    [self parseData:data intoList:self.allPostsWithTagInCollege];
+    [self parseData:data asClass:[Post class] intoList:self.allPostsWithTagInCollege];
 }
 - (void)fetchUserPostsWithUserId:(long)userId
 {
@@ -128,14 +117,14 @@
 {   // fetch tags trending across all colleges
     self.allTags = [[NSMutableArray alloc] init];
     NSData *data = [Networker GETTagsTrending];
-    [self parseData:data intoList:self.allTags];
+    [self parseData:data asClass:[Tag class] intoList:self.allTags];
 }
 - (void)fetchAllTagsWithCollegeId:(long)collegeId
 {   // fetch tags trending in a particular college
     self.allTagsInCollege = [[NSMutableArray alloc] init];
     //TODO: need a url to get all trending tags for a school, but waiting on a server endpoint
     NSData *data = [Networker GETTagsTrending];
-    [self parseData:data intoList:self.allTagsInCollege];
+    [self parseData:data asClass:[Tag class] intoList:self.allTagsInCollege];
 }
 
 
@@ -152,28 +141,23 @@
     {
         result = [Networker POSTVoteData:[vote toJSON] WithPostId:vote.parentID];
     }
-    return [self parseData:result intoList:self.commentList];
+    return [self parseData:result asClass:[Vote class] intoList:self.commentList];
 }
 
-#pragma mark - Helper Data Access
+#pragma mark - Local Data Access
 
--(BOOL)parseData:(NSData *)data intoList:(NSMutableArray *)array
-{
-    NSArray *jsonArray = (NSArray*)[NSJSONSerialization JSONObjectWithData:data
-                                                                   options:0
-                                                                     error:nil];
-    if (jsonArray != nil)
+- (void)getHardCodedCollegeList
+{   // Populate the college list with a recent
+    // list of colleges instead of accessing the network
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"CollegeList" ofType:@"txt"];
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    
+    if (data == nil)
     {
-        for (int i = 0; i < jsonArray.count; i++)
-        {
-            // Individual JSON object
-            NSDictionary *jsonObject = (NSDictionary *) [jsonArray objectAtIndex:i];
-            [array addObject:[Model initFromJSON:jsonObject]];
-            
-        }
-        return YES;
+        NSLog(@"Could not get hard-coded list in CollegeList.txt");
+        return;
     }
-    return NO;
+    [self parseData:data asClass:[College class] intoList:self.collegeList];
 }
 - (NSArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon
 {
@@ -193,5 +177,45 @@
         
     }
     return colleges;
+}
+
+#pragma mark - Helper Methods
+
+-(BOOL)parseData:(NSData *)data asClass:(Class)class intoList:(NSMutableArray *)array
+{
+    NSArray *jsonArray = (NSArray*)[NSJSONSerialization JSONObjectWithData:data
+                                                                   options:0
+                                                                     error:nil];
+    if (jsonArray != nil)
+    {
+        for (int i = 0; i < jsonArray.count; i++)
+        {
+            // Individual JSON object
+            NSDictionary *jsonObject = (NSDictionary *) [jsonArray objectAtIndex:i];
+            if ([College class] == class)
+            {
+                [array addObject:[College initFromJSON:jsonObject]];
+            }
+            if ([Comment class] == class)
+            {
+                [array addObject:[Comment initFromJSON:jsonObject]];
+            }
+            if ([Post class] == class)
+            {
+                [array addObject:[Post initFromJSON:jsonObject]];
+            }
+            if ([Tag class] == class)
+            {
+                [array addObject:[Tag initFromJSON:jsonObject]];
+            }
+            if ([Vote class] == class)
+            {
+                [array addObject:[Vote initFromJSON:jsonObject]];
+            }
+            
+        }
+        return YES;
+    }
+    return NO;
 }
 @end

@@ -11,10 +11,6 @@
 #import <UIKit/UIKit.h>
 
 #import "DataController.h"
-#import "CommentDataController.h"
-#import "VoteDataController.h"
-#import "CollegeDataController.h"
-#import "TagDataController.h"
 #import "CollegePickerViewController.h"
 
 
@@ -24,11 +20,8 @@
 
 @property (strong, nonatomic) id<AppDataDelegateProtocol> appDelegate;
 
-@property (strong, nonatomic) PostDataController    *postDataController;
-@property (strong, nonatomic) CommentDataController *commentDataController;
-@property (strong, nonatomic) VoteDataController    *voteDataController;
-@property (strong, nonatomic) CollegeDataController *collegeDataController;
-@property (strong, nonatomic) TagDataController     *tagDataController;
+@property (strong, nonatomic) Post *postInFocus;
+@property (strong, nonatomic) DataController *dataController;
 
 @property (strong, nonatomic) CollegePickerViewController *collegeFeedPicker;
 

@@ -7,7 +7,7 @@
 //
 
 #import "CollegePickerViewController.h"
-#import "College.h"
+#import "Models/Models/College.h"
 #import "Shared.h"
 #import "PostsViewController.h"
 #import "ChildCellDelegate.h"
@@ -25,7 +25,7 @@
     {
         [self setTopColleges:YES];
         [self setAllColleges:NO];
-        [self setList:data.collegeDataController.list];
+        [self setList:data.dataController.collegeList];
     }
     return self;
 }
@@ -37,7 +37,7 @@
         [self setTopColleges:NO];
         [self setAllColleges:YES];
         [self setAppData:data];
-        [self setList:self.appData.collegeDataController.list];
+        [self setList:data.dataController.collegeList];
     }
     return self;
 }

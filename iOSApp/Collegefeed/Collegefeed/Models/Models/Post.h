@@ -11,7 +11,7 @@
 
 @class Vote;
 
-@interface Post : Model
+@interface Post : Model<PostAndCommentProtocol>
 
 @property (nonatomic) NSMutableArray *commentList;
 @property (nonatomic) float lat;

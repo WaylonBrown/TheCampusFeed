@@ -15,13 +15,10 @@
     self = [super init];
     if (self)
     {
-        [self setPostDataController:    [[PostDataController alloc]     init]];
-        [self setCommentDataController: [[CommentDataController alloc]  init]];
-        [self setVoteDataController:    [[VoteDataController alloc]     init]];
-        [self setCollegeDataController: [[CollegeDataController alloc]  init]];
-        [self setTagDataController:     [[TagDataController alloc]      init]];
-        [self setCollegeFeedPicker:     [[CollegePickerViewController alloc]
-                                         initAsAllCollegesWithAppData:self]];
+        [self setDataController:    [[DataController alloc] init]];
+        
+        [self setCollegeFeedPicker: [[CollegePickerViewController alloc]
+                                    initAsAllCollegesWithAppData:self]];
         
         [self switchedToSpecificCollegeOrNil:nil];
         
@@ -65,7 +62,7 @@
 - (void)findNearbyColleges
 {   // Populate the nearbyColleges array appropriately using current location
 
-    self.nearbyColleges = [[NSArray alloc] initWithArray:[self.collegeDataController
+    self.nearbyColleges = [[NSArray alloc] initWithArray:[self.dataController
                                     findNearbyCollegesWithLat:self.lat withLon:self.lon]];
 
 }

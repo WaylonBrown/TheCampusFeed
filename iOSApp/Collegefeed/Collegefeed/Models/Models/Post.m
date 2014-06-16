@@ -90,4 +90,32 @@
 {   // Returns the ID for this Post
     return self.postID;
 }
+
+#pragma mark - Protocol Methods
+
+- (NSString *)getMessage
+{
+    return self.message;
+}
+- (NSDate *)getCreatedAt
+{
+    return self.createdAt;
+}
+- (long)getScore
+{
+    return self.score;
+}
+- (NSString *)getCollegeName
+{
+    return self.collegeName;
+}
+- (void)setVote:(Vote *)vote
+{
+    [self setVote:vote];
+}
+- (Vote *)getVote
+{
+    return self.vote;
+}
+
 @end

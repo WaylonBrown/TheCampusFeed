@@ -8,12 +8,10 @@
 
 #import "TableCell.h"
 #import "PostsViewController.h"
-#import "PostDataController.h"
-#import "Post.h"
+#import "Models/Models/Post.h"
 #import "PostsViewController.h"
 #import "CommentViewController.h"
-#import "CommentDataController.h"
-#import "Comment.h"
+#import "Models/Models/Comment.h"
 #import "TTTAttributedLabel.h"
 #import "Shared.h"
 
@@ -28,12 +26,9 @@
     
     if (self.originalPost != nil)
     {
-        [self.appData.commentDataController setPost:self.originalPost];
+        [self.appData setPostInFocus:self.originalPost];
         long postID = (long)self.originalPost.postID;
-        
-        [self.appData.commentDataController fetchWithUrl:[Shared GETCommentsWithPostId:postID]
-                                                intoList:self.appData.commentDataController.list];
-        
+        [self.appData.dataController fetchCommentsWithPostId:postID];
         [self.tableView reloadData];
     }
 }
@@ -67,7 +62,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Number of rows in table views
     if (section == 0) return 1;
-    else return [self.appData.commentDataController countOfList];
+    else return [self.appData.dataController.commentList count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Get the table view cell for the given row
@@ -91,7 +86,7 @@
     }
     else
     {   // CommentView table; get the comment to be displayed in this cell
-        Comment *commentAtIndex = (Comment*)[self.appData.commentDataController objectInListAtIndex:indexPath.row];
+        Comment *commentAtIndex = (Comment*)[self.appData.dataController.commentList objectAtIndex:indexPath.row];
         [cell assign:commentAtIndex];
         return cell;
     }
@@ -160,8 +155,7 @@
     
     Comment *newComment = [[Comment alloc] initWithCommentMessage:[[alertView textFieldAtIndex:0] text]
                                                          withPost:self.originalPost];
-    [self.appData.commentDataController POSTtoServer:newComment
-                                            intoList:self.appData.commentDataController.list];
+    [self.appData.dataController createComment:newComment];
     [self.tableView reloadData];
 }
 

@@ -20,6 +20,7 @@
 		53CF3391194E57F0008BB733 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CF338A194E57F0008BB733 /* Post.m */; };
 		53CF3392194E57F0008BB733 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CF338C194E57F0008BB733 /* Tag.m */; };
 		53CF3393194E57F0008BB733 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CF338E194E57F0008BB733 /* Vote.m */; };
+		53CF33A2194E82BB008BB733 /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CF33A1194E82BB008BB733 /* Model.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		53CF338C194E57F0008BB733 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
 		53CF338D194E57F0008BB733 /* Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vote.h; sourceTree = "<group>"; };
 		53CF338E194E57F0008BB733 /* Vote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vote.m; sourceTree = "<group>"; };
+		53CF33A1194E82BB008BB733 /* Model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Model.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				53CF3352194E56F7008BB733 /* Model.h */,
+				53CF33A1194E82BB008BB733 /* Model.m */,
 				53CF3385194E57F0008BB733 /* College.h */,
 				53CF3386194E57F0008BB733 /* College.m */,
 				53CF3387194E57F0008BB733 /* Comment.h */,
@@ -248,6 +251,7 @@
 				53CF3390194E57F0008BB733 /* Comment.m in Sources */,
 				53CF338F194E57F0008BB733 /* College.m in Sources */,
 				53CF3391194E57F0008BB733 /* Post.m in Sources */,
+				53CF33A2194E82BB008BB733 /* Model.m in Sources */,
 				53CF3392194E57F0008BB733 /* Tag.m in Sources */,
 				53CF3393194E57F0008BB733 /* Vote.m in Sources */,
 			);

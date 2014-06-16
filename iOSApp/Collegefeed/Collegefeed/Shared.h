@@ -27,6 +27,7 @@
 #define CF_DARKGRAY    0x444444
 #define CF_WHITE       0xFFFFFF
 
+
 // Custom fonts
 #define CF_FONT_LIGHT(s)    [UIFont fontWithName:@"Roboto-Light" size:s]
 #define CF_FONT_ITALIC(s)   [UIFont fontWithName:@"Roboto-LightItalic" size:s]
@@ -40,5 +41,8 @@
 // Title view for navigation bar
 #define logoImage @"collegefeedlogosmall.png"
 #define logoTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:logoImage]]
+
++ (UIColor*)getCustomUIColor:(int)hexValue;
+
 
 @end

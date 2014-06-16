@@ -7,10 +7,9 @@
 //
 
 
-#import "College.h"
-#import "Tag.h"
+#import "Models/Models/College.h"
+#import "Models/Models/Tag.h"
 #import "TagViewController.h"
-#import "TagDataController.h"
 #import "PostsViewController.h"
 #import "Shared.h"
 #import "SimpleTableCell.h"
@@ -30,7 +29,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Post view of all posts with the selected tag
-    self.selectedTag = (Tag *)[self.appData.tagDataController objectInListAtIndex:indexPath.row];
+    self.selectedTag = (Tag *)[self.appData.dataController.allTags objectAtIndex:indexPath.row];
     PostsViewController* controller = [[PostsViewController alloc] initAsTagPostsWithAppData:self.appData
                                                                               withTagMessage:self.selectedTag.name];
     
@@ -43,7 +42,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
-    return [self.appData.tagDataController countOfList];
+    return self.appData.dataController.allTags.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
@@ -59,7 +58,7 @@
     }
     
     // get the post and display in this cell
-    Tag *tagAtIndex = (Tag*)[self.appData.tagDataController objectInListAtIndex:indexPath.row];
+    Tag *tagAtIndex = (Tag*)[self.appData.dataController.allTags objectAtIndex:indexPath.row];
     [cell assignTag:tagAtIndex];
     return cell;
 }
@@ -75,11 +74,11 @@
 {   // refresh this tag view
     if (self.appData.allColleges)
     {
-        [self.appData.tagDataController fetchAllTags];
+        [self.appData.dataController fetchAllTags];
     }
     else if (self.appData.specificCollege)
     {
-        [self.appData.tagDataController fetchAllTagsWithCollegeId:self.appData.currentCollege.collegeID];
+        [self.appData.dataController fetchAllTagsWithCollegeId:self.appData.currentCollege.collegeID];
     }
     [super refresh];
 }

@@ -44,7 +44,6 @@
 
 // Networker Access - Colleges
 - (void)getNetworkCollegeList;
-- (void)getHardCodedCollegeList;
 
 // Networker Access - Comments
 - (BOOL)createComment:(Comment *)comment;
@@ -75,5 +74,9 @@
 
 // Networker Access - Votes
 - (BOOL)createVote:(Vote *)vote;
+
+// Local Data Access
+- (void)getHardCodedCollegeList;
+- (NSArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon;
 
 @end
