@@ -22,6 +22,7 @@ import com.appuccino.collegefeed.fragments.MyCommentsFragment;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
+import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
 
@@ -172,9 +173,9 @@ public class NetWorker {
 		}
 
 		@Override
-		protected ArrayList<Post> doInBackground(PostSelector... arg0) {
+		protected ArrayList<Comment> doInBackground(PostSelector... arg0) {
 			HttpGet request = new HttpGet(REQUEST_URL + "posts/" + postID + "comments");
-			ArrayList<Post> ret = new ArrayList<Post>();
+			ArrayList<Comment> ret = new ArrayList<Comment>();
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String response = null;
 			try {
@@ -191,7 +192,7 @@ public class NetWorker {
 				Log.d("cfeed", response);
 			
 			try {
-				ret = JSONParser.postListFromJSON(response);
+				ret = JSONParser.commentListFromJSON(response);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -200,11 +201,11 @@ public class NetWorker {
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<Post> result) {
-			TopPostFragment.postList = new ArrayList<Post>(result);
-			TopPostFragment.updateList();
-			TopPostFragment.makeLoadingIndicator(false);
-			TopPostFragment.setupFooterListView();
+		protected void onPostExecute(ArrayList<Comment> result) {
+//			TopPostFragment.postList = new ArrayList<Comment>(result);
+//			TopPostFragment.updateList();
+//			TopPostFragment.makeLoadingIndicator(false);
+//			TopPostFragment.setupFooterListView();
 		}		
 	}
 	

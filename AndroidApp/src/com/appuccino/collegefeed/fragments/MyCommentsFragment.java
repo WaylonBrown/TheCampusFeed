@@ -130,7 +130,7 @@ public class MyCommentsFragment extends Fragment implements OnRefreshListener
 	protected void commentClicked(Comment comment) 
 	{
 		Intent intent = new Intent(getActivity(), PostCommentsActivity.class);
-		intent.putExtra("POST_ID", comment.getParentID());
+		intent.putExtra("POST_ID", comment.getPostID());
 		intent.putExtra("SECTION_NUMBER", tabNumber);
 
 		startActivity(intent);
@@ -144,7 +144,7 @@ public class MyCommentsFragment extends Fragment implements OnRefreshListener
 		{
 			for(int i = 0; i < commentList.size(); i++)
 			{
-				if(commentList.get(i).getParentID() == id)
+				if(commentList.get(i).getPostID() == id)
 				{
 					//return commentList.get(i).getParentID();
 				}

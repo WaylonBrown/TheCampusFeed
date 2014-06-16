@@ -3,14 +3,12 @@ package com.appuccino.collegefeed.objects;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.StringReader;
 import java.util.ArrayList;
+
+import android.util.JsonWriter;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.utils.TimeManager;
-
-import android.util.JsonReader;
-import android.util.JsonWriter;
 
 public class Post extends AbstractPostComment{
 

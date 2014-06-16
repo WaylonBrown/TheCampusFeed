@@ -1,17 +1,5 @@
 package com.appuccino.collegefeed.objects;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.StringReader;
-import java.util.ArrayList;
-
-import com.appuccino.collegefeed.MainActivity;
-import com.appuccino.collegefeed.utils.TimeManager;
-
-import android.util.JsonReader;
-import android.util.JsonWriter;
-
 public class AbstractPostComment {
 	public int score = 0;
 	String message = "";
