@@ -86,7 +86,7 @@ public class MyPostsFragment extends Fragment implements OnRefreshListener
 		{
 			pullListFromServer();
 		}		
-		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_post, postList, 0);
+		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_post, postList, 2);
 		list.setAdapter(listAdapter);
 		
 		

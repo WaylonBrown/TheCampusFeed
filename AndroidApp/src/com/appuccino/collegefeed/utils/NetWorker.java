@@ -76,13 +76,32 @@ public class NetWorker {
 		}
 		
 		private ArrayList<Post> fetchTopPostsFrag() {
-			ArrayList<Post> ret = new ArrayList<Post>();
 			HttpGet request = null;
 			if(feedID == MainActivity.ALL_COLLEGES)
-				request = new HttpGet(REQUEST_URL + "posts");
+				request = new HttpGet(REQUEST_URL + "posts/trending");
 			else
-				request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/posts");
+				request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/posts/trending");
 			
+			return getPostsFromURLRequest(request);
+		}
+
+		private ArrayList<Post> fetchNewPostsFrag() {
+			HttpGet request = null;
+			if(feedID == MainActivity.ALL_COLLEGES)
+				request = new HttpGet(REQUEST_URL + "posts/recent");
+			else
+				request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/posts/recent");
+			
+			return getPostsFromURLRequest(request);
+		}
+		
+		private ArrayList<Post> fetchMyPostsFrag() {
+			ArrayList<Post> ret = new ArrayList<Post>();
+			return ret;
+		}
+		
+		private ArrayList<Post> getPostsFromURLRequest(HttpGet request) {
+			ArrayList<Post> ret = new ArrayList<Post>();
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String response = null;
 			try {
@@ -107,21 +126,10 @@ public class NetWorker {
 			return ret;
 		}
 
-		private ArrayList<Post> fetchNewPostsFrag() {
-			ArrayList<Post> ret = new ArrayList<Post>();
-			return ret;
-		}
-		
-		private ArrayList<Post> fetchMyPostsFrag() {
-			ArrayList<Post> ret = new ArrayList<Post>();
-			return ret;
-		}
-
 		@Override
 		protected void onPostExecute(ArrayList<Post> result) {
 			if(whichFrag == 0)		//top posts
 			{
-				Log.i("cfeed","Fetched with size of " + result.size());
 				TopPostFragment.postList = new ArrayList<Post>(result);
 				TopPostFragment.updateList();
 				TopPostFragment.makeLoadingIndicator(false);
@@ -129,16 +137,14 @@ public class NetWorker {
 			}
 			else if(whichFrag == 1)	//new posts
 			{
-				NewPostFragment.postList.clear();
-				NewPostFragment.postList.addAll(result);
+				NewPostFragment.postList = new ArrayList<Post>(result);
 				NewPostFragment.updateList();
 				NewPostFragment.makeLoadingIndicator(false);
 				NewPostFragment.setupFooterListView();
 			}
 			else if(whichFrag == 2)	//my posts
 			{
-				MyPostsFragment.postList.clear();
-				MyPostsFragment.postList.addAll(result);
+				MyPostsFragment.postList = new ArrayList<Post>(result);
 				MyPostsFragment.updateList();
 				MyPostsFragment.makeLoadingIndicator(false);
 			}
@@ -189,14 +195,13 @@ public class NetWorker {
 	public static class MakeVoteTask extends AsyncTask<Vote, Void, Boolean>{
 		public Boolean doInBackground(Vote... votes){
 			try{
-
-				HttpGet request = new HttpGet(REQUEST_URL + "votes");
+				HttpGet request = new HttpGet(REQUEST_URL + "posts/" + votes[0].id + "/votes");
 				//request.setEntity(new ByteArrayEntity(
 				  //  votes[0].toString().getBytes("UTF8")));
 				ResponseHandler<String> responseHandler = new BasicResponseHandler();
 				String response = client.execute(request, responseHandler);
 				
-				Log.d("http", response);
+				Log.d("cfeed", "Make vote server response: " + response);
 				return true;
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block

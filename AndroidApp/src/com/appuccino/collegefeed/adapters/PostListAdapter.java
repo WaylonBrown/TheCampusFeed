@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
+import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Post;
@@ -39,14 +40,14 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 	Context context; 
     int layoutResourceId;    
     List<Post> postList = null;
-    int whichlist = -1;
+    int whichList = 0;	//0 = toppostfrag, 1 = newpostfrag, 2 = mypostfrag
     
     public PostListAdapter(Context context, int layoutResourceId, List<Post> list, int whichList) {
         super(context, layoutResourceId, list);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         postList = list;
-        this.whichlist = whichList;
+        this.whichList = whichList;
     }
     
     @Override
@@ -126,9 +127,17 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 					thisPost.setVote(0);
 					thisPost.score--;
 				}
-				TopPostFragment.updateList();
-				NewPostFragment.updateList();
-				TagListActivity.updateList();
+				
+				switch(whichList){
+				case 0:
+					TopPostFragment.updateList();
+					break;
+				case 1:
+					NewPostFragment.updateList();
+					break;
+				default:
+					MyPostsFragment.updateList();
+				}
 				new MakeVoteTask().execute(new Vote(thisPost.getID(), true));
 			}        	
         });
@@ -158,6 +167,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 					TopPostFragment.updateList();
 					NewPostFragment.updateList();
 					TagListActivity.updateList();
+					new MakeVoteTask().execute(new Vote(thisPost.getID(), false));
 				}
 				else
 				{
