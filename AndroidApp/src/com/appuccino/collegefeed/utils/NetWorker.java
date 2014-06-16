@@ -151,6 +151,63 @@ public class NetWorker {
 		}		
 	}
 	
+	public static class GetCommentsTask extends AsyncTask<PostSelector, Void, ArrayList<Comment> >
+	{
+		int postID = 0;
+		
+		public GetCommentsTask()
+		{
+		}
+		
+		public GetCommentsTask(int postID)
+		{
+			this.postID = postID;
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			//TODO: make loading indicator here for PostCommentsActivity
+			//TopPostFragment.makeLoadingIndicator(true);
+			super.onPreExecute();
+		}
+
+		@Override
+		protected ArrayList<Post> doInBackground(PostSelector... arg0) {
+			HttpGet request = new HttpGet(REQUEST_URL + "posts/" + postID + "comments");
+			ArrayList<Post> ret = new ArrayList<Post>();
+			ResponseHandler<String> responseHandler = new BasicResponseHandler();
+			String response = null;
+			try {
+				response = client.execute(request, responseHandler);
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if(response != null)
+				Log.d("cfeed", response);
+			
+			try {
+				ret = JSONParser.postListFromJSON(response);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ret;
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<Post> result) {
+			TopPostFragment.postList = new ArrayList<Post>(result);
+			TopPostFragment.updateList();
+			TopPostFragment.makeLoadingIndicator(false);
+			TopPostFragment.setupFooterListView();
+		}		
+	}
+	
 	public static class MakePostTask extends AsyncTask<Post, Void, Boolean>{
 
 		Context c;
