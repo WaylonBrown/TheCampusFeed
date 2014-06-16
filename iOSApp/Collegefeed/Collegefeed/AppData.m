@@ -62,8 +62,8 @@
 - (void)findNearbyColleges
 {   // Populate the nearbyColleges array appropriately using current location
 
-    self.nearbyColleges = [[NSArray alloc] initWithArray:[self.dataController
-                                    findNearbyCollegesWithLat:self.lat withLon:self.lon]];
+    [self setNearbyColleges:[[NSArray alloc] initWithArray:[self.dataController
+                            findNearbyCollegesWithLat:self.lat withLon:self.lon]]];
 
 }
 - (BOOL)isNearCollege

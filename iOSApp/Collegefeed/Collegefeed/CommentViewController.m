@@ -23,7 +23,6 @@
 {   // this function called right before the comments view appears
     [super viewWillAppear:animated];
 
-    
     if (self.originalPost != nil)
     {
         [self.appData setPostInFocus:self.originalPost];

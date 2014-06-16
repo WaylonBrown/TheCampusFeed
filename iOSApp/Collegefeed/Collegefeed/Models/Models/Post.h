@@ -38,5 +38,4 @@
            withScore:(NSInteger)newScore
          withMessage:(NSString *)newMessage;
 
-
 @end

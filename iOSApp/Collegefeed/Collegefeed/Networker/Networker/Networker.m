@@ -65,7 +65,7 @@
                                                         length:[POSTReply length]
                                                       encoding: NSASCIIStringEncoding];
     
-    if ([response statusCode] != 201)
+    if ([response statusCode] == 201)
     {
         return POSTReply;
     }

@@ -27,9 +27,9 @@
         [self setRecentPosts:NO];
         [self setMyPosts:NO];
         [self setTagPosts:NO];
-        self.list = data.dataController.topPostsAllColleges;
-        
         [self switchToAllColleges];
+
+        [self setList:data.dataController.topPostsAllColleges];
     }
     return self;
 }
@@ -42,9 +42,9 @@
         [self setRecentPosts:YES];
         [self setMyPosts:NO];
         [self setTagPosts:NO];
-        self.list = data.dataController.recentPostsAllColleges;
-        
         [self switchToAllColleges];
+        [self setList:data.dataController.recentPostsAllColleges];
+        
     }
     return self;
 }
@@ -57,9 +57,9 @@
         [self setRecentPosts:NO];
         [self setMyPosts:YES];
         [self setTagPosts:NO];
-        self.list = data.dataController.userPostsAllColleges;
-        
         [self switchToAllColleges];
+        [self setList:data.dataController.userPostsAllColleges];
+        
     }
     return self;
 }
@@ -74,9 +74,8 @@
         [self setMyPosts:NO];
         [self setTagPosts:YES];
         [self setTagMessage:tagMessage];
-        self.list = data.dataController.allPostsWithTag;
-        
         [self switchToAllColleges];
+        [self setList:data.dataController.allPostsWithTag];
     }
     return self;
 }
@@ -95,7 +94,6 @@
     [self.tableView setDelegate:self];
     [self refresh];
     [self setCommentViewController:[[CommentViewController alloc] initWithAppData:self.appData]];
-
 }
 - (void)loadView
 {

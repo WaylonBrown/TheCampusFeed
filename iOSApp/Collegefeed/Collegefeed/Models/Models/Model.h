@@ -12,7 +12,7 @@
 
 @interface Model : NSObject
 
-+ (id)initFromJSON:(NSDictionary *)jsonObject;
+- (id)initFromJSON:(NSDictionary *)jsonObject;
 - (NSData*)toJSON;
 - (long)getID;
 

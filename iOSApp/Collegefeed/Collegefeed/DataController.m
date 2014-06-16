@@ -22,7 +22,16 @@
     self = [super init];
     if (self)
     {
-
+        self.topPostsAllColleges = [[NSMutableArray alloc] init];
+        self.recentPostsAllColleges = [[NSMutableArray alloc] init];
+        self.collegeList = [[NSMutableArray alloc] init];
+        self.allTags = [[NSMutableArray alloc] init];
+        
+        [self fetchTopPosts];
+        [self fetchNewPosts];
+        [self fetchAllTags];
+        [self getHardCodedCollegeList];
+        
     }
     return self;
 }
@@ -42,8 +51,8 @@
 {
     NSData *result = [Networker POSTCommentData:[comment toJSON]
                                      WithPostId:comment.postID];
-    
-    return [self parseData:result asClass:[Comment class] intoList:self.commentList];
+    [self.commentList addObject:comment];
+    return YES;
 }
 - (void)fetchCommentsWithPostId:(long)postId
 {
@@ -58,9 +67,9 @@
 {
     NSData *result = [Networker POSTPostData:[post toJSON]
                                WithCollegeId:post.collegeID];
-    
-    [self parseData:result asClass:[Post class] intoList:self.topPostsAllColleges];
-    return [self parseData:result asClass:[Post class] intoList:self.recentPostsAllColleges];
+
+    [self.topPostsAllColleges addObject:post];
+    return YES;
 }
 - (void)fetchTopPosts
 {
@@ -141,7 +150,7 @@
     {
         result = [Networker POSTVoteData:[vote toJSON] WithPostId:vote.parentID];
     }
-    return [self parseData:result asClass:[Vote class] intoList:self.commentList];
+    return YES;
 }
 
 #pragma mark - Local Data Access
@@ -183,6 +192,10 @@
 
 -(BOOL)parseData:(NSData *)data asClass:(Class)class intoList:(NSMutableArray *)array
 {
+    if (array == nil)
+    {
+        array = [[NSMutableArray alloc] init];
+    }
     NSArray *jsonArray = (NSArray*)[NSJSONSerialization JSONObjectWithData:data
                                                                    options:0
                                                                      error:nil];
@@ -192,27 +205,7 @@
         {
             // Individual JSON object
             NSDictionary *jsonObject = (NSDictionary *) [jsonArray objectAtIndex:i];
-            if ([College class] == class)
-            {
-                [array addObject:[College initFromJSON:jsonObject]];
-            }
-            if ([Comment class] == class)
-            {
-                [array addObject:[Comment initFromJSON:jsonObject]];
-            }
-            if ([Post class] == class)
-            {
-                [array addObject:[Post initFromJSON:jsonObject]];
-            }
-            if ([Tag class] == class)
-            {
-                [array addObject:[Tag initFromJSON:jsonObject]];
-            }
-            if ([Vote class] == class)
-            {
-                [array addObject:[Vote initFromJSON:jsonObject]];
-            }
-            
+            [array addObject:[[class alloc] initFromJSON:jsonObject]];
         }
         return YES;
     }
