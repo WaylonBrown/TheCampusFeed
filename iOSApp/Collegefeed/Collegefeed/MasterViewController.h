@@ -27,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UILabel            *showingLabel;
 @property (weak, nonatomic) IBOutlet UIButton           *feedButton;
 
+@property (strong, nonatomic) NSMutableArray *list;
+
 // Initialization
 - (id)initWithAppData:(AppData *)data;
 

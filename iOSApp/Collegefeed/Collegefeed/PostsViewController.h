@@ -34,7 +34,7 @@
 - (id)initAsNewPostsWithAppData:(AppData *)data;
 - (id)initAsMyPostsWithAppData:(AppData *)data;
 - (id)initAsTagPostsWithAppData:(AppData *)data
-                    withTagMessage:(NSString*)tagMessage;
+                 withTagMessage:(NSString*)tagMessage;
 
 @end
 

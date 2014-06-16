@@ -7,9 +7,9 @@
 //
 
 #import "NearbyCollegeSelector.h"
-#import "College.h"
+#import "Models/Models/College.h"
 #import "AppData.h"
-#import "Post.h"
+#import "Models/Models/Post.h"
 #import "Shared.h"
 #import "NewPostAlertView.h"
 
@@ -141,8 +141,7 @@
     {
         Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]
                                         withCollegeId:currentCollege.collegeID];
-        [self.appData.postDataController POSTtoServer:newPost
-                                             intoList:self.appData.postDataController.topPostsAllColleges];
+        [self.appData.dataController createPost:newPost];
     }
     else
     {

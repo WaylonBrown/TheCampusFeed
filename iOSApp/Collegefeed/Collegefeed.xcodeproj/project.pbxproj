@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5308D2BD193552C600D70C1A /* Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 5308D2BC193552C600D70C1A /* Shared.m */; };
-		532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532706E1191378EF00F5EAB9 /* PostDataController.m */; };
 		533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 533475881922B88300E84CC8 /* TTTAttributedLabel.m */; };
 		5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5334758B1922D9B700E84CC8 /* TagViewController.m */; };
 		533475A41923344100E84CC8 /* TableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533475A21923344100E84CC8 /* TableCell.m */; };
@@ -21,7 +19,6 @@
 		5390A9201914B76800ACD082 /* arrowupblue.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9171914B76800ACD082 /* arrowupblue.png */; };
 		5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9191914B76800ACD082 /* collegefeedlogosmall.png */; };
 		5390A9241914B76800ACD082 /* postbuttonclick.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5390A91B1914B76800ACD082 /* postbuttonclick.xml */; };
-		5390A92C19153EBE00ACD082 /* CommentDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A92B19153EBE00ACD082 /* CommentDataController.m */; };
 		5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A93A191552AE00ACD082 /* CommentViewController.m */; };
 		5390A94119158E0E00ACD082 /* ViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A94019158E0E00ACD082 /* ViewControllerTests.m */; };
 		5390A94319158E1A00ACD082 /* DataControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A94219158E1A00ACD082 /* DataControllerTests.m */; };
@@ -30,12 +27,8 @@
 		53AB57BE194AAFF8001D1B7B /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 53AB57BA194AAFF8001D1B7B /* Roboto-Light.ttf */; };
 		53AB57BF194AAFF8001D1B7B /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 53AB57BB194AAFF8001D1B7B /* Roboto-LightItalic.ttf */; };
 		53AB57C5194ABD11001D1B7B /* Omnes-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 53AB57C4194ABD11001D1B7B /* Omnes-Semibold.ttf */; };
-		53AE73601925B53900BE6B02 /* TagDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE735F1925B53900BE6B02 /* TagDataController.m */; };
-		53AE736A1925CFA800BE6B02 /* CollegeDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73691925CFA800BE6B02 /* CollegeDataController.m */; };
 		53AE73C3192802BD00BE6B02 /* ModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73C2192802BD00BE6B02 /* ModelTests.m */; };
-		53AE73C51928208100BE6B02 /* Votable.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73C41928208100BE6B02 /* Votable.m */; };
 		53AE73C71928354F00BE6B02 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73C61928354F00BE6B02 /* DataController.m */; };
-		53AE73CB19283A9D00BE6B02 /* VoteDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73CA19283A9D00BE6B02 /* VoteDataController.m */; };
 		53AF23E719438C35003A5074 /* CustomIOS7AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF23E619438C35003A5074 /* CustomIOS7AlertView.m */; };
 		53AF23ED1943A58D003A5074 /* NearbyCollegeSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF23EC1943A58D003A5074 /* NearbyCollegeSelector.m */; };
 		53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B1FDFC19254E4700905E49 /* MasterView.xib */; };
@@ -49,12 +42,10 @@
 		53BDB4DC1930688200F45D5C /* tags.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D91930688200F45D5C /* tags.png */; };
 		53CF3254194E2A56008BB733 /* NewPostAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CF3253194E2A56008BB733 /* NewPostAlertView.m */; };
 		53CF3257194E2A8A008BB733 /* NewPostAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53CF3256194E2A8A008BB733 /* NewPostAlertView.xib */; };
-		53D2AD0719189E9E0097C840 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0619189E9E0097C840 /* Comment.m */; };
-		53D2AD0B19189EC60097C840 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0A19189EC60097C840 /* Post.m */; };
-		53D2AD0E19189F740097C840 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0D19189F740097C840 /* Vote.m */; };
-		53D2AD111918A22A0097C840 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD101918A22A0097C840 /* Tag.m */; };
-		53D2AD151918AAB80097C840 /* College.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD141918AAB80097C840 /* College.m */; };
-		53D51E35194950FA00A8BA81 /* CollegeList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53D51E34194950FA00A8BA81 /* CollegeList.txt */; };
+		53CF330E194E53DB008BB733 /* libNetworker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CF3309194E53B6008BB733 /* libNetworker.a */; };
+		53CF3399194E584E008BB733 /* libModels.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CF3379194E571C008BB733 /* libModels.a */; };
+		53CF339E194E7235008BB733 /* CollegeList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53CF339D194E7235008BB733 /* CollegeList.txt */; };
+		53CF33A0194E7A7A008BB733 /* Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CF339F194E7A7A008BB733 /* Shared.m */; };
 		53D51E391949625300A8BA81 /* SimpleTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D51E371949625300A8BA81 /* SimpleTableCell.m */; };
 		53D51E3A1949625300A8BA81 /* SimpleTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D51E381949625300A8BA81 /* SimpleTableCell.xib */; };
 		53F85731193D6CFF0004D35F /* AppData.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F85730193D6CFF0004D35F /* AppData.m */; };
@@ -73,6 +64,48 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		53CF3308194E53B6008BB733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53CF3303194E53B6008BB733 /* Networker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53CF32DA194E5341008BB733;
+			remoteInfo = Networker;
+		};
+		53CF330A194E53B6008BB733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53CF3303194E53B6008BB733 /* Networker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53CF32EA194E5341008BB733;
+			remoteInfo = NetworkerTests;
+		};
+		53CF330C194E53D8008BB733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53CF3303194E53B6008BB733 /* Networker.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 53CF32D9194E5341008BB733;
+			remoteInfo = Networker;
+		};
+		53CF3378194E571C008BB733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53CF3373194E571B008BB733 /* Models.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53CF334A194E56F7008BB733;
+			remoteInfo = Models;
+		};
+		53CF337A194E571C008BB733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53CF3373194E571B008BB733 /* Models.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53CF335A194E56F7008BB733;
+			remoteInfo = ModelsTests;
+		};
+		53CF3396194E5844008BB733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53CF3373194E571B008BB733 /* Models.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 53CF3349194E56F7008BB733;
+			remoteInfo = Models;
+		};
 		53F878B919133F60002A578B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 53F8788519133F60002A578B /* Project object */;
@@ -84,9 +117,6 @@
 
 /* Begin PBXFileReference section */
 		5308D2BB193552C600D70C1A /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
-		5308D2BC193552C600D70C1A /* Shared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shared.m; sourceTree = "<group>"; };
-		532706E0191378EF00F5EAB9 /* PostDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDataController.h; sourceTree = "<group>"; };
-		532706E1191378EF00F5EAB9 /* PostDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PostDataController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		533475871922B88300E84CC8 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		533475881922B88300E84CC8 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		5334758A1922D9B700E84CC8 /* TagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagViewController.h; sourceTree = "<group>"; };
@@ -102,8 +132,6 @@
 		5390A9171914B76800ACD082 /* arrowupblue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowupblue.png; sourceTree = "<group>"; };
 		5390A9191914B76800ACD082 /* collegefeedlogosmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collegefeedlogosmall.png; sourceTree = "<group>"; };
 		5390A91B1914B76800ACD082 /* postbuttonclick.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = postbuttonclick.xml; sourceTree = "<group>"; };
-		5390A92A19153EBE00ACD082 /* CommentDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentDataController.h; sourceTree = "<group>"; };
-		5390A92B19153EBE00ACD082 /* CommentDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentDataController.m; sourceTree = "<group>"; };
 		5390A939191552AE00ACD082 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
 		5390A93A191552AE00ACD082 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CommentViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5390A94019158E0E00ACD082 /* ViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerTests.m; sourceTree = "<group>"; };
@@ -114,17 +142,9 @@
 		53AB57BA194AAFF8001D1B7B /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Light.ttf"; path = "fonts/Roboto-Light.ttf"; sourceTree = "<group>"; };
 		53AB57BB194AAFF8001D1B7B /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-LightItalic.ttf"; path = "fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
 		53AB57C4194ABD11001D1B7B /* Omnes-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Omnes-Semibold.ttf"; path = "fonts/Omnes-Semibold.ttf"; sourceTree = "<group>"; };
-		53AE735E1925B53900BE6B02 /* TagDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagDataController.h; sourceTree = "<group>"; };
-		53AE735F1925B53900BE6B02 /* TagDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagDataController.m; sourceTree = "<group>"; };
-		53AE73681925CFA800BE6B02 /* CollegeDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollegeDataController.h; sourceTree = "<group>"; };
-		53AE73691925CFA800BE6B02 /* CollegeDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollegeDataController.m; sourceTree = "<group>"; };
 		53AE73BC1927ED6600BE6B02 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DataController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		53AE73BF1927FBA700BE6B02 /* Votable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Votable.h; sourceTree = "<group>"; };
 		53AE73C2192802BD00BE6B02 /* ModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelTests.m; sourceTree = "<group>"; };
-		53AE73C41928208100BE6B02 /* Votable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Votable.m; sourceTree = "<group>"; };
 		53AE73C61928354F00BE6B02 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DataController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		53AE73C919283A9D00BE6B02 /* VoteDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = VoteDataController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		53AE73CA19283A9D00BE6B02 /* VoteDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = VoteDataController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53AF23E519438C35003A5074 /* CustomIOS7AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOS7AlertView.h; sourceTree = "<group>"; };
 		53AF23E619438C35003A5074 /* CustomIOS7AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOS7AlertView.m; sourceTree = "<group>"; };
 		53AF23EB1943A58D003A5074 /* NearbyCollegeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyCollegeSelector.h; sourceTree = "<group>"; };
@@ -143,17 +163,10 @@
 		53CF3252194E2A56008BB733 /* NewPostAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPostAlertView.h; sourceTree = "<group>"; };
 		53CF3253194E2A56008BB733 /* NewPostAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPostAlertView.m; sourceTree = "<group>"; };
 		53CF3256194E2A8A008BB733 /* NewPostAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewPostAlertView.xib; sourceTree = "<group>"; };
-		53D2AD0519189E9E0097C840 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
-		53D2AD0619189E9E0097C840 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
-		53D2AD0919189EC60097C840 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
-		53D2AD0A19189EC60097C840 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
-		53D2AD0C19189F740097C840 /* Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vote.h; sourceTree = "<group>"; };
-		53D2AD0D19189F740097C840 /* Vote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vote.m; sourceTree = "<group>"; };
-		53D2AD0F1918A22A0097C840 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
-		53D2AD101918A22A0097C840 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
-		53D2AD131918AAB80097C840 /* College.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = College.h; sourceTree = "<group>"; };
-		53D2AD141918AAB80097C840 /* College.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = College.m; sourceTree = "<group>"; };
-		53D51E34194950FA00A8BA81 /* CollegeList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CollegeList.txt; sourceTree = "<group>"; };
+		53CF3303194E53B6008BB733 /* Networker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Networker.xcodeproj; path = Collegefeed/Networker/Networker.xcodeproj; sourceTree = "<group>"; };
+		53CF3373194E571B008BB733 /* Models.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Models.xcodeproj; path = Collegefeed/Models/Models.xcodeproj; sourceTree = "<group>"; };
+		53CF339D194E7235008BB733 /* CollegeList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CollegeList.txt; sourceTree = "<group>"; };
+		53CF339F194E7A7A008BB733 /* Shared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shared.m; sourceTree = "<group>"; };
 		53D51E361949625300A8BA81 /* SimpleTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleTableCell.h; path = Collegefeed/SimpleTableCell.h; sourceTree = "<group>"; };
 		53D51E371949625300A8BA81 /* SimpleTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleTableCell.m; path = Collegefeed/SimpleTableCell.m; sourceTree = "<group>"; };
 		53D51E381949625300A8BA81 /* SimpleTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SimpleTableCell.xib; path = Collegefeed/SimpleTableCell.xib; sourceTree = "<group>"; };
@@ -183,6 +196,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53CF3399194E584E008BB733 /* libModels.a in Frameworks */,
+				53CF330E194E53DB008BB733 /* libNetworker.a in Frameworks */,
 				53BDB4CE192F3E4400F45D5C /* CoreLocation.framework in Frameworks */,
 				53F8789319133F60002A578B /* CoreGraphics.framework in Frameworks */,
 				53F8789519133F60002A578B /* UIKit.framework in Frameworks */,
@@ -240,7 +255,7 @@
 			children = (
 				53FA791219381A4F00EF246E /* ChildCellDelegate.h */,
 				5308D2BB193552C600D70C1A /* Shared.h */,
-				5308D2BC193552C600D70C1A /* Shared.m */,
+				53CF339F194E7A7A008BB733 /* Shared.m */,
 				533475871922B88300E84CC8 /* TTTAttributedLabel.h */,
 				533475881922B88300E84CC8 /* TTTAttributedLabel.m */,
 			);
@@ -265,15 +280,6 @@
 				533FCA4E193FCD8200754C07 /* austin.gpx */,
 			);
 			name = "GPX Locations";
-			sourceTree = "<group>";
-		};
-		53AE73BA1927EB8F00BE6B02 /* Interfaces */ = {
-			isa = PBXGroup;
-			children = (
-				53AE73BF1927FBA700BE6B02 /* Votable.h */,
-				53AE73C41928208100BE6B02 /* Votable.m */,
-			);
-			name = Interfaces;
 			sourceTree = "<group>";
 		};
 		53AF23E819438CF3003A5074 /* CustomAlertView */ = {
@@ -303,53 +309,16 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
-		53B090B6192DA13D00E3D996 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				53AE73BA1927EB8F00BE6B02 /* Interfaces */,
-				53D2AD0919189EC60097C840 /* Post.h */,
-				53D2AD0A19189EC60097C840 /* Post.m */,
-				53D2AD0519189E9E0097C840 /* Comment.h */,
-				53D2AD0619189E9E0097C840 /* Comment.m */,
-				53D2AD0C19189F740097C840 /* Vote.h */,
-				53D2AD0D19189F740097C840 /* Vote.m */,
-				53D2AD131918AAB80097C840 /* College.h */,
-				53D2AD141918AAB80097C840 /* College.m */,
-				53D2AD0F1918A22A0097C840 /* Tag.h */,
-				53D2AD101918A22A0097C840 /* Tag.m */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
-		53B090B7192DA14400E3D996 /* DataControllers */ = {
+		53B090B8192DA1FA00E3D996 /* Source Code */ = {
 			isa = PBXGroup;
 			children = (
 				53AE73BC1927ED6600BE6B02 /* DataController.h */,
 				53AE73C61928354F00BE6B02 /* DataController.m */,
-				532706E0191378EF00F5EAB9 /* PostDataController.h */,
-				532706E1191378EF00F5EAB9 /* PostDataController.m */,
-				5390A92A19153EBE00ACD082 /* CommentDataController.h */,
-				5390A92B19153EBE00ACD082 /* CommentDataController.m */,
-				53AE73C919283A9D00BE6B02 /* VoteDataController.h */,
-				53AE73CA19283A9D00BE6B02 /* VoteDataController.m */,
-				53AE73681925CFA800BE6B02 /* CollegeDataController.h */,
-				53AE73691925CFA800BE6B02 /* CollegeDataController.m */,
-				53AE735E1925B53900BE6B02 /* TagDataController.h */,
-				53AE735F1925B53900BE6B02 /* TagDataController.m */,
-			);
-			name = DataControllers;
-			sourceTree = "<group>";
-		};
-		53B090B8192DA1FA00E3D996 /* Source Code */ = {
-			isa = PBXGroup;
-			children = (
 				53F8572F193D6CFF0004D35F /* AppData.h */,
 				53F85730193D6CFF0004D35F /* AppData.m */,
 				53F8789F19133F60002A578B /* AppDelegate.h */,
 				53F878A019133F60002A578B /* AppDelegate.m */,
 				53B090B5192DA13100E3D996 /* Views */,
-				53B090B6192DA13D00E3D996 /* Models */,
-				53B090B7192DA14400E3D996 /* DataControllers */,
 				53AB57B7194AAFB3001D1B7B /* Other */,
 			);
 			name = "Source Code";
@@ -398,9 +367,29 @@
 			name = NewPostAlertView;
 			sourceTree = "<group>";
 		};
+		53CF3304194E53B6008BB733 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				53CF3309194E53B6008BB733 /* libNetworker.a */,
+				53CF330B194E53B6008BB733 /* NetworkerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		53CF3374194E571B008BB733 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				53CF3379194E571C008BB733 /* libModels.a */,
+				53CF337B194E571C008BB733 /* ModelsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		53F8788419133F60002A578B = {
 			isa = PBXGroup;
 			children = (
+				53CF3373194E571B008BB733 /* Models.xcodeproj */,
+				53CF3303194E53B6008BB733 /* Networker.xcodeproj */,
 				53F8789619133F60002A578B /* Collegefeed */,
 				53F878BB19133F60002A578B /* CollegefeedTests */,
 				53F8788F19133F60002A578B /* Frameworks */,
@@ -441,7 +430,7 @@
 		53F8789719133F60002A578B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				53D51E34194950FA00A8BA81 /* CollegeList.txt */,
+				53CF339D194E7235008BB733 /* CollegeList.txt */,
 				53F8789819133F60002A578B /* Collegefeed-Info.plist */,
 				53F8789919133F60002A578B /* InfoPlist.strings */,
 				53F8789C19133F60002A578B /* main.m */,
@@ -485,6 +474,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				53CF3397194E5844008BB733 /* PBXTargetDependency */,
+				53CF330D194E53D8008BB733 /* PBXTargetDependency */,
 			);
 			name = Collegefeed;
 			productName = Collegefeed;
@@ -534,6 +525,16 @@
 			mainGroup = 53F8788419133F60002A578B;
 			productRefGroup = 53F8788E19133F60002A578B /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 53CF3374194E571B008BB733 /* Products */;
+					ProjectRef = 53CF3373194E571B008BB733 /* Models.xcodeproj */;
+				},
+				{
+					ProductGroup = 53CF3304194E53B6008BB733 /* Products */;
+					ProjectRef = 53CF3303194E53B6008BB733 /* Networker.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				53F8788C19133F60002A578B /* Collegefeed */,
@@ -542,6 +543,37 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		53CF3309194E53B6008BB733 /* libNetworker.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libNetworker.a;
+			remoteRef = 53CF3308194E53B6008BB733 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		53CF330B194E53B6008BB733 /* NetworkerTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = NetworkerTests.xctest;
+			remoteRef = 53CF330A194E53B6008BB733 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		53CF3379194E571C008BB733 /* libModels.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libModels.a;
+			remoteRef = 53CF3378194E571C008BB733 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		53CF337B194E571C008BB733 /* ModelsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ModelsTests.xctest;
+			remoteRef = 53CF337A194E571C008BB733 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		53F8788B19133F60002A578B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
@@ -549,7 +581,6 @@
 			files = (
 				5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */,
 				53BDB4D4192F4E6700F45D5C /* CollegePickerViewController.xib in Resources */,
-				53D51E35194950FA00A8BA81 /* CollegeList.txt in Resources */,
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */,
 				53AB57C5194ABD11001D1B7B /* Omnes-Semibold.ttf in Resources */,
@@ -568,6 +599,7 @@
 				53BDB4DA1930688200F45D5C /* colleges.png in Resources */,
 				5390A91F1914B76800ACD082 /* arrowup.png in Resources */,
 				53BDB4DC1930688200F45D5C /* tags.png in Resources */,
+				53CF339E194E7235008BB733 /* CollegeList.txt in Resources */,
 				53BDB4D61930669100F45D5C /* top.png in Resources */,
 				53F8789B19133F60002A578B /* InfoPlist.strings in Resources */,
 				533475A51923344100E84CC8 /* TableCell.xib in Resources */,
@@ -592,28 +624,17 @@
 				53AF23E719438C35003A5074 /* CustomIOS7AlertView.m in Sources */,
 				53AF23ED1943A58D003A5074 /* NearbyCollegeSelector.m in Sources */,
 				5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */,
-				53D2AD0719189E9E0097C840 /* Comment.m in Sources */,
-				53AE736A1925CFA800BE6B02 /* CollegeDataController.m in Sources */,
-				5308D2BD193552C600D70C1A /* Shared.m in Sources */,
 				5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */,
 				53F878A119133F60002A578B /* AppDelegate.m in Sources */,
 				53CF3254194E2A56008BB733 /* NewPostAlertView.m in Sources */,
 				53F85731193D6CFF0004D35F /* AppData.m in Sources */,
-				53AE73C51928208100BE6B02 /* Votable.m in Sources */,
-				532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */,
-				53D2AD111918A22A0097C840 /* Tag.m in Sources */,
 				53BDB4D3192F4E6700F45D5C /* CollegePickerViewController.m in Sources */,
-				53D2AD151918AAB80097C840 /* College.m in Sources */,
-				53AE73CB19283A9D00BE6B02 /* VoteDataController.m in Sources */,
 				53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */,
-				53AE73601925B53900BE6B02 /* TagDataController.m in Sources */,
-				5390A92C19153EBE00ACD082 /* CommentDataController.m in Sources */,
 				53AE73C71928354F00BE6B02 /* DataController.m in Sources */,
+				53CF33A0194E7A7A008BB733 /* Shared.m in Sources */,
 				533475A41923344100E84CC8 /* TableCell.m in Sources */,
-				53D2AD0B19189EC60097C840 /* Post.m in Sources */,
 				53963DE71916E5F50084E646 /* PostsViewController.m in Sources */,
 				53F8789D19133F60002A578B /* main.m in Sources */,
-				53D2AD0E19189F740097C840 /* Vote.m in Sources */,
 				53D51E391949625300A8BA81 /* SimpleTableCell.m in Sources */,
 				533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */,
 			);
@@ -633,6 +654,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		53CF330D194E53D8008BB733 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Networker;
+			targetProxy = 53CF330C194E53D8008BB733 /* PBXContainerItemProxy */;
+		};
+		53CF3397194E5844008BB733 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Models;
+			targetProxy = 53CF3396194E5844008BB733 /* PBXContainerItemProxy */;
+		};
 		53F878BA19133F60002A578B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 53F8788C19133F60002A578B /* Collegefeed */;
@@ -742,6 +773,7 @@
 				GCC_PREFIX_HEADER = "Collegefeed/Collegefeed-Prefix.pch";
 				INFOPLIST_FILE = "Collegefeed/Collegefeed-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -758,6 +790,7 @@
 				GCC_PREFIX_HEADER = "Collegefeed/Collegefeed-Prefix.pch";
 				INFOPLIST_FILE = "Collegefeed/Collegefeed-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

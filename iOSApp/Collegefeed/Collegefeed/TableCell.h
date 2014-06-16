@@ -9,15 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "TTTAttributedLabel.h"
 
-@class Votable;
+@class Model;
 @class Vote;
 
 @protocol SubViewDelegate;
 @protocol ChildCellDelegate;
+@protocol PostAndCommentProtocol;
 
 @interface TableCell : UITableViewCell <TTTAttributedLabelDelegate>
 
-@property (nonatomic, strong) Votable* object;
+@property (nonatomic, strong) Model<PostAndCommentProtocol> *object;
 
 @property (nonatomic, weak) id<ChildCellDelegate> delegate;
 
@@ -29,7 +30,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *upVoteButton;
 @property (nonatomic, weak) IBOutlet UIButton *downVoteButton;
 
-- (void)assign:(Votable *)votableObject;
+- (void)assign:(Model *)votableObject;
 - (IBAction) upVotePressed:(id)sender;
 - (IBAction) downVotePresed:(id)sender;
 

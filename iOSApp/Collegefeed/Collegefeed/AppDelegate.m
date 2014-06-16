@@ -11,8 +11,9 @@
 #import "CommentViewController.h"
 #import "TagViewController.h"
 #import "Shared.h"
-#import "College.h"
+#import "Models/Models/College.h"
 #import "CollegePickerViewController.h"
+#import "Networker/Networker.h"
 
 @implementation AppDelegate
 
@@ -20,7 +21,6 @@
 {   // Set up ViewControllers and DataControllers
 
     // ***SIMULATE YOUR LOCATION***
-
     self.appData = [[AppData alloc] init];
     [self.appData setAppDelegate:self];
     
@@ -106,23 +106,6 @@
     [self.topPostsController foundLocation];
     [self.recentPostsController foundLocation];
     [self.tagController foundLocation];
-//    NSString *message = @"Location determined";
-//    
-//    NSArray *colleges = [self.appData nearbyColleges];
-//    if (colleges.count > 0)
-//    {
-//        message = [NSString stringWithFormat:@"%@. Colleges allowed: ", message];
-//        for (College* college in colleges)
-//        {
-//            message = [NSString stringWithFormat:@"%@%@, ", message, college.name];
-//        }
-//    }
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention"
-//                                                    message:message
-//                                                   delegate:self
-//                                          cancelButtonTitle:@"I don't care"
-//                                          otherButtonTitles:nil, nil];
-//    [alert show];
 }
 - (void)didNotFindLocation
 {

@@ -10,15 +10,11 @@
 #import "CommentViewController.h"
 #import "CollegePickerViewController.h"
 #import "TableCell.h"
-#import "Post.h"
+#import "Models/Models/Post.h"
 #import "DataController.h"
-#import "PostDataController.h"
-#import "CollegeDataController.h"
-#import "TagDataController.h"
-#import "VoteDataController.h"
 #import "Shared.h"
 #import "AppDelegate.h"
-#import "College.h"
+#import "Models/Models/College.h"
 #import "NearbyCollegeSelector.h"
 #import "NewPostAlertView.h"
 
@@ -168,8 +164,7 @@
 
 - (void)castVote:(Vote *)vote
 {   // vote was cast in a table cell
-    [self.appData.voteDataController POSTtoServer:vote
-                                         intoList:self.appData.voteDataController.list];
+    [self.appData.dataController createVote:vote];
 }
 - (void)selectedCollegeOrNil:(College *)college
                         from:(CollegePickerViewController *)sender
