@@ -1,5 +1,11 @@
 package com.appuccino.collegefeed.objects;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
+import android.util.JsonWriter;
+
 public class AbstractPostComment {
 	public int score = 0;
 	String message = "";
@@ -41,5 +47,22 @@ public class AbstractPostComment {
 	public int getVote()
 	{
 		return vote;
+	}
+	
+	public ByteArrayOutputStream toJSONString() throws IOException{
+		ByteArrayOutputStream ret = new ByteArrayOutputStream();
+		JsonWriter writer = new JsonWriter(new OutputStreamWriter(ret, "UTF-8"));
+		writer.setIndent("  ");
+		
+		writer.beginObject();
+		
+		writer.name("post");
+		writer.beginObject();
+		writer.name("text"); writer.value(message);
+		writer.endObject();
+		
+		writer.endObject();
+		writer.close();
+		return ret;
 	}
 }

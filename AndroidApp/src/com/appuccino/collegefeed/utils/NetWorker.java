@@ -250,6 +250,49 @@ public class NetWorker {
 		
 	}
 	
+	public static class MakeCommentTask extends AsyncTask<Comment, Void, Boolean>{
+
+		Context c;
+		
+		public MakeCommentTask(Context context) {
+			c = context;
+		}
+
+		@Override
+		protected Boolean doInBackground(Comment... comments) {
+			try{
+				Log.i("cfeed","Making comment with college ID of " + comments[0].getCollegeID() + 
+						" and Post ID of " + comments[0].getPostID());
+				String fullRequestURL = REQUEST_URL + "posts/" + comments[0].getPostID() + "/comments";
+				Log.i("cfeed","Request URL: " + fullRequestURL);
+				HttpPost request = new HttpPost(fullRequestURL);
+				request.setHeader("Content-Type", "application/json");
+				request.setEntity(new ByteArrayEntity(comments[0].toJSONString().toByteArray()));
+				ResponseHandler<String> responseHandler = new BasicResponseHandler();
+				String response = client.execute(request, responseHandler);
+				
+				Log.d("cfeed", "Server response: " + response);
+				return true;
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			if(!result)
+				Toast.makeText(c, "Failed to post.", Toast.LENGTH_LONG).show();
+			super.onPostExecute(result);
+		}
+		
+	}
+	
 	public static class MakeVoteTask extends AsyncTask<Vote, Void, Boolean>{
 		public Boolean doInBackground(Vote... votes){
 			try{

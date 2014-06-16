@@ -63,31 +63,5 @@ public class Post extends AbstractPostComment{
 	{
 		return commentList;
 	}
-	
-	public ByteArrayOutputStream toJSONString() throws IOException{
-		ByteArrayOutputStream ret = new ByteArrayOutputStream();
-		JsonWriter writer = new JsonWriter(new OutputStreamWriter(ret, "UTF-8"));
-		writer.setIndent("  ");
-		
-		/*{
-		  "id": 2,
-		  "text": "#YOLO SWAG!",
-		  "score": null,
-		  "lat": null,
-		  "lon": null,
-		  "created_at": "2014-05-02T01:30:26.238Z",
-		  "updated_at": "2014-05-02T01:30:26.238Z"
-		}*/
-		
-		writer.beginObject();
-		
-		writer.name("post");
-		writer.beginObject();
-		writer.name("text"); writer.value(message);
-		writer.endObject();
-		
-		writer.endObject();
-		writer.close();
-		return ret;
-	}
+
 }

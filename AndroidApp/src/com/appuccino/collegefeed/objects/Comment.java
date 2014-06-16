@@ -1,5 +1,11 @@
 package com.appuccino.collegefeed.objects;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
+import android.util.JsonWriter;
+
 import com.appuccino.collegefeed.utils.TimeManager;
 
 public class Comment extends AbstractPostComment{
