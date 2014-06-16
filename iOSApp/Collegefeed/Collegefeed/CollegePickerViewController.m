@@ -12,6 +12,7 @@
 #import "PostsViewController.h"
 #import "ChildCellDelegate.h"
 #import "AppData.h"
+#import "SimpleTableCell.h"
 
 @implementation CollegePickerViewController
 
@@ -24,7 +25,6 @@
     {
         [self setTopColleges:YES];
         [self setAllColleges:NO];
-//        [self setAppData:data];
         [self setList:data.collegeDataController.list];
     }
     return self;
@@ -50,10 +50,9 @@
 }
 - (void)viewDidLoad
 {
-    [self.navigationItem setTitleView:logoTitleView];
-
     // Do any additional setup after loading the view from its nib.
     [super viewDidLoad];
+    [self.navigationItem setTitleView:logoTitleView];
 
     [self.tableView reloadData];
 }
@@ -87,7 +86,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
     {
         return [[UIView alloc] initWithFrame:CGRectMake(0,0,20,1)];
     }
-    UILabel *headerLabel = [[UILabel alloc] init];
+    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20)];
 
     if ([self.appData isNearCollege] && section == 1)
     {   // section of colleges 'near you'
@@ -100,7 +99,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
 
     [headerLabel setTextAlignment:NSTextAlignmentCenter];
     [headerLabel setFont:[UIFont systemFontOfSize:14]];
-    [headerLabel setBackgroundColor:[Shared getCustomUIColor:cf_lightgray]];
+    [headerLabel setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
     
     return headerLabel;
 }
@@ -172,55 +171,61 @@ shouldReloadTableForSearchString:(NSString *)searchString
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Display a cell representing a college that links to its feed
-    static NSString *CellIdentifier = @"TableCell";
+    static NSString *CellIdentifier = @"SimpleTableCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    SimpleTableCell *cell = (SimpleTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier
+                                                     owner:self options:nil];
+        cell = [nib objectAtIndex:0];
     }
     
     if (tableView == self.searchDisplayController.searchResultsTableView)
     {   // if the table is filtered by a search
         College *college = (College *)[self.searchResults objectAtIndex:indexPath.row];
-        [cell.textLabel setText:college.name];
+        [cell assignCollege:college];
     }
     
     else if (self.allColleges)
     {   // if searching all colleges
         if (indexPath.section == 0)
         {
-            [cell.textLabel setText:@"All Colleges"];
+            [cell.messageLabel setText:@"All Colleges"];
+            [cell.messageLabel setFont:[UIFont fontWithName:@"System" size:12]];
+            [cell.messageLabel setTextAlignment:NSTextAlignmentCenter];
+            [cell.countLabel setText:@""];
         }
         else if (indexPath.section == 1 && [self.appData isNearCollege])
         {   // section of colleges 'near you'
             College *college = [self.appData.nearbyColleges objectAtIndex:indexPath.row];
-            [cell.textLabel setText:college.name];
+            [cell assignCollege:college];
         }
         else
         {   // last section always is of all colleges
             College *college = (College *)[self.list objectAtIndex:indexPath.row];
-            [cell.textLabel setText:college.name];
+            [cell assignCollege:college];
         }
     }
     else
     {   // last section always is of all colleges
         College *college = (College *)[self.list objectAtIndex:indexPath.row];
-        [cell.textLabel setText:college.name];  
+        [cell assignCollege:college];
     }
 
-    
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // TODO: This should probably not be hardcoded; revist
     
     // if not showing college name
-    return 50;
+    return 56;
     
-    // if showing college name
-    //    return 120;
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) return 0;
+    return 20;
+}
 @end

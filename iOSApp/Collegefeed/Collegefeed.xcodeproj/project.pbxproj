@@ -26,6 +26,10 @@
 		5390A94119158E0E00ACD082 /* ViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A94019158E0E00ACD082 /* ViewControllerTests.m */; };
 		5390A94319158E1A00ACD082 /* DataControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A94219158E1A00ACD082 /* DataControllerTests.m */; };
 		53963DE71916E5F50084E646 /* PostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53963DE61916E5F50084E646 /* PostsViewController.m */; };
+		53AB57BC194AAFF8001D1B7B /* mplus-2c-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 53AB57B8194AAFF8001D1B7B /* mplus-2c-bold.ttf */; };
+		53AB57BE194AAFF8001D1B7B /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 53AB57BA194AAFF8001D1B7B /* Roboto-Light.ttf */; };
+		53AB57BF194AAFF8001D1B7B /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 53AB57BB194AAFF8001D1B7B /* Roboto-LightItalic.ttf */; };
+		53AB57C5194ABD11001D1B7B /* Omnes-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 53AB57C4194ABD11001D1B7B /* Omnes-Semibold.ttf */; };
 		53AE73601925B53900BE6B02 /* TagDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE735F1925B53900BE6B02 /* TagDataController.m */; };
 		53AE736A1925CFA800BE6B02 /* CollegeDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73691925CFA800BE6B02 /* CollegeDataController.m */; };
 		53AE73C3192802BD00BE6B02 /* ModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73C2192802BD00BE6B02 /* ModelTests.m */; };
@@ -33,7 +37,6 @@
 		53AE73C71928354F00BE6B02 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73C61928354F00BE6B02 /* DataController.m */; };
 		53AE73CB19283A9D00BE6B02 /* VoteDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73CA19283A9D00BE6B02 /* VoteDataController.m */; };
 		53AF23E719438C35003A5074 /* CustomIOS7AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF23E619438C35003A5074 /* CustomIOS7AlertView.m */; };
-		53AF23EA19439D79003A5074 /* Sandbox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53AF23E919439D79003A5074 /* Sandbox.xib */; };
 		53AF23ED1943A58D003A5074 /* NearbyCollegeSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AF23EC1943A58D003A5074 /* NearbyCollegeSelector.m */; };
 		53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B1FDFC19254E4700905E49 /* MasterView.xib */; };
 		53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B1FDFF19254E8F00905E49 /* MasterViewController.m */; };
@@ -44,11 +47,16 @@
 		53BDB4DA1930688200F45D5C /* colleges.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D71930688200F45D5C /* colleges.png */; };
 		53BDB4DB1930688200F45D5C /* new.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D81930688200F45D5C /* new.png */; };
 		53BDB4DC1930688200F45D5C /* tags.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D91930688200F45D5C /* tags.png */; };
+		53CF3254194E2A56008BB733 /* NewPostAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CF3253194E2A56008BB733 /* NewPostAlertView.m */; };
+		53CF3257194E2A8A008BB733 /* NewPostAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53CF3256194E2A8A008BB733 /* NewPostAlertView.xib */; };
 		53D2AD0719189E9E0097C840 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0619189E9E0097C840 /* Comment.m */; };
 		53D2AD0B19189EC60097C840 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0A19189EC60097C840 /* Post.m */; };
 		53D2AD0E19189F740097C840 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD0D19189F740097C840 /* Vote.m */; };
 		53D2AD111918A22A0097C840 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD101918A22A0097C840 /* Tag.m */; };
 		53D2AD151918AAB80097C840 /* College.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D2AD141918AAB80097C840 /* College.m */; };
+		53D51E35194950FA00A8BA81 /* CollegeList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53D51E34194950FA00A8BA81 /* CollegeList.txt */; };
+		53D51E391949625300A8BA81 /* SimpleTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D51E371949625300A8BA81 /* SimpleTableCell.m */; };
+		53D51E3A1949625300A8BA81 /* SimpleTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D51E381949625300A8BA81 /* SimpleTableCell.xib */; };
 		53F85731193D6CFF0004D35F /* AppData.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F85730193D6CFF0004D35F /* AppData.m */; };
 		53F8789119133F60002A578B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789019133F60002A578B /* Foundation.framework */; };
 		53F8789319133F60002A578B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789219133F60002A578B /* CoreGraphics.framework */; };
@@ -102,6 +110,10 @@
 		5390A94219158E1A00ACD082 /* DataControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DataControllerTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53963DE51916E5F50084E646 /* PostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = PostsViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		53963DE61916E5F50084E646 /* PostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PostsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		53AB57B8194AAFF8001D1B7B /* mplus-2c-bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "mplus-2c-bold.ttf"; path = "fonts/mplus-2c-bold.ttf"; sourceTree = "<group>"; };
+		53AB57BA194AAFF8001D1B7B /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Light.ttf"; path = "fonts/Roboto-Light.ttf"; sourceTree = "<group>"; };
+		53AB57BB194AAFF8001D1B7B /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-LightItalic.ttf"; path = "fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
+		53AB57C4194ABD11001D1B7B /* Omnes-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Omnes-Semibold.ttf"; path = "fonts/Omnes-Semibold.ttf"; sourceTree = "<group>"; };
 		53AE735E1925B53900BE6B02 /* TagDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagDataController.h; sourceTree = "<group>"; };
 		53AE735F1925B53900BE6B02 /* TagDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagDataController.m; sourceTree = "<group>"; };
 		53AE73681925CFA800BE6B02 /* CollegeDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollegeDataController.h; sourceTree = "<group>"; };
@@ -115,7 +127,6 @@
 		53AE73CA19283A9D00BE6B02 /* VoteDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = VoteDataController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53AF23E519438C35003A5074 /* CustomIOS7AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOS7AlertView.h; sourceTree = "<group>"; };
 		53AF23E619438C35003A5074 /* CustomIOS7AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOS7AlertView.m; sourceTree = "<group>"; };
-		53AF23E919439D79003A5074 /* Sandbox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Sandbox.xib; sourceTree = "<group>"; };
 		53AF23EB1943A58D003A5074 /* NearbyCollegeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyCollegeSelector.h; sourceTree = "<group>"; };
 		53AF23EC1943A58D003A5074 /* NearbyCollegeSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyCollegeSelector.m; sourceTree = "<group>"; };
 		53B1FDFC19254E4700905E49 /* MasterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterView.xib; sourceTree = "<group>"; };
@@ -129,6 +140,9 @@
 		53BDB4D71930688200F45D5C /* colleges.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colleges.png; sourceTree = "<group>"; };
 		53BDB4D81930688200F45D5C /* new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = new.png; sourceTree = "<group>"; };
 		53BDB4D91930688200F45D5C /* tags.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tags.png; sourceTree = "<group>"; };
+		53CF3252194E2A56008BB733 /* NewPostAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPostAlertView.h; sourceTree = "<group>"; };
+		53CF3253194E2A56008BB733 /* NewPostAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPostAlertView.m; sourceTree = "<group>"; };
+		53CF3256194E2A8A008BB733 /* NewPostAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewPostAlertView.xib; sourceTree = "<group>"; };
 		53D2AD0519189E9E0097C840 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
 		53D2AD0619189E9E0097C840 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		53D2AD0919189EC60097C840 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
@@ -137,9 +151,12 @@
 		53D2AD0D19189F740097C840 /* Vote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vote.m; sourceTree = "<group>"; };
 		53D2AD0F1918A22A0097C840 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
 		53D2AD101918A22A0097C840 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
-		53D2AD121918A7760097C840 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		53D2AD131918AAB80097C840 /* College.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = College.h; sourceTree = "<group>"; };
 		53D2AD141918AAB80097C840 /* College.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = College.m; sourceTree = "<group>"; };
+		53D51E34194950FA00A8BA81 /* CollegeList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CollegeList.txt; sourceTree = "<group>"; };
+		53D51E361949625300A8BA81 /* SimpleTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleTableCell.h; path = Collegefeed/SimpleTableCell.h; sourceTree = "<group>"; };
+		53D51E371949625300A8BA81 /* SimpleTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleTableCell.m; path = Collegefeed/SimpleTableCell.m; sourceTree = "<group>"; };
+		53D51E381949625300A8BA81 /* SimpleTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SimpleTableCell.xib; path = Collegefeed/SimpleTableCell.xib; sourceTree = "<group>"; };
 		53F8572F193D6CFF0004D35F /* AppData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppData.h; sourceTree = "<group>"; };
 		53F85730193D6CFF0004D35F /* AppData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppData.m; sourceTree = "<group>"; };
 		53F8788D19133F60002A578B /* Collegefeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collegefeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,7 +169,7 @@
 		53F8789E19133F60002A578B /* Collegefeed-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Collegefeed-Prefix.pch"; sourceTree = "<group>"; };
 		53F8789F19133F60002A578B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		53F878A019133F60002A578B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		53F878AE19133F60002A578B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		53F878AE19133F60002A578B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Collegefeed/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		53F878B419133F60002A578B /* CollegefeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CollegefeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		53F878B519133F60002A578B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		53F878BD19133F60002A578B /* CollegefeedTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CollegefeedTests-Info.plist"; sourceTree = "<group>"; };
@@ -186,20 +203,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		533475A019232A4A00E84CC8 /* TableCell */ = {
+		533475A019232A4A00E84CC8 /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
 				533475A11923344100E84CC8 /* TableCell.h */,
 				533475A21923344100E84CC8 /* TableCell.m */,
 				533475A31923344100E84CC8 /* TableCell.xib */,
+				53D51E361949625300A8BA81 /* SimpleTableCell.h */,
+				53D51E371949625300A8BA81 /* SimpleTableCell.m */,
+				53D51E381949625300A8BA81 /* SimpleTableCell.xib */,
 			);
-			name = TableCell;
+			name = "Custom Cells";
 			path = ..;
 			sourceTree = "<group>";
 		};
 		5390A9131914B76800ACD082 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				53F878AE19133F60002A578B /* Images.xcassets */,
 				53BDB4D71930688200F45D5C /* colleges.png */,
 				53BDB4D81930688200F45D5C /* new.png */,
 				53BDB4D91930688200F45D5C /* tags.png */,
@@ -212,6 +233,38 @@
 				5390A91B1914B76800ACD082 /* postbuttonclick.xml */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		53AB57B7194AAFB3001D1B7B /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				53FA791219381A4F00EF246E /* ChildCellDelegate.h */,
+				5308D2BB193552C600D70C1A /* Shared.h */,
+				5308D2BC193552C600D70C1A /* Shared.m */,
+				533475871922B88300E84CC8 /* TTTAttributedLabel.h */,
+				533475881922B88300E84CC8 /* TTTAttributedLabel.m */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		53AB57C0194AAFFF001D1B7B /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				53AB57C4194ABD11001D1B7B /* Omnes-Semibold.ttf */,
+				53AB57B8194AAFF8001D1B7B /* mplus-2c-bold.ttf */,
+				53AB57BA194AAFF8001D1B7B /* Roboto-Light.ttf */,
+				53AB57BB194AAFF8001D1B7B /* Roboto-LightItalic.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		53AB57C1194AB029001D1B7B /* GPX Locations */ = {
+			isa = PBXGroup;
+			children = (
+				533FCA4C193EDE3B00754C07 /* aggieland.gpx */,
+				533FCA4E193FCD8200754C07 /* austin.gpx */,
+			);
+			name = "GPX Locations";
 			sourceTree = "<group>";
 		};
 		53AE73BA1927EB8F00BE6B02 /* Interfaces */ = {
@@ -235,10 +288,10 @@
 		53B090B5192DA13100E3D996 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				53AF23E919439D79003A5074 /* Sandbox.xib */,
+				53CF3255194E2A62008BB733 /* NewPostAlertView */,
 				53AF23E819438CF3003A5074 /* CustomAlertView */,
-				53BDB4CF192F4E4300F45D5C /* CollegePicker */,
-				533475A019232A4A00E84CC8 /* TableCell */,
+				53BDB4CF192F4E4300F45D5C /* College Selection */,
+				533475A019232A4A00E84CC8 /* Custom Cells */,
 				53B1FE0119254EB900905E49 /* MasterView */,
 				53963DE51916E5F50084E646 /* PostsViewController.h */,
 				53963DE61916E5F50084E646 /* PostsViewController.m */,
@@ -246,8 +299,6 @@
 				5390A93A191552AE00ACD082 /* CommentViewController.m */,
 				5334758A1922D9B700E84CC8 /* TagViewController.h */,
 				5334758B1922D9B700E84CC8 /* TagViewController.m */,
-				53AF23EB1943A58D003A5074 /* NearbyCollegeSelector.h */,
-				53AF23EC1943A58D003A5074 /* NearbyCollegeSelector.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -299,6 +350,7 @@
 				53B090B5192DA13100E3D996 /* Views */,
 				53B090B6192DA13D00E3D996 /* Models */,
 				53B090B7192DA14400E3D996 /* DataControllers */,
+				53AB57B7194AAFB3001D1B7B /* Other */,
 			);
 			name = "Source Code";
 			sourceTree = "<group>";
@@ -306,8 +358,9 @@
 		53B090B9192DA21600E3D996 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				53F878AE19133F60002A578B /* Images.xcassets */,
 				53F8789719133F60002A578B /* Supporting Files */,
+				53AB57C0194AAFFF001D1B7B /* Fonts */,
+				53AB57C1194AB029001D1B7B /* GPX Locations */,
 				5390A9131914B76800ACD082 /* Images */,
 			);
 			name = Resources;
@@ -323,14 +376,26 @@
 			name = MasterView;
 			sourceTree = "<group>";
 		};
-		53BDB4CF192F4E4300F45D5C /* CollegePicker */ = {
+		53BDB4CF192F4E4300F45D5C /* College Selection */ = {
 			isa = PBXGroup;
 			children = (
+				53AF23EB1943A58D003A5074 /* NearbyCollegeSelector.h */,
+				53AF23EC1943A58D003A5074 /* NearbyCollegeSelector.m */,
 				53BDB4D0192F4E6600F45D5C /* CollegePickerViewController.h */,
 				53BDB4D1192F4E6600F45D5C /* CollegePickerViewController.m */,
 				53BDB4D2192F4E6600F45D5C /* CollegePickerViewController.xib */,
 			);
-			name = CollegePicker;
+			name = "College Selection";
+			sourceTree = "<group>";
+		};
+		53CF3255194E2A62008BB733 /* NewPostAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				53CF3252194E2A56008BB733 /* NewPostAlertView.h */,
+				53CF3253194E2A56008BB733 /* NewPostAlertView.m */,
+				53CF3256194E2A8A008BB733 /* NewPostAlertView.xib */,
+			);
+			name = NewPostAlertView;
 			sourceTree = "<group>";
 		};
 		53F8788419133F60002A578B = {
@@ -376,14 +441,7 @@
 		53F8789719133F60002A578B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				533FCA4C193EDE3B00754C07 /* aggieland.gpx */,
-				533FCA4E193FCD8200754C07 /* austin.gpx */,
-				53FA791219381A4F00EF246E /* ChildCellDelegate.h */,
-				5308D2BB193552C600D70C1A /* Shared.h */,
-				5308D2BC193552C600D70C1A /* Shared.m */,
-				53D2AD121918A7760097C840 /* Constants.h */,
-				533475871922B88300E84CC8 /* TTTAttributedLabel.h */,
-				533475881922B88300E84CC8 /* TTTAttributedLabel.m */,
+				53D51E34194950FA00A8BA81 /* CollegeList.txt */,
 				53F8789819133F60002A578B /* Collegefeed-Info.plist */,
 				53F8789919133F60002A578B /* InfoPlist.strings */,
 				53F8789C19133F60002A578B /* main.m */,
@@ -491,18 +549,24 @@
 			files = (
 				5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */,
 				53BDB4D4192F4E6700F45D5C /* CollegePickerViewController.xib in Resources */,
+				53D51E35194950FA00A8BA81 /* CollegeList.txt in Resources */,
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */,
+				53AB57C5194ABD11001D1B7B /* Omnes-Semibold.ttf in Resources */,
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,
+				53AB57BC194AAFF8001D1B7B /* mplus-2c-bold.ttf in Resources */,
+				53CF3257194E2A8A008BB733 /* NewPostAlertView.xib in Resources */,
 				5390A9201914B76800ACD082 /* arrowupblue.png in Resources */,
 				533FCA4D193EDE3B00754C07 /* aggieland.gpx in Resources */,
 				533FCA4F193FCD8200754C07 /* austin.gpx in Resources */,
 				5390A9241914B76800ACD082 /* postbuttonclick.xml in Resources */,
+				53AB57BF194AAFF8001D1B7B /* Roboto-LightItalic.ttf in Resources */,
 				53F878AF19133F60002A578B /* Images.xcassets in Resources */,
 				53BDB4DB1930688200F45D5C /* new.png in Resources */,
+				53D51E3A1949625300A8BA81 /* SimpleTableCell.xib in Resources */,
+				53AB57BE194AAFF8001D1B7B /* Roboto-Light.ttf in Resources */,
 				53BDB4DA1930688200F45D5C /* colleges.png in Resources */,
 				5390A91F1914B76800ACD082 /* arrowup.png in Resources */,
-				53AF23EA19439D79003A5074 /* Sandbox.xib in Resources */,
 				53BDB4DC1930688200F45D5C /* tags.png in Resources */,
 				53BDB4D61930669100F45D5C /* top.png in Resources */,
 				53F8789B19133F60002A578B /* InfoPlist.strings in Resources */,
@@ -533,6 +597,7 @@
 				5308D2BD193552C600D70C1A /* Shared.m in Sources */,
 				5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */,
 				53F878A119133F60002A578B /* AppDelegate.m in Sources */,
+				53CF3254194E2A56008BB733 /* NewPostAlertView.m in Sources */,
 				53F85731193D6CFF0004D35F /* AppData.m in Sources */,
 				53AE73C51928208100BE6B02 /* Votable.m in Sources */,
 				532706E2191378EF00F5EAB9 /* PostDataController.m in Sources */,
@@ -549,6 +614,7 @@
 				53963DE71916E5F50084E646 /* PostsViewController.m in Sources */,
 				53F8789D19133F60002A578B /* main.m in Sources */,
 				53D2AD0E19189F740097C840 /* Vote.m in Sources */,
+				53D51E391949625300A8BA81 /* SimpleTableCell.m in Sources */,
 				533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

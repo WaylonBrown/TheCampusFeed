@@ -66,20 +66,9 @@ angular.module('cfeed')
     })
   }
 
-  /*$scope.closeInMs = function(post, time){
-    console.log('left')
-    console.log(post)
-    $timeout(function(){
-      post.isOpen = false;
-      $scope.$apply();
-    }, time)
-  }*/
-
   $scope.editPost = function($event, post){
     $event.stopPropagation()
     $($event.currentTarget).parents('.panel').children('.panel-collapse').height('auto');
-    console.log($($event.currentTarget).parents('.panel').children('.panel-collapse'));
-    console.log($event)
     post.isEditing = true;
   }
 

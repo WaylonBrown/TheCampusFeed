@@ -20,4 +20,6 @@
 - (NSArray *)findNearbyCollegesWithLat:(float)userLat
                                withLon:(float)userLon;
 
+- (void)getNetworkCollegeList;
+- (void)getHardCodedCollegeList;
 @end

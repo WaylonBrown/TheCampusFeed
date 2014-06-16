@@ -76,12 +76,12 @@
     }
     return self;
 }
+
+#pragma mark - View Loading
+
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
-
     [super viewWillAppear:animated];
-    [self.navigationItem setTitleView:logoTitleView];
-    [self refresh];
 }
 - (void)viewDidLoad
 {
@@ -89,12 +89,12 @@
     // Do any additional setup after loading the view.
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
-    
+    [self refresh];
+    [self setCommentViewController:[[CommentViewController alloc] initWithAppData:self.appData]];
+
 }
 - (void)loadView
 {
-    [self setCommentViewController:[[CommentViewController alloc] initWithAppData:self.appData]];
-    
     [super loadView];
 }
 

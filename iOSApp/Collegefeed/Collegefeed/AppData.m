@@ -23,7 +23,6 @@
         [self setCollegeFeedPicker:     [[CollegePickerViewController alloc]
                                          initAsAllCollegesWithAppData:self]];
         
-        
         [self switchedToSpecificCollegeOrNil:nil];
         
         [self setLocationManager:[[CLLocationManager alloc] init]];
@@ -50,6 +49,8 @@
 }
 - (void)switchedToSpecificCollegeOrNil:(College *)college
 {
+    [self setCurrentCollege:college];
+
     if (college == nil)
     {
         [self setAllColleges:YES];
@@ -57,7 +58,6 @@
     }
     else
     {
-        [self setCurrentCollege:college];
         [self setAllColleges:NO];
         [self setSpecificCollege:YES];
     }

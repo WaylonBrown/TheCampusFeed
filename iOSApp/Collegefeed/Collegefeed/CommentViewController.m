@@ -25,7 +25,6 @@
 {   // this function called right before the comments view appears
     [super viewWillAppear:animated];
 
-    [self.navigationItem setTitleView:logoTitleView];
     
     if (self.originalPost != nil)
     {
@@ -51,7 +50,7 @@
 {   // called when the comment view is initially loaded
   
     [super loadView];
-    
+
     self.navigationItem.rightBarButtonItem =
     [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
                                                   target:self
@@ -122,7 +121,7 @@
     [commentHeader setText:@"Comments"];
     [commentHeader setTextAlignment:NSTextAlignmentCenter];
     [commentHeader setFont:[UIFont systemFontOfSize:12]];
-    [commentHeader setBackgroundColor:[Shared getCustomUIColor:cf_lightgray]];
+    [commentHeader setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
     
     return commentHeader;
 }
