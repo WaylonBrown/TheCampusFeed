@@ -203,7 +203,7 @@ public class CommentsActivity extends Activity{
 						{
 							LayoutInflater inflater = getLayoutInflater();
 							View commentDialogLayout = inflater.inflate(R.layout.dialog_comment, null);
-							new NewCommentDialog(getApplicationContext(), commentDialogLayout, post);
+							new NewCommentDialog(CommentsActivity.this, commentDialogLayout, post);
 						}
 					}        	
 		        });
