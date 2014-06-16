@@ -12,7 +12,7 @@ import com.appuccino.collegefeed.utils.TimeManager;
 import android.util.JsonReader;
 import android.util.JsonWriter;
 
-public class Post implements Votable{
+public class Post {
 	public int score;
 	String message;
 	String time;
@@ -21,32 +21,6 @@ public class Post implements Votable{
 	int vote = 0;		//-1 = downvote, 0 = nothing, 1 = upvote
 	int collegeID;
 	String collegeName;
-	
-	public Post()
-	{
-		score = 0;
-		message = "";
-		id = (int)(Math.random() * Integer.MAX_VALUE);
-		collegeID = 234234;
-		collegeName = "Texas A&M University";
-		
-		int numberOfComments = (int)(Math.random() * 15);
-		for(int i = 0; i < numberOfComments; i++)
-			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
-	}
-	
-	public Post(String m)
-	{
-		message = m;
-		score = 0;
-		id = (int)(Math.random() * Integer.MAX_VALUE);
-		collegeID = 234234;
-		collegeName = "Texas A&M University";
-		
-		int numberOfComments = (int)(Math.random() * 15);
-		for(int i = 0; i < numberOfComments; i++)
-			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
-	}
 	
 	public Post(String message, int collegeID)
 	{
@@ -144,7 +118,6 @@ public class Post implements Votable{
 		return time;
 	}
 	
-	@Override
 	public int getID()
 	{
 		return id;
