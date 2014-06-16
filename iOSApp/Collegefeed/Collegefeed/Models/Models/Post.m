@@ -8,7 +8,6 @@
 
 #import "Post.h"
 #import "Comment.h"
-#import "Shared.h"
 #import "Vote.h"
 
 @implementation Post
@@ -23,9 +22,7 @@
     {
         [self setMessage:newMessage];
         [self setCollegeID:collegeId];
-        
-        [self setPOSTurl:[Shared POSTPostWithCollegeId:collegeId]];
-        
+                
         return self;
     }
     return nil;
@@ -46,8 +43,6 @@
         [self setCollegeName:@"<No College>"];
         [self setDate:[NSDate date]];
         [self setVote:nil];
-         
-        [self validate];
         return self;
     }
     return nil;
@@ -84,18 +79,6 @@
         return self;
     }
     return nil;
-}
-- (void)validate
-{   // check for proper length
-
-//    if (self.postMessage.length < MIN_POST_LENGTH)
-//    {
-//        [NSException raise:@"Invalid Post" format:@"Post \"%@\" is too short", self.postMessage];
-//    }
-//    if (self.postMessage.length > MAX_POST_LENGTH)
-//    {
-//        [NSException raise:@"Invalid Post" format:@"Post \"%@\" is too long", self.postMessage];
-//    }
 }
 - (NSData*)toJSON
 {   // Returns an NSData representation of this Post in JSON

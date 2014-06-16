@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Model.h"
 
-@interface Tag : NSObject
+@interface Tag : Model
 
 @property (nonatomic) long tagID;
 @property (nonatomic) long postID;
@@ -20,6 +21,5 @@
            withName:(NSString*)name;
 - (id)initDummy;
 - (id)initFromJSON:(NSDictionary *)jsonObject;
-- (void)validate;
 
 @end

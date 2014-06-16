@@ -7,7 +7,6 @@
 //
 
 #import "Vote.h"
-#import "Shared.h"
 
 @implementation Vote
 
@@ -19,7 +18,7 @@
     {
         [self setParentID:ID];
         [self setUpvote:isUpvote];
-        [self setPOSTurl:[Shared POSTVoteWithPostId:ID]];
+//        [self setPOSTurl:[Shared POSTVoteWithPostId:ID]];
         return self;
     }
     return nil;

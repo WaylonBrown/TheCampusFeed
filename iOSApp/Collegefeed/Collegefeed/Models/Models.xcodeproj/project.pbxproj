@@ -8,14 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		53CF334E194E56F7008BB733 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CF334D194E56F7008BB733 /* Foundation.framework */; };
-		53CF3353194E56F7008BB733 /* Models.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 53CF3352194E56F7008BB733 /* Models.h */; };
-		53CF3355194E56F7008BB733 /* Models.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CF3354194E56F7008BB733 /* Models.m */; };
+		53CF3353194E56F7008BB733 /* Model.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 53CF3352194E56F7008BB733 /* Model.h */; };
 		53CF335C194E56F7008BB733 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CF335B194E56F7008BB733 /* XCTest.framework */; };
 		53CF335D194E56F7008BB733 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CF334D194E56F7008BB733 /* Foundation.framework */; };
 		53CF335F194E56F7008BB733 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CF335E194E56F7008BB733 /* UIKit.framework */; };
 		53CF3362194E56F7008BB733 /* libModels.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CF334A194E56F7008BB733 /* libModels.a */; };
 		53CF3368194E56F7008BB733 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 53CF3366194E56F7008BB733 /* InfoPlist.strings */; };
 		53CF336A194E56F7008BB733 /* ModelsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CF3369194E56F7008BB733 /* ModelsTests.m */; };
+		53CF338F194E57F0008BB733 /* College.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CF3386194E57F0008BB733 /* College.m */; };
+		53CF3390194E57F0008BB733 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CF3388194E57F0008BB733 /* Comment.m */; };
+		53CF3391194E57F0008BB733 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CF338A194E57F0008BB733 /* Post.m */; };
+		53CF3392194E57F0008BB733 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CF338C194E57F0008BB733 /* Tag.m */; };
+		53CF3393194E57F0008BB733 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CF338E194E57F0008BB733 /* Vote.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,7 +39,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				53CF3353194E56F7008BB733 /* Models.h in CopyFiles */,
+				53CF3353194E56F7008BB733 /* Model.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,14 +49,23 @@
 		53CF334A194E56F7008BB733 /* libModels.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libModels.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		53CF334D194E56F7008BB733 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		53CF3351194E56F7008BB733 /* Models-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Models-Prefix.pch"; sourceTree = "<group>"; };
-		53CF3352194E56F7008BB733 /* Models.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Models.h; sourceTree = "<group>"; };
-		53CF3354194E56F7008BB733 /* Models.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Models.m; sourceTree = "<group>"; };
+		53CF3352194E56F7008BB733 /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		53CF335A194E56F7008BB733 /* ModelsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModelsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		53CF335B194E56F7008BB733 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		53CF335E194E56F7008BB733 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		53CF3365194E56F7008BB733 /* ModelsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ModelsTests-Info.plist"; sourceTree = "<group>"; };
 		53CF3367194E56F7008BB733 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		53CF3369194E56F7008BB733 /* ModelsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModelsTests.m; sourceTree = "<group>"; };
+		53CF3385194E57F0008BB733 /* College.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = College.h; sourceTree = "<group>"; };
+		53CF3386194E57F0008BB733 /* College.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = College.m; sourceTree = "<group>"; };
+		53CF3387194E57F0008BB733 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		53CF3388194E57F0008BB733 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
+		53CF3389194E57F0008BB733 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
+		53CF338A194E57F0008BB733 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
+		53CF338B194E57F0008BB733 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
+		53CF338C194E57F0008BB733 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
+		53CF338D194E57F0008BB733 /* Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vote.h; sourceTree = "<group>"; };
+		53CF338E194E57F0008BB733 /* Vote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vote.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,8 +123,17 @@
 		53CF334F194E56F7008BB733 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				53CF3352194E56F7008BB733 /* Models.h */,
-				53CF3354194E56F7008BB733 /* Models.m */,
+				53CF3352194E56F7008BB733 /* Model.h */,
+				53CF3385194E57F0008BB733 /* College.h */,
+				53CF3386194E57F0008BB733 /* College.m */,
+				53CF3387194E57F0008BB733 /* Comment.h */,
+				53CF3388194E57F0008BB733 /* Comment.m */,
+				53CF3389194E57F0008BB733 /* Post.h */,
+				53CF338A194E57F0008BB733 /* Post.m */,
+				53CF338B194E57F0008BB733 /* Tag.h */,
+				53CF338C194E57F0008BB733 /* Tag.m */,
+				53CF338D194E57F0008BB733 /* Vote.h */,
+				53CF338E194E57F0008BB733 /* Vote.m */,
 				53CF3350194E56F7008BB733 /* Supporting Files */,
 			);
 			path = Models;
@@ -223,7 +245,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53CF3355194E56F7008BB733 /* Models.m in Sources */,
+				53CF3390194E57F0008BB733 /* Comment.m in Sources */,
+				53CF338F194E57F0008BB733 /* College.m in Sources */,
+				53CF3391194E57F0008BB733 /* Post.m in Sources */,
+				53CF3392194E57F0008BB733 /* Tag.m in Sources */,
+				53CF3393194E57F0008BB733 /* Vote.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,6 +430,7 @@
 				53CF336F194E56F7008BB733 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		53CF3370194E56F7008BB733 /* Build configuration list for PBXNativeTarget "ModelsTests" */ = {
 			isa = XCConfigurationList;
@@ -412,6 +439,7 @@
 				53CF3372194E56F7008BB733 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

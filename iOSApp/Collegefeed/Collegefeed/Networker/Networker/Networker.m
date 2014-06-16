@@ -111,7 +111,7 @@
 
 #pragma mark - Posts
 
-+ (NSData *)POSTPostData:(NSData *)data WithCollegeId:(long)collegeId;\
++ (NSData *)POSTPostData:(NSData *)data WithCollegeId:(long)collegeId;
 {
     NSURL *url = [[NSURL alloc] initWithString:
                   [NSString stringWithFormat:@"%@/%@/colleges/%ld/posts",
@@ -212,11 +212,25 @@
                    API_URL, API_VERSION, postId]];
     return [self POST:data toUrl:url];
 }
++ (NSData *)POSTVoteData:(NSData *)data WithCommentId:(long)commentId
+{
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/comment/%ld/votes",
+                   API_URL, API_VERSION, commentId]];
+    return [self POST:data toUrl:url];
+}
 + (NSData *)GETVoteScoreWithPostId:(long)postId
 {
     NSURL *url = [[NSURL alloc] initWithString:
                   [NSString stringWithFormat:@"%@/%@/posts/%ld/votes/score",
                    API_URL, API_VERSION, postId]];
+    return [self GET:url];
+}
++ (NSData *)GETVoteScoreWithCommentId:(long)commentId
+{
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/comments/%ld/votes/score",
+                   API_URL, API_VERSION, commentId]];
     return [self GET:url];
 }
 

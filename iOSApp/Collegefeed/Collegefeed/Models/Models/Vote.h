@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Model.h"
 
-@interface Vote : NSObject
+@interface Vote : Model
 
 // voteID: ID of this vote
 @property (nonatomic) long voteID;

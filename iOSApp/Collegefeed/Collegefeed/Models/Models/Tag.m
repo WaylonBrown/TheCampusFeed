@@ -7,7 +7,6 @@
 //
 
 #import "Tag.h"
-#import "Shared.h"
 
 @implementation Tag
 
@@ -26,7 +25,6 @@
         {
             [self setName:[NSString stringWithFormat:@"#%@", tName]];
         }
-        [self validate];
         return self;
     }
     return nil;

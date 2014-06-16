@@ -10,7 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <UIKit/UIKit.h>
 
-#import "PostDataController.h"
+#import "DataController.h"
 #import "CommentDataController.h"
 #import "VoteDataController.h"
 #import "CollegeDataController.h"

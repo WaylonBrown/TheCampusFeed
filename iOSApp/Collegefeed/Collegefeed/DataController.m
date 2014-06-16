@@ -7,7 +7,12 @@
 //
 
 #import "DataController.h"
-#import "Votable.h"
+#import "Models/Models/Model.h"
+#import "Models/Models/College.h"
+#import "Models/Models/Comment.h"
+#import "Models/Models/Post.h"
+#import "Models/Models/Vote.h"
+#import "Networker/Networker/Networker.h"
 
 @implementation DataController
 
@@ -16,138 +21,177 @@
     self = [super init];
     if (self)
     {
-        [self setList:[[NSMutableArray alloc] init]];
+
     }
     return self;
 }
 
-#pragma mark Data Access
+#pragma mark - Networker Access - Colleges
 
-- (NSUInteger)countOfList
-{   // return the number of objects in this list
-    return [self.list count];
+- (void)getNetworkCollegeList
+{
+    self.collegeList = [[NSMutableArray alloc] init];
+    NSData *data = [Networker GETAllColleges];
+    [self parseData:data intoList:self.collegeList];
 }
-- (NSObject *)objectInListAtIndex:(NSUInteger)theIndex
-{   // return the object at theIndex
-    return [self.list objectAtIndex:theIndex];
-}
-- (void)addObjectToList:(NSObject *)obj
-{}
-- (void)refresh
-{}
-
-#pragma mark - Network Access
-
-- (id)GETfromServer:(NSURL *)url
-{ // GETs a JSON-formatted response from the server, given a url
+- (void)getHardCodedCollegeList
+{   // Populate the college list with a recent
+    // list of colleges instead of accessing the network
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"CollegeList" ofType:@"txt"];
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    
-    [request setURL:url];
-    [request setHTTPMethod:@"GET"];
-    [request setValue:@"application/json;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
-    
-    // Fetch the response from the server in JSON format
-    NSHTTPURLResponse   *response;
-    NSError     *error;
-    NSData      *GETReply = [NSURLConnection sendSynchronousRequest:request
-                                                  returningResponse:&response
-                                                              error:&error];
-    NSString    *stringReply = [[NSString alloc] initWithBytes:[GETReply bytes]
-                                                                length:[GETReply length]
-                                                              encoding:NSASCIIStringEncoding];
-    NSInteger   statusCode = [response statusCode];
-    
-    if (error)
+    if (data == nil)
     {
-        NSLog(@"\nError in GETfromServer with URL: %@\nResponse: %@\nError message: %@\n",
-              url, stringReply, [error localizedDescription]);
+        NSLog(@"Could not get hard-coded list in CollegeList.txt");
+        return;
     }
+    [self parseData:data intoList:self.collegeList];
+}
 
-    if (statusCode == 200)
+#pragma mark - Networker Access - Comments
+
+- (BOOL)createComment:(Comment *)comment
+{
+    NSData *result = [Networker POSTCommentData:[comment toJSON]
+                                     WithPostId:comment.postID];
+    
+    return [self parseData:result intoList:self.commentList];
+}
+- (void)fetchCommentsWithPostId:(long)postId
+{
+    self.commentList = [[NSMutableArray alloc] init];
+    NSData *data = [Networker GETCommentsWithPostId:postId];
+    [self parseData:data intoList:self.commentList];
+}
+
+#pragma mark - Networker Access - Posts
+
+- (BOOL)createPost:(Post *)post
+{
+    NSData *result = [Networker POSTPostData:[post toJSON]
+                               WithCollegeId:post.collegeID];
+    
+    return [self parseData:result intoList:self.recentPostsAllColleges];
+}
+- (void)fetchTopPosts
+{
+    self.topPostsAllColleges = [[NSMutableArray alloc] init];
+    NSData* data = [Networker GETAllPosts];
+    [self parseData:data intoList:self.topPostsAllColleges];
+}
+- (void)fetchTopPostsWithCollegeId:(long)collegeId
+{
+    self.topPostsInCollege = [[NSMutableArray alloc] init];
+    NSData* data = [Networker GETTrendingPostsWithCollegeId:collegeId];
+    [self parseData:data intoList:self.topPostsInCollege];
+}
+- (void)fetchNewPosts
+{
+    [self setRecentPostsAllColleges:[[NSMutableArray alloc] init]];
+    NSData* data = [Networker GETAllPosts];
+    [self parseData:data intoList:self.recentPostsAllColleges];
+}
+- (void)fetchNewPostsWithCollegeId:(long)collegeId
+{
+    [self setRecentPostsInCollege:[[NSMutableArray alloc] init]];
+    NSData* data = [Networker GETRecentPostsWithCollegeId:collegeId];
+    [self parseData:data intoList:self.recentPostsInCollege];
+}
+- (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage
+{
+    [self setAllPostsWithTag:[[NSMutableArray alloc] init]];
+    NSData* data = [Networker GETPostsWithTagName:tagMessage];
+    [self parseData:data intoList:self.allPostsWithTag];
+}
+- (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage
+                      withCollegeId:(long)collegeId
+{
+    [self setAllPostsWithTagInCollege:[[NSMutableArray alloc] init]];
+    NSData* data = [Networker GETPostsWithTagName:tagMessage withCollegeId:collegeId];
+    [self parseData:data intoList:self.allPostsWithTagInCollege];
+}
+- (void)fetchUserPostsWithUserId:(long)userId
+{
+    [self setUserPostsAllColleges:[[NSMutableArray alloc] init]];
+    
+}
+- (void)fetchUserPostsWithUserId:(long)userId
+                   WithCollegeId:(long)collegeId
+{
+    [self setUserPostsInCollege:[[NSMutableArray alloc] init]];
+    
+}
+
+#pragma mark - Networker Access - Tags
+
+- (void)fetchAllTags
+{   // fetch tags trending across all colleges
+    self.allTags = [[NSMutableArray alloc] init];
+    NSData *data = [Networker GETTagsTrending];
+    [self parseData:data intoList:self.allTags];
+}
+- (void)fetchAllTagsWithCollegeId:(long)collegeId
+{   // fetch tags trending in a particular college
+    self.allTagsInCollege = [[NSMutableArray alloc] init];
+    //TODO: need a url to get all trending tags for a school, but waiting on a server endpoint
+    NSData *data = [Networker GETTagsTrending];
+    [self parseData:data intoList:self.allTagsInCollege];
+}
+
+
+#pragma mark - Networker Access - Votes
+
+- (BOOL)createVote:(Vote *)vote
+{
+    NSData *result;
+    if ([vote.votableType isEqual: @"Comment"])
     {
-        return [NSJSONSerialization JSONObjectWithData:GETReply
-                                               options:0
-                                                 error:nil];
+        result = [Networker POSTVoteData:[vote toJSON] WithCommentId:vote.parentID];
     }
     else
     {
-        NSLog(@"\nUnexpected status code in GETfromServer with URL: %@\n", url);
+        result = [Networker POSTVoteData:[vote toJSON] WithPostId:vote.parentID];
     }
-    return nil;
+    return [self parseData:result intoList:self.commentList];
 }
-- (void)POSTtoServer:(Votable *)obj intoList:(NSMutableArray *)array
-{   // Build a POST request for obj (an implementation of Votable - Post or Comment)
-    // If posted to server successfully, add obj to the provided array
 
-    // Build request's body
-    NSData      *bodyData = [obj toJSON];
-    NSString    *bodyString = [[NSString alloc] initWithBytes:[bodyData bytes]
-                                                       length:[bodyData length]
-                                                     encoding:NSASCIIStringEncoding];
-    NSString    *bodyLength = [NSString stringWithFormat:@"%d", [bodyData length]];
-    
-    // Build request's header
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:obj.POSTurl];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:bodyLength forHTTPHeaderField:@"Content-Length"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:bodyData];
-    
-    // Send request and get the response
-    NSHTTPURLResponse *response;
-    NSError     *error1;
-    NSData      *POSTReply = [NSURLConnection sendSynchronousRequest:request
-                                              returningResponse:&response
-                                                          error:&error1];
-    NSString    *stringReply = [[NSString alloc] initWithBytes:[POSTReply bytes]
-                                                        length:[POSTReply length]
-                                                      encoding: NSASCIIStringEncoding];
-    NSInteger   statusCode = [response statusCode];
-    
-    if (error1)
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:[NSString stringWithFormat:@"An error occurred attempting to retrieve information from %@.", obj.POSTurl]
-                                                       delegate:self cancelButtonTitle:@"Whoops" otherButtonTitles:nil, nil];
-        NSLog(@"Error in POSTtoServer with: \nPost body: %@\nResponse: %@\nError message: %@",
-                                                bodyString, stringReply, [error1 localizedDescription]);
-        [alert show];
-    }
-    
-    if (statusCode == 201)
-    {
-        NSError      *error2;
-        NSDictionary *jsonPost = [NSJSONSerialization JSONObjectWithData:POSTReply
-                                                                 options:0 error:&error2];
-        
-        if (error2)
-        {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                            message:@"An error occurred attempting to send information to the server."
-                                                           delegate:self cancelButtonTitle:@"Whoops" otherButtonTitles:nil, nil];
-            NSLog(@"Error in POSTtoServer during NSJSONSerialization with: \nPost body: %@\nResponse: %@\njsonPost: %@\nError message: %@",
-                                                                        bodyString, stringReply, jsonPost, [error1 localizedDescription]);
-            [alert show];
-        }
-        // initialize this object from the JSON in the response
-        obj = [obj initFromJSON:jsonPost];
-        [array addObject:obj];
-    }
-    else // if (statusCode != 201)
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:[NSString stringWithFormat:@"An error occurred attempting to retrieve information from %@.", obj.POSTurl]
-                                                       delegate:self cancelButtonTitle:@"Whoops" otherButtonTitles:nil, nil];
-        NSLog(@"Unexpected status code. Expected=201, actual=%d", statusCode);
-        [alert show];
-    }
-}
-- (void)fetchWithUrl:(NSURL *)url intoList:(NSMutableArray *)array
+#pragma mark - Helper Data Access
+
+-(BOOL)parseData:(NSData *)data intoList:(NSMutableArray *)array
 {
-
+    NSArray *jsonArray = (NSArray*)[NSJSONSerialization JSONObjectWithData:data
+                                                                   options:0
+                                                                     error:nil];
+    if (jsonArray != nil)
+    {
+        for (int i = 0; i < jsonArray.count; i++)
+        {
+            // Individual JSON object
+            NSDictionary *jsonObject = (NSDictionary *) [jsonArray objectAtIndex:i];
+            [array addObject:[Model initFromJSON:jsonObject]];
+            
+        }
+        return YES;
+    }
+    return NO;
 }
-
-
+- (NSArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon
+{
+    NSMutableArray *colleges = [[NSMutableArray alloc] init];
+    
+    double degreesForPermissions = MILES_FOR_PERMISSION / 50.0;	//roughly 50 miles per degree
+    
+    for (College *college in self.collegeList)
+    {
+        //TODO: change to formula that takes into account the roundness of the earth
+        double degreesAway = sqrt(pow((userLat - college.lat), 2) + pow((userLon - college.lon), 2));
+        
+        if (degreesAway <= degreesForPermissions)
+        {
+            [colleges addObject:college];
+        }
+        
+    }
+    return colleges;
+}
 @end

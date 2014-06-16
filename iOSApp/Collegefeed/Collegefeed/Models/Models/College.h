@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Model.h"
 
-@interface College : NSObject
+@interface College : Model
 
 @property (nonatomic) NSInteger collegeID;
 @property (nonatomic) float lat;
@@ -22,8 +23,5 @@
 
 - (id)initWithCollegeID:(NSInteger)cID withName:(NSString*)cName
           withShortName:(NSString*)cShortName;
-
-- (void)validateCollege;
-
 
 @end

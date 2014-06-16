@@ -47,7 +47,9 @@
 
 // Votes
 + (NSData *)POSTVoteData:(NSData *)data WithPostId:(long)postId;
++ (NSData *)POSTVoteData:(NSData *)data WithCommentId:(long)commentId;
 + (NSData *)GETVoteScoreWithPostId:(long)postId;
++ (NSData *)GETVoteScoreWithCommentId:(long)commentId;
 
 @end
 

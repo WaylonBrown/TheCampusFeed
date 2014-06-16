@@ -10,6 +10,8 @@
 
 @implementation College
 
+#pragma mark - Initializations
+
 - (id)initWithCollegeID:(NSInteger)cID withName:(NSString*)cName
 {
     self = [super init];
@@ -17,8 +19,6 @@
     {
         [self setCollegeID:cID];
         [self setName:cName];
-        
-        [self validateCollege];
         return self;
     }
     return nil;
@@ -33,8 +33,6 @@
         [self setName:cName];
         [self setLat:lat];
         [self setLon:lon];
-        
-        [self validateCollege];
         return self;
     }
     return nil;
@@ -48,19 +46,35 @@
         [self setCollegeID:cID];
         [self setName:cName];
         [self setShortName:cShortName];
-        
-        [self validateCollege];
         return self;
     }
     return nil;
 }
-- (void)validateCollege
-{   //TODO: ensure college is valid here
 
-//    if (false)
-//    {
-//        [NSException raise:@"Invalid College" format:@"College \"%@\" invalid", self.name];
-//    }
+#pragma mark - Model Interface Methods
+
+- (id)initFromJSON:(NSDictionary *)jsonObject
+{
+    // values to pass to College constructor
+    NSString *collegeID = (NSString*)[jsonObject valueForKey:@"id"];
+    NSString *name      = (NSString*)[jsonObject valueForKey:@"name"];
+    NSString *lat       = (NSString*)[jsonObject valueForKey:@"lat"];
+    NSString *lon       = (NSString*)[jsonObject valueForKey:@"lon"];
+    //            NSString *size      = (NSString*)[jsonCollege valueForKey:@"size"];
+    
+    return [self initWithCollegeID:[collegeID integerValue]
+                          withName:name
+                           withLat:[lat floatValue]
+                           withLon:[lon floatValue]];
+    
+}
+- (NSData*)toJSON
+{
+    return nil;
+}
+- (long)getID
+{
+    return self.collegeID;
 }
 
 @end

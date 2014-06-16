@@ -8,7 +8,6 @@
 
 #import "Comment.h"
 #import "Post.h"
-#import "Shared.h"
 #import "Vote.h"
 
 @implementation Comment
@@ -24,9 +23,7 @@
         [self setPostID:post.getID];
         [self setMessage:message];
         
-        [self setPOSTurl:[Shared POSTCommentWithPostId:(long)post.getID]];
-        
-        [self validate];
+//        [self setPOSTurl:[Shared POSTCommentWithPostId:(long)post.getID]];
         return self;
     }
     return nil;
@@ -48,8 +45,6 @@
         [self setCollegeName:@"<No College>"];
         [self setDate:[NSDate date]];
         [self setVote:nil];
-        
-        [self validate];
         return self;
     }
     return nil;
@@ -80,8 +75,6 @@
     {
         [self setPostID:post.postID];
         [self setCollegeID:post.collegeID];
-
-        [self validate];
         return self;
     }
     return nil;
@@ -111,22 +104,6 @@
         return self;
     }
     return nil;
-}
-- (void)validate
-{   // check for proper length
-
-//    if (self.commentMessage.length < MIN_COMMENT_LENGTH)
-//    {
-//        [NSException raise:@"Invalid Comment" format:@"Comment \"%@\" is too short", self.commentMessage];
-//    }
-//    if (self.commentMessage.length > MAX_COMMENT_LENGTH)
-//    {
-//        [NSException raise:@"Invalid Comment" format:@"Comment \"%@\" is too long", self.commentMessage];
-//    }
-//    if (self.vote != -1 && self.vote != 0 && self.vote != 1)
-//    {
-//        [NSException raise:@"Invalid Vote value" format:@"Invalid Vote value on comment with id = %d", self.commentID];
-//    }
 }
 - (NSData*)toJSON
 {   // Returns an NSData representation of this Comment in JSON
