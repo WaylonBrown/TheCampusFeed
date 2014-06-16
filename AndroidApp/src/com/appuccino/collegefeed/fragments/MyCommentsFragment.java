@@ -22,7 +22,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.MainActivity;
-import com.appuccino.collegefeed.PostCommentsActivity;
+import com.appuccino.collegefeed.CommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
 import com.appuccino.collegefeed.objects.Comment;
@@ -129,7 +129,7 @@ public class MyCommentsFragment extends Fragment implements OnRefreshListener
 	
 	protected void commentClicked(Comment comment) 
 	{
-		Intent intent = new Intent(getActivity(), PostCommentsActivity.class);
+		Intent intent = new Intent(getActivity(), CommentsActivity.class);
 		intent.putExtra("POST_ID", comment.getPostID());
 		intent.putExtra("SECTION_NUMBER", tabNumber);
 

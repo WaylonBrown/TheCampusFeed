@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.MainActivity;
-import com.appuccino.collegefeed.PostCommentsActivity;
+import com.appuccino.collegefeed.CommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
 import com.appuccino.collegefeed.adapters.PostListAdapter.PostHolder;
@@ -82,7 +82,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         
         setMessageAndColorizeTags(thisComment.getMessage(), commentHolder);
         
-      //arrow click listeners
+        //arrow click listeners
         commentHolder.arrowUp.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -104,7 +104,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 					thisComment.score--;
 				}
 
-				PostCommentsActivity.updateList();
+				CommentsActivity.updateList();
 			}        	
         });
         commentHolder.arrowDown.setOnClickListener(new OnClickListener(){
@@ -129,7 +129,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 						thisComment.setVote(-1);
 						thisComment.score -= 2;
 					}
-					PostCommentsActivity.updateList();
+					CommentsActivity.updateList();
 				}
 				else
 				{

@@ -65,6 +65,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	static final double MILES_FOR_PERMISSION = 15.0;
 	static final int LOCATION_TIMEOUT_SECONDS = 10;
 	public static final int MIN_POST_LENGTH = 10;
+	public static final int MIN_COMMENT_LENGTH = 5;
 	
 	boolean locationFound = false;
 	public static LocationManager mgr;
@@ -177,6 +178,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		}
 	}
 
+	/**
+	 * Determine if the user has permissions to the collegeID given
+	 * 
+	 * @param collegeID
+	 * @return
+	 */
 	public static boolean hasPermissions(int collegeID) 
 	{
 		if(permissions == null)
