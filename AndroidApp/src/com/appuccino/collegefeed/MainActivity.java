@@ -264,8 +264,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 	private void determinePermissions(Location loc) 
 	{
-		double degreesForPermissions = MILES_FOR_PERMISSION / 50.0;	//roughly 50 miles per degree
-		
 		if(collegeList != null)
 		{
 			if(permissions != null)
@@ -276,10 +274,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			//add IDs to permissions list
 			for(College c : collegeList)
 			{
-				//TODO: change to formula James is using that takes into account the roundness of the earth
-				double degreesAway = Math.sqrt(Math.pow((loc.getLatitude() - c.getLatitude()), 2) + Math.pow((loc.getLongitude() - c.getLongitude()), 2));
-				
-				if(degreesAway <= degreesForPermissions)
+				double milesAway = milesAway(loc, c.getLatitude(), c.getLongitude());
+				if(milesAway <= MILES_FOR_PERMISSION)
 				{
 					permissions.add(c.getID());
 					Log.i("cfeed","Permissions college data: " + c.toString());
@@ -327,6 +323,31 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			
 		}		
 	}
+
+	/**
+	 * Implemented using Haversine formula
+	 */
+	private double milesAway(Location userLoc, double collegeLat, double collegeLon) {
+        final int R = 3959; // Radius of the earth in miles
+        Double lat1 = userLoc.getLatitude();
+        Double lon1 = userLoc.getLongitude();
+        Double lat2 = collegeLat;
+        Double lon2 = collegeLon;
+        Double latDistance = toRad(lat2-lat1);
+        Double lonDistance = toRad(lon2-lon1);
+        Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) + 
+                   Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * 
+                   Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return (R * c);
+	}
+	
+	/**
+	 * Helper method for milesAway
+	 */
+	private static Double toRad(Double value) {
+        return value * Math.PI / 180;
+    }
 
 	public static College getCollegeByID(Integer id) {
 		if(collegeList != null)
