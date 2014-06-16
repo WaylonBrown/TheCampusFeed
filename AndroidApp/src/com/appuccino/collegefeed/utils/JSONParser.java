@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import android.util.JsonReader;
 
 import com.appuccino.collegefeed.objects.College;
+import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 
 public class JSONParser {
@@ -124,11 +125,70 @@ public class JSONParser {
 		return ret;
 	}
 
-	private static Integer passIntWithNull(Integer nextInt) {
-		if(nextInt != null)
-			return nextInt;
+	public static ArrayList<Comment> commentListFromJSON(String json) throws IOException{
+		ArrayList<Comment> ret = new ArrayList<Comment>();
+//		JsonReader reader = new JsonReader(new StringReader(""));
+//		try {
+//			reader = new JsonReader(new StringReader(json));
+//			reader.beginArray();
+//			while(reader.hasNext()){
+//				
+//				int id = -1;
+//				String text = null;
+//				int score = 0;
+//				int collegeID = -1;
+//				String time = null;
+//				
+//				reader.beginObject();
+//				while(reader.hasNext()){
+//					String name = reader.nextName(); //property name of next property.
+//					if(name.equals("id")){
+//						//use in case null is passed in, which prim types can't take
+//						try{
+//							id = reader.nextInt();
+//						}catch(Exception e){
+//							reader.skipValue();
+//							e.printStackTrace();
+//						}
+//					}
+//					else if(name.equals("text")){
+//						text = reader.nextString();
+//					}
+//					else if(name.equals("score")){
+//						//use in case null is passed in, which prim types can't take
+//						try{
+//							score = reader.nextInt();
+//						}catch(Exception e){
+//							reader.skipValue();
+//							e.printStackTrace();
+//						}
+//					}
+//					else if(name.equals("college_id")){
+//						//use in case null is passed in, which prim types can't take
+//						try{
+//							collegeID = reader.nextInt();
+//						}catch(Exception e){
+//							reader.skipValue();
+//							e.printStackTrace();
+//						}
+//					}
+//					else if(name.equals("created_at")){
+//						time = reader.nextString();
+//					}
+//					else{
+//						reader.skipValue();
+//					}
+//				}
+//				reader.endObject();
+//				
+//				ret.add(new Post(id, text, score, collegeID, time));
+//			}
+//			reader.endArray();
+//		} finally{
+//			reader.close();
+//		}
 		
-		return 0;
+		return ret;
 	}
 
 }

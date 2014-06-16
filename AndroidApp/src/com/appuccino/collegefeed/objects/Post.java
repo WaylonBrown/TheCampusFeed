@@ -3,62 +3,29 @@ package com.appuccino.collegefeed.objects;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.StringReader;
 import java.util.ArrayList;
+
+import android.util.JsonWriter;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.utils.TimeManager;
 
-import android.util.JsonReader;
-import android.util.JsonWriter;
+public class Post extends AbstractPostComment{
 
-public class Post implements Votable{
-	public int score;
-	String message;
-	String time;
-	int id;
 	ArrayList<Comment> commentList = new ArrayList<Comment>();
-	int vote = 0;		//-1 = downvote, 0 = nothing, 1 = upvote
-	int collegeID;
 	String collegeName;
 	
-	public Post()
+	public Post(String m, int c)
 	{
-		score = 0;
-		message = "";
-		id = (int)(Math.random() * Integer.MAX_VALUE);
-		collegeID = 234234;
-		collegeName = "Texas A&M University";
-		
-		int numberOfComments = (int)(Math.random() * 15);
-		for(int i = 0; i < numberOfComments; i++)
-			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
-	}
-	
-	public Post(String m)
-	{
+		score = 1;
 		message = m;
-		score = 0;
-		id = (int)(Math.random() * Integer.MAX_VALUE);
-		collegeID = 234234;
-		collegeName = "Texas A&M University";
-		
-		int numberOfComments = (int)(Math.random() * 15);
-		for(int i = 0; i < numberOfComments; i++)
-			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
-	}
-	
-	public Post(String message, int collegeID)
-	{
-		this.score = 1;
-		this.message = message;
-		this.time = TimeManager.now();
-		this.collegeID = collegeID;
+		time = TimeManager.now();
+		collegeID = c;
 		collegeName = MainActivity.getCollegeByID(collegeID).getName();
 		
-		int numberOfComments = (int)(Math.random() * 15);
-		for(int i = 0; i < numberOfComments; i++)
-			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
+//		int numberOfComments = (int)(Math.random() * 15);
+//		for(int i = 0; i < numberOfComments; i++)
+//			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
 	}
 	
 	public Post(int id, String message, int score, int collegeID, String time)
@@ -77,14 +44,24 @@ public class Post implements Votable{
 			collegeName = "";
 		}
 		
-		int numberOfComments = (int)(Math.random() * 15);
-		for(int i = 0; i < numberOfComments; i++)
-			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
+//		int numberOfComments = (int)(Math.random() * 15);
+//		for(int i = 0; i < numberOfComments; i++)
+//			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
 	}
 	
 	public void addComment(Comment comment)
 	{
 		commentList.add(comment);
+	}
+	
+	public String getCollegeName()
+	{
+		return collegeName;
+	}
+	
+	public ArrayList<Comment> getCommentList()
+	{
+		return commentList;
 	}
 	
 	public ByteArrayOutputStream toJSONString() throws IOException{
@@ -112,51 +89,5 @@ public class Post implements Votable{
 		writer.endObject();
 		writer.close();
 		return ret;
-	}
-	
-	public void setVote(int vote)
-	{
-		this.vote = vote;
-	}
-	
-	public int getScore()
-	{
-		return score;
-	}
-	
-	public String getMessage()
-	{
-		return message;
-	}
-	
-	public String getCollegeName()
-	{
-		return collegeName;
-	}
-	
-	public int getCollegeID()
-	{
-		return collegeID;
-	}
-	
-	public String getTime()
-	{
-		return time;
-	}
-	
-	@Override
-	public int getID()
-	{
-		return id;
-	}
-	
-	public ArrayList<Comment> getCommentList()
-	{
-		return commentList;
-	}
-	
-	public int getVote()
-	{
-		return vote;
 	}
 }

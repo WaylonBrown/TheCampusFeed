@@ -1,6 +1,6 @@
 package com.appuccino.collegefeed.objects;
 
-public class Tag implements Votable{
+public class Tag {
 	String name;
 	int score;
 	int id;
@@ -27,7 +27,6 @@ public class Tag implements Votable{
 		return score;
 	}
 	
-	@Override
 	public int getID(){
 		return id;
 	}
