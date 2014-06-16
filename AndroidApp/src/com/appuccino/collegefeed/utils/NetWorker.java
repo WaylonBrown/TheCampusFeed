@@ -152,7 +152,7 @@ public class NetWorker {
 		}		
 	}
 	
-	public static class GetCommentsTask extends AsyncTask<PostSelector, Void, ArrayList<Comment> >
+	public static class GetCommentsTask extends AsyncTask<PostSelector, Void, ArrayList<Comment>>
 	{
 		int postID = 0;
 		
@@ -174,7 +174,7 @@ public class NetWorker {
 
 		@Override
 		protected ArrayList<Comment> doInBackground(PostSelector... arg0) {
-			HttpGet request = new HttpGet(REQUEST_URL + "posts/" + postID + "comments");
+			HttpGet request = new HttpGet(REQUEST_URL + "posts/" + postID + "/comments");
 			ArrayList<Comment> ret = new ArrayList<Comment>();
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String response = null;
@@ -189,7 +189,7 @@ public class NetWorker {
 			}
 			
 			if(response != null)
-				Log.d("cfeed", response);
+				Log.d("cfeed", "Server response: " + response);
 			
 			try {
 				ret = JSONParser.commentListFromJSON(response);
