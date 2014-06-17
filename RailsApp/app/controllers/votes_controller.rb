@@ -3,8 +3,8 @@ class VotesController < ApplicationController
   before_action :set_votable, only: [:create, :index, :score]
 
   def score
-    up_score = @votable.votes.where('upvote = true').count
-    down_score = @votable.votes.where('upvote = false').count
+    up_score = @votable.votes.count(:conditions => "upvote = true")
+    down_score = @votable.votes.count(:conditions => "upvote = false")
     render json: {:score => up_score - down_score}
   end
 

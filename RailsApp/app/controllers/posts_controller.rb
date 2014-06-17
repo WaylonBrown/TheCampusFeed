@@ -4,6 +4,13 @@ class PostsController < ApplicationController
   before_action :require_college, only: [:create]
   before_action :set_college, only: [:index, :create, :byTag, :recent, :trending]
 
+  before_action :set_score, only: [:render]
+
+  def set_score
+    p @posts
+    #votes[0].score
+  end
+
   def search
     posts = Post.search_by_text(params[:searchText])
     paginate json: posts
