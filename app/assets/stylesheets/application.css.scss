@@ -39,3 +39,7 @@ nav.navbar{
     -webkit-transition: none;
     transition: none;
 }
+
+.panel-group > div {
+  margin-bottom: 15px;
+}

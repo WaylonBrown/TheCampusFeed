@@ -21,13 +21,6 @@ angular.module('cfeed')
 
   $scope.getAllColleges()
   
-  $scope.getColleges = function() {
-    return $http.get('api/v1/colleges')
-      .then(function(res){
-        console.log(res.data)
-        return res.data
-      })
-  }
 }]);
 
 

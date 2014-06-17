@@ -3,6 +3,19 @@ include CollegesHelper
 class CollegesController < ApplicationController
   before_action :set_college, only: [:show, :edit, :update, :destroy, :within, :image]
 
+  def search
+    colleges = College.search_by_text(params[:searchText])
+    paginate json: colleges 
+  end
+
+  def searchCount
+    render json: College.search_by_text(params[:searchText]).count
+  end
+
+  def count
+    render json: College.all.count
+  end
+
   def image
     suckr = ImageSuckr::GoogleSuckr.new
     render json: suckr.get_image_url({"q" => @college.name + " logo", "as_filetype" => 'png'})
@@ -12,6 +25,7 @@ class CollegesController < ApplicationController
   # GET /colleges.json
   def index
     @colleges = College.all
+    paginate json: @colleges
   end
 
   # GET /colleges/1

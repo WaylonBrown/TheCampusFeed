@@ -52,7 +52,10 @@ Postfeed::Application.routes.draw do
       #get '/colleges/listNearby' => 'colleges#listNearby'
       #get '/colleges/:id/within' => 'colleges#within'
       get '/colleges/:id/image' => 'colleges#image'
-      resources :colleges, only: [:index] do
+      get '/colleges/search/:searchText' => 'colleges#search'
+      get '/colleges/search/:searchText/count' => 'colleges#searchCount'
+      get '/colleges/count' => 'colleges#count'
+      resources :colleges do
 
         get '/posts/byTag/:tagText' => 'posts#byTag'
         get '/posts/recent' => 'posts#recent'
