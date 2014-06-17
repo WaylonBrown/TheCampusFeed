@@ -1,5 +1,7 @@
 package com.appuccino.collegefeed.adapters;
 
+import java.text.ParseException;
+import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
@@ -16,14 +18,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.MainActivity;
-import com.appuccino.collegefeed.PostCommentsActivity;
+import com.appuccino.collegefeed.CommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
 import com.appuccino.collegefeed.adapters.PostListAdapter.PostHolder;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Comment;
+import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
+import com.appuccino.collegefeed.utils.TimeManager;
 
 public class CommentListAdapter extends ArrayAdapter<Comment>{
 
@@ -68,11 +72,17 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         final Comment thisComment = commentList.get(position);
         commentHolder.scoreText.setText(String.valueOf(thisComment.getScore()));
         commentHolder.messageText.setText(thisComment.getMessage());
-        commentHolder.timeText.setText(String.valueOf(thisComment.getHoursAgo()) + " hours ago");
+        
+        try {
+			setTime(thisComment, commentHolder.timeText);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         setMessageAndColorizeTags(thisComment.getMessage(), commentHolder);
         
-      //arrow click listeners
+        //arrow click listeners
         commentHolder.arrowUp.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -94,7 +104,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 					thisComment.score--;
 				}
 
-				PostCommentsActivity.updateList();
+				CommentsActivity.updateList();
 			}        	
         });
         commentHolder.arrowDown.setOnClickListener(new OnClickListener(){
@@ -119,7 +129,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 						thisComment.setVote(-1);
 						thisComment.score -= 2;
 					}
-					PostCommentsActivity.updateList();
+					CommentsActivity.updateList();
 				}
 				else
 				{
@@ -147,6 +157,86 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         
         return row;
     }
+    
+    private void setTime(Comment thisComment, TextView timeText) throws ParseException {
+    	Calendar thisPostTime = TimeManager.toCalendar(thisComment.getTime());
+    	Calendar now = Calendar.getInstance();
+    	
+    	int yearsDiff;
+    	int monthsDiff;
+    	int weeksDiff;
+    	int daysDiff;
+    	int hoursDiff;
+    	int minutesDiff;
+    	int secondsDiff;
+    	
+    	yearsDiff = now.get(Calendar.YEAR) - thisPostTime.get(Calendar.YEAR);
+    	monthsDiff = now.get(Calendar.MONTH) - thisPostTime.get(Calendar.MONTH);
+    	weeksDiff = now.get(Calendar.WEEK_OF_YEAR) - thisPostTime.get(Calendar.WEEK_OF_YEAR);
+    	daysDiff = now.get(Calendar.DAY_OF_YEAR) - thisPostTime.get(Calendar.DAY_OF_YEAR);
+    	hoursDiff = now.get(Calendar.HOUR_OF_DAY) - thisPostTime.get(Calendar.HOUR_OF_DAY);
+    	minutesDiff = now.get(Calendar.MINUTE) - thisPostTime.get(Calendar.MINUTE);
+    	secondsDiff = now.get(Calendar.SECOND) - thisPostTime.get(Calendar.SECOND);
+    	
+//    	Log.i("cfeed","Time difference for post " + thisPost.getMessage().substring(0, 10) + ": Years: " + yearsDiff + " Months: " + monthsDiff +
+//    			" Weeks: " + weeksDiff + " Days: " + daysDiff + " Hours: " + hoursDiff + " Minutes: " + minutesDiff + " Seconds: " + secondsDiff);
+    	
+    	String timeOutputText = "";
+    	if(yearsDiff > 0){
+    		timeOutputText = yearsDiff + " year";
+    		if(yearsDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else if(monthsDiff > 0){
+    		timeOutputText = monthsDiff + " month";
+    		if(monthsDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else if(weeksDiff > 0){
+    		timeOutputText = weeksDiff + " week";
+    		if(weeksDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else if(daysDiff > 0){
+    		timeOutputText = daysDiff + " day";
+    		if(daysDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else if(hoursDiff > 0){
+    		timeOutputText = hoursDiff + " hour";
+    		if(hoursDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else if(minutesDiff > 0){
+    		timeOutputText = minutesDiff + " minute";
+    		if(minutesDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else if(secondsDiff > 0){
+    		timeOutputText = secondsDiff + " second";
+    		if(secondsDiff > 1){
+    			timeOutputText += "s";
+    		}
+    		timeOutputText += " ago";
+    	}
+    	else{
+    		timeOutputText = "Just now";
+    	}
+    	
+    	timeText.setText(timeOutputText);
+	}
     
     private void setMessageAndColorizeTags(String msg, CommentHolder commentHolder) 
     {

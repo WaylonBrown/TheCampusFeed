@@ -7,11 +7,11 @@
 //
 
 #import "TableCell.h"
-#import "Votable.h"
-#import "Post.h"
-#import "Vote.h"
+#import "Models/Models/Post.h"
+#import "Models/Models/Vote.h"
 #import "PostsViewController.h"
 #import "ChildCellDelegate.h"
+#import "Shared.h"
 
 @implementation TableCell
 
@@ -20,6 +20,14 @@
 - (void)awakeFromNib
 {
     // Initialization code
+    
+    // Set font styles
+    [self.messageLabel      setFont:CF_FONT_LIGHT(16)];
+    [self.commentCountLabel setFont:CF_FONT_MEDIUM(12)];
+    [self.ageLabel          setFont:CF_FONT_MEDIUM(12)];
+    [self.scoreLabel        setFont:CF_FONT_BOLD(12)];
+    [self.collegeLabel      setFont:CF_FONT_ITALIC(12)];
+
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
@@ -30,7 +38,7 @@
 
 #pragma mark - Data Population
 
-- (void)assign:(Votable *)obj;
+- (void)assign:(Model<PostAndCommentProtocol> *)obj;
 {   // configure view of the cell according to obj's properties
     
     if (obj == nil)
@@ -43,11 +51,11 @@
     [self setObject:obj];
     
     // assign cell's plain text labels
-    [self.ageLabel setText: [self getAgeAsString:obj.createdAt]];
-    [self.scoreLabel setText:[NSString stringWithFormat:@"%d", (int)obj.score]];
-    [self.messageLabel setText:obj.message];
+    [self.messageLabel      setText:[obj getMessage]];
     [self.commentCountLabel setText:[self getCommentLabelString]];
-    [self.collegeLabel setText:obj.collegeName];
+    [self.ageLabel          setText:[self getAgeAsString:[obj getCreatedAt]]];
+    [self.scoreLabel        setText:[NSString stringWithFormat:@"%lu", [obj getScore]]];
+    [self.collegeLabel      setText:[obj getCollegeName]];
     
     // Parse message for Tags
     [self findHashTags];
@@ -60,21 +68,23 @@
 
 - (IBAction)upVotePressed:(id)sender
 {   // User clicked upvote button
-    [self.object castVote:YES];
+    Vote *vote = [[Vote alloc] initWithVotableID:[self.object getID]
+                                 withUpvoteValue:YES];
+    [self.object setVote:vote];
     [self updateVoteButtons];
     
     id<ChildCellDelegate> strongDelegate = self.delegate;
-    [strongDelegate castVote:[[Vote alloc] initWithVotableID:self.object.getID
-                                            withUpvoteValue:YES]];
+    [strongDelegate castVote:vote];
 }
 - (IBAction)downVotePresed:(id)sender
 {   // User clicked downvote button
-    [self.object castVote:NO];
+    Vote *vote = [[Vote alloc] initWithVotableID:[self.object getID]
+                                 withUpvoteValue:NO];
+    [self.object setVote:vote];
     [self updateVoteButtons];
     
     id<ChildCellDelegate> strongDelegate = self.delegate;
-    [strongDelegate castVote:[[Vote alloc] initWithVotableID:self.object.getID
-                                             withUpvoteValue:NO]];
+    [strongDelegate castVote:vote];
 }
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
 {
@@ -159,7 +169,7 @@
 }
 - (void)updateVoteButtons
 {   // assign appropriate arrow colors (based on user's vote)
-    Vote* vote = self.object.vote;
+    Vote* vote = [self.object getVote];
     UIImage *regularUp      = [UIImage imageNamed:@"arrowup.png"];
     UIImage *regularDown    = [UIImage imageNamed:@"arrowdown.png"];
     UIImage *selectedUp     = [UIImage imageNamed:@"arrowupblue.png"];
@@ -187,7 +197,7 @@
                              forState:UIControlStateNormal];
     }
     
-    [self.scoreLabel setText:[NSString stringWithFormat:@"%ld", self.object.score]];
+    [self.scoreLabel setText:[NSString stringWithFormat:@"%ld", [self.object getScore]]];
 }
 
 @end

@@ -22,6 +22,7 @@ import com.appuccino.collegefeed.fragments.MyCommentsFragment;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
+import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
 
@@ -76,13 +77,32 @@ public class NetWorker {
 		}
 		
 		private ArrayList<Post> fetchTopPostsFrag() {
-			ArrayList<Post> ret = new ArrayList<Post>();
 			HttpGet request = null;
 			if(feedID == MainActivity.ALL_COLLEGES)
-				request = new HttpGet(REQUEST_URL + "posts");
+				request = new HttpGet(REQUEST_URL + "posts/trending");
 			else
-				request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/posts");
+				request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/posts/trending");
 			
+			return getPostsFromURLRequest(request);
+		}
+
+		private ArrayList<Post> fetchNewPostsFrag() {
+			HttpGet request = null;
+			if(feedID == MainActivity.ALL_COLLEGES)
+				request = new HttpGet(REQUEST_URL + "posts/recent");
+			else
+				request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/posts/recent");
+			
+			return getPostsFromURLRequest(request);
+		}
+		
+		private ArrayList<Post> fetchMyPostsFrag() {
+			ArrayList<Post> ret = new ArrayList<Post>();
+			return ret;
+		}
+		
+		private ArrayList<Post> getPostsFromURLRequest(HttpGet request) {
+			ArrayList<Post> ret = new ArrayList<Post>();
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String response = null;
 			try {
@@ -107,21 +127,10 @@ public class NetWorker {
 			return ret;
 		}
 
-		private ArrayList<Post> fetchNewPostsFrag() {
-			ArrayList<Post> ret = new ArrayList<Post>();
-			return ret;
-		}
-		
-		private ArrayList<Post> fetchMyPostsFrag() {
-			ArrayList<Post> ret = new ArrayList<Post>();
-			return ret;
-		}
-
 		@Override
 		protected void onPostExecute(ArrayList<Post> result) {
 			if(whichFrag == 0)		//top posts
 			{
-				Log.i("cfeed","Fetched with size of " + result.size());
 				TopPostFragment.postList = new ArrayList<Post>(result);
 				TopPostFragment.updateList();
 				TopPostFragment.makeLoadingIndicator(false);
@@ -129,19 +138,74 @@ public class NetWorker {
 			}
 			else if(whichFrag == 1)	//new posts
 			{
-				NewPostFragment.postList.clear();
-				NewPostFragment.postList.addAll(result);
+				NewPostFragment.postList = new ArrayList<Post>(result);
 				NewPostFragment.updateList();
 				NewPostFragment.makeLoadingIndicator(false);
 				NewPostFragment.setupFooterListView();
 			}
 			else if(whichFrag == 2)	//my posts
 			{
-				MyPostsFragment.postList.clear();
-				MyPostsFragment.postList.addAll(result);
+				MyPostsFragment.postList = new ArrayList<Post>(result);
 				MyPostsFragment.updateList();
 				MyPostsFragment.makeLoadingIndicator(false);
 			}
+		}		
+	}
+	
+	public static class GetCommentsTask extends AsyncTask<PostSelector, Void, ArrayList<Comment>>
+	{
+		int postID = 0;
+		
+		public GetCommentsTask()
+		{
+		}
+		
+		public GetCommentsTask(int postID)
+		{
+			this.postID = postID;
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			//TODO: make loading indicator here for PostCommentsActivity
+			//TopPostFragment.makeLoadingIndicator(true);
+			super.onPreExecute();
+		}
+
+		@Override
+		protected ArrayList<Comment> doInBackground(PostSelector... arg0) {
+			HttpGet request = new HttpGet(REQUEST_URL + "posts/" + postID + "/comments");
+			ArrayList<Comment> ret = new ArrayList<Comment>();
+			ResponseHandler<String> responseHandler = new BasicResponseHandler();
+			String response = null;
+			try {
+				response = client.execute(request, responseHandler);
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if(response != null)
+				Log.d("cfeed", "Server response: " + response);
+			
+			try {
+				ret = JSONParser.commentListFromJSON(response);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ret;
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<Comment> result) {
+//			TopPostFragment.postList = new ArrayList<Comment>(result);
+//			TopPostFragment.updateList();
+//			TopPostFragment.makeLoadingIndicator(false);
+//			TopPostFragment.setupFooterListView();
 		}		
 	}
 	
@@ -186,17 +250,59 @@ public class NetWorker {
 		
 	}
 	
+	public static class MakeCommentTask extends AsyncTask<Comment, Void, Boolean>{
+
+		Context c;
+		
+		public MakeCommentTask(Context context) {
+			c = context;
+		}
+
+		@Override
+		protected Boolean doInBackground(Comment... comments) {
+			try{
+				Log.i("cfeed","Making comment with college ID of " + comments[0].getCollegeID() + 
+						" and Post ID of " + comments[0].getPostID());
+				String fullRequestURL = REQUEST_URL + "posts/" + comments[0].getPostID() + "/comments";
+				Log.i("cfeed","Request URL: " + fullRequestURL);
+				HttpPost request = new HttpPost(fullRequestURL);
+				request.setHeader("Content-Type", "application/json");
+				request.setEntity(new ByteArrayEntity(comments[0].toJSONString().toByteArray()));
+				ResponseHandler<String> responseHandler = new BasicResponseHandler();
+				String response = client.execute(request, responseHandler);
+				
+				Log.d("cfeed", "Server response: " + response);
+				return true;
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			if(!result)
+				Toast.makeText(c, "Failed to post.", Toast.LENGTH_LONG).show();
+			super.onPostExecute(result);
+		}
+		
+	}
+	
 	public static class MakeVoteTask extends AsyncTask<Vote, Void, Boolean>{
 		public Boolean doInBackground(Vote... votes){
 			try{
-
-				HttpGet request = new HttpGet(REQUEST_URL + "votes");
+				HttpGet request = new HttpGet(REQUEST_URL + "posts/" + votes[0].id + "/votes");
 				//request.setEntity(new ByteArrayEntity(
 				  //  votes[0].toString().getBytes("UTF8")));
 				ResponseHandler<String> responseHandler = new BasicResponseHandler();
 				String response = client.execute(request, responseHandler);
 				
-				Log.d("http", response);
+				Log.d("cfeed", "Make vote server response: " + response);
 				return true;
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block

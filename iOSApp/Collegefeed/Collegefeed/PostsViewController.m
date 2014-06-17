@@ -9,11 +9,10 @@
 #import "AppDelegate.h"
 #import "TableCell.h"
 #import "PostsViewController.h"
-#import "PostDataController.h"
-#import "Post.h"
+#import "Models/Models/Post.h"
 #import "CommentViewController.h"
 #import "Shared.h"
-#import "College.h"
+#import "Models/Models/College.h"
 
 @implementation PostsViewController
 
@@ -28,8 +27,9 @@
         [self setRecentPosts:NO];
         [self setMyPosts:NO];
         [self setTagPosts:NO];
-        
         [self switchToAllColleges];
+
+        [self setList:data.dataController.topPostsAllColleges];
     }
     return self;
 }
@@ -42,8 +42,9 @@
         [self setRecentPosts:YES];
         [self setMyPosts:NO];
         [self setTagPosts:NO];
-        
         [self switchToAllColleges];
+        [self setList:data.dataController.recentPostsAllColleges];
+        
     }
     return self;
 }
@@ -56,13 +57,14 @@
         [self setRecentPosts:NO];
         [self setMyPosts:YES];
         [self setTagPosts:NO];
-        
         [self switchToAllColleges];
+        [self setList:data.dataController.userPostsAllColleges];
+        
     }
     return self;
 }
 - (id)initAsTagPostsWithAppData:(AppData *)data
-                    withTagMessage:(NSString*)tagMessage
+                 withTagMessage:(NSString*)tagMessage
 {
     self = [super initWithAppData:data];
     if (self)
@@ -73,15 +75,16 @@
         [self setTagPosts:YES];
         [self setTagMessage:tagMessage];
         [self switchToAllColleges];
+        [self setList:data.dataController.allPostsWithTag];
     }
     return self;
 }
+
+#pragma mark - View Loading
+
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
-
     [super viewWillAppear:animated];
-    [self.navigationItem setTitleView:logoTitleView];
-    [self refresh];
 }
 - (void)viewDidLoad
 {
@@ -89,12 +92,11 @@
     // Do any additional setup after loading the view.
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
-    
+    [self refresh];
+    [self setCommentViewController:[[CommentViewController alloc] initWithAppData:self.appData]];
 }
 - (void)loadView
 {
-    [self setCommentViewController:[[CommentViewController alloc] initWithAppData:self.appData]];
-    
     [super loadView];
 }
 
@@ -103,7 +105,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Comment View for the selected post
     
-    self.selectedPost = (Post *)[self.appData.postDataController objectInListAtIndex:indexPath.row];
+    self.selectedPost = (Post *)[self.list objectAtIndex:indexPath.row];
 
     [self.commentViewController setOriginalPost:self.selectedPost];
         
@@ -113,7 +115,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
     
-    return [self.appData.postDataController countOfList];
+    return self.list.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
@@ -133,7 +135,7 @@
     [cell setDelegate: self];
 
     // get the post and display in this cell
-    Post *postAtIndex = (Post*)[self.appData.postDataController objectInListAtIndex:indexPath.row];
+    Post *postAtIndex = (Post*)[self.list objectAtIndex:indexPath.row];
     [cell assign:postAtIndex];
     
     return cell;
@@ -150,31 +152,31 @@
 {
     if (self.topPosts)
     {
-        [self.appData.postDataController fetchTopPosts];
+        [self.appData.dataController fetchTopPosts];
     }
     else if (self.recentPosts)
     {
-        [self.appData.postDataController fetchNewPosts];
+        [self.appData.dataController fetchNewPosts];
     }
     else if (self.tagPosts && self.tagMessage != nil)
     {
-        [self.appData.postDataController fetchAllPostsWithTagMessage:self.tagMessage];
+        [self.appData.dataController fetchAllPostsWithTagMessage:self.tagMessage];
     }
 }
 - (void)switchToSpecificCollege
 {
     if (self.topPosts)
     {
-        [self.appData.postDataController fetchTopPostsWithCollegeId:self.appData.currentCollege.collegeID];
+        [self.appData.dataController fetchTopPostsWithCollegeId:self.appData.currentCollege.collegeID];
     }
     else if (self.recentPosts)
     {
-        [self.appData.postDataController fetchNewPostsWithCollegeId:self.appData.currentCollege.collegeID];
+        [self.appData.dataController fetchNewPostsWithCollegeId:self.appData.currentCollege.collegeID];
     }
     else if (self.tagPosts && self.tagMessage != nil)
     {
-        [self.appData.postDataController fetchAllPostsWithTagMessage:self.tagMessage
-                                                       withCollegeId:self.appData.currentCollege.collegeID];
+        [self.appData.dataController fetchAllPostsWithTagMessage:self.tagMessage
+                                                   withCollegeId:self.appData.currentCollege.collegeID];
     }
 }
 

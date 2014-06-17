@@ -17,11 +17,17 @@
 @property (strong, nonatomic) AppData *appData;
 
 // outlet properties connected to the view
-@property (weak, nonatomic) IBOutlet UILabel            *currentFeedLabel;
 @property (weak, nonatomic) IBOutlet UITableView        *tableView;
 @property (strong, nonatomic) UIActivityIndicatorView   *activityIndicator;
+@property (strong, nonatomic) NearbyCollegeSelector     *selector;
+@property (weak, nonatomic) IBOutlet UIView             *feedToolbar;
+@property (strong, nonatomic) UIRefreshControl          *refreshControl;
 
-@property (strong, nonatomic) NearbyCollegeSelector *selector;
+@property (weak, nonatomic) IBOutlet UILabel            *currentFeedLabel;
+@property (weak, nonatomic) IBOutlet UILabel            *showingLabel;
+@property (weak, nonatomic) IBOutlet UIButton           *feedButton;
+
+@property (strong, nonatomic) NSMutableArray *list;
 
 // Initialization
 - (id)initWithAppData:(AppData *)data;

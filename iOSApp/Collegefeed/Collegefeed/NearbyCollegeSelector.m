@@ -7,10 +7,11 @@
 //
 
 #import "NearbyCollegeSelector.h"
-#import "College.h"
+#import "Models/Models/College.h"
 #import "AppData.h"
-#import "Post.h"
+#import "Models/Models/Post.h"
 #import "Shared.h"
+#import "NewPostAlertView.h"
 
 @implementation NearbyCollegeSelector
 
@@ -54,8 +55,8 @@
     titleLabel.clipsToBounds = YES;
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [titleLabel setText:@"Select a college to post to"];
-    [titleLabel setFont:[UIFont systemFontOfSize:17]];
-    [titleLabel setBackgroundColor:[Shared getCustomUIColor:cf_lightgray]];
+    [titleLabel setFont:CF_FONT_LIGHT(20)];
+    [titleLabel setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
 
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, titleHeight, width, tableHeight)];
     tableView.layer.cornerRadius = 10;
@@ -69,8 +70,8 @@
     
     CustomIOS7AlertView *alertView = [[CustomIOS7AlertView alloc] init];
     [alertView setContainerView:fullView];
-    
-    [alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"nvm...", nil]];
+
+    [alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"Cancel", nil]];
     [alertView setDelegate:self];
     
     [alertView show];
@@ -82,14 +83,51 @@
 }
 - (void)displayPostToCollege:(College *)college
 {   // Prompt the user to post a college
+    
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Post"
                                                     message:[NSString stringWithFormat:@"Posting to %@", college.name]
                                                    delegate:self
-                                          cancelButtonTitle:@"nvm.."
-                                          otherButtonTitles:@"Post dis bitch!", nil];
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"Post", nil];
     
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     [alert show];
+//
+//    float width = 290;
+//    float titleHeight = 50;
+//    float subTitleHeight = 50;
+//    float textFieldHeight = 100;
+//    float totalHeight = titleHeight + subTitleHeight + textFieldHeight;
+//    
+//    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, titleHeight)];
+//    title.layer.cornerRadius = 10;
+//    title.clipsToBounds = YES;
+//    title.textAlignment = NSTextAlignmentCenter;
+//    [title setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
+//    [title setText:@"New Post"];
+//    [title setFont:CF_FONT_LIGHT(20)];
+//    
+//    UILabel *subTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, titleHeight, width, subTitleHeight)];
+//    [subTitle setText:[NSString stringWithFormat:@"Posting to %@", college.name]];
+//    [subTitle setFont:CF_FONT_ITALIC(16)];
+//
+//    UITextField *postField = [[UITextField alloc] initWithFrame:CGRectMake(0, titleHeight + subTitleHeight, width, textFieldHeight)];
+//
+//    [postField setFont:CF_FONT_LIGHT(14)];
+//    
+//    UIView *fullView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, totalHeight)];
+//    
+//    [fullView addSubview:title];
+//    [fullView addSubview:subTitle];
+//    [fullView addSubview:postField];
+//    
+//    CustomIOS7AlertView *alertView = [[CustomIOS7AlertView alloc] init];
+//    [alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"Cancel", @"Post", nil]];
+//
+//    [alertView setContainerView:fullView];
+//    [alertView setDelegate:self];
+//    [alertView show];
+
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {   // Add new post if user submits on the alert view
@@ -103,8 +141,7 @@
     {
         Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]
                                         withCollegeId:currentCollege.collegeID];
-        [self.appData.postDataController POSTtoServer:newPost
-                                             intoList:self.appData.postDataController.topPostsAllColleges];
+        [self.appData.dataController createPost:newPost];
     }
     else
     {
@@ -144,6 +181,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     College *college = [self.appData.nearbyColleges objectAtIndex:indexPath.row];
+    [cell.textLabel setFont:CF_FONT_LIGHT(16)];
     [cell.textLabel setText:college.name];
     
     return cell;

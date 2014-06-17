@@ -21,7 +21,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.MainActivity;
-import com.appuccino.collegefeed.PostCommentsActivity;
+import com.appuccino.collegefeed.CommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.PostListAdapter;
 import com.appuccino.collegefeed.objects.Post;
@@ -86,7 +86,7 @@ public class MyPostsFragment extends Fragment implements OnRefreshListener
 		{
 			pullListFromServer();
 		}		
-		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_post, postList, 0);
+		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_post, postList, 2);
 		list.setAdapter(listAdapter);
 		
 		
@@ -121,7 +121,7 @@ public class MyPostsFragment extends Fragment implements OnRefreshListener
 
 	protected void postClicked(Post post) 
 	{
-		Intent intent = new Intent(getActivity(), PostCommentsActivity.class);
+		Intent intent = new Intent(getActivity(), CommentsActivity.class);
 		intent.putExtra("COLLEGE_ID", post.getCollegeID());
 		intent.putExtra("POST_ID", post.getID());
 		

@@ -22,7 +22,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.MainActivity;
-import com.appuccino.collegefeed.PostCommentsActivity;
+import com.appuccino.collegefeed.CommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
 import com.appuccino.collegefeed.objects.Comment;
@@ -129,8 +129,8 @@ public class MyCommentsFragment extends Fragment implements OnRefreshListener
 	
 	protected void commentClicked(Comment comment) 
 	{
-		Intent intent = new Intent(getActivity(), PostCommentsActivity.class);
-		intent.putExtra("POST_ID", comment.getParentID());
+		Intent intent = new Intent(getActivity(), CommentsActivity.class);
+		intent.putExtra("POST_ID", comment.getPostID());
 		intent.putExtra("SECTION_NUMBER", tabNumber);
 
 		startActivity(intent);
@@ -144,7 +144,7 @@ public class MyCommentsFragment extends Fragment implements OnRefreshListener
 		{
 			for(int i = 0; i < commentList.size(); i++)
 			{
-				if(commentList.get(i).getParentID() == id)
+				if(commentList.get(i).getPostID() == id)
 				{
 					//return commentList.get(i).getParentID();
 				}
