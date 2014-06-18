@@ -139,9 +139,8 @@
     College *currentCollege = [self.appData.nearbyColleges objectAtIndex:0];
     if (currentCollege != nil)
     {
-        Post *newPost = [[Post alloc] initWithMessage:[[alertView textFieldAtIndex:0] text]
-                                        withCollegeId:currentCollege.collegeID];
-        [self.appData.dataController createPost:newPost];
+        bool success = [self.appData.dataController createPostWithMessage:[[alertView textFieldAtIndex:0] text]
+                                                            withCollegeId:currentCollege.collegeID];
     }
     else
     {

@@ -18,7 +18,7 @@
 
 @interface TableCell : UITableViewCell <TTTAttributedLabelDelegate>
 
-@property (nonatomic, strong) Model<PostAndCommentProtocol> *object;
+@property (nonatomic, strong) NSObject<PostAndCommentProtocol> *object;
 
 @property (nonatomic, weak) id<ChildCellDelegate> delegate;
 
@@ -30,7 +30,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *upVoteButton;
 @property (nonatomic, weak) IBOutlet UIButton *downVoteButton;
 
-- (void)assign:(Model *)votableObject;
+- (void)assign:(NSObject<PostAndCommentProtocol> *)obj;
 - (IBAction) upVotePressed:(id)sender;
 - (IBAction) downVotePresed:(id)sender;
 

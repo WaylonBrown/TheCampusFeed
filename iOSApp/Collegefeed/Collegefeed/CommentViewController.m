@@ -152,9 +152,8 @@
     
     if (buttonIndex == 0) return;
     
-    Comment *newComment = [[Comment alloc] initWithCommentMessage:[[alertView textFieldAtIndex:0] text]
-                                                         withPost:self.originalPost];
-    [self.appData.dataController createComment:newComment];
+    bool success = [self.appData.dataController createCommentWithMessage:[[alertView textFieldAtIndex:0] text]
+                                                                withPost:self.originalPost];
     [self.tableView reloadData];
 }
 

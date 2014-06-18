@@ -17,6 +17,7 @@
 #import "Models/Models/College.h"
 #import "NearbyCollegeSelector.h"
 #import "NewPostAlertView.h"
+#import "CreatePostCommentViewController.h"
 
 @implementation MasterViewController
 
@@ -137,16 +138,22 @@
 }
 - (void)create
 {   // Display popup to let user type a new post
-    NSArray *nearbyColleges = self.appData.nearbyColleges;
-    if (nearbyColleges.count == 0)
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:@"You cannot post because you are not within range of any known colleges"
-                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-    }
+    CreatePostCommentViewController *alert = [CreatePostCommentViewController new];
+    [self presentViewController:alert animated:YES completion:nil];
     
-    [self.selector displaySelectorForNearbyColleges:nearbyColleges];
+//    
+//    NSArray *nearbyColleges = self.appData.nearbyColleges;
+//    if (nearbyColleges.count == 0)
+//    {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+//                                                        message:@"You cannot post because you are not within range of any known colleges"
+//                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        [alert show];
+//    }
+//    else
+//    {
+//        [self.selector displaySelectorForNearbyColleges:nearbyColleges];
+//    }
 }
 - (void)refresh
 {   // refresh the current view

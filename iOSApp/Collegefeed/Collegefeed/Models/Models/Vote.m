@@ -42,7 +42,6 @@
     }
     return nil;
 }
-
 - (NSData*)toJSON
 {   // Returns an NSData representation of this Vote in JSON
     
@@ -52,5 +51,13 @@
     NSData *voteData = [voteString dataUsingEncoding:NSASCIIStringEncoding
                                 allowLossyConversion:YES];
     return voteData;
+}
+- (long)getID
+{
+    return self.voteID;
+}
+- (void)validate
+{
+    
 }
 @end

@@ -7,12 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Model.h"
+
+#import "CFModelProtocol.h"
+#import "PostAndCommentProtocol.h"
 
 @class Post;
-@class Vote;
 
-@interface Comment : Model<PostAndCommentProtocol>
+@interface Comment : NSObject<CFModelProtocol, PostAndCommentProtocol>
 
 @property (nonatomic) long commentID;
 @property (nonatomic) long postID;

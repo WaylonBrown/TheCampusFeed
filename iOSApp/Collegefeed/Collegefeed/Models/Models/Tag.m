@@ -74,6 +74,18 @@
     }
     return nil;
 }
+- (NSData *)toJSON
+{   // Returns an NSData representation of this Tag in JSON
+    NSString *tagString = [NSString stringWithFormat:@"{\"id\":%lu, \"text\":\"%@\"}",
+                           self.tagID, self.name];
+    NSData *tagData = [tagString dataUsingEncoding:NSASCIIStringEncoding
+                              allowLossyConversion:YES];
+    return tagData;
+}
+- (long)getID
+{
+    return self.tagID;
+}
 - (void)validate
 {
     if ([self.name characterAtIndex:0] != '#')

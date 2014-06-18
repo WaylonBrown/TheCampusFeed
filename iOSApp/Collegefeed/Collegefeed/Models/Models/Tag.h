@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Model.h"
 
-@interface Tag : Model
+#import "CFModelProtocol.h"
+
+@interface Tag : NSObject<CFModelProtocol>
 
 @property (nonatomic) long tagID;
 @property (nonatomic) long postID;

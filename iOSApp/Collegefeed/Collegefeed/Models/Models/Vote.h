@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Model.h"
 
-@interface Vote : Model
+#import "CFModelProtocol.h"
+
+@interface Vote : NSObject<CFModelProtocol>
 
 // voteID: ID of this vote
 @property (nonatomic) long voteID;
