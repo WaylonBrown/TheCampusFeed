@@ -8,11 +8,16 @@
 require 'csv'
 
 def sanitizeName(name)
+  ret = name
   if name.start_with? "The "
-    return name[4..-1] #chop that off!
-  else
-    return name
+    ret = name[4..-1] #chop that off!
   end
+
+  if /(.* .) & (..*)/.match(ret)
+    ret = $1 + "&" + $2
+  end
+
+  return ret
 end
 
 @@smallestSizeIncluded = 12
@@ -20,19 +25,27 @@ def importFromFile(lim = -1)
   #imports from the 2012 
   @i = 0
   @data = CSV.foreach("app/assets/hd2012.csv", encoding: "iso-8859-1:UTF-8" ){ |row|
-    if 0 == @i
+
+
+
+
+    if 0 == @i #don't use first row
       @i += 1
       next
     end
 
-    if Integer(row[49]) < @@smallestSizeIncluded #don't use first row and don't use small schools
+
+
+    if Integer(row[49]) < @@smallestSizeIncluded #don't use small schools
       next
     end
 
-
-    @params = Hash.new
     name = row[1]
     sanitizedName = sanitizeName(name)
+
+
+
+    @params = Hash.new
     @params[:name] = sanitizedName
     @params[:lat] = row[-1]
     @params[:lon] = row[-2] # database provided as lon then lat.. wtf
