@@ -46,14 +46,12 @@
 - (void)getNetworkCollegeList;
 
 // Networker Access - Comments
-//- (BOOL)createComment:(Comment *)comment;
 - (BOOL)createCommentWithMessage:(NSString *)message
                         withPost:(Post*)post;
 
 - (void)fetchCommentsWithPostId:(long)postId;
 
 // Networker Access - Posts
-//- (BOOL)createPost:(Post *)post;
 - (BOOL)createPostWithMessage:(NSString *)message
                 withCollegeId:(long)collegeId;
 

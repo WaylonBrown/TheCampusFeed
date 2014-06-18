@@ -46,13 +46,6 @@
 
 #pragma mark - Networker Access - Comments
 
-//- (BOOL)createComment:(Comment *)comment
-//{
-//    NSData *result = [Networker POSTCommentData:[comment toJSON]
-//                                     WithPostId:comment.postID];
-//    [self.commentList addObject:comment];
-//    return YES;
-//}
 - (BOOL)createCommentWithMessage:(NSString *)message
                         withPost:(Post*)post
 {
@@ -79,14 +72,6 @@
 
 #pragma mark - Networker Access - Posts
 
-//- (BOOL)createPost:(Post *)post
-//{
-//    NSData *result = [Networker POSTPostData:[post toJSON]
-//                               WithCollegeId:post.collegeID];
-//
-//    [self.topPostsAllColleges addObject:post];
-//    return YES;
-//}
 - (BOOL)createPostWithMessage:(NSString *)message
                 withCollegeId:(long)collegeId
 {
