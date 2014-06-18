@@ -47,10 +47,16 @@
 
 - (IBAction)submit:(id)sender
 {
-    
+    NSString *message = self.textField.text;
+    if (message.length > MIN_POST_LENGTH
+        && message.length < MAX_POST_LENGTH)
+    {
+        [self.delegate submitPostCommentCreationWithMessage:message];
+        [self dismiss:nil];
+    }
 }
 
-- (IBAction)cancel:(id)sender
+- (IBAction)dismiss:(id)sender
 {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }

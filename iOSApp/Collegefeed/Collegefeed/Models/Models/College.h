@@ -12,17 +12,17 @@
 
 @interface College : NSObject<CFModelProtocol>
 
-@property (nonatomic) NSInteger collegeID;
+@property (nonatomic) long collegeID;
 @property (nonatomic) float lat;
 @property (nonatomic) float lon;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *shortName;
 
-- (id)initWithCollegeID:(NSInteger)cID withName:(NSString*)cName;
-- (id)initWithCollegeID:(NSInteger)cID withName:(NSString*)cName
-                withLat:(NSInteger)lat withLon:(NSInteger)lon;
+- (id)initWithCollegeID:(long)cID withName:(NSString*)cName;
+- (id)initWithCollegeID:(long)cID withName:(NSString*)cName
+                withLat:(float)lat withLon:(float)lon;
 
-- (id)initWithCollegeID:(NSInteger)cID withName:(NSString*)cName
+- (id)initWithCollegeID:(long)cID withName:(NSString*)cName
           withShortName:(NSString*)cShortName;
 
 @end

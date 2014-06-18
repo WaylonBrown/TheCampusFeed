@@ -17,7 +17,6 @@
 #import "Models/Models/College.h"
 #import "NearbyCollegeSelector.h"
 #import "NewPostAlertView.h"
-#import "CreatePostCommentViewController.h"
 
 @implementation MasterViewController
 
@@ -139,6 +138,7 @@
 - (void)create
 {   // Display popup to let user type a new post
     CreatePostCommentViewController *alert = [CreatePostCommentViewController new];
+    [alert setDelegate:self];
     [self presentViewController:alert animated:YES completion:nil];
     
 //    
@@ -193,6 +193,13 @@
 //    {
 //        [self.currentFeedLabel setText:college.name];
 //    }
+}
+
+#pragma mark - CreationViewProtocl Delegate Methods
+
+- (void)submitPostCommentCreationWithMessage:(NSString *)message
+{
+    
 }
 
 @end

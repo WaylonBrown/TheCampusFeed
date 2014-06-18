@@ -187,4 +187,11 @@
     [super castVote:vote];
 }
 
+#pragma mark - CreationViewProtocl Delegate Methods
+
+- (void)submitPostCommentCreationWithMessage:(NSString *)message
+{
+    [self.appData.dataController createCommentWithMessage:message withPost:self.originalPost];
+}
+
 @end

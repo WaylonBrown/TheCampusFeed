@@ -8,7 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol CreationViewProtocol <NSObject>
+
+- (void)submitPostCommentCreationWithMessage:(NSString *)message;
+
+@end
+
 @interface CreatePostCommentViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
+
+@property (strong, nonatomic) id<CreationViewProtocol> delegate;
 
 @property (weak, nonatomic) IBOutlet UIView *alertView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -17,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *createButton;
 
 - (IBAction)submit:(id)sender;
-- (IBAction)cancel:(id)sender;
+- (IBAction)dismiss:(id)sender;
 
 @end
+

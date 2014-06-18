@@ -12,7 +12,7 @@
 
 #pragma mark - Initializations
 
-- (id)initWithCollegeID:(NSInteger)cID withName:(NSString*)cName
+- (id)initWithCollegeID:(long)cID withName:(NSString*)cName
 {
     self = [super init];
     if (self)
@@ -23,8 +23,8 @@
     }
     return nil;
 }
-- (id)initWithCollegeID:(NSInteger)cID withName:(NSString*)cName
-                withLat:(NSInteger)lat withLon:(NSInteger)lon
+- (id)initWithCollegeID:(long)cID withName:(NSString*)cName
+                withLat:(float)lat withLon:(float)lon
 {
     self = [super init];
     if (self)
@@ -38,7 +38,7 @@
     return nil;
 }
 
-- (id)initWithCollegeID:(NSInteger)cID withName:(NSString*)cName withShortName:(NSString*)cShortName
+- (id)initWithCollegeID:(long)cID withName:(NSString*)cName withShortName:(NSString*)cShortName
 {
     self = [super init];
     if (self)

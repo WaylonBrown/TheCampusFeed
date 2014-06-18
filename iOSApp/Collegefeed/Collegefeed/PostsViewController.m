@@ -195,4 +195,11 @@
     [super refresh];
 }
 
+#pragma mark - CreationViewProtocl Delegate Methods
+
+- (void)submitPostCommentCreationWithMessage:(NSString *)message
+{
+    [self.appData.dataController createPostWithMessage:message withCollegeId:self.appData.currentCollege.collegeID];
+}
+
 @end

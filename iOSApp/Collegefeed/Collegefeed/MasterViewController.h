@@ -11,8 +11,9 @@
 #import "AppData.h"
 #import "ChildCellDelegate.h"
 #import "NearbyCollegeSelector.h"
+#import "CreatePostCommentViewController.h"
 
-@interface MasterViewController : UIViewController <ChildCellDelegate>
+@interface MasterViewController : UIViewController <ChildCellDelegate, CreationViewProtocol>
 
 @property (strong, nonatomic) AppData *appData;
 
