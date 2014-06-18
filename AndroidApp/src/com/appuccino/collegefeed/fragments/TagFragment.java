@@ -45,6 +45,7 @@ public class TagFragment extends Fragment
 {
 	static MainActivity mainActivity;
 	public static final String ARG_SECTION_NUMBER = "section_number";
+	public static final int MIN_TAGSEARCH_LENGTH = 4;
 	static ArrayList<Tag> tagList;
 	QuickReturnListView list;
 	View rootView;
@@ -269,8 +270,8 @@ public class TagFragment extends Fragment
 			public void onClick(View v) 
     		{		
     			String text = searchTagEditText.getText().toString().trim();
-    			if(text.length() < 4)
-    				Toast.makeText(mainActivity, "Must be at least 4 characters long.", Toast.LENGTH_LONG).show();
+    			if(text.length() < MIN_TAGSEARCH_LENGTH)
+    				Toast.makeText(mainActivity, "Must be at least " + MIN_TAGSEARCH_LENGTH + " characters long.", Toast.LENGTH_LONG).show();
     			else if(!text.substring(0, 1).equals("#"))
     				Toast.makeText(mainActivity, "Must start with #", Toast.LENGTH_LONG).show();
     			else{
