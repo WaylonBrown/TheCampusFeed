@@ -38,7 +38,7 @@
 
 #pragma mark - Data Population
 
-- (void)assign:(Model<PostAndCommentProtocol> *)obj;
+- (void)assign:(NSObject<PostAndCommentProtocol> *)obj;
 {   // configure view of the cell according to obj's properties
     
     if (obj == nil)

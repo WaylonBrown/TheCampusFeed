@@ -22,9 +22,7 @@
     {
         [self setPostID:post.getID];
         [self setMessage:message];
-        
-//        [self setPOSTurl:[Shared POSTCommentWithPostId:(long)post.getID]];
-        return self;
+        [self validate];
     }
     return nil;
 }
@@ -45,6 +43,8 @@
         [self setCollegeName:@"<No College>"];
         [self setDate:[NSDate date]];
         [self setVote:nil];
+        [self validate];
+
         return self;
     }
     return nil;
@@ -64,6 +64,7 @@
                          withScore:(arc4random() % 99)
                        withMessage:dummyMessage
                         withPostID:(arc4random() % 999)];
+
     
     return self;
 }
@@ -75,10 +76,15 @@
     {
         [self setPostID:post.postID];
         [self setCollegeID:post.collegeID];
+        [self validate];
+
         return self;
     }
     return nil;
 }
+
+#pragma mark - Protocol Methods
+
 - (id)initFromJSON:(NSDictionary *)jsonObject
 {   // Initialize this Comment using a JSON object as an NSDictionary
     self = [super init];
@@ -100,7 +106,8 @@
         [self setMessage:text];
         [self setPostID:[postID integerValue]];
         [self setCreatedAt:createdDate];
-        
+        [self validate];
+
         return self;
     }
     return nil;
@@ -115,9 +122,6 @@
 {   // Returns the ID for this Comment
     return self.commentID;
 }
-
-#pragma mark - Protocol Methods
-
 - (NSString *)getMessage
 {
     return self.message;
@@ -142,5 +146,17 @@
 {
     return self.vote;
 }
-
+- (void)validate
+{
+    if (self.message.length < MIN_COMMENT_LENGTH)
+    {
+        NSException *e = [NSException exceptionWithName:@"CommentLengthException" reason:@"Comment is too short" userInfo:nil];
+        [e raise];
+    }
+    if (self.message.length > MAX_COMMENT_LENGTH)
+    {
+        NSException *e = [NSException exceptionWithName:@"CommentLengthException" reason:@"Comment is too long" userInfo:nil];
+        [e raise];
+    }
+}
 @end

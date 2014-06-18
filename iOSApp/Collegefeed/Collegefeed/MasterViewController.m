@@ -145,8 +145,10 @@
                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }
-    
-    [self.selector displaySelectorForNearbyColleges:nearbyColleges];
+    else
+    {
+        [self.selector displaySelectorForNearbyColleges:nearbyColleges];
+    }
 }
 - (void)refresh
 {   // refresh the current view

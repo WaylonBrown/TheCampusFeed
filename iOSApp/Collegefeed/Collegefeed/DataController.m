@@ -7,7 +7,6 @@
 //
 
 #import "DataController.h"
-#import "Models/Models/Model.h"
 #import "Models/Models/College.h"
 #import "Models/Models/Comment.h"
 #import "Models/Models/Post.h"
@@ -47,12 +46,29 @@
 
 #pragma mark - Networker Access - Comments
 
-- (BOOL)createComment:(Comment *)comment
+//- (BOOL)createComment:(Comment *)comment
+//{
+//    NSData *result = [Networker POSTCommentData:[comment toJSON]
+//                                     WithPostId:comment.postID];
+//    [self.commentList addObject:comment];
+//    return YES;
+//}
+- (BOOL)createCommentWithMessage:(NSString *)message
+                        withPost:(Post*)post
 {
-    NSData *result = [Networker POSTCommentData:[comment toJSON]
-                                     WithPostId:comment.postID];
-    [self.commentList addObject:comment];
-    return YES;
+    @try
+    {
+        Comment *comment = [[Comment alloc] initWithCommentMessage:message
+                                                          withPost:post];
+        [Networker POSTCommentData:[comment toJSON] WithPostId:comment.postID];
+        [self.commentList addObject:comment];
+        return YES;
+    }
+    @catch (NSException *exception)
+    {
+        NSLog(@"%@", exception.reason);
+    }
+    return NO;
 }
 - (void)fetchCommentsWithPostId:(long)postId
 {
@@ -63,13 +79,31 @@
 
 #pragma mark - Networker Access - Posts
 
-- (BOOL)createPost:(Post *)post
+//- (BOOL)createPost:(Post *)post
+//{
+//    NSData *result = [Networker POSTPostData:[post toJSON]
+//                               WithCollegeId:post.collegeID];
+//
+//    [self.topPostsAllColleges addObject:post];
+//    return YES;
+//}
+- (BOOL)createPostWithMessage:(NSString *)message
+                withCollegeId:(long)collegeId
 {
-    NSData *result = [Networker POSTPostData:[post toJSON]
-                               WithCollegeId:post.collegeID];
-
-    [self.topPostsAllColleges addObject:post];
-    return YES;
+    @try
+    {
+        Post *post = [[Post alloc] initWithMessage:message
+                                     withCollegeId:collegeId];
+        [Networker POSTPostData:[post toJSON] WithCollegeId:post.collegeID];
+        [self.topPostsAllColleges addObject:post];
+        [self.recentPostsAllColleges addObject:post];
+        return YES;
+    }
+    @catch (NSException *exception)
+    {
+        NSLog(@"%@", exception.reason);
+    }
+    return NO;
 }
 - (void)fetchTopPosts
 {

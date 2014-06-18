@@ -22,7 +22,7 @@
     {
         [self setMessage:newMessage];
         [self setCollegeID:collegeId];
-                
+        [self validate];
         return self;
     }
     return nil;
@@ -43,10 +43,13 @@
         [self setCollegeName:@"<No College>"];
         [self setDate:[NSDate date]];
         [self setVote:nil];
+        [self validate];
         return self;
     }
     return nil;
 }
+
+#pragma mark - Protocol Methods
 
 - (id)initFromJSON:(NSDictionary *)jsonObject
 {   // Initialize this Post using a JSON object as an NSDictionary
@@ -75,7 +78,7 @@
         [self setLat:[lat floatValue]];
         [self setLon:[lon floatValue]];
         [self setCreatedAt:createdDate];
-        
+        [self validate];
         return self;
     }
     return nil;
@@ -90,9 +93,6 @@
 {   // Returns the ID for this Post
     return self.postID;
 }
-
-#pragma mark - Protocol Methods
-
 - (NSString *)getMessage
 {
     return self.message;
@@ -117,5 +117,17 @@
 {
     return self.vote;
 }
-
+- (void)validate
+{
+    if (self.message.length < MIN_POST_LENGTH)
+    {
+        NSException *e = [NSException exceptionWithName:@"PostLengthException" reason:@"Post is too short" userInfo:nil];
+        [e raise];
+    }
+    if (self.message.length > MAX_POST_LENGTH)
+    {
+        NSException *e = [NSException exceptionWithName:@"PostLengthException" reason:@"Post is too long" userInfo:nil];
+        [e raise];
+    }
+}
 @end

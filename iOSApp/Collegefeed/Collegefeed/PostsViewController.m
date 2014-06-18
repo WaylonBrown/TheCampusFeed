@@ -135,7 +135,7 @@
     [cell setDelegate: self];
 
     // get the post and display in this cell
-    Post *postAtIndex = (Post*)[self.list objectAtIndex:indexPath.row];
+    NSObject<PostAndCommentProtocol> *postAtIndex = [self.list objectAtIndex:indexPath.row];
     [cell assign:postAtIndex];
     
     return cell;

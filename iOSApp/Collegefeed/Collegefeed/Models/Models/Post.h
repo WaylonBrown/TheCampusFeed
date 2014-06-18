@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Model.h"
 
-@class Vote;
+#import "CFModelProtocol.h"
+#import "PostAndCommentProtocol.h"
 
-@interface Post : Model<PostAndCommentProtocol>
+@interface Post : NSObject<CFModelProtocol, PostAndCommentProtocol>
 
 @property (nonatomic) NSMutableArray *commentList;
 @property (nonatomic) float lat;

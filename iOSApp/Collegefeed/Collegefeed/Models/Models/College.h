@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Model.h"
 
-@interface College : Model
+#import "CFModelProtocol.h"
+
+@interface College : NSObject<CFModelProtocol>
 
 @property (nonatomic) NSInteger collegeID;
 @property (nonatomic) float lat;

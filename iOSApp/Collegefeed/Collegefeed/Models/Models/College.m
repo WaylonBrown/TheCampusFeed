@@ -76,5 +76,8 @@
 {
     return self.collegeID;
 }
-
+- (void)validate
+{
+    
+}
 @end
