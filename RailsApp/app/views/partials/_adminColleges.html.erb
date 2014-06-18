@@ -1,16 +1,17 @@
 <div ng-controller="CollegeSectionController">
   <accordion-group>
     <accordion-heading>
-      Posts
+      <%= fa_icon 'bank'%>
+      Colleges
       <%= fa_icon 'plus', class: 'pull-right tip', 
         'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 
-        title: 'add post', 'hasTooltip' => '', 'ng-click' => 'openCreateModal($event)' %>
+        title: 'add college', 'hasTooltip' => '', 'ng-click' => 'openCreateModal($event)' %>
     </accordion-heading>
 
     <form class="" role="search" ng-submit="">
       <div class="form-group">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search" ng-model="postOptions.searchText" ng-change="updateTotalAndPopulate()">
+          <input type="text" class="form-control" placeholder="Search" ng-model="collegeOptions.searchText" ng-change="updateTotalAndPopulate()">
           <div class="input-group-btn">
             <button type="submit" class="btn btn-default" ng>
               <%= fa_icon 'search' %>
@@ -20,28 +21,36 @@
       </div>
     </form>
 
-    <alert ng-show="postOptions.error" type="danger">Error in query.</alert>
-    <accordion close-others="oneAtATime">
-      <accordion-group ng-repeat="post in postOptions.posts" ng-mouseenter="post.isOpen = true" ng-mouseleave="post.isOpen = false" is-open="post.isOpen">
+    <alert ng-show="collegeOptions.error" type="danger">Error in query.</alert>
+    <accordion close-others="true">
+      <accordion-group ng-repeat="college in collegeOptions.colleges" 
+          ng-mouseenter="college.isOpen = true" 
+          is-open="college.isOpen">
         <accordion-heading>
-          {{post.text}}
-          <%= fa_icon 'trash-o', class: 'pull-right tip', 
+          {{college.name}}
+          <%= fa_icon 'trash-o', class: 'pull-right tip',
             'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 
-            title: 'delete', 'hasTooltip' => '' %>
+            title: 'delete', 'hasTooltip' => '', 'ng-click' => 'deleteCollege($event, college)' %>
           <%= fa_icon 'edit', class: 'pull-right tip', 
             'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 
-            title: 'edit', 'hasTooltip' => '' %>
+            title: 'edit', 'hasTooltip' => '', 'ng-click' => 'editCollege($event, college)' %>
         </accordion-heading>
-        <div class="row">
-          <div class="col-md-3" ng-repeat="(key,value) in post">
-            <b>{{key}}:</b> <u class="pull-right">{{value}}</u>
+        <form>
+          <div class="row">
+            <div class="col-md-3" ng-repeat="(key,value) in college">
+              <b>{{key}}:</b> 
+              <u ng-hide="college.isEditing" class="pull-right collegeValue">{{value}}</u>
+              <input type="text" ng-model="college[key]" ng-show="college.isEditing" class="" />
+            </div>
           </div>
-        </div>
+          <input type="button" ng-click="finishedEditing(college, true)" ng-show="college.isEditing" class="btn btn-info" value="Done">
+          <input type="button" ng-click="finishedEditing(college, false)" ng-show="college.isEditing" class="btn btn-warning" value="Cancel">
+        </form>
       </accordion-group>
     </accordion>
-    <pagination total-items="postOptions.total" ng-model="postOptions.pageNo" 
-        items-per-page="postOptions.perPage"
+    <pagination total-items="collegeOptions.total" ng-model="collegeOptions.pageNo" 
+        items-per-page="collegeOptions.perPage"
         max-size="10" class="pagination" boundary-links="true"
-        ng-change="populatePosts()"></pagination>
+        ng-change="populateColleges()"></pagination>
   </accordion-group>
 </div>

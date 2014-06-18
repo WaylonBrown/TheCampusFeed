@@ -28,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.MainActivity;
-import com.appuccino.collegefeed.PostCommentsActivity;
+import com.appuccino.collegefeed.CommentsActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.PostListAdapter;
 import com.appuccino.collegefeed.extra.QuickReturnListView;
@@ -243,7 +243,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 
 	protected void postClicked(Post post) 
 	{
-		Intent intent = new Intent(getActivity(), PostCommentsActivity.class);
+		Intent intent = new Intent(getActivity(), CommentsActivity.class);
 		intent.putExtra("POST_ID", post.getID());
 		intent.putExtra("COLLEGE_ID", post.getCollegeID());
 		

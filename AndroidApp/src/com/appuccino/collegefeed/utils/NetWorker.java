@@ -152,7 +152,7 @@ public class NetWorker {
 		}		
 	}
 	
-	public static class GetCommentsTask extends AsyncTask<PostSelector, Void, ArrayList<Comment> >
+	public static class GetCommentsTask extends AsyncTask<PostSelector, Void, ArrayList<Comment>>
 	{
 		int postID = 0;
 		
@@ -174,7 +174,7 @@ public class NetWorker {
 
 		@Override
 		protected ArrayList<Comment> doInBackground(PostSelector... arg0) {
-			HttpGet request = new HttpGet(REQUEST_URL + "posts/" + postID + "comments");
+			HttpGet request = new HttpGet(REQUEST_URL + "posts/" + postID + "/comments");
 			ArrayList<Comment> ret = new ArrayList<Comment>();
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String response = null;
@@ -189,7 +189,7 @@ public class NetWorker {
 			}
 			
 			if(response != null)
-				Log.d("cfeed", response);
+				Log.d("cfeed", "Server response: " + response);
 			
 			try {
 				ret = JSONParser.commentListFromJSON(response);
@@ -225,6 +225,49 @@ public class NetWorker {
 				HttpPost request = new HttpPost(REQUEST_URL + "colleges/" + posts[0].getCollegeID() + "/posts");
 				request.setHeader("Content-Type", "application/json");
 				request.setEntity(new ByteArrayEntity(posts[0].toJSONString().toByteArray()));
+				ResponseHandler<String> responseHandler = new BasicResponseHandler();
+				String response = client.execute(request, responseHandler);
+				
+				Log.d("cfeed", "Server response: " + response);
+				return true;
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			if(!result)
+				Toast.makeText(c, "Failed to post.", Toast.LENGTH_LONG).show();
+			super.onPostExecute(result);
+		}
+		
+	}
+	
+	public static class MakeCommentTask extends AsyncTask<Comment, Void, Boolean>{
+
+		Context c;
+		
+		public MakeCommentTask(Context context) {
+			c = context;
+		}
+
+		@Override
+		protected Boolean doInBackground(Comment... comments) {
+			try{
+				Log.i("cfeed","Making comment with college ID of " + comments[0].getCollegeID() + 
+						" and Post ID of " + comments[0].getPostID());
+				String fullRequestURL = REQUEST_URL + "posts/" + comments[0].getPostID() + "/comments";
+				Log.i("cfeed","Request URL: " + fullRequestURL);
+				HttpPost request = new HttpPost(fullRequestURL);
+				request.setHeader("Content-Type", "application/json");
+				request.setEntity(new ByteArrayEntity(comments[0].toJSONString().toByteArray()));
 				ResponseHandler<String> responseHandler = new BasicResponseHandler();
 				String response = client.execute(request, responseHandler);
 				

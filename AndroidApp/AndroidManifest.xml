@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.appuccino.collegefeed.PostCommentsActivity">
+            android:name="com.appuccino.collegefeed.CommentsActivity">
         </activity>
         <activity
             android:name="com.appuccino.collegefeed.TagListActivity">

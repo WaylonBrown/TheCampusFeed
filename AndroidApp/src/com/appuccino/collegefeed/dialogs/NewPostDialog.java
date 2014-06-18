@@ -3,14 +3,6 @@ package com.appuccino.collegefeed.dialogs;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.appuccino.collegefeed.MainActivity;
-import com.appuccino.collegefeed.R;
-import com.appuccino.collegefeed.fragments.NewPostFragment;
-import com.appuccino.collegefeed.fragments.TopPostFragment;
-import com.appuccino.collegefeed.objects.Post;
-import com.appuccino.collegefeed.utils.FontManager;
-import com.appuccino.collegefeed.utils.NetWorker.MakePostTask;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,14 +10,19 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.appuccino.collegefeed.MainActivity;
+import com.appuccino.collegefeed.R;
+import com.appuccino.collegefeed.fragments.NewPostFragment;
+import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.utils.FontManager;
+import com.appuccino.collegefeed.utils.NetWorker.MakePostTask;
 
 public class NewPostDialog extends AlertDialog.Builder{
 	
@@ -109,7 +106,7 @@ public class NewPostDialog extends AlertDialog.Builder{
     			}
     			else
     			{
-    				Toast.makeText(context, "Post must be at least 10 characters long.", Toast.LENGTH_LONG).show();
+    				Toast.makeText(context, "Post must be at least " + MainActivity.MIN_POST_LENGTH + " characters long.", Toast.LENGTH_LONG).show();
     			}
 			}
     	});

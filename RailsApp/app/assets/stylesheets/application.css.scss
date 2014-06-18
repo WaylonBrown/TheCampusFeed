@@ -39,3 +39,15 @@ nav.navbar{
     -webkit-transition: none;
     transition: none;
 }
+
+.panel-group > div {
+  margin-bottom: 15px;
+}
+/*
+div.col-md-3{
+  clear:both;
+}
+
+div.col-md-3 > input{
+  float:right;
+}*/
