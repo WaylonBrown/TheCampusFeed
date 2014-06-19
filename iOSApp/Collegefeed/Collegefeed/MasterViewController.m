@@ -6,17 +6,24 @@
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
+// Models
+#import "Models/Models/Post.h"
+#import "Models/Models/College.h"
+
+// Full views
 #import "MasterViewController.h"
 #import "CommentViewController.h"
 #import "CollegePickerViewController.h"
+
+// Minor views and dialogs
 #import "TableCell.h"
-#import "Models/Models/Post.h"
+#import "NearbyCollegeSelector.h"
+
+// Universal app information
 #import "DataController.h"
 #import "Shared.h"
 #import "AppDelegate.h"
-#import "Models/Models/College.h"
-#import "NearbyCollegeSelector.h"
-#import "NewPostAlertView.h"
+
 
 @implementation MasterViewController
 
@@ -129,10 +136,13 @@
 
 - (IBAction)changeFeed;
 {   // User wants to change the feed (all colleges, nearby college, or other)
+    //    CollegePickerViewController *controller = self.appData.collegeFeedPicker;
     
-    CollegePickerViewController *controller = self.appData.collegeFeedPicker;
+    SelectCollegeViewController *controller = [SelectCollegeViewController new];
+    [controller setFullCollegeList:self.appData.dataController.collegeList];
+    [controller setNearbyCollegeList:self.appData.nearbyColleges];
     [controller setDelegate:self];
-    [self.navigationController pushViewController:controller animated:YES];
+    [self.navigationController presentViewController:controller animated:YES completion:nil];
     [self refresh];
 }
 - (void)create
@@ -195,10 +205,19 @@
 //    }
 }
 
-#pragma mark - CreationViewProtocl Delegate Methods
+#pragma mark - CreationViewProtocol Delegate Methods
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
 {
+    
+}
+
+#pragma mark - CollegeSelectionProtocol Delegate Methods
+
+- (void)submitSelectionWithCollegeOrNil:(College *)college
+{
+    // TODO: Presumably this would only get called when changing feeds...
+    
     
 }
 
