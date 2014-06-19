@@ -18,7 +18,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.MainActivity;
-import com.appuccino.collegefeed.fragments.MyCommentsFragment;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
@@ -31,6 +30,7 @@ public class NetWorker {
 	public final static String SERVER_URL = "http://cfeed.herokuapp.com/api/";
 	public final static String API_VERSION = "v1/";
 	public final static String REQUEST_URL = SERVER_URL + API_VERSION;
+	public final static String LOG_TAG = "NETWORK: ";
 	
 	public static HttpClient client = new DefaultHttpClient();
 	
@@ -116,7 +116,7 @@ public class NetWorker {
 			}
 			
 			if(response != null)
-				Log.d("cfeed", response);
+				Log.d("cfeed", LOG_TAG + response);
 			
 			try {
 				ret = JSONParser.postListFromJSON(response);
@@ -189,7 +189,7 @@ public class NetWorker {
 			}
 			
 			if(response != null)
-				Log.d("cfeed", "Server response: " + response);
+				Log.d("cfeed", LOG_TAG + "Server response: " + response);
 			
 			try {
 				ret = JSONParser.commentListFromJSON(response);
@@ -220,15 +220,15 @@ public class NetWorker {
 		@Override
 		protected Boolean doInBackground(Post... posts) {
 			try{
-				Log.i("cfeed","Posting to feed with ID of " + posts[0].getCollegeID());
-				Log.i("cfeed","Request URL: " + REQUEST_URL + "colleges/" + posts[0].getCollegeID() + "/posts");
+				Log.i("cfeed",LOG_TAG + "Posting to feed with ID of " + posts[0].getCollegeID());
+				Log.i("cfeed",LOG_TAG + "Request URL: " + REQUEST_URL + "colleges/" + posts[0].getCollegeID() + "/posts");
 				HttpPost request = new HttpPost(REQUEST_URL + "colleges/" + posts[0].getCollegeID() + "/posts");
 				request.setHeader("Content-Type", "application/json");
 				request.setEntity(new ByteArrayEntity(posts[0].toJSONString().toByteArray()));
 				ResponseHandler<String> responseHandler = new BasicResponseHandler();
 				String response = client.execute(request, responseHandler);
 				
-				Log.d("cfeed", "Server response: " + response);
+				Log.d("cfeed", LOG_TAG + "Server response: " + response);
 				return true;
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
@@ -261,17 +261,18 @@ public class NetWorker {
 		@Override
 		protected Boolean doInBackground(Comment... comments) {
 			try{
-				Log.i("cfeed","Making comment with college ID of " + comments[0].getCollegeID() + 
+				Log.i("cfeed",LOG_TAG + "Making comment with college ID of " + comments[0].getCollegeID() + 
 						" and Post ID of " + comments[0].getPostID());
 				String fullRequestURL = REQUEST_URL + "posts/" + comments[0].getPostID() + "/comments";
-				Log.i("cfeed","Request URL: " + fullRequestURL);
+				Log.i("cfeed",LOG_TAG + "Request URL: " + fullRequestURL);
+				Log.i("cfeed",LOG_TAG + "Request URL: " + fullRequestURL);
 				HttpPost request = new HttpPost(fullRequestURL);
 				request.setHeader("Content-Type", "application/json");
 				request.setEntity(new ByteArrayEntity(comments[0].toJSONString().toByteArray()));
 				ResponseHandler<String> responseHandler = new BasicResponseHandler();
 				String response = client.execute(request, responseHandler);
 				
-				Log.d("cfeed", "Server response: " + response);
+				Log.d("cfeed", LOG_TAG + "Server response: " + response);
 				return true;
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
@@ -302,7 +303,7 @@ public class NetWorker {
 				ResponseHandler<String> responseHandler = new BasicResponseHandler();
 				String response = client.execute(request, responseHandler);
 				
-				Log.d("cfeed", "Make vote server response: " + response);
+				Log.d("cfeed", LOG_TAG + "Make vote server response: " + response);
 				return true;
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
@@ -316,7 +317,7 @@ public class NetWorker {
 		}
 		
 		public void onPostExecute(Boolean result){
-			Log.d("http", "success: " + result);
+			Log.d("http", LOG_TAG + "success: " + result);
 		}
 	}
 }
