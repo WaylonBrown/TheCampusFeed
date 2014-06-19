@@ -108,9 +108,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		if(postList == null && mainActivity != null)
 		{
 			changeFeed(MainActivity.ALL_COLLEGES);
-		}else if(postList == null){
-			postList = new ArrayList<Post>();
-		}		
+		}
 		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 1);
 		if(list != null)
 			list.setAdapter(listAdapter);	

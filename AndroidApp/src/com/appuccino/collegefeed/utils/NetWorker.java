@@ -265,7 +265,7 @@ public class NetWorker {
 						" and Post ID of " + comments[0].getPostID());
 				String fullRequestURL = REQUEST_URL + "posts/" + comments[0].getPostID() + "/comments";
 				Log.i("cfeed",LOG_TAG + "Request URL: " + fullRequestURL);
-				Log.i("cfeed",LOG_TAG + "Request URL: " + fullRequestURL);
+				Log.i("cfeed",LOG_TAG + "JSON to send: " + comments[0].toJSONString());
 				HttpPost request = new HttpPost(fullRequestURL);
 				request.setHeader("Content-Type", "application/json");
 				request.setEntity(new ByteArrayEntity(comments[0].toJSONString().toByteArray()));

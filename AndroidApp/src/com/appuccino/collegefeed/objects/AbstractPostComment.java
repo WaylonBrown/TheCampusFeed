@@ -52,17 +52,13 @@ public class AbstractPostComment {
 	public ByteArrayOutputStream toJSONString() throws IOException{
 		ByteArrayOutputStream ret = new ByteArrayOutputStream();
 		JsonWriter writer = new JsonWriter(new OutputStreamWriter(ret, "UTF-8"));
+		
 		writer.setIndent("  ");
-		
-		writer.beginObject();
-		
-		writer.name("post");
 		writer.beginObject();
 		writer.name("text"); writer.value(message);
 		writer.endObject();
-		
-		writer.endObject();
 		writer.close();
+		
 		return ret;
 	}
 }
