@@ -23,8 +23,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (weak, nonatomic) NSMutableArray *fullCollegeList;
-@property (weak, nonatomic) NSMutableArray *nearbyCollegeList;
+@property (weak, nonatomic) NSArray *fullCollegeList;
+@property (weak, nonatomic) NSArray *nearbyCollegeList;
 
 
 - (IBAction)dismiss;

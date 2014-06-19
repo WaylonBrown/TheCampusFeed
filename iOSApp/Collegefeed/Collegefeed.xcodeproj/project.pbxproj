@@ -247,14 +247,14 @@
 			name = "Create Post/Comment";
 			sourceTree = "<group>";
 		};
-		5350558119529FD5009C1911 /* Select College */ = {
+		5350558119529FD5009C1911 /* SelectCollege */ = {
 			isa = PBXGroup;
 			children = (
 				5350557C19529FCA009C1911 /* SelectCollegeViewController.h */,
 				5350557D19529FCA009C1911 /* SelectCollegeViewController.m */,
 				5350557E19529FCA009C1911 /* SelectCollegeViewController.xib */,
 			);
-			name = "Select College";
+			name = SelectCollege;
 			sourceTree = "<group>";
 		};
 		5350558219529FE6009C1911 /* OLD, DELETE THESE */ = {
@@ -328,11 +328,11 @@
 		53B090B5192DA13100E3D996 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5350558119529FD5009C1911 /* Select College */,
+				53B1FE0119254EB900905E49 /* MasterView */,
+				5350558119529FD5009C1911 /* SelectCollege */,
 				5350557B1951458B009C1911 /* Create Post/Comment */,
 				5350558219529FE6009C1911 /* OLD, DELETE THESE */,
 				533475A019232A4A00E84CC8 /* Custom Cells */,
-				53B1FE0119254EB900905E49 /* MasterView */,
 				53963DE51916E5F50084E646 /* PostsViewController.h */,
 				53963DE61916E5F50084E646 /* PostsViewController.m */,
 				5390A939191552AE00ACD082 /* CommentViewController.h */,

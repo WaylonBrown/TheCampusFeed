@@ -12,8 +12,11 @@
 #import "ChildCellDelegate.h"
 #import "NearbyCollegeSelector.h"
 #import "CreatePostCommentViewController.h"
+#import "SelectCollegeViewController.h"
 
-@interface MasterViewController : UIViewController <ChildCellDelegate, CreationViewProtocol>
+@protocol CollegeSelectionProtocol;
+
+@interface MasterViewController : UIViewController <ChildCellDelegate, CreationViewProtocol, CollegeSelectionProtocol>
 
 @property (strong, nonatomic) AppData *appData;
 

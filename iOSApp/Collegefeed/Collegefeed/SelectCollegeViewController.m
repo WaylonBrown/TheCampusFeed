@@ -27,19 +27,19 @@
     return self;
 }
 
-- (void)initDummy
-{
-    College *c1 = [[College alloc] initWithCollegeID:111 withName:@"Texas A&M"];
-    College *c2 = [[College alloc] initWithCollegeID:222 withName:@"University of Texas"];
-    College *c3 = [[College alloc] initWithCollegeID:333 withName:@"Brown"];
-    
-    [self.fullCollegeList addObject:c1];
-    [self.fullCollegeList addObject:c2];
-    [self.fullCollegeList addObject:c3];
-    
-    [self.nearbyCollegeList addObject:c1];
-    [self.nearbyCollegeList addObject:c2];
-}
+//- (void)initDummy
+//{
+//    College *c1 = [[College alloc] initWithCollegeID:111 withName:@"Texas A&M"];
+//    College *c2 = [[College alloc] initWithCollegeID:222 withName:@"University of Texas"];
+//    College *c3 = [[College alloc] initWithCollegeID:333 withName:@"Brown"];
+//    
+//    [self.fullCollegeList addObject:c1];
+//    [self.fullCollegeList addObject:c2];
+//    [self.fullCollegeList addObject:c3];
+//    
+//    [self.nearbyCollegeList addObject:c1];
+//    [self.nearbyCollegeList addObject:c2];
+//}
 
 - (void)viewDidLoad
 {
@@ -48,6 +48,8 @@
     self.alertView.layer.cornerRadius = 5;
     [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
     
+    [self.tableView setDataSource:self];
+    [self.tableView setDelegate:self];
     // Set fonts
     [self.titleLabel setFont:CF_FONT_LIGHT(30)];
 
