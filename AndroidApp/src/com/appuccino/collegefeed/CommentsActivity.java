@@ -42,6 +42,7 @@ import com.appuccino.collegefeed.utils.NetWorker;
 import com.appuccino.collegefeed.utils.TimeManager;
 import com.appuccino.collegefeed.utils.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.utils.NetWorker.MakeVoteTask;
+import com.romainpiel.shimmer.Shimmer;
 
 public class CommentsActivity extends Activity{
 
@@ -49,7 +50,7 @@ public class CommentsActivity extends Activity{
 	Post post;
 	ImageView newCommentButton;
 	final int minCommentLength = 3;
-	ListView commentsList;
+	ListView list;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class CommentsActivity extends Activity{
 		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
 		actionBar.setIcon(R.drawable.logofake);
 		newCommentButton = (ImageView)findViewById(R.id.newCommentButton);
-		commentsList = (ListView)findViewById(R.id.commentsList);
+		list = (ListView)findViewById(R.id.commentsList);
 		
 		int collegeID = getIntent().getIntExtra("COLLEGE_ID", 0);
 		int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);
@@ -91,8 +92,6 @@ public class CommentsActivity extends Activity{
 		messageText.setTypeface(FontManager.light);
 		timeText.setTypeface(FontManager.italic);
 		commentsText.setTypeface(FontManager.light);
-		
-		ListView commentsListView = (ListView)findViewById(R.id.commentsList);
 		if(post != null)
 		{
 			scoreText.setText(String.valueOf(post.getScore()));
@@ -107,18 +106,17 @@ public class CommentsActivity extends Activity{
 			if(post.getCommentList().size() == 0)
 				commentsText.setText("No Comments");
 				
-			sortCommentsList(post);
 			listAdapter = new CommentListAdapter(this, R.layout.list_row_post, post.getCommentList());
 			
 			//if doesnt havefooter, add it
-			if(commentsListView.getFooterViewsCount() == 0)
+			if(list.getFooterViewsCount() == 0)
 			{
 				//for card UI
 				View headerFooter = new View(this);
 				headerFooter.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
-				commentsListView.addFooterView(headerFooter, null, false);
+				list.addFooterView(headerFooter, null, false);
 			}
-			commentsListView.setAdapter(listAdapter);
+			list.setAdapter(listAdapter);
 			
 			setMessageAndColorizeTags(post.getMessage(), messageText);
 			final ImageView arrowUp = (ImageView)findViewById(R.id.arrowUp);
@@ -289,23 +287,6 @@ public class CommentsActivity extends Activity{
     	timeText.setText(timeOutputText);
 	}
 
-	private void sortCommentsList(Post post) 
-	{
-		Collections.sort(post.getCommentList(), new Comparator<Comment>()
-		{
-			@Override
-			public int compare(Comment lhs, Comment rhs) 
-			{
-				if(lhs.getScore() > rhs.getScore())
-					return -1;
-				else if(lhs.getScore() == rhs.getScore())
-					return 0;
-				else
-					return 1;
-			}
-		});
-	}
-
 	protected void updateArrows(ImageView arrowUp, ImageView arrowDown) 
 	{
 		int vote = post.getVote();
@@ -353,6 +334,33 @@ public class CommentsActivity extends Activity{
     	
     	messageText.setText(Html.fromHtml(message));
 		
+	}
+	
+	public static void makeLoadingIndicator(boolean makeLoading) 
+	{
+		if(makeLoading)
+		{
+			list.setVisibility(View.INVISIBLE);
+			loadingText.setVisibility(View.VISIBLE);
+			
+			shimmer = new Shimmer();
+			shimmer.setDuration(600);
+			shimmer.start(loadingText);
+		}
+		else
+		{
+			list.setVisibility(View.VISIBLE);
+			loadingText.setVisibility(View.INVISIBLE);
+			
+			if (shimmer != null && shimmer.isAnimating()) 
+	            shimmer.cancel();
+			
+			if(pullToRefresh != null)
+			{
+				// Notify PullToRefreshLayout that the refresh has finished
+	            pullToRefresh.setRefreshComplete();
+			}
+		}
 	}
 
 	@Override
