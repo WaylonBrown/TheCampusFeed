@@ -10,7 +10,6 @@ AndroidApp/gen/com/appuccino/collegefeed/BuildConfig.java
 *.pydevproject
 .project
 .metadata
-bin/
 tmp/
 *.tmp
 *.bak
