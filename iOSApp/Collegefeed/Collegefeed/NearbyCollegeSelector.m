@@ -11,7 +11,6 @@
 #import "AppData.h"
 #import "Models/Models/Post.h"
 #import "Shared.h"
-#import "NewPostAlertView.h"
 
 @implementation NearbyCollegeSelector
 

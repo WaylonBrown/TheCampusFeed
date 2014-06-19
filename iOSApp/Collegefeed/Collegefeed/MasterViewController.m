@@ -16,7 +16,6 @@
 #import "AppDelegate.h"
 #import "Models/Models/College.h"
 #import "NearbyCollegeSelector.h"
-#import "NewPostAlertView.h"
 
 @implementation MasterViewController
 
