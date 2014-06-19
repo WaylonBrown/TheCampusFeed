@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -29,6 +30,7 @@ import android.widget.Toast;
 
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
+import com.appuccino.collegefeed.adapters.PostListAdapter;
 import com.appuccino.collegefeed.dialogs.NewCommentDialog;
 import com.appuccino.collegefeed.dialogs.NewPostDialog;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
@@ -43,10 +45,13 @@ import com.appuccino.collegefeed.utils.TimeManager;
 import com.appuccino.collegefeed.utils.NetWorker.MakePostTask;
 import com.appuccino.collegefeed.utils.NetWorker.MakeVoteTask;
 import com.romainpiel.shimmer.Shimmer;
+import com.romainpiel.shimmer.ShimmerTextView;
 
 public class CommentsActivity extends Activity{
 
 	static CommentListAdapter listAdapter;
+	ShimmerTextView loadingText;
+	Shimmer shimmer;
 	Post post;
 	ImageView newCommentButton;
 	final int minCommentLength = 3;
@@ -67,6 +72,7 @@ public class CommentsActivity extends Activity{
 		actionBar.setIcon(R.drawable.logofake);
 		newCommentButton = (ImageView)findViewById(R.id.newCommentButton);
 		list = (ListView)findViewById(R.id.commentsList);
+		loadingText = (ShimmerTextView)findViewById(R.id.commentsLoadingText);
 		
 		int collegeID = getIntent().getIntExtra("COLLEGE_ID", 0);
 		int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);
@@ -116,7 +122,16 @@ public class CommentsActivity extends Activity{
 				headerFooter.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
 				list.addFooterView(headerFooter, null, false);
 			}
-			list.setAdapter(listAdapter);
+			
+			if(list == null && mainActivity != null)
+			{
+				pullListFromServer();
+			}
+			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 0);
+			if(list != null)
+				list.setAdapter(listAdapter);	
+			else
+				Log.e("cfeed", "TopPostFragment list adapter wasn't set.");
 			
 			setMessageAndColorizeTags(post.getMessage(), messageText);
 			final ImageView arrowUp = (ImageView)findViewById(R.id.arrowUp);
@@ -336,7 +351,7 @@ public class CommentsActivity extends Activity{
 		
 	}
 	
-	public static void makeLoadingIndicator(boolean makeLoading) 
+	public void makeLoadingIndicator(boolean makeLoading) 
 	{
 		if(makeLoading)
 		{
@@ -355,11 +370,12 @@ public class CommentsActivity extends Activity{
 			if (shimmer != null && shimmer.isAnimating()) 
 	            shimmer.cancel();
 			
-			if(pullToRefresh != null)
-			{
-				// Notify PullToRefreshLayout that the refresh has finished
-	            pullToRefresh.setRefreshComplete();
-			}
+			//TODO: for PTR
+//			if(pullToRefresh != null)
+//			{
+//				// Notify PullToRefreshLayout that the refresh has finished
+//	            pullToRefresh.setRefreshComplete();
+//			}
 		}
 	}
 
