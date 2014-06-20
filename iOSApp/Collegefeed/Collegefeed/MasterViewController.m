@@ -32,7 +32,6 @@
     self = [super initWithNibName:@"MasterView" bundle:nil];
     if (self)
     {
-//        [self setAppData:data];
         [self setDataController:controller];
         
         // Initialize a loading indicator, refresh control, and nearby college selector
@@ -93,13 +92,10 @@
 }
 - (void)placeCreatePost
 {   // Place the create post button in the navigation bar (instead of loading indicator)
-
     [self.activityIndicator stopAnimating];
-
     UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
                                                                                   target:self action:@selector(create)];
     [self.navigationItem setRightBarButtonItem:createButton];
-    
     [self refresh];
 }
 - (void)foundLocation
@@ -141,26 +137,32 @@
     [self.navigationController presentViewController:controller animated:YES completion:nil];
     [self refresh];
 }
+- (void)showCreationDialogForCollege:(College *) college
+{
+    CreatePostCommentViewController *alert = [[CreatePostCommentViewController alloc] initWithType:POST withCollege:college];
+    [alert setDelegate:self];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 - (void)create
 {   // Display popup to let user type a new post
     
-    CreatePostCommentViewController *alert = [CreatePostCommentViewController new];
-    [alert setDelegate:self];
-    [self presentViewController:alert animated:YES completion:nil];
-    
-//    
-//    NSArray *nearbyColleges = self.appData.nearbyColleges;
-//    if (nearbyColleges.count == 0)
-//    {
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-//                                                        message:@"You cannot post because you are not within range of any known colleges"
-//                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//        [alert show];
-//    }
-//    else
-//    {
-//        [self.selector displaySelectorForNearbyColleges:nearbyColleges];
-//    }
+    NSArray *nearbyColleges = self.dataController.nearbyColleges;
+    if (nearbyColleges.count == 0)
+    {   // None nearby
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"You cannot post because you are not within range of any known colleges"
+                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    else if (nearbyColleges.count == 1)
+    {   // One college is nearby
+        College *collegeNearby = [nearbyColleges objectAtIndex:0];
+        [self showCreationDialogForCollege:collegeNearby];
+    }
+    else
+    {   // Multiple colleges are nearby
+        
+    }
 }
 - (void)refresh
 {   // refresh the current view
@@ -180,10 +182,10 @@
 {   // vote was cast in a table cell
     [self.dataController createVote:vote];
 }
-//- (void)selectedCollegeOrNil:(College *)college
-//                        from:(CollegePickerViewController *)sender
-//{   // A feed was selected from either the 'top colleges' in tab bar or from the 'change' button on toolbar
-//    
+- (void)selectedCollegeOrNil:(College *)college
+                        from:(CollegePickerViewController *)sender
+{   // A feed was selected from either the 'top colleges' in tab bar or from the 'change' button on toolbar
+//
 //    [self.dataController switchedToSpecificCollegeOrNil:college];
 //    
 //    if (sender.topColleges)
@@ -200,13 +202,14 @@
 ////    {
 ////        [self.currentFeedLabel setText:college.name];
 ////    }
-//}
+}
 
 #pragma mark - CreationViewProtocol Delegate Methods
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
+                                 withCollegeId:(long)collegeId
 {
-    
+    [self.dataController createPostWithMessage:message withCollegeId:collegeId];
 }
 
 #pragma mark - CollegeSelectionProtocol Delegate Methods

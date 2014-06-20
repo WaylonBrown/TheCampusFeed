@@ -8,11 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+@class College;
+
+
 @protocol CreationViewProtocol <NSObject>
 
-- (void)submitPostCommentCreationWithMessage:(NSString *)message;
-
+- (void)submitPostCommentCreationWithMessage:(NSString *)message
+                               withCollegeId:(long)collegeId;
 @end
+
+
+typedef NS_ENUM(NSInteger, CreationType)
+{
+    POST,
+    COMMENT
+};
+
 
 @interface CreatePostCommentViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
 
@@ -23,6 +34,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIButton *createButton;
+
+@property (strong, nonatomic) College *collegeForPost;
+@property (nonatomic) CreationType creationType;
+
+- (id)initWithType:(CreationType)type
+       withCollege:(College *)college;
 
 - (IBAction)submit:(id)sender;
 - (IBAction)dismiss:(id)sender;

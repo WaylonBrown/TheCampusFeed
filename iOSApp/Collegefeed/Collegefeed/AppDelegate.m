@@ -20,8 +20,6 @@
 {   // Set up ViewControllers and DataControllers
 
     // ***SIMULATE YOUR LOCATION***
-//    self.appData = [[AppData alloc] init];
-//    [self.appData setAppDelegate:self];
     
     self.dataController = [DataController new];
     [self.dataController setAppDelegate:self];

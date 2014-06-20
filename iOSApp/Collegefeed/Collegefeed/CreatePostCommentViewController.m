@@ -8,6 +8,7 @@
 
 #import "CreatePostCommentViewController.h"
 #import "Shared.h"
+#import "Models/Models/College.h"
 
 @interface CreatePostCommentViewController ()
 
@@ -15,13 +16,16 @@
 
 @implementation CreatePostCommentViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithType:(CreationType)type
+       withCollege:(College *)college
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super init];
     if (self)
     {
-        self.modalPresentationStyle = UIModalPresentationCustom;
-        self.transitioningDelegate = self;
+        [self setModalPresentationStyle:UIModalPresentationCustom];
+        [self setTransitioningDelegate:self];
+        [self setCreationType:type];
+        [self setCollegeForPost:college];
     }
     return self;
 }
@@ -32,6 +36,19 @@
     self.alertView.layer.borderWidth = 2;
     self.alertView.layer.cornerRadius = 5;
     [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
+    
+    if (self.creationType == POST)
+    {
+        [self.titleLabel setText:@"New Post"];
+        [self.subtitleLabel setText:[NSString stringWithFormat:@"Posting to %@", self.collegeForPost.name]];
+        [self.createButton.titleLabel setText:@"Post"];
+    }
+    else if (self.creationType == COMMENT)
+    {
+        [self.titleLabel setText:@"New Comment"];
+        [self.subtitleLabel setText:@""];
+        [self.createButton.titleLabel setText:@"Comment"];
+    }
     
     // Set fonts
     [self.titleLabel setFont:CF_FONT_LIGHT(30)];
@@ -51,7 +68,7 @@
     if (message.length > MIN_POST_LENGTH
         && message.length < MAX_POST_LENGTH)
     {
-        [self.delegate submitPostCommentCreationWithMessage:message];
+        [self.delegate submitPostCommentCreationWithMessage:message withCollegeId:self.collegeForPost.collegeID];
         [self dismiss:nil];
     }
 }

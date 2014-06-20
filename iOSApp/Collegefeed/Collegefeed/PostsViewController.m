@@ -32,7 +32,7 @@
                 [self setList:controller.topPostsAllColleges];
                 break;
             case RECENT:
-                [self setList:controller.topPostsAllColleges];
+                [self setList:controller.recentPostsAllColleges];
                 break;
             case USER:
                 [self setList:controller.userPostsAllColleges];

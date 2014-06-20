@@ -139,25 +139,10 @@
 }
 - (void)create
 {   // Display popup to let user type a new comment
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Comment"
-                                                    message:@"You got an opinion?"
-                                                   delegate:self
-                                          cancelButtonTitle:@"nope.."
-                                          otherButtonTitles:@"Comment!", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alert show];
-}
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{   // Add new comment if user submits on the alert view
     
-    if (buttonIndex == 0) return;
-    
-    bool success = [self.dataController createCommentWithMessage:[[alertView textFieldAtIndex:0] text]
-                                                        withPost:self.originalPost];
-    if (success)
-    {
-        [self.tableView reloadData];
-    }
+    CreatePostCommentViewController *alert = [[CreatePostCommentViewController alloc] initWithType:COMMENT withCollege:nil];
+    [alert setDelegate:self];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - Helper Methods
@@ -190,9 +175,10 @@
     [super castVote:vote];
 }
 
-#pragma mark - CreationViewProtocl Delegate Methods
+#pragma mark - CreationViewProtocol Delegate Methods
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
+                               withCollegeId:(long)collegeId
 {
     [self.dataController createCommentWithMessage:message withPost:self.originalPost];
 }

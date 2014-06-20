@@ -68,7 +68,7 @@
     {
         Comment *comment = [[Comment alloc] initWithCommentMessage:message
                                                           withPost:post];
-        [Networker POSTCommentData:[comment toJSON] WithPostId:comment.postID];
+        [Networker POSTCommentData:[comment toJSON] WithPostId:post.postID];
         [self.commentList addObject:comment];
         return YES;
     }
@@ -120,7 +120,7 @@
 - (void)fetchNewPosts
 {
     [self setRecentPostsAllColleges:[[NSMutableArray alloc] init]];
-    NSData* data = [Networker GETAllPosts];
+    NSData* data = [Networker GETRecentPosts];
     [self parseData:data asClass:[Post class] intoList:self.recentPostsAllColleges];
 }
 - (void)fetchNewPostsWithCollegeId:(long)collegeId

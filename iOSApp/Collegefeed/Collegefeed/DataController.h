@@ -15,7 +15,7 @@
 @class Post;
 @class Vote;
 
-#define MILES_FOR_PERMISSION 50
+#define MILES_FOR_PERMISSION 15
 
 #pragma mark - Protocol Definitions
 /********************************/
