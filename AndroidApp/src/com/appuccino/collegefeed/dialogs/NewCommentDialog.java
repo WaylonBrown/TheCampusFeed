@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appuccino.collegefeed.CommentsActivity;
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.objects.Comment;
@@ -60,10 +61,9 @@ public class NewCommentDialog extends AlertDialog.Builder{
     			if(messageEditText.getText().toString().length() >= MainActivity.MIN_COMMENT_LENGTH)
     			{
     				Comment newComment = new Comment(messageEditText.getText().toString(), 0, parentPost.getID(), 1, parentPost.getCollegeID(), TimeManager.now());
-    				//TODO: do this
     				//instantly add to new comments
-    				//NewPostFragment.postList.add(newPost);
-            		//NewPostFragment.updateList();
+    				CommentsActivity.commentList.add(newComment);
+    				CommentsActivity.updateList();
         			new MakeCommentTask(context).execute(newComment);
         			dialog.dismiss();
     			}

@@ -45,6 +45,7 @@ public class CommentsActivity extends Activity{
 	Shimmer shimmer;
 	Post post;
 	ImageView newCommentButton;
+	static TextView commentsText;
 	final int minCommentLength = 3;
 	ListView list;
 	public static List<Comment> commentList;
@@ -80,7 +81,7 @@ public class CommentsActivity extends Activity{
 		final TextView scoreText = (TextView)findViewById(R.id.scoreText);
 		TextView messageText = (TextView)findViewById(R.id.messageText);
 		TextView timeText = (TextView)findViewById(R.id.timeText);
-		TextView commentsText = (TextView)findViewById(R.id.commentsText);
+		commentsText = (TextView)findViewById(R.id.commentsText);
 		scoreText.setTypeface(FontManager.bold);
 		messageText.setTypeface(FontManager.light);
 		timeText.setTypeface(FontManager.italic);
@@ -393,6 +394,12 @@ public class CommentsActivity extends Activity{
 			listAdapter.addAll(commentList);
 			listAdapter.notifyDataSetChanged();	
 		}
+		
+		//change text if no comments from post
+		if(commentList.size() == 0)
+			commentsText.setText("No Comments");
+		else
+			commentsText.setText("Comments");
 				
 	}
 
