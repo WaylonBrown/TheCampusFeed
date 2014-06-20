@@ -17,6 +17,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.appuccino.collegefeed.CommentsActivity;
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
@@ -155,14 +156,16 @@ public class NetWorker {
 	public static class GetCommentsTask extends AsyncTask<PostSelector, Void, ArrayList<Comment>>
 	{
 		int postID = 0;
+		CommentsActivity activity;
 		
 		public GetCommentsTask()
 		{
 		}
 		
-		public GetCommentsTask(int postID)
+		public GetCommentsTask(CommentsActivity activity, int postID)
 		{
 			this.postID = postID;
+			this.activity = activity;
 		}
 		
 		@Override
@@ -192,7 +195,7 @@ public class NetWorker {
 				Log.d("cfeed", LOG_TAG + "Server response: " + response);
 			
 			try {
-				ret = JSONParser.commentListFromJSON(response);
+				ret = JSONParser.commentListFromJSON(response, postID);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -202,10 +205,9 @@ public class NetWorker {
 
 		@Override
 		protected void onPostExecute(ArrayList<Comment> result) {
-//			TopPostFragment.postList = new ArrayList<Comment>(result);
-//			TopPostFragment.updateList();
-//			TopPostFragment.makeLoadingIndicator(false);
-//			TopPostFragment.setupFooterListView();
+			CommentsActivity.commentList = new ArrayList<Comment>(result);
+			CommentsActivity.updateList();
+			activity.makeLoadingIndicator(false);
 		}		
 	}
 	

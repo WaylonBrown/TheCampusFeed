@@ -1,38 +1,29 @@
 package com.appuccino.collegefeed;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.graphics.Typeface;
+import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.Html;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
-import com.appuccino.collegefeed.adapters.PostListAdapter;
 import com.appuccino.collegefeed.dialogs.NewCommentDialog;
-import com.appuccino.collegefeed.dialogs.NewPostDialog;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
@@ -40,10 +31,10 @@ import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
 import com.appuccino.collegefeed.utils.FontManager;
-import com.appuccino.collegefeed.utils.NetWorker;
-import com.appuccino.collegefeed.utils.TimeManager;
-import com.appuccino.collegefeed.utils.NetWorker.MakePostTask;
+import com.appuccino.collegefeed.utils.NetWorker.GetCommentsTask;
 import com.appuccino.collegefeed.utils.NetWorker.MakeVoteTask;
+import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
+import com.appuccino.collegefeed.utils.TimeManager;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
 
@@ -56,20 +47,15 @@ public class CommentsActivity extends Activity{
 	ImageView newCommentButton;
 	final int minCommentLength = 3;
 	ListView list;
+	public static List<Comment> commentList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_comment);
-		// Set up the action bar.
-		final ActionBar actionBar = getActionBar();
-		actionBar.setCustomView(R.layout.actionbar_comment);
-		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setDisplayShowCustomEnabled(true);
-		actionBar.setDisplayUseLogoEnabled(false);
-		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
-		actionBar.setIcon(R.drawable.logofake);
+		setupActionBar();
+		
 		newCommentButton = (ImageView)findViewById(R.id.newCommentButton);
 		list = (ListView)findViewById(R.id.commentsList);
 		loadingText = (ShimmerTextView)findViewById(R.id.commentsLoadingText);
@@ -89,6 +75,7 @@ public class CommentsActivity extends Activity{
 		else if(sectionNumber == 2)
 			post = MyPostsFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
 		
+		Log.i("cfeed", "Clicked from section number " + sectionNumber);
         //set fonts
 		final TextView scoreText = (TextView)findViewById(R.id.scoreText);
 		TextView messageText = (TextView)findViewById(R.id.messageText);
@@ -108,30 +95,16 @@ public class CommentsActivity extends Activity{
 				e.printStackTrace();
 			}
 			
-			//change text if no comments from post
-			if(post.getCommentList().size() == 0)
-				commentsText.setText("No Comments");
-				
-			listAdapter = new CommentListAdapter(this, R.layout.list_row_post, post.getCommentList());
-			
-			//if doesnt havefooter, add it
-			if(list.getFooterViewsCount() == 0)
-			{
-				//for card UI
-				View headerFooter = new View(this);
-				headerFooter.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
-				list.addFooterView(headerFooter, null, false);
-			}
-			
-			if(list == null && mainActivity != null)
-			{
-				pullListFromServer();
-			}
-			listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 0);
-			if(list != null)
+			pullListFromServer();
+			listAdapter = new CommentListAdapter(this, R.layout.list_row_post, commentList);
+			if(list != null && commentList != null)
 				list.setAdapter(listAdapter);	
 			else
 				Log.e("cfeed", "TopPostFragment list adapter wasn't set.");
+			
+			//change text if no comments from post
+			if(commentList.size() == 0)
+				commentsText.setText("No Comments");
 			
 			setMessageAndColorizeTags(post.getMessage(), messageText);
 			final ImageView arrowUp = (ImageView)findViewById(R.id.arrowUp);
@@ -225,6 +198,35 @@ public class CommentsActivity extends Activity{
 		}
 	}
 	
+	private void setupActionBar() {
+		final ActionBar actionBar = getActionBar();
+		actionBar.setCustomView(R.layout.actionbar_comment);
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setDisplayShowCustomEnabled(true);
+		actionBar.setDisplayUseLogoEnabled(false);
+		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
+		actionBar.setIcon(R.drawable.logofake);
+	}
+
+	private void pullListFromServer() {
+		commentList = new ArrayList<Comment>();
+		ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);		
+		if(cm.getActiveNetworkInfo() != null)
+			new GetCommentsTask(this, post.getID()).execute(new PostSelector());
+		else
+			Toast.makeText(this, "You have no internet connection. Pull down to refresh and try again.", Toast.LENGTH_LONG).show();
+		
+		
+		//if doesnt havefooter, add it
+		if(list.getFooterViewsCount() == 0)
+		{
+			//for card UI
+			View headerFooter = new View(this);
+			headerFooter.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
+			list.addFooterView(headerFooter, null, false);
+		}
+	}
+
 	private void setTime(String time, TextView timeText) throws ParseException {
     	Calendar thisPostTime = TimeManager.toCalendar(time);
     	Calendar now = Calendar.getInstance();
@@ -386,8 +388,12 @@ public class CommentsActivity extends Activity{
 	}
 
 	public static void updateList() {
-		if(listAdapter != null)
-			listAdapter.notifyDataSetChanged();		
+		if(listAdapter != null){
+			listAdapter.clear();
+			listAdapter.addAll(commentList);
+			listAdapter.notifyDataSetChanged();	
+		}
+				
 	}
 
 }

@@ -19,6 +19,7 @@ import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.NetWorker.MakeCommentTask;
+import com.appuccino.collegefeed.utils.TimeManager;
 
 public class NewCommentDialog extends AlertDialog.Builder{
 	Context context;
@@ -58,7 +59,7 @@ public class NewCommentDialog extends AlertDialog.Builder{
     		{				
     			if(messageEditText.getText().toString().length() >= MainActivity.MIN_COMMENT_LENGTH)
     			{
-    				Comment newComment = new Comment(messageEditText.getText().toString(), parentPost.getID());
+    				Comment newComment = new Comment(messageEditText.getText().toString(), 0, parentPost.getID(), 1, parentPost.getCollegeID(), TimeManager.now());
     				//TODO: do this
     				//instantly add to new comments
     				//NewPostFragment.postList.add(newPost);
