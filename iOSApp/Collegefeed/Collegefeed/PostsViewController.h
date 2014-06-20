@@ -30,10 +30,10 @@
 // should equal YES if looking at tag-filtered posts
 @property (nonatomic) BOOL tagPosts;
 
-- (id)initAsTopPostsWithAppData:(AppData *)data;
-- (id)initAsNewPostsWithAppData:(AppData *)data;
-- (id)initAsMyPostsWithAppData:(AppData *)data;
-- (id)initAsTagPostsWithAppData:(AppData *)data
+- (id)initAsTopPostsWithDataController:(DataController *)controller;
+- (id)initAsNewPostsWithDataController:(DataController *)controller;
+- (id)initAsMyPostsWithDataController:(DataController *)controller;
+- (id)initAsTagPostsWithDataController:(DataController *)controller
                  withTagMessage:(NSString*)tagMessage;
 
 @end

@@ -25,9 +25,9 @@
 
     if (self.originalPost != nil)
     {
-        [self.appData setPostInFocus:self.originalPost];
+        [self.dataController setPostInFocus:self.originalPost];
         long postID = (long)self.originalPost.postID;
-        [self.appData.dataController fetchCommentsWithPostId:postID];
+        [self.dataController fetchCommentsWithPostId:postID];
         [self.tableView reloadData];
     }
 }
@@ -61,7 +61,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Number of rows in table views
     if (section == 0) return 1;
-    else return [self.appData.dataController.commentList count];
+    else return [self.dataController.commentList count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Get the table view cell for the given row
@@ -85,7 +85,7 @@
     }
     else
     {   // CommentView table; get the comment to be displayed in this cell
-        Comment *commentAtIndex = (Comment*)[self.appData.dataController.commentList objectAtIndex:indexPath.row];
+        Comment *commentAtIndex = (Comment*)[self.dataController.commentList objectAtIndex:indexPath.row];
         [cell assign:commentAtIndex];
         return cell;
     }
@@ -152,9 +152,12 @@
     
     if (buttonIndex == 0) return;
     
-    bool success = [self.appData.dataController createCommentWithMessage:[[alertView textFieldAtIndex:0] text]
-                                                                withPost:self.originalPost];
-    [self.tableView reloadData];
+    bool success = [self.dataController createCommentWithMessage:[[alertView textFieldAtIndex:0] text]
+                                                        withPost:self.originalPost];
+    if (success)
+    {
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - Helper Methods
@@ -191,7 +194,7 @@
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
 {
-    [self.appData.dataController createCommentWithMessage:message withPost:self.originalPost];
+    [self.dataController createCommentWithMessage:message withPost:self.originalPost];
 }
 
 @end

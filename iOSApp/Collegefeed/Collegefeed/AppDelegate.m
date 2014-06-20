@@ -12,7 +12,6 @@
 #import "TagViewController.h"
 #import "Shared.h"
 #import "Models/Models/College.h"
-#import "CollegePickerViewController.h"
 #import "Networker/Networker.h"
 
 @implementation AppDelegate
@@ -21,8 +20,11 @@
 {   // Set up ViewControllers and DataControllers
 
     // ***SIMULATE YOUR LOCATION***
-    self.appData = [[AppData alloc] init];
-    [self.appData setAppDelegate:self];
+//    self.appData = [[AppData alloc] init];
+//    [self.appData setAppDelegate:self];
+    
+    self.dataController = [DataController new];
+    [self.dataController setAppDelegate:self];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
@@ -31,27 +33,27 @@
 #pragma mark - Create ViewControllers
     
     // *** Top Posts - PostsViewController *** //
-    self.topPostsController = [[PostsViewController alloc] initAsTopPostsWithAppData:self.appData];
+    self.topPostsController = [[PostsViewController alloc] initAsTopPostsWithDataController:self.dataController];
     UINavigationController *topPostsNavController = [[UINavigationController alloc] initWithRootViewController:self.topPostsController];
     // *************************************** //
     
     // *** New Posts - PostsViewController *** //
-    self.recentPostsController = [[PostsViewController alloc] initAsNewPostsWithAppData:self.appData];
+    self.recentPostsController = [[PostsViewController alloc] initAsNewPostsWithDataController:self.dataController];
     UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:self.recentPostsController];
     // *************************************** //
     
     
     // *** Trending Tags - TagViewController *** //
-    self.tagController = [[TagViewController alloc] initWithAppData:self.appData];
+    self.tagController = [[TagViewController alloc] initWithDataController:self.dataController];
     UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:self.tagController];
     // *************************************** //
     
     
     // *** Top Colleges - CollegePickerViewController *** //
-    self.collegeController = [[CollegePickerViewController alloc] initAsTopCollegesWithAppData:self.appData];
-    [self.collegeController setDelegate:self.topPostsController];
-    UINavigationController *collegeNavController =
-            [[UINavigationController alloc] initWithRootViewController:self.collegeController];
+//    self.collegeController = [[CollegePickerViewController alloc] initAsTopCollegesWithDataController:self.dataController];
+//    [self.collegeController setDelegate:self.topPostsController];
+//    UINavigationController *collegeNavController =
+//            [[UINavigationController alloc] initWithRootViewController:self.collegeController];
     // *************************************** //
 
     
@@ -60,7 +62,8 @@
                                topPostsNavController,
                                newPostsNavController,
                                tagNavController,
-                               collegeNavController, nil];
+//                               collegeNavController,
+                               nil];
     
     [self setTabBarController:[[UITabBarController alloc] init]];
     [self.tabBarController setViewControllers:navControllers];
@@ -70,7 +73,7 @@
     [[self.tabBarController.tabBar.items objectAtIndex:0] setImage:[UIImage imageNamed:@"top.png"]];
     [[self.tabBarController.tabBar.items objectAtIndex:1] setImage:[UIImage imageNamed:@"new.png"]];
     [[self.tabBarController.tabBar.items objectAtIndex:2] setImage:[UIImage imageNamed:@"tags.png"]];
-    [[self.tabBarController.tabBar.items objectAtIndex:3] setImage:[UIImage imageNamed:@"colleges.png"]];
+//    [[self.tabBarController.tabBar.items objectAtIndex:3] setImage:[UIImage imageNamed:@"colleges.png"]];
 
     
     // finalize window specifications

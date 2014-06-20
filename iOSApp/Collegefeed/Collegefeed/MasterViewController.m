@@ -13,11 +13,9 @@
 // Full views
 #import "MasterViewController.h"
 #import "CommentViewController.h"
-#import "CollegePickerViewController.h"
 
 // Minor views and dialogs
 #import "TableCell.h"
-#import "NearbyCollegeSelector.h"
 
 // Universal app information
 #import "DataController.h"
@@ -29,16 +27,18 @@
 
 #pragma mark - Initialization and View Loading
 
-- (id)initWithAppData:(AppData *)data
+//- (id)initWithAppData:(AppData *)data
+- (id)initWithDataController:(DataController *)controller
 {
     self = [super initWithNibName:@"MasterView" bundle:nil];
     if (self)
     {
-        [self setAppData:data];
+//        [self setAppData:data];
+        [self setDataController:controller];
         
         // Initialize a loading indicator, refresh control, and nearby college selector
         self.refreshControl     = [[UIRefreshControl alloc] init];
-        self.selector           = [[NearbyCollegeSelector alloc] initWithAppData:self.appData];
+//        self.selector           = [[NearbyCollegeSelector alloc] initWithAppData:self.appData];
         self.activityIndicator  = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 
         [self.refreshControl addTarget:self action:@selector(refresh)
@@ -53,7 +53,7 @@
 
     // Show loading indicator until a nearby college is found,
     // then replace it with a create post button
-    if ([self.appData isNearCollege])
+    if ([self.dataController isNearCollege])
     {
         [self placeCreatePost];
     }
@@ -106,7 +106,7 @@
 }
 - (void)foundLocation
 {   // Called when the user's location is determined. Allow them to create posts
-    if ([self.appData isNearCollege])
+    if ([self.dataController isNearCollege])
     {
         [self placeCreatePost];
     }
@@ -139,8 +139,8 @@
     //    CollegePickerViewController *controller = self.appData.collegeFeedPicker;
     
     SelectCollegeViewController *controller = [SelectCollegeViewController new];
-    [controller setFullCollegeList:self.appData.dataController.collegeList];
-    [controller setNearbyCollegeList:self.appData.nearbyColleges];
+    [controller setFullCollegeList:self.dataController.collegeList];
+    [controller setNearbyCollegeList:self.dataController.nearbyColleges];
     [controller setDelegate:self];
     [self.navigationController presentViewController:controller animated:YES completion:nil];
     [self refresh];
@@ -167,7 +167,7 @@
 }
 - (void)refresh
 {   // refresh the current view
-    NSString *feedName = self.appData.currentCollege.name;
+    NSString *feedName = self.dataController.collegeInFocus.name;
     if (feedName == nil)
     {
         feedName = @"All Colleges";
@@ -181,29 +181,29 @@
 
 - (void)castVote:(Vote *)vote
 {   // vote was cast in a table cell
-    [self.appData.dataController createVote:vote];
+    [self.dataController createVote:vote];
 }
-- (void)selectedCollegeOrNil:(College *)college
-                        from:(CollegePickerViewController *)sender
-{   // A feed was selected from either the 'top colleges' in tab bar or from the 'change' button on toolbar
-    
-    [self.appData switchedToSpecificCollegeOrNil:college];
-    
-    if (sender.topColleges)
-    {   // change to 'top posts' tab if selection made from 'top colleges' tab
-        [self.tabBarController setSelectedIndex:0];
-    }
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    [self refresh];
-    //    if (college == nil)
-//    {
-//        [self.currentFeedLabel setText:@"All Colleges"];
+//- (void)selectedCollegeOrNil:(College *)college
+//                        from:(CollegePickerViewController *)sender
+//{   // A feed was selected from either the 'top colleges' in tab bar or from the 'change' button on toolbar
+//    
+//    [self.dataController switchedToSpecificCollegeOrNil:college];
+//    
+//    if (sender.topColleges)
+//    {   // change to 'top posts' tab if selection made from 'top colleges' tab
+//        [self.tabBarController setSelectedIndex:0];
 //    }
-//    else
-//    {
-//        [self.currentFeedLabel setText:college.name];
-//    }
-}
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+//    [self refresh];
+//    //    if (college == nil)
+////    {
+////        [self.currentFeedLabel setText:@"All Colleges"];
+////    }
+////    else
+////    {
+////        [self.currentFeedLabel setText:college.name];
+////    }
+//}
 
 #pragma mark - CreationViewProtocol Delegate Methods
 

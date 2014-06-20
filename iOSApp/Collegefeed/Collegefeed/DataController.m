@@ -21,15 +21,29 @@
     self = [super init];
     if (self)
     {
-        self.topPostsAllColleges = [[NSMutableArray alloc] init];
+        // Initialize arrays for the initial arrays needed
+        self.topPostsAllColleges    = [[NSMutableArray alloc] init];
         self.recentPostsAllColleges = [[NSMutableArray alloc] init];
-        self.collegeList = [[NSMutableArray alloc] init];
-        self.allTags = [[NSMutableArray alloc] init];
+        self.collegeList            = [[NSMutableArray alloc] init];
+        self.allTags                = [[NSMutableArray alloc] init];
         
+        // Populate the initial arrays
         [self fetchTopPosts];
         [self fetchNewPosts];
-        [self fetchAllTags];
         [self getHardCodedCollegeList];
+        
+        [self fetchAllTags];
+        
+        // Get the user's location
+        if (self.locationManager != nil)
+        {
+            int breakpoint = 123;
+            breakpoint += 6;
+        }
+        [self setLocationManager:[[CLLocationManager alloc] init]];
+        [self.locationManager setDelegate:self];
+        [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+        [self.locationManager startUpdatingLocation];
         
     }
     return self;
@@ -39,6 +53,7 @@
 
 - (void)getNetworkCollegeList
 {
+    // TODO: most recently, this only gets first 25 colleges
     self.collegeList = [[NSMutableArray alloc] init];
     NSData *data = [Networker GETAllColleges];
     [self parseData:data asClass:[College class] intoList:self.collegeList];
@@ -185,9 +200,10 @@
         NSLog(@"Could not get hard-coded list in CollegeList.txt");
         return;
     }
+    self.collegeList = [[NSMutableArray alloc] init];
     [self parseData:data asClass:[College class] intoList:self.collegeList];
 }
-- (NSArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon
+- (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon
 {
     NSMutableArray *colleges = [[NSMutableArray alloc] init];
     
@@ -205,6 +221,25 @@
         
     }
     return colleges;
+}
+- (void)switchedToSpecificCollegeOrNil:(College *)college
+{
+    [self setCollegeInFocus:college];
+    
+    if (college == nil)
+    {
+        [self setShowingAllColleges:YES];
+        [self setShowingSingleCollege:NO];
+    }
+    else
+    {
+        [self setShowingAllColleges:NO];
+        [self setShowingSingleCollege:YES];
+    }
+}
+- (BOOL)isNearCollege
+{
+    return self.nearbyColleges.count > 0;
 }
 
 #pragma mark - Helper Methods
@@ -230,4 +265,28 @@
     }
     return NO;
 }
+- (void)findNearbyColleges
+{   // Populate the nearbyColleges array appropriately using current location
+    self.nearbyColleges = [NSMutableArray new];
+    [self setNearbyColleges:[self findNearbyCollegesWithLat:self.lat
+                                                    withLon:self.lon]];
+    
+}
+#pragma mark - CLLocationManager Delegate Functions
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    [self setLat:newLocation.coordinate.latitude];
+    [self setLon:newLocation.coordinate.longitude];
+    [self.locationManager stopUpdatingLocation];
+    
+    [self findNearbyColleges];
+    [self.appDelegate foundLocation];
+}
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    [self.appDelegate didNotFindLocation];
+}
+
+
 @end

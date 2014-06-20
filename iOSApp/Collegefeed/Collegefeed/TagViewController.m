@@ -29,9 +29,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Post view of all posts with the selected tag
-    self.selectedTag = (Tag *)[self.appData.dataController.allTags objectAtIndex:indexPath.row];
-    PostsViewController* controller = [[PostsViewController alloc] initAsTagPostsWithAppData:self.appData
-                                                                              withTagMessage:self.selectedTag.name];
+    self.selectedTag = (Tag *)[self.dataController.allTags objectAtIndex:indexPath.row];
+    PostsViewController* controller = [[PostsViewController alloc]
+                        initAsTagPostsWithDataController:self.dataController
+                                    withTagMessage:self.selectedTag.name];
     
     
     [self.navigationController pushViewController:controller
@@ -42,7 +43,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
-    return self.appData.dataController.allTags.count;
+    return self.dataController.allTags.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
@@ -58,7 +59,7 @@
     }
     
     // get the post and display in this cell
-    Tag *tagAtIndex = (Tag*)[self.appData.dataController.allTags objectAtIndex:indexPath.row];
+    Tag *tagAtIndex = (Tag*)[self.dataController.allTags objectAtIndex:indexPath.row];
     [cell assignTag:tagAtIndex];
     return cell;
 }
@@ -72,13 +73,13 @@
 
 - (void)refresh
 {   // refresh this tag view
-    if (self.appData.allColleges)
+    if (self.dataController.showingAllColleges)
     {
-        [self.appData.dataController fetchAllTags];
+        [self.dataController fetchAllTags];
     }
-    else if (self.appData.specificCollege)
+    else if (self.dataController.showingSingleCollege)
     {
-        [self.appData.dataController fetchAllTagsWithCollegeId:self.appData.currentCollege.collegeID];
+        [self.dataController fetchAllTagsWithCollegeId:self.dataController.collegeInFocus.collegeID];
     }
     [super refresh];
 }

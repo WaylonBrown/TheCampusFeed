@@ -8,22 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-#import "AppData.h"
 #import "ChildCellDelegate.h"
-#import "NearbyCollegeSelector.h"
 #import "CreatePostCommentViewController.h"
 #import "SelectCollegeViewController.h"
+#import "DataController.h"
 
 @protocol CollegeSelectionProtocol;
 
 @interface MasterViewController : UIViewController <ChildCellDelegate, CreationViewProtocol, CollegeSelectionProtocol>
 
-@property (strong, nonatomic) AppData *appData;
+//@property (strong, nonatomic) AppData *appData;
+@property (strong, nonatomic) DataController *dataController;
 
 // outlet properties connected to the view
 @property (weak, nonatomic) IBOutlet UITableView        *tableView;
 @property (strong, nonatomic) UIActivityIndicatorView   *activityIndicator;
-@property (strong, nonatomic) NearbyCollegeSelector     *selector;
 @property (weak, nonatomic) IBOutlet UIView             *feedToolbar;
 @property (strong, nonatomic) UIRefreshControl          *refreshControl;
 
@@ -34,7 +33,8 @@
 @property (strong, nonatomic) NSMutableArray *list;
 
 // Initialization
-- (id)initWithAppData:(AppData *)data;
+//- (id)initWithAppData:(AppData *)data;
+- (id)initWithDataController:(DataController *)controller;
 
 - (void)placeLoadingIndicator;
 - (void)placeCreatePost;

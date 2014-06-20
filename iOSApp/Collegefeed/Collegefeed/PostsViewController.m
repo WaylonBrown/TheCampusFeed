@@ -18,9 +18,9 @@
 
 #pragma mark - Initializations
 
-- (id)initAsTopPostsWithAppData:(AppData *)data
+- (id)initAsTopPostsWithDataController:(DataController *)controller
 {
-    self = [super initWithAppData:data];
+    self = [super initWithDataController:controller];
     if (self)
     {
         [self setTopPosts:YES];
@@ -29,13 +29,13 @@
         [self setTagPosts:NO];
         [self switchToAllColleges];
 
-        [self setList:data.dataController.topPostsAllColleges];
+        [self setList:controller.topPostsAllColleges];
     }
     return self;
 }
-- (id)initAsNewPostsWithAppData:(AppData *)data
+- (id)initAsNewPostsWithDataController:(DataController *)controller
 {
-    self = [super initWithAppData:data];
+    self = [super initWithDataController:controller];
     if (self)
     {
         [self setTopPosts:NO];
@@ -43,14 +43,14 @@
         [self setMyPosts:NO];
         [self setTagPosts:NO];
         [self switchToAllColleges];
-        [self setList:data.dataController.recentPostsAllColleges];
+        [self setList:controller.recentPostsAllColleges];
         
     }
     return self;
 }
-- (id)initAsMyPostsWithAppData:(AppData *)data
+- (id)initAsMyPostsWithDataController:(DataController *)controller
 {
-    self = [super initWithAppData:data];
+    self = [super initWithDataController:controller];
     if (self)
     {
         [self setTopPosts:NO];
@@ -58,15 +58,15 @@
         [self setMyPosts:YES];
         [self setTagPosts:NO];
         [self switchToAllColleges];
-        [self setList:data.dataController.userPostsAllColleges];
+        [self setList:controller.userPostsAllColleges];
         
     }
     return self;
 }
-- (id)initAsTagPostsWithAppData:(AppData *)data
+- (id)initAsTagPostsWithDataController:(DataController *)controller
                  withTagMessage:(NSString*)tagMessage
 {
-    self = [super initWithAppData:data];
+    self = [super initWithDataController:controller];
     if (self)
     {
         [self setTopPosts:NO];
@@ -75,7 +75,7 @@
         [self setTagPosts:YES];
         [self setTagMessage:tagMessage];
         [self switchToAllColleges];
-        [self setList:data.dataController.allPostsWithTag];
+        [self setList:controller.allPostsWithTag];
     }
     return self;
 }
@@ -93,7 +93,7 @@
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
     [self refresh];
-    [self setCommentViewController:[[CommentViewController alloc] initWithAppData:self.appData]];
+    [self setCommentViewController:[[CommentViewController alloc] initWithDataController:self.dataController]];
 }
 - (void)loadView
 {
@@ -152,31 +152,32 @@
 {
     if (self.topPosts)
     {
-        [self.appData.dataController fetchTopPosts];
+        [self.dataController fetchTopPosts];
     }
     else if (self.recentPosts)
     {
-        [self.appData.dataController fetchNewPosts];
+        [self.dataController fetchNewPosts];
     }
     else if (self.tagPosts && self.tagMessage != nil)
     {
-        [self.appData.dataController fetchAllPostsWithTagMessage:self.tagMessage];
+        [self.dataController fetchAllPostsWithTagMessage:self.tagMessage];
     }
 }
 - (void)switchToSpecificCollege
 {
     if (self.topPosts)
     {
-        [self.appData.dataController fetchTopPostsWithCollegeId:self.appData.currentCollege.collegeID];
+        // TODO: this is calling dataController's function and passing its own variable to itself
+        [self.dataController fetchTopPostsWithCollegeId:self.dataController.collegeInFocus.collegeID];
     }
     else if (self.recentPosts)
     {
-        [self.appData.dataController fetchNewPostsWithCollegeId:self.appData.currentCollege.collegeID];
+        [self.dataController fetchNewPostsWithCollegeId:self.dataController.collegeInFocus.collegeID];
     }
     else if (self.tagPosts && self.tagMessage != nil)
     {
-        [self.appData.dataController fetchAllPostsWithTagMessage:self.tagMessage
-                                                   withCollegeId:self.appData.currentCollege.collegeID];
+        [self.dataController fetchAllPostsWithTagMessage:self.tagMessage
+                                                   withCollegeId:self.dataController.collegeInFocus.collegeID];
     }
 }
 
@@ -184,11 +185,11 @@
 
 - (void)refresh
 {   // refresh this post view
-    if (self.appData.allColleges)
+    if (self.dataController.showingAllColleges)
     {
         [self switchToAllColleges];
     }
-    else if (self.appData.specificCollege)
+    else if (self.dataController.showingSingleCollege)
     {
         [self switchToSpecificCollege];
     }
@@ -199,7 +200,8 @@
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
 {
-    [self.appData.dataController createPostWithMessage:message withCollegeId:self.appData.currentCollege.collegeID];
+    [self.dataController createPostWithMessage:message
+                                 withCollegeId:self.dataController.collegeInFocus.collegeID];
 }
 
 @end
