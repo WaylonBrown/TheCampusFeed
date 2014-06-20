@@ -31,15 +31,9 @@
         [self fetchTopPosts];
         [self fetchNewPosts];
         [self getHardCodedCollegeList];
-        
         [self fetchAllTags];
         
         // Get the user's location
-        if (self.locationManager != nil)
-        {
-            int breakpoint = 123;
-            breakpoint += 6;
-        }
         [self setLocationManager:[[CLLocationManager alloc] init]];
         [self.locationManager setDelegate:self];
         [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
@@ -207,18 +201,14 @@
 {
     NSMutableArray *colleges = [[NSMutableArray alloc] init];
     
-    double degreesForPermissions = MILES_FOR_PERMISSION / 50.0;	//roughly 50 miles per degree
-    
     for (College *college in self.collegeList)
     {
-        //TODO: change to formula that takes into account the roundness of the earth
-        double degreesAway = sqrt(pow((userLat - college.lat), 2) + pow((userLon - college.lon), 2));
+        double milesAway = [self numberMilesAwayFromLat:userLat fromLon:userLon AtLat:college.lat atLon:college.lon];
         
-        if (degreesAway <= degreesForPermissions)
+        if (milesAway <= MILES_FOR_PERMISSION)
         {
             [colleges addObject:college];
         }
-        
     }
     return colleges;
 }
@@ -272,6 +262,26 @@
                                                     withLon:self.lon]];
     
 }
+- (float)numberMilesAwayFromLat:(float)collegeLat fromLon:(float)collegeLon AtLat:(float)userLat atLon:(float)userLon
+{   // Implemented using Haversine formula
+    double lat1 = userLat;
+    double lon1 = userLon;
+    double lat2 = collegeLat;
+    double lon2 = collegeLon;
+    double latDistance = [self toRad:(lat2-lat1)];
+    double lonDistance = [self toRad:(lon2-lon1)];
+    double a = sin(latDistance / 2) * sin(latDistance / 2) +
+    cos([self toRad:lat1]) * cos([self toRad:lat2]) *
+    sin(lonDistance / 2) * sin(lonDistance / 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1-a));
+    return (EARTH_RADIUS_MILES * c);
+}
+
+- (float)toRad:(float)value
+{   // Helper method for milesAway
+    return value * PI_VALUE / 180;
+}
+
 #pragma mark - CLLocationManager Delegate Functions
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation

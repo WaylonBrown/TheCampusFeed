@@ -165,13 +165,6 @@
 }
 - (void)castVote:(Vote *)vote
 {
-    //TODO: show this only if voting on a comment
-//    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Warning"
-//                                                    message:@"Cannot currently send a comment's vote to the server"
-//                                                   delegate:self
-//                                          cancelButtonTitle:@"K"
-//                                          otherButtonTitles:nil, nil];
-//    [alert show];
     [super castVote:vote];
 }
 
