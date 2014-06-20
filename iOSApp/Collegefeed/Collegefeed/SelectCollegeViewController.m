@@ -26,21 +26,6 @@
     }
     return self;
 }
-
-//- (void)initDummy
-//{
-//    College *c1 = [[College alloc] initWithCollegeID:111 withName:@"Texas A&M"];
-//    College *c2 = [[College alloc] initWithCollegeID:222 withName:@"University of Texas"];
-//    College *c3 = [[College alloc] initWithCollegeID:333 withName:@"Brown"];
-//    
-//    [self.fullCollegeList addObject:c1];
-//    [self.fullCollegeList addObject:c2];
-//    [self.fullCollegeList addObject:c3];
-//    
-//    [self.nearbyCollegeList addObject:c1];
-//    [self.nearbyCollegeList addObject:c2];
-//}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -54,13 +39,11 @@
     [self.titleLabel setFont:CF_FONT_LIGHT(30)];
 
 }
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 - (IBAction)dismiss
 {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
@@ -103,12 +86,13 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:CellIdentifier];
-
     }
     
     NSString *cellLabel = @"";
     if (indexPath.section == 0)
     {
+        [cell.textLabel setTextAlignment:NSTextAlignmentCenter];
+        [cell.textLabel setFont:CF_FONT_LIGHT(18)];
         cellLabel = @"All Colleges";
     }
     else
@@ -117,6 +101,7 @@
         if (college != nil)
         {
             cellLabel = college.name;
+            [cell.textLabel setFont:CF_FONT_LIGHT(14)];
         }
     }
     
@@ -133,6 +118,48 @@
     
     [self.delegate submitSelectionWithCollegeOrNil:college];
     [self dismiss];
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 0)
+    {
+        return [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
+    }
+    
+    static const int headerHeight = 20;
+    const int headerWidth = self.view.frame.size.width;
+    
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerWidth, headerHeight)];
+    UILabel *headerLabel;
+    
+    
+    if (section == 1 && self.nearbyCollegeList.count > 0)
+    {   // section of colleges 'near you'
+        headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, headerHeight)];
+        [headerLabel setText:@"Near You"];
+        UIImageView *gpsIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gps.png"]];
+        [gpsIcon setFrame:CGRectMake(100, 0, 20, 20)];
+        
+        [headerView addSubview:gpsIcon];
+        
+    }
+    else
+    {   // section of all colleges
+        headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, headerWidth, headerHeight)];
+        [headerLabel setText:@"Other Colleges"];
+    }
+
+    [headerView addSubview:headerLabel];
+    [headerLabel setTextAlignment:NSTextAlignmentCenter];
+    [headerLabel setFont:CF_FONT_LIGHT(14)];
+    [headerLabel setTintColor:[Shared getCustomUIColor:CF_WHITE]];
+    [headerView setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
+    
+    return headerView;
+}
+- (float)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return (section == 0) ? 0 : 20;
 }
 
 #pragma mark - Transitioning Protocol Methods

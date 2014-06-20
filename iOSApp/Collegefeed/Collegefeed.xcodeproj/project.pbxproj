@@ -17,6 +17,7 @@
 		5350557819514587009C1911 /* CreatePostCommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5350557619514587009C1911 /* CreatePostCommentViewController.xib */; };
 		5350557F19529FCA009C1911 /* SelectCollegeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5350557D19529FCA009C1911 /* SelectCollegeViewController.m */; };
 		5350558019529FCA009C1911 /* SelectCollegeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5350557E19529FCA009C1911 /* SelectCollegeViewController.xib */; };
+		5350558F1953C75C009C1911 /* gps.png in Resources */ = {isa = PBXBuildFile; fileRef = 5350558E1953C75C009C1911 /* gps.png */; };
 		5390A91D1914B76800ACD082 /* arrowdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9141914B76800ACD082 /* arrowdown.png */; };
 		5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9151914B76800ACD082 /* arrowdownred.png */; };
 		5390A91F1914B76800ACD082 /* arrowup.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9161914B76800ACD082 /* arrowup.png */; };
@@ -129,6 +130,7 @@
 		5350557C19529FCA009C1911 /* SelectCollegeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectCollegeViewController.h; sourceTree = "<group>"; };
 		5350557D19529FCA009C1911 /* SelectCollegeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectCollegeViewController.m; sourceTree = "<group>"; };
 		5350557E19529FCA009C1911 /* SelectCollegeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectCollegeViewController.xib; sourceTree = "<group>"; };
+		5350558E1953C75C009C1911 /* gps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gps.png; sourceTree = "<group>"; };
 		5390A9141914B76800ACD082 /* arrowdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdown.png; sourceTree = "<group>"; };
 		5390A9151914B76800ACD082 /* arrowdownred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdownred.png; sourceTree = "<group>"; };
 		5390A9161914B76800ACD082 /* arrowup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowup.png; sourceTree = "<group>"; };
@@ -233,14 +235,14 @@
 			name = "Create Post/Comment";
 			sourceTree = "<group>";
 		};
-		5350558119529FD5009C1911 /* SelectCollege */ = {
+		5350558119529FD5009C1911 /* Select College */ = {
 			isa = PBXGroup;
 			children = (
 				5350557C19529FCA009C1911 /* SelectCollegeViewController.h */,
 				5350557D19529FCA009C1911 /* SelectCollegeViewController.m */,
 				5350557E19529FCA009C1911 /* SelectCollegeViewController.xib */,
 			);
-			name = SelectCollege;
+			name = "Select College";
 			sourceTree = "<group>";
 		};
 		535055881953B067009C1911 /* Post/Comment View */ = {
@@ -268,6 +270,7 @@
 			children = (
 				53F878AE19133F60002A578B /* Images.xcassets */,
 				53BDB4D71930688200F45D5C /* colleges.png */,
+				5350558E1953C75C009C1911 /* gps.png */,
 				53BDB4D81930688200F45D5C /* new.png */,
 				53BDB4D91930688200F45D5C /* tags.png */,
 				53BDB4D51930669100F45D5C /* top.png */,
@@ -318,7 +321,7 @@
 			children = (
 				53B1FE0119254EB900905E49 /* MasterView */,
 				535055881953B067009C1911 /* Post/Comment View */,
-				5350558119529FD5009C1911 /* SelectCollege */,
+				5350558119529FD5009C1911 /* Select College */,
 				5350557B1951458B009C1911 /* Create Post/Comment */,
 				533475A019232A4A00E84CC8 /* Custom Cells */,
 				535055891953B07A009C1911 /* Tag View */,
@@ -582,6 +585,7 @@
 				5390A9201914B76800ACD082 /* arrowupblue.png in Resources */,
 				533FCA4D193EDE3B00754C07 /* aggieland.gpx in Resources */,
 				533FCA4F193FCD8200754C07 /* austin.gpx in Resources */,
+				5350558F1953C75C009C1911 /* gps.png in Resources */,
 				5350557819514587009C1911 /* CreatePostCommentViewController.xib in Resources */,
 				5390A9241914B76800ACD082 /* postbuttonclick.xml in Resources */,
 				53AB57BF194AAFF8001D1B7B /* Roboto-LightItalic.ttf in Resources */,
