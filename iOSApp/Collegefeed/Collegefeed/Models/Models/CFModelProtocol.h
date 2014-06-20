@@ -9,10 +9,7 @@
 #import <Foundation/Foundation.h>
 
 // Constant lengths for validations
-
-
-#define MAX_TAG_LENGTH       50
-#define MIN_TAG_LENGTH       2
+#define MIN_TAG_LENGTH       4
 
 @protocol CFModelProtocol <NSObject>
 

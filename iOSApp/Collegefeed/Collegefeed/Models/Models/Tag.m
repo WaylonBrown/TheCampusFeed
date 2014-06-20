@@ -90,15 +90,13 @@
 {
     if ([self.name characterAtIndex:0] != '#')
     {
-        [self setName:[NSString stringWithFormat:@"#%@", self.name]];
+        NSException *e = [NSException exceptionWithName:@"TagFormatException" reason:@"Tag is not proceeded with a hashtag" userInfo:nil];
+        [e raise];
     }
-//    if (self.name.length < MIN_TAG_LENGTH)
-//    {
-//        [NSException raise:@"Invalid Tag" format:@"Tag \"%@\" is too short", self.name];
-//    }
-//    if (self.name.length > MAX_TAG_LENGTH)
-//    {
-//        [NSException raise:@"Invalid Tag" format:@"Tag \"%@\" is too long", self.name];
-//    }
+    if (self.name.length < MIN_TAG_LENGTH)
+    {
+        NSException *e = [NSException exceptionWithName:@"TagLengthException" reason:@"Tag is too short" userInfo:nil];
+        [e raise];
+    }
 }
 @end

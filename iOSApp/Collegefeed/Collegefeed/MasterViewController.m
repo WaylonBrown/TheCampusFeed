@@ -27,7 +27,6 @@
 
 #pragma mark - Initialization and View Loading
 
-//- (id)initWithAppData:(AppData *)data
 - (id)initWithDataController:(DataController *)controller
 {
     self = [super initWithNibName:@"MasterView" bundle:nil];
@@ -38,7 +37,6 @@
         
         // Initialize a loading indicator, refresh control, and nearby college selector
         self.refreshControl     = [[UIRefreshControl alloc] init];
-//        self.selector           = [[NearbyCollegeSelector alloc] initWithAppData:self.appData];
         self.activityIndicator  = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 
         [self.refreshControl addTarget:self action:@selector(refresh)
@@ -136,8 +134,6 @@
 
 - (IBAction)changeFeed;
 {   // User wants to change the feed (all colleges, nearby college, or other)
-    //    CollegePickerViewController *controller = self.appData.collegeFeedPicker;
-    
     SelectCollegeViewController *controller = [SelectCollegeViewController new];
     [controller setFullCollegeList:self.dataController.collegeList];
     [controller setNearbyCollegeList:self.dataController.nearbyColleges];
@@ -147,6 +143,7 @@
 }
 - (void)create
 {   // Display popup to let user type a new post
+    
     CreatePostCommentViewController *alert = [CreatePostCommentViewController new];
     [alert setDelegate:self];
     [self presentViewController:alert animated:YES completion:nil];

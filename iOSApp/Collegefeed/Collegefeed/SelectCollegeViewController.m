@@ -126,26 +126,29 @@
         return [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
     }
     
-    static const int headerHeight = 20;
     const int headerWidth = self.view.frame.size.width;
     
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerWidth, headerHeight)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
     UILabel *headerLabel;
     
+    //**************
+    // Keep messing with the view set up here for the choose feed dialog
+    //**************
     
     if (section == 1 && self.nearbyCollegeList.count > 0)
     {   // section of colleges 'near you'
-        headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, headerHeight)];
+        
+        headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
         [headerLabel setText:@"Near You"];
         UIImageView *gpsIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gps.png"]];
-        [gpsIcon setFrame:CGRectMake(100, 0, 20, 20)];
+        [gpsIcon setFrame:CGRectMake((headerWidth / 2) + 50, 5, 20, 20)];
         
         [headerView addSubview:gpsIcon];
         
     }
     else
     {   // section of all colleges
-        headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, headerWidth, headerHeight)];
+        headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
         [headerLabel setText:@"Other Colleges"];
     }
 
@@ -159,7 +162,7 @@
 }
 - (float)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return (section == 0) ? 0 : 20;
+    return (section == 0) ? 0 : TABLE_HEADER_HEIGHT;
 }
 
 #pragma mark - Transitioning Protocol Methods

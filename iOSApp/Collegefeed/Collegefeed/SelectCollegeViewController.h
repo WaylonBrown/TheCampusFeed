@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define TABLE_HEADER_HEIGHT 30
+
 @class College;
 @protocol CollegeSelectionProtocol <NSObject>
 

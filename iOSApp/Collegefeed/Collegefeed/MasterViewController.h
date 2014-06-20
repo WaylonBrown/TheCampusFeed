@@ -17,7 +17,6 @@
 
 @interface MasterViewController : UIViewController <ChildCellDelegate, CreationViewProtocol, CollegeSelectionProtocol>
 
-//@property (strong, nonatomic) AppData *appData;
 @property (strong, nonatomic) DataController *dataController;
 
 // outlet properties connected to the view
@@ -33,7 +32,6 @@
 @property (strong, nonatomic) NSMutableArray *list;
 
 // Initialization
-//- (id)initWithAppData:(AppData *)data;
 - (id)initWithDataController:(DataController *)controller;
 
 - (void)placeLoadingIndicator;
@@ -47,3 +45,12 @@
 - (void)refresh;
 
 @end
+
+typedef NS_ENUM(NSInteger, ViewSortingStyle)
+{
+    ALL,
+    TOP,
+    RECENT,
+    USER,
+    TAG,
+};
