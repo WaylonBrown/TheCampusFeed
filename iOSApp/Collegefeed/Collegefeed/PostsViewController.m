@@ -18,64 +18,33 @@
 
 #pragma mark - Initializations
 
-- (id)initAsTopPostsWithDataController:(DataController *)controller
+- (id)initAsType:(ViewSortingType)type withDataController:(DataController *)controller
 {
     self = [super initWithDataController:controller];
     if (self)
     {
-        [self setTopPosts:YES];
-        [self setRecentPosts:NO];
-        [self setMyPosts:NO];
-        [self setTagPosts:NO];
+        [self setViewSortingType:type];
         [self switchToAllColleges];
-
-        [self setList:controller.topPostsAllColleges];
-    }
-    return self;
-}
-- (id)initAsNewPostsWithDataController:(DataController *)controller
-{
-    self = [super initWithDataController:controller];
-    if (self)
-    {
-        [self setTopPosts:NO];
-        [self setRecentPosts:YES];
-        [self setMyPosts:NO];
-        [self setTagPosts:NO];
-        [self switchToAllColleges];
-        [self setList:controller.recentPostsAllColleges];
         
-    }
-    return self;
-}
-- (id)initAsMyPostsWithDataController:(DataController *)controller
-{
-    self = [super initWithDataController:controller];
-    if (self)
-    {
-        [self setTopPosts:NO];
-        [self setRecentPosts:NO];
-        [self setMyPosts:YES];
-        [self setTagPosts:NO];
-        [self switchToAllColleges];
-        [self setList:controller.userPostsAllColleges];
+        switch (type)
+        {
+            case TOP:
+                [self setList:controller.topPostsAllColleges];
+                break;
+            case RECENT:
+                [self setList:controller.topPostsAllColleges];
+                break;
+            case USER:
+                [self setList:controller.userPostsAllColleges];
+                break;
+            case TAG:
+                [self setList:controller.allPostsWithTag];
+                break;
+            default:
+                break;
+        }
         
-    }
-    return self;
-}
-- (id)initAsTagPostsWithDataController:(DataController *)controller
-                 withTagMessage:(NSString*)tagMessage
-{
-    self = [super initWithDataController:controller];
-    if (self)
-    {
-        [self setTopPosts:NO];
-        [self setRecentPosts:NO];
-        [self setMyPosts:NO];
-        [self setTagPosts:YES];
-        [self setTagMessage:tagMessage];
-        [self switchToAllColleges];
-        [self setList:controller.allPostsWithTag];
+        
     }
     return self;
 }
@@ -85,6 +54,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
     [super viewWillAppear:animated];
+    if (self.viewSortingType == TAG && self.tagMessage == nil)
+    {
+        NSException *e = [NSException exceptionWithName:@"NoTagFoundException" reason:@"No Tag message provided for a PostsView filtered by Tag" userInfo:nil];
+        [e raise];
+    }
 }
 - (void)viewDidLoad
 {
@@ -150,31 +124,31 @@
 
 - (void)switchToAllColleges
 {
-    if (self.topPosts)
+    if (self.viewSortingType == TOP)
     {
         [self.dataController fetchTopPosts];
     }
-    else if (self.recentPosts)
+    else if (self.viewSortingType == RECENT)
     {
         [self.dataController fetchNewPosts];
     }
-    else if (self.tagPosts && self.tagMessage != nil)
+    else if (self.viewSortingType == TAG && self.tagMessage != nil)
     {
         [self.dataController fetchAllPostsWithTagMessage:self.tagMessage];
     }
 }
 - (void)switchToSpecificCollege
 {
-    if (self.topPosts)
+    if (self.viewSortingType == TOP)
     {
         // TODO: this is calling dataController's function and passing its own variable to itself
         [self.dataController fetchTopPostsWithCollegeId:self.dataController.collegeInFocus.collegeID];
     }
-    else if (self.recentPosts)
+    else if (self.viewSortingType == RECENT)
     {
         [self.dataController fetchNewPostsWithCollegeId:self.dataController.collegeInFocus.collegeID];
     }
-    else if (self.tagPosts && self.tagMessage != nil)
+    else if (self.viewSortingType == TAG && self.tagMessage != nil)
     {
         [self.dataController fetchAllPostsWithTagMessage:self.tagMessage
                                                    withCollegeId:self.dataController.collegeInFocus.collegeID];

@@ -16,25 +16,11 @@
 
 @property (strong, nonatomic) Post* selectedPost;
 @property (strong, nonatomic) CommentViewController* commentViewController;
-@property (nonatomic, strong) NSString* tagMessage;
+@property (strong, nonatomic) NSString* tagMessage;
 
-// should equal YES if looking at 'Top' posts
-@property (nonatomic) BOOL topPosts;
+@property (nonatomic) ViewSortingType viewSortingType;
 
-// should equal YES if looking at 'New' posts
-@property (nonatomic) BOOL recentPosts;
-
-// should equal YES if looking at 'My' posts
-@property (nonatomic) BOOL myPosts;
-
-// should equal YES if looking at tag-filtered posts
-@property (nonatomic) BOOL tagPosts;
-
-- (id)initAsTopPostsWithDataController:(DataController *)controller;
-- (id)initAsNewPostsWithDataController:(DataController *)controller;
-- (id)initAsMyPostsWithDataController:(DataController *)controller;
-- (id)initAsTagPostsWithDataController:(DataController *)controller
-                 withTagMessage:(NSString*)tagMessage;
+- (id)initAsType:(ViewSortingType)type withDataController:(DataController *)controller;
 
 @end
 

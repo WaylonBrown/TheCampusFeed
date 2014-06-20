@@ -46,7 +46,7 @@
 
 @end
 
-typedef NS_ENUM(NSInteger, ViewSortingStyle)
+typedef NS_ENUM(NSInteger, ViewSortingType)
 {
     ALL,
     TOP,

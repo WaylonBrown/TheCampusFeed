@@ -33,12 +33,14 @@
 #pragma mark - Create ViewControllers
     
     // *** Top Posts - PostsViewController *** //
-    self.topPostsController = [[PostsViewController alloc] initAsTopPostsWithDataController:self.dataController];
+    self.topPostsController = [[PostsViewController alloc] initAsType:TOP
+                                                   withDataController:self.dataController];
     UINavigationController *topPostsNavController = [[UINavigationController alloc] initWithRootViewController:self.topPostsController];
     // *************************************** //
     
     // *** New Posts - PostsViewController *** //
-    self.recentPostsController = [[PostsViewController alloc] initAsNewPostsWithDataController:self.dataController];
+    self.recentPostsController = [[PostsViewController alloc] initAsType:RECENT
+                                                      withDataController:self.dataController];
     UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:self.recentPostsController];
     // *************************************** //
     

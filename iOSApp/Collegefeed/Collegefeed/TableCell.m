@@ -90,8 +90,11 @@
 {
     NSString             *tagMessage = [url absoluteString];
     MasterViewController *masterView        = (MasterViewController*)self.delegate;
-    PostsViewController  *controller = [[PostsViewController alloc] initAsTagPostsWithDataController:masterView.dataController
-                                                                                      withTagMessage:tagMessage];
+    
+    PostsViewController  *controller = [[PostsViewController alloc] initAsType:TAG
+                                                            withDataController:masterView.dataController];
+    [controller setTagMessage:tagMessage];
+    
     if (masterView.dataController.nearbyColleges.count > 0)
     {
         [controller placeCreatePost];
