@@ -130,6 +130,7 @@
 
 - (IBAction)changeFeed;
 {   // User wants to change the feed (all colleges, nearby college, or other)
+
     FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_NEARBY_OTHER];
     [controller setFullCollegeList:self.dataController.collegeList];
     [controller setNearbyCollegeList:self.dataController.nearbyColleges];
@@ -215,7 +216,7 @@
     [self.dataController createPostWithMessage:message withCollegeId:collegeId];
 }
 
-#pragma mark - CollegeSelectionProtocol Delegate Methods
+#pragma mark - FeedSelectionProtocol Delegate Methods
 
 - (void)submitSelectionForFeedWithCollegeOrNil:(College *)college
 {
@@ -223,11 +224,21 @@
     
     
 }
+- (void)showDialogForAllColleges
+{  
+    FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_COLLEGES_WITH_SEARCH];
+    [controller setFullCollegeList:self.dataController.collegeList];
+    [controller setFeedDelegate:self];
+    [self.navigationController presentViewController:controller animated:YES completion:nil];
+}
+
+#pragma mark - CollegeForPostingSelectionProtocol Delegate Methods
 
 - (void)submitSelectionForPostWithCollege:(College *)college
 {
     // TODO: This should get called when user selects which nearby college they want to post to
 
 }
+
 
 @end

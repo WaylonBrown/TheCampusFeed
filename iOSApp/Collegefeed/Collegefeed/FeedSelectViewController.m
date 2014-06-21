@@ -51,28 +51,44 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     bool isNearColleges = self.nearbyCollegeList.count > 0;
-    return isNearColleges ? 3 : 2;
+
+    switch (self.type)
+    {
+        case ALL_NEARBY_OTHER:
+            return isNearColleges ? 3 : 2;
+            break;
+        default:
+            break;
+    }
+    return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0 || section == 2)
+    bool isNearColleges = self.nearbyCollegeList.count > 0;
+    
+    switch (self.type)
     {
-        return 1;
+        case ALL_NEARBY_OTHER:
+            if (isNearColleges && section == 1)
+            {
+                return self.nearbyCollegeList.count;
+            }
+            else
+            {
+                return 1;
+            }
+            break;
+        case ALL_COLLEGES_WITH_SEARCH:
+            // TODO: this needs to account for the search filtration
+            return self.fullCollegeList.count;
+            break;
+        case ONLY_NEARBY_COLLEGES:
+            return self.nearbyCollegeList.count;
+            break;
+        default:
+            break;
     }
-
-    NSInteger numNearbyColleges = self.nearbyCollegeList.count;
-    NSInteger numAllColleges = self.fullCollegeList.count;
-    if (section == 1)
-    {
-        return (numNearbyColleges > 0)
-            ? numNearbyColleges
-            : numAllColleges;
-    }
-    else if (section == 2 && numNearbyColleges > 0)
-    {
-        return numAllColleges;
-    }
-    return 0;
+    return 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -119,13 +135,19 @@
             if (indexPath.section == 2)
             {   // Show new dialog of: all colleges to let user choose one they are not close to
                 
-                FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_COLLEGES_WITH_SEARCH];
-                [controller setFullCollegeList:self.fullCollegeList];
-                [controller setFeedDelegate:self.feedDelegate];
-                [self dismiss];
+                [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+                    [self.feedDelegate showDialogForAllColleges];
+                }];
+
+                
+//                [self dismiss];
+
+//                FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_COLLEGES_WITH_SEARCH];
+//                [controller setFullCollegeList:self.fullCollegeList];
+//                [controller setFeedDelegate:self.feedDelegate];
                 
                 // TODO: not working yet
-                [self.navigationController presentViewController:controller animated:YES completion:nil];
+//                [self.navigationController presentViewController:controller animated:YES completion:nil];
             }
             else
             {   // When user chooses all colleges (nil selection) or one of the nearby ones

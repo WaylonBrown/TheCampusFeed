@@ -14,6 +14,7 @@
 @protocol FeedSelectionProtocol <NSObject>
 
 - (void)submitSelectionForFeedWithCollegeOrNil:(College *)college;
+- (void)showDialogForAllColleges;
 
 @end
 
