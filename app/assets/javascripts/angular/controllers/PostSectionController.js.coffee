@@ -96,7 +96,6 @@ angular.module("cfeed").controller "PostSectionController", [
 
     $scope.openComments = ($event, post) ->
       $event.stopPropagation()
-      $rootScope.emit('
       return
 
     $scope.$on "show.bs.collapse", ->

@@ -11,10 +11,12 @@ angular.module("cfeed").controller "CommentSectionController", [
     $scope.commentOptions.searchText = ""
     $scope.commentOptions.comments = []
     $scope.commentOptions.error = false
+    $scope.commentOptions.postId = ""
+
     $scope.populateComments = ->
       searchPortion = ""
       searchPortion = "/search/" + $scope.commentOptions.searchText  if $scope.commentOptions.searchText.trim().length > 0
-      $http.get("api/v1/comments" + searchPortion + "?page=" + $scope.commentOptions.pageNo + "&per_page=" + $scope.commentOptions.perPage).success((res) ->
+      $http.get("api/v1/posts/" + $scope.commentOptions.postId + "/comments" + searchPortion + "?page=" + $scope.commentOptions.pageNo + "&per_page=" + $scope.commentOptions.perPage).success((res) ->
         $scope.commentOptions.error = false
         $scope.commentOptions.comments = res
         return
@@ -28,7 +30,7 @@ angular.module("cfeed").controller "CommentSectionController", [
     $scope.setTotal = ->
       searchPortion = ""
       searchPortion = "/search/" + $scope.commentOptions.searchText  if $scope.commentOptions.searchText.trim().length > 0
-      $http.get("api/v1/comments" + searchPortion + "/count").success((res) ->
+      $http.get("api/v1/posts/" + $scope.commentOptions.postId + "/comments" + searchPortion + "/count").success((res) ->
         $scope.commentOptions.error = false
         $scope.commentOptions.total = res
         return
@@ -40,8 +42,9 @@ angular.module("cfeed").controller "CommentSectionController", [
       return
 
     $scope.updateTotalAndPopulate = ->
-      $scope.setTotal()
-      $scope.populateComments()
+      if $scope.commentOptions.postId.length > 0
+        $scope.setTotal()
+        $scope.populateComments()
       return
 
     $scope.updateTotalAndPopulate()
@@ -53,7 +56,7 @@ angular.module("cfeed").controller "CommentSectionController", [
       )
       modal.result.then ((newComment) ->
         console.log newComment
-        $http.comment("api/v1/colleges/" + newComment.college_id + "/comments",
+        $http.post("api/v1/posts/" + $scope.commentOptions.postId + "/comments",
           comment:
             text: newComment.text
         ).then ((res) ->
@@ -79,16 +82,15 @@ angular.module("cfeed").controller "CommentSectionController", [
     $scope.finishedEditingComment = (comment, sendChanges) ->
       comment.isEditing = false
       if sendChanges
-        $http.put("api/v1/colleges/" + comment.college_id + "/comments/" + comment.id, comment).then (res) ->
+        $http.put("api/v1/posts/" + comment.post_id + "/comments/" + comment.id, comment).then (res) ->
           $scope.updateTotalAndPopulate()
-          alsdfslkdf
           return
 
       return
 
     $scope.deleteComment = ($event, comment) ->
       $event.stopPropagation()
-      $http.delete("api/v1/colleges/" + comment.college_id + "/comments/" + comment.id).then (res) ->
+      $http.delete("api/v1/posts/" + comment.post_id + "/comments/" + comment.college_id + "/comments/" + comment.id).then (res) ->
         $scope.updateTotalAndPopulate()
         return
 

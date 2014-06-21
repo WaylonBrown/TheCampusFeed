@@ -2,6 +2,19 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   before_action :set_post, only: [:create, :index]
 
+  def search
+    comments = Comment.search_by_text(params[:searchText])
+    paginate json: comments
+  end
+
+  def searchCount
+    render json: Comment.search_by_text(params[:searchText]).count
+  end
+
+  def count
+    render json: Comment.all.count
+  end
+
   # GET /comments
   # GET /comments.json
   def index
