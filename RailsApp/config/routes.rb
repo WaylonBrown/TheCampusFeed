@@ -38,6 +38,9 @@ Postfeed::Application.routes.draw do
       get '/posts/recent' => 'posts#recent'
       get '/posts/trending' => 'posts#trending'
       resources :posts do
+        get '/comments/search/:searchText' => 'comments#search'
+        get '/comments/search/:searchText/count' => 'comments#searchCount'
+        get '/comments/count' => 'comments#count'
         resources :comments, except: [:show] do
           get 'votes/score' => 'votes#score'
           resources :votes, only: [:create]
@@ -65,6 +68,9 @@ Postfeed::Application.routes.draw do
         get '/posts/recent' => 'posts#recent'
         get '/posts/trending' => 'posts#trending'
         resources :posts do
+          get '/comments/search/:searchText' => 'comments#search'
+          get '/comments/search/:searchText/count' => 'comments#searchCount'
+          get '/comments/count' => 'comments#count'
           resources :comments, except: [:show] do
             get 'votes/score' => 'votes#score'
             resources :votes, only: [:create]
