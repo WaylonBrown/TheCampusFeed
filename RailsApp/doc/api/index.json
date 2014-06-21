@@ -31,6 +31,16 @@
       ]
     },
     {
+      "name": "Flags",
+      "examples": [
+        {
+          "description": "Flagging post ID 101",
+          "link": "flags/flagging_post_id_.json",
+          "groups": "all"
+        }
+      ]
+    },
+    {
       "name": "Posts",
       "examples": [
         {

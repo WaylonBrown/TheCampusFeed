@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140617055020) do
+ActiveRecord::Schema.define(version: 20140618055958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,14 @@ ActiveRecord::Schema.define(version: 20140617055020) do
   end
 
   add_index "comments", ["post_id"], name: "index_comments_on_post_id", using: :btree
+
+  create_table "flags", force: true do |t|
+    t.integer  "votable_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "flags", ["votable_id"], name: "index_flags_on_votable_id", using: :btree
 
   create_table "partials", force: true do |t|
     t.string   "name"

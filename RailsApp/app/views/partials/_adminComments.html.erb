@@ -1,0 +1,71 @@
+<div ng-controller="CommentSectionController">
+  <accordion-group>
+    <accordion-heading>
+      <%= fa_icon 'comment'%>
+      Comments
+      <%= fa_icon 'plus', class: 'pull-right tip', 
+        'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 
+        title: 'add comment', 'hasTooltip' => '', 'ng-click' => 'openCreateModal($event)' %>
+    </accordion-heading>
+
+    <form class="" role="search" ng-submit="">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-2">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Post Id" ng-model="commentOptions.searchText" ng-change="updateTotalAndPopulate()"/>
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-default" ng>
+                  <%= fa_icon 'file-text' %>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-10">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search" ng-model="commentOptions.searchText" ng-change="updateTotalAndPopulate()"/>
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-default" ng>
+                  <%= fa_icon 'search' %>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <alert ng-show="commentOptions.error" type="danger">Error in query.</alert>
+    <accordion close-others="true">
+      <accordion-group ng-repeat="comment in commentOptions.comments" 
+          ng-mouseenter="comment.isOpen = true" 
+          is-open="comment.isOpen">
+        <accordion-heading>
+          {{comment.text}}
+          <%= fa_icon 'trash-o', class: 'pull-right tip',
+            'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 
+            title: 'delete', 'hasTooltip' => '', 'ng-click' => 'deleteComment($event, comment)' %>
+          <%= fa_icon 'edit', class: 'pull-right tip', 
+            'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 
+            title: 'edit', 'hasTooltip' => '', 'ng-click' => 'editComment($event, comment)' %>
+        </accordion-heading>
+        <form>
+          <div class="row">
+            <div class="col-md-3" ng-repeat="(key,value) in comment" ng-if="key != 'comments'">
+              <b>{{key}}:</b> 
+              <u ng-hide="comment.isEditing" class="pull-right commentValue">{{value}}</u>
+              <input type="text" ng-model="comment[key]" ng-show="comment.isEditing" class="" />
+            </div>
+          </div>
+          <input type="button" ng-click="finishedEditingComment(comment, true)" ng-show="comment.isEditing" class="btn btn-info" value="Done">
+            <input type="button" ng-click="finishedEditingComment(comment, false)" ng-show="comment.isEditing" class="btn btn-warning" value="Cancel">
+            </form>
+
+          </accordion-group>
+        </accordion>
+        <pagination total-items="commentOptions.total" ng-model="commentOptions.pageNo" 
+            items-per-page="commentOptions.perPage"
+            max-size="10" class="pagination" boundary-links="true"
+            ng-change="populateComments()"></pagination>
+      </accordion-group>
+    </div>
