@@ -70,7 +70,7 @@
       <AdditionalOptions>
       </AdditionalOptions>
       <LocationScenarioReference
-         identifier = "../../Collegefeed/aggieland.gpx"
+         identifier = "../../Collegefeed/austin.gpx"
          referenceType = "0">
       </LocationScenarioReference>
    </LaunchAction>

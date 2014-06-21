@@ -10,12 +10,12 @@
 
 #import "ChildCellDelegate.h"
 #import "CreatePostCommentViewController.h"
-#import "SelectCollegeViewController.h"
+#import "FeedSelectViewController.h"
 #import "DataController.h"
 
-@protocol CollegeSelectionProtocol;
+@protocol FeedSelectionProtocol;
 
-@interface MasterViewController : UIViewController <ChildCellDelegate, CreationViewProtocol, CollegeSelectionProtocol>
+@interface MasterViewController : UIViewController <ChildCellDelegate, CreationViewProtocol, FeedSelectionProtocol, CollegeForPostingSelectionProtocol>
 
 @property (strong, nonatomic) DataController *dataController;
 

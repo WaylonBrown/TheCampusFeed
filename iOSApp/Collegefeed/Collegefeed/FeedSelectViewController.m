@@ -1,28 +1,25 @@
 //
-//  SelectCollegeViewController.m
+//  FeedSelectViewController.m
 //  Collegefeed
 //
 //  Created by Patrick Sheehan on 6/18/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
-#import "SelectCollegeViewController.h"
+#import "FeedSelectViewController.h"
 #import "Shared.h"
 #import "Models/Models/College.h"
 
-@interface SelectCollegeViewController ()
+@implementation FeedSelectViewController
 
-@end
-
-@implementation SelectCollegeViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithType:(FeedSelectorType)type
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super init];
     if (self)
     {
-        self.modalPresentationStyle = UIModalPresentationCustom;
-        self.transitioningDelegate = self;
+        [self setType:type];
+        [self setModalPresentationStyle:UIModalPresentationCustom];
+        [self setTransitioningDelegate:self];
     }
     return self;
 }
@@ -58,7 +55,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0)
+    if (section == 0 || section == 2)
     {
         return 1;
     }
@@ -89,11 +86,14 @@
     }
     
     NSString *cellLabel = @"";
-    if (indexPath.section == 0)
+    
+    if (self.type == ALL_NEARBY_OTHER && indexPath.section == 0)
     {
-        [cell.textLabel setTextAlignment:NSTextAlignmentCenter];
-        [cell.textLabel setFont:CF_FONT_LIGHT(18)];
         cellLabel = @"All Colleges";
+    }
+    else if (self.type == ALL_NEARBY_OTHER && indexPath.section == 2)
+    {
+        cellLabel = @"Choose a College";
     }
     else
     {
@@ -101,47 +101,73 @@
         if (college != nil)
         {
             cellLabel = college.name;
-            [cell.textLabel setFont:CF_FONT_LIGHT(14)];
         }
     }
-    
+    [cell.textLabel setFont:CF_FONT_LIGHT(18)];
+    [cell.textLabel setTextAlignment:NSTextAlignmentCenter];
     [cell.textLabel setText:cellLabel];
     return cell;
 }
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    College *college = nil;
-    if (indexPath.section != 0)
+    College *college = [self getCollegeForIndexPath:indexPath];
+    
+    switch (self.type)
     {
-        college = [self getCollegeForIndexPath:indexPath];
+        case ALL_NEARBY_OTHER:
+        {   // Initial prompt given to user to select which feed to view
+            if (indexPath.section == 2)
+            {   // Show new dialog of: all colleges to let user choose one they are not close to
+                
+                FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_COLLEGES_WITH_SEARCH];
+                [controller setFullCollegeList:self.fullCollegeList];
+                [controller setFeedDelegate:self.feedDelegate];
+                [self dismiss];
+                
+                // TODO: not working yet
+                [self.navigationController presentViewController:controller animated:YES completion:nil];
+            }
+            else
+            {   // When user chooses all colleges (nil selection) or one of the nearby ones
+                [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:college];
+            }
+            break;
+        }
+        case ALL_COLLEGES_WITH_SEARCH:
+        {   // When user wants to see all colleges and be able to search through them
+            [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:college];
+            break;
+        }
+        case ONLY_NEARBY_COLLEGES:
+        {   // When user is selecting which of nearby colleges to post to
+            [self.postingDelegate submitSelectionForPostWithCollege:college];
+            break;
+        }
+        default: break;
     }
     
-    [self.delegate submitSelectionWithCollegeOrNil:college];
     [self dismiss];
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    const int headerWidth = tableView.frame.size.width;
+
     if (section == 0)
     {
-        return [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
+        return [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerWidth, 1)];
     }
-    
-    const int headerWidth = self.view.frame.size.width;
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
     UILabel *headerLabel;
-    
-    //**************
-    // Keep messing with the view set up here for the choose feed dialog
-    //**************
     
     if (section == 1 && self.nearbyCollegeList.count > 0)
     {   // section of colleges 'near you'
         
         headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
         [headerLabel setText:@"Near You"];
+        
         UIImageView *gpsIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gps.png"]];
-        [gpsIcon setFrame:CGRectMake((headerWidth / 2) + 50, 5, 20, 20)];
+        [gpsIcon setFrame:CGRectMake((headerWidth / 2) + 35, 5, 20, 20)];
         
         [headerView addSubview:gpsIcon];
         
@@ -155,7 +181,6 @@
     [headerView addSubview:headerLabel];
     [headerLabel setTextAlignment:NSTextAlignmentCenter];
     [headerLabel setFont:CF_FONT_LIGHT(14)];
-    [headerLabel setTintColor:[Shared getCustomUIColor:CF_WHITE]];
     [headerView setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
     
     return headerView;
@@ -216,24 +241,71 @@
 #pragma mark - Private Helpers
 
 - (College *)getCollegeForIndexPath:(NSIndexPath *)indexPath
-{
+{   // Given the indexPath, and knowing own FeedSelectorType,
+    // Call the appropriate delegate's method to alert about the
+    // college selection and in what context
+    
     NSInteger numNearbyColleges = self.nearbyCollegeList.count;
     NSInteger row = indexPath.row;
     NSInteger section = indexPath.section;
-    College *college = nil;
     
-    if (section == 1)
+    switch (self.type)
     {
-        college = (numNearbyColleges > row)
-        ? [self.nearbyCollegeList objectAtIndex:row]
-        : [self.fullCollegeList objectAtIndex:row];
+        case ALL_NEARBY_OTHER:
+        {   // Initial prompt given to user to select which feed to view
+//            if (section == 0)
+//            {
+//                return nil;
+////                college = nil;
+//            }
+            /*else*/if (section == 1 && numNearbyColleges > row)
+            {
+//                college =
+                return self.nearbyCollegeList[row];
+                
+                //****
+//                [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:college];
+            }
+            else // if (section == 2 || (section == 1 && numNearbyColleges is too small))
+            {
+                // Show all colleges to let user choose one they are not close to
+                
+                
+//                //****
+//                FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_COLLEGES_WITH_SEARCH];
+//                [controller setFullCollegeList:self.fullCollegeList];
+//                [controller setFeedDelegate:self.feedDelegate];
+//                [self dismiss];
+//                [self.navigationController presentViewController:controller animated:YES completion:nil];
+            }
+            break;
+        }
+        case ALL_COLLEGES_WITH_SEARCH:
+        {   // When user wants to see all colleges and be able to search through them
+            
+//            college =
+            return self.fullCollegeList[row];
+            
+            //*****
+//            [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:college];
+            
+            // TODO: also need to account for if it has been filtered by a search
+            //          (see CollegePickerViewController.m)
+            
+            break;
+        }
+        case ONLY_NEARBY_COLLEGES:
+        {   // When user is selecting which of nearby colleges to post to
+            
+//            college =
+            return self.nearbyCollegeList[row];
+//            [self.postingDelegate submitSelectionForPostWithCollege:college];
+            break;
+        }
+        default: break;
     }
-    else if (section == 2 && numNearbyColleges > 0)
-    {
-        college = [self.fullCollegeList objectAtIndex:row];
-    }
-    
-    return college;
+
+    return nil;
 }
 
 @end

@@ -15,8 +15,8 @@
 		533FCA4F193FCD8200754C07 /* austin.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 533FCA4E193FCD8200754C07 /* austin.gpx */; };
 		5350557719514587009C1911 /* CreatePostCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5350557519514587009C1911 /* CreatePostCommentViewController.m */; };
 		5350557819514587009C1911 /* CreatePostCommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5350557619514587009C1911 /* CreatePostCommentViewController.xib */; };
-		5350557F19529FCA009C1911 /* SelectCollegeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5350557D19529FCA009C1911 /* SelectCollegeViewController.m */; };
-		5350558019529FCA009C1911 /* SelectCollegeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5350557E19529FCA009C1911 /* SelectCollegeViewController.xib */; };
+		5350557F19529FCA009C1911 /* FeedSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5350557D19529FCA009C1911 /* FeedSelectViewController.m */; };
+		5350558019529FCA009C1911 /* FeedSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5350557E19529FCA009C1911 /* FeedSelectViewController.xib */; };
 		5350558F1953C75C009C1911 /* gps.png in Resources */ = {isa = PBXBuildFile; fileRef = 5350558E1953C75C009C1911 /* gps.png */; };
 		5390A91D1914B76800ACD082 /* arrowdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9141914B76800ACD082 /* arrowdown.png */; };
 		5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9151914B76800ACD082 /* arrowdownred.png */; };
@@ -127,9 +127,9 @@
 		5350557419514587009C1911 /* CreatePostCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatePostCommentViewController.h; sourceTree = "<group>"; };
 		5350557519514587009C1911 /* CreatePostCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatePostCommentViewController.m; sourceTree = "<group>"; };
 		5350557619514587009C1911 /* CreatePostCommentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreatePostCommentViewController.xib; sourceTree = "<group>"; };
-		5350557C19529FCA009C1911 /* SelectCollegeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectCollegeViewController.h; sourceTree = "<group>"; };
-		5350557D19529FCA009C1911 /* SelectCollegeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectCollegeViewController.m; sourceTree = "<group>"; };
-		5350557E19529FCA009C1911 /* SelectCollegeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectCollegeViewController.xib; sourceTree = "<group>"; };
+		5350557C19529FCA009C1911 /* FeedSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedSelectViewController.h; sourceTree = "<group>"; };
+		5350557D19529FCA009C1911 /* FeedSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedSelectViewController.m; sourceTree = "<group>"; };
+		5350557E19529FCA009C1911 /* FeedSelectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedSelectViewController.xib; sourceTree = "<group>"; };
 		5350558E1953C75C009C1911 /* gps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gps.png; sourceTree = "<group>"; };
 		5390A9141914B76800ACD082 /* arrowdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdown.png; sourceTree = "<group>"; };
 		5390A9151914B76800ACD082 /* arrowdownred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdownred.png; sourceTree = "<group>"; };
@@ -238,9 +238,9 @@
 		5350558119529FD5009C1911 /* Select College */ = {
 			isa = PBXGroup;
 			children = (
-				5350557C19529FCA009C1911 /* SelectCollegeViewController.h */,
-				5350557D19529FCA009C1911 /* SelectCollegeViewController.m */,
-				5350557E19529FCA009C1911 /* SelectCollegeViewController.xib */,
+				5350557C19529FCA009C1911 /* FeedSelectViewController.h */,
+				5350557D19529FCA009C1911 /* FeedSelectViewController.m */,
+				5350557E19529FCA009C1911 /* FeedSelectViewController.xib */,
 			);
 			name = "Select College";
 			sourceTree = "<group>";
@@ -580,7 +580,7 @@
 				53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */,
 				53AB57C5194ABD11001D1B7B /* Omnes-Semibold.ttf in Resources */,
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,
-				5350558019529FCA009C1911 /* SelectCollegeViewController.xib in Resources */,
+				5350558019529FCA009C1911 /* FeedSelectViewController.xib in Resources */,
 				53AB57BC194AAFF8001D1B7B /* mplus-2c-bold.ttf in Resources */,
 				5390A9201914B76800ACD082 /* arrowupblue.png in Resources */,
 				533FCA4D193EDE3B00754C07 /* aggieland.gpx in Resources */,
@@ -620,7 +620,7 @@
 			files = (
 				5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */,
 				5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */,
-				5350557F19529FCA009C1911 /* SelectCollegeViewController.m in Sources */,
+				5350557F19529FCA009C1911 /* FeedSelectViewController.m in Sources */,
 				53F878A119133F60002A578B /* AppDelegate.m in Sources */,
 				53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */,
 				53AE73C71928354F00BE6B02 /* DataController.m in Sources */,
