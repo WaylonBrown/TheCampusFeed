@@ -18,64 +18,33 @@
 
 #pragma mark - Initializations
 
-- (id)initAsTopPostsWithAppData:(AppData *)data
+- (id)initAsType:(ViewSortingType)type withDataController:(DataController *)controller
 {
-    self = [super initWithAppData:data];
+    self = [super initWithDataController:controller];
     if (self)
     {
-        [self setTopPosts:YES];
-        [self setRecentPosts:NO];
-        [self setMyPosts:NO];
-        [self setTagPosts:NO];
+        [self setViewSortingType:type];
         [self switchToAllColleges];
-
-        [self setList:data.dataController.topPostsAllColleges];
-    }
-    return self;
-}
-- (id)initAsNewPostsWithAppData:(AppData *)data
-{
-    self = [super initWithAppData:data];
-    if (self)
-    {
-        [self setTopPosts:NO];
-        [self setRecentPosts:YES];
-        [self setMyPosts:NO];
-        [self setTagPosts:NO];
-        [self switchToAllColleges];
-        [self setList:data.dataController.recentPostsAllColleges];
         
-    }
-    return self;
-}
-- (id)initAsMyPostsWithAppData:(AppData *)data
-{
-    self = [super initWithAppData:data];
-    if (self)
-    {
-        [self setTopPosts:NO];
-        [self setRecentPosts:NO];
-        [self setMyPosts:YES];
-        [self setTagPosts:NO];
-        [self switchToAllColleges];
-        [self setList:data.dataController.userPostsAllColleges];
+        switch (type)
+        {
+            case TOP:
+                [self setList:controller.topPostsAllColleges];
+                break;
+            case RECENT:
+                [self setList:controller.recentPostsAllColleges];
+                break;
+            case USER:
+                [self setList:controller.userPostsAllColleges];
+                break;
+            case TAG:
+                [self setList:controller.allPostsWithTag];
+                break;
+            default:
+                break;
+        }
         
-    }
-    return self;
-}
-- (id)initAsTagPostsWithAppData:(AppData *)data
-                 withTagMessage:(NSString*)tagMessage
-{
-    self = [super initWithAppData:data];
-    if (self)
-    {
-        [self setTopPosts:NO];
-        [self setRecentPosts:NO];
-        [self setMyPosts:NO];
-        [self setTagPosts:YES];
-        [self setTagMessage:tagMessage];
-        [self switchToAllColleges];
-        [self setList:data.dataController.allPostsWithTag];
+        
     }
     return self;
 }
@@ -85,6 +54,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
     [super viewWillAppear:animated];
+    if (self.viewSortingType == TAG && self.tagMessage == nil)
+    {
+        NSException *e = [NSException exceptionWithName:@"NoTagFoundException" reason:@"No Tag message provided for a PostsView filtered by Tag" userInfo:nil];
+        [e raise];
+    }
 }
 - (void)viewDidLoad
 {
@@ -93,7 +67,7 @@
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
     [self refresh];
-    [self setCommentViewController:[[CommentViewController alloc] initWithAppData:self.appData]];
+    [self setCommentViewController:[[CommentViewController alloc] initWithDataController:self.dataController]];
 }
 - (void)loadView
 {
@@ -150,33 +124,34 @@
 
 - (void)switchToAllColleges
 {
-    if (self.topPosts)
+    if (self.viewSortingType == TOP)
     {
-        [self.appData.dataController fetchTopPosts];
+        [self.dataController fetchTopPosts];
     }
-    else if (self.recentPosts)
+    else if (self.viewSortingType == RECENT)
     {
-        [self.appData.dataController fetchNewPosts];
+        [self.dataController fetchNewPosts];
     }
-    else if (self.tagPosts && self.tagMessage != nil)
+    else if (self.viewSortingType == TAG && self.tagMessage != nil)
     {
-        [self.appData.dataController fetchAllPostsWithTagMessage:self.tagMessage];
+        [self.dataController fetchAllPostsWithTagMessage:self.tagMessage];
     }
 }
 - (void)switchToSpecificCollege
 {
-    if (self.topPosts)
+    if (self.viewSortingType == TOP)
     {
-        [self.appData.dataController fetchTopPostsWithCollegeId:self.appData.currentCollege.collegeID];
+        // TODO: this is calling dataController's function and passing its own variable to itself
+        [self.dataController fetchTopPostsWithCollegeId:self.dataController.collegeInFocus.collegeID];
     }
-    else if (self.recentPosts)
+    else if (self.viewSortingType == RECENT)
     {
-        [self.appData.dataController fetchNewPostsWithCollegeId:self.appData.currentCollege.collegeID];
+        [self.dataController fetchNewPostsWithCollegeId:self.dataController.collegeInFocus.collegeID];
     }
-    else if (self.tagPosts && self.tagMessage != nil)
+    else if (self.viewSortingType == TAG && self.tagMessage != nil)
     {
-        [self.appData.dataController fetchAllPostsWithTagMessage:self.tagMessage
-                                                   withCollegeId:self.appData.currentCollege.collegeID];
+        [self.dataController fetchAllPostsWithTagMessage:self.tagMessage
+                                                   withCollegeId:self.dataController.collegeInFocus.collegeID];
     }
 }
 
@@ -184,15 +159,23 @@
 
 - (void)refresh
 {   // refresh this post view
-    if (self.appData.allColleges)
+    if (self.dataController.showingAllColleges)
     {
         [self switchToAllColleges];
     }
-    else if (self.appData.specificCollege)
+    else if (self.dataController.showingSingleCollege)
     {
         [self switchToSpecificCollege];
     }
     [super refresh];
+}
+
+#pragma mark - CreationViewProtocl Delegate Methods
+
+- (void)submitPostCommentCreationWithMessage:(NSString *)message
+{
+    [self.dataController createPostWithMessage:message
+                                 withCollegeId:self.dataController.collegeInFocus.collegeID];
 }
 
 @end

@@ -6,33 +6,36 @@
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
+// Models
+#import "Models/Models/Post.h"
+#import "Models/Models/College.h"
+
+// Full views
 #import "MasterViewController.h"
 #import "CommentViewController.h"
-#import "CollegePickerViewController.h"
+
+// Minor views and dialogs
 #import "TableCell.h"
-#import "Models/Models/Post.h"
+
+// Universal app information
 #import "DataController.h"
 #import "Shared.h"
 #import "AppDelegate.h"
-#import "Models/Models/College.h"
-#import "NearbyCollegeSelector.h"
-#import "NewPostAlertView.h"
-#import "CreatePostCommentViewController.h"
+
 
 @implementation MasterViewController
 
 #pragma mark - Initialization and View Loading
 
-- (id)initWithAppData:(AppData *)data
+- (id)initWithDataController:(DataController *)controller
 {
     self = [super initWithNibName:@"MasterView" bundle:nil];
     if (self)
     {
-        [self setAppData:data];
+        [self setDataController:controller];
         
         // Initialize a loading indicator, refresh control, and nearby college selector
         self.refreshControl     = [[UIRefreshControl alloc] init];
-        self.selector           = [[NearbyCollegeSelector alloc] initWithAppData:self.appData];
         self.activityIndicator  = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 
         [self.refreshControl addTarget:self action:@selector(refresh)
@@ -47,7 +50,7 @@
 
     // Show loading indicator until a nearby college is found,
     // then replace it with a create post button
-    if ([self.appData isNearCollege])
+    if ([self.dataController isNearCollege])
     {
         [self placeCreatePost];
     }
@@ -89,18 +92,15 @@
 }
 - (void)placeCreatePost
 {   // Place the create post button in the navigation bar (instead of loading indicator)
-
     [self.activityIndicator stopAnimating];
-
     UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
                                                                                   target:self action:@selector(create)];
     [self.navigationItem setRightBarButtonItem:createButton];
-    
     [self refresh];
 }
 - (void)foundLocation
 {   // Called when the user's location is determined. Allow them to create posts
-    if ([self.appData isNearCollege])
+    if ([self.dataController isNearCollege])
     {
         [self placeCreatePost];
     }
@@ -130,34 +130,47 @@
 
 - (IBAction)changeFeed;
 {   // User wants to change the feed (all colleges, nearby college, or other)
-    
-    CollegePickerViewController *controller = self.appData.collegeFeedPicker;
-    [controller setDelegate:self];
-    [self.navigationController pushViewController:controller animated:YES];
+
+    FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_NEARBY_OTHER];
+    [controller setFullCollegeList:self.dataController.collegeList];
+    [controller setNearbyCollegeList:self.dataController.nearbyColleges];
+    [controller setFeedDelegate:self];
+    [self.navigationController presentViewController:controller animated:YES completion:nil];
     [self refresh];
+}
+- (void)showCreationDialogForCollege:(College *) college
+{
+    CreatePostCommentViewController *alert = [[CreatePostCommentViewController alloc] initWithType:POST withCollege:college];
+    [alert setDelegate:self];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 - (void)create
 {   // Display popup to let user type a new post
-    CreatePostCommentViewController *alert = [CreatePostCommentViewController new];
-    [self presentViewController:alert animated:YES completion:nil];
     
-//    
-//    NSArray *nearbyColleges = self.appData.nearbyColleges;
-//    if (nearbyColleges.count == 0)
-//    {
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-//                                                        message:@"You cannot post because you are not within range of any known colleges"
-//                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//        [alert show];
-//    }
-//    else
-//    {
-//        [self.selector displaySelectorForNearbyColleges:nearbyColleges];
-//    }
+    NSArray *nearbyColleges = self.dataController.nearbyColleges;
+    if (nearbyColleges.count == 0)
+    {   // None nearby
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"You cannot post because you are not within range of any known colleges"
+                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    else if (nearbyColleges.count == 1)
+    {   // One college is nearby
+        College *collegeNearby = [nearbyColleges objectAtIndex:0];
+        [self showCreationDialogForCollege:collegeNearby];
+    }
+    else
+    {   // Multiple colleges are nearby
+        FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ONLY_NEARBY_COLLEGES];
+        [controller setNearbyCollegeList:self.dataController.nearbyColleges];
+        [controller setPostingDelegate:self];
+        [self.navigationController presentViewController:controller animated:YES completion:nil];
+    }
 }
 - (void)refresh
 {   // refresh the current view
-    NSString *feedName = self.appData.currentCollege.name;
+    NSString *feedName = self.dataController.collegeInFocus.name;
     if (feedName == nil)
     {
         feedName = @"All Colleges";
@@ -171,28 +184,61 @@
 
 - (void)castVote:(Vote *)vote
 {   // vote was cast in a table cell
-    [self.appData.dataController createVote:vote];
+    [self.dataController createVote:vote];
 }
 - (void)selectedCollegeOrNil:(College *)college
                         from:(CollegePickerViewController *)sender
 {   // A feed was selected from either the 'top colleges' in tab bar or from the 'change' button on toolbar
-    
-    [self.appData switchedToSpecificCollegeOrNil:college];
-    
-    if (sender.topColleges)
-    {   // change to 'top posts' tab if selection made from 'top colleges' tab
-        [self.tabBarController setSelectedIndex:0];
-    }
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    [self refresh];
-    //    if (college == nil)
-//    {
-//        [self.currentFeedLabel setText:@"All Colleges"];
+//
+//    [self.dataController switchedToSpecificCollegeOrNil:college];
+//    
+//    if (sender.topColleges)
+//    {   // change to 'top posts' tab if selection made from 'top colleges' tab
+//        [self.tabBarController setSelectedIndex:0];
 //    }
-//    else
-//    {
-//        [self.currentFeedLabel setText:college.name];
-//    }
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+//    [self refresh];
+//    //    if (college == nil)
+////    {
+////        [self.currentFeedLabel setText:@"All Colleges"];
+////    }
+////    else
+////    {
+////        [self.currentFeedLabel setText:college.name];
+////    }
 }
+
+#pragma mark - CreationViewProtocol Delegate Methods
+
+- (void)submitPostCommentCreationWithMessage:(NSString *)message
+                                 withCollegeId:(long)collegeId
+{
+    [self.dataController createPostWithMessage:message withCollegeId:collegeId];
+}
+
+#pragma mark - FeedSelectionProtocol Delegate Methods
+
+- (void)submitSelectionForFeedWithCollegeOrNil:(College *)college
+{
+    // TODO: This should get called when making a feed selection
+    
+    
+}
+- (void)showDialogForAllColleges
+{  
+    FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_COLLEGES_WITH_SEARCH];
+    [controller setFullCollegeList:self.dataController.collegeList];
+    [controller setFeedDelegate:self];
+    [self.navigationController presentViewController:controller animated:YES completion:nil];
+}
+
+#pragma mark - CollegeForPostingSelectionProtocol Delegate Methods
+
+- (void)submitSelectionForPostWithCollege:(College *)college
+{
+    // TODO: This should get called when user selects which nearby college they want to post to
+
+}
+
 
 @end

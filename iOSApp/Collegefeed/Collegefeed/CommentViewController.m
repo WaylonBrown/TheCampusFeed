@@ -25,9 +25,9 @@
 
     if (self.originalPost != nil)
     {
-        [self.appData setPostInFocus:self.originalPost];
+        [self.dataController setPostInFocus:self.originalPost];
         long postID = (long)self.originalPost.postID;
-        [self.appData.dataController fetchCommentsWithPostId:postID];
+        [self.dataController fetchCommentsWithPostId:postID];
         [self.tableView reloadData];
     }
 }
@@ -61,7 +61,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Number of rows in table views
     if (section == 0) return 1;
-    else return [self.appData.dataController.commentList count];
+    else return [self.dataController.commentList count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Get the table view cell for the given row
@@ -85,7 +85,7 @@
     }
     else
     {   // CommentView table; get the comment to be displayed in this cell
-        Comment *commentAtIndex = (Comment*)[self.appData.dataController.commentList objectAtIndex:indexPath.row];
+        Comment *commentAtIndex = (Comment*)[self.dataController.commentList objectAtIndex:indexPath.row];
         [cell assign:commentAtIndex];
         return cell;
     }
@@ -139,22 +139,10 @@
 }
 - (void)create
 {   // Display popup to let user type a new comment
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"New Comment"
-                                                    message:@"You got an opinion?"
-                                                   delegate:self
-                                          cancelButtonTitle:@"nope.."
-                                          otherButtonTitles:@"Comment!", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alert show];
-}
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{   // Add new comment if user submits on the alert view
     
-    if (buttonIndex == 0) return;
-    
-    bool success = [self.appData.dataController createCommentWithMessage:[[alertView textFieldAtIndex:0] text]
-                                                                withPost:self.originalPost];
-    [self.tableView reloadData];
+    CreatePostCommentViewController *alert = [[CreatePostCommentViewController alloc] initWithType:COMMENT withCollege:nil];
+    [alert setDelegate:self];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - Helper Methods
@@ -177,14 +165,15 @@
 }
 - (void)castVote:(Vote *)vote
 {
-    //TODO: show this only if voting on a comment
-//    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Warning"
-//                                                    message:@"Cannot currently send a comment's vote to the server"
-//                                                   delegate:self
-//                                          cancelButtonTitle:@"K"
-//                                          otherButtonTitles:nil, nil];
-//    [alert show];
     [super castVote:vote];
+}
+
+#pragma mark - CreationViewProtocol Delegate Methods
+
+- (void)submitPostCommentCreationWithMessage:(NSString *)message
+                               withCollegeId:(long)collegeId
+{
+    [self.dataController createCommentWithMessage:message withPost:self.originalPost];
 }
 
 @end

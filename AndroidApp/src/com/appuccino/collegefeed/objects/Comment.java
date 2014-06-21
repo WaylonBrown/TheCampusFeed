@@ -21,14 +21,14 @@ public class Comment extends AbstractPostComment{
 		collegeID = 234234;
 	}
 	
-	public Comment(String m, int parentID)
+	public Comment(String message, int id, int parentID, int score, int collegeID, String time)
 	{
-		score = (int)(Math.random() * 100);;
-		id = (int)(Math.random() * Integer.MAX_VALUE);
-		message = m;
-		time = TimeManager.now();
-		collegeID = 234234;
+		this.message = message;
+		this.id = id;
 		this.postID = parentID;
+		this.score = score;
+		this.collegeID = collegeID;
+		this.time = time;
 	}
 	
 	public int getPostID()

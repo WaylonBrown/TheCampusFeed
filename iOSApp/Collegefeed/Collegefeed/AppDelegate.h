@@ -8,18 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
-#import "AppData.h"
+#import "DataController.h"
 
 @class College;
 @class PostsViewController;
 @class TagViewController;
 @class CollegePickerViewController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, AppDataDelegateProtocol>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, LocationFinderDelegateProtocol
+    //AppDataDelegateProtocol,
+    >
 
 @property (strong, nonatomic) UIWindow              *window;
 @property (strong, nonatomic) UITabBarController    *tabBarController;
-@property (strong, nonatomic) AppData               *appData;
+//@property (strong, nonatomic) AppData               *appData;
+
+@property (strong, nonatomic) DataController *dataController;
 
 @property (strong, nonatomic) PostsViewController *topPostsController;
 @property (strong, nonatomic) PostsViewController *recentPostsController;

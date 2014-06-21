@@ -89,10 +89,13 @@
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
 {
     NSString             *tagMessage = [url absoluteString];
-    MasterViewController *mvc        = (MasterViewController*)self.delegate;
-    PostsViewController  *controller = [[PostsViewController alloc] initAsTagPostsWithAppData:mvc.appData
-                                                                               withTagMessage:tagMessage];
-    if (mvc.appData.nearbyColleges.count > 0)
+    MasterViewController *masterView        = (MasterViewController*)self.delegate;
+    
+    PostsViewController  *controller = [[PostsViewController alloc] initAsType:TAG
+                                                            withDataController:masterView.dataController];
+    [controller setTagMessage:tagMessage];
+    
+    if (masterView.dataController.nearbyColleges.count > 0)
     {
         [controller placeCreatePost];
     }
@@ -100,7 +103,7 @@
     {
         controller.navigationItem.rightBarButtonItem = nil;
     }
-    [mvc.navigationController pushViewController:controller
+    [masterView.navigationController pushViewController:controller
                                         animated:YES];
 }
 

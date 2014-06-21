@@ -21,15 +21,23 @@
     self = [super init];
     if (self)
     {
-        self.topPostsAllColleges = [[NSMutableArray alloc] init];
+        // Initialize arrays for the initial arrays needed
+        self.topPostsAllColleges    = [[NSMutableArray alloc] init];
         self.recentPostsAllColleges = [[NSMutableArray alloc] init];
-        self.collegeList = [[NSMutableArray alloc] init];
-        self.allTags = [[NSMutableArray alloc] init];
+        self.collegeList            = [[NSMutableArray alloc] init];
+        self.allTags                = [[NSMutableArray alloc] init];
         
+        // Populate the initial arrays
         [self fetchTopPosts];
         [self fetchNewPosts];
-        [self fetchAllTags];
         [self getHardCodedCollegeList];
+        [self fetchAllTags];
+        
+        // Get the user's location
+        [self setLocationManager:[[CLLocationManager alloc] init]];
+        [self.locationManager setDelegate:self];
+        [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+        [self.locationManager startUpdatingLocation];
         
     }
     return self;
@@ -39,6 +47,7 @@
 
 - (void)getNetworkCollegeList
 {
+    // TODO: most recently, this only gets first 25 colleges
     self.collegeList = [[NSMutableArray alloc] init];
     NSData *data = [Networker GETAllColleges];
     [self parseData:data asClass:[College class] intoList:self.collegeList];
@@ -53,7 +62,7 @@
     {
         Comment *comment = [[Comment alloc] initWithCommentMessage:message
                                                           withPost:post];
-        [Networker POSTCommentData:[comment toJSON] WithPostId:comment.postID];
+        [Networker POSTCommentData:[comment toJSON] WithPostId:post.postID];
         [self.commentList addObject:comment];
         return YES;
     }
@@ -105,7 +114,7 @@
 - (void)fetchNewPosts
 {
     [self setRecentPostsAllColleges:[[NSMutableArray alloc] init]];
-    NSData* data = [Networker GETAllPosts];
+    NSData* data = [Networker GETRecentPosts];
     [self parseData:data asClass:[Post class] intoList:self.recentPostsAllColleges];
 }
 - (void)fetchNewPostsWithCollegeId:(long)collegeId
@@ -185,26 +194,42 @@
         NSLog(@"Could not get hard-coded list in CollegeList.txt");
         return;
     }
+    self.collegeList = [[NSMutableArray alloc] init];
     [self parseData:data asClass:[College class] intoList:self.collegeList];
 }
-- (NSArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon
+- (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon
 {
     NSMutableArray *colleges = [[NSMutableArray alloc] init];
     
-    double degreesForPermissions = MILES_FOR_PERMISSION / 50.0;	//roughly 50 miles per degree
-    
     for (College *college in self.collegeList)
     {
-        //TODO: change to formula that takes into account the roundness of the earth
-        double degreesAway = sqrt(pow((userLat - college.lat), 2) + pow((userLon - college.lon), 2));
+        double milesAway = [self numberMilesAwayFromLat:userLat fromLon:userLon AtLat:college.lat atLon:college.lon];
         
-        if (degreesAway <= degreesForPermissions)
+        if (milesAway <= MILES_FOR_PERMISSION)
         {
             [colleges addObject:college];
         }
-        
     }
     return colleges;
+}
+- (void)switchedToSpecificCollegeOrNil:(College *)college
+{
+    [self setCollegeInFocus:college];
+    
+    if (college == nil)
+    {
+        [self setShowingAllColleges:YES];
+        [self setShowingSingleCollege:NO];
+    }
+    else
+    {
+        [self setShowingAllColleges:NO];
+        [self setShowingSingleCollege:YES];
+    }
+}
+- (BOOL)isNearCollege
+{
+    return self.nearbyColleges.count > 0;
 }
 
 #pragma mark - Helper Methods
@@ -230,4 +255,48 @@
     }
     return NO;
 }
+- (void)findNearbyColleges
+{   // Populate the nearbyColleges array appropriately using current location
+    self.nearbyColleges = [NSMutableArray new];
+    [self setNearbyColleges:[self findNearbyCollegesWithLat:self.lat
+                                                    withLon:self.lon]];
+    
+}
+- (float)numberMilesAwayFromLat:(float)collegeLat fromLon:(float)collegeLon AtLat:(float)userLat atLon:(float)userLon
+{   // Implemented using Haversine formula
+    double lat1 = userLat;
+    double lon1 = userLon;
+    double lat2 = collegeLat;
+    double lon2 = collegeLon;
+    double latDistance = [self toRad:(lat2-lat1)];
+    double lonDistance = [self toRad:(lon2-lon1)];
+    double a = sin(latDistance / 2) * sin(latDistance / 2) +
+    cos([self toRad:lat1]) * cos([self toRad:lat2]) *
+    sin(lonDistance / 2) * sin(lonDistance / 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1-a));
+    return (EARTH_RADIUS_MILES * c);
+}
+
+- (float)toRad:(float)value
+{   // Helper method for milesAway
+    return value * PI_VALUE / 180;
+}
+
+#pragma mark - CLLocationManager Delegate Functions
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    [self setLat:newLocation.coordinate.latitude];
+    [self setLon:newLocation.coordinate.longitude];
+    [self.locationManager stopUpdatingLocation];
+    
+    [self findNearbyColleges];
+    [self.appDelegate foundLocation];
+}
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    [self.appDelegate didNotFindLocation];
+}
+
+
 @end

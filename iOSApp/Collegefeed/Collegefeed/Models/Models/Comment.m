@@ -20,11 +20,11 @@
     self = [super init];
     if (self)
     {
-        [self setPostID:post.getID];
+        [self setPostID:post.postID];
         [self setMessage:message];
         [self validate];
     }
-    return nil;
+    return self;
 }
 
 - (id)initWithCommentID:(NSInteger)newCommentID
@@ -44,10 +44,8 @@
         [self setDate:[NSDate date]];
         [self setVote:nil];
         [self validate];
-
-        return self;
     }
-    return nil;
+    return self;
 }
 - (id)initDummy
 {   // dummy initializer for dev/testing
@@ -77,10 +75,8 @@
         [self setPostID:post.postID];
         [self setCollegeID:post.collegeID];
         [self validate];
-
-        return self;
     }
-    return nil;
+    return self;
 }
 
 #pragma mark - Protocol Methods

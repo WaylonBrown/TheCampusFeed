@@ -8,18 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-#import "AppData.h"
 #import "ChildCellDelegate.h"
-#import "NearbyCollegeSelector.h"
+#import "CreatePostCommentViewController.h"
+#import "FeedSelectViewController.h"
+#import "DataController.h"
 
-@interface MasterViewController : UIViewController <ChildCellDelegate>
+@protocol FeedSelectionProtocol;
 
-@property (strong, nonatomic) AppData *appData;
+@interface MasterViewController : UIViewController <ChildCellDelegate, CreationViewProtocol, FeedSelectionProtocol, CollegeForPostingSelectionProtocol>
+
+@property (strong, nonatomic) DataController *dataController;
 
 // outlet properties connected to the view
 @property (weak, nonatomic) IBOutlet UITableView        *tableView;
 @property (strong, nonatomic) UIActivityIndicatorView   *activityIndicator;
-@property (strong, nonatomic) NearbyCollegeSelector     *selector;
 @property (weak, nonatomic) IBOutlet UIView             *feedToolbar;
 @property (strong, nonatomic) UIRefreshControl          *refreshControl;
 
@@ -30,7 +32,7 @@
 @property (strong, nonatomic) NSMutableArray *list;
 
 // Initialization
-- (id)initWithAppData:(AppData *)data;
+- (id)initWithDataController:(DataController *)controller;
 
 - (void)placeLoadingIndicator;
 - (void)placeCreatePost;
@@ -43,3 +45,12 @@
 - (void)refresh;
 
 @end
+
+typedef NS_ENUM(NSInteger, ViewSortingType)
+{
+    ALL,
+    TOP,
+    RECENT,
+    USER,
+    TAG,
+};

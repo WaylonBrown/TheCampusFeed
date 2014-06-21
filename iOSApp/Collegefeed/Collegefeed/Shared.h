@@ -12,12 +12,7 @@
 
 // Constant lengths
 #define MAX_POST_LENGTH      140
-#define MAX_COMMENT_LENGTH   140
-#define MAX_TAG_LENGTH       50
 #define MIN_POST_LENGTH      10
-#define MIN_COMMENT_LENGTH   10
-#define MIN_TAG_LENGTH       2
-#define MILES_FOR_PERMISSION 15
 
 // Custom colors
 #define CF_LIGHTBLUE   0x33B5E5 // 51, 181, 229

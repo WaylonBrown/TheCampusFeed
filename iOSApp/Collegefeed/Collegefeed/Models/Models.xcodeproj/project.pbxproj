@@ -119,7 +119,7 @@
 			children = (
 				53505572195134DA009C1911 /* Protocols */,
 				5350557319513895009C1911 /* Post and Comment */,
-				53CF334F194E56F7008BB733 /* Other Models */,
+				53CF334F194E56F7008BB733 /* Tag, Vote, College */,
 				53CF3363194E56F7008BB733 /* ModelsTests */,
 				53CF334C194E56F7008BB733 /* Frameworks */,
 				53CF334B194E56F7008BB733 /* Products */,
@@ -145,7 +145,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		53CF334F194E56F7008BB733 /* Other Models */ = {
+		53CF334F194E56F7008BB733 /* Tag, Vote, College */ = {
 			isa = PBXGroup;
 			children = (
 				53CF3385194E57F0008BB733 /* College.h */,
@@ -156,7 +156,7 @@
 				53CF338E194E57F0008BB733 /* Vote.m */,
 				53CF3350194E56F7008BB733 /* Supporting Files */,
 			);
-			name = "Other Models";
+			name = "Tag, Vote, College";
 			path = Models;
 			sourceTree = "<group>";
 		};

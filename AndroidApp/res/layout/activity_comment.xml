@@ -97,16 +97,30 @@
         android:text="Comments"
         android:textSize="16sp"/>
     
-    <ListView
-        android:id="@+id/commentsList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="8dp"
-		android:layout_marginRight="8dp"
-	    android:divider="@android:color/transparent"
-		android:dividerHeight="6dp"
-		android:listSelector="@android:color/transparent" 
-		android:scrollbars="none"
-        />
-
+    <!-- holds listview and loading text -->
+    
+    <FrameLayout
+        style="@style/fill">
+        
+        <ListView
+	        android:id="@+id/commentsList"
+	        style="@style/fill"
+	        android:layout_marginLeft="8dp"
+			android:layout_marginRight="8dp"
+		    android:divider="@android:color/transparent"
+			android:dividerHeight="6dp"
+			android:listSelector="@android:color/transparent" 
+			android:scrollbars="none"
+	        />
+        
+        <com.romainpiel.shimmer.ShimmerTextView
+	        android:id="@+id/commentsLoadingText"
+	        android:text="Loading..."
+	        android:textSize="30sp"
+	        style="@style/fill"
+	        android:gravity="center"
+	        android:visibility="gone"/>
+        
+    </FrameLayout>
+    
 </LinearLayout>

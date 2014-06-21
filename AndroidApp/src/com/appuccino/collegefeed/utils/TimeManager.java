@@ -12,6 +12,9 @@ public class TimeManager {
             throws ParseException {
         Calendar calendar = GregorianCalendar.getInstance();
         String s = iso8601string;
+        if(iso8601string == null || iso8601string.isEmpty()){
+        	s = now();
+        }
         s = s.substring(0, s.length() - 5);
         s += "+00:00";
         try {
