@@ -34,18 +34,22 @@
           <%= fa_icon 'edit', class: 'pull-right tip', 
             'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 
             title: 'edit', 'hasTooltip' => '', 'ng-click' => 'editPost($event, post)' %>
+          <%= fa_icon 'comment', class: 'pull-right tip', 
+            'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 
+            title: 'view comments', 'hasTooltip' => '', 'ng-click' => 'openComments($event, post)' %>
         </accordion-heading>
         <form>
           <div class="row">
-            <div class="col-md-3" ng-repeat="(key,value) in post">
+            <div class="col-md-3" ng-repeat="(key,value) in post" ng-if="key != 'comments'">
               <b>{{key}}:</b> 
               <u ng-hide="post.isEditing" class="pull-right postValue">{{value}}</u>
               <input type="text" ng-model="post[key]" ng-show="post.isEditing" class="" />
             </div>
           </div>
-          <input type="button" ng-click="finishedEditing(post, true)" ng-show="post.isEditing" class="btn btn-info" value="Done">
-          <input type="button" ng-click="finishedEditing(post, false)" ng-show="post.isEditing" class="btn btn-warning" value="Cancel">
+          <input type="button" ng-click="finishedEditingPost(post, true)" ng-show="post.isEditing" class="btn btn-info" value="Done">
+          <input type="button" ng-click="finishedEditingPost(post, false)" ng-show="post.isEditing" class="btn btn-warning" value="Cancel">
         </form>
+
       </accordion-group>
     </accordion>
     <pagination total-items="postOptions.total" ng-model="postOptions.pageNo" 

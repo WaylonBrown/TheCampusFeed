@@ -22,8 +22,8 @@
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "[{\"id\":1,\"text\":\"yolo\",\"posts_count\":1},{\"id\":2,\"text\":\"swag\",\"posts_count\":1}]",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"f7c5b36d59b8fb23a5070e63e7999ea0\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"39a1392d-3b26-4323-bca5-cc92139e5189","X-Runtime":"0.063266","Content-Length":"79"},
+      "response_body": "[{\"id\":132,\"text\":\"yolo\",\"posts_count\":1},{\"id\":133,\"text\":\"swag\",\"posts_count\":1}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"c3a463d62e02f5913f82f31ba71538ed\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"26bd8d88-20d0-4ccd-8616-cb3a402ee6d6","X-Runtime":"0.051184","Content-Length":"83"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

@@ -1,0 +1,35 @@
+{
+  "resource": "Flags",
+  "http_method": "POST",
+  "route": "/api/v1/posts/101/flags",
+  "description": "Flagging post ID 101",
+  "explanation": null,
+  "parameters": [
+    {
+      "required": true,
+      "name": "votable_id",
+      "description": "The id of the votable being flagged."
+    }
+  ],
+  "requests": [
+    {
+      "request_method": "POST",
+      "request_path": "/api/v1/posts/101/flags",
+      "request_body": "{\"votable_id\":101}",
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 201,
+      "response_status_text": "Created",
+      "response_body": "{\"id\":3,\"votable_id\":101,\"created_at\":\"2014-06-21T08:55:15.584Z\",\"updated_at\":\"2014-06-21T08:55:15.584Z\"}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/flags/3","Content-Type":"application/json; charset=utf-8","ETag":"\"e977f5d9aff576881e79c0977bd2b7d2\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"9cb057d7-aaad-4c4f-9158-23b6e0d9e2b2","X-Runtime":"0.034704","Content-Length":"105"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

@@ -1,6 +1,7 @@
 Postfeed::Application.routes.draw do
 
 
+
   get '/partials/:partialName' => 'partials#byName'
 
 =begin
@@ -28,6 +29,7 @@ Postfeed::Application.routes.draw do
 
 
       resources :comments, only: [:show]
+      resources :flags, only: [:show]
 
       get '/posts/search/:searchText' => 'posts#search'
       get '/posts/search/:searchText/count' => 'posts#searchCount'
@@ -39,9 +41,11 @@ Postfeed::Application.routes.draw do
         resources :comments, except: [:show] do
           get 'votes/score' => 'votes#score'
           resources :votes, only: [:create]
+          resources :flags
         end
         get 'votes/score' => 'votes#score'
         resources :votes
+        resources :flags
       end
 
       get '/tags/trending' => 'tags#trending'
@@ -64,9 +68,11 @@ Postfeed::Application.routes.draw do
           resources :comments, except: [:show] do
             get 'votes/score' => 'votes#score'
             resources :votes, only: [:create]
+            resources :flags
           end
           get 'votes/score' => 'votes#score'
           resources :votes
+          resources :flags
         end
 
         get '/tags/trending' => 'tags#trending'
