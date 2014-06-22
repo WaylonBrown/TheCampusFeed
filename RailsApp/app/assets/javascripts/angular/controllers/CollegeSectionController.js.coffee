@@ -28,11 +28,12 @@ angular.module("cfeed").controller "CollegeSectionController", [
     $scope.setTotal = ->
       searchPortion = ""
       searchPortion = "/search/" + $scope.collegeOptions.searchText  if $scope.collegeOptions.searchText.trim().length > 0
-      $http.get("api/v1/colleges" + searchPortion + "/count").success((res) ->
-        $scope.collegeOptions.error = false
-        $scope.collegeOptions.total = res
-        return
-      ).error (res) ->
+      $http.get("api/v1/colleges" + searchPortion + "/count")
+        .success((res) ->
+          $scope.collegeOptions.error = false
+          $scope.collegeOptions.total = res
+          return
+        ).error (res) ->
         $scope.collegeOptions.total = 0
         $scope.collegeOptions.error = true
         return
@@ -67,15 +68,16 @@ angular.module("cfeed").controller "CollegeSectionController", [
 
       return
 
-    
+
     #Modal dismissed
     $scope.editCollege = ($event, college) ->
       $event.stopPropagation()
-      $($event.currentTarget).parents(".panel").children(".panel-collapse").height "auto"
+      $($event.currentTarget).parents(".panel").children(".panel-collapse")
+        .height "auto"
       college.isEditing = true
       return
 
-    $scope.finishedEditing = (college, sendChanges) ->
+    $scope.finishedEditingCollege = (college, sendChanges) ->
       college.isEditing = false
       if sendChanges
         $http.put("api/v1/colleges/" + college.id, college).then (res) ->
