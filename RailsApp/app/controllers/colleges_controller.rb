@@ -4,8 +4,8 @@ class CollegesController < ApplicationController
   before_action :set_college, only: [:show, :edit, :update, :destroy, :within, :image]
 
   def search
-    colleges = College.search_by_text(params[:searchText])
-    paginate json: colleges 
+    colleges = College.search_by_text(params[:searchText]).page(params[:page]).per(params[:per_page])
+    render json: colleges 
   end
 
   def searchCount
@@ -24,8 +24,8 @@ class CollegesController < ApplicationController
   # GET /colleges
   # GET /colleges.json
   def index
-    @colleges = College.all
-    paginate json: @colleges
+    @colleges = College.all..page(params[:page]).per(params[:per_page])
+    render json: @colleges
   end
 
   # GET /colleges/1
