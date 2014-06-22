@@ -12,8 +12,8 @@ class PostsController < ApplicationController
   end
 
   def search
-    posts = Post.search_by_text(params[:searchText])
-    paginate json: posts
+    posts = Post.search_by_text(params[:searchText]).page(params[:page]).per(params[:per_page])
+    render json: posts
   end
 
   def searchCount
@@ -30,10 +30,11 @@ class PostsController < ApplicationController
     if @tag
       #Paginate by 25
       if @college
-        paginate json: @tag.posts.select{ |p| p.college_id == @college.id }
+        @tags = @tag.posts.where("college_id = #{@college.id}").page(params[:page]).per(params[:per_page])
       else
-        paginate json: @tag.posts
+        @tags = @tag.posts.page(params[:page]).per(params[:per_page])
       end
+      render json: @tags
     else
       render json: {:tag => ["does not exist."]}, status: 400
     end
@@ -44,32 +45,32 @@ class PostsController < ApplicationController
   # GET /colleges/1/posts
   def index
     if !@college.nil?
-      @posts = @college.posts
+      @posts = @college.posts.page(params[:page]).per(params[:per_page])
     else 
-      @posts = Post.all
+      @posts = Post.all.page(params[:page]).per(params[:per_page])
     end
-    
-    paginate json: @posts
+
+    render json: @posts
   end
 
   def recent
     if !@college.nil?
-      @posts = Post.where('college_id = '+@college.id.to_s).order('created_at desc')
+      @posts = Post.where('college_id = '+@college.id.to_s).order('created_at desc').page(params[:page]).per(params[:per_page])
     else 
-      @posts = Post.order('created_at desc')
+      @posts = Post.order('created_at desc').page(params[:page]).per(params[:per_page])
     end
     
-    paginate json: @posts
+    render json: @posts
   end
 
   def trending
     if !@college.nil?
-      @posts = Post.where('college_id = '+@college.id.to_s).order('score desc')
+      @posts = Post.where('college_id = '+@college.id.to_s).order('score desc').page(params[:page]).per(params[:per_page])
     else 
-      @posts = Post.order('created_at desc')
+      @posts = Post.order('created_at desc').page(params[:page]).per(params[:per_page])
     end
     
-    paginate json: @posts
+    render json: @posts
   end
 
   # GET /posts/1

@@ -1,16 +1,6 @@
 {
   "resources": [
     {
-      "name": "Colleges",
-      "examples": [
-        {
-          "description": "List all colleges",
-          "link": "colleges/list_all_colleges.json",
-          "groups": "all"
-        }
-      ]
-    },
-    {
       "name": "Comments",
       "examples": [
         {

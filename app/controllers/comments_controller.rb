@@ -3,8 +3,8 @@ class CommentsController < ApplicationController
   before_action :set_post, only: [:create, :index]
 
   def search
-    comments = Comment.search_by_text(params[:searchText])
-    paginate json: comments
+    comments = Comment.search_by_text(params[:searchText]).page(params[:page]).per(params[:per_page])
+    render json: comments
   end
 
   def searchCount
@@ -18,7 +18,8 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = @post.comments.all
+    @comments = @post.comments.page(params[:page]).per(params[:per_page])
+    render json: @comments
   end
 
   # GET /comments/1

@@ -37,7 +37,6 @@ gem 'apitome'
 gem 'versioncake'
 
 gem 'kaminari'
-gem 'api-pagination'
 
 
 gem 'oauth-plugin'
