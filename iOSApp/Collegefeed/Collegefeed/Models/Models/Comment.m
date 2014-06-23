@@ -134,25 +134,30 @@
 {
     return self.collegeName;
 }
-- (void)setVote:(Vote *)vote
-{
-    [self setVote:vote];
-}
+//- (void)setVote:(Vote *)vote
+//{
+//    [self setVote:vote];
+//}
 - (Vote *)getVote
 {
     return self.vote;
 }
 - (void)validate
 {
-    if (self.message.length < MIN_COMMENT_LENGTH)
-    {
-        NSException *e = [NSException exceptionWithName:@"CommentLengthException" reason:@"Comment is too short" userInfo:nil];
-        [e raise];
-    }
-    if (self.message.length > MAX_COMMENT_LENGTH)
-    {
-        NSException *e = [NSException exceptionWithName:@"CommentLengthException" reason:@"Comment is too long" userInfo:nil];
-        [e raise];
-    }
+//    if (self.message.length < MIN_COMMENT_LENGTH)
+//    {
+//        NSException *e = [NSException exceptionWithName:@"CommentLengthException" reason:@"Comment is too short" userInfo:nil];
+//        [e raise];
+//    }
+//    if (self.message.length > MAX_COMMENT_LENGTH)
+//    {
+//        NSException *e = [NSException exceptionWithName:@"CommentLengthException" reason:@"Comment is too long" userInfo:nil];
+//        [e raise];
+//    }
 }
+- (ModelType)getType
+{
+    return COMMENT;
+}
+
 @end

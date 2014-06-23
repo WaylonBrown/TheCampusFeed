@@ -18,26 +18,26 @@
 
 #pragma mark - Initializations
 
-- (id)initAsType:(ViewSortingType)type withDataController:(DataController *)controller
+- (id)initAsType:(ViewType)type withDataController:(DataController *)controller
 {
     self = [super initWithDataController:controller];
     if (self)
     {
-        [self setViewSortingType:type];
+        [self setViewType:type];
         [self switchToAllColleges];
         
         switch (type)
         {
-            case TOP:
+            case TOP_VIEW:
                 [self setList:controller.topPostsAllColleges];
                 break;
-            case RECENT:
+            case RECENT_VIEW:
                 [self setList:controller.recentPostsAllColleges];
                 break;
-            case USER:
+            case USER_VIEW:
                 [self setList:controller.userPostsAllColleges];
                 break;
-            case TAG:
+            case TAG_VIEW:
                 [self setList:controller.allPostsWithTag];
                 break;
             default:
@@ -54,7 +54,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
     [super viewWillAppear:animated];
-    if (self.viewSortingType == TAG && self.tagMessage == nil)
+    if (self.viewType == TAG && self.tagMessage == nil)
     {
         NSException *e = [NSException exceptionWithName:@"NoTagFoundException" reason:@"No Tag message provided for a PostsView filtered by Tag" userInfo:nil];
         [e raise];
@@ -124,34 +124,51 @@
 
 - (void)switchToAllColleges
 {
-    if (self.viewSortingType == TOP)
+    switch (self.viewType)
     {
-        [self.dataController fetchTopPosts];
-    }
-    else if (self.viewSortingType == RECENT)
-    {
-        [self.dataController fetchNewPosts];
-    }
-    else if (self.viewSortingType == TAG && self.tagMessage != nil)
-    {
-        [self.dataController fetchAllPostsWithTagMessage:self.tagMessage];
+        case TOP_VIEW:
+            [self.dataController fetchTopPosts];
+            [self setList:self.dataController.topPostsAllColleges];
+            break;
+        case RECENT_VIEW:
+            [self.dataController fetchNewPosts];
+            [self setList:self.dataController.recentPostsAllColleges];
+            break;
+        case TAG_VIEW:
+            if (self.tagMessage != nil)
+            {
+                [self.dataController fetchAllPostsWithTagMessage:self.tagMessage];
+            }
+            [self setList:self.dataController.allPostsWithTag];
+            break;
+        default:
+            break;
     }
 }
 - (void)switchToSpecificCollege
 {
-    if (self.viewSortingType == TOP)
+    switch (self.viewType)
     {
-        // TODO: this is calling dataController's function and passing its own variable to itself
-        [self.dataController fetchTopPostsWithCollegeId:self.dataController.collegeInFocus.collegeID];
-    }
-    else if (self.viewSortingType == RECENT)
-    {
-        [self.dataController fetchNewPostsWithCollegeId:self.dataController.collegeInFocus.collegeID];
-    }
-    else if (self.viewSortingType == TAG && self.tagMessage != nil)
-    {
-        [self.dataController fetchAllPostsWithTagMessage:self.tagMessage
-                                                   withCollegeId:self.dataController.collegeInFocus.collegeID];
+        case TOP_VIEW:
+            // TODO: this is calling dataController's function and passing its own variable to itself
+            [self.dataController fetchTopPostsWithCollegeId:self.dataController.collegeInFocus.collegeID];
+            [self setList:self.dataController.topPostsInCollege];
+            break;
+        case RECENT_VIEW:
+            [self.dataController fetchNewPostsWithCollegeId:self.dataController.collegeInFocus.collegeID];
+            [self setList:self.dataController.recentPostsInCollege];
+            break;
+        case TAG_VIEW:
+            if (self.tagMessage != nil)
+            {
+                [self setList:self.dataController.allPostsWithTagInCollege];
+            }
+            [self.dataController fetchAllPostsWithTagMessage:self.tagMessage
+                                               withCollegeId:self.dataController.collegeInFocus.collegeID];
+
+            break;
+        default:
+            break;
     }
 }
 
@@ -170,7 +187,7 @@
     [super refresh];
 }
 
-#pragma mark - CreationViewProtocl Delegate Methods
+#pragma mark - CreationViewProtocol Delegate Methods
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
 {

@@ -7,23 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Models/Models/CFModelProtocol.h"
 
 @class College;
-
 
 @protocol CreationViewProtocol <NSObject>
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
                                withCollegeId:(long)collegeId;
 @end
-
-
-typedef NS_ENUM(NSInteger, CreationType)
-{
-    POST,
-    COMMENT
-};
-
 
 @interface CreatePostCommentViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
 
@@ -36,9 +28,9 @@ typedef NS_ENUM(NSInteger, CreationType)
 @property (weak, nonatomic) IBOutlet UIButton *createButton;
 
 @property (strong, nonatomic) College *collegeForPost;
-@property (nonatomic) CreationType creationType;
+@property (nonatomic) ModelType modelType;
 
-- (id)initWithType:(CreationType)type
+- (id)initWithType:(ModelType)type
        withCollege:(College *)college;
 
 - (IBAction)submit:(id)sender;

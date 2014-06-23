@@ -30,7 +30,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Post view of all posts with the selected tag
     self.selectedTag = (Tag *)[self.dataController.allTags objectAtIndex:indexPath.row];
-    PostsViewController* controller = [[PostsViewController alloc] initAsType:TAG
+    PostsViewController* controller = [[PostsViewController alloc] initAsType:TAG_VIEW
                                                            withDataController:self.dataController];
     [controller setTagMessage:self.selectedTag.name];
     

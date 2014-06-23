@@ -46,11 +46,11 @@
 
 @end
 
-typedef NS_ENUM(NSInteger, ViewSortingType)
+typedef NS_ENUM(NSInteger, ViewType)
 {
-    ALL,
-    TOP,
-    RECENT,
-    USER,
-    TAG,
+    ALL_VIEW,
+    TOP_VIEW,
+    RECENT_VIEW,
+    USER_VIEW,
+    TAG_VIEW,
 };

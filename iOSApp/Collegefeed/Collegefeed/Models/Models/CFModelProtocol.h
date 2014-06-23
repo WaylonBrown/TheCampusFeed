@@ -11,12 +11,22 @@
 // Constant lengths for validations
 #define MIN_TAG_LENGTH       4
 
+typedef NS_ENUM(NSInteger, ModelType)
+{
+    COLLEGE,
+    COMMENT,
+    POST,
+    TAG,
+    VOTE
+};
+
 @protocol CFModelProtocol <NSObject>
 
 - (id)initFromJSON:(NSDictionary *)jsonObject;
 - (NSData*)toJSON;
 - (long)getID;
 - (void)validate;
+- (ModelType)getType;
 
 @end
 

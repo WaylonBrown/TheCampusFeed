@@ -138,31 +138,27 @@
                 [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
                     [self.feedDelegate showDialogForAllColleges];
                 }];
-
-                
-//                [self dismiss];
-
-//                FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_COLLEGES_WITH_SEARCH];
-//                [controller setFullCollegeList:self.fullCollegeList];
-//                [controller setFeedDelegate:self.feedDelegate];
-                
-                // TODO: not working yet
-//                [self.navigationController presentViewController:controller animated:YES completion:nil];
             }
             else
             {   // When user chooses all colleges (nil selection) or one of the nearby ones
-                [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:college];
+                [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+                    [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:college];
+                }];
             }
             break;
         }
         case ALL_COLLEGES_WITH_SEARCH:
         {   // When user wants to see all colleges and be able to search through them
-            [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:college];
+            [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+                [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:college];
+            }];
             break;
         }
         case ONLY_NEARBY_COLLEGES:
         {   // When user is selecting which of nearby colleges to post to
-            [self.postingDelegate submitSelectionForPostWithCollege:college];
+            [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+                [self.postingDelegate submitSelectionForPostWithCollege:college];
+            }];
             break;
         }
         default: break;

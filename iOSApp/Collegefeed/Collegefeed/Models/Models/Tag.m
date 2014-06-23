@@ -98,4 +98,9 @@
 //        [e raise];
 //    }
 }
+- (ModelType)getType
+{
+    return TAG;
+}
+
 @end

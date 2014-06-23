@@ -11,13 +11,15 @@
 @implementation Vote
 
 - (id)initWithVotableID:(NSInteger)ID
-        withUpvoteValue:(BOOL)isUpvote;
+        withUpvoteValue:(BOOL)isUpvote
+          asVotableType:(ModelType)type
 {
     self = [super init];
     if (self)
     {
         [self setParentID:ID];
         [self setUpvote:isUpvote];
+        [self setVotableType:type];
 //        [self setPOSTurl:[Shared POSTVoteWithPostId:ID]];
         return self;
     }
@@ -36,7 +38,15 @@
         [self setVoteID:[voteID integerValue]];
         [self setParentID:[parentID integerValue]];
         [self setUpvote:(upvote ? YES : NO)];
-        [self setVotableType:type];
+        
+        if ([type isEqualToString:@"Post"])
+        {
+            [self setVotableType:POST];
+        }
+        else if ([type isEqualToString:@"Comment"])
+        {
+            [self setVotableType:COMMENT];
+        }
 
         return self;
     }
@@ -60,4 +70,9 @@
 {
     
 }
+- (ModelType)getType
+{
+    return VOTE;
+}
+
 @end

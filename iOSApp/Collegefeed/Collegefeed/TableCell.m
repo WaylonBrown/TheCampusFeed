@@ -38,7 +38,7 @@
 
 #pragma mark - Data Population
 
-- (void)assign:(NSObject<PostAndCommentProtocol> *)obj;
+- (void)assign:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj;
 {   // configure view of the cell according to obj's properties
     
     if (obj == nil)
@@ -69,7 +69,8 @@
 - (IBAction)upVotePressed:(id)sender
 {   // User clicked upvote button
     Vote *vote = [[Vote alloc] initWithVotableID:[self.object getID]
-                                 withUpvoteValue:YES];
+                                 withUpvoteValue:YES
+                                   asVotableType:[self.object getType]];
     [self.object setVote:vote];
     [self updateVoteButtons];
     
@@ -79,7 +80,8 @@
 - (IBAction)downVotePresed:(id)sender
 {   // User clicked downvote button
     Vote *vote = [[Vote alloc] initWithVotableID:[self.object getID]
-                                 withUpvoteValue:NO];
+                                 withUpvoteValue:NO
+                                   asVotableType:[self.object getType]];
     [self.object setVote:vote];
     [self updateVoteButtons];
     
@@ -91,7 +93,7 @@
     NSString             *tagMessage = [url absoluteString];
     MasterViewController *masterView        = (MasterViewController*)self.delegate;
     
-    PostsViewController  *controller = [[PostsViewController alloc] initAsType:TAG
+    PostsViewController  *controller = [[PostsViewController alloc] initAsType:TAG_VIEW
                                                             withDataController:masterView.dataController];
     [controller setTagMessage:tagMessage];
     

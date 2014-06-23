@@ -174,6 +174,7 @@
                                withCollegeId:(long)collegeId
 {
     [self.dataController createCommentWithMessage:message withPost:self.originalPost];
+    [self refresh];
 }
 
 @end

@@ -80,6 +80,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
     [super viewWillAppear:animated];
+    [self refresh];
 }
 - (void)placeLoadingIndicator
 {   // Place the loading indicator in the navigation bar (instead of create post button)
@@ -136,7 +137,6 @@
     [controller setNearbyCollegeList:self.dataController.nearbyColleges];
     [controller setFeedDelegate:self];
     [self.navigationController presentViewController:controller animated:YES completion:nil];
-    [self refresh];
 }
 - (void)showCreationDialogForCollege:(College *) college
 {
@@ -214,18 +214,27 @@
                                  withCollegeId:(long)collegeId
 {
     [self.dataController createPostWithMessage:message withCollegeId:collegeId];
+    [self refresh];
 }
 
 #pragma mark - FeedSelectionProtocol Delegate Methods
 
 - (void)submitSelectionForFeedWithCollegeOrNil:(College *)college
 {
-    // TODO: This should get called when making a feed selection
-    
-    
+    [self.dataController switchedToSpecificCollegeOrNil:college];
+    [self.tabBarController setSelectedIndex:0];
+    if (college == nil)
+    {
+        [self.currentFeedLabel setText:@"All Colleges"];
+    }
+    else
+    {
+        [self.currentFeedLabel setText:college.name];
+    }
+    [self refresh];
 }
 - (void)showDialogForAllColleges
-{  
+{
     FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_COLLEGES_WITH_SEARCH];
     [controller setFullCollegeList:self.dataController.collegeList];
     [controller setFeedDelegate:self];
@@ -236,8 +245,7 @@
 
 - (void)submitSelectionForPostWithCollege:(College *)college
 {
-    // TODO: This should get called when user selects which nearby college they want to post to
-
+    [self showCreationDialogForCollege:college];
 }
 
 

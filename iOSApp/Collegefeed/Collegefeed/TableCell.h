@@ -15,10 +15,11 @@
 @protocol SubViewDelegate;
 @protocol ChildCellDelegate;
 @protocol PostAndCommentProtocol;
+@protocol CFModelProtocol;
 
 @interface TableCell : UITableViewCell <TTTAttributedLabelDelegate>
 
-@property (nonatomic, strong) NSObject<PostAndCommentProtocol> *object;
+@property (nonatomic, strong) NSObject<PostAndCommentProtocol, CFModelProtocol> *object;
 
 @property (nonatomic, weak) id<ChildCellDelegate> delegate;
 

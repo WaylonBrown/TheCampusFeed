@@ -130,4 +130,9 @@
         [e raise];
     }
 }
+- (ModelType)getType
+{
+    return POST;
+}
+
 @end

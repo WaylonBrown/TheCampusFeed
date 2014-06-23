@@ -63,7 +63,7 @@
         Comment *comment = [[Comment alloc] initWithCommentMessage:message
                                                           withPost:post];
         [Networker POSTCommentData:[comment toJSON] WithPostId:post.postID];
-        [self.commentList addObject:comment];
+        [self.commentList  insertObject:comment atIndex:0];
         return YES;
     }
     @catch (NSException *exception)
@@ -89,8 +89,8 @@
         Post *post = [[Post alloc] initWithMessage:message
                                      withCollegeId:collegeId];
         [Networker POSTPostData:[post toJSON] WithCollegeId:post.collegeID];
-        [self.topPostsAllColleges addObject:post];
-        [self.recentPostsAllColleges addObject:post];
+        [self.topPostsAllColleges insertObject:post atIndex:0];
+        [self.recentPostsAllColleges insertObject:post atIndex:0];
         return YES;
     }
     @catch (NSException *exception)
@@ -102,7 +102,7 @@
 - (void)fetchTopPosts
 {
     self.topPostsAllColleges = [[NSMutableArray alloc] init];
-    NSData* data = [Networker GETAllPosts];
+    NSData* data = [Networker GETTrendingPosts];
     [self parseData:data asClass:[Post class] intoList:self.topPostsAllColleges];
 }
 - (void)fetchTopPostsWithCollegeId:(long)collegeId
@@ -170,13 +170,15 @@
 - (BOOL)createVote:(Vote *)vote
 {
     NSData *result;
-    if ([vote.votableType isEqual: @"Comment"])
+    if (vote.votableType == COMMENT)
     {
-        result = [Networker POSTVoteData:[vote toJSON] WithCommentId:vote.parentID];
+        result = [Networker POSTVoteData:[vote toJSON]
+                           WithCommentId:vote.parentID];
     }
-    else
+    else if (vote.votableType == POST)
     {
-        result = [Networker POSTVoteData:[vote toJSON] WithPostId:vote.parentID];
+        result = [Networker POSTVoteData:[vote toJSON]
+                              WithPostId:vote.parentID];
     }
     return YES;
 }

@@ -18,9 +18,9 @@
 @property (strong, nonatomic) CommentViewController* commentViewController;
 @property (strong, nonatomic) NSString* tagMessage;
 
-@property (nonatomic) ViewSortingType viewSortingType;
+@property (nonatomic) ViewType viewType;
 
-- (id)initAsType:(ViewSortingType)type withDataController:(DataController *)controller;
+- (id)initAsType:(ViewType)type withDataController:(DataController *)controller;
 
 @end
 

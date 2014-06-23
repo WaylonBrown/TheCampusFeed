@@ -16,7 +16,7 @@
 
 @implementation CreatePostCommentViewController
 
-- (id)initWithType:(CreationType)type
+- (id)initWithType:(ModelType)type
        withCollege:(College *)college
 {
     self = [super init];
@@ -24,7 +24,7 @@
     {
         [self setModalPresentationStyle:UIModalPresentationCustom];
         [self setTransitioningDelegate:self];
-        [self setCreationType:type];
+        [self setModelType:type];
         [self setCollegeForPost:college];
     }
     return self;
@@ -37,13 +37,13 @@
     self.alertView.layer.cornerRadius = 5;
     [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
     
-    if (self.creationType == POST)
+    if (self.modelType == POST)
     {
         [self.titleLabel setText:@"New Post"];
         [self.subtitleLabel setText:[NSString stringWithFormat:@"Posting to %@", self.collegeForPost.name]];
         [self.createButton.titleLabel setText:@"Post"];
     }
-    else if (self.creationType == COMMENT)
+    else if (self.modelType == COMMENT)
     {
         [self.titleLabel setText:@"New Comment"];
         [self.subtitleLabel setText:@""];

@@ -22,12 +22,14 @@
 @property (nonatomic) long parentID;
 
 // votableType: "Post" or "Comment"
-@property (nonatomic, strong) NSString *votableType;
+@property (nonatomic) ModelType votableType;
 
 @property (nonatomic, strong) NSURL *POSTurl;
 
 - (id)initWithVotableID:(NSInteger)ID
-        withUpvoteValue:(BOOL)isUpvote;
+        withUpvoteValue:(BOOL)isUpvote
+          asVotableType:(ModelType)type;
+
 
 - (id)initFromJSON:(NSDictionary *)jsonObject;
 

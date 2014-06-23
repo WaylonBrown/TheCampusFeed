@@ -80,4 +80,9 @@
 {
     
 }
+- (ModelType)getType
+{
+    return COLLEGE;
+}
+
 @end
