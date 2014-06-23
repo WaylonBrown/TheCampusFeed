@@ -170,8 +170,7 @@ public class NetWorker {
 		
 		@Override
 		protected void onPreExecute() {
-			//TODO: make loading indicator here for PostCommentsActivity
-			//TopPostFragment.makeLoadingIndicator(true);
+			activity.makeLoadingIndicator(true);
 			super.onPreExecute();
 		}
 

@@ -60,6 +60,10 @@ public class CommentsActivity extends Activity{
 		newCommentButton = (ImageView)findViewById(R.id.newCommentButton);
 		list = (ListView)findViewById(R.id.commentsList);
 		loadingText = (ShimmerTextView)findViewById(R.id.commentsLoadingText);
+		final TextView scoreText = (TextView)findViewById(R.id.scoreText);
+		TextView messageText = (TextView)findViewById(R.id.messageText);
+		TextView timeText = (TextView)findViewById(R.id.timeText);
+		commentsText = (TextView)findViewById(R.id.commentsText);
 		
 		int collegeID = getIntent().getIntExtra("COLLEGE_ID", 0);
 		int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);
@@ -77,15 +81,13 @@ public class CommentsActivity extends Activity{
 			post = MyPostsFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
 		
 		Log.i("cfeed", "Clicked from section number " + sectionNumber);
-        //set fonts
-		final TextView scoreText = (TextView)findViewById(R.id.scoreText);
-		TextView messageText = (TextView)findViewById(R.id.messageText);
-		TextView timeText = (TextView)findViewById(R.id.timeText);
-		commentsText = (TextView)findViewById(R.id.commentsText);
+		
+        //set fonts		
 		scoreText.setTypeface(FontManager.bold);
 		messageText.setTypeface(FontManager.light);
 		timeText.setTypeface(FontManager.italic);
 		commentsText.setTypeface(FontManager.light);
+		loadingText.setTypeface(FontManager.light)
 		if(post != null)
 		{
 			scoreText.setText(String.valueOf(post.getScore()));
