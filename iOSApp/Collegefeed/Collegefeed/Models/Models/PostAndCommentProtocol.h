@@ -25,5 +25,6 @@
 - (void)setVote:(Vote *)vote;
 - (Vote *)getVote;
 - (long)getID;
+- (void)setCollegeName:(NSString *)name;
 
 @end

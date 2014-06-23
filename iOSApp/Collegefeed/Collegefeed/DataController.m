@@ -21,6 +21,9 @@
     self = [super init];
     if (self)
     {
+        [self setShowingAllColleges:YES];
+        [self setShowingSingleCollege:NO];
+        
         // Initialize arrays for the initial arrays needed
         self.topPostsAllColleges    = [[NSMutableArray alloc] init];
         self.recentPostsAllColleges = [[NSMutableArray alloc] init];

@@ -62,10 +62,12 @@
         NSString *lat       = (NSString*)[jsonObject valueForKey:@"lat"];
         NSString *lon       = (NSString*)[jsonObject valueForKey:@"lon"];
         NSString *created   = (NSString*)[jsonObject valueForKey:@"created_at"];
+        NSString *collegeID = (NSString*)[jsonObject valueForKey:@"college_id"];
         
         if (score == (id)[NSNull null]) score = nil;
         if (lat == (id)[NSNull null]) lat = nil;
         if (lon == (id)[NSNull null]) lon = nil;
+        if (collegeID == (id)[NSNull null]) collegeID = nil;
         
         //"created_at":"2014-06-03T00:09:22.621Z
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -78,6 +80,7 @@
         [self setLat:[lat floatValue]];
         [self setLon:[lon floatValue]];
         [self setCreatedAt:createdDate];
+        [self setCollegeID:[collegeID integerValue]];
         [self validate];
         return self;
     }
@@ -134,5 +137,6 @@
 {
     return POST;
 }
+
 
 @end

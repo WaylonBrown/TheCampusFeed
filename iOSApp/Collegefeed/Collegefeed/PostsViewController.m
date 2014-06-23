@@ -110,14 +110,21 @@
 
     // get the post and display in this cell
     NSObject<PostAndCommentProtocol> *postAtIndex = [self.list objectAtIndex:indexPath.row];
+    [postAtIndex setCollegeName:@"Dookie University"];
     [cell assign:postAtIndex];
     
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // TODO: This should not be hardcoded; revist
-    
-    return 100;
+    if (self.dataController.showingAllColleges)
+    {
+        return 119;
+    }
+    else
+    {
+        return 100;
+    }
 }
 
 #pragma mark - Navigation
