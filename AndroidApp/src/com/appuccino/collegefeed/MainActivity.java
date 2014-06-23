@@ -283,8 +283,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					{
 						permissionsProgress.setVisibility(View.GONE);
 						newPostButton.setVisibility(View.VISIBLE);
+						CommentsActivity.setNewPermissionsIfAvailable();
 					}
-						
 				}
 			}
 			

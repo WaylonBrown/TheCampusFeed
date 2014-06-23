@@ -44,11 +44,12 @@ public class CommentsActivity extends Activity{
 	ShimmerTextView loadingText;
 	Shimmer shimmer;
 	Post post;
-	ImageView newCommentButton;
+	static ImageView newCommentButton;
 	static TextView commentsText;
 	final int minCommentLength = 3;
 	ListView list;
 	public static List<Comment> commentList;
+	static boolean hasPermissions = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +88,7 @@ public class CommentsActivity extends Activity{
 		messageText.setTypeface(FontManager.light);
 		timeText.setTypeface(FontManager.italic);
 		commentsText.setTypeface(FontManager.light);
-		loadingText.setTypeface(FontManager.light)
+		loadingText.setTypeface(FontManager.light);
 		if(post != null)
 		{
 			scoreText.setText(String.valueOf(post.getScore()));
@@ -181,21 +182,19 @@ public class CommentsActivity extends Activity{
 				}        	
 	        });
 	        
-	        //I know it's redundent to check permissions this many times, but no one fcking post to the wrong college!
-	        if(MainActivity.hasPermissions(collegeID))
-				newCommentButton.setOnClickListener(new OnClickListener(){
+			newCommentButton.setOnClickListener(new OnClickListener(){
 
-					@Override
-					public void onClick(View v) 
-					{					
-						if(MainActivity.hasPermissions(post.getCollegeID()))
-						{
-							LayoutInflater inflater = getLayoutInflater();
-							View commentDialogLayout = inflater.inflate(R.layout.dialog_comment, null);
-							new NewCommentDialog(CommentsActivity.this, commentDialogLayout, post);
-						}
-					}        	
-		        });
+				@Override
+				public void onClick(View v) 
+				{					
+					if(MainActivity.hasPermissions(post.getCollegeID()) || hasPermissions)
+					{
+						LayoutInflater inflater = getLayoutInflater();
+						View commentDialogLayout = inflater.inflate(R.layout.dialog_comment, null);
+						new NewCommentDialog(CommentsActivity.this, commentDialogLayout, post);
+					}
+				}        	
+	        });
 	        
 	        updateArrows(arrowUp, arrowDown);
 		}
@@ -405,4 +404,10 @@ public class CommentsActivity extends Activity{
 				
 	}
 
+	public static void setNewPermissionsIfAvailable() {
+		if(newCommentButton != null){
+			newCommentButton.setVisibility(View.VISIBLE);
+		}
+		hasPermissions = true;	//necessary that way if permissions updated while not on MainActivity, still allow to comment
+	}
 }
