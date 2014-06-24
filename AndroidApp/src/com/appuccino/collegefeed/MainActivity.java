@@ -60,10 +60,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	
 	//final values
 	public static final int ALL_COLLEGES = 0;	//used for permissions
-	static final String PREFERENCE_KEY_COLLEGE_LIST1 = "all_colleges_preference_key1";
-	static final String PREFERENCE_KEY_COLLEGE_LIST2 = "all_colleges_preference_key2";
-	static final double MILES_FOR_PERMISSION = 15.0;
-	static final int LOCATION_TIMEOUT_SECONDS = 10;
+	public static final String PREFERENCE_KEY_COLLEGE_LIST1 = "all_colleges_preference_key1";
+	public static final String PREFERENCE_KEY_COLLEGE_LIST2 = "all_colleges_preference_key2";
+	public static final double MILES_FOR_PERMISSION = 15.0;
+	public static final int LOCATION_TIMEOUT_SECONDS = 10;
 	public static final int MIN_POST_LENGTH = 10;
 	public static final int MIN_COMMENT_LENGTH = 5;
 	
@@ -318,9 +318,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					Toast.makeText(this, "You can upvote, downvote, post, and comment on those colleges' posts", Toast.LENGTH_LONG).show();
 				}
 				
-				updateListsForGPS();	//so that GPS icon can be set
+				if(currentFeedCollegeID == ALL_COLLEGES){
+					updateListsForGPS();	//so that GPS icon can be set
+				}
 			}
-			
 		}		
 	}
 
@@ -350,15 +351,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     }
 
 	public static College getCollegeByID(Integer id) {
-		if(collegeList != null)
+		if(collegeList != null && collegeList.size() > 0)
 		{
-			if(collegeList.size() > 0)
+			for(College c : collegeList)
 			{
-				for(College c : collegeList)
-				{
-					if(c.getID() == id)
-						return c;
-				}
+				if(c.getID() == id)
+					return c;
 			}
 		}
 		return null;
@@ -367,12 +365,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	private void updateListsForGPS() 
 	{
 		Toast.makeText(this, "Remember to reimplement updateListsForGPS()", Toast.LENGTH_SHORT).show();
-		//if looking at All Colleges, update lists for GPS icon
-//		if(spinner.getSelectedItemPosition() == 0)
-//		{
-//			TopPostFragment.updateList();
-//			NewPostFragment.updateList();
-//		}
+		
+		if(currentFeedCollegeID == ALL_COLLEGES){
+			TopPostFragment.updateList();
+			NewPostFragment.updateList();
+		}
 	}
 	
 	public void chooseFeedDialog() {
@@ -380,8 +377,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		View layout = inflater.inflate(R.layout.dialog_choosefeed, null);
 		new ChooseFeedDialog(this, layout);
 	}
-
-	
 
 	public void newPostClicked() 
 	{
@@ -391,7 +386,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			View postDialogLayout = inflater.inflate(R.layout.dialog_post, null);
 			new NewPostDialog(this, postDialogLayout);
 		}
-		
 	}
 
 	@Override
