@@ -108,10 +108,12 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         	postHolder.bottomDivider.setVisibility(View.GONE);
         	postHolder.bottomLayout.setVisibility(View.GONE);
         	postHolder.bottomPadding.setVisibility(View.VISIBLE);
+        	postHolder.collegeName.setVisibility(View.GONE);
         }else{
         	postHolder.bottomDivider.setVisibility(View.VISIBLE);
         	postHolder.bottomLayout.setVisibility(View.VISIBLE);
         	postHolder.bottomPadding.setVisibility(View.GONE);
+        	postHolder.collegeName.setVisibility(View.VISIBLE);
         }
         
         setMessageAndColorizeTags(thisPost.getMessage(), postHolder);

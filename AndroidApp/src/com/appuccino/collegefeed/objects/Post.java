@@ -21,7 +21,10 @@ public class Post extends AbstractPostComment{
 		message = m;
 		time = TimeManager.now();
 		collegeID = c;
-		collegeName = MainActivity.getCollegeByID(collegeID).getName();
+		try{
+			collegeName = MainActivity.getCollegeByID(collegeID).getName();
+		}catch(Exception e){
+		}
 		
 //		int numberOfComments = (int)(Math.random() * 15);
 //		for(int i = 0; i < numberOfComments; i++)
@@ -36,8 +39,12 @@ public class Post extends AbstractPostComment{
 		this.id = id;
 		this.collegeID = collegeID;
 		College thisCollege = MainActivity.getCollegeByID(collegeID);
-		if(thisCollege != null)	//in case college isn't in list
-			collegeName = thisCollege.getName();
+		if(thisCollege != null){	//in case college isn't in list
+			try{
+				collegeName = MainActivity.getCollegeByID(collegeID).getName();
+			}catch(Exception e){
+			}
+		}
 		else
 		{
 			//TODO: make call to get updated college list here

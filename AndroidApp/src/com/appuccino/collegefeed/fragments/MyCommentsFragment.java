@@ -94,7 +94,7 @@ public class MyCommentsFragment extends Fragment implements OnRefreshListener
 			postList.add(new Post(15, "Top message 3 test message 3 #whoa test message 3 #lol test message 3 test message 3", 1));*/
 		}		
 		
-		listAdapter = new CommentListAdapter(getActivity(), R.layout.list_row_post, commentList);
+		listAdapter = new CommentListAdapter(getActivity(), R.layout.list_row_collegepost, commentList);
 		list.setAdapter(listAdapter);
 		
 		

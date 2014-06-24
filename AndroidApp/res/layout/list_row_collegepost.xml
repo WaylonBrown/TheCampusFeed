@@ -123,13 +123,15 @@
         android:layout_height="1dp"
         android:background="@color/lightgray"
         android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"/>
+        android:layout_marginRight="2dp"
+        android:visibility="gone"/>
     
 	<LinearLayout
 	    android:id="@+id/bottomLayout"
 	    android:layout_height="wrap_content"
 	    android:layout_width="match_parent"
 	    android:orientation="horizontal"
+	    android:visibility="gone"
 	    >
 	    
 	    <View
@@ -149,6 +151,7 @@
 	        android:textSize="15sp"
 	        android:layout_marginBottom="6dp"
 	        android:singleLine="true"
+	        android:visibility="gone"
 	        />
 	    
 	    <ImageView

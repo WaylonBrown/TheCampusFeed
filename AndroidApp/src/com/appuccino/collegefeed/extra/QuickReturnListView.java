@@ -54,7 +54,6 @@ public class QuickReturnListView extends ListView {
 					MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
 			mItemOffsetY[i] = mHeight;
 			mHeight += view.getMeasuredHeight() + dividerHeight;
-			//System.out.println(mHeight);
 		}
 		scrollIsComputed = true;
 	}

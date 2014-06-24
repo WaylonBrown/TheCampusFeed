@@ -196,7 +196,6 @@ public class TagFragment extends Fragment
 
 					translationY = (rawY - mMinRawY) + mQuickReturnHeight;
 
-					System.out.println(translationY);
 					if (translationY < 0) {
 						translationY = 0;
 						mMinRawY = rawY + mQuickReturnHeight;

@@ -100,7 +100,7 @@ public class CommentsActivity extends Activity{
 			}
 			
 			pullListFromServer();
-			listAdapter = new CommentListAdapter(this, R.layout.list_row_post, commentList);
+			listAdapter = new CommentListAdapter(this, R.layout.list_row_collegepost, commentList);
 			if(list != null && commentList != null)
 				list.setAdapter(listAdapter);	
 			else

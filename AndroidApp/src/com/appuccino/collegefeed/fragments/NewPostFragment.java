@@ -194,7 +194,6 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 
 					translationY = (rawY - mMinRawY) + mQuickReturnHeight;
 
-					System.out.println(translationY);
 					if (translationY < 0) {
 						translationY = 0;
 						mMinRawY = rawY + mQuickReturnHeight;

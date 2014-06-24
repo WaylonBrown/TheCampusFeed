@@ -47,15 +47,8 @@ public class TagListActivity extends Activity{
 		if(!tagText.equals("") && tagText != null)
 		{			
 			ArrayList<Post> postList = new ArrayList<Post>();
-			postList.add(new Post("Post with tag 1", 1));
-			postList.add(new Post("Post with tag 2", 1));
-			postList.add(new Post("Post with tag 3", 1));
-			postList.add(new Post("Post with tag 4", 1));
-			postList.add(new Post("Post with tag 5", 1));
-			postList.add(new Post("Post with tag 6", 1));
-			postList.add(new Post("Post with tag 7", 1));
-			postList.add(new Post("Post with tag 8", 1));
-			listAdapter = new PostListAdapter(this, R.layout.list_row_post, postList, 0, MainActivity.ALL_COLLEGES);
+			postList.add(new Post(1, "Post with tag 1", 1, 1, ""));
+			listAdapter = new PostListAdapter(this, R.layout.list_row_collegepost, postList, 0, MainActivity.ALL_COLLEGES);
 			
 			//if doesnt have footer, add it
 			if(listView.getFooterViewsCount() == 0)
