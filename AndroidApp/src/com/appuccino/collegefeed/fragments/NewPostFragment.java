@@ -109,7 +109,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		{
 			changeFeed(MainActivity.ALL_COLLEGES);
 		}
-		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 1);
+		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 1, currentFeedID);
 		if(list != null)
 			list.setAdapter(listAdapter);	
 		else
@@ -271,6 +271,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 	{
 		if(listAdapter != null)
 		{
+			listAdapter.setCollegeFeedID(currentFeedID);
 			listAdapter.clear();
 			listAdapter.addAll(postList);
 			listAdapter.notifyDataSetChanged();

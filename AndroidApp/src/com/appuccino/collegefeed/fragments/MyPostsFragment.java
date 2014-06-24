@@ -86,7 +86,9 @@ public class MyPostsFragment extends Fragment implements OnRefreshListener
 		{
 			pullListFromServer();
 		}		
-		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_post, postList, 2);
+		
+		//use -1 as last parameter (college feed ID) to signify to the listAdapter that it shouldn't display college names
+		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_post, postList, 2, -1);
 		list.setAdapter(listAdapter);
 		
 		
@@ -149,6 +151,7 @@ public class MyPostsFragment extends Fragment implements OnRefreshListener
 	{
 		if(listAdapter != null)
 		{
+			listAdapter.setCollegeFeedID(-1);
 			listAdapter.clear();
 			listAdapter.addAll(postList);
 			listAdapter.notifyDataSetChanged();

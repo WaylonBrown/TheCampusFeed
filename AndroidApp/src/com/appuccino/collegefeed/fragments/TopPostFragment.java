@@ -109,7 +109,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		{
 			changeFeed(MainActivity.ALL_COLLEGES);
 		}
-		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 0);
+		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 0, currentFeedID);
 		if(list != null)
 			list.setAdapter(listAdapter);	
 		else
@@ -271,10 +271,11 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	{	
 		if(listAdapter != null)
 		{
+			listAdapter.setCollegeFeedID(currentFeedID);
 			listAdapter.clear();
 			listAdapter.addAll(postList);
 			listAdapter.notifyDataSetChanged();
-		}			
+		}
 	}
 
 	public static void makeLoadingIndicator(boolean makeLoading) 

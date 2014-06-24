@@ -110,7 +110,15 @@
 	
 	</LinearLayout>
 	
+	<!-- the following view shows only if the rest of the XML doesn't, as the padding's needed to look nice, otherwise show the divider/college name etc. -->
 	<View
+	    android:id="@+id/bottomPadding"
+	    android:layout_width="match_parent"
+	    android:layout_height="4dp"
+	    android:visibility="gone"/>
+	
+	<View
+	    android:id="@+id/bottomDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/lightgray"
@@ -118,6 +126,7 @@
         android:layout_marginRight="2dp"/>
     
 	<LinearLayout
+	    android:id="@+id/bottomLayout"
 	    android:layout_height="wrap_content"
 	    android:layout_width="match_parent"
 	    android:orientation="horizontal"

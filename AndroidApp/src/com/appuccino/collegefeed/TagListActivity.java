@@ -55,7 +55,7 @@ public class TagListActivity extends Activity{
 			postList.add(new Post("Post with tag 6", 1));
 			postList.add(new Post("Post with tag 7", 1));
 			postList.add(new Post("Post with tag 8", 1));
-			listAdapter = new PostListAdapter(this, R.layout.list_row_post, postList, 0);
+			listAdapter = new PostListAdapter(this, R.layout.list_row_post, postList, 0, MainActivity.ALL_COLLEGES);
 			
 			//if doesnt have footer, add it
 			if(listView.getFooterViewsCount() == 0)

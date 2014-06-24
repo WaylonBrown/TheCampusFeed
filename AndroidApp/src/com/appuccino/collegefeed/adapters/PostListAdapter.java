@@ -18,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,13 +42,15 @@ public class PostListAdapter extends ArrayAdapter<Post>{
     int layoutResourceId;    
     List<Post> postList = null;
     int whichList = 0;	//0 = toppostfrag, 1 = newpostfrag, 2 = mypostfrag
+    int currentFeedID;
     
-    public PostListAdapter(Context context, int layoutResourceId, List<Post> list, int whichList) {
+    public PostListAdapter(Context context, int layoutResourceId, List<Post> list, int whichList, int currentFeedID) {
         super(context, layoutResourceId, list);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         postList = list;
         this.whichList = whichList;
+        this.currentFeedID = currentFeedID;
     }
     
     @Override
@@ -68,10 +71,12 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         	postHolder.commentText = (TextView)row.findViewById(R.id.commentText);
         	postHolder.arrowUp = (ImageView)row.findViewById(R.id.arrowUp);
         	postHolder.arrowDown = (ImageView)row.findViewById(R.id.arrowDown);
-        	//these two will return null if not showing posts with college names
         	postHolder.collegeName = (TextView)row.findViewById(R.id.collegeNameText);
         	postHolder.gpsImage = (ImageView)row.findViewById(R.id.gpsImage);
         	postHolder.gpsImageGap = (View)row.findViewById(R.id.gpsImageGapFiller);
+        	postHolder.bottomDivider = (View)row.findViewById(R.id.bottomDivider);
+        	postHolder.bottomPadding = (View)row.findViewById(R.id.bottomPadding);
+        	postHolder.bottomLayout = (LinearLayout)row.findViewById(R.id.bottomLayout);
             
             postHolder.scoreText.setTypeface(FontManager.bold);
             postHolder.messageText.setTypeface(FontManager.light);
@@ -97,6 +102,17 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         if(thisPost.getCommentList().size() != 1)
         	commentString += "s";
         postHolder.commentText.setText(commentString);
+        
+        //dont show bottom part of post
+        if(currentFeedID != MainActivity.ALL_COLLEGES){
+        	postHolder.bottomDivider.setVisibility(View.GONE);
+        	postHolder.bottomLayout.setVisibility(View.GONE);
+        	postHolder.bottomPadding.setVisibility(View.VISIBLE);
+        }else{
+        	postHolder.bottomDivider.setVisibility(View.VISIBLE);
+        	postHolder.bottomLayout.setVisibility(View.VISIBLE);
+        	postHolder.bottomPadding.setVisibility(View.GONE);
+        }
         
         setMessageAndColorizeTags(thisPost.getMessage(), postHolder);
         try {
@@ -356,8 +372,11 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 //		ss.setSpan(span1, 5, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 //    	postHolder.messageText.setText(Html.fromHtml(message));
     	postHolder.messageText.setText(Html.fromHtml(message));
-		
 	}
+    
+    public void setCollegeFeedID(int id){
+    	currentFeedID = id;
+    }
 
 	static class PostHolder
     {
@@ -370,5 +389,8 @@ public class PostListAdapter extends ArrayAdapter<Post>{
     	ImageView arrowDown;
     	ImageView gpsImage;
     	View gpsImageGap;
+    	View bottomDivider;
+    	View bottomPadding;
+    	LinearLayout bottomLayout;
     }
 }
