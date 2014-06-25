@@ -3,6 +3,7 @@ package com.appuccino.collegefeed;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -71,7 +72,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public static LocationManager mgr;
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
 	public static ArrayList<Integer> permissions = new ArrayList<Integer>();	//length of 0 or null = no perms, otherwise the college ID is the perm IDs
-	public static ArrayList<College> collegeList;
+	public static ArrayList<College> collegeList = new ArrayList<College>();
+	
+	public static List<Integer> postUpvoteList = new ArrayList<Integer>();
+	public static List<Integer> postDownvoteList = new ArrayList<Integer>();
+	public static List<Integer> commentUpvoteList = new ArrayList<Integer>();
+	public static List<Integer> commentDownvoteList = new ArrayList<Integer>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +93,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		setupCollegeList();
 		
 		locationFound = false;
+		postUpvoteList = PrefManager.getPostUpvoteList();
+		postDownvoteList = PrefManager.getPostDownvoteList();
+		commentUpvoteList = PrefManager.getCommentUpvoteList();
+		commentDownvoteList = PrefManager.getCommentDownvoteList();
 		
 		permissionsProgress = (ProgressBar)findViewById(R.id.permissionsLoadingIcon);
 		newPostButton = (ImageView)findViewById(R.id.newPostButton);
@@ -98,7 +108,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		});
 		
 		setupAdapter();
-		//changeFeed(ALL_COLLEGES);
 		getLocation();
 	}
 
