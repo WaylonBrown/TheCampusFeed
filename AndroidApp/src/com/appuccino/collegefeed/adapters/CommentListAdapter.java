@@ -6,8 +6,8 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,16 +17,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.CommentsActivity;
+import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
-import com.appuccino.collegefeed.TagListActivity;
-import com.appuccino.collegefeed.adapters.PostListAdapter.PostHolder;
-import com.appuccino.collegefeed.fragments.NewPostFragment;
-import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Comment;
-import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
+import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.TimeManager;
 
 public class CommentListAdapter extends ArrayAdapter<Comment>{
@@ -92,16 +88,24 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 				{
 					thisComment.setVote(1);
 					thisComment.score += 2;
+					MainActivity.commentDownvoteList.remove(Integer.valueOf(thisComment.getID()));
+					MainActivity.commentUpvoteList.add(thisComment.getID());
+					PrefManager.putCommentDownvoteList(MainActivity.commentDownvoteList);
+					PrefManager.putCommentUpvoteList(MainActivity.commentUpvoteList);
 				}
 				else if(thisComment.getVote() == 0)
 				{
 					thisComment.setVote(1);
 					thisComment.score++;
+					MainActivity.commentUpvoteList.add(thisComment.getID());
+					PrefManager.putCommentUpvoteList(MainActivity.commentUpvoteList);
 				}
 				else 
 				{
 					thisComment.setVote(0);
 					thisComment.score--;
+					MainActivity.commentUpvoteList.remove(Integer.valueOf(thisComment.getID()));
+					PrefManager.putCommentUpvoteList(MainActivity.commentUpvoteList);
 				}
 
 				CommentsActivity.updateList();
@@ -111,6 +115,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 
 			@Override
 			public void onClick(View v) {
+				Log.i("cfeed","College id: " + thisComment.getCollegeID());
 				if(MainActivity.hasPermissions(thisComment.getCollegeID()))
 				{
 					//if already downvoted, un-downvote
@@ -118,16 +123,24 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 					{
 						thisComment.setVote(0);
 						thisComment.score++;
+						MainActivity.commentDownvoteList.remove(Integer.valueOf(thisComment.getID()));
+						PrefManager.putCommentDownvoteList(MainActivity.commentDownvoteList);
 					}
 					else if(thisComment.getVote() == 0)
 					{
 						thisComment.setVote(-1);
 						thisComment.score--;
+						MainActivity.commentDownvoteList.add(thisComment.getID());
+						PrefManager.putCommentDownvoteList(MainActivity.commentDownvoteList);
 					}
 					else 
 					{
 						thisComment.setVote(-1);
 						thisComment.score -= 2;
+						MainActivity.commentUpvoteList.remove(Integer.valueOf(thisComment.getID()));
+						MainActivity.commentDownvoteList.add(thisComment.getID());
+						PrefManager.putCommentDownvoteList(MainActivity.commentDownvoteList);
+						PrefManager.putCommentUpvoteList(MainActivity.commentUpvoteList);
 					}
 					CommentsActivity.updateList();
 				}
@@ -138,6 +151,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 			}        	
         });
         
+        thisComment.setVote(MainActivity.getVoteByCommentId(thisComment.getID()));
         int vote = thisComment.getVote();
         if(vote == -1)
         {
@@ -159,7 +173,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
     }
     
     private void setTime(Comment thisComment, TextView timeText) throws ParseException {
-    	Calendar thisPostTime = TimeManager.toCalendar(thisComment.getTime());
+    	Calendar thisCommentTime = TimeManager.toCalendar(thisComment.getTime());
     	Calendar now = Calendar.getInstance();
     	
     	int yearsDiff;
@@ -170,13 +184,13 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
     	int minutesDiff;
     	int secondsDiff;
     	
-    	yearsDiff = now.get(Calendar.YEAR) - thisPostTime.get(Calendar.YEAR);
-    	monthsDiff = now.get(Calendar.MONTH) - thisPostTime.get(Calendar.MONTH);
-    	weeksDiff = now.get(Calendar.WEEK_OF_YEAR) - thisPostTime.get(Calendar.WEEK_OF_YEAR);
-    	daysDiff = now.get(Calendar.DAY_OF_YEAR) - thisPostTime.get(Calendar.DAY_OF_YEAR);
-    	hoursDiff = now.get(Calendar.HOUR_OF_DAY) - thisPostTime.get(Calendar.HOUR_OF_DAY);
-    	minutesDiff = now.get(Calendar.MINUTE) - thisPostTime.get(Calendar.MINUTE);
-    	secondsDiff = now.get(Calendar.SECOND) - thisPostTime.get(Calendar.SECOND);
+    	yearsDiff = now.get(Calendar.YEAR) - thisCommentTime.get(Calendar.YEAR);
+    	monthsDiff = now.get(Calendar.MONTH) - thisCommentTime.get(Calendar.MONTH);
+    	weeksDiff = now.get(Calendar.WEEK_OF_YEAR) - thisCommentTime.get(Calendar.WEEK_OF_YEAR);
+    	daysDiff = now.get(Calendar.DAY_OF_YEAR) - thisCommentTime.get(Calendar.DAY_OF_YEAR);
+    	hoursDiff = now.get(Calendar.HOUR_OF_DAY) - thisCommentTime.get(Calendar.HOUR_OF_DAY);
+    	minutesDiff = now.get(Calendar.MINUTE) - thisCommentTime.get(Calendar.MINUTE);
+    	secondsDiff = now.get(Calendar.SECOND) - thisCommentTime.get(Calendar.SECOND);
     	
 //    	Log.i("cfeed","Time difference for post " + thisPost.getMessage().substring(0, 10) + ": Years: " + yearsDiff + " Months: " + monthsDiff +
 //    			" Weeks: " + weeksDiff + " Days: " + daysDiff + " Hours: " + hoursDiff + " Minutes: " + minutesDiff + " Seconds: " + secondsDiff);
