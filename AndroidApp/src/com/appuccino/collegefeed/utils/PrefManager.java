@@ -1,5 +1,8 @@
 package com.appuccino.collegefeed.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -10,6 +13,8 @@ import android.preference.PreferenceManager;
 public class PrefManager {
 	
 	public static SharedPreferences prefs;
+	public static final String UPVOTE_LIST = "upvote_list";
+	public static final String DOWNVOTE_LIST = "downvote_list";
 	
 	public static void setup(Context c) 
 	{
@@ -44,5 +49,59 @@ public class PrefManager {
 	public static String getString(String key, String defaultVal)
 	{
 		return prefs.getString(key, defaultVal);
+	}
+	
+	public static void putUpvoteList(List<Integer> list){
+		String storage = "";
+		for(int id : list){
+			storage += (id + ";");
+		}
+		//remove final ;
+		storage = storage.substring(0, storage.length()-1);
+		
+		prefs.edit().putString(UPVOTE_LIST, storage).commit();
+	}
+	
+	public static List<Integer> getUpvoteList(){
+		List<Integer> returnList = new ArrayList<Integer>();
+		String retrieval = prefs.getString(UPVOTE_LIST, "");
+		if(retrieval != null && !retrieval.isEmpty()){
+			String[] split = retrieval.split(";");
+			for(String id : split){
+				try{
+					returnList.add(Integer.valueOf(id));
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+			}
+		}
+		return returnList;
+	}
+	
+	public static void putDownvoteList(List<Integer> list){
+		String storage = "";
+		for(int id : list){
+			storage += (id + ";");
+		}
+		//remove final ;
+		storage = storage.substring(0, storage.length()-1);
+		
+		prefs.edit().putString(DOWNVOTE_LIST, storage).commit();
+	}
+	
+	public static List<Integer> getDownvoteList(){
+		List<Integer> returnList = new ArrayList<Integer>();
+		String retrieval = prefs.getString(DOWNVOTE_LIST, "");
+		if(retrieval != null && !retrieval.isEmpty()){
+			String[] split = retrieval.split(";");
+			for(String id : split){
+				try{
+					returnList.add(Integer.valueOf(id));
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+			}
+		}
+		return returnList;
 	}
 }
