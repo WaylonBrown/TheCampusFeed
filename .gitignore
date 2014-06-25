@@ -3,6 +3,8 @@
 **/BuildConfig.java
 AndroidApp/gen/com/appuccino/collegefeed/BuildConfig.java
 
+bin/
+
 #################
 ## Eclipse
 #################
