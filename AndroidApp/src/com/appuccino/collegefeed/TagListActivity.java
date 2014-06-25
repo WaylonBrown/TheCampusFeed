@@ -1,26 +1,33 @@
 package com.appuccino.collegefeed;
 
 import java.util.ArrayList;
-
-import com.appuccino.collegefeed.adapters.CommentListAdapter;
-import com.appuccino.collegefeed.adapters.PostListAdapter;
-import com.appuccino.collegefeed.objects.Post;
-import com.appuccino.collegefeed.utils.FontManager;
-import com.appuccino.collegefeed.R;
+import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.graphics.Typeface;
+import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.appuccino.collegefeed.adapters.PostListAdapter;
+import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.utils.FontManager;
+import com.appuccino.collegefeed.utils.NetWorker.GetTagActivityTask;
+import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
 
 public class TagListActivity extends Activity{
-	static PostListAdapter listAdapter;
+	private static PostListAdapter listAdapter;
+	private ListView list;
+	public static List<Post> postList = new ArrayList<Post>();
+	private static String tagText = "";
+	private static TextView topTagText;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,29 +44,46 @@ public class TagListActivity extends Activity{
 		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
 		actionBar.setIcon(R.drawable.logofake);
 				
-		String tagText = getIntent().getStringExtra("TAG_ID");
+		tagText = getIntent().getStringExtra("TAG_ID");
+		tagText = tagText.replace("#", "");
         
-        TextView topTagText = (TextView)findViewById(R.id.topTagText);
-        topTagText.setText("Posts with " + tagText);
+        topTagText = (TextView)findViewById(R.id.topTagText);
+        if(postList.size() > 0){
+			topTagText.setText("Posts with #" + tagText);
+		}else{
+			topTagText.setText("No posts with #" + tagText);
+		}
         topTagText.setTypeface(FontManager.light);
 		
-		ListView listView = (ListView)findViewById(R.id.fragmentListView);
-		if(!tagText.equals("") && tagText != null)
+		list = (ListView)findViewById(R.id.fragmentListView);
+		if(!tagText.isEmpty() && tagText != null)
 		{			
-			ArrayList<Post> postList = new ArrayList<Post>();
-			postList.add(new Post(1, "Post with tag 1", 1, 1, ""));
-			listAdapter = new PostListAdapter(this, R.layout.list_row_collegepost, postList, 0, MainActivity.ALL_COLLEGES);
-			
 			//if doesnt have footer, add it
-			if(listView.getFooterViewsCount() == 0)
+			if(list.getFooterViewsCount() == 0)
 			{
 				//for card UI
 				View headerFooter = new View(this);
 				headerFooter.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
-				listView.addFooterView(headerFooter, null, false);
+				list.addFooterView(headerFooter, null, false);
 			}
-			listView.setAdapter(listAdapter);
+			
+			ArrayList<Post> postList = new ArrayList<Post>();
+			pullListFromServer();
+			listAdapter = new PostListAdapter(this, R.layout.list_row_collegepost, postList, 0, MainActivity.currentFeedCollegeID);
+			if(list != null)
+				list.setAdapter(listAdapter);	
+			else
+				Log.e("cfeed", "TopPostFragment list adapter wasn't set.");
 		}
+	}
+
+	private void pullListFromServer() {
+		postList = new ArrayList<Post>();
+		ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);		
+		if(cm.getActiveNetworkInfo() != null)
+			new GetTagActivityTask(this, MainActivity.currentFeedCollegeID, tagText).execute(new PostSelector());
+		else
+			Toast.makeText(this, "You have no internet connection.", Toast.LENGTH_LONG).show();
 	}
 
 	@Override
@@ -69,8 +93,23 @@ public class TagListActivity extends Activity{
 	}
 
 	public static void updateList() {
-		if(listAdapter != null)
+		if(listAdapter != null){
+			listAdapter.clear();
+			listAdapter.addAll(postList);
 			listAdapter.notifyDataSetChanged();
+			
+			tagText = tagText.replace("#", "");
+			if(postList.size() > 0){
+				topTagText.setText("Posts with #" + tagText);
+			}else{
+				Log.i("cfeed", "Tagstext is " + tagText);
+				topTagText.setText("No posts with #" + tagText);
+			}
+		}
+	}
+
+	public void makeLoadingIndicator(boolean b) {
+		// TODO Auto-generated method stub
 	}
 
 }

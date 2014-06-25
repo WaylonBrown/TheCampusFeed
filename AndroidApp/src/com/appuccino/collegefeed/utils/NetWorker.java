@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.appuccino.collegefeed.CommentsActivity;
 import com.appuccino.collegefeed.MainActivity;
+import com.appuccino.collegefeed.TagListActivity;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
@@ -274,6 +275,74 @@ public class NetWorker {
 			TagFragment.updateList();
 			TagFragment.makeLoadingIndicator(false);
 			TagFragment.setupFooterListView();
+		}		
+	}
+	
+	public static class GetTagActivityTask extends AsyncTask<PostSelector, Void, ArrayList<Post> >
+	{
+		int feedID = 0;
+		TagListActivity activity;
+		String tagText;
+		
+		public GetTagActivityTask()
+		{
+		}
+		
+		public GetTagActivityTask(TagListActivity activity, int feedID, String text)
+		{
+			this.feedID = feedID;
+			this.activity = activity;
+			tagText = text;
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			activity.makeLoadingIndicator(true);
+			super.onPreExecute();
+		}
+
+		@Override
+		protected ArrayList<Post> doInBackground(PostSelector... arg0) {
+			HttpGet request = null;
+			if(feedID == MainActivity.ALL_COLLEGES)
+				request = new HttpGet(REQUEST_URL + "posts/byTag/" + tagText);
+			else
+				request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/posts/byTag/" + tagText);
+			
+			return getPostsFromURLRequest(request);
+		}
+				
+		private ArrayList<Post> getPostsFromURLRequest(HttpGet request) {
+			ArrayList<Post> ret = new ArrayList<Post>();
+			ResponseHandler<String> responseHandler = new BasicResponseHandler();
+			String response = null;
+			try {
+				response = client.execute(request, responseHandler);
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if(response != null)
+				Log.d("cfeed", LOG_TAG + response);
+			
+			try {
+				ret = JSONParser.postListFromJSON(response);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ret;
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<Post> result) {
+			activity.postList = new ArrayList<Post>(result);
+			TagListActivity.updateList();
+			activity.makeLoadingIndicator(false);
 		}		
 	}
 	

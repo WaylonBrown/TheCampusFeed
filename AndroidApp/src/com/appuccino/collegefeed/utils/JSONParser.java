@@ -54,6 +54,8 @@ public class JSONParser {
 				ret.add(new College(name, id, latitude, longitude));
 			}
 			reader.endArray();
+		}catch(Exception e){
+			e.printStackTrace();
 		} finally{
 			reader.close();
 		}
@@ -120,6 +122,8 @@ public class JSONParser {
 				ret.add(new Post(id, text, score, collegeID, time));
 			}
 			reader.endArray();
+		}catch(Exception e){
+			e.printStackTrace();
 		} finally{
 			reader.close();
 		}
@@ -185,6 +189,8 @@ public class JSONParser {
 				ret.add(new Comment(message, id, postID, score, collegeID, time));
 			}
 			reader.endArray();
+		}catch(Exception e){
+			e.printStackTrace();
 		} finally{
 			reader.close();
 		}
@@ -216,6 +222,8 @@ public class JSONParser {
 				ret.add(new Tag(text));
 			}
 			reader.endArray();
+		}catch(Exception e){
+			e.printStackTrace();
 		} finally{
 			reader.close();
 		}

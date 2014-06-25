@@ -118,7 +118,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	
 		// Set up the ViewPager with the sections adapter.
 		viewPager.setAdapter(pagerAdapter);
-		viewPager.setOffscreenPageLimit(5);
+		viewPager.setOffscreenPageLimit(3);
 		tabs.setViewPager(viewPager);
 	}
 
@@ -373,8 +373,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 	private void updateListsForGPS() 
 	{
-		Toast.makeText(this, "Remember to reimplement updateListsForGPS()", Toast.LENGTH_SHORT).show();
-		
 		if(currentFeedCollegeID == ALL_COLLEGES){
 			TopPostFragment.updateList();
 			NewPostFragment.updateList();
@@ -481,12 +479,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			case 3:	//most active colleges
 				fragment = new MostActiveCollegesFragment(mainActivity);
 				break;
-			case 4:	//my posts
-				fragment = new MyPostsFragment(mainActivity);
-				break;
-			case 5:	//my comments
-				fragment = new MyCommentsFragment(mainActivity);
-				break;
 			}
 			
 			if(fragment != null)
@@ -496,7 +488,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 		@Override
 		public int getCount() {
-			return 6;
+			return 4;
 		}
 
 		@Override
@@ -511,10 +503,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				return getString(R.string.section3).toUpperCase(l);
 			case 3:
 				return getString(R.string.section4).toUpperCase(l);
-			case 4:
-				return getString(R.string.section5).toUpperCase(l);
-			case 5:
-				return getString(R.string.section6).toUpperCase(l);
 			}
 			return null;
 		}
