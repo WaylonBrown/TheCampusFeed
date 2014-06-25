@@ -4,31 +4,28 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.Html;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.view.animation.TranslateAnimation;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AbsListView.OnScrollListener;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
@@ -36,19 +33,20 @@ import com.appuccino.collegefeed.TagListActivity;
 import com.appuccino.collegefeed.adapters.TagListAdapter;
 import com.appuccino.collegefeed.extra.QuickReturnListView;
 import com.appuccino.collegefeed.objects.College;
-import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Tag;
 import com.appuccino.collegefeed.utils.FontManager;
-import com.appuccino.collegefeed.utils.NetWorker.MakePostTask;
+import com.appuccino.collegefeed.utils.NetWorker.GetTagFragmentTask;
+import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
 
 public class TagFragment extends Fragment
 {
 	static MainActivity mainActivity;
 	public static final String ARG_SECTION_NUMBER = "section_number";
 	public static final int MIN_TAGSEARCH_LENGTH = 4;
-	static ArrayList<Tag> tagList;
-	QuickReturnListView list;
+	public static ArrayList<Tag> tagList;
+	static QuickReturnListView list;
 	View rootView;
+	private static int currentFeedID;
 	
 	//values for footer
 	static LinearLayout footer;
@@ -61,6 +59,7 @@ public class TagFragment extends Fragment
 	private static int mMinRawY = 0;
 	private static TranslateAnimation anim;
 	static TextView collegeNameBottom;
+	private static TagListAdapter listAdapter;
 
 	public TagFragment()
 	{
@@ -80,22 +79,6 @@ public class TagFragment extends Fragment
 		footer = (LinearLayout)rootView.findViewById(R.id.footer);
 		setupBottomViewUI();
 		
-		tagList = new ArrayList<Tag>();
-		tagList.add(new Tag("#YOLO", 5));
-		tagList.add(new Tag("#bieberfever", 5));
-		tagList.add(new Tag("#tbt", 5));
-		tagList.add(new Tag("#YOLO", 5));
-		tagList.add(new Tag("#bieberfever", 5));
-		tagList.add(new Tag("#tbt", 5));
-		tagList.add(new Tag("#YOLO", 5));
-		tagList.add(new Tag("#bieberfever", 5));
-		tagList.add(new Tag("#tbt", 5));
-		tagList.add(new Tag("#YOLO", 5));
-		tagList.add(new Tag("#bieberfever", 5));
-		tagList.add(new Tag("#tbt", 5));
-		
-		TagListAdapter adapter = new TagListAdapter(getActivity(), R.layout.list_row_tag, tagList);
-		
 		//if doesnt have header and footer, add them
 		if(list.getHeaderViewsCount() == 0)
 		{
@@ -105,10 +88,16 @@ public class TagFragment extends Fragment
 			list.addFooterView(headerFooter, null, false);
 			list.addHeaderView(headerFooter, null, false);
 		}
+		
+		if(tagList == null && mainActivity != null)
+		{
+			changeFeed(MainActivity.ALL_COLLEGES);
+		}
+		listAdapter = new TagListAdapter(getActivity(), R.layout.list_row_tag, tagList);
 		if(list != null)
-			list.setAdapter(adapter);	
+			list.setAdapter(listAdapter);	
 		else
-			Log.e("cfeed", "TopPostFragment list adapter wasn't set.");
+			Log.e("cfeed", "TagFragment list adapter wasn't set.");
 		list.setItemsCanFocus(true);
 	    
 	    //set bottom text typeface
@@ -149,7 +138,7 @@ public class TagFragment extends Fragment
 		});
 	}
 	
-	private void setupFooterListView() {
+	public static void setupFooterListView() {
 		list.getViewTreeObserver().addOnGlobalLayoutListener(
 			new ViewTreeObserver.OnGlobalLayoutListener() {
 				@Override
@@ -299,18 +288,42 @@ public class TagFragment extends Fragment
     	});
 	}
 	
+	private static void pullListFromServer() 
+	{
+		tagList = new ArrayList<Tag>();
+		ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);		
+		if(cm.getActiveNetworkInfo() != null){
+			new GetTagFragmentTask(currentFeedID).execute(new PostSelector());
+		}
+	}
+	
 	public static void changeFeed(int id) {
-		College newFeed = MainActivity.getCollegeByID(id);
+		currentFeedID = id;
+		College currentCollege = MainActivity.getCollegeByID(id);
 		if(collegeNameBottom != null)
 		{
 			//chose an actual college
-			if(newFeed != null)
-				collegeNameBottom.setText(newFeed.getName());
+			if(currentCollege != null)
+				collegeNameBottom.setText(currentCollege.getName());
 			else if(id == MainActivity.ALL_COLLEGES)
 				collegeNameBottom.setText(mainActivity.getResources().getString(R.string.allColleges));
 			//TODO: load college list here
 			else
 				collegeNameBottom.setText("");
 		}
+		pullListFromServer();
+	}
+
+	public static void updateList() {
+		if(listAdapter != null)
+		{
+			listAdapter.clear();
+			listAdapter.addAll(tagList);
+			listAdapter.notifyDataSetChanged();
+		}
+	}
+
+	public static void makeLoadingIndicator(boolean b) {
+		//TODO
 	}
 }

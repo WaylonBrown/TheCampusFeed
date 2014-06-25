@@ -11,6 +11,11 @@ public class Tag {
 		score = 0;
 	}
 	
+	public Tag(String n)
+	{
+		name = n;
+	}
+	
 	public Tag(String n, int s)
 	{
 		name = n;

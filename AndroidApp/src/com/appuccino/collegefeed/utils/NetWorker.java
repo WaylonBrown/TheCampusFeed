@@ -21,9 +21,11 @@ import com.appuccino.collegefeed.CommentsActivity;
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
+import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.objects.Tag;
 import com.appuccino.collegefeed.objects.Vote;
 
 public class NetWorker {
@@ -207,6 +209,71 @@ public class NetWorker {
 			CommentsActivity.commentList = new ArrayList<Comment>(result);
 			CommentsActivity.updateList();
 			activity.makeLoadingIndicator(false);
+		}		
+	}
+	
+	public static class GetTagFragmentTask extends AsyncTask<PostSelector, Void, ArrayList<Tag> >
+	{
+		int feedID = 0;
+		
+		public GetTagFragmentTask()
+		{
+		}
+		
+		public GetTagFragmentTask(int feedID)
+		{
+			this.feedID = feedID;
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			TagFragment.makeLoadingIndicator(true);
+			super.onPreExecute();
+		}
+
+		@Override
+		protected ArrayList<Tag> doInBackground(PostSelector... arg0) {
+			HttpGet request = null;
+			if(feedID == MainActivity.ALL_COLLEGES)
+				request = new HttpGet(REQUEST_URL + "tags/trending");
+			else
+				request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/tags/trending");
+			
+			return getTagsFromURLRequest(request);
+		}
+		
+		private ArrayList<Tag> getTagsFromURLRequest(HttpGet request) {
+			ArrayList<Tag> ret = new ArrayList<Tag>();
+			ResponseHandler<String> responseHandler = new BasicResponseHandler();
+			String response = null;
+			try {
+				response = client.execute(request, responseHandler);
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if(response != null)
+				Log.d("cfeed", LOG_TAG + response);
+			
+			try {
+				ret = JSONParser.tagListFromJSON(response);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ret;
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<Tag> result) {
+			TagFragment.tagList = new ArrayList<Tag>(result);
+			TagFragment.updateList();
+			TagFragment.makeLoadingIndicator(false);
+			TagFragment.setupFooterListView();
 		}		
 	}
 	

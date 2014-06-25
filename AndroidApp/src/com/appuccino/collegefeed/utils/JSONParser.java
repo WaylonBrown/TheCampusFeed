@@ -13,6 +13,7 @@ import android.util.Log;
 import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.objects.Tag;
 
 public class JSONParser {
 
@@ -187,6 +188,38 @@ public class JSONParser {
 		} finally{
 			reader.close();
 		}
+		return ret;
+	}
+
+	public static ArrayList<Tag> tagListFromJSON(String json) throws IOException {
+		ArrayList<Tag> ret = new ArrayList<Tag>();
+		JsonReader reader = new JsonReader(new StringReader(""));
+		try {
+			reader = new JsonReader(new StringReader(json));
+			reader.beginArray();
+			while(reader.hasNext()){
+				
+				String text = null;
+				
+				reader.beginObject();
+				while(reader.hasNext()){
+					String name = reader.nextName(); //property name of next property.
+					if(name.equals("text")){
+						text = reader.nextString();
+					}
+					else{
+						reader.skipValue();
+					}
+				}
+				reader.endObject();
+				
+				ret.add(new Tag(text));
+			}
+			reader.endArray();
+		} finally{
+			reader.close();
+		}
+		
 		return ret;
 	}
 
