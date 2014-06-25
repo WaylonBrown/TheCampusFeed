@@ -34,6 +34,7 @@ import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.utils.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
+import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.TimeManager;
 
 public class PostListAdapter extends ArrayAdapter<Post>{
@@ -134,16 +135,24 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 				{
 					thisPost.setVote(1);
 					thisPost.score += 2;
+					MainActivity.postDownvoteList.remove(Integer.valueOf(thisPost.getID()));
+					MainActivity.postUpvoteList.add(thisPost.getID());
+					PrefManager.putPostDownvoteList(MainActivity.postDownvoteList);
+					PrefManager.putPostUpvoteList(MainActivity.postUpvoteList);
 				}
 				else if(thisPost.getVote() == 0)
 				{
 					thisPost.setVote(1);
 					thisPost.score++;
+					MainActivity.postUpvoteList.add(thisPost.getID());
+					PrefManager.putPostUpvoteList(MainActivity.postUpvoteList);
 				}
 				else 
 				{
 					thisPost.setVote(0);
 					thisPost.score--;
+					MainActivity.postUpvoteList.remove(Integer.valueOf(thisPost.getID()));
+					PrefManager.putPostUpvoteList(MainActivity.postUpvoteList);
 				}
 				
 				switch(whichList){
@@ -171,16 +180,24 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 					{
 						thisPost.setVote(0);
 						thisPost.score++;
+						MainActivity.postDownvoteList.remove(Integer.valueOf(thisPost.getID()));
+						PrefManager.putPostDownvoteList(MainActivity.postDownvoteList);
 					}
 					else if(thisPost.getVote() == 0)
 					{
 						thisPost.setVote(-1);
 						thisPost.score--;
+						MainActivity.postDownvoteList.add(thisPost.getID());
+						PrefManager.putPostDownvoteList(MainActivity.postDownvoteList);
 					}
 					else 
 					{
 						thisPost.setVote(-1);
 						thisPost.score -= 2;
+						MainActivity.postUpvoteList.remove(Integer.valueOf(thisPost.getID()));
+						MainActivity.postDownvoteList.add(thisPost.getID());
+						PrefManager.putPostDownvoteList(MainActivity.postDownvoteList);
+						PrefManager.putPostUpvoteList(MainActivity.postUpvoteList);
 					}
 					TopPostFragment.updateList();
 					NewPostFragment.updateList();
@@ -194,6 +211,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 			}        	
         });
         
+        thisPost.setVote(MainActivity.getVoteByPostId(thisPost.getID()));
         int vote = thisPost.getVote();
         if(vote == -1)
         {

@@ -396,6 +396,34 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			new NewPostDialog(this, postDialogLayout);
 		}
 	}
+	
+	public static int getIdByCollegeName(String name) {
+		for(College c: collegeList)
+		{
+			if(c.getName().equals(name))
+				return c.getID();
+		}
+		
+		return -1;
+	}
+	
+	public static int getVoteByPostId(int id){
+		if(postUpvoteList.contains(id)){
+			return 1;
+		}else if(postDownvoteList.contains(id)){
+			return -1;
+		}
+		return 0;
+	}
+	
+	public static int getVoteByCommentId(int id){
+		if(commentUpvoteList.contains(id)){
+			return 1;
+		}else if(commentDownvoteList.contains(id)){
+			return -1;
+		}
+		return 0;
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -491,7 +519,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			return null;
 		}
 	}
-
+	
 	@Override
 	public void onLocationChanged(Location loc) {
 		locationFound = true;
@@ -515,15 +543,5 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	public static int getIdByCollegeName(String name) {
-		for(College c: collegeList)
-		{
-			if(c.getName().equals(name))
-				return c.getID();
-		}
-		
-		return -1;
 	}
 }
