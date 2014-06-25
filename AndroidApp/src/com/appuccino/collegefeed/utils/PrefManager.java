@@ -59,7 +59,9 @@ public class PrefManager {
 			storage += (id + ";");
 		}
 		//remove final ;
-		storage = storage.substring(0, storage.length()-1);
+		if(storage.length() > 0){
+			storage = storage.substring(0, storage.length()-1);
+		}
 		
 		prefs.edit().putString(UPVOTE_LIST, storage).commit();
 	}
@@ -86,7 +88,9 @@ public class PrefManager {
 			storage += (id + ";");
 		}
 		//remove final ;
-		storage = storage.substring(0, storage.length()-1);
+		if(storage.length() > 0){
+			storage = storage.substring(0, storage.length()-1);
+		}
 		
 		prefs.edit().putString(DOWNVOTE_LIST, storage).commit();
 	}
@@ -113,7 +117,9 @@ public class PrefManager {
 			storage += (id + ";");
 		}
 		//remove final ;
-		storage = storage.substring(0, storage.length()-1);
+		if(storage.length() > 0){
+			storage = storage.substring(0, storage.length()-1);
+		}
 		
 		prefs.edit().putString(COMMENT_UPVOTE_LIST, storage).commit();
 	}
@@ -140,7 +146,9 @@ public class PrefManager {
 			storage += (id + ";");
 		}
 		//remove final ;
-		storage = storage.substring(0, storage.length()-1);
+		if(storage.length() > 0){
+			storage = storage.substring(0, storage.length()-1);
+		}
 		
 		prefs.edit().putString(COMMENT_DOWNVOTE_LIST, storage).commit();
 	}
