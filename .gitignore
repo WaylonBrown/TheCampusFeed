@@ -2,7 +2,6 @@
 *.properties
 **/BuildConfig.java
 AndroidApp/gen/com/appuccino/collegefeed/BuildConfig.java
-bin/
 
 #################
 ## Eclipse
@@ -11,6 +10,7 @@ bin/
 *.pydevproject
 .project
 .metadata
+bin/
 tmp/
 *.tmp
 *.bak
@@ -52,6 +52,7 @@ local.properties
 [Rr]elease/
 x64/
 build/
+[Bb]in/
 [Oo]bj/
 
 # MSTest test Results
