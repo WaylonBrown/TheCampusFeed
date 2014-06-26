@@ -59,6 +59,11 @@
 		53F878B819133F60002A578B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789419133F60002A578B /* UIKit.framework */; };
 		53F878C019133F60002A578B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 53F878BE19133F60002A578B /* InfoPlist.strings */; };
 		53F878C219133F60002A578B /* CollegefeedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F878C119133F60002A578B /* CollegefeedTests.m */; };
+		53FF2D06195BCE430040E872 /* UserPosts.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D05195BCE430040E872 /* UserPosts.txt */; };
+		53FF2D0A195BCE7D0040E872 /* UserComments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D09195BCE7D0040E872 /* UserComments.txt */; };
+		53FF2D0C195BCE850040E872 /* UserVotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D0B195BCE850040E872 /* UserVotes.txt */; };
+		53FF2D15195BD6270040E872 /* TestResizingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FF2D13195BD6270040E872 /* TestResizingViewController.m */; };
+		53FF2D16195BD6270040E872 /* TestResizingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D14195BD6270040E872 /* TestResizingViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,6 +187,12 @@
 		53F878BF19133F60002A578B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		53F878C119133F60002A578B /* CollegefeedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollegefeedTests.m; sourceTree = "<group>"; };
 		53FA791219381A4F00EF246E /* ChildCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildCellDelegate.h; sourceTree = "<group>"; };
+		53FF2D05195BCE430040E872 /* UserPosts.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserPosts.txt; sourceTree = "<group>"; };
+		53FF2D09195BCE7D0040E872 /* UserComments.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserComments.txt; sourceTree = "<group>"; };
+		53FF2D0B195BCE850040E872 /* UserVotes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserVotes.txt; sourceTree = "<group>"; };
+		53FF2D12195BD6270040E872 /* TestResizingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestResizingViewController.h; sourceTree = "<group>"; };
+		53FF2D13195BD6270040E872 /* TestResizingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestResizingViewController.m; sourceTree = "<group>"; };
+		53FF2D14195BD6270040E872 /* TestResizingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestResizingViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -325,6 +336,9 @@
 				5350557B1951458B009C1911 /* Create Post/Comment */,
 				533475A019232A4A00E84CC8 /* Custom Cells */,
 				535055891953B07A009C1911 /* Tag View */,
+				53FF2D12195BD6270040E872 /* TestResizingViewController.h */,
+				53FF2D13195BD6270040E872 /* TestResizingViewController.m */,
+				53FF2D14195BD6270040E872 /* TestResizingViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -426,6 +440,9 @@
 		53F8789719133F60002A578B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				53FF2D05195BCE430040E872 /* UserPosts.txt */,
+				53FF2D09195BCE7D0040E872 /* UserComments.txt */,
+				53FF2D0B195BCE850040E872 /* UserVotes.txt */,
 				53CF339D194E7235008BB733 /* CollegeList.txt */,
 				53F8789819133F60002A578B /* Collegefeed-Info.plist */,
 				53F8789919133F60002A578B /* InfoPlist.strings */,
@@ -580,11 +597,15 @@
 				53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */,
 				53AB57C5194ABD11001D1B7B /* Omnes-Semibold.ttf in Resources */,
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,
+				53FF2D0A195BCE7D0040E872 /* UserComments.txt in Resources */,
 				5350558019529FCA009C1911 /* FeedSelectViewController.xib in Resources */,
 				53AB57BC194AAFF8001D1B7B /* mplus-2c-bold.ttf in Resources */,
 				5390A9201914B76800ACD082 /* arrowupblue.png in Resources */,
+				53FF2D06195BCE430040E872 /* UserPosts.txt in Resources */,
 				533FCA4D193EDE3B00754C07 /* aggieland.gpx in Resources */,
+				53FF2D0C195BCE850040E872 /* UserVotes.txt in Resources */,
 				533FCA4F193FCD8200754C07 /* austin.gpx in Resources */,
+				53FF2D16195BD6270040E872 /* TestResizingViewController.xib in Resources */,
 				5350558F1953C75C009C1911 /* gps.png in Resources */,
 				5350557819514587009C1911 /* CreatePostCommentViewController.xib in Resources */,
 				5390A9241914B76800ACD082 /* postbuttonclick.xml in Resources */,
@@ -629,6 +650,7 @@
 				533475A41923344100E84CC8 /* TableCell.m in Sources */,
 				53963DE71916E5F50084E646 /* PostsViewController.m in Sources */,
 				53F8789D19133F60002A578B /* main.m in Sources */,
+				53FF2D15195BD6270040E872 /* TestResizingViewController.m in Sources */,
 				53D51E391949625300A8BA81 /* SimpleTableCell.m in Sources */,
 				533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */,
 			);

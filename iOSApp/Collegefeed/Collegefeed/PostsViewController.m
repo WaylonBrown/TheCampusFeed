@@ -35,7 +35,7 @@
                 [self setList:controller.recentPostsAllColleges];
                 break;
             case USER_VIEW:
-                [self setList:controller.userPostsAllColleges];
+                [self setList:controller.userPosts];
                 break;
             case TAG_VIEW:
                 [self setList:controller.allPostsWithTag];
