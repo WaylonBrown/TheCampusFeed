@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,8 +54,10 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         	commentHolder.scoreText = (TextView)row.findViewById(R.id.scoreText);
         	commentHolder.messageText = (TextView)row.findViewById(R.id.messageText);
         	commentHolder.timeText = (TextView)row.findViewById(R.id.timeText);
+        	commentHolder.commentsText = (TextView)row.findViewById(R.id.commentText);
         	commentHolder.arrowUp = (ImageView)row.findViewById(R.id.arrowUp);
         	commentHolder.arrowDown = (ImageView)row.findViewById(R.id.arrowDown);
+        	commentHolder.bottomPadding = (View)row.findViewById(R.id.bottomPadding);
             
             commentHolder.scoreText.setTypeface(FontManager.bold);
             commentHolder.messageText.setTypeface(FontManager.light);
@@ -68,6 +71,8 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         final Comment thisComment = commentList.get(position);
         commentHolder.scoreText.setText(String.valueOf(thisComment.getScore()));
         commentHolder.messageText.setText(thisComment.getMessage());
+        commentHolder.commentsText.setVisibility(View.GONE);
+        commentHolder.bottomPadding.setVisibility(View.VISIBLE);
         
         try {
 			setTime(thisComment, commentHolder.timeText);
@@ -80,7 +85,6 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         
         //arrow click listeners
         commentHolder.arrowUp.setOnClickListener(new OnClickListener(){
-
 			@Override
 			public void onClick(View v) {
 				//if already upvoted, un-upvote
@@ -283,7 +287,9 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
     	TextView scoreText;
     	TextView messageText;
     	TextView timeText;
+    	TextView commentsText;
     	ImageView arrowUp;
     	ImageView arrowDown;
+    	View bottomPadding;
     }
 }

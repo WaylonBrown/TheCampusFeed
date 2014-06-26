@@ -6,12 +6,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.text.Html;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,9 +26,7 @@ import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
 import com.appuccino.collegefeed.utils.FontManager;
-import com.appuccino.collegefeed.utils.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.utils.NetWorker.MakeVoteTask;
-import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
 import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.TimeManager;
 
@@ -331,33 +324,6 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 		}
 	}
 
-//    private void setMessageAndColorizeTags(String msg, PostHolder postHolder) 
-//    {
-//    	String tagColor = "#33B5E5";
-//    	String message = msg;
-//    	
-//    	String[] wordArray = message.split(" ");
-//    	//check for tags, colorize them
-//    	for(int i = 0; i < wordArray.length; i++)
-//    	{
-//    		if(wordArray[i].length() > 0 && wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
-//    		{
-//    			wordArray[i] = "<font color='" + tagColor + "'>" + wordArray[i] + "</font>";
-//    		}
-//    	}
-//    	
-//    	message = "";
-//    	//combine back to string
-//    	for(int i = 0; i < wordArray.length; i++)
-//    	{
-//    		message += wordArray[i] + " ";
-//    	}
-//    	
-//    	postHolder.messageText.setText(Html.fromHtml(message));
-//    	
-//		
-//	}
-    
     private void setMessageAndColorizeTags(String msg, PostHolder postHolder) 
     {
     	String tagColor = "#33B5E5";

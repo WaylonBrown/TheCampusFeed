@@ -87,7 +87,7 @@ public class CommentsActivity extends Activity{
         //set fonts		
 		scoreText.setTypeface(FontManager.bold);
 		messageText.setTypeface(FontManager.light);
-		timeText.setTypeface(FontManager.italic);
+		timeText.setTypeface(FontManager.medium);
 		commentsText.setTypeface(FontManager.light);
 		loadingText.setTypeface(FontManager.light);
 		if(post != null)
