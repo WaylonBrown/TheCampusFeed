@@ -17,7 +17,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5nr-Vv-dnb">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5nr-Vv-dnb">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal">
@@ -28,7 +28,7 @@
                         <action selector="dismiss" destination="-1" eventType="touchUpInside" id="gQr-qM-8yv"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="llI-Ec-hur">
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="llI-Ec-hur">
                     <rect key="frame" x="20" y="115" width="280" height="290"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
@@ -45,16 +45,32 @@
                             <color key="textColor" red="0.20000000300000001" green="0.70980393890000004" blue="0.89803922179999995" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="5P2-ay-ia0">
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="5P2-ay-ia0">
                             <rect key="frame" x="5" y="53" width="270" height="232"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="5P2-ay-ia0" secondAttribute="trailing" constant="5" id="7SO-WH-655"/>
+                        <constraint firstItem="5P2-ay-ia0" firstAttribute="leading" secondItem="llI-Ec-hur" secondAttribute="leading" constant="5" id="IrQ-YV-k4B"/>
+                        <constraint firstItem="5P2-ay-ia0" firstAttribute="top" secondItem="llI-Ec-hur" secondAttribute="top" constant="53" id="O4N-WI-3hN"/>
+                        <constraint firstAttribute="bottom" secondItem="5P2-ay-ia0" secondAttribute="bottom" constant="5" id="tQu-Nl-9DZ"/>
+                        <constraint firstAttribute="height" constant="290" id="wHc-mt-qv6"/>
+                        <constraint firstAttribute="width" constant="280" id="z4w-kI-mhZ"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="llI-Ec-hur" secondAttribute="centerX" id="2gl-ry-VMr"/>
+                <constraint firstItem="5nr-Vv-dnb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3LK-wa-PMv"/>
+                <constraint firstAttribute="trailing" secondItem="5nr-Vv-dnb" secondAttribute="trailing" id="7Ln-n3-wca"/>
+                <constraint firstAttribute="bottom" secondItem="5nr-Vv-dnb" secondAttribute="bottom" id="850-cR-J5o"/>
+                <constraint firstAttribute="centerY" secondItem="llI-Ec-hur" secondAttribute="centerY" id="Koh-5O-X2L"/>
+                <constraint firstItem="5nr-Vv-dnb" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="xvi-zQ-qAu"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>

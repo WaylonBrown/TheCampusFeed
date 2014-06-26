@@ -13,11 +13,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VUB-wS-DO1">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VUB-wS-DO1">
                         <rect key="frame" x="9" y="5" width="302" height="46"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o85-Cc-6e6">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o85-Cc-6e6">
                                 <rect key="frame" x="10" y="5" width="282" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
@@ -25,8 +25,20 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="o85-Cc-6e6" firstAttribute="leading" secondItem="VUB-wS-DO1" secondAttribute="leading" constant="10" id="JCK-FO-5gA"/>
+                            <constraint firstAttribute="bottom" secondItem="o85-Cc-6e6" secondAttribute="bottom" constant="5" id="SWP-ge-49E"/>
+                            <constraint firstItem="o85-Cc-6e6" firstAttribute="top" secondItem="VUB-wS-DO1" secondAttribute="top" constant="5" id="ec6-79-J9C"/>
+                            <constraint firstAttribute="trailing" secondItem="o85-Cc-6e6" secondAttribute="trailing" constant="10" id="txO-b0-0tm"/>
+                        </constraints>
                     </view>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="VUB-wS-DO1" secondAttribute="trailing" constant="9" id="GYZ-NP-0AA"/>
+                    <constraint firstItem="VUB-wS-DO1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="9" id="Uxw-DX-dlH"/>
+                    <constraint firstItem="VUB-wS-DO1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="pwQ-36-oQ4"/>
+                    <constraint firstAttribute="bottom" secondItem="VUB-wS-DO1" secondAttribute="bottom" constant="4" id="xoc-BY-U3t"/>
+                </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
             <connections>

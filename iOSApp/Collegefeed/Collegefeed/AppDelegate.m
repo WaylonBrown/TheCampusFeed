@@ -14,8 +14,6 @@
 #import "Models/Models/College.h"
 #import "Networker/Networker.h"
 
-#import "TestResizingViewController.h"
-
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

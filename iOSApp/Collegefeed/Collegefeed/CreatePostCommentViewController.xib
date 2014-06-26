@@ -19,7 +19,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mpu-AD-HcM">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mpu-AD-HcM">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal">
@@ -30,8 +30,8 @@
                         <action selector="dismiss:" destination="-1" eventType="touchUpInside" id="9Ge-3Z-MxQ"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gj6-SA-745">
-                    <rect key="frame" x="20" y="150" width="280" height="160"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gj6-SA-745">
+                    <rect key="frame" x="20" y="204" width="280" height="160"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="New Post" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QD5-9l-3Ds">
@@ -72,8 +72,20 @@
                         </textField>
                     </subviews>
                     <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="280" id="ZTH-zM-5Xs"/>
+                        <constraint firstAttribute="height" constant="160" id="chl-hM-A9K"/>
+                    </constraints>
                 </view>
             </subviews>
+            <constraints>
+                <constraint firstAttribute="centerY" secondItem="gj6-SA-745" secondAttribute="centerY" id="4hH-BX-f9j"/>
+                <constraint firstItem="Mpu-AD-HcM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Bd8-gf-7LD"/>
+                <constraint firstAttribute="trailing" secondItem="Mpu-AD-HcM" secondAttribute="trailing" id="Gvi-pG-mge"/>
+                <constraint firstAttribute="bottom" secondItem="Mpu-AD-HcM" secondAttribute="bottom" id="WXy-s2-MJ1"/>
+                <constraint firstAttribute="centerX" secondItem="gj6-SA-745" secondAttribute="centerX" id="aZJ-WH-j2Y"/>
+                <constraint firstItem="Mpu-AD-HcM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bGY-gP-TOa"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
