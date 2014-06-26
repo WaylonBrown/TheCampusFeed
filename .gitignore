@@ -3,6 +3,9 @@
 **/BuildConfig.java
 AndroidApp/gen/com/appuccino/collegefeed/BuildConfig.java
 *.class
+*.dex
+*.ap_
+dexedlibs/
 
 #################
 ## Eclipse
