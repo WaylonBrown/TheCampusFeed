@@ -112,6 +112,10 @@
 {
     return self.collegeName;
 }
+- (long)getCollegeID
+{
+    return self.collegeID;
+}
 - (void)setVote:(Vote *)vote
 {
     [self setVote:vote];

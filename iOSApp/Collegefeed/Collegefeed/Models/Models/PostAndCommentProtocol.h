@@ -22,6 +22,7 @@
 - (NSDate *)getCreatedAt;
 - (long)getScore;
 - (NSString *)getCollegeName;
+- (long)getCollegeID;
 - (void)setVote:(Vote *)vote;
 - (Vote *)getVote;
 - (long)getID;

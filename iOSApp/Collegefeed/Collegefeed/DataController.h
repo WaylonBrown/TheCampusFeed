@@ -85,6 +85,7 @@
 /****************************/
 /***** Local Data Access ****/
 /****************************/
+- (NSString *)getCollegeNameById:(long)Id;
 - (void)getHardCodedCollegeList;
 - (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon;
 

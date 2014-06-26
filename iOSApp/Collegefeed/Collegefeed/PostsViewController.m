@@ -110,7 +110,8 @@
 
     // get the post and display in this cell
     NSObject<PostAndCommentProtocol> *postAtIndex = [self.list objectAtIndex:indexPath.row];
-    [postAtIndex setCollegeName:@"Dookie University"];
+    NSString *collegeName = [self.dataController getCollegeNameById:[postAtIndex getCollegeID]];
+    [postAtIndex setCollegeName:collegeName];
     [cell assign:postAtIndex];
     
     return cell;

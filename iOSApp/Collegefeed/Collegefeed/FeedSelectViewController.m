@@ -29,7 +29,7 @@
     self.alertView.layer.borderWidth = 2;
     self.alertView.layer.cornerRadius = 5;
     [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
-    
+
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
     // Set fonts

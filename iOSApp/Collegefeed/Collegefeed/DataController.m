@@ -188,6 +188,17 @@
 
 #pragma mark - Local Data Access
 
+- (NSString *)getCollegeNameById:(long)Id
+{
+    for (College *college in self.collegeList)
+    {
+        if (college.collegeID == Id)
+        {
+            return college.name;
+        }
+    }
+    return @"";
+}
 - (void)getHardCodedCollegeList
 {   // Populate the college list with a recent
     // list of colleges instead of accessing the network
