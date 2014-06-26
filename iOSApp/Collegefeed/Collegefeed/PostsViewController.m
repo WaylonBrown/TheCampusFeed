@@ -120,7 +120,7 @@
 {   // TODO: This should not be hardcoded; revist
     if (self.dataController.showingAllColleges)
     {
-        return 119;
+        return 120;
     }
     else
     {
