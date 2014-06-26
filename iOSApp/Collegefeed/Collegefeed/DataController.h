@@ -46,21 +46,24 @@
 
 // Comment Array
 @property (nonatomic, strong) NSMutableArray *commentList;
+@property (nonatomic, strong) NSMutableArray *userComments;
 
 // Post Arrays
 @property (nonatomic, strong) NSMutableArray *topPostsAllColleges;
 @property (nonatomic, strong) NSMutableArray *recentPostsAllColleges;
-@property (nonatomic, strong) NSMutableArray *userPostsAllColleges;
+@property (nonatomic, strong) NSMutableArray *userPosts;
 @property (nonatomic, strong) NSMutableArray *allPostsWithTag;
 
 @property (nonatomic, strong) NSMutableArray *topPostsInCollege;
 @property (nonatomic, strong) NSMutableArray *recentPostsInCollege;
-@property (nonatomic, strong) NSMutableArray *userPostsInCollege;
 @property (nonatomic, strong) NSMutableArray *allPostsWithTagInCollege;
 
 // Tag Arrays
 @property (nonatomic, strong) NSMutableArray *allTags;
 @property (nonatomic, strong) NSMutableArray *allTagsInCollege;
+
+// Vote Arrays
+@property (nonatomic, strong) NSMutableArray *userVotes;
 
 // Location Information
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -92,6 +95,8 @@
 - (void)switchedToSpecificCollegeOrNil:(College *)college;
 - (BOOL)isNearCollege;
 
+- (void)retrieveUserData;
+
 /*************************/
 /***** Network Access ****/
 /*************************/
@@ -117,12 +122,6 @@
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage;
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage
                       withCollegeId:(long)collegeId;
-
-    // TODO: these not implemented yet
-- (void)fetchUserPostsWithUserId:(long)userId;
-- (void)fetchUserPostsWithUserId:(long)userId
-                   WithCollegeId:(long)collegeId;
-
 
 // Tags
 - (void)fetchAllTags;

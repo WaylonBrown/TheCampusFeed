@@ -14,6 +14,8 @@
 #import "Models/Models/College.h"
 #import "Networker/Networker.h"
 
+#import "TestResizingViewController.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -77,7 +79,8 @@
 
     
     // finalize window specifications
-    [self.window setRootViewController:self.tabBarController];
+//    [self.window setRootViewController:self.tabBarController];
+    [self.window setRootViewController:[TestResizingViewController new]];
     [self.window makeKeyAndVisible];
 
     return YES;

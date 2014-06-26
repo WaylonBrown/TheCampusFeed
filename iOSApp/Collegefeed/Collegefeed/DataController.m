@@ -139,17 +139,6 @@
     NSData* data = [Networker GETPostsWithTagName:tagMessage withCollegeId:collegeId];
     [self parseData:data asClass:[Post class] intoList:self.allPostsWithTagInCollege];
 }
-- (void)fetchUserPostsWithUserId:(long)userId
-{
-    [self setUserPostsAllColleges:[[NSMutableArray alloc] init]];
-    
-}
-- (void)fetchUserPostsWithUserId:(long)userId
-                   WithCollegeId:(long)collegeId
-{
-    [self setUserPostsInCollege:[[NSMutableArray alloc] init]];
-    
-}
 
 #pragma mark - Networker Access - Tags
 
@@ -246,6 +235,38 @@
 - (BOOL)isNearCollege
 {
     return self.nearbyColleges.count > 0;
+}
+- (void)retrieveUserData
+{
+    // Retrieve Posts
+    [self setUserPosts:[[NSMutableArray alloc] init]];
+    NSString *postsFilePath = [[NSBundle mainBundle] pathForResource:@"UserPosts" ofType:@"txt"];
+    NSData *postsData = [NSData dataWithContentsOfFile:postsFilePath];
+    if (postsData == nil)
+    {
+        NSLog(@"Could not get hard-coded list in UserPosts.txt");
+    }
+    [self parseData:postsData asClass:[Post class] intoList:self.userPosts];
+    
+    // Retrieve Comments
+    [self setUserComments:[[NSMutableArray alloc] init]];
+    NSString *commentsFilePath = [[NSBundle mainBundle] pathForResource:@"UserComments" ofType:@"txt"];
+    NSData *commentsData = [NSData dataWithContentsOfFile:commentsFilePath];
+    if (commentsData == nil)
+    {
+        NSLog(@"Could not get hard-coded list in UserComments.txt");
+    }
+    [self parseData:commentsData asClass:[Comment class] intoList:self.userComments];
+    
+    // Retrieve Votes
+    [self setUserVotes:[[NSMutableArray alloc] init]];
+    NSString *votesFilePath = [[NSBundle mainBundle] pathForResource:@"UserVotes" ofType:@"txt"];
+    NSData *votesData = [NSData dataWithContentsOfFile:votesFilePath];
+    if (votesData == nil)
+    {
+        NSLog(@"Could not get hard-coded list in UserVotes.txt");
+    }
+    [self parseData:votesData asClass:[Vote class] intoList:self.userVotes];
 }
 
 #pragma mark - Helper Methods
