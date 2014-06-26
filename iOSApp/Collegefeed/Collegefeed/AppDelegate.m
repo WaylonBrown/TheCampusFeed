@@ -79,8 +79,7 @@
 
     
     // finalize window specifications
-//    [self.window setRootViewController:self.tabBarController];
-    [self.window setRootViewController:[TestResizingViewController new]];
+    [self.window setRootViewController:self.tabBarController];
     [self.window makeKeyAndVisible];
 
     return YES;

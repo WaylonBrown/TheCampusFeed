@@ -336,9 +336,7 @@
 				5350557B1951458B009C1911 /* Create Post/Comment */,
 				533475A019232A4A00E84CC8 /* Custom Cells */,
 				535055891953B07A009C1911 /* Tag View */,
-				53FF2D12195BD6270040E872 /* TestResizingViewController.h */,
-				53FF2D13195BD6270040E872 /* TestResizingViewController.m */,
-				53FF2D14195BD6270040E872 /* TestResizingViewController.xib */,
+				53FF2D1F195BDB830040E872 /* Resizing Test */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -350,7 +348,6 @@
 				53AE73C61928354F00BE6B02 /* DataController.m */,
 				53F8789F19133F60002A578B /* AppDelegate.h */,
 				53F878A019133F60002A578B /* AppDelegate.m */,
-				53B090B5192DA13100E3D996 /* Views */,
 				53AB57B7194AAFB3001D1B7B /* Other */,
 			);
 			name = "Source Code";
@@ -432,6 +429,7 @@
 			isa = PBXGroup;
 			children = (
 				53B090B8192DA1FA00E3D996 /* Source Code */,
+				53B090B5192DA13100E3D996 /* Views */,
 				53B090B9192DA21600E3D996 /* Resources */,
 			);
 			path = Collegefeed;
@@ -471,6 +469,16 @@
 				53F878BE19133F60002A578B /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		53FF2D1F195BDB830040E872 /* Resizing Test */ = {
+			isa = PBXGroup;
+			children = (
+				53FF2D12195BD6270040E872 /* TestResizingViewController.h */,
+				53FF2D13195BD6270040E872 /* TestResizingViewController.m */,
+				53FF2D14195BD6270040E872 /* TestResizingViewController.xib */,
+			);
+			name = "Resizing Test";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
