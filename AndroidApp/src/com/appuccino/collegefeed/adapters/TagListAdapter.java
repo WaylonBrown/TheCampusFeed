@@ -51,7 +51,7 @@ public class TagListAdapter extends ArrayAdapter<Tag>{
         	tagHolder = (TagHolder)row.getTag();
         
         final Tag thisTag = tagList.get(position);
-        tagHolder.text.setText(thisTag.getText());
+        tagHolder.text.setText("#" + thisTag.getText());
         tagHolder.text.setSelected(true);
         
         row.setClickable(true);
