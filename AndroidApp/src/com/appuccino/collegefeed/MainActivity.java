@@ -293,7 +293,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					{
 						permissionsProgress.setVisibility(View.GONE);
 						newPostButton.setVisibility(View.VISIBLE);
-						CommentsActivity.setNewPermissionsIfAvailable();
 					}
 				}
 			}
@@ -310,6 +309,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			}
 			else	//near a college
 			{
+				CommentsActivity.setNewPermissionsIfAvailable();
 				if(permissions.size() == 1)
 				{
 					Toast.makeText(this, "You're near " + getCollegeByID(permissions.get(0)).getName(), Toast.LENGTH_LONG).show();

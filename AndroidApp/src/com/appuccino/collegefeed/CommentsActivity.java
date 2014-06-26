@@ -44,7 +44,7 @@ public class CommentsActivity extends Activity{
 	static CommentListAdapter listAdapter;
 	ShimmerTextView loadingText;
 	Shimmer shimmer;
-	Post post;
+	static Post post;
 	static ImageView newCommentButton;
 	static TextView commentsText;
 	final int minCommentLength = 3;
@@ -422,7 +422,7 @@ public class CommentsActivity extends Activity{
 	}
 
 	public static void setNewPermissionsIfAvailable() {
-		if(newCommentButton != null){
+		if(newCommentButton != null && MainActivity.hasPermissions(post.getCollegeID())){
 			newCommentButton.setVisibility(View.VISIBLE);
 		}
 		hasPermissions = true;	//necessary that way if permissions updated while not on MainActivity, still allow to comment
