@@ -54,6 +54,7 @@
     self.collegeList = [[NSMutableArray alloc] init];
     NSData *data = [Networker GETAllColleges];
     [self parseData:data asClass:[College class] intoList:self.collegeList];
+    [self writeCollegesToFileWithData:data];
 }
 
 #pragma mark - Networker Access - Comments
@@ -177,6 +178,14 @@
 
 #pragma mark - Local Data Access
 
+- (void)writeCollegesToFileWithData:(NSData *)data
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex: 0];
+    NSString *docFile = [docDir stringByAppendingPathComponent: @"NewCollegeList.txt"];
+    
+    [data writeToFile:docFile atomically: NO];
+}
 - (NSString *)getCollegeNameById:(long)Id
 {
     for (College *college in self.collegeList)
@@ -191,8 +200,14 @@
 - (void)getHardCodedCollegeList
 {   // Populate the college list with a recent
     // list of colleges instead of accessing the network
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"CollegeList" ofType:@"txt"];
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex: 0];
+    NSString *docFile = [docDir stringByAppendingPathComponent: @"NewCollegeList.txt"];
+    NSData *data = [NSData dataWithContentsOfFile:docFile];
+    
+//    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"CollegeList" ofType:@"txt"];
+//    NSData *data = [NSData dataWithContentsOfFile:filePath];
     
     if (data == nil)
     {

@@ -14,8 +14,11 @@
 
 #import <XCTest/XCTest.h>
 
+#import "DataController.h"
+
 @interface DataControllerTests : XCTestCase
 
+@property (strong, nonatomic) DataController *controller;
 
 @end
 
@@ -24,6 +27,7 @@
 - (void)setUp
 {   // NOT called by default
     [super setUp];
+    self.controller = [DataController new];
 }
 
 - (void)tearDown
@@ -32,6 +36,12 @@
     [super tearDown];
 }
 
-
+- (void)testFetchNewCollegeList
+{
+    [self setUp];
+    [self.controller getNetworkCollegeList];
+    [self.controller.collegeList removeAllObjects];
+    [self.controller getHardCodedCollegeList];
+}
 
 @end
