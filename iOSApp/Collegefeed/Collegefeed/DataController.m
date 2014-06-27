@@ -195,7 +195,16 @@
             return college.name;
         }
     }
-    return @"";
+    
+    NSData *collegeData = [Networker GETCollegeWithId:Id];
+    NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:collegeData
+                                                               options:0
+                                                                 error:nil];
+
+    College *college = [[College alloc] initFromJSON:jsonObject];
+    [self.collegeList addObject:college];
+    
+    return (college == nil) ? @"" : college.name;
 }
 - (void)getHardCodedCollegeList
 {   // Populate the college list with a recent
@@ -205,9 +214,6 @@
     NSString *docDir = [paths objectAtIndex: 0];
     NSString *docFile = [docDir stringByAppendingPathComponent: @"NewCollegeList.txt"];
     NSData *data = [NSData dataWithContentsOfFile:docFile];
-    
-//    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"CollegeList" ofType:@"txt"];
-//    NSData *data = [NSData dataWithContentsOfFile:filePath];
     
     if (data == nil)
     {
