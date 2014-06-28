@@ -33,7 +33,8 @@
         // Populate the initial arrays
         [self fetchTopPosts];
         [self fetchNewPosts];
-        [self getHardCodedCollegeList];
+//        [self getHardCodedCollegeList];
+        [self getNetworkCollegeList];
         [self fetchAllTags];
         
         // Get the user's location

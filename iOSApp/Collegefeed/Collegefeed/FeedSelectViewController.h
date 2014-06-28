@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #define TABLE_HEADER_HEIGHT 30
+#define TABLE_CELL_HEIGHT 44
 
 @class College;
 @protocol FeedSelectionProtocol <NSObject>
@@ -41,6 +42,8 @@ typedef NS_ENUM(NSInteger, FeedSelectorType)
 @property (strong, nonatomic) id<FeedSelectionProtocol> feedDelegate;
 @property (strong, nonatomic) id<CollegeForPostingSelectionProtocol> postingDelegate;
 
+@property (weak,nonatomic) IBOutlet NSLayoutConstraint *tableHeightConstraint;
+
 @property (weak, nonatomic) IBOutlet UIView *alertView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -53,5 +56,6 @@ typedef NS_ENUM(NSInteger, FeedSelectorType)
 - (id)initWithType:(FeedSelectorType)type;
 
 - (IBAction)dismiss;
+- (void)fixHeights:(int)numNearbyColleges;
 
 @end

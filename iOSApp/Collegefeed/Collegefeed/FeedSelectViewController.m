@@ -34,7 +34,6 @@
     [self.tableView setDelegate:self];
     // Set fonts
     [self.titleLabel setFont:CF_FONT_LIGHT(30)];
-
 }
 - (void)didReceiveMemoryWarning
 {
@@ -44,6 +43,35 @@
 - (IBAction)dismiss
 {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)fixHeights:(int)numNearbyColleges
+{
+    bool isNearColleges = numNearbyColleges > 0;
+    
+    int numCells = 0;
+    int numHeaders = 0;
+    
+    switch (self.type)
+    {
+        case ALL_COLLEGES_WITH_SEARCH:
+            return;
+        case ALL_NEARBY_OTHER:
+            numCells = numNearbyColleges + 2;
+            numHeaders = isNearColleges ? 3 : 2;
+            break;
+        case ONLY_NEARBY_COLLEGES:
+            numCells = numNearbyColleges;
+            numHeaders = 0;
+            break;
+        default:
+            break;
+    }
+
+    float tableViewHeight = (TABLE_HEADER_HEIGHT * numHeaders) + (TABLE_CELL_HEIGHT * numCells);
+    self.tableHeightConstraint.constant = tableViewHeight;
+    [self.tableView needsUpdateConstraints];
+    [self.alertView needsUpdateConstraints];
 }
 
 #pragma mark - Table View Protocol Methods
@@ -62,16 +90,30 @@
     }
     return 1;
 }
+//-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+////    if ([indexPath section] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).section
+////        &&
+//if (        [indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row)
+//    {
+//        [self fixHeights];
+//        NSLog(@"%f",self.tableView.contentSize.height);
+//        
+//    }
+//}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    bool isNearColleges = self.nearbyCollegeList.count > 0;
+    int numNearby = self.nearbyCollegeList.count;
+    bool isNearColleges = numNearby > 0;
     
     switch (self.type)
     {
         case ALL_NEARBY_OTHER:
             if (isNearColleges && section == 1)
             {
-                return self.nearbyCollegeList.count;
+                
+                [self fixHeights:numNearby];
+                return numNearby;
             }
             else
             {
@@ -83,7 +125,8 @@
             return self.fullCollegeList.count;
             break;
         case ONLY_NEARBY_COLLEGES:
-            return self.nearbyCollegeList.count;
+            [self fixHeights:numNearby];
+            return numNearby;
             break;
         default:
             break;
@@ -122,6 +165,7 @@
     [cell.textLabel setFont:CF_FONT_LIGHT(18)];
     [cell.textLabel setTextAlignment:NSTextAlignmentCenter];
     [cell.textLabel setText:cellLabel];
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
