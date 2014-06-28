@@ -186,27 +186,6 @@
 {   // vote was cast in a table cell
     [self.dataController createVote:vote];
 }
-- (void)selectedCollegeOrNil:(College *)college
-                        from:(CollegePickerViewController *)sender
-{   // A feed was selected from either the 'top colleges' in tab bar or from the 'change' button on toolbar
-//
-//    [self.dataController switchedToSpecificCollegeOrNil:college];
-//    
-//    if (sender.topColleges)
-//    {   // change to 'top posts' tab if selection made from 'top colleges' tab
-//        [self.tabBarController setSelectedIndex:0];
-//    }
-//    [self.navigationController popToRootViewControllerAnimated:YES];
-//    [self refresh];
-//    //    if (college == nil)
-////    {
-////        [self.currentFeedLabel setText:@"All Colleges"];
-////    }
-////    else
-////    {
-////        [self.currentFeedLabel setText:college.name];
-////    }
-}
 
 #pragma mark - CreationViewProtocol Delegate Methods
 

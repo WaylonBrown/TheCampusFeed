@@ -65,6 +65,8 @@
 - (IBAction)submit:(id)sender
 {
     NSString *message = self.textField.text;
+    message = [message stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
     if (message.length > MIN_POST_LENGTH
         && message.length < MAX_POST_LENGTH)
     {
