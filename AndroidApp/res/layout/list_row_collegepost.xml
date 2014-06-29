@@ -12,11 +12,13 @@
 	<LinearLayout 
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:orientation="horizontal">
+	    android:orientation="horizontal"
+	    android:padding="4dp">
 	    
 	    <LinearLayout 
 	        android:layout_width="40dp"
 	        android:layout_height="wrap_content"
+	        android:layout_marginRight="2dp"
 	        android:orientation="vertical">
 	        
 	        <ImageView
@@ -37,6 +39,7 @@
 	            android:layout_height="wrap_content"
 	            android:text="0"
 	            android:textColor="@color/darkgray"
+	            android:textSize="16dp"
 	            android:layout_gravity="center_horizontal"
 	            />
 	        
@@ -64,18 +67,19 @@
 		    <TextView 
 		        android:id="@+id/messageText"
 		        android:text="This is me testing "
-		        android:textSize="18sp"
+		        android:textSize="20sp"
 		        android:textColor="@color/darkgray"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_marginTop="4dp"
+		        android:layout_marginTop="6dp"
 		        android:layout_marginRight="8dp"
-		        android:minHeight="67dp"/>
+		        android:minHeight="60dp"/>
 		    
 		    <LinearLayout 
 		        android:id="@+id/postDetails"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
+		        android:paddingTop="8dp"
 		        android:orientation="horizontal">
 		        
 		        <TextView 
