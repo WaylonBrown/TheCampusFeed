@@ -8,10 +8,11 @@
     <LinearLayout
 	    android:id="@+id/postCard"
 	    android:layout_width="match_parent"
-	    android:layout_height="100dp"
+	    android:layout_height="wrap_content"
 	    android:orientation="horizontal"
 	    android:layout_marginLeft="8dp"
-		android:layout_marginRight="8dp"
+		android:layout_marginRight="10dp"
+		android:padding="4dp"
 		android:background="@drawable/card">
 	    
 	    <LinearLayout 
@@ -37,6 +38,7 @@
 	            android:text="0"
 	            android:textColor="@color/darkgray"
 	            android:layout_gravity="center_horizontal"
+	            android:textSize="16dp"
 	            />
 	        
 	        <ImageView
@@ -47,6 +49,7 @@
 		        android:layout_marginLeft="4dp"
 		        android:layout_marginTop="0dp"
 		        android:layout_marginRight="4dp"
+		        android:layout_marginBottom="8dp"
 		        android:layout_gravity="center_horizontal"
 		        />
 	        
@@ -54,19 +57,20 @@
 		    
 	    <LinearLayout
 	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
+	        android:layout_height="wrap_content"
 	        android:orientation="vertical"
 	        >
 			        
 		    <TextView 
 		        android:id="@+id/messageText"
 		        android:text="Post not found"
-		        android:textSize="18sp"
+		        android:textSize="20sp"
 		        android:textColor="@color/darkgray"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_marginTop="4dp"
-		        android:layout_marginRight="8dp"/>
+		        android:layout_marginTop="6dp"
+		        android:layout_marginRight="8dp"
+		        android:minHeight="65dp"/>
 			        
 	        <TextView 
 	            android:id="@+id/timeText"
@@ -76,10 +80,11 @@
 	            android:layout_width="match_parent"
 	            android:layout_height="match_parent"
 	            android:layout_marginTop="2dp"
-	            android:layout_marginBottom="8dp"
+	            android:paddingBottom="6dp"
+	            android:layout_marginRight="10dp"
 	            android:layout_gravity="right|bottom"
 	            android:gravity="right|bottom"
-	            android:layout_marginRight="8dp"/>"
+	            />
 			        
 		</LinearLayout>
 	    

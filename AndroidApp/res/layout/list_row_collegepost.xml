@@ -73,7 +73,7 @@
 		        android:layout_height="wrap_content"
 		        android:layout_marginTop="6dp"
 		        android:layout_marginRight="8dp"
-		        android:minHeight="58dp"/>
+		        android:minHeight="60dp"/>
 		    
 		    <LinearLayout 
 		        android:id="@+id/postDetails"
