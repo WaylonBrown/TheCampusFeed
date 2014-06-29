@@ -18,7 +18,8 @@ class TagsController < ApplicationController
     else
       @tags = Tag.select('tags.id, tags.text, count(posts.id) AS posts_count').
         joins(:posts).
-        where('college_id = '+@college.id.to_s).
+        #on('college_id = '+@college.id.to_s).
+        where(posts:{college_id: @college.id}).
         group('tags.id').
         order('posts_count DESC').
         limit(25)

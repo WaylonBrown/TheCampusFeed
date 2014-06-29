@@ -22,8 +22,8 @@
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "[{\"id\":1,\"text\":\"yolo\",\"posts_count\":1},{\"id\":2,\"text\":\"swag\",\"posts_count\":1}]",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"f7c5b36d59b8fb23a5070e63e7999ea0\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"3c41b821-e256-4f96-a3e4-ff1a491eda60","X-Runtime":"0.059042","Content-Length":"79"},
+      "response_body": "[{\"id\":87,\"text\":\"yolo\",\"posts_count\":2},{\"id\":91,\"text\":\"bitch.\",\"posts_count\":1},{\"id\":89,\"text\":\"making\",\"posts_count\":1},{\"id\":90,\"text\":\"money\",\"posts_count\":1},{\"id\":88,\"text\":\"swag\",\"posts_count\":1}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"dcaa4b406bb470f5a2b60cdc6d903b53\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"20418712-f5fe-4624-ba0a-a07ce6d954f9","X-Runtime":"0.018012","Content-Length":"206"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }
