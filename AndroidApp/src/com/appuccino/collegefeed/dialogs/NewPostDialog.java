@@ -93,9 +93,10 @@ public class NewPostDialog extends AlertDialog.Builder{
     		@Override
 			public void onClick(View v) 
     		{				
-    			if(postMessage.getText().toString().length() >= MainActivity.MIN_POST_LENGTH)
+    			String thisString = postMessage.getText().toString().trim();
+    			if(thisString.length() >= MainActivity.MIN_POST_LENGTH)
     			{
-    				Post newPost = new Post(postMessage.getText().toString(), selectedCollegeID);
+    				Post newPost = new Post(thisString, selectedCollegeID);
     				//instantly add to new posts
     				if(MainActivity.currentFeedCollegeID == MainActivity.ALL_COLLEGES || MainActivity.currentFeedCollegeID == selectedCollegeID){
     					NewPostFragment.postList.add(newPost);
