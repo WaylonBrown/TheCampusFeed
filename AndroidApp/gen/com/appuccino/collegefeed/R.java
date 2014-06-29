@@ -383,13 +383,14 @@ containing a value of this type.
         public static final int logofake=0x7f02000b;
         public static final int mask=0x7f02000c;
         public static final int newpost=0x7f02000d;
-        public static final int old_card=0x7f02000e;
-        public static final int postbuttonclick=0x7f02000f;
-        public static final int postfeedlogosmall=0x7f020010;
-        public static final int searchtagbuttonclick=0x7f020011;
-        public static final int social_send_now=0x7f020012;
-        public static final int spot_mask=0x7f020013;
-        public static final int tabs_pattern=0x7f020014;
+        public static final int newpostold=0x7f02000e;
+        public static final int old_card=0x7f02000f;
+        public static final int postbuttonclick=0x7f020010;
+        public static final int postfeedlogosmall=0x7f020011;
+        public static final int searchtagbuttonclick=0x7f020012;
+        public static final int social_send_now=0x7f020013;
+        public static final int spot_mask=0x7f020014;
+        public static final int tabs_pattern=0x7f020015;
     }
     public static final class id {
         public static final int allCollegesButton=0x7f06001c;

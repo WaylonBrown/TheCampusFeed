@@ -19,13 +19,15 @@
 	    android:layout_height="0dp"/>
 	
 	<ImageView
-        android:id="@+id/newCommentButton"
-        android:layout_width="50dp"
-        android:layout_height="40dp"
-        android:src="@drawable/newpost"
-        android:background="@drawable/postbuttonclick"
-        android:layout_gravity="center_vertical|right"
-        android:clickable="true"
-        android:visibility="gone"/>
+	        android:id="@+id/newCommentButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:scaleType="fitCenter"
+	        android:padding="10dp"
+	        android:src="@drawable/newpost"
+	        android:background="@drawable/postbuttonclick"
+	        android:layout_gravity="center_vertical"
+	        android:clickable="true"
+	        android:visibility="gone"/>
 	
 </LinearLayout>
