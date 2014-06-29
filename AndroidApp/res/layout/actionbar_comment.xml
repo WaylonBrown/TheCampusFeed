@@ -20,14 +20,14 @@
 	
 	<ImageView
 	        android:id="@+id/newCommentButton"
-	        android:layout_width="wrap_content"
+	        android:layout_width="35dp"
 	        android:layout_height="match_parent"
 	        android:scaleType="fitCenter"
-	        android:padding="10dp"
-	        android:src="@drawable/newpost"
+	        android:padding="4dp"
+	        android:src="@drawable/commentbutton"
 	        android:background="@drawable/postbuttonclick"
 	        android:layout_gravity="center_vertical"
 	        android:clickable="true"
-	        android:visibility="gone"/>
+	        android:visibility="visible"/>
 	
 </LinearLayout>

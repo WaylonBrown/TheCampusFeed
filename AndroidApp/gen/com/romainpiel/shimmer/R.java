@@ -39,8 +39,8 @@ public final class R {
 		public static final int spb_default_stroke_width = 0x7f070001;
 	}
 	public static final class drawable {
-		public static final int mask = 0x7f02000c;
-		public static final int spot_mask = 0x7f020014;
+		public static final int mask = 0x7f02000d;
+		public static final int spot_mask = 0x7f020015;
 	}
 	public static final class id {
 		public static final int spb_interpolator_accelerate = 0x7f060000;
