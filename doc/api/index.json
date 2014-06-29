@@ -1,6 +1,16 @@
 {
   "resources": [
     {
+      "name": "Colleges",
+      "examples": [
+        {
+          "description": "List all colleges",
+          "link": "colleges/list_all_colleges.json",
+          "groups": "all"
+        }
+      ]
+    },
+    {
       "name": "Comments",
       "examples": [
         {
@@ -101,6 +111,11 @@
         {
           "description": "Get the currently trending tags",
           "link": "tags/get_the_currently_trending_tags.json",
+          "groups": "all"
+        },
+        {
+          "description": "Get the currently trending tags for college ID 2015",
+          "link": "tags/get_the_currently_trending_tags_for_college_id_.json",
           "groups": "all"
         }
       ]
