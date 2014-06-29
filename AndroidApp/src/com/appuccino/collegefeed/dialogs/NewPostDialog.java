@@ -68,11 +68,11 @@ public class NewPostDialog extends AlertDialog.Builder{
 	    AlertDialog.Builder builder = new AlertDialog.Builder(context);
 	    
 	    final TextView title = new TextView(context);
-	    title.setText("Choose a Feed");
+	    title.setText("Post to...");
 	    title.setTextSize(30);
 	    title.setTextColor(context.getResources().getColor(R.color.lightblue));
 	    title.setTypeface(FontManager.light);
-	    title.setPadding(20, 12, 12, 12);
+	    title.setPadding(28, 20, 12, 20);
 	    builder.setCustomTitle(title);
 	    builder.setItems(items, new DialogInterface.OnClickListener() {
 	        public void onClick(DialogInterface dialog, int item) {
