@@ -16,6 +16,7 @@
 
 // Minor views and dialogs
 #import "TableCell.h"
+#import "UIView+Toast.h"
 
 // Universal app information
 #import "DataController.h"
@@ -40,6 +41,8 @@
 
         [self.refreshControl addTarget:self action:@selector(refresh)
                       forControlEvents:UIControlEventValueChanged];
+        
+        
     }
     return self;
 }
@@ -69,7 +72,6 @@
     [self.currentFeedLabel      setFont:CF_FONT_LIGHT(20)];
     [self.showingLabel          setFont:CF_FONT_MEDIUM(11)];
     [self.feedButton.titleLabel setFont:CF_FONT_LIGHT(15)];
-    
 }
 - (void)viewDidLoad
 {
@@ -104,6 +106,16 @@
     if ([self.dataController isNearCollege])
     {
         [self placeCreatePost];
+        
+        int count = 0;
+        for (College *college in self.dataController.nearbyColleges)
+        {
+            NSString *collegeMessage = [NSString stringWithFormat:@"You're near %@", college.name];
+            [NSTimer scheduledTimerWithTimeInterval:count target:self selector:@selector(showToast:) userInfo:collegeMessage repeats:NO];
+            count += 2;
+        }
+        NSString *infoMessage = @"You can upvote, downvote, post, and comment on that college's posts";
+        [NSTimer scheduledTimerWithTimeInterval:count target:self selector:@selector(showToast:) userInfo:infoMessage repeats:NO];
     }
     else
     {
@@ -129,6 +141,17 @@
 
 #pragma mark - Actions
 
+- (void)showToast:(NSTimer *)timer
+{
+    NSString *message = [timer userInfo];
+    float x = self.feedToolbar.frame.size.width / 2;
+    float y = self.feedToolbar.frame.origin.y - 45;
+    CGPoint point = CGPointMake(x, y);
+    
+    [self.view makeToast:message
+                duration:2.0
+                position:[NSValue valueWithCGPoint:point]];
+}
 - (IBAction)changeFeed;
 {   // User wants to change the feed (all colleges, nearby college, or other)
 

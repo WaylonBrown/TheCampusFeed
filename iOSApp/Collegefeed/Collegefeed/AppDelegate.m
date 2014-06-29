@@ -107,8 +107,8 @@
 - (void)foundLocation
 {
     [self.topPostsController foundLocation];
-    [self.recentPostsController foundLocation];
-    [self.tagController foundLocation];
+//    [self.recentPostsController foundLocation];
+//    [self.tagController foundLocation];
 }
 - (void)didNotFindLocation
 {
