@@ -1,0 +1,31 @@
+{
+  "resource": "Colleges",
+  "http_method": "GET",
+  "route": "/api/v1/colleges",
+  "description": "List all colleges",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/v1/colleges",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "[{\"id\":9,\"name\":\"Texas A\\u0026M University\",\"lat\":30.614997,\"lon\":-96.342311,\"created_at\":\"2014-06-30T06:41:44.942Z\",\"updated_at\":\"2014-06-30T06:41:44.942Z\",\"size\":null},{\"id\":10,\"name\":\"University of Texas\",\"lat\":30.28496,\"lon\":-97.734239,\"created_at\":\"2014-06-30T06:41:44.973Z\",\"updated_at\":\"2014-06-30T06:41:44.973Z\",\"size\":null}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"64e467c70fc8f7bdd6305d6e9ea3bb88\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"2727cd46-fedb-4f49-9b38-3d1f3e343c42","X-Runtime":"0.075518","Content-Length":"333"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}
