@@ -12,7 +12,7 @@ class PostsController < ApplicationController
   end
 
   def search
-    posts = Post.search_by_text(params[:searchText]).page(params[:page]).per(params[:per_page])
+    posts = Post.search_by_text(params[:searchText]).order('created_at desc').page(params[:page]).per(params[:per_page])
     render json: posts
   end
 
@@ -45,32 +45,32 @@ class PostsController < ApplicationController
   # GET /colleges/1/posts
   def index
     if !@college.nil?
-      @posts = @college.posts.page(params[:page]).per(params[:per_page])
+      @posts = @college.posts
     else 
-      @posts = Post.all.page(params[:page]).per(params[:per_page])
+      @posts = Post.all
     end
 
-    render json: @posts
+    render json: @posts.page(params[:page]).per(params[:per_page])
   end
 
   def recent
     if !@college.nil?
-      @posts = Post.where('college_id = '+@college.id.to_s).order('created_at desc').page(params[:page]).per(params[:per_page])
-    else 
-      @posts = Post.order('created_at desc').page(params[:page]).per(params[:per_page])
+      @posts = Post.where('college_id = '+@college.id.to_s)
+    else
+      @posts = Post.all
     end
     
-    render json: @posts
+    render json: @posts.order('created_at desc').page(params[:page]).per(params[:per_page])
   end
 
   def trending
     if !@college.nil?
-      @posts = Post.where('college_id = '+@college.id.to_s).order('score desc').page(params[:page]).per(params[:per_page])
+      @posts = Post.where('college_id = '+@college.id.to_s)
     else 
-      @posts = Post.order('created_at desc').page(params[:page]).per(params[:per_page])
+      @posts = Post.all
     end
     
-    render json: @posts
+    render json: @posts.order('score desc').page(params[:page]).per(params[:per_page])
   end
 
   # GET /posts/1
