@@ -58,9 +58,10 @@ public class NewCommentDialog extends AlertDialog.Builder{
     		@Override
 			public void onClick(View v) 
     		{				
-    			if(messageEditText.getText().toString().length() >= MainActivity.MIN_COMMENT_LENGTH)
+    			String thisString = messageEditText.getText().toString().trim();
+    			if(thisString.length() >= MainActivity.MIN_COMMENT_LENGTH)
     			{
-    				Comment newComment = new Comment(messageEditText.getText().toString(), 0, parentPost.getID(), 1, parentPost.getCollegeID(), TimeManager.now());
+    				Comment newComment = new Comment(thisString, 0, parentPost.getID(), 1, parentPost.getCollegeID(), TimeManager.now());
     				//instantly add to new comments
     				CommentsActivity.commentList.add(newComment);
     				CommentsActivity.updateList();

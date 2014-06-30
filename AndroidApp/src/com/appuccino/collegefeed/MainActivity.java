@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -119,7 +120,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	
 		// Set up the ViewPager with the sections adapter.
 		viewPager.setAdapter(pagerAdapter);
-		viewPager.setOffscreenPageLimit(3);
+		viewPager.setOffscreenPageLimit(10);
 		tabs.setViewPager(viewPager);
 	}
 

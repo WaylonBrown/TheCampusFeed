@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,12 +29,14 @@ public class TagListActivity extends Activity{
 	public static List<Post> postList = new ArrayList<Post>();
 	private static String tagText = "";
 	private static TextView topTagText;
+	private static ProgressBar progressSpinner;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_tag);		
+		progressSpinner = (ProgressBar)findViewById(R.id.progressSpinner);
 		
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
@@ -109,7 +112,12 @@ public class TagListActivity extends Activity{
 	}
 
 	public void makeLoadingIndicator(boolean b) {
-		// TODO Auto-generated method stub
+		if(b){
+			progressSpinner.setVisibility(View.VISIBLE);
+		}else{
+			progressSpinner.setVisibility(View.GONE);
+		}
+		
 	}
 
 }
