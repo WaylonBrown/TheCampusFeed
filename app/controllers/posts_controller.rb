@@ -30,11 +30,11 @@ class PostsController < ApplicationController
     if @tag
       #Paginate by 25
       if @college
-        @tags = @tag.posts.where("college_id = #{@college.id}").page(params[:page]).per(params[:per_page])
+        @tags = @tag.posts.where("college_id = #{@college.id}")
       else
-        @tags = @tag.posts.page(params[:page]).per(params[:per_page])
+        @tags = @tag.posts
       end
-      render json: @tags
+      render json: @tags.order('created_at desc').page(params[:page]).per(params[:per_page])
     else
       render json: {:tag => ["does not exist."]}, status: 400
     end
