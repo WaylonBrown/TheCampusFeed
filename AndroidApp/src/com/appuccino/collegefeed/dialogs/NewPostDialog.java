@@ -99,7 +99,7 @@ public class NewPostDialog extends AlertDialog.Builder{
     				Post newPost = new Post(thisString, selectedCollegeID);
     				//instantly add to new posts
     				if(MainActivity.currentFeedCollegeID == MainActivity.ALL_COLLEGES || MainActivity.currentFeedCollegeID == selectedCollegeID){
-    					NewPostFragment.postList.add(newPost);
+    					NewPostFragment.postList.add(0, newPost);
             			NewPostFragment.updateList();
     				}
         			new MakePostTask(context).execute(newPost);
