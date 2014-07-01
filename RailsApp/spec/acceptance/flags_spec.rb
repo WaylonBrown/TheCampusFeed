@@ -12,8 +12,6 @@ resource "Flags" do
   post "/api/v1/posts/101/flags" do
     let(:raw_post) { params.to_json }
 
-    parameter :votable_id, "The id of the votable being flagged.", :required => true
-
     example "Flagging post ID 101" do
       do_request(
         :votable_id => 101

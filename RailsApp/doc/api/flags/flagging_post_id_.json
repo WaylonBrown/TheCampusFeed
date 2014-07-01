@@ -5,11 +5,7 @@
   "description": "Flagging post ID 101",
   "explanation": null,
   "parameters": [
-    {
-      "required": true,
-      "name": "votable_id",
-      "description": "The id of the votable being flagged."
-    }
+
   ],
   "requests": [
     {
@@ -26,8 +22,8 @@
       "request_content_type": "application/json",
       "response_status": 201,
       "response_status_text": "Created",
-      "response_body": "{\"id\":5,\"votable_id\":101,\"created_at\":\"2014-06-30T06:41:45.227Z\",\"updated_at\":\"2014-06-30T06:41:45.227Z\"}",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/flags/5","Content-Type":"application/json; charset=utf-8","ETag":"\"ef88fa36aa993f7c1e4e712c80914d72\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"4930332e-b791-49b0-8c2c-c5dc09c8a15c","X-Runtime":"0.126104","Content-Length":"105"},
+      "response_body": "{\"id\":6,\"votable_id\":101,\"created_at\":\"2014-07-01T05:01:02.652Z\",\"updated_at\":\"2014-07-01T05:01:02.652Z\"}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/flags/6","Content-Type":"application/json; charset=utf-8","ETag":"\"a816524cf402f9709d7cc257200d1257\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"0a01c7f9-3a10-4150-9abb-9c0bd17dd585","X-Runtime":"0.067466","Content-Length":"105"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }
