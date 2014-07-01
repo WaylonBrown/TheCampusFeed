@@ -24,7 +24,7 @@ class CollegesController < ApplicationController
   # GET /colleges
   # GET /colleges.json
   def index
-    @colleges = College.all.page(params[:page]).per(params[:per_page])
+    @colleges = College.all
     render json: @colleges
   end
 
