@@ -185,7 +185,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		}
 		else
 		{
-			Toast.makeText(this, "Since you aren't near " + collegeName + ", you can only downvote", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Since you aren't near " + collegeName + ", you can only upvote", Toast.LENGTH_LONG).show();
 		}
 	}
 

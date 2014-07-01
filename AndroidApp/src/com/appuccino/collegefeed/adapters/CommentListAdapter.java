@@ -150,6 +150,12 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 				}
 				else
 				{
+					Log.i("cfeed", "CollegeID of this comment: " + thisComment.getCollegeID());
+					String message = "User permission IDs: ";
+					for(int i: MainActivity.permissions){
+						message += i + ", ";
+					}
+					Log.i("cfeed", message);
 					Toast.makeText(context, "You need to be near the college to downvote", Toast.LENGTH_LONG).show();
 				}
 			}        	
