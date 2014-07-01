@@ -15,6 +15,16 @@ class Post < ActiveRecord::Base
 
   after_save :make_tags
 
+  def comment_count
+    comments.count
+  end
+
+  def as_json(options = { })
+    h = super(options)
+    h[:comment_count] = comment_count
+    h
+  end
+
   def make_tags
     @words = text.split(/[\r\n\t ]+/)
     @words.each do |w|
