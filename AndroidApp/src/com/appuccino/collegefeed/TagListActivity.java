@@ -82,6 +82,7 @@ public class TagListActivity extends Activity{
 
 	private void pullListFromServer() {
 		postList = new ArrayList<Post>();
+		tagText = tagText.replace(" ", "");	//whitespace causes crash
 		ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);		
 		if(cm.getActiveNetworkInfo() != null)
 			new GetTagActivityTask(this, MainActivity.currentFeedCollegeID, tagText).execute(new PostSelector());

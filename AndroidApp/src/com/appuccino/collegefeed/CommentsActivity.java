@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
+import com.appuccino.collegefeed.dialogs.FlagDialog;
 import com.appuccino.collegefeed.dialogs.NewCommentDialog;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
@@ -46,6 +47,7 @@ public class CommentsActivity extends Activity{
 	Shimmer shimmer;
 	static Post post;
 	static ImageView newCommentButton;
+	static ImageView flagButton;
 	static TextView commentsText;
 	final int minCommentLength = 3;
 	ListView list;
@@ -60,6 +62,7 @@ public class CommentsActivity extends Activity{
 		setupActionBar();
 		
 		newCommentButton = (ImageView)findViewById(R.id.newCommentButton);
+		flagButton = (ImageView)findViewById(R.id.flagButton);
 		list = (ListView)findViewById(R.id.commentsList);
 		loadingText = (ShimmerTextView)findViewById(R.id.commentsLoadingText);
 		final TextView scoreText = (TextView)findViewById(R.id.scoreText);
@@ -70,10 +73,13 @@ public class CommentsActivity extends Activity{
 		int collegeID = getIntent().getIntExtra("COLLEGE_ID", 0);
 		int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);
 		
-		if(MainActivity.hasPermissions(collegeID))
+		if(MainActivity.hasPermissions(collegeID)){
 			newCommentButton.setVisibility(View.VISIBLE);
-		else
+			flagButton.setVisibility(View.VISIBLE);
+		}else{
 			newCommentButton.setVisibility(View.GONE);
+			flagButton.setVisibility(View.GONE);
+		}
 		
 		if(sectionNumber == 0)
 			post = TopPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
@@ -101,7 +107,7 @@ public class CommentsActivity extends Activity{
 			}
 			
 			pullListFromServer();
-			listAdapter = new CommentListAdapter(this, R.layout.list_row_collegepost, commentList);
+			listAdapter = new CommentListAdapter(this, R.layout.list_row_collegepost, commentList, post);
 			if(list != null && commentList != null)
 				list.setAdapter(listAdapter);	
 			else
@@ -199,8 +205,7 @@ public class CommentsActivity extends Activity{
 				}        	
 	        });
 	        
-			newCommentButton.setOnClickListener(new OnClickListener(){
-
+	        newCommentButton.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) 
 				{					
@@ -209,6 +214,17 @@ public class CommentsActivity extends Activity{
 						LayoutInflater inflater = getLayoutInflater();
 						View commentDialogLayout = inflater.inflate(R.layout.dialog_comment, null);
 						new NewCommentDialog(CommentsActivity.this, commentDialogLayout, post);
+					}
+				}        	
+	        });
+	        
+	        flagButton.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View v) 
+				{					
+					if(MainActivity.hasPermissions(post.getCollegeID()) || hasPermissions){
+						LayoutInflater inflater = getLayoutInflater();
+						new FlagDialog(CommentsActivity.this, post);
 					}
 				}        	
 	        });
@@ -424,6 +440,7 @@ public class CommentsActivity extends Activity{
 	public static void setNewPermissionsIfAvailable() {
 		if(newCommentButton != null && MainActivity.hasPermissions(post.getCollegeID())){
 			newCommentButton.setVisibility(View.VISIBLE);
+			flagButton.setVisibility(View.VISIBLE);
 		}
 		hasPermissions = true;	//necessary that way if permissions updated while not on MainActivity, still allow to comment
 	}
