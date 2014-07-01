@@ -25,10 +25,11 @@
 	    
 	    <ImageView
 	        android:id="@+id/newPostButton"
-	        android:layout_width="wrap_content"
+	        android:layout_width="50dp"
 	        android:layout_height="match_parent"
 	        android:scaleType="fitCenter"
-	        android:padding="10dp"
+	        android:paddingTop="10dp"
+	        android:paddingBottom="10dp"
 	        android:src="@drawable/newpost"
 	        android:background="@drawable/postbuttonclick"
 	        android:layout_gravity="center_vertical"
