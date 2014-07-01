@@ -22,6 +22,7 @@ import com.appuccino.collegefeed.CommentsActivity;
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.objects.Comment;
+import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.TimeManager;
@@ -31,12 +32,14 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 	Context context; 
     int layoutResourceId;    
     List<Comment> commentList = null;
+    private Post post;
     
-    public CommentListAdapter(Context context, int layoutResourceId, List<Comment> list) {
+    public CommentListAdapter(Context context, int layoutResourceId, List<Comment> list, Post post) {
         super(context, layoutResourceId, list);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         commentList = list;
+        this.post = post;
     }
     
     @Override
@@ -120,7 +123,8 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 			@Override
 			public void onClick(View v) {
 				Log.i("cfeed","College id: " + thisComment.getCollegeID());
-				if(MainActivity.hasPermissions(thisComment.getCollegeID()))
+				//post is null if this comment list is received from the MyCommentsFragment and not a comments list to a post
+				if(post != null && MainActivity.hasPermissions(post.getCollegeID()))
 				{
 					//if already downvoted, un-downvote
 					if(thisComment.getVote() == -1)
@@ -156,6 +160,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 						message += i + ", ";
 					}
 					Log.i("cfeed", message);
+					
 					Toast.makeText(context, "You need to be near the college to downvote", Toast.LENGTH_LONG).show();
 				}
 			}        	
