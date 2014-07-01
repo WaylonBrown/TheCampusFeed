@@ -440,6 +440,7 @@ public class CommentsActivity extends Activity{
 	public static void setNewPermissionsIfAvailable() {
 		if(newCommentButton != null && MainActivity.hasPermissions(post.getCollegeID())){
 			newCommentButton.setVisibility(View.VISIBLE);
+			flagButton.setVisibility(View.VISIBLE);
 		}
 		hasPermissions = true;	//necessary that way if permissions updated while not on MainActivity, still allow to comment
 	}
