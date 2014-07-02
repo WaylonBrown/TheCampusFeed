@@ -34,6 +34,8 @@ resource "Comments" do
 
   end
   get '/api/v1/comments/many' do
+
+    parameter :many_ids, "An array of comment IDs for which to get information. In the query parameters screen below this displays incorrectly. A correct example would be many_ids=[1,2,3]"
     example 'Get many comments from a list of comment IDs' do
       comment_ids = [1,2]
       do_request(
@@ -46,7 +48,7 @@ resource "Comments" do
   post "/api/v1/posts/1/comments" do
     let(:raw_post) { params.to_json }
 
-    parameter :comment, "The new comment.", :required => true
+    parameter :text, "The new comment's text.", :required => true
 
     example "Creating a comment for a given post" do
 
