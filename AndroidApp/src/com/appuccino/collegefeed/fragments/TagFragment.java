@@ -242,7 +242,13 @@ public class TagFragment extends Fragment
 				}
 			});
 		}
-		
+	}
+	
+	private static boolean willListScroll() {
+		if(tagList == null || list.getLastVisiblePosition() + 1 == tagList.size() || tagList.size() == 0) {
+			return false;
+		}
+		return true; 
 	}
 
 	public static void tagClicked(Tag tag) 
