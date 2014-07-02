@@ -21,8 +21,7 @@
         Do your part for the CollegeFeed community and flag any post that:\n\n
         &#8226; Targets a specific person\n
         &#8226; Has a phone number\n
-        &#8226; Is offensive, bad-natured, or threatening\n\n
-        Users that have more than one post taken down get banned from posting on the app again.</string>
+        &#8226; Is offensive, bad-natured, or threatening\n\nUsers that have more than one post taken down get banned from posting on the app again.</string>
     
     <string-array name="spinnerArray">
         <item>All Colleges</item>
