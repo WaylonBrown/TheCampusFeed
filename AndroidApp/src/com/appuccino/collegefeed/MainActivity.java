@@ -30,6 +30,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -83,7 +84,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 		setContentView(R.layout.activity_main);
 		tabs = (PagerSlidingTabStrip)findViewById(R.id.tabs);
 		viewPager = (ViewPager) findViewById(R.id.pager);
