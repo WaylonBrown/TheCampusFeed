@@ -80,6 +80,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public static List<Integer> postDownvoteList = new ArrayList<Integer>();
 	public static List<Integer> commentUpvoteList = new ArrayList<Integer>();
 	public static List<Integer> commentDownvoteList = new ArrayList<Integer>();
+	public static List<Integer> flagList = new ArrayList<Integer>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		postDownvoteList = PrefManager.getPostDownvoteList();
 		commentUpvoteList = PrefManager.getCommentUpvoteList();
 		commentDownvoteList = PrefManager.getCommentDownvoteList();
+		flagList = PrefManager.getFlagList();
 		
 		permissionsProgress = (ProgressBar)findViewById(R.id.permissionsLoadingIcon);
 		newPostButton = (ImageView)findViewById(R.id.newPostButton);

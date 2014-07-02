@@ -381,7 +381,7 @@ public class NetWorker {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if(!result)
-				Toast.makeText(c, "Failed to post.", Toast.LENGTH_LONG).show();
+				Toast.makeText(c, "Failed to post, please try again later.", Toast.LENGTH_LONG).show();
 			super.onPostExecute(result);
 		}
 		
@@ -425,7 +425,7 @@ public class NetWorker {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if(!result)
-				Toast.makeText(c, "Failed to post.", Toast.LENGTH_LONG).show();
+				Toast.makeText(c, "Failed to , please try again later.", Toast.LENGTH_LONG).show();
 			super.onPostExecute(result);
 		}
 		
@@ -461,12 +461,14 @@ public class NetWorker {
 	public static class MakeFlagTask extends AsyncTask<Integer, Void, Boolean>{
 		
 		Context c;
+		int postID;
 		
 		public MakeFlagTask(Context c){
 			this.c = c;
 		}
 		
 		public Boolean doInBackground(Integer... postID){
+			this.postID = postID[0];
 			try{
 				HttpGet request = new HttpGet(REQUEST_URL + "posts/" + postID[0] + "/flags");
 				//request.setEntity(new ByteArrayEntity(String.valueOf(postID).getBytes("UTF8")));
@@ -488,8 +490,13 @@ public class NetWorker {
 		
 		public void onPostExecute(Boolean result){
 			Log.d("http", LOG_TAG + "success: " + result);
-			if(!result){
-				Toast.makeText(c, "Failed to flag post, try again later.", Toast.LENGTH_LONG);
+			if(result){
+				MainActivity.flagList.add(postID);
+				PrefManager.putFlagList(MainActivity.flagList);
+				CommentsActivity.removeFlagButton();
+				Toast.makeText(c, "Post has been flagged, thank you :)", Toast.LENGTH_LONG).show();
+			}else{
+				Toast.makeText(c, "Failed to flag post, please try again later.", Toast.LENGTH_LONG).show();
 			}
 		}
 	}
