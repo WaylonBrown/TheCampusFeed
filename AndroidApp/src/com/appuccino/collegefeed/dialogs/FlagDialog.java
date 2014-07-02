@@ -3,34 +3,24 @@ package com.appuccino.collegefeed.dialogs;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.text.Editable;
-import android.text.Html;
-import android.text.TextWatcher;
-import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.appuccino.collegefeed.CommentsActivity;
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
-import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
-import com.appuccino.collegefeed.utils.NetWorker.MakeCommentTask;
-import com.appuccino.collegefeed.utils.TimeManager;
+import com.appuccino.collegefeed.utils.NetWorker.MakeFlagTask;
 
 public class FlagDialog extends AlertDialog.Builder{
 	Context context;
-	Post parentPost;
+	Post post;
 	AlertDialog dialog;
 	
 	public FlagDialog(final Context context, Post post) {
 		super(context);
 		this.context = context;
-		parentPost = post;
+		this.post = post;
 		setCancelable(true);
 		setPositiveButton("Yes", new DialogInterface.OnClickListener()
         {
@@ -48,7 +38,7 @@ public class FlagDialog extends AlertDialog.Builder{
             }
         }).setTitle("Flag as Inappropriate?").setMessage(context.getResources().getString(R.string.flagMessage));
 		
-		if(MainActivity.permissions != null && MainActivity.hasPermissions(parentPost.getCollegeID()))
+		if(MainActivity.permissions != null && MainActivity.hasPermissions(post.getCollegeID()))
 		{
 			createDialog();
 		}
@@ -56,7 +46,7 @@ public class FlagDialog extends AlertDialog.Builder{
 	}
 
 	protected void yesButtonClicked() {
-		
+		new MakeFlagTask(context).execute(post.getID());
 	}
 
 	private void createDialog() {

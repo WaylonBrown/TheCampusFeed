@@ -457,4 +457,40 @@ public class NetWorker {
 			Log.d("http", LOG_TAG + "success: " + result);
 		}
 	}
+	
+	public static class MakeFlagTask extends AsyncTask<Integer, Void, Boolean>{
+		
+		Context c;
+		
+		public MakeFlagTask(Context c){
+			this.c = c;
+		}
+		
+		public Boolean doInBackground(Integer... postID){
+			try{
+				HttpGet request = new HttpGet(REQUEST_URL + "posts/" + postID[0] + "/flags");
+				//request.setEntity(new ByteArrayEntity(String.valueOf(postID).getBytes("UTF8")));
+				ResponseHandler<String> responseHandler = new BasicResponseHandler();
+				String response = client.execute(request, responseHandler);
+				
+				Log.d("cfeed", LOG_TAG + "Make flag server response: " + response);
+				return true;
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block 
+				e.printStackTrace();
+				return false;
+			}
+		}
+		
+		public void onPostExecute(Boolean result){
+			Log.d("http", LOG_TAG + "success: " + result);
+			if(!result){
+				Toast.makeText(c, "Failed to flag post, try again later.", Toast.LENGTH_LONG);
+			}
+		}
+	}
 }
