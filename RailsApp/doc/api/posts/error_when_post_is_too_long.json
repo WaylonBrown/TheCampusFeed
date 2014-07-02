@@ -15,7 +15,7 @@
     {
       "request_method": "POST",
       "request_path": "/api/v1/colleges/2015/posts",
-      "request_body": "{\"text\":\"qpeqRftawmKwVQsvMJCjVPWJoyXxDwMUSFHmPtLwOuZofxrhbmIIywXqsKdqZoQlfwLTFsGdBZkNBVtXanBVXCiJNlZKKnxQcPDnFNxgFelSRyXiKpWLbgnSfDTgvbTlKcTLKRjzLxXVsxtpGqsrua\"}",
+      "request_body": "{\"text\":\"ozNOeKvCcGaPVSctZPIyhRwYoAWWUzpMQFNHwwDGSWAXWTaeGYwzISaSKXjcULhuPGXVYsChxotkJYFTNuPCMakSbBDOOzYNiSpKKdUsxCjQXgieQvBlbRvAJxRXoLZhXuoeeIkPUswmFwtbfVLmBh\"}",
       "request_headers": {
         "Content-Type": "application/json",
         "Host": "example.org",
@@ -27,7 +27,7 @@
       "response_status": 422,
       "response_status_text": "Unprocessable Entity",
       "response_body": "{\"text\":[\"is too long (maximum is 140 characters)\"]}",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","Cache-Control":"no-cache","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"e89cf8f5-71d1-4730-9234-07cdeab29463","X-Runtime":"0.011027","Content-Length":"52"},
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","Cache-Control":"no-cache","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"c3c120f7-e2bb-497c-a78b-089df0918105","X-Runtime":"0.012009","Content-Length":"52"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

@@ -2,6 +2,14 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   before_action :set_post, only: [:create, :index]
 
+  def many
+    comments = []
+    params[:many_ids].each{ |id|
+      comments.push Comment.find(id)
+    }
+    render json: comments
+  end
+
   def search
     comments = Comment.search_by_text(params[:searchText]).page(params[:page]).per(params[:per_page])
     render json: comments

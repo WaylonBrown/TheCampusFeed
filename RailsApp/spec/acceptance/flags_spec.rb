@@ -13,9 +13,7 @@ resource "Flags" do
     let(:raw_post) { params.to_json }
 
     example "Flagging post ID 101" do
-      do_request(
-        :votable_id => 101
-      )
+      do_request()
       status.should == 201
     end
 

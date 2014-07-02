@@ -1,5 +1,6 @@
 class FlagsController < ApplicationController
   before_action :set_flag, only: [:show, :edit, :update, :destroy]
+  before_action :set_flaggable, only: [:create]
 
   # GET /flags
   # GET /flags.json
@@ -24,7 +25,7 @@ class FlagsController < ApplicationController
   # POST /flags
   # POST /flags.json
   def create
-    @flag = Flag.new(flag_params)
+    @flag = @flaggable.flags.create()
 
     respond_to do |format|
       if @flag.save
@@ -62,6 +63,15 @@ class FlagsController < ApplicationController
   end
 
   private
+
+    def set_flaggable
+      if params[:comment_id]
+        @flaggable = Comment.find(params[:comment_id])
+      elsif params[:post_id]
+        @flaggable = Post.find(params[:post_id])
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_flag
       @flag = Flag.find(params[:id])
@@ -69,6 +79,6 @@ class FlagsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def flag_params
-      params.require(:flag).permit(:votable_id)
+      params.require(:flag)
     end
 end

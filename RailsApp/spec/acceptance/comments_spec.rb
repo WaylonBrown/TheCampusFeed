@@ -6,8 +6,8 @@ resource "Comments" do
 
   before do
     @p = Post.create(:text => "Test post.", :id => 1);
-    @p.comments.create(:text => "Test comment.");
-    @p.comments.create(:text => "Test comment number 2.");
+    @p.comments.create(:text => "Test comment.", :id => 1);
+    @p.comments.create(:text => "Test comment number 2.", :id => 2);
 
     @p2 = Post.create(:text => "Test post number 2.", :id => 2);
     @p2.comments.create(:text => "Test comment number 3.");
@@ -33,10 +33,22 @@ resource "Comments" do
     end
 
   end
+  get '/api/v1/comments/many' do
+
+    parameter :many_ids, "An array of comment IDs for which to get information. In the query parameters screen below this displays incorrectly. A correct example would be many_ids=[1,2,3]"
+    example 'Get many comments from a list of comment IDs' do
+      comment_ids = [1,2]
+      do_request(
+          :many_ids => comment_ids
+      )
+      status.should == 200
+    end
+  end
+
   post "/api/v1/posts/1/comments" do
     let(:raw_post) { params.to_json }
 
-    parameter :comment, "The new comment.", :required => true
+    parameter :text, "The new comment's text.", :required => true
 
     example "Creating a comment for a given post" do
 

@@ -4,16 +4,15 @@ require 'rspec_api_documentation/dsl'
 resource "Posts" do
   header "Content-Type", "application/json"
 
-
   before do
     @c = College.create(:name => "Swag University", :id => 2015)
     (1..3).each do |i|
-      @c.posts.create(:text => "its a #test post #{i}");
+      @c.posts.create(:text => "its a #test post #{i}", :id => i);
     end
 
     @c2 = College.create(:name => "Yolo University", :id => 2016)
-    (1..3).each do |i|
-      @c2.posts.create(:text => "its a #test post 2.0 #{i}");
+    (4..6).each do |i|
+      @c2.posts.create(:text => "its a #test post 2.0 #{i}", :id => i);
     end
     
   end
@@ -96,6 +95,18 @@ resource "Posts" do
     end
   end
 
+  get '/api/v1/posts/many' do
+    let(:raw_post) { params.to_json }
+    parameter :many_ids, "An array of post IDs for which to get information. In the query parameters screen below this displays incorrectly. A correct example would be many_ids=[1,2,3]"
+    example 'Get many posts from a list of post IDs' do
+      post_ids = [1,2,3]
+      do_request(
+          :many_ids => post_ids
+      )
+      status.should == 200
+    end
+  end
+
   post "/api/v1/colleges/2015/posts" do
     let(:raw_post) { params.to_json }
 
@@ -120,7 +131,7 @@ resource "Posts" do
       longString = (0...150).map { o[rand(o.length)] }.join
 
       do_request(
-        :text => longString 
+        :text => longString
       )
       status.should == 422
     end

@@ -1,1 +1,1 @@
-json.extract! @flag, :id, :votable_id, :created_at, :updated_at
+json.extract! @flag, :id, :flaggable_id, :created_at, :updated_at

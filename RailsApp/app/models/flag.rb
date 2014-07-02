@@ -1,3 +1,3 @@
 class Flag < ActiveRecord::Base
-  belongs_to :votable
+  belongs_to :flaggable
 end
