@@ -1,6 +1,7 @@
 package com.appuccino.collegefeed.fragments;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
@@ -45,7 +46,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	static MainActivity mainActivity;
 	public static final String ARG_TAB_NUMBER = "section_number";
 	public static final String ARG_SPINNER_NUMBER = "tab_number";
-	public static ArrayList<Post> postList;
+	public static List<Post> postList;
 	static PostListAdapter listAdapter;
 	static QuickReturnListView list;
 	private static int currentFeedID;
@@ -148,86 +149,116 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	}
 
 	public static void setupFooterListView() {
-		list.getViewTreeObserver().addOnGlobalLayoutListener(
-			new ViewTreeObserver.OnGlobalLayoutListener() {
+		if(willListScroll()){
+			list.getViewTreeObserver().addOnGlobalLayoutListener(
+				new ViewTreeObserver.OnGlobalLayoutListener() {
+					@Override
+					public void onGlobalLayout() {
+						mQuickReturnHeight = footer.getHeight();
+						list.computeScrollY();
+					}
+			});
+			
+			list.setOnScrollListener(new OnScrollListener() {
+				@SuppressLint("NewApi")
 				@Override
-				public void onGlobalLayout() {
-					mQuickReturnHeight = footer.getHeight();
-					list.computeScrollY();
-				}
-		});
-		
-		list.setOnScrollListener(new OnScrollListener() {
-			@SuppressLint("NewApi")
-			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem,
-					int visibleItemCount, int totalItemCount) {
+				public void onScroll(AbsListView view, int firstVisibleItem,
+						int visibleItemCount, int totalItemCount) {
 
-				mScrollY = 0;
-				int translationY = 0;
+					mScrollY = 0;
+					int translationY = 0;
 
-				if (list.scrollYIsComputed()) {
-					mScrollY = list.getComputedScrollY();
-				}
+					if (list.scrollYIsComputed()) {
+						mScrollY = list.getComputedScrollY();
+					}
 
-				int rawY = mScrollY;
+					int rawY = mScrollY;
 
-				switch (mState) {
-				case STATE_OFFSCREEN:
-					if (rawY >= mMinRawY) {
-						mMinRawY = rawY;
+					switch (mState) {
+					case STATE_OFFSCREEN:
+						if (rawY >= mMinRawY) {
+							mMinRawY = rawY;
+						} else {
+							mState = STATE_RETURNING;
+						}
+						translationY = rawY;
+						break;
+
+					case STATE_ONSCREEN:
+						if (rawY > mQuickReturnHeight) {
+							mState = STATE_OFFSCREEN;
+							mMinRawY = rawY;
+						}
+						translationY = rawY;
+						break;
+
+					case STATE_RETURNING:
+
+						translationY = (rawY - mMinRawY) + mQuickReturnHeight;
+
+						if (translationY < 0) {
+							translationY = 0;
+							mMinRawY = rawY + mQuickReturnHeight;
+						}
+
+						if (rawY == 0) {
+							mState = STATE_ONSCREEN;
+							translationY = 0;
+						}
+
+						if (translationY > mQuickReturnHeight) {
+							mState = STATE_OFFSCREEN;
+							mMinRawY = rawY;
+						}
+						break;
+					}
+
+					/** this can be used if the build is below honeycomb **/
+					if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
+						anim = new TranslateAnimation(0, 0, translationY,
+								translationY);
+						anim.setFillAfter(true);
+						anim.setDuration(0);
+						footer.startAnimation(anim);
 					} else {
-						mState = STATE_RETURNING;
-					}
-					translationY = rawY;
-					break;
-
-				case STATE_ONSCREEN:
-					if (rawY > mQuickReturnHeight) {
-						mState = STATE_OFFSCREEN;
-						mMinRawY = rawY;
-					}
-					translationY = rawY;
-					break;
-
-				case STATE_RETURNING:
-
-					translationY = (rawY - mMinRawY) + mQuickReturnHeight;
-
-					if (translationY < 0) {
-						translationY = 0;
-						mMinRawY = rawY + mQuickReturnHeight;
+						footer.setTranslationY(translationY);
 					}
 
-					if (rawY == 0) {
-						mState = STATE_ONSCREEN;
-						translationY = 0;
-					}
-
-					if (translationY > mQuickReturnHeight) {
-						mState = STATE_OFFSCREEN;
-						mMinRawY = rawY;
-					}
-					break;
 				}
 
-				/** this can be used if the build is below honeycomb **/
-				if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
-					anim = new TranslateAnimation(0, 0, translationY,
-							translationY);
-					anim.setFillAfter(true);
-					anim.setDuration(0);
-					footer.startAnimation(anim);
-				} else {
-					footer.setTranslationY(translationY);
+				@Override
+				public void onScrollStateChanged(AbsListView view, int scrollState) {
 				}
+			});
+		}else{				//don't let bottom part move if the list isn't scrollable
+			list.getViewTreeObserver().addOnGlobalLayoutListener(
+				new ViewTreeObserver.OnGlobalLayoutListener() {
+					@Override
+					public void onGlobalLayout() {
+						//do nothing
+					}
+			});
+			
+			list.setOnScrollListener(new OnScrollListener() {
+				@SuppressLint("NewApi")
+				@Override
+				public void onScroll(AbsListView view, int firstVisibleItem,
+						int visibleItemCount, int totalItemCount) {
+					//do nothing
+				}
+				@Override
+				public void onScrollStateChanged(AbsListView view, int scrollState) {
+				}
+			});
+		}
+		
+	}
 
-			}
-
-			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-			}
-		});
+	private static boolean willListScroll() {
+		if(postList == null || list.getLastVisiblePosition() + 1 == postList.size() || postList.size() == 0) {
+			return false;
+		}
+		return true; 
 	}
 
 	private static void pullListFromServer() 
