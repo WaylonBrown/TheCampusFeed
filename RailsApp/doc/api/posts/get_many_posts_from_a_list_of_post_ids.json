@@ -1,0 +1,32 @@
+{
+  "resource": "Posts",
+  "http_method": "GET",
+  "route": "/api/v1/posts/many",
+  "description": "Get many posts from a list of post IDs",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/v1/posts/many?many_ids[]=1&many_ids[]=2&many_ids[]=3",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+        "many_ids[]": "3"
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "[{\"id\":1,\"text\":\"its a #test post 1\",\"score\":null,\"created_at\":\"2014-07-02T04:04:31.846Z\",\"updated_at\":\"2014-07-02T04:04:31.846Z\",\"college_id\":2015,\"lat\":null,\"lon\":null,\"comment_count\":0},{\"id\":2,\"text\":\"its a #test post 2\",\"score\":null,\"created_at\":\"2014-07-02T04:04:31.858Z\",\"updated_at\":\"2014-07-02T04:04:31.858Z\",\"college_id\":2015,\"lat\":null,\"lon\":null,\"comment_count\":0},{\"id\":3,\"text\":\"its a #test post 3\",\"score\":null,\"created_at\":\"2014-07-02T04:04:31.869Z\",\"updated_at\":\"2014-07-02T04:04:31.869Z\",\"college_id\":2015,\"lat\":null,\"lon\":null,\"comment_count\":0}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"c08ca2e93fe798f3e0d0e7a8c23a45c0\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"08506196-de16-4fdc-873b-77e04d97f3d3","X-Runtime":"0.016012","Content-Length":"565"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}
