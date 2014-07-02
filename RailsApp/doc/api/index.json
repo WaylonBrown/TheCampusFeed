@@ -19,6 +19,11 @@
           "groups": "all"
         },
         {
+          "description": "Get many comments from a list of comment IDs",
+          "link": "comments/get_many_comments_from_a_list_of_comment_ids.json",
+          "groups": "all"
+        },
+        {
           "description": "Listing comments for post ID 1",
           "link": "comments/listing_comments_for_post_id_.json",
           "groups": "all"
@@ -66,6 +71,11 @@
         {
           "description": "Get all posts using tag #test from college ID 2016",
           "link": "posts/get_all_posts_using_tag_test_from_college_id_.json",
+          "groups": "all"
+        },
+        {
+          "description": "Get many posts from a list of post IDs",
+          "link": "posts/get_many_posts_from_a_list_of_post_ids.json",
           "groups": "all"
         },
         {

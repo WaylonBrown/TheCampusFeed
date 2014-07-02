@@ -28,8 +28,14 @@ Postfeed::Application.routes.draw do
     scope '/api/v1', defaults: {format: :json}, shallow_path: '/api/v1' do
 
 
+
+
+      get '/comments/many' => 'comments#many'
+      get '/posts/many' => 'posts#many'
+
       resources :comments, only: [:show]
       resources :flags, only: [:show]
+
 
       get '/posts/search/:searchText' => 'posts#search'
       get '/posts/search/:searchText/count' => 'posts#searchCount'

@@ -6,8 +6,8 @@ resource "Comments" do
 
   before do
     @p = Post.create(:text => "Test post.", :id => 1);
-    @p.comments.create(:text => "Test comment.");
-    @p.comments.create(:text => "Test comment number 2.");
+    @p.comments.create(:text => "Test comment.", :id => 1);
+    @p.comments.create(:text => "Test comment number 2.", :id => 2);
 
     @p2 = Post.create(:text => "Test post number 2.", :id => 2);
     @p2.comments.create(:text => "Test comment number 3.");
@@ -33,6 +33,16 @@ resource "Comments" do
     end
 
   end
+  get '/api/v1/comments/many' do
+    example 'Get many comments from a list of comment IDs' do
+      comment_ids = [1,2]
+      do_request(
+          :many_ids => comment_ids
+      )
+      status.should == 200
+    end
+  end
+
   post "/api/v1/posts/1/comments" do
     let(:raw_post) { params.to_json }
 

@@ -1,8 +1,8 @@
 {
   "resource": "Comments",
   "http_method": "GET",
-  "route": "/api/v1/posts/2/comments",
-  "description": "Listing comments for post ID 2",
+  "route": "/api/v1/posts/1/comments",
+  "description": "Listing comments for post ID 1",
   "explanation": null,
   "parameters": [
 
@@ -10,7 +10,7 @@
   "requests": [
     {
       "request_method": "GET",
-      "request_path": "/api/v1/posts/2/comments",
+      "request_path": "/api/v1/posts/1/comments",
       "request_body": null,
       "request_headers": {
         "Content-Type": "application/json",
@@ -22,8 +22,8 @@
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "[{\"id\":86,\"text\":\"Test comment number 4.\",\"score\":null,\"created_at\":\"2014-07-01T05:05:55.930Z\",\"updated_at\":\"2014-07-01T05:05:55.930Z\",\"post_id\":\"2\"},{\"id\":85,\"text\":\"Test comment number 3.\",\"score\":null,\"created_at\":\"2014-07-01T05:05:55.926Z\",\"updated_at\":\"2014-07-01T05:05:55.926Z\",\"post_id\":\"2\"}]",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"2e7f26cf6ba665bbe8091dcd59e7f644\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"10c15647-9c53-431b-bab2-8bc66c35c70f","X-Runtime":"0.010007","Content-Length":"299"},
+      "response_body": "[{\"id\":2,\"text\":\"Test comment number 2.\",\"score\":null,\"created_at\":\"2014-07-02T04:04:32.750Z\",\"updated_at\":\"2014-07-02T04:04:32.750Z\",\"post_id\":\"1\"},{\"id\":1,\"text\":\"Test comment.\",\"score\":null,\"created_at\":\"2014-07-02T04:04:32.745Z\",\"updated_at\":\"2014-07-02T04:04:32.745Z\",\"post_id\":\"1\"}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"32694f05548062c2bdaf29920021829a\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"40cf85f7-c3f3-4087-8152-967dba74e855","X-Runtime":"0.011989","Content-Length":"288"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

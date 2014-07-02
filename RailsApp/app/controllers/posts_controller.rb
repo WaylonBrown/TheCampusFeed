@@ -4,11 +4,12 @@ class PostsController < ApplicationController
   before_action :require_college, only: [:create]
   before_action :set_college, only: [:index, :create, :byTag, :recent, :trending]
 
-  before_action :set_score, only: [:render]
-
-  def set_score
-    p @posts
-    #votes[0].score
+  def many
+    posts = []
+    params[:many_ids].each{ |id|
+      posts.push Post.find(id)
+    }
+    render json: posts
   end
 
   def search
