@@ -16,7 +16,13 @@
     <string name="searchColleges">Choose a College</string>
     <string name="nearYou">Near You</string>
     <string name="other">Other Colleges</string>
-    <string name="flagMessage">Are you sure you wish to flag this post as inappropriate? This cannot be undone. Posts with a certain amount of flags per views are automatically removed.</string>
+    <string name="flagMessage">Are you sure you wish to flag this post as inappropriate? 
+        Posts with a certain amount of flags per views are automatically removed. 
+        Do your part for the CollegeFeed community and flag any post that:\n\n
+        &#8226; Targets a specific person\n
+        &#8226; Has a phone number\n
+        &#8226; Is offensive, bad-natured, or threatening\n\n
+        Users that have more than one post taken down get banned from posting on the app again.</string>
     
     <string-array name="spinnerArray">
         <item>All Colleges</item>
