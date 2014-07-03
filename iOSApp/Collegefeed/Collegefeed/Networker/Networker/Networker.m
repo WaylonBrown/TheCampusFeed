@@ -201,6 +201,30 @@
     return [self GET:url];
 }
 
++ (NSData *)GETPostsWithIdArray:(NSArray *)Ids
+{
+    //TODO: change this url if endpoint parameters get fixed
+    NSString *idString = @"";
+    for (int i = 0; i < Ids.count; i++)
+    {
+        NSString *postId = [Ids objectAtIndex:i];
+        if ([postId isEqualToString:@""]) continue;
+        
+        if (i == 0)
+        {
+            idString = [NSString stringWithFormat:@"many_ids[]=%@", postId];
+        }
+        else if (i > 0)
+        {
+            idString = [NSString stringWithFormat:@"%@&many_ids[]=%@", idString, postId];
+        }
+    }
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/posts/many?%@",
+                   API_URL, API_VERSION, idString]];
+    return [self GET:url];
+}
+
 #pragma mark - Tags
 
 + (NSData *)GETTagsTrending

@@ -14,6 +14,7 @@
 #import "Models/Models/Comment.h"
 #import "TTTAttributedLabel.h"
 #import "Shared.h"
+#import "ToastController.h"
 
 @implementation CommentViewController
 
@@ -173,12 +174,14 @@
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
                                withCollegeId:(long)collegeId
 {
-    [self.dataController createCommentWithMessage:message withPost:self.originalPost];
+    BOOL success = [self.dataController createCommentWithMessage:message withPost:self.originalPost];
+    
+    if (!success)
+    {
+        [self.toastController toastPostFailed];
+    }
     [self refresh];
-}
-- (void)showToastMessageTooShortWithType:(ModelType)type
-{
-    [super showToastMessageTooShortWithType:type];
+    
 }
 
 @end

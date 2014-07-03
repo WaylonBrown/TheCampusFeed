@@ -84,13 +84,12 @@
 /***** PUBLIC FUNCTIONS *****/
 /****************************/
 
-// Initialization
-//- (id)init;
 
 /****************************/
 /***** Local Data Access ****/
 /****************************/
 - (NSString *)getCollegeNameById:(long)Id;
+- (College *)getCollegeById:(long)Id;
 - (void)getHardCodedCollegeList;
 - (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon;
 
@@ -98,6 +97,13 @@
 - (BOOL)isNearCollege;
 
 - (void)retrieveUserData;
+
+
+//** Not implemented********
+- (void)saveUserDataIds;
+- (void)retrieveUserDataIds;
+//**************************
+
 
 /*************************/
 /***** Network Access ****/
@@ -124,6 +130,8 @@
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage;
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage
                       withCollegeId:(long)collegeId;
+
+- (void)fetchUserPostsWithIdArray:(NSArray *)postIds;
 
 // Tags
 - (void)fetchAllTags;

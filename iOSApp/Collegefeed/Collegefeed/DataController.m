@@ -29,6 +29,7 @@
         self.recentPostsAllColleges = [[NSMutableArray alloc] init];
         self.collegeList            = [[NSMutableArray alloc] init];
         self.allTags                = [[NSMutableArray alloc] init];
+        self.userPosts              = [[NSMutableArray alloc] init];
         
         // Populate the initial arrays
         [self fetchTopPosts];
@@ -144,6 +145,12 @@
     NSData* data = [Networker GETPostsWithTagName:tagMessage withCollegeId:collegeId];
     [self parseData:data asClass:[Post class] intoList:self.allPostsWithTagInCollege];
 }
+- (void)fetchUserPostsWithIdArray:(NSArray *)postIds
+{
+    [self setUserPosts:[NSMutableArray new]];
+    NSData *data = [Networker GETPostsWithIdArray:postIds];
+    [self parseData:data asClass:[Post class] intoList:self.userPosts];
+}
 
 #pragma mark - Networker Access - Tags
 
@@ -192,11 +199,16 @@
 }
 - (NSString *)getCollegeNameById:(long)Id
 {
+    College *college = [self getCollegeById:Id];
+    return college == nil ? @"" : college.name;
+}
+- (College *)getCollegeById:(long)Id
+{
     for (College *college in self.collegeList)
     {
         if (college.collegeID == Id)
         {
-            return college.name;
+            return college;
         }
     }
     
@@ -204,11 +216,14 @@
     NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:collegeData
                                                                options:0
                                                                  error:nil];
-
-    College *college = [[College alloc] initFromJSON:jsonObject];
-    [self.collegeList addObject:college];
     
-    return (college == nil) ? @"" : college.name;
+    College *college = [[College alloc] initFromJSON:jsonObject];
+    if (college != nil)
+    {
+        [self.collegeList addObject:college];
+    }
+    
+    return college;
 }
 - (void)getHardCodedCollegeList
 {   // Populate the college list with a recent
@@ -261,37 +276,81 @@
 {
     return self.nearbyColleges.count > 0;
 }
+//- (void)retrieveUserData
+//{
+//    // Retrieve Posts
+//    [self setUserPosts:[[NSMutableArray alloc] init]];
+//    NSString *postsFilePath = [[NSBundle mainBundle] pathForResource:@"UserPosts" ofType:@"txt"];
+//    NSData *postsData = [NSData dataWithContentsOfFile:postsFilePath];
+//    if (postsData == nil)
+//    {
+//        NSLog(@"Could not get hard-coded list in UserPosts.txt");
+//    }
+//    [self parseData:postsData asClass:[Post class] intoList:self.userPosts];
+//    
+//    // Retrieve Comments
+//    [self setUserComments:[[NSMutableArray alloc] init]];
+//    NSString *commentsFilePath = [[NSBundle mainBundle] pathForResource:@"UserComments" ofType:@"txt"];
+//    NSData *commentsData = [NSData dataWithContentsOfFile:commentsFilePath];
+//    if (commentsData == nil)
+//    {
+//        NSLog(@"Could not get hard-coded list in UserComments.txt");
+//    }
+//    [self parseData:commentsData asClass:[Comment class] intoList:self.userComments];
+//    
+//    // Retrieve Votes
+//    [self setUserVotes:[[NSMutableArray alloc] init]];
+//    NSString *votesFilePath = [[NSBundle mainBundle] pathForResource:@"UserVotes" ofType:@"txt"];
+//    NSData *votesData = [NSData dataWithContentsOfFile:votesFilePath];
+//    if (votesData == nil)
+//    {
+//        NSLog(@"Could not get hard-coded list in UserVotes.txt");
+//    }
+//    [self parseData:votesData asClass:[Vote class] intoList:self.userVotes];
+//}
+- (void)saveUserDataIds
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex: 0];
+    NSString *postFile = [docDir stringByAppendingPathComponent: @"UserPostIds.txt"];
+    NSString *commentFile = [docDir stringByAppendingPathComponent: @"UserCommentIds.txt"];
+    NSString *voteFile = [docDir stringByAppendingPathComponent: @"UserVoteIds.txt"];
+    
+    // Save Post Ids
+    NSString *postIdsString = @"";
+    for (Post *post in self.userPosts)
+    {
+        long postId = post.postID;
+        postIdsString = [NSString stringWithFormat:@"%ld\n%@",postId, postIdsString];
+    }
+    NSData *postData = [postIdsString dataUsingEncoding:NSUTF8StringEncoding];
+    [postData writeToFile:postFile atomically:NO];
+    
+    // Save Comment Ids
+    NSString *commentIdsString = @"";
+    for (Comment *comment in self.userComments)
+    {
+        long commentId = comment.commentID;
+        commentIdsString = [NSString stringWithFormat:@"%@\n%ld", commentIdsString, commentId];
+    }
+    NSData *commentData = [commentIdsString dataUsingEncoding:NSUTF8StringEncoding];
+    [commentData writeToFile:commentFile atomically:NO];
+    
+    // Save Vote Ids
+//    SAVE ACTUAL VOTES
+}
 - (void)retrieveUserData
 {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex: 0];
+    NSString *postFile = [docDir stringByAppendingPathComponent: @"UserPostIds.txt"];
+    NSString *commentFile = [docDir stringByAppendingPathComponent: @"UserCommentIds.txt"];
+    NSString *voteFile = [docDir stringByAppendingPathComponent: @"UserVoteIds.txt"];
+    
     // Retrieve Posts
-    [self setUserPosts:[[NSMutableArray alloc] init]];
-    NSString *postsFilePath = [[NSBundle mainBundle] pathForResource:@"UserPosts" ofType:@"txt"];
-    NSData *postsData = [NSData dataWithContentsOfFile:postsFilePath];
-    if (postsData == nil)
-    {
-        NSLog(@"Could not get hard-coded list in UserPosts.txt");
-    }
-    [self parseData:postsData asClass:[Post class] intoList:self.userPosts];
-    
-    // Retrieve Comments
-    [self setUserComments:[[NSMutableArray alloc] init]];
-    NSString *commentsFilePath = [[NSBundle mainBundle] pathForResource:@"UserComments" ofType:@"txt"];
-    NSData *commentsData = [NSData dataWithContentsOfFile:commentsFilePath];
-    if (commentsData == nil)
-    {
-        NSLog(@"Could not get hard-coded list in UserComments.txt");
-    }
-    [self parseData:commentsData asClass:[Comment class] intoList:self.userComments];
-    
-    // Retrieve Votes
-    [self setUserVotes:[[NSMutableArray alloc] init]];
-    NSString *votesFilePath = [[NSBundle mainBundle] pathForResource:@"UserVotes" ofType:@"txt"];
-    NSData *votesData = [NSData dataWithContentsOfFile:votesFilePath];
-    if (votesData == nil)
-    {
-        NSLog(@"Could not get hard-coded list in UserVotes.txt");
-    }
-    [self parseData:votesData asClass:[Vote class] intoList:self.userVotes];
+    NSString *postsString = [NSString stringWithContentsOfFile:postFile encoding:NSUTF8StringEncoding error:nil];
+    NSArray *postIds = [postsString componentsSeparatedByString: @"\n"];
+    [self fetchUserPostsWithIdArray:postIds];
 }
 
 #pragma mark - Helper Methods

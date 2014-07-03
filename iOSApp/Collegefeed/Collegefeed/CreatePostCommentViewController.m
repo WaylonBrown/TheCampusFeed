@@ -9,10 +9,7 @@
 #import "CreatePostCommentViewController.h"
 #import "Shared.h"
 #import "Models/Models/College.h"
-
-@interface CreatePostCommentViewController ()
-
-@end
+#import "ToastController.h"
 
 @implementation CreatePostCommentViewController
 
@@ -26,6 +23,7 @@
         [self setTransitioningDelegate:self];
         [self setModelType:type];
         [self setCollegeForPost:college];
+        self.toastController = [[ToastController alloc] initWithViewController:self];
     }
     return self;
 }
@@ -75,7 +73,16 @@
     }
     else if (message.length < MIN_POST_LENGTH)
     {
-        [self.delegate showToastMessageTooShortWithType:self.modelType];
+        switch (self.modelType)
+        {
+            case POST:
+                [self.toastController toastPostTooShortWithLength:MIN_POST_LENGTH];
+                break;
+            case COMMENT:
+                [self.toastController toastCommentTooShortWithLength:MIN_POST_LENGTH];
+            default:
+                break;
+        }
     }
 }
 

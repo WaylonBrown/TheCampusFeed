@@ -10,13 +10,12 @@
 #import "Models/Models/CFModelProtocol.h"
 
 @class College;
+@class ToastController;
 
 @protocol CreationViewProtocol <NSObject>
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
                                withCollegeId:(long)collegeId;
-
-- (void)showToastMessageTooShortWithType:(ModelType)type;
 
 @end
 
@@ -29,6 +28,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIButton *createButton;
+
+@property (strong, nonatomic) ToastController *toastController;
 
 @property (strong, nonatomic) College *collegeForPost;
 @property (nonatomic) ModelType modelType;

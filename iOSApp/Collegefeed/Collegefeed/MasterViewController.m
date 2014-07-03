@@ -36,7 +36,7 @@
     if (self)
     {
         [self setDataController:controller];
-        self.toastController = [[ToastController alloc] initWithMasterViewController:self];
+        self.toastController = [[ToastController alloc] initWithViewController:self];
         
         // Initialize a loading indicator, refresh control, and nearby college selector
         self.refreshControl     = [[UIRefreshControl alloc] init];
@@ -109,18 +109,19 @@
     if ([self.dataController isNearCollege])
     {
         [self placeCreatePost];
-        
         [self.toastController toastNearbyColleges:self.dataController.nearbyColleges];
     }
     else
     {
         [self.navigationItem setRightBarButtonItem:nil];
+        [self.toastController toastLocationFoundNotNearCollege];
     }
 }
 - (void)didNotFindLocation
 {   // Called when the user's location cannot be determined. Stop and remove activity indicator
     [self.activityIndicator stopAnimating];
     [self.navigationItem setRightBarButtonItem:nil];
+    [self.toastController toastLocationNotFoundOnTimeout];
 }
 
 #pragma mark - UITableView Functions
@@ -177,6 +178,10 @@
 }
 - (void)refresh
 {   // refresh the current view
+    if (self.dataController.collegeList == nil || self.dataController.collegeList.count == 0)
+    {
+        [self.toastController toastErrorFetchingCollegeList];
+    }
     NSString *feedName = self.dataController.collegeInFocus.name;
     if (feedName == nil)
     {
@@ -191,8 +196,12 @@
 
 - (void)castVote:(Vote *)vote
 {   // vote was cast in a table cell
-    if (vote.upvote == YES && !self.dataController.isNearCollege)
-    {
+
+    College *college = [self.dataController getCollegeById:vote.collegeId];
+    if (college != nil
+        && ![self.dataController.nearbyColleges containsObject:college]
+        && vote.upvote == NO)
+    {   // users cannot cast downvotes to a distant school
         [self.toastController toastInvalidDownvote];
     }
     else
@@ -208,19 +217,6 @@
 {
     [self.dataController createPostWithMessage:message withCollegeId:collegeId];
     [self refresh];
-}
-- (void)showToastMessageTooShortWithType:(ModelType)type
-{
-    switch (type) {
-        case POST:
-            [self.toastController toastPostTooShortWithLength:MIN_POST_LENGTH];
-            break;
-        case COMMENT:
-            [self.toastController toastCommentTooShortWithLength:MIN_COMMENT_LENGTH];
-            break;
-        default:
-            break;
-    }
 }
 
 #pragma mark - FeedSelectionProtocol Delegate Methods

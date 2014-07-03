@@ -71,6 +71,8 @@
     Vote *vote = [[Vote alloc] initWithVotableID:[self.object getID]
                                  withUpvoteValue:YES
                                    asVotableType:[self.object getType]];
+
+    [vote setCollegeId:[self.object getCollegeID]];
     [self.object setVote:vote];
     [self updateVoteButtons];
     
@@ -82,6 +84,8 @@
     Vote *vote = [[Vote alloc] initWithVotableID:[self.object getID]
                                  withUpvoteValue:NO
                                    asVotableType:[self.object getType]];
+    
+    [vote setCollegeId:[self.object getCollegeID]];
     [self.object setVote:vote];
     [self updateVoteButtons];
     
