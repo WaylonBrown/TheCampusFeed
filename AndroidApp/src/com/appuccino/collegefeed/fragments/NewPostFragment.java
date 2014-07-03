@@ -333,6 +333,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		else{
 			Toast.makeText(mainActivity, "You have no internet connection. Pull down to refresh and try again.", Toast.LENGTH_LONG).show();
 			removeFooterSpinner();
+			makeLoadingIndicator(false);
 		}
 	}
 
