@@ -109,7 +109,7 @@
     {
         [self placeCreatePost];
         
-        [self.toastController toastNearbyColleges:self.dataController.nearbyColleges inView:self];
+        [self.toastController toastNearbyColleges:self.dataController.nearbyColleges];
     }
     else
     {
