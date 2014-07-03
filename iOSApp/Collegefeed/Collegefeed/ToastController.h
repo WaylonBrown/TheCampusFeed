@@ -17,9 +17,9 @@
 
 - (id)initWithMasterViewController:(MasterViewController *)viewController;
 
-- (void)toastInvalidDownvote;
-- (void)toastCommentTooShortWithLength:(int)minLength;
-- (void)toastPostTooShortWithLength:(int)minLength;
+- (void)toastInvalidDownvote; //**
+- (void)toastCommentTooShortWithLength:(int)minLength; //**
+- (void)toastPostTooShortWithLength:(int)minLength; //**
 - (void)toastNoInternetConnection;
 - (void)toastTagSearchTooShortWithLength:(int)minLength;
 - (void)toastTagNeedsHash;
@@ -29,10 +29,12 @@
 - (void)toastErrorFetchingCollegeList;
 - (void)toastFeedSwitchedToNearbyCollege:(NSString *)collegeName;
 - (void)toastFeedSwitchedToDistantCollege:(NSString *)collegeName;
-- (void)toastNoLocationServices;
+- (void)toastNoLocationServices; //**
 - (void)toastLocationNotFoundOnTimeout;
 - (void)toastLocationFoundNotNearCollege;
-- (void)toastNearbyColleges:(NSArray *)colleges;
+- (void)toastNearbyColleges:(NSArray *)colleges; //**
 
 
+// ** = toast has been placed
+//   5/16 placed
 @end

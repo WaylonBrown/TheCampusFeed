@@ -19,6 +19,11 @@
     [self setView:viewController];
     self.toastQueue = [NSMutableArray new];
     
+    if (![CLLocationManager locationServicesEnabled])
+    {   // In the UI is probably not proper place to put this, but it works
+        [self toastNoLocationServices];
+    }
+    
     [NSTimer scheduledTimerWithTimeInterval:3.0
                                      target:self
                                    selector:@selector(dequeueToast)

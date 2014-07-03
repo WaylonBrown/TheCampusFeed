@@ -40,8 +40,11 @@
         // Get the user's location
         [self setLocationManager:[[CLLocationManager alloc] init]];
         [self.locationManager setDelegate:self];
-        [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
-        [self.locationManager startUpdatingLocation];
+        if ([CLLocationManager locationServicesEnabled])
+        {
+            [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+            [self.locationManager startUpdatingLocation];
+        }
         
     }
     return self;
