@@ -422,6 +422,7 @@ containing a value of this type.
         public static final int gpsImage=0x7f060023;
         public static final int gpsImageGapFiller=0x7f060040;
         public static final int inside=0x7f060004;
+        public static final int lazyFooterSpinner=0x7f060038;
         public static final int loadingText=0x7f060032;
         public static final int menu_GPS=0x7f060046;
         public static final int menu_help=0x7f060045;
@@ -446,7 +447,6 @@ containing a value of this type.
         public static final int permissionsLoadingIcon=0x7f06000d;
         public static final int postCard=0x7f06000f;
         public static final int postDetails=0x7f06003b;
-        public static final int progressBar1=0x7f060038;
         public static final int progressSpinner=0x7f06001d;
         public static final int ptr_content=0x7f060006;
         public static final int ptr_progress=0x7f060008;

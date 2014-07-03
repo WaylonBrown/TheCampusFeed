@@ -25,6 +25,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +56,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	static Shimmer shimmer;
 	private static PullToRefreshLayout pullToRefresh;
 	View rootView;
+	private static ProgressBar lazyLoadingFooterSpinner;
 	
 	//values for footer
 	static LinearLayout scrollAwayBottomView;
@@ -107,6 +109,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		if(list.getFooterViewsCount() == 0){
 			View footerView =  ((LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.list_lazy_loading_footer, null, false);
 	        list.addFooterView(footerView);
+	        lazyLoadingFooterSpinner = (ProgressBar)footerView.findViewById(R.id.lazyFooterSpinner);
 		}
 		
 		if(postList == null && mainActivity != null)
@@ -168,65 +171,13 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 				public void onScroll(AbsListView view, int firstVisibleItem,
 						int visibleItemCount, int totalItemCount) {
 
-					mScrollY = 0;
-					int translationY = 0;
-
-					if (list.scrollYIsComputed()) {
-						mScrollY = list.getComputedScrollY();
+					handleScrollAwayBottomViewOnScroll();
+					if (list.getLastVisiblePosition() == list.getAdapter().getCount() -1 &&
+							list.getChildAt(list.getChildCount() - 1).getBottom() <= list.getHeight() &&
+							lazyLoadingFooterSpinner != null)
+					{
+						lazyLoadingFooterSpinner.setVisibility(View.VISIBLE);
 					}
-
-					int rawY = mScrollY;
-
-					switch (mState) {
-					case STATE_OFFSCREEN:
-						if (rawY >= mMinRawY) {
-							mMinRawY = rawY;
-						} else {
-							mState = STATE_RETURNING;
-						}
-						translationY = rawY;
-						break;
-
-					case STATE_ONSCREEN:
-						if (rawY > mQuickReturnHeight) {
-							mState = STATE_OFFSCREEN;
-							mMinRawY = rawY;
-						}
-						translationY = rawY;
-						break;
-
-					case STATE_RETURNING:
-
-						translationY = (rawY - mMinRawY) + mQuickReturnHeight;
-
-						if (translationY < 0) {
-							translationY = 0;
-							mMinRawY = rawY + mQuickReturnHeight;
-						}
-
-						if (rawY == 0) {
-							mState = STATE_ONSCREEN;
-							translationY = 0;
-						}
-
-						if (translationY > mQuickReturnHeight) {
-							mState = STATE_OFFSCREEN;
-							mMinRawY = rawY;
-						}
-						break;
-					}
-
-					/** this can be used if the build is below honeycomb **/
-					if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
-						anim = new TranslateAnimation(0, 0, translationY,
-								translationY);
-						anim.setFillAfter(true);
-						anim.setDuration(0);
-						scrollAwayBottomView.startAnimation(anim);
-					} else {
-						scrollAwayBottomView.setTranslationY(translationY);
-					}
-
 				}
 
 				@Override
@@ -255,6 +206,68 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 			});
 		}
 		
+	}
+
+	protected static void handleScrollAwayBottomViewOnScroll() {
+		mScrollY = 0;
+		int translationY = 0;
+
+		if (list.scrollYIsComputed()) {
+			mScrollY = list.getComputedScrollY();
+		}
+
+		int rawY = mScrollY;
+
+		switch (mState) {
+		case STATE_OFFSCREEN:
+			if (rawY >= mMinRawY) {
+				mMinRawY = rawY;
+			} else {
+				mState = STATE_RETURNING;
+			}
+			translationY = rawY;
+			break;
+
+		case STATE_ONSCREEN:
+			if (rawY > mQuickReturnHeight) {
+				mState = STATE_OFFSCREEN;
+				mMinRawY = rawY;
+			}
+			translationY = rawY;
+			break;
+
+		case STATE_RETURNING:
+
+			translationY = (rawY - mMinRawY) + mQuickReturnHeight;
+
+			if (translationY < 0) {
+				translationY = 0;
+				mMinRawY = rawY + mQuickReturnHeight;
+			}
+
+			if (rawY == 0) {
+				mState = STATE_ONSCREEN;
+				translationY = 0;
+			}
+
+			if (translationY > mQuickReturnHeight) {
+				mState = STATE_OFFSCREEN;
+				mMinRawY = rawY;
+			}
+			break;
+		}
+
+		/** this can be used if the build is below honeycomb **/
+		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
+			anim = new TranslateAnimation(0, 0, translationY,
+					translationY);
+			anim.setFillAfter(true);
+			anim.setDuration(0);
+			scrollAwayBottomView.startAnimation(anim);
+		} else {
+			scrollAwayBottomView.setTranslationY(translationY);
+		}
+
 	}
 
 	private static boolean willListScroll() {

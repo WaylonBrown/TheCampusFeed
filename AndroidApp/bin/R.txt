@@ -118,6 +118,7 @@ int id fragmentListView 0x7f06001c
 int id gpsImage 0x7f060023
 int id gpsImageGapFiller 0x7f060040
 int id inside 0x7f060004
+int id lazyFooterSpinner 0x7f060038
 int id loadingText 0x7f060032
 int id menu_GPS 0x7f060046
 int id menu_help 0x7f060045
@@ -142,7 +143,6 @@ int id pager 0x7f060019
 int id permissionsLoadingIcon 0x7f06000d
 int id postCard 0x7f06000f
 int id postDetails 0x7f06003b
-int id progressBar1 0x7f060038
 int id progressSpinner 0x7f06001d
 int id ptr_content 0x7f060006
 int id ptr_progress 0x7f060008
