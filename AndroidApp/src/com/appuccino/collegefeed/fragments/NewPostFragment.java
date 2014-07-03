@@ -357,4 +357,10 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		}
 		pullListFromServer();
 	}
+
+	public static void scrollToTop() {
+		if(list != null){
+			list.setSelectionAfterHeaderView();
+		}
+	}
 }

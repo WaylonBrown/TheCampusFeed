@@ -47,7 +47,7 @@ import com.astuetz.PagerSlidingTabStrip;
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener, LocationListener 
 {
 	//views and widgets
-	ViewPager viewPager;
+	static ViewPager viewPager;
 	PagerSlidingTabStrip tabs;
 	PagerAdapter pagerAdapter;
 	ActionBar actionBar;
@@ -330,6 +330,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				}
 			}
 		}		
+	}
+	
+	public static void goToNewPostsAndScrollToTop() {
+		if(viewPager != null){
+			viewPager.setCurrentItem(1);
+			NewPostFragment.scrollToTop();
+		}
 	}
 
 	/**

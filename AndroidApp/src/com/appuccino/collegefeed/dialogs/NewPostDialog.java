@@ -101,6 +101,7 @@ public class NewPostDialog extends AlertDialog.Builder{
     				if(MainActivity.currentFeedCollegeID == MainActivity.ALL_COLLEGES || MainActivity.currentFeedCollegeID == selectedCollegeID){
     					NewPostFragment.postList.add(0, newPost);
             			NewPostFragment.updateList();
+            			MainActivity.goToNewPostsAndScrollToTop();
     				}
         			new MakePostTask(context).execute(newPost);
         			dialog.dismiss();
