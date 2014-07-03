@@ -8,21 +8,17 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -30,7 +26,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -39,8 +34,6 @@ import com.appuccino.collegefeed.dialogs.ChooseFeedDialog;
 import com.appuccino.collegefeed.dialogs.NewPostDialog;
 import com.appuccino.collegefeed.extra.AllCollegeJSONString;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
-import com.appuccino.collegefeed.fragments.MyCommentsFragment;
-import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
@@ -260,7 +253,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 								@Override
 								public void run() {
 									Toast.makeText(getApplicationContext(), "Couldn't find location. You can upvote, but nothing else.", Toast.LENGTH_LONG).show();
-
+									permissionsProgress.setVisibility(View.GONE);
+									newPostButton.setVisibility(View.GONE);
 								}
 								
 							});
