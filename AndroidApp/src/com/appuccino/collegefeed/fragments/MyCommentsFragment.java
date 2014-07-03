@@ -121,8 +121,10 @@ public class MyCommentsFragment extends Fragment implements OnRefreshListener
 	{
 		commentList = new ArrayList<Comment>();
 		ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
-		if(cm.getActiveNetworkInfo() != null)
-			new GetPostsTask(3, 0).execute(new PostSelector());
+		if(cm.getActiveNetworkInfo() != null){
+			//TODO: change third number for pagination and last for wasPullToRefresh
+			new GetPostsTask(3, 0, 1, true).execute(new PostSelector());
+		}
 		else
 			Toast.makeText(getActivity(), "You have no internet connection. Pull down to refresh and try again.", Toast.LENGTH_LONG).show();
 	}

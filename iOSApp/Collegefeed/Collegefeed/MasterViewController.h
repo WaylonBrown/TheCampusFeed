@@ -13,10 +13,12 @@
 #import "FeedSelectViewController.h"
 #import "DataController.h"
 
+@class ToastController;
 @protocol FeedSelectionProtocol;
 
 @interface MasterViewController : UIViewController <ChildCellDelegate, CreationViewProtocol, FeedSelectionProtocol, CollegeForPostingSelectionProtocol>
 
+@property (strong, nonatomic) ToastController *toastController;
 @property (strong, nonatomic) DataController *dataController;
 
 // outlet properties connected to the view

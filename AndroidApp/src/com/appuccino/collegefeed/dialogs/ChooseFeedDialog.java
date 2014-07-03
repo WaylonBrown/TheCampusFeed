@@ -31,8 +31,9 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 	
 	MainActivity main;
 	ArrayList<College> otherColleges;
-	ArrayList<College> nearYouList;
+	ArrayList<College> nearYouListArray;
 	AlertDialog dialog;
+	ListView nearYouListView;
 	
 	public ChooseFeedDialog(MainActivity main, View layout) {
 		super(main);
@@ -43,7 +44,7 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 		dialog = create();
 		dialog.show();
 		
-		ListView nearYouList = (ListView)layout.findViewById(R.id.nearYouDialogList);
+		nearYouListView = (ListView)layout.findViewById(R.id.nearYouDialogList);
 		TextView chooseTitleText = (TextView)layout.findViewById(R.id.chooseFeedDialogTitle);
     	TextView allCollegesText = (TextView)layout.findViewById(R.id.allCollegesText);
     	TextView nearYouTitle = (TextView)layout.findViewById(R.id.nearYouTitle);
@@ -58,7 +59,7 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
     	otherTitle.setTypeface(FontManager.light);
     	otherCollegesText.setTypeface(FontManager.light);
     	
-    	populateNearYouList(nearYouList);
+    	populateNearYouList();
     	setupClickListeners(searchColleges, allColleges);
 	}
 	
@@ -79,42 +80,44 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 		});
 	}
 
-	private void populateNearYouList(ListView list) {
-		nearYouList = new ArrayList<College>();
-		boolean enableListClicking = true;	//false if no colleges so that the item can't be clicked
-		
-		if(MainActivity.permissions != null)
-		{
-			if(MainActivity.permissions.size() > 0)
+	public void populateNearYouList() {
+		if(nearYouListView != null){
+			nearYouListArray = new ArrayList<College>();
+			boolean enableListClicking = true;	//false if no colleges so that the item can't be clicked
+			
+			if(MainActivity.permissions != null)
 			{
-				for(int id : MainActivity.permissions)
+				if(MainActivity.permissions.size() > 0)
 				{
-					nearYouList.add(MainActivity.getCollegeByID(id));
+					for(int id : MainActivity.permissions)
+					{
+						nearYouListArray.add(MainActivity.getCollegeByID(id));
+					}
+				}
+				else
+				{
+					nearYouListArray.add(new College("(none)"));
+					enableListClicking = false;
 				}
 			}
 			else
 			{
-				nearYouList.add(new College("(none)"));
+				nearYouListArray.add(new College("(none)"));
 				enableListClicking = false;
 			}
+			
+			DialogCollegeListAdapter adapter = new DialogCollegeListAdapter(main, R.layout.list_row_choosefeed_college, nearYouListArray, enableListClicking);
+			nearYouListView.setAdapter(adapter);
+			
+			nearYouListView.setOnItemClickListener(new OnItemClickListener(){
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					dialog.dismiss();
+					main.changeFeed(nearYouListArray.get(position).getID());
+				}
+			});
 		}
-		else
-		{
-			nearYouList.add(new College("(none)"));
-			enableListClicking = false;
-		}
-		
-		DialogCollegeListAdapter adapter = new DialogCollegeListAdapter(main, R.layout.list_row_choosefeed_college, nearYouList, enableListClicking);
-		list.setAdapter(adapter);
-		
-		list.setOnItemClickListener(new OnItemClickListener(){
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				dialog.dismiss();
-				main.changeFeed(nearYouList.get(position).getID());
-			}
-		});
 	}
 
 	public class SearchCollegesDialog extends AlertDialog.Builder{
@@ -196,5 +199,12 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 			AutoCompleteDropdownAdapter adapter = new AutoCompleteDropdownAdapter(main, R.layout.list_row_dropdown, allCollegesList);
 	        textView.setAdapter(adapter);
 		}
+	}
+
+	public boolean isShowing() {
+		if(dialog != null && dialog.isShowing()){
+			return true;
+		}
+		return false;
 	}
 }

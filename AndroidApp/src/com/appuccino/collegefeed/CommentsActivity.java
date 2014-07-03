@@ -19,6 +19,7 @@ import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,7 @@ public class CommentsActivity extends Activity{
 	static Post post;
 	static ImageView newCommentButton;
 	static ImageView flagButton;
+	static ProgressBar actionBarLoadingIcon;
 	static TextView commentsText;
 	final int minCommentLength = 3;
 	ListView list;
@@ -63,6 +65,7 @@ public class CommentsActivity extends Activity{
 		
 		newCommentButton = (ImageView)findViewById(R.id.newCommentButton);
 		flagButton = (ImageView)findViewById(R.id.flagButton);
+		actionBarLoadingIcon = (ProgressBar)findViewById(R.id.commentActionbarLoadingIcon);
 		list = (ListView)findViewById(R.id.commentsList);
 		loadingText = (ShimmerTextView)findViewById(R.id.commentsLoadingText);
 		final TextView scoreText = (TextView)findViewById(R.id.scoreText);
@@ -73,20 +76,23 @@ public class CommentsActivity extends Activity{
 		int collegeID = getIntent().getIntExtra("COLLEGE_ID", 0);
 		int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);
 		
-		if(MainActivity.hasPermissions(collegeID)){
-			newCommentButton.setVisibility(View.VISIBLE);
-			flagButton.setVisibility(View.VISIBLE);
-		}else{
-			newCommentButton.setVisibility(View.GONE);
-			flagButton.setVisibility(View.GONE);
-		}
-		
 		if(sectionNumber == 0)
 			post = TopPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
 		else if(sectionNumber == 1)
 			post = NewPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
 		else if(sectionNumber == 2)
 			post = MyPostsFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
+		
+		if(MainActivity.hasPermissions(collegeID)){
+			newCommentButton.setVisibility(View.VISIBLE);
+			Log.i("cfeed", "Post: " + post + " list: " + MainActivity.flagList);
+			if(!MainActivity.flagList.contains(post.getID())){	//dont show flag button if already flagged
+				flagButton.setVisibility(View.VISIBLE);
+			}
+		}else{
+			newCommentButton.setVisibility(View.GONE);
+			flagButton.setVisibility(View.GONE);
+		}
 		
 		Log.i("cfeed", "Clicked from section number " + sectionNumber);
 		
@@ -223,7 +229,6 @@ public class CommentsActivity extends Activity{
 				public void onClick(View v) 
 				{					
 					if(MainActivity.hasPermissions(post.getCollegeID()) || hasPermissions){
-						LayoutInflater inflater = getLayoutInflater();
 						new FlagDialog(CommentsActivity.this, post);
 					}
 				}        	
@@ -440,8 +445,28 @@ public class CommentsActivity extends Activity{
 	public static void setNewPermissionsIfAvailable() {
 		if(newCommentButton != null && MainActivity.hasPermissions(post.getCollegeID())){
 			newCommentButton.setVisibility(View.VISIBLE);
-			flagButton.setVisibility(View.VISIBLE);
 		}
 		hasPermissions = true;	//necessary that way if permissions updated while not on MainActivity, still allow to comment
+	}
+	
+	public static void removeFlagButtonAndLoadingIndicator(){
+		if(flagButton != null){
+			flagButton.setVisibility(View.GONE);
+			actionBarLoadingIcon.setVisibility(View.GONE);
+		}
+	}
+
+	public static void addActionBarLoadingIndicatorAndRemoveFlag() {
+		if(flagButton != null && actionBarLoadingIcon != null){
+			flagButton.setVisibility(View.GONE);
+			actionBarLoadingIcon.setVisibility(View.VISIBLE);
+		}
+	}
+	
+	public static void removeActionBarLoadingIndicatorAndAddFlag(){
+		if(flagButton != null && actionBarLoadingIcon != null){
+			flagButton.setVisibility(View.VISIBLE);
+			actionBarLoadingIcon.setVisibility(View.GONE);
+		}
 	}
 }

@@ -76,6 +76,7 @@ public class JSONParser {
 				int score = 0;
 				int collegeID = -1;
 				String time = null;
+				int commentCount = 0;
 				
 				reader.beginObject();
 				while(reader.hasNext()){
@@ -86,7 +87,6 @@ public class JSONParser {
 							id = reader.nextInt();
 						}catch(Exception e){
 							reader.skipValue();
-							e.printStackTrace();
 						}
 					}
 					else if(name.equals("text")){
@@ -98,7 +98,6 @@ public class JSONParser {
 							score = reader.nextInt();
 						}catch(Exception e){
 							reader.skipValue();
-							e.printStackTrace();
 						}
 					}
 					else if(name.equals("college_id")){
@@ -107,11 +106,18 @@ public class JSONParser {
 							collegeID = reader.nextInt();
 						}catch(Exception e){
 							reader.skipValue();
-							e.printStackTrace();
 						}
 					}
 					else if(name.equals("created_at")){
 						time = reader.nextString();
+					}
+					else if(name.equals("comment_count")){
+						//use in case null is passed in, which prim types can't take
+						try{
+							commentCount = reader.nextInt();
+						}catch(Exception e){
+							reader.skipValue();
+						}
 					}
 					else{
 						reader.skipValue();
@@ -119,7 +125,7 @@ public class JSONParser {
 				}
 				reader.endObject();
 				
-				ret.add(new Post(id, text, score, collegeID, time));
+				ret.add(new Post(id, text, score, collegeID, time, commentCount));
 			}
 			reader.endArray();
 		}catch(Exception e){

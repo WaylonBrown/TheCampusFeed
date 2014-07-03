@@ -73,6 +73,10 @@
         [self.delegate submitPostCommentCreationWithMessage:message withCollegeId:self.collegeForPost.collegeID];
         [self dismiss:nil];
     }
+    else if (message.length < MIN_POST_LENGTH)
+    {
+        [self.delegate showToastMessageTooShortWithType:self.modelType];
+    }
 }
 
 - (IBAction)dismiss:(id)sender

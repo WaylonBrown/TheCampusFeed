@@ -14,6 +14,7 @@ public class Post extends AbstractPostComment{
 
 	ArrayList<Comment> commentList = new ArrayList<Comment>();
 	String collegeName;
+	int commentCount = 0;
 	
 	public Post(String m, int c)
 	{
@@ -25,10 +26,6 @@ public class Post extends AbstractPostComment{
 			collegeName = MainActivity.getCollegeByID(collegeID).getName();
 		}catch(Exception e){
 		}
-		
-//		int numberOfComments = (int)(Math.random() * 15);
-//		for(int i = 0; i < numberOfComments; i++)
-//			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
 	}
 	
 	public Post(int id, String message, int score, int collegeID, String time)
@@ -50,15 +47,37 @@ public class Post extends AbstractPostComment{
 			//TODO: make call to get updated college list here
 			collegeName = "";
 		}
-		
-//		int numberOfComments = (int)(Math.random() * 15);
-//		for(int i = 0; i < numberOfComments; i++)
-//			commentList.add(new Comment("test comment test comment test comment test comment test comment", this.id));
+	}
+	
+	public Post(int id, String message, int score, int collegeID, String time, int commentCount)
+	{
+		this.score = score;
+		this.message = message;
+		this.time = time;
+		this.id = id;
+		this.collegeID = collegeID;
+		this.commentCount = commentCount;
+		College thisCollege = MainActivity.getCollegeByID(collegeID);
+		if(thisCollege != null){	//in case college isn't in list
+			try{
+				collegeName = MainActivity.getCollegeByID(collegeID).getName();
+			}catch(Exception e){
+			}
+		}
+		else
+		{
+			//TODO: make call to get updated college list here
+			collegeName = "";
+		}
 	}
 	
 	public void addComment(Comment comment)
 	{
 		commentList.add(comment);
+	}
+	
+	public int getCommentCount() {
+		return commentCount;
 	}
 	
 	public String getCollegeName()

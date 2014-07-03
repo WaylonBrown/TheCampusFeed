@@ -46,56 +46,64 @@ public class NetWorker {
 	{
 		int whichFrag = 0;
 		int feedID = 0;
+		int pageNumber;
+		boolean wasPullToRefresh;
+		final int POSTS_PER_PAGE = 8;
 		
 		public GetPostsTask()
 		{
 		}
 		
-		public GetPostsTask(int whichFrag, int feedID)
+		public GetPostsTask(int whichFrag, int feedID, int pageNumber, boolean wasPullToRefresh)
 		{
 			this.whichFrag = whichFrag;
 			this.feedID = feedID;
+			this.pageNumber = pageNumber;
+			this.wasPullToRefresh = wasPullToRefresh;
 		}
 		
 		@Override
 		protected void onPreExecute() {
-			if(whichFrag == 0)			//top posts
-				TopPostFragment.makeLoadingIndicator(true);
-			else if (whichFrag == 1)	//new posts
-				NewPostFragment.makeLoadingIndicator(true);
-			else if (whichFrag == 2)	//my posts
-				MyPostsFragment.makeLoadingIndicator(true);
+			if(wasPullToRefresh){
+				if(whichFrag == 0)			//top posts
+					TopPostFragment.makeLoadingIndicator(true);
+				else if (whichFrag == 1)	//new posts
+					NewPostFragment.makeLoadingIndicator(true);
+				else if (whichFrag == 2)	//my posts
+					MyPostsFragment.makeLoadingIndicator(true);
+			}			
 			super.onPreExecute();
 		}
 
 		@Override
 		protected ArrayList<Post> doInBackground(PostSelector... arg0) {
+			String paginationString = "?page=" + pageNumber + "&per_page=" + POSTS_PER_PAGE;
 			switch(whichFrag){
 			case 0:
-				return fetchTopPostsFrag();
+				return fetchTopPostsFrag(paginationString);
 			case 1:
-				return fetchNewPostsFrag();
+				return fetchNewPostsFrag(paginationString);
 			default:
 				return fetchMyPostsFrag();
 			}
 		}
 		
-		private ArrayList<Post> fetchTopPostsFrag() {
+		private ArrayList<Post> fetchTopPostsFrag(String paginationString) {
 			HttpGet request = null;
 			if(feedID == MainActivity.ALL_COLLEGES)
-				request = new HttpGet(REQUEST_URL + "posts/trending");
+				request = new HttpGet(REQUEST_URL + "posts/trending" + paginationString);
 			else
-				request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/posts/trending");
+				request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/posts/trending" + paginationString);
 			
 			return getPostsFromURLRequest(request);
 		}
 
-		private ArrayList<Post> fetchNewPostsFrag() {
+		private ArrayList<Post> fetchNewPostsFrag(String paginationString) {
 			HttpGet request = null;
 			if(feedID == MainActivity.ALL_COLLEGES)
-				request = new HttpGet(REQUEST_URL + "posts/recent");
+				request = new HttpGet(REQUEST_URL + "posts/recent" + paginationString);
 			else
-				request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/posts/recent");
+				request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/posts/recent" + paginationString);
 			
 			return getPostsFromURLRequest(request);
 		}
@@ -135,17 +143,27 @@ public class NetWorker {
 		protected void onPostExecute(ArrayList<Post> result) {
 			if(whichFrag == 0)		//top posts
 			{
-				TopPostFragment.postList = new ArrayList<Post>(result);
+				//I have zero idea why this first line is needed, but without it the listadapter doesn't load the new list
+				TopPostFragment.postList = new ArrayList<Post>(TopPostFragment.postList);
+				TopPostFragment.postList.addAll(result);
+				//NewPostFragment.postList = new ArrayList<Post>(result);
 				TopPostFragment.updateList();
 				TopPostFragment.makeLoadingIndicator(false);
 				TopPostFragment.setupFooterListView();
+				TopPostFragment.currentPageNumber++;
+				TopPostFragment.removeFooterSpinner();
 			}
 			else if(whichFrag == 1)	//new posts
 			{
-				NewPostFragment.postList = new ArrayList<Post>(result);
+				//I have zero idea why this first line is needed, but without it the listadapter doesn't load the new list
+				NewPostFragment.postList = new ArrayList<Post>(NewPostFragment.postList);
+				NewPostFragment.postList.addAll(result);
+				//NewPostFragment.postList = new ArrayList<Post>(result);
 				NewPostFragment.updateList();
 				NewPostFragment.makeLoadingIndicator(false);
 				NewPostFragment.setupFooterListView();
+				NewPostFragment.currentPageNumber++;
+				NewPostFragment.removeFooterSpinner();
 			}
 			else if(whichFrag == 2)	//my posts
 			{
@@ -381,7 +399,7 @@ public class NetWorker {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if(!result)
-				Toast.makeText(c, "Failed to post.", Toast.LENGTH_LONG).show();
+				Toast.makeText(c, "Failed to post, please try again later.", Toast.LENGTH_LONG).show();
 			super.onPostExecute(result);
 		}
 		
@@ -425,7 +443,7 @@ public class NetWorker {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if(!result)
-				Toast.makeText(c, "Failed to post.", Toast.LENGTH_LONG).show();
+				Toast.makeText(c, "Failed to , please try again later.", Toast.LENGTH_LONG).show();
 			super.onPostExecute(result);
 		}
 		
@@ -455,6 +473,59 @@ public class NetWorker {
 		
 		public void onPostExecute(Boolean result){
 			Log.d("http", LOG_TAG + "success: " + result);
+		}
+	}
+	
+	public static class MakeFlagTask extends AsyncTask<Integer, Void, Boolean>{
+		
+		Context c;
+		int postID;
+		
+		public MakeFlagTask(Context c){
+			this.c = c;
+		}
+		
+		
+		@Override
+		protected void onPreExecute() {
+			CommentsActivity.addActionBarLoadingIndicatorAndRemoveFlag();
+			super.onPreExecute();
+		}
+
+
+		public Boolean doInBackground(Integer... postID){
+			this.postID = postID[0];
+			try{
+				HttpGet request = new HttpGet(REQUEST_URL + "posts/" + postID[0] + "/flags");
+				//request.setEntity(new ByteArrayEntity(String.valueOf(postID).getBytes("UTF8")));
+				ResponseHandler<String> responseHandler = new BasicResponseHandler();
+				String response = client.execute(request, responseHandler);
+				
+				Log.d("cfeed", LOG_TAG + "Make flag server response: " + response);
+				return true;
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block 
+				e.printStackTrace();
+				return false;
+			}
+		}
+		
+		public void onPostExecute(Boolean result){
+			Log.d("http", LOG_TAG + "success: " + result);
+			if(result){
+				MainActivity.flagList.add(postID);
+				PrefManager.putFlagList(MainActivity.flagList);
+				CommentsActivity.removeFlagButtonAndLoadingIndicator();
+				Toast.makeText(c, "Post has been flagged, thank you :)", Toast.LENGTH_LONG).show();
+			}else{
+				Toast.makeText(c, "Failed to flag post, please try again later.", Toast.LENGTH_LONG).show();
+				CommentsActivity.removeActionBarLoadingIndicatorAndAddFlag();
+			}
+			super.onPostExecute(result);
 		}
 	}
 }

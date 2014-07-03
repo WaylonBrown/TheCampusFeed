@@ -17,6 +17,7 @@ public class PrefManager {
 	public static final String DOWNVOTE_LIST = "downvote_list";
 	public static final String COMMENT_UPVOTE_LIST = "comment_upvote_list";
 	public static final String COMMENT_DOWNVOTE_LIST = "comment_downvote_list";
+	public static final String FLAG_LIST = "flag_list";
 	
 	public static void setup(Context c) 
 	{
@@ -156,6 +157,35 @@ public class PrefManager {
 	public static List<Integer> getCommentDownvoteList(){
 		List<Integer> returnList = new ArrayList<Integer>();
 		String retrieval = prefs.getString(COMMENT_DOWNVOTE_LIST, "");
+		if(retrieval != null && !retrieval.isEmpty()){
+			String[] split = retrieval.split(";");
+			for(String id : split){
+				try{
+					returnList.add(Integer.valueOf(id));
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+			}
+		}
+		return returnList;
+	}
+	
+	public static void putFlagList(List<Integer> list){
+		String storage = "";
+		for(int id : list){
+			storage += (id + ";");
+		}
+		//remove final ;
+		if(storage.length() > 0){
+			storage = storage.substring(0, storage.length()-1);
+		}
+		
+		prefs.edit().putString(FLAG_LIST, storage).commit();
+	}
+	
+	public static List<Integer> getFlagList(){
+		List<Integer> returnList = new ArrayList<Integer>();
+		String retrieval = prefs.getString(FLAG_LIST, "");
 		if(retrieval != null && !retrieval.isEmpty()){
 			String[] split = retrieval.split(";");
 			for(String id : split){

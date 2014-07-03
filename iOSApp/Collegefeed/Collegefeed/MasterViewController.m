@@ -7,8 +7,9 @@
 //
 
 // Models
-#import "Models/Models/Post.h"
 #import "Models/Models/College.h"
+#import "Models/Models/Post.h"
+#import "Models/Models/Vote.h"
 
 // Full views
 #import "MasterViewController.h"
@@ -22,6 +23,7 @@
 #import "DataController.h"
 #import "Shared.h"
 #import "AppDelegate.h"
+#import "ToastController.h"
 
 
 @implementation MasterViewController
@@ -34,6 +36,7 @@
     if (self)
     {
         [self setDataController:controller];
+        self.toastController = [[ToastController alloc] initWithMasterViewController:self];
         
         // Initialize a loading indicator, refresh control, and nearby college selector
         self.refreshControl     = [[UIRefreshControl alloc] init];
@@ -107,15 +110,7 @@
     {
         [self placeCreatePost];
         
-        int count = 0;
-        for (College *college in self.dataController.nearbyColleges)
-        {
-            NSString *collegeMessage = [NSString stringWithFormat:@"You're near %@", college.name];
-            [NSTimer scheduledTimerWithTimeInterval:count target:self selector:@selector(showToast:) userInfo:collegeMessage repeats:NO];
-            count += 2;
-        }
-        NSString *infoMessage = @"You can upvote, downvote, post, and comment on that college's posts";
-        [NSTimer scheduledTimerWithTimeInterval:count target:self selector:@selector(showToast:) userInfo:infoMessage repeats:NO];
+        [self.toastController toastNearbyColleges:self.dataController.nearbyColleges];
     }
     else
     {
@@ -141,17 +136,6 @@
 
 #pragma mark - Actions
 
-- (void)showToast:(NSTimer *)timer
-{
-    NSString *message = [timer userInfo];
-    float x = self.feedToolbar.frame.size.width / 2;
-    float y = self.feedToolbar.frame.origin.y - 45;
-    CGPoint point = CGPointMake(x, y);
-    
-    [self.view makeToast:message
-                duration:2.0
-                position:[NSValue valueWithCGPoint:point]];
-}
 - (IBAction)changeFeed;
 {   // User wants to change the feed (all colleges, nearby college, or other)
 
@@ -207,7 +191,14 @@
 
 - (void)castVote:(Vote *)vote
 {   // vote was cast in a table cell
-    [self.dataController createVote:vote];
+    if (vote.upvote == YES && !self.dataController.isNearCollege)
+    {
+        [self.toastController toastInvalidDownvote];
+    }
+    else
+    {
+        [self.dataController createVote:vote];
+    }
 }
 
 #pragma mark - CreationViewProtocol Delegate Methods
@@ -217,6 +208,19 @@
 {
     [self.dataController createPostWithMessage:message withCollegeId:collegeId];
     [self refresh];
+}
+- (void)showToastMessageTooShortWithType:(ModelType)type
+{
+    switch (type) {
+        case POST:
+            [self.toastController toastPostTooShortWithLength:MIN_POST_LENGTH];
+            break;
+        case COMMENT:
+            [self.toastController toastCommentTooShortWithLength:MIN_COMMENT_LENGTH];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - FeedSelectionProtocol Delegate Methods

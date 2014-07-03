@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5312942E196504CD00CF13DB /* ToastController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5312942D196504CD00CF13DB /* ToastController.m */; };
 		533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 533475881922B88300E84CC8 /* TTTAttributedLabel.m */; };
 		5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5334758B1922D9B700E84CC8 /* TagViewController.m */; };
 		533475A41923344100E84CC8 /* TableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533475A21923344100E84CC8 /* TableCell.m */; };
@@ -119,6 +120,8 @@
 
 /* Begin PBXFileReference section */
 		5308D2BB193552C600D70C1A /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
+		5312942C196504CD00CF13DB /* ToastController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastController.h; sourceTree = "<group>"; };
+		5312942D196504CD00CF13DB /* ToastController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToastController.m; sourceTree = "<group>"; };
 		533475871922B88300E84CC8 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		533475881922B88300E84CC8 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		5334758A1922D9B700E84CC8 /* TagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagViewController.h; sourceTree = "<group>"; };
@@ -220,6 +223,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		53129431196517A000CF13DB /* Toasts */ = {
+			isa = PBXGroup;
+			children = (
+				5352B5A0195F5C3100FEB2BF /* UIView+Toast.h */,
+				5352B5A1195F5C3100FEB2BF /* UIView+Toast.m */,
+				5312942C196504CD00CF13DB /* ToastController.h */,
+				5312942D196504CD00CF13DB /* ToastController.m */,
+			);
+			name = Toasts;
+			sourceTree = "<group>";
+		};
 		533475A019232A4A00E84CC8 /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -341,6 +355,7 @@
 		53B090B8192DA1FA00E3D996 /* Source Code */ = {
 			isa = PBXGroup;
 			children = (
+				53129431196517A000CF13DB /* Toasts */,
 				53AE73BC1927ED6600BE6B02 /* DataController.h */,
 				53AE73C61928354F00BE6B02 /* DataController.m */,
 				53F8789F19133F60002A578B /* AppDelegate.h */,
@@ -425,8 +440,6 @@
 		53F8789619133F60002A578B /* Collegefeed */ = {
 			isa = PBXGroup;
 			children = (
-				5352B5A0195F5C3100FEB2BF /* UIView+Toast.h */,
-				5352B5A1195F5C3100FEB2BF /* UIView+Toast.m */,
 				53B090B8192DA1FA00E3D996 /* Source Code */,
 				53B090B5192DA13100E3D996 /* Views */,
 				53B090B9192DA21600E3D996 /* Resources */,
@@ -648,6 +661,7 @@
 				53963DE71916E5F50084E646 /* PostsViewController.m in Sources */,
 				53F8789D19133F60002A578B /* main.m in Sources */,
 				53D51E391949625300A8BA81 /* SimpleTableCell.m in Sources */,
+				5312942E196504CD00CF13DB /* ToastController.m in Sources */,
 				533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -25,11 +25,12 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.CommentsActivity;
+import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.PostListAdapter;
 import com.appuccino.collegefeed.extra.QuickReturnListView;
@@ -55,9 +56,11 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	static Shimmer shimmer;
 	private static PullToRefreshLayout pullToRefresh;
 	View rootView;
+	private static ProgressBar lazyLoadingFooterSpinner;
+	public static int currentPageNumber = 1;
 	
 	//values for footer
-	static LinearLayout footer;
+	static LinearLayout scrollAwayBottomView;
 	private static int mQuickReturnHeight;
 	private static final int STATE_ONSCREEN = 0;
 	private static final int STATE_OFFSCREEN = 1;
@@ -84,7 +87,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 				container, false);
 		list = (QuickReturnListView)rootView.findViewById(R.id.fragmentListView);
 		loadingText = (ShimmerTextView)rootView.findViewById(R.id.loadingText);
-		footer = (LinearLayout)rootView.findViewById(R.id.footer);
+		scrollAwayBottomView = (LinearLayout)rootView.findViewById(R.id.footer);
 		
 		loadingText.setTypeface(FontManager.light);
 		setupBottomViewUI();
@@ -100,10 +103,14 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		if(list.getHeaderViewsCount() == 0)
 		{
 			//for card UI
-			View headerFooter = new View(getActivity());
-			headerFooter.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
-			list.addFooterView(headerFooter, null, false);
-			list.addHeaderView(headerFooter, null, false);
+			View headerSpace = new View(getActivity());
+			headerSpace.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
+			list.addHeaderView(headerSpace, null, false);
+		}
+		if(list.getFooterViewsCount() == 0){
+			View footerView =  ((LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.list_lazy_loading_footer, null, false);
+	        list.addFooterView(footerView);
+	        lazyLoadingFooterSpinner = (ProgressBar)footerView.findViewById(R.id.lazyFooterSpinner);
 		}
 		
 		if(postList == null && mainActivity != null)
@@ -154,7 +161,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 				new ViewTreeObserver.OnGlobalLayoutListener() {
 					@Override
 					public void onGlobalLayout() {
-						mQuickReturnHeight = footer.getHeight();
+						mQuickReturnHeight = scrollAwayBottomView.getHeight();
 						list.computeScrollY();
 					}
 			});
@@ -165,65 +172,12 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 				public void onScroll(AbsListView view, int firstVisibleItem,
 						int visibleItemCount, int totalItemCount) {
 
-					mScrollY = 0;
-					int translationY = 0;
-
-					if (list.scrollYIsComputed()) {
-						mScrollY = list.getComputedScrollY();
+					handleScrollAwayBottomViewOnScroll();
+					if (list.getLastVisiblePosition() == list.getAdapter().getCount() -1 &&
+							list.getChildAt(list.getChildCount() - 1).getBottom() <= list.getHeight())
+					{
+						loadMorePosts();
 					}
-
-					int rawY = mScrollY;
-
-					switch (mState) {
-					case STATE_OFFSCREEN:
-						if (rawY >= mMinRawY) {
-							mMinRawY = rawY;
-						} else {
-							mState = STATE_RETURNING;
-						}
-						translationY = rawY;
-						break;
-
-					case STATE_ONSCREEN:
-						if (rawY > mQuickReturnHeight) {
-							mState = STATE_OFFSCREEN;
-							mMinRawY = rawY;
-						}
-						translationY = rawY;
-						break;
-
-					case STATE_RETURNING:
-
-						translationY = (rawY - mMinRawY) + mQuickReturnHeight;
-
-						if (translationY < 0) {
-							translationY = 0;
-							mMinRawY = rawY + mQuickReturnHeight;
-						}
-
-						if (rawY == 0) {
-							mState = STATE_ONSCREEN;
-							translationY = 0;
-						}
-
-						if (translationY > mQuickReturnHeight) {
-							mState = STATE_OFFSCREEN;
-							mMinRawY = rawY;
-						}
-						break;
-					}
-
-					/** this can be used if the build is below honeycomb **/
-					if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
-						anim = new TranslateAnimation(0, 0, translationY,
-								translationY);
-						anim.setFillAfter(true);
-						anim.setDuration(0);
-						footer.startAnimation(anim);
-					} else {
-						footer.setTranslationY(translationY);
-					}
-
 				}
 
 				@Override
@@ -254,6 +208,81 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		
 	}
 
+	protected static void loadMorePosts() {
+		if(lazyLoadingFooterSpinner != null){
+			lazyLoadingFooterSpinner.setVisibility(View.VISIBLE);
+		}
+		pullListFromServer(false);
+	}
+	
+	public static void removeFooterSpinner() {
+		if(lazyLoadingFooterSpinner != null){
+			lazyLoadingFooterSpinner.setVisibility(View.INVISIBLE);
+		}
+	}
+
+	protected static void handleScrollAwayBottomViewOnScroll() {
+		mScrollY = 0;
+		int translationY = 0;
+
+		if (list.scrollYIsComputed()) {
+			mScrollY = list.getComputedScrollY();
+		}
+
+		int rawY = mScrollY;
+
+		switch (mState) {
+		case STATE_OFFSCREEN:
+			if (rawY >= mMinRawY) {
+				mMinRawY = rawY;
+			} else {
+				mState = STATE_RETURNING;
+			}
+			translationY = rawY;
+			break;
+
+		case STATE_ONSCREEN:
+			if (rawY > mQuickReturnHeight) {
+				mState = STATE_OFFSCREEN;
+				mMinRawY = rawY;
+			}
+			translationY = rawY;
+			break;
+
+		case STATE_RETURNING:
+
+			translationY = (rawY - mMinRawY) + mQuickReturnHeight;
+
+			if (translationY < 0) {
+				translationY = 0;
+				mMinRawY = rawY + mQuickReturnHeight;
+			}
+
+			if (rawY == 0) {
+				mState = STATE_ONSCREEN;
+				translationY = 0;
+			}
+
+			if (translationY > mQuickReturnHeight) {
+				mState = STATE_OFFSCREEN;
+				mMinRawY = rawY;
+			}
+			break;
+		}
+
+		/** this can be used if the build is below honeycomb **/
+		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
+			anim = new TranslateAnimation(0, 0, translationY,
+					translationY);
+			anim.setFillAfter(true);
+			anim.setDuration(0);
+			scrollAwayBottomView.startAnimation(anim);
+		} else {
+			scrollAwayBottomView.setTranslationY(translationY);
+		}
+
+	}
+
 	private static boolean willListScroll() {
 		if(postList == null || list.getLastVisiblePosition() + 1 == postList.size() || postList.size() == 0) {
 			return false;
@@ -261,12 +290,14 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		return true; 
 	}
 
-	private static void pullListFromServer() 
+	private static void pullListFromServer(boolean wasPullToRefresh) 
 	{
-		postList = new ArrayList<Post>();
+		if(postList == null){
+			postList = new ArrayList<Post>();
+		}
 		ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);		
 		if(cm.getActiveNetworkInfo() != null)
-			new GetPostsTask(0, currentFeedID).execute(new PostSelector());
+			new GetPostsTask(0, currentFeedID, currentPageNumber, wasPullToRefresh).execute(new PostSelector());
 		else
 			Toast.makeText(mainActivity, "You have no internet connection. Pull down to refresh and try again.", Toast.LENGTH_LONG).show();
 	}
@@ -301,9 +332,11 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	{	
 		if(listAdapter != null)
 		{
+			Log.i("cfeed","TEST new post size: " + postList.size());
 			listAdapter.setCollegeFeedID(currentFeedID);
 			listAdapter.clear();
 			listAdapter.addAll(postList);
+			Log.i("cfeed","TEST last post size: " + listAdapter.getCount());
 			listAdapter.notifyDataSetChanged();
 		}
 	}
@@ -338,7 +371,11 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	@Override
 	public void onRefreshStarted(View arg0) 
 	{
-		pullListFromServer();
+		//go back to first page
+		currentPageNumber = 1;
+		//reset list
+		postList.clear();
+		pullListFromServer(true);
 	}
 
 	public static void changeFeed(int id) {
@@ -355,6 +392,6 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 			else
 				collegeNameBottom.setText("");
 		}
-		pullListFromServer();
+		pullListFromServer(true);
 	}
 }

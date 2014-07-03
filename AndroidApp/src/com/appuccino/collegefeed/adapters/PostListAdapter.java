@@ -92,8 +92,8 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         	setGPSImageVisibility(postHolder, thisPost);
         }
         
-        String commentString = thisPost.getCommentList().size() + " comment";
-        if(thisPost.getCommentList().size() != 1)
+        String commentString = thisPost.getCommentCount() + " comment";
+        if(thisPost.getCommentCount() != 1)
         	commentString += "s";
         postHolder.commentText.setText(commentString);
         

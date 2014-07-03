@@ -15,6 +15,9 @@
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
                                withCollegeId:(long)collegeId;
+
+- (void)showToastMessageTooShortWithType:(ModelType)type;
+
 @end
 
 @interface CreatePostCommentViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
