@@ -330,8 +330,10 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);		
 		if(cm.getActiveNetworkInfo() != null)
 			new GetPostsTask(1, currentFeedID, currentPageNumber, wasPullToRefresh).execute(new PostSelector());
-		else
+		else{
 			Toast.makeText(mainActivity, "You have no internet connection. Pull down to refresh and try again.", Toast.LENGTH_LONG).show();
+			removeFooterSpinner();
+		}
 	}
 
 	protected void postClicked(Post post) 
