@@ -82,7 +82,7 @@ public class NetWorker {
 			case 0:
 				return fetchTopPostsFrag(paginationString);
 			case 1:
-				return fetchNewPostsFrag();
+				return fetchNewPostsFrag(paginationString);
 			default:
 				return fetchMyPostsFrag();
 			}
@@ -98,12 +98,12 @@ public class NetWorker {
 			return getPostsFromURLRequest(request);
 		}
 
-		private ArrayList<Post> fetchNewPostsFrag() {
+		private ArrayList<Post> fetchNewPostsFrag(String paginationString) {
 			HttpGet request = null;
 			if(feedID == MainActivity.ALL_COLLEGES)
-				request = new HttpGet(REQUEST_URL + "posts/recent");
+				request = new HttpGet(REQUEST_URL + "posts/recent" + paginationString);
 			else
-				request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/posts/recent");
+				request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/posts/recent" + paginationString);
 			
 			return getPostsFromURLRequest(request);
 		}
@@ -146,6 +146,7 @@ public class NetWorker {
 				//I have zero idea why this first line is needed, but without it the listadapter doesn't load the new list
 				TopPostFragment.postList = new ArrayList<Post>(TopPostFragment.postList);
 				TopPostFragment.postList.addAll(result);
+				//NewPostFragment.postList = new ArrayList<Post>(result);
 				TopPostFragment.updateList();
 				TopPostFragment.makeLoadingIndicator(false);
 				TopPostFragment.setupFooterListView();
@@ -154,10 +155,15 @@ public class NetWorker {
 			}
 			else if(whichFrag == 1)	//new posts
 			{
-				NewPostFragment.postList = new ArrayList<Post>(result);
+				//I have zero idea why this first line is needed, but without it the listadapter doesn't load the new list
+				NewPostFragment.postList = new ArrayList<Post>(NewPostFragment.postList);
+				NewPostFragment.postList.addAll(result);
+				//NewPostFragment.postList = new ArrayList<Post>(result);
 				NewPostFragment.updateList();
 				NewPostFragment.makeLoadingIndicator(false);
 				NewPostFragment.setupFooterListView();
+				NewPostFragment.currentPageNumber++;
+				NewPostFragment.removeFooterSpinner();
 			}
 			else if(whichFrag == 2)	//my posts
 			{

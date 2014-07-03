@@ -29,8 +29,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.CommentsActivity;
+import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.PostListAdapter;
 import com.appuccino.collegefeed.extra.QuickReturnListView;
@@ -371,6 +371,10 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	@Override
 	public void onRefreshStarted(View arg0) 
 	{
+		//go back to first page
+		currentPageNumber = 1;
+		//reset list
+		postList.clear();
 		pullListFromServer(true);
 	}
 
