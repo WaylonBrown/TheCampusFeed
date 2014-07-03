@@ -467,6 +467,14 @@ public class NetWorker {
 			this.c = c;
 		}
 		
+		
+		@Override
+		protected void onPreExecute() {
+			CommentsActivity.addActionBarLoadingIndicatorAndRemoveFlag();
+			super.onPreExecute();
+		}
+
+
 		public Boolean doInBackground(Integer... postID){
 			this.postID = postID[0];
 			try{
@@ -493,11 +501,13 @@ public class NetWorker {
 			if(result){
 				MainActivity.flagList.add(postID);
 				PrefManager.putFlagList(MainActivity.flagList);
-				CommentsActivity.removeFlagButton();
+				CommentsActivity.removeFlagButtonAndLoadingIndicator();
 				Toast.makeText(c, "Post has been flagged, thank you :)", Toast.LENGTH_LONG).show();
 			}else{
 				Toast.makeText(c, "Failed to flag post, please try again later.", Toast.LENGTH_LONG).show();
+				CommentsActivity.removeActionBarLoadingIndicatorAndAddFlag();
 			}
+			super.onPostExecute(result);
 		}
 	}
 }

@@ -19,6 +19,7 @@ import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,7 @@ public class CommentsActivity extends Activity{
 	static Post post;
 	static ImageView newCommentButton;
 	static ImageView flagButton;
+	static ProgressBar actionBarLoadingIcon;
 	static TextView commentsText;
 	final int minCommentLength = 3;
 	ListView list;
@@ -63,6 +65,7 @@ public class CommentsActivity extends Activity{
 		
 		newCommentButton = (ImageView)findViewById(R.id.newCommentButton);
 		flagButton = (ImageView)findViewById(R.id.flagButton);
+		actionBarLoadingIcon = (ProgressBar)findViewById(R.id.commentActionbarLoadingIcon);
 		list = (ListView)findViewById(R.id.commentsList);
 		loadingText = (ShimmerTextView)findViewById(R.id.commentsLoadingText);
 		final TextView scoreText = (TextView)findViewById(R.id.scoreText);
@@ -446,11 +449,24 @@ public class CommentsActivity extends Activity{
 		hasPermissions = true;	//necessary that way if permissions updated while not on MainActivity, still allow to comment
 	}
 	
-	public static void removeFlagButton(){
-		Log.i("cfeed","Flagged1");
+	public static void removeFlagButtonAndLoadingIndicator(){
 		if(flagButton != null){
-			Log.i("cfeed","Flagged2");
 			flagButton.setVisibility(View.GONE);
+			actionBarLoadingIcon.setVisibility(View.GONE);
+		}
+	}
+
+	public static void addActionBarLoadingIndicatorAndRemoveFlag() {
+		if(flagButton != null && actionBarLoadingIcon != null){
+			flagButton.setVisibility(View.GONE);
+			actionBarLoadingIcon.setVisibility(View.VISIBLE);
+		}
+	}
+	
+	public static void removeActionBarLoadingIndicatorAndAddFlag(){
+		if(flagButton != null && actionBarLoadingIcon != null){
+			flagButton.setVisibility(View.VISIBLE);
+			actionBarLoadingIcon.setVisibility(View.GONE);
 		}
 	}
 }
