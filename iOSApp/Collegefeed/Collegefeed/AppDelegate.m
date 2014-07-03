@@ -113,8 +113,8 @@
 - (void)didNotFindLocation
 {
     [self.topPostsController didNotFindLocation];
-    [self.recentPostsController didNotFindLocation];
-    [self.tagController didNotFindLocation];
+//    [self.recentPostsController didNotFindLocation];
+//    [self.tagController didNotFindLocation];
 }
 
 @end

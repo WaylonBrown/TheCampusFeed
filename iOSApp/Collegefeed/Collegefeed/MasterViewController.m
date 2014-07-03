@@ -22,6 +22,7 @@
 #import "DataController.h"
 #import "Shared.h"
 #import "AppDelegate.h"
+#import "ToastController.h"
 
 
 @implementation MasterViewController
@@ -34,6 +35,7 @@
     if (self)
     {
         [self setDataController:controller];
+        self.toastController = [[ToastController alloc] initWithMasterViewController:self];
         
         // Initialize a loading indicator, refresh control, and nearby college selector
         self.refreshControl     = [[UIRefreshControl alloc] init];
@@ -107,15 +109,7 @@
     {
         [self placeCreatePost];
         
-        int count = 0;
-        for (College *college in self.dataController.nearbyColleges)
-        {
-            NSString *collegeMessage = [NSString stringWithFormat:@"You're near %@", college.name];
-            [NSTimer scheduledTimerWithTimeInterval:count target:self selector:@selector(showToast:) userInfo:collegeMessage repeats:NO];
-            count += 2;
-        }
-        NSString *infoMessage = @"You can upvote, downvote, post, and comment on that college's posts";
-        [NSTimer scheduledTimerWithTimeInterval:count target:self selector:@selector(showToast:) userInfo:infoMessage repeats:NO];
+        [self.toastController toastNearbyColleges:self.dataController.nearbyColleges inView:self];
     }
     else
     {

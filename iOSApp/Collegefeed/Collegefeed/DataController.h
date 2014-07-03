@@ -69,6 +69,7 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic) CLLocationDegrees         lat;
 @property (nonatomic) CLLocationDegrees         lon;
+@property (nonatomic) BOOL                      foundLocation;
 
 // Status Information
 @property (strong, nonatomic) College   *collegeInFocus;

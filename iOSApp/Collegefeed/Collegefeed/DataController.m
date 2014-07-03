@@ -345,16 +345,25 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    [self setLat:newLocation.coordinate.latitude];
-    [self setLon:newLocation.coordinate.longitude];
-    [self.locationManager stopUpdatingLocation];
-    
-    [self findNearbyColleges];
-    [self.appDelegate foundLocation];
+    if (!self.foundLocation)
+    {
+        [self setLat:newLocation.coordinate.latitude];
+        [self setLon:newLocation.coordinate.longitude];
+        [self.locationManager stopUpdatingLocation];
+        
+        [self findNearbyColleges];
+        [self.appDelegate foundLocation];
+        [self setFoundLocation:YES];
+    }
+    else
+    {
+        [self.locationManager stopUpdatingLocation];
+    }
 }
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     [self.appDelegate didNotFindLocation];
+    [self setFoundLocation:NO];
 }
 
 
