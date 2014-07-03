@@ -87,7 +87,6 @@ public class JSONParser {
 							id = reader.nextInt();
 						}catch(Exception e){
 							reader.skipValue();
-							e.printStackTrace();
 						}
 					}
 					else if(name.equals("text")){
@@ -99,7 +98,6 @@ public class JSONParser {
 							score = reader.nextInt();
 						}catch(Exception e){
 							reader.skipValue();
-							e.printStackTrace();
 						}
 					}
 					else if(name.equals("college_id")){
@@ -108,7 +106,6 @@ public class JSONParser {
 							collegeID = reader.nextInt();
 						}catch(Exception e){
 							reader.skipValue();
-							e.printStackTrace();
 						}
 					}
 					else if(name.equals("created_at")){
@@ -120,7 +117,6 @@ public class JSONParser {
 							commentCount = reader.nextInt();
 						}catch(Exception e){
 							reader.skipValue();
-							e.printStackTrace();
 						}
 					}
 					else{

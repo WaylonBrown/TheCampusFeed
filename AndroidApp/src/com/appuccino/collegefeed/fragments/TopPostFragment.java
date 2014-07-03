@@ -57,6 +57,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	private static PullToRefreshLayout pullToRefresh;
 	View rootView;
 	private static ProgressBar lazyLoadingFooterSpinner;
+	public static int currentPageNumber = 1;
 	
 	//values for footer
 	static LinearLayout scrollAwayBottomView;
@@ -173,10 +174,9 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 
 					handleScrollAwayBottomViewOnScroll();
 					if (list.getLastVisiblePosition() == list.getAdapter().getCount() -1 &&
-							list.getChildAt(list.getChildCount() - 1).getBottom() <= list.getHeight() &&
-							lazyLoadingFooterSpinner != null)
+							list.getChildAt(list.getChildCount() - 1).getBottom() <= list.getHeight())
 					{
-						lazyLoadingFooterSpinner.setVisibility(View.VISIBLE);
+						loadMorePosts();
 					}
 				}
 
@@ -206,6 +206,19 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 			});
 		}
 		
+	}
+
+	protected static void loadMorePosts() {
+		if(lazyLoadingFooterSpinner != null){
+			lazyLoadingFooterSpinner.setVisibility(View.VISIBLE);
+		}
+		pullListFromServer(false);
+	}
+	
+	public static void removeFooterSpinner() {
+		if(lazyLoadingFooterSpinner != null){
+			lazyLoadingFooterSpinner.setVisibility(View.INVISIBLE);
+		}
 	}
 
 	protected static void handleScrollAwayBottomViewOnScroll() {
@@ -277,12 +290,14 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		return true; 
 	}
 
-	private static void pullListFromServer() 
+	private static void pullListFromServer(boolean wasPullToRefresh) 
 	{
-		postList = new ArrayList<Post>();
+		if(postList == null){
+			postList = new ArrayList<Post>();
+		}
 		ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);		
 		if(cm.getActiveNetworkInfo() != null)
-			new GetPostsTask(0, currentFeedID).execute(new PostSelector());
+			new GetPostsTask(0, currentFeedID, currentPageNumber, wasPullToRefresh).execute(new PostSelector());
 		else
 			Toast.makeText(mainActivity, "You have no internet connection. Pull down to refresh and try again.", Toast.LENGTH_LONG).show();
 	}
@@ -317,9 +332,11 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	{	
 		if(listAdapter != null)
 		{
+			Log.i("cfeed","TEST new post size: " + postList.size());
 			listAdapter.setCollegeFeedID(currentFeedID);
 			listAdapter.clear();
 			listAdapter.addAll(postList);
+			Log.i("cfeed","TEST last post size: " + listAdapter.getCount());
 			listAdapter.notifyDataSetChanged();
 		}
 	}
@@ -354,7 +371,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	@Override
 	public void onRefreshStarted(View arg0) 
 	{
-		pullListFromServer();
+		pullListFromServer(true);
 	}
 
 	public static void changeFeed(int id) {
@@ -371,6 +388,6 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 			else
 				collegeNameBottom.setText("");
 		}
-		pullListFromServer();
+		pullListFromServer(true);
 	}
 }

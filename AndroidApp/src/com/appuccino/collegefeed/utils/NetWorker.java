@@ -46,33 +46,41 @@ public class NetWorker {
 	{
 		int whichFrag = 0;
 		int feedID = 0;
+		int pageNumber;
+		boolean wasPullToRefresh;
+		final int POSTS_PER_PAGE = 8;
 		
 		public GetPostsTask()
 		{
 		}
 		
-		public GetPostsTask(int whichFrag, int feedID)
+		public GetPostsTask(int whichFrag, int feedID, int pageNumber, boolean wasPullToRefresh)
 		{
 			this.whichFrag = whichFrag;
 			this.feedID = feedID;
+			this.pageNumber = pageNumber;
+			this.wasPullToRefresh = wasPullToRefresh;
 		}
 		
 		@Override
 		protected void onPreExecute() {
-			if(whichFrag == 0)			//top posts
-				TopPostFragment.makeLoadingIndicator(true);
-			else if (whichFrag == 1)	//new posts
-				NewPostFragment.makeLoadingIndicator(true);
-			else if (whichFrag == 2)	//my posts
-				MyPostsFragment.makeLoadingIndicator(true);
+			if(wasPullToRefresh){
+				if(whichFrag == 0)			//top posts
+					TopPostFragment.makeLoadingIndicator(true);
+				else if (whichFrag == 1)	//new posts
+					NewPostFragment.makeLoadingIndicator(true);
+				else if (whichFrag == 2)	//my posts
+					MyPostsFragment.makeLoadingIndicator(true);
+			}			
 			super.onPreExecute();
 		}
 
 		@Override
 		protected ArrayList<Post> doInBackground(PostSelector... arg0) {
+			String paginationString = "?page=" + pageNumber + "&per_page=" + POSTS_PER_PAGE;
 			switch(whichFrag){
 			case 0:
-				return fetchTopPostsFrag();
+				return fetchTopPostsFrag(paginationString);
 			case 1:
 				return fetchNewPostsFrag();
 			default:
@@ -80,12 +88,12 @@ public class NetWorker {
 			}
 		}
 		
-		private ArrayList<Post> fetchTopPostsFrag() {
+		private ArrayList<Post> fetchTopPostsFrag(String paginationString) {
 			HttpGet request = null;
 			if(feedID == MainActivity.ALL_COLLEGES)
-				request = new HttpGet(REQUEST_URL + "posts/trending");
+				request = new HttpGet(REQUEST_URL + "posts/trending" + paginationString);
 			else
-				request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/posts/trending");
+				request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/posts/trending" + paginationString);
 			
 			return getPostsFromURLRequest(request);
 		}
@@ -135,10 +143,14 @@ public class NetWorker {
 		protected void onPostExecute(ArrayList<Post> result) {
 			if(whichFrag == 0)		//top posts
 			{
-				TopPostFragment.postList = new ArrayList<Post>(result);
+				//I have zero idea why this first line is needed, but without it the listadapter doesn't load the new list
+				TopPostFragment.postList = new ArrayList<Post>(TopPostFragment.postList);
+				TopPostFragment.postList.addAll(result);
 				TopPostFragment.updateList();
 				TopPostFragment.makeLoadingIndicator(false);
 				TopPostFragment.setupFooterListView();
+				TopPostFragment.currentPageNumber++;
+				TopPostFragment.removeFooterSpinner();
 			}
 			else if(whichFrag == 1)	//new posts
 			{
