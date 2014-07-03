@@ -87,6 +87,12 @@
     NSData *data = [Networker GETCommentsWithPostId:postId];
     [self parseData:data asClass:[Comment class] intoList:self.commentList];
 }
+- (void)fetchUserCommentsWithIdArray:(NSArray *)commentIds
+{
+    [self setUserComments:[NSMutableArray new]];
+    NSData *data = [Networker GETCommentsWithIdArray:commentIds];
+    [self parseData:data asClass:[Comment class] intoList:self.userComments];
+}
 
 #pragma mark - Networker Access - Posts
 
@@ -167,7 +173,6 @@
     NSData *data = [Networker GETTagsTrending];
     [self parseData:data asClass:[Tag class] intoList:self.allTagsInCollege];
 }
-
 
 #pragma mark - Networker Access - Votes
 
@@ -276,39 +281,7 @@
 {
     return self.nearbyColleges.count > 0;
 }
-//- (void)retrieveUserData
-//{
-//    // Retrieve Posts
-//    [self setUserPosts:[[NSMutableArray alloc] init]];
-//    NSString *postsFilePath = [[NSBundle mainBundle] pathForResource:@"UserPosts" ofType:@"txt"];
-//    NSData *postsData = [NSData dataWithContentsOfFile:postsFilePath];
-//    if (postsData == nil)
-//    {
-//        NSLog(@"Could not get hard-coded list in UserPosts.txt");
-//    }
-//    [self parseData:postsData asClass:[Post class] intoList:self.userPosts];
-//    
-//    // Retrieve Comments
-//    [self setUserComments:[[NSMutableArray alloc] init]];
-//    NSString *commentsFilePath = [[NSBundle mainBundle] pathForResource:@"UserComments" ofType:@"txt"];
-//    NSData *commentsData = [NSData dataWithContentsOfFile:commentsFilePath];
-//    if (commentsData == nil)
-//    {
-//        NSLog(@"Could not get hard-coded list in UserComments.txt");
-//    }
-//    [self parseData:commentsData asClass:[Comment class] intoList:self.userComments];
-//    
-//    // Retrieve Votes
-//    [self setUserVotes:[[NSMutableArray alloc] init]];
-//    NSString *votesFilePath = [[NSBundle mainBundle] pathForResource:@"UserVotes" ofType:@"txt"];
-//    NSData *votesData = [NSData dataWithContentsOfFile:votesFilePath];
-//    if (votesData == nil)
-//    {
-//        NSLog(@"Could not get hard-coded list in UserVotes.txt");
-//    }
-//    [self parseData:votesData asClass:[Vote class] intoList:self.userVotes];
-//}
-- (void)saveUserDataIds
+- (void)saveUserData
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docDir = [paths objectAtIndex: 0];
@@ -351,6 +324,11 @@
     NSString *postsString = [NSString stringWithContentsOfFile:postFile encoding:NSUTF8StringEncoding error:nil];
     NSArray *postIds = [postsString componentsSeparatedByString: @"\n"];
     [self fetchUserPostsWithIdArray:postIds];
+    
+    // Retrieve Comments
+    NSString *commentsString = [NSString stringWithContentsOfFile:commentFile encoding:NSUTF8StringEncoding error:nil];
+    NSArray *commentIds = [commentsString componentsSeparatedByString: @"\n"];
+    [self fetchUserCommentsWithIdArray:commentIds];
 }
 
 #pragma mark - Helper Methods

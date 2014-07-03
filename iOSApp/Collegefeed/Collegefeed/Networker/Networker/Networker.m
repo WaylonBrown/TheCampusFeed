@@ -117,6 +117,30 @@
     return [self GET:url];
 }
 
++ (NSData *)GETCommentsWithIdArray:(NSArray *)Ids
+{
+    //TODO: change this url if endpoint parameters get fixed
+    NSString *idString = @"";
+    for (int i = 0; i < Ids.count; i++)
+    {
+        NSString *commentId = [Ids objectAtIndex:i];
+        if ([commentId isEqualToString:@""]) continue;
+        
+        if (i == 0)
+        {
+            idString = [NSString stringWithFormat:@"many_ids[]=%@", commentId];
+        }
+        else if (i > 0)
+        {
+            idString = [NSString stringWithFormat:@"%@&many_ids[]=%@", idString, commentId];
+        }
+    }
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/comments/many?%@",
+                   API_URL, API_VERSION, idString]];
+    return [self GET:url];
+}
+
 #pragma mark - Posts
 
 + (NSData *)POSTPostData:(NSData *)data WithCollegeId:(long)collegeId;
