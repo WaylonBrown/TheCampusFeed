@@ -53,6 +53,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	ActionBar actionBar;
 	ImageView newPostButton;
 	ProgressBar permissionsProgress;
+	ChooseFeedDialog chooseFeedDialog;
 	
 	//final values
 	public static final int ALL_COLLEGES = 0;	//used for permissions
@@ -328,6 +329,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				if(currentFeedCollegeID == ALL_COLLEGES){
 					updateListsForGPS();	//so that GPS icon can be set
 				}
+				
+				if(chooseFeedDialog != null && chooseFeedDialog.isShowing()){
+					chooseFeedDialog.populateNearYouList();
+				}
 			}
 		}		
 	}
@@ -387,7 +392,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public void chooseFeedDialog() {
 		LayoutInflater inflater = getLayoutInflater();
 		View layout = inflater.inflate(R.layout.dialog_choosefeed, null);
-		new ChooseFeedDialog(this, layout);
+		chooseFeedDialog = new ChooseFeedDialog(this, layout);
 	}
 
 	public void newPostClicked() 
