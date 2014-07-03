@@ -10,12 +10,17 @@ import java.util.TimerTask;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -211,63 +216,112 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	}
 	
 	private void getLocation(){
-		mgr = (LocationManager) getSystemService(LOCATION_SERVICE);
-		Criteria criteria = new Criteria();
-		criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-		String best = mgr.getBestProvider(criteria, true);
-		Log.d("location", best);
-		if (best == null) {
-		    //ask user to enable at least one of the Location Providers
-			permissions.clear();	//no permissions
-			if(newPostButton.isShown())
-			{
-				newPostButton.setVisibility(View.GONE);
-				permissionsProgress.setVisibility(View.VISIBLE);
-			}
-			Toast.makeText(this, "Location Services are turned off.", Toast.LENGTH_LONG).show();
-			Toast.makeText(this, "You can upvote, but nothing else.", Toast.LENGTH_LONG).show();
-		} else {
-//		    Location lastKnownLoc = mgr.getLastKnownLocation(best);
-//		    //But sometimes it returns null
-//		    if(lastKnownLoc == null){
-//		    	Toast.makeText(this, "Getting your location...", Toast.LENGTH_LONG).show();
-		    	//mgr.requestLocationUpdates(best, 0, 0, this);
-		    	//mgr.requestSingleUpdate(best, this, null);
-				if(mgr.getProvider(LocationManager.NETWORK_PROVIDER) != null){
-					mgr.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, this, null);
+		if(isMockSettingOn() && areThereMockApps()){
+			Toast.makeText(this, "Sorry, we can't use your location as in the Android settings you have Allow Mock Location turned on.", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Turn off Allow Mock Location in Settings>Developer Options.", Toast.LENGTH_LONG).show();
+			permissionsProgress.setVisibility(View.GONE);
+			newPostButton.setVisibility(View.GONE);
+		}else{
+			mgr = (LocationManager) getSystemService(LOCATION_SERVICE);
+			Criteria criteria = new Criteria();
+			criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+			String best = mgr.getBestProvider(criteria, true);
+			Log.d("location", best);
+			if (best == null) {
+			    //ask user to enable at least one of the Location Providers
+				permissions.clear();	//no permissions
+				if(newPostButton.isShown())
+				{
+					newPostButton.setVisibility(View.GONE);
+					permissionsProgress.setVisibility(View.VISIBLE);
 				}
-				else if(mgr.getProvider(LocationManager.GPS_PROVIDER) != null){
-					mgr.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, null);
-				}
-		    	Timer timeout = new Timer();
-		    	final MainActivity that = this;
-		    	timeout.schedule(new TimerTask()
-		    	{
-					@Override
-					public void run() 
-					{						
-						if(!locationFound)
-						{
-							mgr.removeUpdates(that);
-							that.runOnUiThread(new Runnable(){
+				Toast.makeText(this, "Location Services are turned off.", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "You can upvote, but nothing else.", Toast.LENGTH_LONG).show();
+			} else {
+//			    Location lastKnownLoc = mgr.getLastKnownLocation(best);
+//			    //But sometimes it returns null
+//			    if(lastKnownLoc == null){
+//			    	Toast.makeText(this, "Getting your location...", Toast.LENGTH_LONG).show();
+			    	//mgr.requestLocationUpdates(best, 0, 0, this);
+			    	//mgr.requestSingleUpdate(best, this, null);
+					if(mgr.getProvider(LocationManager.NETWORK_PROVIDER) != null){
+						mgr.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, this, null);
+					}
+					else if(mgr.getProvider(LocationManager.GPS_PROVIDER) != null){
+						mgr.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, null);
+					}
+			    	Timer timeout = new Timer();
+			    	final MainActivity that = this;
+			    	timeout.schedule(new TimerTask()
+			    	{
+						@Override
+						public void run() 
+						{						
+							if(!locationFound)
+							{
+								mgr.removeUpdates(that);
+								that.runOnUiThread(new Runnable(){
 
-								@Override
-								public void run() {
-									Toast.makeText(getApplicationContext(), "Couldn't find location. You can upvote, but nothing else.", Toast.LENGTH_LONG).show();
-									permissionsProgress.setVisibility(View.GONE);
-									newPostButton.setVisibility(View.GONE);
-								}
+									@Override
+									public void run() {
+										Toast.makeText(getApplicationContext(), "Couldn't find location. You can upvote, but nothing else.", Toast.LENGTH_LONG).show();
+										permissionsProgress.setVisibility(View.GONE);
+										newPostButton.setVisibility(View.GONE);
+									}
+									
+								});
 								
-							});
-							
-						}							
-					}		    		
-		    	}, LOCATION_TIMEOUT_SECONDS * 1000);
-//			}
-//		    else{
-//		    	determinePermissions(lastKnownLoc);
-//		    }
+							}							
+						}		    		
+			    	}, LOCATION_TIMEOUT_SECONDS * 1000);
+//				}
+//			    else{
+//			    	determinePermissions(lastKnownLoc);
+//			    }
+			}
 		}
+	}
+
+	private boolean areThereMockApps() {
+		int count = 0;
+		
+		PackageManager pm = getPackageManager();
+		List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+		
+		for (ApplicationInfo applicationInfo : packages) {
+			try {
+				PackageInfo packageInfo = pm.getPackageInfo(applicationInfo.packageName,
+		                                                    PackageManager.GET_PERMISSIONS);
+		
+				// Get Permissions
+				String[] requestedPermissions = packageInfo.requestedPermissions;
+		
+				if (requestedPermissions != null) {
+					for (int i = 0; i < requestedPermissions.length; i++) {
+						if (requestedPermissions[i]
+								.equals("android.permission.ACCESS_MOCK_LOCATION")
+								&& !applicationInfo.packageName.equals(getPackageName())) {
+							count++;
+		          }
+		       }
+		    }
+		 } catch (NameNotFoundException e) {
+		    e.printStackTrace();
+		     }
+		  }
+		
+		  if (count > 0)
+		     return true;
+		  return false;
+	}
+
+	private boolean isMockSettingOn() {
+		// returns true if mock location enabled, false if not enabled.
+		if (Settings.Secure.getString(getContentResolver(), Settings.Secure.ALLOW_MOCK_LOCATION).equals("0")){
+			return false;
+		}
+			
+		return true;
 	}
 
 	private void determinePermissions(Location loc) 
