@@ -137,9 +137,11 @@ Postfeed::Application.routes.draw do
       end
     end
 =end
-    root to: 'static_pages#index'
+    root to: 'static_pages#landing'
 
     get '/admin' => 'static_pages#admin'
+    get '/landing' => 'static_pages#landing'
+    get '/mobile' => 'static_pages#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -6,4 +6,6 @@ class StaticPagesController < ApplicationController
   def admin
   end
 
+  def landing
+  end
 end
