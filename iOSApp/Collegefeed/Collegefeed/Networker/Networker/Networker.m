@@ -141,6 +141,18 @@
     return [self GET:url];
 }
 
+#pragma mark - Flags
+
++ (NSData *)POSTFlagPost:(long)postId
+{
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/posts/%ld/flags",
+                   API_URL, API_VERSION, postId]];
+    NSString *string = @"{}";
+    NSData *data = [string dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    return [self POST:data toUrl:url];
+}
+
 #pragma mark - Posts
 
 + (NSData *)POSTPostData:(NSData *)data WithCollegeId:(long)collegeId;

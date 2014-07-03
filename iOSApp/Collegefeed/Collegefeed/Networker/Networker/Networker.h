@@ -46,6 +46,9 @@
 + (NSData *)GETTrendingPostsWithCollegeId:(long)collegeId;
 + (NSData *)GETPostsWithIdArray:(NSArray *)Ids;
 
+// Flags
++ (NSData *)POSTFlagPost:(long)postId;
+
 // Tags
 + (NSData *)GETTagsTrending;
 

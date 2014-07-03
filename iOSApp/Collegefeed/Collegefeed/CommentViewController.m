@@ -46,11 +46,15 @@
   
     [super loadView];
 
-    self.navigationItem.rightBarButtonItem =
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-                                                  target:self
-                                                  action:@selector(create)];
+    UIBarButtonItem *create = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                                                                            target:self
+                                                                            action:@selector(create)];
+
+    UIBarButtonItem *flag = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+                                                                          target:self
+                                                                          action:@selector(flag)];
     
+    self.navigationItem.rightBarButtonItems = @[create, flag];
 }
 
 #pragma mark - Table view methods
@@ -144,6 +148,28 @@
     CreatePostCommentViewController *alert = [[CreatePostCommentViewController alloc] initWithType:COMMENT withCollege:nil];
     [alert setDelegate:self];
     [self presentViewController:alert animated:YES completion:nil];
+}
+- (void)flag
+{   // Display popup to let user type a new comment
+    NSString *message = @"Are you sure you wish to flag this post as inappropriate? Posts with a certain amount of flags per views are automatically removed. Do your part for the CollegeFeed community and flag any post that: \n\n - Is offensive, bad-natured, or threatening\n - Targets a specific person negatively to the point of bullying\n - Has a phone number\n\nUsers that have more than one post taken down get banned from posting on the app again.";
+    
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Flag as Inappropriate?" message:message delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+    [alert show];
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
+    {
+        if ([self.dataController flagPost:self.originalPost.postID])
+        {
+            [self.toastController toastFlagSuccess];
+        }
+        else
+        {
+            [self.toastController toastFlagFailed];
+        }
+    }
 }
 
 #pragma mark - Helper Methods

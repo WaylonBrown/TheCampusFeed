@@ -96,10 +96,10 @@
 - (void)switchedToSpecificCollegeOrNil:(College *)college;
 - (BOOL)isNearCollege;
 
-//** Not called********
+//** Not called**********
 - (void)saveUserData;
 - (void)retrieveUserData;
-//**************************
+//***********************
 
 
 /*************************/
@@ -114,6 +114,9 @@
 
 - (void)fetchCommentsWithPostId:(long)postId;
 - (void)fetchUserCommentsWithIdArray:(NSArray *)commentIds;
+
+// Flags
+- (BOOL)flagPost:(long)postId;
 
 // Posts
 - (BOOL)createPostWithMessage:(NSString *)message

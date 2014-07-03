@@ -37,8 +37,8 @@ typedef NS_ENUM(NSInteger, ToastViewType)
 // Network Error
 - (void)toastNoInternetConnection; // ****
 - (void)toastPostFailed;
-- (void)toastFlagFailed; // ****
-- (void)toastFlagSuccess; // ****
+- (void)toastFlagFailed;
+- (void)toastFlagSuccess;
 - (void)toastErrorFetchingCollegeList;
 - (void)toastNoLocationServices;
 - (void)toastLocationNotFoundOnTimeout;

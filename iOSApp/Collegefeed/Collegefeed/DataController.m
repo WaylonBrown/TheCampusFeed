@@ -94,6 +94,22 @@
     [self parseData:data asClass:[Comment class] intoList:self.userComments];
 }
 
+#pragma mark - Networker Access - Flags
+
+- (BOOL)flagPost:(long)postId
+{
+    @try
+    {
+        [Networker POSTFlagPost:postId];
+        return YES;
+    }
+    @catch (NSException *exception)
+    {
+        NSLog(@"%@", exception.reason);
+    }
+    return NO;
+}
+
 #pragma mark - Networker Access - Posts
 
 - (BOOL)createPostWithMessage:(NSString *)message
