@@ -141,12 +141,19 @@ public class NetWorker {
 
 		@Override
 		protected void onPostExecute(ArrayList<Post> result) {
+			if(pageNumber > 2)
+				result = new ArrayList<Post>();
 			if(whichFrag == 0)		//top posts
 			{
-				//I have zero idea why this first line is needed, but without it the listadapter doesn't load the new list
-				TopPostFragment.postList = new ArrayList<Post>(TopPostFragment.postList);
-				TopPostFragment.postList.addAll(result);
-				//NewPostFragment.postList = new ArrayList<Post>(result);
+				if(result != null && result.size() != 0){
+					//I have zero idea why this first line is needed, but without it the listadapter doesn't load the new list
+					TopPostFragment.postList = new ArrayList<Post>(TopPostFragment.postList);
+					TopPostFragment.postList.addAll(result);
+					//NewPostFragment.postList = new ArrayList<Post>(result);
+				}else{
+					TopPostFragment.endOfListReached = true;
+				}
+				
 				TopPostFragment.updateList();
 				TopPostFragment.makeLoadingIndicator(false);
 				TopPostFragment.setupFooterListView();
