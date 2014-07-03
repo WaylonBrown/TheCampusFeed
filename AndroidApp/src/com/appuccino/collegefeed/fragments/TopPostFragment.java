@@ -57,7 +57,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	View rootView;
 	
 	//values for footer
-	static LinearLayout footer;
+	static LinearLayout scrollAwayBottomView;
 	private static int mQuickReturnHeight;
 	private static final int STATE_ONSCREEN = 0;
 	private static final int STATE_OFFSCREEN = 1;
@@ -84,7 +84,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 				container, false);
 		list = (QuickReturnListView)rootView.findViewById(R.id.fragmentListView);
 		loadingText = (ShimmerTextView)rootView.findViewById(R.id.loadingText);
-		footer = (LinearLayout)rootView.findViewById(R.id.footer);
+		scrollAwayBottomView = (LinearLayout)rootView.findViewById(R.id.footer);
 		
 		loadingText.setTypeface(FontManager.light);
 		setupBottomViewUI();
@@ -100,10 +100,13 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		if(list.getHeaderViewsCount() == 0)
 		{
 			//for card UI
-			View headerFooter = new View(getActivity());
-			headerFooter.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
-			list.addFooterView(headerFooter, null, false);
-			list.addHeaderView(headerFooter, null, false);
+			View headerSpace = new View(getActivity());
+			headerSpace.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
+			list.addHeaderView(headerSpace, null, false);
+		}
+		if(list.getFooterViewsCount() == 0){
+			View footerView =  ((LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.list_lazy_loading_footer, null, false);
+	        list.addFooterView(footerView);
 		}
 		
 		if(postList == null && mainActivity != null)
@@ -154,7 +157,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 				new ViewTreeObserver.OnGlobalLayoutListener() {
 					@Override
 					public void onGlobalLayout() {
-						mQuickReturnHeight = footer.getHeight();
+						mQuickReturnHeight = scrollAwayBottomView.getHeight();
 						list.computeScrollY();
 					}
 			});
@@ -219,9 +222,9 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 								translationY);
 						anim.setFillAfter(true);
 						anim.setDuration(0);
-						footer.startAnimation(anim);
+						scrollAwayBottomView.startAnimation(anim);
 					} else {
-						footer.setTranslationY(translationY);
+						scrollAwayBottomView.setTranslationY(translationY);
 					}
 
 				}
