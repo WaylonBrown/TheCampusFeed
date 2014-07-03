@@ -309,8 +309,28 @@
     NSData *commentData = [commentIdsString dataUsingEncoding:NSUTF8StringEncoding];
     [commentData writeToFile:commentFile atomically:NO];
     
-    // Save Vote Ids
-//    SAVE ACTUAL VOTES
+    // Save full Votes
+    NSString *votesString = @"";
+    int numVotes = self.userVotes.count;
+    for (int i = 0; i < numVotes; i++)
+    {
+        Vote *vote = [self.userVotes objectAtIndex:i];
+        NSString *singleVoteString = [NSString stringWithUTF8String:[[vote toJSON] bytes]];
+        if (i == 0)
+        {
+            votesString = [NSString stringWithFormat:@"[%@,", singleVoteString];
+        }
+        else if (i == numVotes - 1)
+        {
+            votesString = [NSString stringWithFormat:@"%@%@]", votesString, singleVoteString];
+        }
+        else
+        {
+            votesString = [NSString stringWithFormat:@"%@%@,", votesString, singleVoteString];
+        }
+    }
+    NSData *voteData = [votesString dataUsingEncoding:NSUTF8StringEncoding];
+    [voteData writeToFile:voteFile atomically:NO];
 }
 - (void)retrieveUserData
 {
@@ -329,6 +349,10 @@
     NSString *commentsString = [NSString stringWithContentsOfFile:commentFile encoding:NSUTF8StringEncoding error:nil];
     NSArray *commentIds = [commentsString componentsSeparatedByString: @"\n"];
     [self fetchUserCommentsWithIdArray:commentIds];
+    
+    // Retrieve Votes
+    NSData *voteData = [NSData dataWithContentsOfFile:voteFile];
+    [self parseData:voteData asClass:[Vote class] intoList:self.userVotes];
 }
 
 #pragma mark - Helper Methods
