@@ -292,6 +292,9 @@ public class TagFragment extends Fragment
     				Toast.makeText(mainActivity, "Must be at least " + MIN_TAGSEARCH_LENGTH + " characters long.", Toast.LENGTH_LONG).show();
     			else if(!text.substring(0, 1).equals("#"))
     				Toast.makeText(mainActivity, "Must start with #", Toast.LENGTH_LONG).show();
+    			else if(containsSymbols(text)){
+    				Toast.makeText(mainActivity, "A search for a tag cannot include the symbols !, $, %, ^, &, *, +, or .", Toast.LENGTH_LONG).show();
+    			}
     			else{
     				Intent intent = new Intent(mainActivity, TagListActivity.class);
     				intent.putExtra("TAG_ID", searchTagEditText.getText().toString());
@@ -318,6 +321,20 @@ public class TagFragment extends Fragment
     	});
 	}
 	
+	protected boolean containsSymbols(String text) {
+		if(text.contains("!") ||
+				text.contains("$") ||
+				text.contains("%") ||
+				text.contains("^") ||
+				text.contains("&") ||
+				text.contains("*") ||
+				text.contains("+") ||
+				text.contains(".")){
+			return true;
+		}
+		return false;
+	}
+
 	private static void pullListFromServer() 
 	{
 		tagList = new ArrayList<Tag>();
