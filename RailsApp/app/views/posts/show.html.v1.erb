@@ -1,0 +1,48 @@
+<div ng-app="cfeed" >
+  <div ng-controller="showPostCtrl">
+    <nav class="navbar navbar-default" role="navigation" id="default">
+      <div class="absoluteFull" id="navBg" randombgpos>
+
+      </div>
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><%= fa_icon 'mortar-board' %>College<span class="light">Feed</span></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="dropdown active">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Control Panel</a></li>
+                <li><a href="#">Stat Panel</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+
+
+    <div class="container">
+
+
+      <div class="col-med-12 card">
+        <h1><%= @post.text %></h1>
+        <div ng-repeat="comment in allComments" class="comment">
+          {{comment.text}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

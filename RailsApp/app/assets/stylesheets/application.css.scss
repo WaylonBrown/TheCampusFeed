@@ -21,10 +21,6 @@
 
 /* Change Colors */
 
-nav.navbar{
-  background-color: #33B5E5;
-}
-
 .navbar-default .navbar-nav > li > a{
   color: #EDEDED
 }
@@ -48,11 +44,63 @@ div.panel-collapse input{
   width: 100%;
 }
 
-/*
-div.col-md-3{
-  clear:both;
+
+
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Lato Light'), local('Lato-Light'), url('fonts/Lato300.woff') format('woff');
 }
 
-div.col-md-3 > input{
-  float:right;
-}*/
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lato Regular'), local('Lato-Regular'), url('fonts/Lato400.woff') format('woff');
+}
+
+
+body {
+  font-family: Lato !important;
+  font-weight: 300 !important;
+  background-image: url('/images/textured_paper.png');
+}
+
+nav#default {
+  background-color: #0078A5;
+  border: 0;
+  a.navbar-brand {
+    color: #EEE;
+
+    font-size: 30px;
+    font-weight: 400;
+    padding: 10px 15px;
+    .light{
+      font-weight: 300;
+    }
+    &:hover{
+      color: #555555;
+    }
+    i{
+      margin-right: 10px;
+    }
+  }
+
+  > .container-fluid {
+    position: relative;
+    z-index: 100;
+  }
+
+  .absoluteFull {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-image: url('/images/congruent_pentagon.png');
+    z-index: 1;
+    opacity: .4;
+  }
+}
