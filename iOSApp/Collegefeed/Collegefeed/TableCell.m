@@ -21,6 +21,16 @@
 {
     // Initialization code
     
+    // TODO: Keep trying ways to speed up this shadow rendering
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.enclosingView.bounds];
+    self.enclosingView.layer.masksToBounds = NO;
+    self.enclosingView.layer.cornerRadius = 2;
+    self.enclosingView.layer.shadowOffset = CGSizeMake(0, 1);
+    self.enclosingView.layer.shadowRadius = 2;
+    self.enclosingView.layer.shadowOpacity = 0.5;
+    self.enclosingView.layer.shadowPath = path.CGPath;
+    
+    
     // Set font styles
     [self.messageLabel      setFont:CF_FONT_LIGHT(16)];
     [self.commentCountLabel setFont:CF_FONT_MEDIUM(12)];

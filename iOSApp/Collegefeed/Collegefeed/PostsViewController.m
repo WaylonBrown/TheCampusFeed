@@ -44,8 +44,6 @@
             default:
                 break;
         }
-        
-        
     }
     return self;
 }
@@ -83,7 +81,8 @@
     self.selectedPost = (Post *)[self.list objectAtIndex:indexPath.row];
 
     [self.commentViewController setOriginalPost:self.selectedPost];
-        
+    
+    [self.navigationController.navigationItem setHidesBackButton:YES];
     [self.navigationController pushViewController:self.commentViewController
                                          animated:YES];
 }

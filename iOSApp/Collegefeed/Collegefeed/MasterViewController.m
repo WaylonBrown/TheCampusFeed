@@ -54,16 +54,16 @@
     
     [super loadView];
 
-    // Show loading indicator until a nearby college is found,
-    // then replace it with a create post button
-    if ([self.dataController isNearCollege])
-    {
-        [self placeCreatePost];
-    }
-    else
-    {
-        [self placeLoadingIndicator];
-    }
+//    // Show loading indicator until a nearby college is found,
+//    // then replace it with a create post button
+//    if ([self.dataController isNearCollege])
+//    {
+//        [self placeCreatePost];
+//    }
+//    else
+//    {
+//        [self placeLoadingIndicator];
+//    }
     
     [self.tableView addSubview:self.refreshControl];
 
@@ -86,6 +86,17 @@
 {   // View is about to appear after being inactive
     [super viewWillAppear:animated];
     [self refresh];
+    // Show loading indicator until a nearby college is found,
+    // then replace it with a create post button
+    if ([self.dataController isNearCollege])
+    {
+        [self placeCreatePost];
+    }
+    else
+    {
+        [self placeLoadingIndicator];
+    }
+
 }
 - (void)placeLoadingIndicator
 {   // Place the loading indicator in the navigation bar (instead of create post button)
