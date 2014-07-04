@@ -16,9 +16,15 @@
 - (void)awakeFromNib
 {
     // Initialization code
+    self.enclosingView.layer.masksToBounds = NO;
+    self.enclosingView.layer.cornerRadius = 2;
+    self.enclosingView.layer.shadowOffset = CGSizeMake(0, 1);
+    self.enclosingView.layer.shadowRadius = 2;
+    self.enclosingView.layer.shadowOpacity = 0.5;
     
     // Set font styles
-    [self.messageLabel  setFont:CF_FONT_LIGHT(16)];
+    [self.messageLabel  setFont:CF_FONT_LIGHT(22)];
+    [self.messageLabel setTintColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
     [self.countLabel    setFont:CF_FONT_MEDIUM(12)];
 }
 

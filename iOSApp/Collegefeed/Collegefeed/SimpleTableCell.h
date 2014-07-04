@@ -15,6 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
+@property (weak, nonatomic) IBOutlet UIView *enclosingView;
 
 - (void)assignTag:(Tag *)tag;
 - (void)assignCollege:(College *)college;

@@ -16,8 +16,6 @@
 
 @implementation TagViewController
 
-#pragma mark - Search Bar
-
 - (void)viewDidLoad
 {
     // Do any additional setup after loading the view.
@@ -120,14 +118,16 @@
     
     self.searchResult = [NSMutableArray arrayWithArray: [self.dataController.allTags filteredArrayUsingPredicate:resultPredicate]];
 }
-
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
     [self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
     
     return YES;
 }
-
+- (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
+{
+    tableView.backgroundColor = [Shared getCustomUIColor:CF_LIGHTGRAY];
+}
 #pragma mark - Actions
 
 - (void)refresh
