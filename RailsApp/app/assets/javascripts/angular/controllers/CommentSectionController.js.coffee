@@ -3,7 +3,8 @@ angular.module("cfeed").controller "CommentSectionController", [
   "$http"
   "$modal"
   "$timeout"
-  ($scope, $http, $modal, $timeout) ->
+  "$rootScope"
+  ($scope, $http, $modal, $timeout, $rootScope) ->
     $scope.commentOptions = {}
     $scope.commentOptions.pageNo = 1
     $scope.commentOptions.perPage = 10
@@ -100,4 +101,8 @@ angular.module("cfeed").controller "CommentSectionController", [
       console.log "it collapsed"
       return
 
+    $rootScope.$on "openCommentsForPost", (event, postId) ->
+      $scope.commentOptions.postId = postId
+      $scope.populateComments()
+      return
 ]

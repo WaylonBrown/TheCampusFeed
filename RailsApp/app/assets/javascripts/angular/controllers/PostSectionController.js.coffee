@@ -3,7 +3,8 @@ angular.module("cfeed").controller "PostSectionController", [
   "$http"
   "$modal"
   "$timeout"
-  ($scope, $http, $modal, $timeout) ->
+  "$rootScope"
+  ($scope, $http, $modal, $timeout, $rootScope) ->
     $scope.postOptions = {}
     $scope.postOptions.pageNo = 1
     $scope.postOptions.perPage = 10
@@ -96,6 +97,7 @@ angular.module("cfeed").controller "PostSectionController", [
 
     $scope.openComments = ($event, post) ->
       $event.stopPropagation()
+      $rootScope.$broadcast("openCommentsForPost", post.id)
       return
 
     $scope.$on "show.bs.collapse", ->

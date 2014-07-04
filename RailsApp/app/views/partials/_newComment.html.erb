@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <h3 class="modal-title">New Comment</h3>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <label for="newCommentText" class="col-sm-2 control-label">Text</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="newCommentText" placeholder="Text" ng-model="newComment.text">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="newCommentPostID" class="col-sm-2 control-label">Post ID</label>
+      <div class="col-sm-10">
+        <input type="text" ng-model="newComment.post_id" placeholder="Post ID" typeahead="post.id as post.text for post in allPosts | filter:$viewValue | limitTo:8"
+               typeahead-loading="loadingPosts" class="form-control">
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()">Create</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
