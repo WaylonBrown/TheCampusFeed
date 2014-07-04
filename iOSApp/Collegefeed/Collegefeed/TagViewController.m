@@ -16,6 +16,8 @@
 
 @implementation TagViewController
 
+#pragma mark - Search Bar
+
 - (void)viewDidLoad
 {
     // Do any additional setup after loading the view.
@@ -23,7 +25,11 @@
     [self.view setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
+    
+    self.searchResult = [NSMutableArray arrayWithCapacity:[self.list count]];
+
 }
+
 
 #pragma mark - Navigation
 
@@ -43,7 +49,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
-    return self.dataController.allTags.count;
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+    {
+        return [self.searchResult count];
+    }
+    else
+    {
+        return self.dataController.allTags.count;
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
@@ -57,16 +70,40 @@
                                                      owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
-    
-    // get the post and display in this cell
-    Tag *tagAtIndex = (Tag*)[self.dataController.allTags objectAtIndex:indexPath.row];
-    [cell assignTag:tagAtIndex];
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+    {
+        Tag *tagAtIndex = (Tag*)[self.searchResult objectAtIndex:indexPath.row];
+        [cell assignTag:tagAtIndex];
+    }
+    else
+    {
+        // get the post and display in this cell
+        Tag *tagAtIndex = (Tag*)[self.dataController.allTags objectAtIndex:indexPath.row];
+        [cell assignTag:tagAtIndex];
+    }
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // TODO: This should not be hardcoded; revist
     
     return 56;
+}
+
+#pragma mark - Search Bar 
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+    [self.searchResult removeAllObjects];
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchText];
+    
+    self.searchResult = [NSMutableArray arrayWithArray: [self.dataController.allTags filteredArrayUsingPredicate:resultPredicate]];
+}
+
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    
+    return YES;
 }
 
 #pragma mark - Actions

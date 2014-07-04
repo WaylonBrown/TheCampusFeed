@@ -9,6 +9,7 @@
                 <outlet property="currentFeedLabel" destination="SXB-AF-c0g" id="r7O-QH-CUk"/>
                 <outlet property="feedButton" destination="1L3-iO-Uw7" id="xLt-VP-iqI"/>
                 <outlet property="feedToolbar" destination="onw-bZ-Ayo" id="guM-k8-k3E"/>
+                <outlet property="searchDisplayController" destination="scp-Ba-aiP" id="UKf-Yt-JEk"/>
                 <outlet property="showingLabel" destination="q0Q-LO-cjs" id="udx-dq-wdK"/>
                 <outlet property="tableView" destination="aEV-VT-52H" id="gZ0-54-1eh"/>
                 <outlet property="view" destination="cKt-4a-JCZ" id="cpw-7Q-b8c"/>
@@ -25,9 +26,17 @@
                     <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="sectionIndexBackgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="sectionIndexTrackingBackgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <searchBar key="tableHeaderView" contentMode="redraw" id="7Po-As-loQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <textInputTraits key="textInputTraits"/>
+                        <connections>
+                            <outlet property="delegate" destination="-1" id="E4Z-ak-Zbd"/>
+                        </connections>
+                    </searchBar>
                 </tableView>
                 <view opaque="NO" alpha="0.87" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="onw-bZ-Ayo">
-                    <rect key="frame" x="0.0" y="419" width="320" height="50"/>
+                    <rect key="frame" x="0.0" y="420" width="320" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1L3-iO-Uw7">
@@ -88,7 +97,7 @@
             <constraints>
                 <constraint firstItem="aEV-VT-52H" firstAttribute="leading" secondItem="cKt-4a-JCZ" secondAttribute="leading" id="3ad-UP-V2U"/>
                 <constraint firstAttribute="trailing" secondItem="onw-bZ-Ayo" secondAttribute="trailing" id="8Re-ne-4Zw"/>
-                <constraint firstAttribute="bottom" secondItem="onw-bZ-Ayo" secondAttribute="bottom" constant="50" id="CAC-MK-eSD"/>
+                <constraint firstAttribute="bottom" secondItem="onw-bZ-Ayo" secondAttribute="bottom" constant="49" id="CAC-MK-eSD"/>
                 <constraint firstItem="aEV-VT-52H" firstAttribute="top" secondItem="cKt-4a-JCZ" secondAttribute="top" id="HTI-BE-RpM"/>
                 <constraint firstAttribute="bottom" secondItem="aEV-VT-52H" secondAttribute="bottom" id="JE9-8B-hTk"/>
                 <constraint firstItem="onw-bZ-Ayo" firstAttribute="leading" secondItem="cKt-4a-JCZ" secondAttribute="leading" id="VYU-mS-F2q"/>
@@ -99,5 +108,14 @@
             <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
+        <searchDisplayController id="scp-Ba-aiP">
+            <connections>
+                <outlet property="delegate" destination="-1" id="rHO-UL-hx4"/>
+                <outlet property="searchBar" destination="7Po-As-loQ" id="Gey-Tn-yI0"/>
+                <outlet property="searchContentsController" destination="-1" id="yVZ-Lp-X2K"/>
+                <outlet property="searchResultsDataSource" destination="-1" id="efo-FH-c3v"/>
+                <outlet property="searchResultsDelegate" destination="-1" id="9Cm-Q9-7JO"/>
+            </connections>
+        </searchDisplayController>
     </objects>
 </document>
