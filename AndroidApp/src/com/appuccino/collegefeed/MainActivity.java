@@ -14,6 +14,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Criteria;
 import android.location.Location;
@@ -84,6 +85,26 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setupApp();
+		getLocation();
+		Log.i("cfeed","APPSETUP: onCreate");		
+	}
+	
+	//this is called when orientation changes
+	@Override
+	public void onConfigurationChanged(Configuration newConfig)
+	{
+	    super.onConfigurationChanged(newConfig);
+	    Log.i("cfeed","APPSETUP: orientation change");
+	    setupApp();
+	    if(permissions == null || permissions.size() == 0){
+	    	newPostButton.setVisibility(View.GONE);
+	    } else {
+	    	newPostButton.setVisibility(View.VISIBLE);
+	    }
+	}
+
+	private void setupApp(){
 		setContentView(R.layout.activity_main);
 		tabs = (PagerSlidingTabStrip)findViewById(R.id.tabs);
 		viewPager = (ViewPager) findViewById(R.id.pager);
@@ -94,7 +115,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		setupActionbar();
 		setupCollegeList();
 		
-		locationFound = false;
 		postUpvoteList = PrefManager.getPostUpvoteList();
 		postDownvoteList = PrefManager.getPostDownvoteList();
 		commentUpvoteList = PrefManager.getCommentUpvoteList();
@@ -111,9 +131,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		});
 		
 		setupAdapter();
-		getLocation();
 	}
-
+	
 	private void setupAdapter() {
 		// Create the adapter that will return a fragment for each of the
 		// sections of the app.
@@ -216,6 +235,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	}
 	
 	private void getLocation(){
+		permissionsProgress.setVisibility(View.VISIBLE);
+		newPostButton.setVisibility(View.GONE);
+		
 		if(isMockSettingOn() && areThereMockApps()){
 			Toast.makeText(this, "Sorry, we can't use your location as in the Android settings you have Allow Mock Location turned on.", Toast.LENGTH_LONG).show();
 			Toast.makeText(this, "Turn off Allow Mock Location in Settings>Developer Options.", Toast.LENGTH_LONG).show();
@@ -264,7 +286,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 									@Override
 									public void run() {
-										Toast.makeText(getApplicationContext(), "Couldn't find location. You can upvote, but nothing else.", Toast.LENGTH_LONG).show();
+										Toast.makeText(that, "Couldn't find location. You can upvote, but nothing else.", Toast.LENGTH_LONG).show();
 										permissionsProgress.setVisibility(View.GONE);
 										newPostButton.setVisibility(View.GONE);
 									}
