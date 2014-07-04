@@ -27,7 +27,15 @@
     [self.tableView setDelegate:self];
     
     self.searchResult = [NSMutableArray arrayWithCapacity:[self.list count]];
-
+    
+    // Search bar
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    self.tableView.tableHeaderView = searchBar;
+    
+    self.searchDisplay = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
+    self.searchDisplay.delegate = self;
+    self.searchDisplay.searchResultsDataSource = self;
+    self.searchDisplay.searchResultsDelegate = self;
 }
 
 
@@ -35,7 +43,21 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Post view of all posts with the selected tag
-    self.selectedTag = (Tag *)[self.dataController.allTags objectAtIndex:indexPath.row];
+    self.selectedTag = nil;
+    if (tableView == self.searchDisplay.searchResultsTableView)
+    {
+        self.selectedTag = (Tag *)[self.searchResult objectAtIndex:indexPath.row];
+    }
+    else
+    {
+        self.selectedTag = (Tag *)[self.dataController.allTags objectAtIndex:indexPath.row];
+    }
+    
+    if (self.selectedTag == nil)
+    {
+        return;
+    }
+    
     PostsViewController* controller = [[PostsViewController alloc] initAsType:TAG_VIEW
                                                            withDataController:self.dataController];
     [controller setTagMessage:self.selectedTag.name];
@@ -49,7 +71,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
-    if (tableView == self.searchDisplayController.searchResultsTableView)
+    if (tableView == self.searchDisplay.searchResultsTableView)
     {
         return [self.searchResult count];
     }
@@ -70,7 +92,7 @@
                                                      owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
-    if (tableView == self.searchDisplayController.searchResultsTableView)
+    if (tableView == self.searchDisplay.searchResultsTableView)
     {
         Tag *tagAtIndex = (Tag*)[self.searchResult objectAtIndex:indexPath.row];
         [cell assignTag:tagAtIndex];

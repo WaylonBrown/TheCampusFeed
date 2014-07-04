@@ -44,8 +44,6 @@
             default:
                 break;
         }
-        
-        
     }
     return self;
 }

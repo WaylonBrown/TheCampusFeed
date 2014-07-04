@@ -30,6 +30,7 @@
 @property (nonatomic, weak) IBOutlet UILabel *collegeLabel;
 @property (nonatomic, weak) IBOutlet UIButton *upVoteButton;
 @property (nonatomic, weak) IBOutlet UIButton *downVoteButton;
+@property (weak, nonatomic) IBOutlet UIView *enclosingView;
 
 - (void)assign:(NSObject<PostAndCommentProtocol> *)obj;
 - (IBAction) upVotePressed:(id)sender;

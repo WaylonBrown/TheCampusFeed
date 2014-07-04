@@ -13,8 +13,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="119"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5I0-GL-s9J">
-                        <rect key="frame" x="9" y="9" width="302" height="117"/>
+                    <view contentMode="center" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5I0-GL-s9J">
+                        <rect key="frame" x="9" y="0.0" width="302" height="111"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A Post" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumFontSize="7" preferredMaxLayoutWidth="252" translatesAutoresizingMaskIntoConstraints="NO" id="BbT-tS-GR7" customClass="TTTAttributedLabel">
@@ -111,10 +111,12 @@
                             <constraint firstAttribute="height" constant="117" id="Blj-kW-xZY"/>
                             <constraint firstItem="XTe-ec-ujB" firstAttribute="top" secondItem="BbT-tS-GR7" secondAttribute="bottom" constant="8" id="Eq0-Jw-WeZ"/>
                             <constraint firstItem="qqg-lP-j6a" firstAttribute="top" secondItem="5I0-GL-s9J" secondAttribute="top" constant="89" id="Fc1-gE-KDR"/>
+                            <constraint firstAttribute="width" constant="302" id="HvA-rB-8lI"/>
                             <constraint firstItem="wn0-nd-BMp" firstAttribute="leading" secondItem="5I0-GL-s9J" secondAttribute="leading" id="I8y-QO-6Cg"/>
                             <constraint firstItem="wn0-nd-BMp" firstAttribute="top" secondItem="XTe-ec-ujB" secondAttribute="bottom" constant="2" id="MMv-vR-2H1"/>
                             <constraint firstAttribute="bottom" secondItem="qqg-lP-j6a" secondAttribute="bottom" constant="27" id="RKZ-7Y-vLl"/>
                             <constraint firstItem="BxK-GL-rEc" firstAttribute="top" secondItem="BbT-tS-GR7" secondAttribute="bottom" constant="8" symbolic="YES" id="XLe-Yx-JKf"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="111" id="bAZ-Qp-1iS"/>
                             <constraint firstItem="BbT-tS-GR7" firstAttribute="top" secondItem="5I0-GL-s9J" secondAttribute="top" constant="3" id="bLS-AU-3BP"/>
                             <constraint firstItem="XHq-5o-yd7" firstAttribute="leading" secondItem="5I0-GL-s9J" secondAttribute="leading" constant="3" id="cIr-qt-EPA"/>
                             <constraint firstItem="ZOu-h5-7eJ" firstAttribute="top" secondItem="oyO-37-LxI" secondAttribute="bottom" constant="5" id="dEi-cL-dX6"/>
@@ -131,7 +133,6 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="5I0-GL-s9J" firstAttribute="leading" secondItem="9pJ-5q-5su" secondAttribute="leading" constant="9" id="RcZ-hm-uty"/>
-                    <constraint firstItem="5I0-GL-s9J" firstAttribute="top" secondItem="9pJ-5q-5su" secondAttribute="top" constant="9" id="b9I-N1-0Fo"/>
                     <constraint firstAttribute="trailing" secondItem="5I0-GL-s9J" secondAttribute="trailing" constant="9" id="mIw-3H-SGn"/>
                 </constraints>
             </tableViewCellContentView>
@@ -142,6 +143,7 @@
                 <outlet property="collegeLabel" destination="wn0-nd-BMp" id="5so-NG-NfC"/>
                 <outlet property="commentCountLabel" destination="BxK-GL-rEc" id="9Gd-IQ-TjH"/>
                 <outlet property="downVoteButton" destination="ZOu-h5-7eJ" id="td3-nQ-eiT"/>
+                <outlet property="enclosingView" destination="5I0-GL-s9J" id="xME-DG-hTT"/>
                 <outlet property="messageLabel" destination="BbT-tS-GR7" id="ILP-eR-nRX"/>
                 <outlet property="scoreLabel" destination="oyO-37-LxI" id="VrO-Cd-oQG"/>
                 <outlet property="upVoteButton" destination="XHq-5o-yd7" id="37E-SD-x5U"/>
