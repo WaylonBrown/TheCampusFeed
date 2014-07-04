@@ -30,6 +30,23 @@
         long postID = (long)self.originalPost.postID;
         [self.dataController fetchCommentsWithPostId:postID];
         [self.tableView reloadData];
+        
+        College *college = [self.dataController getCollegeById:self.originalPost.collegeID];
+        if ([self.dataController.nearbyColleges containsObject:college])
+        {
+            UIBarButtonItem *create = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                                                                                    target:self
+                                                                                    action:@selector(create)];
+            
+            UIImage *image = [UIImage imageNamed:@"flag.png"];
+            UIBarButtonItem *flag = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
+            
+            self.navigationItem.rightBarButtonItems = @[create, flag];
+        }
+        else
+        {
+            [self.navigationItem setRightBarButtonItems:nil];
+        }
     }
 }
 - (void)viewDidLoad
@@ -38,23 +55,15 @@
     
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
-
+    
     [self.tableView reloadData];
 }
 - (void)loadView
 {   // called when the comment view is initially loaded
   
     [super loadView];
-
-    UIBarButtonItem *create = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-                                                                            target:self
-                                                                            action:@selector(create)];
-
-    UIBarButtonItem *flag = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
-                                                                          target:self
-                                                                          action:@selector(flag)];
     
-    self.navigationItem.rightBarButtonItems = @[create, flag];
+
 }
 
 #pragma mark - Table view methods

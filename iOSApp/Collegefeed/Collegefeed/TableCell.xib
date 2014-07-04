@@ -37,7 +37,7 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" misplaced="YES" text="commentCount" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BxK-GL-rEc">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="commentCount" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BxK-GL-rEc">
                                 <rect key="frame" x="38" y="66" width="119" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
@@ -46,7 +46,7 @@
                                 <fontDescription key="fontDescription" type="italicSystem" pointSize="12"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="age" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XTe-ec-ujB">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="age" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XTe-ec-ujB">
                                 <rect key="frame" x="171" y="66" width="119" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Italic" family="Helvetica Neue" pointSize="11"/>
@@ -108,6 +108,7 @@
                             <constraint firstItem="qqg-lP-j6a" firstAttribute="top" secondItem="ZOu-h5-7eJ" secondAttribute="bottom" constant="4" id="HhM-La-60C"/>
                             <constraint firstAttribute="trailing" secondItem="qqg-lP-j6a" secondAttribute="trailing" id="IdE-6M-UaN"/>
                             <constraint firstItem="BbT-tS-GR7" firstAttribute="leading" secondItem="BxK-GL-rEc" secondAttribute="leading" id="NzM-iv-dry"/>
+                            <constraint firstItem="XTe-ec-ujB" firstAttribute="width" secondItem="BxK-GL-rEc" secondAttribute="width" id="T7A-GG-Tby"/>
                             <constraint firstItem="XHq-5o-yd7" firstAttribute="leading" secondItem="5I0-GL-s9J" secondAttribute="leading" constant="3" id="U7s-wm-gzk"/>
                             <constraint firstItem="ZOu-h5-7eJ" firstAttribute="top" secondItem="oyO-37-LxI" secondAttribute="bottom" constant="5" id="Uso-RX-rvZ"/>
                             <constraint firstItem="BxK-GL-rEc" firstAttribute="top" secondItem="BbT-tS-GR7" secondAttribute="bottom" constant="8" id="VgA-DU-YXR"/>

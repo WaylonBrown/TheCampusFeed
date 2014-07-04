@@ -43,6 +43,7 @@
 		53BDB4DA1930688200F45D5C /* colleges.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D71930688200F45D5C /* colleges.png */; };
 		53BDB4DB1930688200F45D5C /* new.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D81930688200F45D5C /* new.png */; };
 		53BDB4DC1930688200F45D5C /* tags.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D91930688200F45D5C /* tags.png */; };
+		53C44EA719669FB400367E33 /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C44EA619669FB400367E33 /* flag.png */; };
 		53CF330E194E53DB008BB733 /* libNetworker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CF3309194E53B6008BB733 /* libNetworker.a */; };
 		53CF3399194E584E008BB733 /* libModels.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CF3379194E571C008BB733 /* libModels.a */; };
 		53CF339E194E7235008BB733 /* CollegeList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53CF339D194E7235008BB733 /* CollegeList.txt */; };
@@ -167,6 +168,7 @@
 		53BDB4D71930688200F45D5C /* colleges.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colleges.png; sourceTree = "<group>"; };
 		53BDB4D81930688200F45D5C /* new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = new.png; sourceTree = "<group>"; };
 		53BDB4D91930688200F45D5C /* tags.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tags.png; sourceTree = "<group>"; };
+		53C44EA619669FB400367E33 /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
 		53CF3303194E53B6008BB733 /* Networker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Networker.xcodeproj; path = Collegefeed/Networker/Networker.xcodeproj; sourceTree = "<group>"; };
 		53CF3373194E571B008BB733 /* Models.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Models.xcodeproj; path = Collegefeed/Models/Models.xcodeproj; sourceTree = "<group>"; };
 		53CF339D194E7235008BB733 /* CollegeList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CollegeList.txt; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 			children = (
 				53F878AE19133F60002A578B /* Images.xcassets */,
 				53BDB4D71930688200F45D5C /* colleges.png */,
+				53C44EA619669FB400367E33 /* flag.png */,
 				5350558E1953C75C009C1911 /* gps.png */,
 				53BDB4D81930688200F45D5C /* new.png */,
 				53BDB4D91930688200F45D5C /* tags.png */,
@@ -606,6 +609,7 @@
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */,
 				53AB57C5194ABD11001D1B7B /* Omnes-Semibold.ttf in Resources */,
+				53C44EA719669FB400367E33 /* flag.png in Resources */,
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,
 				53FF2D0A195BCE7D0040E872 /* UserComments.txt in Resources */,
 				5350558019529FCA009C1911 /* FeedSelectViewController.xib in Resources */,
