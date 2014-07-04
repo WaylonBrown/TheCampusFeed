@@ -10,6 +10,7 @@ import java.util.TimerTask;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -235,6 +236,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	}
 	
 	private void getLocation(){
+		//lock to portrait until location is received so location retrieval isn't messed up
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		
 		permissionsProgress.setVisibility(View.VISIBLE);
 		newPostButton.setVisibility(View.GONE);
 		
@@ -302,6 +306,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 //			    }
 			}
 		}
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 	}
 
 	private boolean areThereMockApps() {
