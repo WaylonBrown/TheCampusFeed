@@ -8,23 +8,39 @@
 
 #import "ToastController.h"
 #import "MasterViewController.h"
+#import "CreatePostCommentViewController.h"
 #import "UIView+Toast.h"
 
 #import "Models/Models/College.h"
 
 @implementation ToastController
 
-- (id)initWithMasterViewController:(MasterViewController *)viewController
+- (id)initWithViewController:(UIViewController *)viewController
 {
-    [self setView:viewController];
+    if ([viewController isKindOfClass:[MasterViewController class]])
+    {
+        [self setMasterView:(MasterViewController *)viewController];
+        [self setToastViewType:MASTER];
+    }
+    else if ([viewController class] == [CreatePostCommentViewController class])
+    {
+        [self setToastViewType:CREATE];
+        [self setCreateView:(CreatePostCommentViewController *)viewController];
+    }
+    else
+    {
+        NSException *e = [NSException exceptionWithName:@"InvalidViewController" reason:@"An invalid subclass of UIViewController was passed to ToastController's initialization" userInfo:nil];
+        [e raise];
+        return nil;
+    }
+
     self.toastQueue = [NSMutableArray new];
-    
     if (![CLLocationManager locationServicesEnabled])
     {   // In the UI is probably not proper place to put this, but it works
         [self toastNoLocationServices];
     }
     
-    [NSTimer scheduledTimerWithTimeInterval:3.0
+    [NSTimer scheduledTimerWithTimeInterval:2.0
                                      target:self
                                    selector:@selector(dequeueToast)
                                    userInfo:nil
@@ -142,7 +158,20 @@
         NSString *message = [self.toastQueue objectAtIndex:0];
     
         [self.toastQueue removeObjectAtIndex:0];
-        [self showToast:message inView:self.view];
+        switch (self.toastViewType)
+        {
+            case MASTER:
+                [self showToast:message inView:self.masterView];
+                break;
+            case CREATE:
+                [self.createView.view makeToast:message
+                                       duration:2.0
+                                       position:@"top"];
+
+                break;
+            default: break;
+        }
+
     }
 }
 - (void)showToast:(NSString *)message inView:(MasterViewController *)sender
@@ -150,7 +179,7 @@
     float x = sender.feedToolbar.frame.size.width / 2;
     float y = sender.feedToolbar.frame.origin.y - 45;
     CGPoint point = CGPointMake(x, y);
-
+    
     [sender.view makeToast:message
                   duration:2.0
                   position:[NSValue valueWithCGPoint:point]];

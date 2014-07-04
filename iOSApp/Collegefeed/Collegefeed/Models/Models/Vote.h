@@ -24,7 +24,9 @@
 // votableType: "Post" or "Comment"
 @property (nonatomic) ModelType votableType;
 
-@property (nonatomic, strong) NSURL *POSTurl;
+@property (nonatomic) long collegeId;
+
+//@property (nonatomic, strong) NSURL *POSTurl;
 
 - (id)initWithVotableID:(NSInteger)ID
         withUpvoteValue:(BOOL)isUpvote

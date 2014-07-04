@@ -23,6 +23,8 @@
 
 + (NSData *)GETCommentsWithPostId:(long)postId;
 
++ (NSData *)GETCommentsWithIdArray:(NSArray *)Ids;
+
 // Posts
 + (NSData *)POSTPostData:(NSData *)data WithCollegeId:(long)collegeId;
 
@@ -42,6 +44,10 @@
 
 + (NSData *)GETTrendingPosts;
 + (NSData *)GETTrendingPostsWithCollegeId:(long)collegeId;
++ (NSData *)GETPostsWithIdArray:(NSArray *)Ids;
+
+// Flags
++ (NSData *)POSTFlagPost:(long)postId;
 
 // Tags
 + (NSData *)GETTagsTrending;

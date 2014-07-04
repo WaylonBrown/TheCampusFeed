@@ -117,6 +117,42 @@
     return [self GET:url];
 }
 
++ (NSData *)GETCommentsWithIdArray:(NSArray *)Ids
+{
+    //TODO: change this url if endpoint parameters get fixed
+    NSString *idString = @"";
+    for (int i = 0; i < Ids.count; i++)
+    {
+        NSString *commentId = [Ids objectAtIndex:i];
+        if ([commentId isEqualToString:@""]) continue;
+        
+        if (i == 0)
+        {
+            idString = [NSString stringWithFormat:@"many_ids[]=%@", commentId];
+        }
+        else if (i > 0)
+        {
+            idString = [NSString stringWithFormat:@"%@&many_ids[]=%@", idString, commentId];
+        }
+    }
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/comments/many?%@",
+                   API_URL, API_VERSION, idString]];
+    return [self GET:url];
+}
+
+#pragma mark - Flags
+
++ (NSData *)POSTFlagPost:(long)postId
+{
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/posts/%ld/flags",
+                   API_URL, API_VERSION, postId]];
+    NSString *string = @"{}";
+    NSData *data = [string dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    return [self POST:data toUrl:url];
+}
+
 #pragma mark - Posts
 
 + (NSData *)POSTPostData:(NSData *)data WithCollegeId:(long)collegeId;
@@ -198,6 +234,30 @@
     NSURL *url = [[NSURL alloc] initWithString:
                   [NSString stringWithFormat:@"%@/%@/colleges/%ld/posts/trending",
                    API_URL, API_VERSION, collegeId]];
+    return [self GET:url];
+}
+
++ (NSData *)GETPostsWithIdArray:(NSArray *)Ids
+{
+    //TODO: change this url if endpoint parameters get fixed
+    NSString *idString = @"";
+    for (int i = 0; i < Ids.count; i++)
+    {
+        NSString *postId = [Ids objectAtIndex:i];
+        if ([postId isEqualToString:@""]) continue;
+        
+        if (i == 0)
+        {
+            idString = [NSString stringWithFormat:@"many_ids[]=%@", postId];
+        }
+        else if (i > 0)
+        {
+            idString = [NSString stringWithFormat:@"%@&many_ids[]=%@", idString, postId];
+        }
+    }
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/posts/many?%@",
+                   API_URL, API_VERSION, idString]];
     return [self GET:url];
 }
 

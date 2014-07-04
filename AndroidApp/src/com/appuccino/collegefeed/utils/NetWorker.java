@@ -143,10 +143,15 @@ public class NetWorker {
 		protected void onPostExecute(ArrayList<Post> result) {
 			if(whichFrag == 0)		//top posts
 			{
-				//I have zero idea why this first line is needed, but without it the listadapter doesn't load the new list
-				TopPostFragment.postList = new ArrayList<Post>(TopPostFragment.postList);
-				TopPostFragment.postList.addAll(result);
-				//NewPostFragment.postList = new ArrayList<Post>(result);
+				if(result != null && result.size() != 0){
+					//I have zero idea why this first line is needed, but without it the listadapter doesn't load the new list
+					TopPostFragment.postList = new ArrayList<Post>(TopPostFragment.postList);
+					TopPostFragment.postList.addAll(result);
+					//NewPostFragment.postList = new ArrayList<Post>(result);
+				}else{
+					TopPostFragment.endOfListReached = true;
+				}
+				
 				TopPostFragment.updateList();
 				TopPostFragment.makeLoadingIndicator(false);
 				TopPostFragment.setupFooterListView();
@@ -155,10 +160,15 @@ public class NetWorker {
 			}
 			else if(whichFrag == 1)	//new posts
 			{
-				//I have zero idea why this first line is needed, but without it the listadapter doesn't load the new list
-				NewPostFragment.postList = new ArrayList<Post>(NewPostFragment.postList);
-				NewPostFragment.postList.addAll(result);
-				//NewPostFragment.postList = new ArrayList<Post>(result);
+				if(result != null && result.size() != 0){
+					//I have zero idea why this first line is needed, but without it the listadapter doesn't load the new list
+					NewPostFragment.postList = new ArrayList<Post>(NewPostFragment.postList);
+					NewPostFragment.postList.addAll(result);
+					//NewPostFragment.postList = new ArrayList<Post>(result);
+				}else{
+					NewPostFragment.endOfListReached = true;
+				}
+				
 				NewPostFragment.updateList();
 				NewPostFragment.makeLoadingIndicator(false);
 				NewPostFragment.setupFooterListView();

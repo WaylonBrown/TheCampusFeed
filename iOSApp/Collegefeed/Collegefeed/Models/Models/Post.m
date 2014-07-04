@@ -118,7 +118,7 @@
 }
 - (void)setVote:(Vote *)vote
 {
-    [self setVote:vote];
+//    [self setVote:vote];
 }
 - (Vote *)getVote
 {

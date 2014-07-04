@@ -20,7 +20,7 @@
         [self setParentID:ID];
         [self setUpvote:isUpvote];
         [self setVotableType:type];
-//        [self setPOSTurl:[Shared POSTVoteWithPostId:ID]];
+        [self setCollegeId:-1];
         return self;
     }
     return nil;
@@ -38,7 +38,8 @@
         [self setVoteID:[voteID integerValue]];
         [self setParentID:[parentID integerValue]];
         [self setUpvote:(upvote ? YES : NO)];
-        
+        [self setCollegeId:-1];
+
         if ([type isEqualToString:@"Post"])
         {
             [self setVotableType:POST];

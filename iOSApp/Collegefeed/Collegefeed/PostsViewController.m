@@ -13,6 +13,7 @@
 #import "CommentViewController.h"
 #import "Shared.h"
 #import "Models/Models/College.h"
+#import "ToastController.h"
 
 @implementation PostsViewController
 
@@ -178,6 +179,18 @@
         default:
             break;
     }
+    College *college = self.dataController.collegeInFocus;
+    if (college != nil)
+    {
+        if ([self.dataController.nearbyColleges containsObject:college])
+        {
+            [self.toastController toastFeedSwitchedToNearbyCollege:college.name];
+        }
+        else
+        {
+            [self.toastController toastFeedSwitchedToDistantCollege:college.name];
+        }
+    }
 }
 
 #pragma mark - Actions
@@ -199,8 +212,14 @@
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
 {
-    [self.dataController createPostWithMessage:message
+    BOOL success = [self.dataController createPostWithMessage:message
                                  withCollegeId:self.dataController.collegeInFocus.collegeID];
+    
+    if (!success)
+    {
+        [self.toastController toastPostFailed];
+    }
+    [self refresh];
 }
 
 @end

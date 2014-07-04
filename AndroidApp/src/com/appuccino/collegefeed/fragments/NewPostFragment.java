@@ -58,6 +58,9 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 	View rootView;
 	private static ProgressBar lazyLoadingFooterSpinner;
 	public static int currentPageNumber = 1;
+	public static boolean endOfListReached = false;
+	static View lazyFooterView;
+	static View footerSpace;
 	
 	//values for footer
 	static LinearLayout scrollAwayBottomView;
@@ -107,11 +110,8 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 			headerSpace.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
 			list.addHeaderView(headerSpace, null, false);
 		}
-		if(list.getFooterViewsCount() == 0){
-			View footerView =  ((LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.list_lazy_loading_footer, null, false);
-	        list.addFooterView(footerView);
-	        lazyLoadingFooterSpinner = (ProgressBar)footerView.findViewById(R.id.lazyFooterSpinner);
-		}
+		
+		addLazyFooterView();
 		
 		if(postList == null && mainActivity != null)
 		{
@@ -136,6 +136,14 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		return rootView;
 	}
 	
+	private static void addLazyFooterView() {
+		if(list.getFooterViewsCount() == 0){
+			lazyFooterView =  ((LayoutInflater)mainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.list_lazy_loading_footer, null, false);
+	        list.addFooterView(lazyFooterView);
+	        lazyLoadingFooterSpinner = (ProgressBar)lazyFooterView.findViewById(R.id.lazyFooterSpinner);
+		}
+	}
+
 	private void setupBottomViewUI() {
 		collegeNameBottom = (TextView)rootView.findViewById(R.id.collegeNameBottomText);
 		TextView showingText = (TextView)rootView.findViewById(R.id.showingFeedText);
@@ -174,9 +182,12 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 
 					handleScrollAwayBottomViewOnScroll();
 					if (list.getLastVisiblePosition() == list.getAdapter().getCount() -1 &&
-							list.getChildAt(list.getChildCount() - 1).getBottom() <= list.getHeight())
+							list.getChildAt(list.getChildCount() - 1).getBottom() <= list.getHeight() &&
+							!endOfListReached)
 					{
 						loadMorePosts();
+					}else if (endOfListReached){
+						replaceFooterBecauseEndOfList();
 					}
 				}
 
@@ -206,6 +217,27 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 			});
 		}
 		
+	}
+
+	protected static void replaceFooterBecauseEndOfList() {
+		if(list.getFooterViewsCount() > 0 && lazyFooterView != null){
+			list.removeFooterView(lazyFooterView);
+		}
+		if(list.getFooterViewsCount() == 0){		//so there's no duplicate
+			//for card UI
+			footerSpace = new View(mainActivity);
+			footerSpace.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
+			list.addFooterView(footerSpace, null, false);
+		}
+	}
+	
+	protected static void replaceFooterBecauseNewLazyList() {
+		if(list.getFooterViewsCount() > 0 && footerSpace != null){
+			list.removeFooterView(footerSpace);
+		}
+		if(list.getFooterViewsCount() == 0){		//so there's no duplicate
+			addLazyFooterView();
+		}
 	}
 
 	protected static void loadMorePosts() {
@@ -298,8 +330,11 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);		
 		if(cm.getActiveNetworkInfo() != null)
 			new GetPostsTask(1, currentFeedID, currentPageNumber, wasPullToRefresh).execute(new PostSelector());
-		else
+		else{
 			Toast.makeText(mainActivity, "You have no internet connection. Pull down to refresh and try again.", Toast.LENGTH_LONG).show();
+			removeFooterSpinner();
+			makeLoadingIndicator(false);
+		}
 	}
 
 	protected void postClicked(Post post) 
@@ -371,14 +406,17 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 	@Override
 	public void onRefreshStarted(View arg0) 
 	{
+		endOfListReached = false;
 		//go back to first page
 		currentPageNumber = 1;
 		//reset list
 		postList.clear();
+		replaceFooterBecauseNewLazyList();
 		pullListFromServer(true);
 	}
 
 	public static void changeFeed(int id) {
+		endOfListReached = false;
 		currentFeedID = id;
 		College currentCollege = MainActivity.getCollegeByID(id);
 		if(collegeNameBottom != null)
