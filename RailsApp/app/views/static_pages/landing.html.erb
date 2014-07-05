@@ -3,7 +3,6 @@
 <head>
   <title>CollegeFeed</title>
   <link rel="stylesheet" href="stylesheets/landing.css">
-  <link href='http://fonts.googleapis.com/css?family=Lato:100,300' rel='stylesheet' type='text/css'>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
@@ -22,7 +21,7 @@
         <div class="card card-mini slide" ng-repeat="post in recentPosts" >
           <h3>{{post.text}}</h3>
           <hr/>
-          <small class="pull-left"><i>Texas A&M University</i></small>
+          <small class="pull-left"><i collegenamefromid cid="{{post.college_id}}"></i></small>
           <small class="pull-right">{{post.comment_count}} Comments</small>
           <div class="clearfix"></div>
         </div>
