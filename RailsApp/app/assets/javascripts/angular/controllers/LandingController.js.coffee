@@ -23,7 +23,7 @@ angular.module("cfeed").controller "LandingCtrl", [
     , 7000);
 
     CommentList = $resource('/api/v1/colleges/:college_id/posts/:post_id/comments/:comment_id',
-      {college_id:1, post_id:1, comment_id: '@id'}, {
+      {comment_id: '@id'}, {
       });
 
 
@@ -32,7 +32,7 @@ angular.module("cfeed").controller "LandingCtrl", [
         $scope.options.post_selected.active = false
         $scope.options.post_selected = null;
       else
-        comments = CommentList.query(->
+        comments = CommentList.query({college_id: post.college_id, post_id: post.id}, ->
           if(null != $scope.options.post_selected)
             $scope.options.post_selected.active = false
           post.active = true
