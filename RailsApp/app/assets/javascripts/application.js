@@ -15,6 +15,7 @@
 //= require turbolinks
 //
 //= require angular
+//= require angular-animate
 //= require bootstrap
 //= require angular-ui-bootstrap-tpls
 //

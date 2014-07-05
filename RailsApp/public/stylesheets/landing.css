@@ -1,3 +1,7 @@
+html,body, div.container-fluid, div.row{
+    height:100%;
+}
+
 body{
     font-family: 'Lato', sans-serif;
     font-weight: 300;
@@ -8,13 +12,8 @@ div.section {
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
-    font: inherit;
     vertical-align: baseline;
-    padding-top: 200px;
-    padding-bottom: 200px;
-    position: absolute;
-    top: 0; left: 0; right: -200px; bottom: 0;
+    height:100%;
 
 }
 
@@ -25,12 +24,11 @@ span.light{
 div.center{
     margin: 0 auto;
     padding: 0 20px;
-    text-align: left;
-    font-size: 120px;
-    color: white;
+    text-align: center;
+    color: #222222;
 }
 
-div#title_bg{
+div#title{
     -webkit-box-shadow: 0px 12px 39px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 12px 39px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 12px 39px 0px rgba(0,0,0,0.75);
@@ -39,15 +37,46 @@ div#title_bg{
     opacity: 0.4;
 }
 
-div#title{
-    z-index:100;
+
+div#cards{
+    padding: 30px;
+    overflow: hidden;
 }
 
-div#screenshots{
-    background-color: #119977;
-    z-index: 1;
+.card-mini{
+    padding: 10px 4px;
+    -webkit-box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
+    -moz-box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
+    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
+    margin-bottom: 10px;
 }
 
-div#screenshots > div > img{
-    max-height:400px;
+.card-mini h3{
+    margin: 0;
+}
+
+hr{
+    margin: 4px 2px;
+    border-top: 1px solid #CDCDCD;
+}
+
+.slide.ng-enter, .slide.ng-leave {
+    -webkit-transition:0.2s linear all;
+    transition:0.2s linear all;
+}
+
+.slide.ng-enter { margin-left: 10px; opacity: 0; }        /* starting animations for enter */
+.slide.ng-enter-active { margin-left:0px; opacity: 1; } /* terminal animations for enter */
+.slide.ng-leave { margin-left:0px; opacity: 1; max-height: 100px;}        /* starting animations for leave */
+.slide.ng-leave-active { margin-left: 10px; opacity: 0; max-height: 0px;} /* terminal animations for leave */
+
+.slide.ng-enter-stagger {
+    /* this will have a 100ms delay between each successive leave animation */
+    -webkit-transition-delay: 0.075s;
+    transition-delay: 0.075s;
+
+    /* in case the stagger doesn't work then these two values
+     must be set to 0 to avoid an accidental CSS inheritance */
+    -webkit-transition-duration: 0s;
+    transition-duration: 0s;
 }

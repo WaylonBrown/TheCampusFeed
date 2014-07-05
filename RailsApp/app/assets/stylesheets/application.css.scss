@@ -12,40 +12,74 @@
  *= require_tree .
  *= require font-awesome
  */
-
 @import "bootstrap";
 
 /* Fix links */
 
-.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+.nav, .pagination, .carousel, .panel-title a {
+  cursor: pointer;
+}
 
 /* Change Colors */
 
-.navbar-default .navbar-nav > li > a{
+.navbar-default .navbar-nav > li > a {
   color: #EDEDED
 }
 
-.navbar-default .navbar-brand{
+.navbar-default .navbar-brand {
   color: #EFEFEF
 }
 
 /* Change Animations */
 
 .collapsing {
-    -webkit-transition: none;
-    transition: none;
+  -webkit-transition: none;
+  transition: none;
 }
 
 .panel-group > div {
   margin-bottom: 15px;
 }
 
-div.panel-collapse input{
+div.panel-collapse input {
   width: 100%;
 }
 
+/* Extra Small devices (mobiles, 320px and up) */
+@media (min-width: 320px) and (max-width: 767px) {
+  .section#title {
+    font-size: 30pt;
+    height: 10%;
+    padding-top: 5%;
+  }
+}
 
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .section#title {
+    font-size: 50pt;
+    height: 20%;
+    padding-top: 5%;
+  }
+}
 
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .section#title {
+    font-size: 60pt;
+    height: 100%;
+    padding-top: 20%;
+  }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) and (max-width: 1920px) {
+  .section#title {
+    font-size: 80pt;
+    height: 100%;
+    padding-top: 20%;
+  }
+}
 
 @font-face {
   font-family: 'Lato';
@@ -60,7 +94,6 @@ div.panel-collapse input{
   font-weight: 400;
   src: local('Lato Regular'), local('Lato-Regular'), url('fonts/Lato400.woff') format('woff');
 }
-
 
 body {
   font-family: Lato !important;
@@ -77,13 +110,13 @@ nav#default {
     font-size: 30px;
     font-weight: 400;
     padding: 10px 15px;
-    .light{
+    .light {
       font-weight: 300;
     }
-    &:hover{
+    &:hover {
       color: #555555;
     }
-    i{
+    i {
       margin-right: 10px;
     }
   }

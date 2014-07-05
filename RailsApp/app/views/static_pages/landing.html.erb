@@ -8,18 +8,25 @@
   </style>
 </head>
 
-<body>
-<div class="container-fluid">
+<body ng-app="cfeed">
+<div class="container-fluid" ng-controller="LandingCtrl">
   <div class="row">
-    <div class="section col-md-6" id="title_bg">
+    <div class="section col-md-9" id="title" randombgpos>
       <div class="center">
+        <%= fa_icon 'mortar-board' %>
+        <span >College</span><span class="light">feed</span>
       </div>
     </div>
 
-    <div class="section col-md-6" id="title">
-      <div class="center">
-        <%= fa_icon 'mortar-board' %>
-        <span>College</span><span class="light">feed</span>
+    <div class="section col-md-3" id="cards">
+      <div>
+        <div class="card card-mini slide" ng-repeat="post in recentPosts" >
+          <h3>{{post.text}}</h3>
+          <hr/>
+          <small class="pull-left"><i>Texas A&M University</i></small>
+          <small class="pull-right">{{post.comment_count}} Comments</small>
+          <div class="clearfix"></div>
+        </div>
       </div>
     </div>
   </div>
