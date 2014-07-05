@@ -60,20 +60,25 @@ hr{
     border-top: 1px solid #CDCDCD;
 }
 
-.slide.ng-enter, .slide.ng-leave {
+.slide.ng-enter{
     -webkit-transition:0.3s ease-out all;
     transition:0.3s ease-out all;
+}
+
+.slide.ng-leave{
+    -webkit-transition:0.7s ease-out all;
+    transition:1.7s ease-out all;
 }
 
 .slide.ng-enter { margin-left: 10px; opacity: 0; }        /* starting animations for enter */
 .slide.ng-enter-active { margin-left:0px; opacity: 1; } /* terminal animations for enter */
 .slide.ng-leave { margin-left:0px; opacity: 1; max-height: 100px; overflow:hidden;}        /* starting animations for leave */
-.slide.ng-leave-active { margin-left: 10px; opacity: 0; max-height: 0px;} /* terminal animations for leave */
+.slide.ng-leave-active { margin-left: 10px; opacity: 0; max-height: 0px; padding: 0; margin: 0;} /* terminal animations for leave */
 
 .slide.ng-enter-stagger {
     /* this will have a 100ms delay between each successive leave animation */
-    -webkit-transition-delay: 0.075s;
-    transition-delay: 0.075s;
+    -webkit-transition-delay: 0.475s;
+    transition-delay: 0.475s;
 
     /* in case the stagger doesn't work then these two values
      must be set to 0 to avoid an accidental CSS inheritance */
