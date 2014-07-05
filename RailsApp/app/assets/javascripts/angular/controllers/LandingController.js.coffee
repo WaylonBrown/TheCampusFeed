@@ -1,6 +1,8 @@
 angular.module("cfeed").controller "LandingCtrl", [
-  "$scope", "$http", "$interval"
-  ($scope, $http, $interval) ->
+  "$scope", "$http", "$interval", "$resource"
+  ($scope, $http, $interval, $resource) ->
+    $scope.options = {}
+    $scope.options.post_selected = null;
     $scope.recentPosts = []
     $scope.loadRecentPosts = ->
       $http.get("api/v1/posts/recent").success((res) ->
@@ -14,9 +16,27 @@ angular.module("cfeed").controller "LandingCtrl", [
     $scope.loadRecentPosts()
 
     $scope.removeInterval = $interval( ->
-      $scope.recentPosts.shift()
+      if(null == $scope.options.post_selected)
+        $scope.recentPosts.shift()
       if($scope.recentPosts.length > 0 && $scope.recentPosts.length < 7)
         $interval.cancel($scope.removeInterval)
     , 7000);
 
+    CommentList = $resource('/api/v1/colleges/:college_id/posts/:post_id/comments/:comment_id',
+      {college_id:1, post_id:1, comment_id: '@id'}, {
+      });
+
+
+    $scope.selectPost = (post) ->
+      if(post == $scope.options.post_selected)
+        $scope.options.post_selected.active = false
+        $scope.options.post_selected = null;
+      else
+        comments = CommentList.query(->
+          if(null != $scope.options.post_selected)
+            $scope.options.post_selected.active = false
+          post.active = true
+          post.comments = comments
+          $scope.options.post_selected = post
+        )
   ]

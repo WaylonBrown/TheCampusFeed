@@ -1,4 +1,4 @@
-angular.module "cfeed", ["ui.bootstrap", "ngAnimate"]
+angular.module "cfeed", ["ui.bootstrap", "ngAnimate", "ngResource"]
 angular.element(document).ready ->
 
 
