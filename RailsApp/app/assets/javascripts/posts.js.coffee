@@ -2,13 +2,14 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-angular.module("cfeed").controller("showPostCtrl", ["$scope", "$http", ($scope, $http) ->
+angular.module("cfeed").controller("showPostCtrl", ["$scope", "$http", "$location", ($scope, $http, $location) ->
 
   $scope.options = {}
   $scope.allComments = {}
 
   $scope.populateComments = ->
-    $http.get("/api/v1/posts/" + "1" + "/comments").success((res) ->
+    url = $location.absUrl();
+    $http.get(url.substr(0,url.length-5)+"/comments").success((res) ->
       $scope.allComments = res
       return
     ).error (res) ->
