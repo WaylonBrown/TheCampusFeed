@@ -13,8 +13,10 @@ angular.module("cfeed").controller "LandingCtrl", [
 
     $scope.loadRecentPosts()
 
-    $interval( ->
+    $scope.removeInterval = $interval( ->
       $scope.recentPosts.shift()
+      if($scope.recentPosts.length > 0 && $scope.recentPosts.length < 7)
+        $interval.cancel($scope.removeInterval)
     , 3000);
 
   ]

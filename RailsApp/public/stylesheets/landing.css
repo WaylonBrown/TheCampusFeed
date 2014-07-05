@@ -61,13 +61,13 @@ hr{
 }
 
 .slide.ng-enter, .slide.ng-leave {
-    -webkit-transition:0.2s linear all;
-    transition:0.2s linear all;
+    -webkit-transition:0.3s ease-out all;
+    transition:0.3s ease-out all;
 }
 
 .slide.ng-enter { margin-left: 10px; opacity: 0; }        /* starting animations for enter */
 .slide.ng-enter-active { margin-left:0px; opacity: 1; } /* terminal animations for enter */
-.slide.ng-leave { margin-left:0px; opacity: 1; max-height: 100px;}        /* starting animations for leave */
+.slide.ng-leave { margin-left:0px; opacity: 1; max-height: 100px; overflow:hidden;}        /* starting animations for leave */
 .slide.ng-leave-active { margin-left: 10px; opacity: 0; max-height: 0px;} /* terminal animations for leave */
 
 .slide.ng-enter-stagger {
