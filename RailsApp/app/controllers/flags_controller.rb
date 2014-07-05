@@ -22,10 +22,22 @@ class FlagsController < ApplicationController
   def edit
   end
 
+  def should_hide? flaggable
+    flaggable.flags.length > 5
+  end
+
+  def hide! flaggable
+    flaggable.hidden = true
+    flaggable.save
+  end
+
   # POST /flags
   # POST /flags.json
   def create
     @flag = @flaggable.flags.create()
+    if should_hide? @flaggable
+      hide! @flaggable
+    end
 
     respond_to do |format|
       if @flag.save

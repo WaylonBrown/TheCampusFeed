@@ -136,4 +136,10 @@ resource "Posts" do
       status.should == 422
     end
   end
+  get "/api/v1/posts/hidden/" do
+    example "Listing all hidden posts" do
+      do_request()
+      status.should == 200
+    end
+  end
 end

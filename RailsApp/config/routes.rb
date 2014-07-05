@@ -43,6 +43,7 @@ Postfeed::Application.routes.draw do
       get '/posts/byTag/:tagText' => 'posts#byTag'
       get '/posts/recent' => 'posts#recent'
       get '/posts/trending' => 'posts#trending'
+      get '/posts/hidden' => 'posts#hidden'
       resources :posts do
         get '/comments/search/:searchText' => 'comments#search'
         get '/comments/search/:searchText/count' => 'comments#searchCount'
@@ -138,10 +139,10 @@ Postfeed::Application.routes.draw do
     end
 =end
     root to: 'static_pages#landing'
-
     get '/admin' => 'static_pages#admin'
     get '/landing' => 'static_pages#landing'
     get '/mobile' => 'static_pages#index'
+    get '/stats' => 'static_pages#stats'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

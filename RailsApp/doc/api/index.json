@@ -84,6 +84,11 @@
           "groups": "all"
         },
         {
+          "description": "Listing all hidden posts",
+          "link": "posts/listing_all_hidden_posts.json",
+          "groups": "all"
+        },
+        {
           "description": "Listing all posts",
           "link": "posts/listing_all_posts.json",
           "groups": "all"

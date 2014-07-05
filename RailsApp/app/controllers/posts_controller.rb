@@ -41,6 +41,16 @@ class PostsController < ApplicationController
     end
   end
 
+  def hidden
+    if !@college.nil?
+      @posts = @college.posts
+    else
+      @posts = Post.all
+    end
+
+    render json: @posts.where('hidden IS TRUE').page(params[:page]).per(params[:per_page])
+  end
+
   # GET /posts
   # GET /posts.json
   # GET /colleges/1/posts
@@ -56,22 +66,22 @@ class PostsController < ApplicationController
 
   def recent
     if !@college.nil?
-      @posts = Post.where('college_id = '+@college.id.to_s)
+      @posts = @college.posts
     else
       @posts = Post.all
     end
     
-    render json: @posts.order('created_at desc').page(params[:page]).per(params[:per_page])
+    render json: @posts.where('hidden IS NOT TRUE').order('created_at desc').page(params[:page]).per(params[:per_page])
   end
 
   def trending
     if !@college.nil?
-      @posts = Post.where('college_id = '+@college.id.to_s)
+      @posts = @college.posts
     else 
       @posts = Post.all
     end
     
-    render json: @posts.order('score desc').page(params[:page]).per(params[:per_page])
+    render json: @posts.where('hidden IS NOT TRUE').order('score desc').page(params[:page]).per(params[:per_page])
   end
 
   # GET /posts/1

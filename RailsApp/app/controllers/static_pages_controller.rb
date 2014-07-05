@@ -8,4 +8,7 @@ class StaticPagesController < ApplicationController
 
   def landing
   end
+
+  def stats
+  end
 end
