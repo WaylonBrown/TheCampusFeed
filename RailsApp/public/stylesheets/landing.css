@@ -44,11 +44,12 @@ div#cards{
 }
 
 .card-mini{
-    padding: 10px 4px;
+    padding: 6px 8px;
     -webkit-box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
     -moz-box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
     margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .card-mini h3{
@@ -66,19 +67,19 @@ hr{
 }
 
 .slide.ng-leave{
-    -webkit-transition:0.7s ease-out all;
-    transition:1.7s ease-out all;
+    -webkit-transition:0.5s ease-out all;
+    transition:0.5s ease-out all;
 }
 
 .slide.ng-enter { margin-left: 10px; opacity: 0; }        /* starting animations for enter */
 .slide.ng-enter-active { margin-left:0px; opacity: 1; } /* terminal animations for enter */
-.slide.ng-leave { margin-left:0px; opacity: 1; max-height: 100px; overflow:hidden;}        /* starting animations for leave */
-.slide.ng-leave-active { margin-left: 10px; opacity: 0; max-height: 0px; padding: 0; margin: 0;} /* terminal animations for leave */
+.slide.ng-leave { position:relative; left: 0px; margin-left:0px; opacity: 1; max-height: 300px; overflow:hidden;}        /* starting animations for leave */
+.slide.ng-leave-active { left: 150px; opacity: 0; max-height: 0px; padding: 0; margin: 0;} /* terminal animations for leave */
 
 .slide.ng-enter-stagger {
     /* this will have a 100ms delay between each successive leave animation */
-    -webkit-transition-delay: 0.475s;
-    transition-delay: 0.475s;
+    -webkit-transition-delay: 0.275s;
+    transition-delay: 0.275s;
 
     /* in case the stagger doesn't work then these two values
      must be set to 0 to avoid an accidental CSS inheritance */
