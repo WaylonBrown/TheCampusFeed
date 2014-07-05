@@ -41,6 +41,10 @@ div#cards, div#comments{
     overflow: -moz-scrollbars-none;
 }
 
+div#comments{
+    background-color: rgba(255,255,255,0.25);
+}
+
 .card-mini{
     margin: 20px 30px;
     padding: 6px 8px;
@@ -78,10 +82,10 @@ hr{
 }
 
 .row > div {
-    -webkit-transition: width 0.3s ease, margin 0.3s ease;
+    /*-webkit-transition: width 0.3s ease, margin 0.3s ease;
     -moz-transition: width 0.3s ease, margin 0.3s ease;
     -o-transition: width 0.3s ease, margin 0.3s ease;
-    transition: width 0.3s ease, margin 0.3s ease;
+    transition: width 0.3s ease, margin 0.3s ease;*/
 }
 
 .slide.ng-enter{
