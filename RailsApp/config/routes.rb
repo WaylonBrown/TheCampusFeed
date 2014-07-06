@@ -1,4 +1,4 @@
-Postfeed::Application.routes.draw do
+CollegeFeed::Application.routes.draw do
 
 
 

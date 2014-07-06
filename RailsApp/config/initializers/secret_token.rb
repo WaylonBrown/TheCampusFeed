@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Postfeed::Application.config.secret_key_base = '628284e982d15deeff8dfbd884e244091c20a061570a2fb2e7d46125aa9ba88b0068ba4b81d95660bdb8bdda6b020e52489e077407b92538a1e0e2ac9c2c9617'
+CollegeFeed::Application.config.secret_key_base = '628284e982d15deeff8dfbd884e244091c20a061570a2fb2e7d46125aa9ba88b0068ba4b81d95660bdb8bdda6b020e52489e077407b92538a1e0e2ac9c2c9617'
