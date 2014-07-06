@@ -3,7 +3,7 @@ angular.module("cfeed").controller "NewCommentController", [
   "$http"
   "$modalInstance"
   ($scope, $http, $modalInstance) ->
-    $scope.newPost = {}
+    $scope.newComment = {}
     $scope.allPosts = []
     $scope.ok = ->
       $modalInstance.close $scope.newComment
