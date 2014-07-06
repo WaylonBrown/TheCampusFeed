@@ -57,7 +57,7 @@ angular.module("cfeed").controller "CommentSectionController", [
       )
       modal.result.then ((newComment) ->
         console.log newComment
-        $http.post("api/v1/posts/" + newComment.postId + "/comments",
+        $http.post("api/v1/posts/" + newComment.post_id + "/comments",
           comment:
             text: newComment.text
         ).then ((res) ->
