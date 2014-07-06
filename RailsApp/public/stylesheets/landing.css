@@ -37,8 +37,12 @@ div#title{
 }
 
 
-div#cards, div#comments{
-    overflow: -moz-scrollbars-none;
+div#cards{
+    overflow:hidden;
+}
+
+div#comments{
+    overflow:scroll;
 }
 
 div#comments{

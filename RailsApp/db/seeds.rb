@@ -7,6 +7,40 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 require 'csv'
 
+@@gray_image_threshold = 30
+def set_color college
+  suckr = ImageSuckr::GoogleSuckr.new
+  url = suckr.get_image_url({"q" => college.name + " logo", "as_filetype" => 'png'});
+  file = Net::HTTP.get(URI(url))
+  img = ChunkyPNG::Image.from_blob file
+
+  frequencies = {}
+  (0..img.width-1).step(10) do |w|
+    (0..img.height-1).step(10) do |h|
+      color = img[w,h]
+      if frequencies.has_key? color
+        frequencies[color] = frequencies[color] + 1
+      else
+        frequencies[color] = 1
+      end
+    end
+  end
+  frequencies.sort_by{ |color, count| count}
+  absdiff = 0
+  i = 0
+  begin
+    winner = ChunkyPNG::Color.parse(frequencies.keys[i])
+    red = ChunkyPNG::Color.r(winner)
+    gre = ChunkyPNG::Color.g(winner)
+    blu = ChunkyPNG::Color.b(winner)
+    absdiff = (red-gre).abs + (red-blu).abs
+    p absdiff
+    i = i + 1
+  end while absdiff < @@gray_image_threshold
+  college.primary_color = ChunkyPNG::Color.to_hex(winner)
+  college.save
+end
+
 def sanitizeName(name)
   ret = name
   if name.start_with? "The "
@@ -53,6 +87,15 @@ def importFromFile(lim = -1)
     @cur = College.new(@params)
     if !@cur.save
       puts 'shit shit shit' #this shouldn't happen ;)
+    else
+      got_color = false
+      while !got_color
+        begin
+          set_color @cur
+          got_color = true
+        rescue
+        end
+      end
     end
     if lim != -1 and @i > lim
       break

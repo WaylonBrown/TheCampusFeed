@@ -17,4 +17,5 @@ angular.module("cfeed").controller "SectionController", [
 
     $rootScope.College = $resource('/api/v1/colleges/:collegeId', {collegeId: '@id'})
     $rootScope.Post = $resource('/api/v1/colleges/:collegeId/posts/:postId', {postId: '@id'})
+    $rootScope.Comment = $resource('/api/v1/colleges/:collegeId/posts/:postId/comments/:commentId', {commentId: '@id'})
 ]

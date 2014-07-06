@@ -51,6 +51,7 @@ gem 'angular-ui-bootstrap-rails'
 gem 'font-awesome-rails'
 
 
+gem 'chunky_png'
 
 
 
