@@ -18,6 +18,7 @@ public class PrefManager {
 	public static final String COMMENT_UPVOTE_LIST = "comment_upvote_list";
 	public static final String COMMENT_DOWNVOTE_LIST = "comment_downvote_list";
 	public static final String FLAG_LIST = "flag_list";
+	public static final String LAST_FEED = "last_feed";
 	
 	public static void setup(Context c) 
 	{

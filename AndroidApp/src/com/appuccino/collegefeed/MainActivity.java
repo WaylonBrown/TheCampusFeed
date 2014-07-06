@@ -192,6 +192,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			showPermissionsToast();
 		}
 			
+		PrefManager.putInt(PrefManager.LAST_FEED, id);
 		TopPostFragment.changeFeed(id);
 		NewPostFragment.changeFeed(id);
 		TagFragment.changeFeed(id);

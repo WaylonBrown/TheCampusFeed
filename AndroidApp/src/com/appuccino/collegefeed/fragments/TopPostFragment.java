@@ -39,6 +39,7 @@ import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
+import com.appuccino.collegefeed.utils.PrefManager;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
 
@@ -115,7 +116,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		
 		if(postList == null && mainActivity != null)
 		{
-			changeFeed(MainActivity.ALL_COLLEGES);
+			changeFeed(PrefManager.getInt(PrefManager.LAST_FEED, 0));
 		}
 		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 0, currentFeedID);
 		if(list != null)

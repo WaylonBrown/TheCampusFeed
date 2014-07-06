@@ -35,6 +35,7 @@ import com.appuccino.collegefeed.extra.QuickReturnListView;
 import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.objects.Tag;
 import com.appuccino.collegefeed.utils.FontManager;
+import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.NetWorker.GetTagFragmentTask;
 import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
 
@@ -91,7 +92,7 @@ public class TagFragment extends Fragment
 		
 		if(tagList == null && mainActivity != null)
 		{
-			changeFeed(MainActivity.ALL_COLLEGES);
+			changeFeed(PrefManager.getInt(PrefManager.LAST_FEED, 0));
 		}
 		listAdapter = new TagListAdapter(getActivity(), R.layout.list_row_tag, tagList);
 		if(list != null)
