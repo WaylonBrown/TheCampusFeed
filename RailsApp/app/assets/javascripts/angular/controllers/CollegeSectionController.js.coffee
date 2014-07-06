@@ -3,7 +3,9 @@ angular.module("cfeed").controller "CollegeSectionController", [
   "$http"
   "$modal"
   "$timeout"
-  ($scope, $http, $modal, $timeout) ->
+  "$resource"
+  "$rootScope"
+  ($scope, $http, $modal, $timeout, $resource, $rootScope) ->
     $scope.collegeOptions = {}
     $scope.collegeOptions.pageNo = 1
     $scope.collegeOptions.perPage = 10
