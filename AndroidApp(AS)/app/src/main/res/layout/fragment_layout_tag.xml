@@ -1,0 +1,127 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity$DummySectionFragment" 
+    android:background="@color/lightgray">
+    
+    <com.appuccino.collegefeed.extra.QuickReturnListView
+        android:id="@+id/fragmentListView"
+        android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_marginLeft="8dp"
+		android:layout_marginRight="8dp"
+	    android:divider="@android:color/transparent"
+		android:dividerHeight="6dp"
+		android:listSelector="@android:color/transparent" 
+		android:scrollbars="none"
+		android:background="@color/lightgray"/>
+    
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:clickable="true">
+        
+        <!-- this view goes behind the one shown below it, since the one below
+        it has a selectable background therefore it's transparent -->
+        <View
+	        android:background="@color/alphalightgray"
+	        android:layout_height="50dp"
+	        android:layout_width="match_parent"
+	        />
+        
+        <LinearLayout 
+	        android:background="?android:attr/selectableItemBackground"
+	        android:layout_height="50dp"
+	        android:layout_width="match_parent"
+	        android:orientation="vertical"
+	        android:clickable="true"
+	        android:layout_marginTop="-50dp"
+	        >
+        
+	        <View
+	            android:layout_height="1dp"
+	            android:layout_width="match_parent"
+	            android:layout_marginLeft="8dp"
+	            android:layout_marginRight="8dp"
+	            android:background="@color/gray"/>
+	        
+	        <TextView
+	            android:id="@+id/tagSearchText"
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:gravity="center"
+	            android:text="Search for a Tag"
+	            android:textColor="@color/darkgray"
+	            android:textSize="20sp"
+	            android:background="@drawable/searchtagbuttonclick"
+	            />
+        
+        
+    	</LinearLayout>
+    
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="54dp"
+	        android:orientation="horizontal"
+	        android:background="@color/alphablue"
+	        android:clickable="true">
+	        
+	        <LinearLayout
+	            android:orientation="vertical"
+	            android:layout_width="0dp"
+	            android:layout_weight="1"
+	            android:layout_height="match_parent">
+	            
+	            <TextView
+		            android:id="@+id/showingFeedText"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginLeft="4dp"
+		            android:layout_marginTop="2dp"
+		            android:layout_marginBottom="-6dp"
+		            android:text="Showing"
+		            android:textSize="16sp"
+		            android:textColor="@color/white"
+		            />
+	            
+	            <TextView
+		            android:id="@+id/collegeNameBottomText"
+		            android:gravity="center_vertical"
+		            android:layout_width="match_parent"
+		            android:layout_height="match_parent"
+		            android:layout_marginLeft="14dp"
+		            android:text="@string/allColleges"
+		            android:textSize="22sp"
+		            android:textColor="@color/white"
+		            android:singleLine="true"
+		            />
+	            
+	        </LinearLayout>
+	        
+	        <View
+	            android:layout_width="1dp"
+	            android:layout_height="match_parent"
+	            android:layout_marginTop="8dp"
+	            android:layout_marginBottom="8dp"
+	            android:background="@color/white"/>
+	        
+	        <TextView
+	            android:id="@+id/chooseText"
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:layout_marginLeft="8dp"
+	            android:layout_marginRight="8dp"
+	            android:gravity="center_vertical"
+	            android:text="Choose"
+	            android:textSize="18sp"
+	            android:textColor="@color/white"
+	            android:clickable="true"
+	            />
+	        
+	    </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
