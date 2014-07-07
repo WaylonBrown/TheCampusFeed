@@ -7,7 +7,6 @@
 
     <ProgressBar
         android:id="@+id/lazyFooterSpinner"
-        android:indeterminateDrawable="@drawable/progress_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="4dp"
