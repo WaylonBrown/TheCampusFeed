@@ -33,6 +33,7 @@
 	
 	<ProgressBar
 	        android:id="@+id/commentActionbarLoadingIcon"
+            android:indeterminateDrawable="@drawable/progress_spinner"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_vertical"
