@@ -61,7 +61,11 @@ class PostsController < ApplicationController
       @posts = Post.all
     end
 
-    render json: @posts.page(params[:page]).per(params[:per_page])
+    if params[:page]
+      @posts = @posts.page(params[:page]).per(params[:per_page])
+    end
+
+    render json: @posts
   end
 
   def recent
