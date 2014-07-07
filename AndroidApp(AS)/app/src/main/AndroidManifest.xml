@@ -35,6 +35,7 @@
         </activity>
         <activity
             android:name="com.appuccino.collegefeed.MainActivity"
+            android:theme="@style/AppTheme"
             android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
@@ -42,6 +43,9 @@
         </activity>
         <activity
             android:name="com.appuccino.collegefeed.TagListActivity">
+        </activity>
+        <activity
+            android:name="com.appuccino.collegefeed.MyContentActivity">
         </activity>
     </application>
 
