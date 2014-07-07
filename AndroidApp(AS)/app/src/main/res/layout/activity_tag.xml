@@ -39,7 +39,7 @@
 	
     <LinearLayout
         style="@style/fill"
-        android:gravity="center">
+        android:gravity="center">d
         
         <ProgressBar
 	        android:id="@+id/progressSpinner"
