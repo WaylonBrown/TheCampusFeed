@@ -86,6 +86,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		super.onCreate(savedInstanceState);
 		setupApp();
 		getLocation();
@@ -107,7 +108,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	}
 
 	private void setupApp(){
-        requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_main);
 		tabs = (PagerSlidingTabStrip)findViewById(R.id.tabs);
 		viewPager = (ViewPager) findViewById(R.id.pager);
