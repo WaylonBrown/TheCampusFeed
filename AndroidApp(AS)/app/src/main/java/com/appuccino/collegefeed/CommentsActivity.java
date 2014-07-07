@@ -77,7 +77,9 @@ public class CommentsActivity extends Activity{
 		
 		int collegeID = getIntent().getIntExtra("COLLEGE_ID", 0);
 		int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);
-		
+
+        Log.i("cfeed", "Section number: " + sectionNumber);
+
 		if(sectionNumber == 0)
 			post = TopPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
 		else if(sectionNumber == 1)
@@ -85,9 +87,10 @@ public class CommentsActivity extends Activity{
 		else if(sectionNumber == 2)
 			post = MyPostsFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
 		
-		if(MainActivity.hasPermissions(collegeID)){
+		Log.i("cfeed", "Post: " + post + " list: " + MainActivity.flagList + " post id: "
+                + getIntent().getIntExtra("POST_ID", -1));
+		if(MainActivity.hasPermissions(collegeID) && post != null){
 			newCommentButton.setVisibility(View.VISIBLE);
-			Log.i("cfeed", "Post: " + post + " list: " + MainActivity.flagList);
 			if(!MainActivity.flagList.contains(post.getID())){	//dont show flag button if already flagged
 				flagButton.setVisibility(View.VISIBLE);
 			}
@@ -445,7 +448,7 @@ public class CommentsActivity extends Activity{
 	}
 
 	public static void setNewPermissionsIfAvailable() {
-		if(newCommentButton != null && MainActivity.hasPermissions(post.getCollegeID())){
+		if(newCommentButton != null && post != null && MainActivity.hasPermissions(post.getCollegeID())){
 			newCommentButton.setVisibility(View.VISIBLE);
 		}
 		hasPermissions = true;	//necessary that way if permissions updated while not on MainActivity, still allow to comment

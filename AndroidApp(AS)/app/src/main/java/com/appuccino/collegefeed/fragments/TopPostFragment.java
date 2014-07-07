@@ -343,6 +343,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		Intent intent = new Intent(getActivity(), CommentsActivity.class);
 		intent.putExtra("POST_ID", post.getID());
 		intent.putExtra("COLLEGE_ID", post.getCollegeID());
+        intent.putExtra("SECTION_NUMBER", 0);
 		
 		startActivity(intent);
 		getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

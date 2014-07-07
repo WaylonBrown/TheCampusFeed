@@ -1,11 +1,5 @@
 package com.appuccino.collegefeed.fragments;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
-import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -37,11 +31,18 @@ import com.appuccino.collegefeed.extra.QuickReturnListView;
 import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
-import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
+import com.appuccino.collegefeed.utils.PrefManager;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 public class NewPostFragment extends Fragment implements OnRefreshListener
 {
@@ -343,6 +344,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		Intent intent = new Intent(getActivity(), CommentsActivity.class);
 		intent.putExtra("POST_ID", post.getID());
 		intent.putExtra("COLLEGE_ID", post.getCollegeID());
+        intent.putExtra("SECTION_NUMBER", 1);
 		
 		startActivity(intent);
 		getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
