@@ -1,10 +1,5 @@
 package com.appuccino.collegefeed;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
@@ -34,13 +29,18 @@ import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
 import com.appuccino.collegefeed.utils.FontManager;
-import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.NetWorker.GetCommentsTask;
 import com.appuccino.collegefeed.utils.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
+import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.TimeManager;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class CommentsActivity extends Activity{
 
@@ -60,7 +60,8 @@ public class CommentsActivity extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
+        requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_comment);
 		setupActionBar();
 		
@@ -240,7 +241,6 @@ public class CommentsActivity extends Activity{
 	}
 	
 	private void setupActionBar() {
-        requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		final ActionBar actionBar = getActionBar();
 		actionBar.setCustomView(R.layout.actionbar_comment);
 		actionBar.setDisplayShowTitleEnabled(false);
