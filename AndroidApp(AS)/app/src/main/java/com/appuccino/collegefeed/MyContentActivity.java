@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.appuccino.collegefeed.adapters.CommentListAdapter;
 import com.appuccino.collegefeed.adapters.PostListAdapter;
 import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
@@ -26,7 +27,8 @@ public class MyContentActivity extends Activity{
 
     ListView myPostsListView;
     ListView myCommentsListView;
-    public static PostListAdapter listAdapter;
+    public static PostListAdapter postListAdapter;
+    public static CommentListAdapter commentListAdapter;
     public static List<Post> postList = new ArrayList<Post>();
     public static List<Comment> commentList = new ArrayList<Comment>();
 
@@ -36,19 +38,26 @@ public class MyContentActivity extends Activity{
         setContentView(R.layout.my_content);
         setupActionbar();
         setupViews();
-        setupList();
+        setupLists();
         fetchLists();
-        //TODO: remove this
-        updateLists();
+        //TODO: remove these
+        updatePostList();
+        updateCommentList();
     }
 
-    private void setupList() {
-        listAdapter = new PostListAdapter(this, R.layout.list_row_collegepost, postList, 0, MainActivity.ALL_COLLEGES);
+    private void setupLists() {
+        postListAdapter = new PostListAdapter(this, R.layout.list_row_collegepost, postList, 0, MainActivity.ALL_COLLEGES);
+        commentListAdapter = new CommentListAdapter(this, R.layout.list_row_collegepost, commentList, null);
         myPostsListView = (ListView)findViewById(R.id.myPostsListView);
+        myCommentsListView = (ListView)findViewById(R.id.myCommentsListView);
         if(myPostsListView != null)
-            myPostsListView.setAdapter(listAdapter);
+            myPostsListView.setAdapter(postListAdapter);
         else
             Log.e("cfeed", "MyContentPostList list adapter wasn't set.");
+        if(myCommentsListView != null)
+            myCommentsListView.setAdapter(postListAdapter);
+        else
+            Log.e("cfeed", "MyContentCommentList list adapter wasn't set.");
 
         myPostsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -59,9 +68,21 @@ public class MyContentActivity extends Activity{
                 postClicked(postList.get(position - 1));
             }
         });
+        myCommentsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1,
+                                    int position, long arg3)
+            {
+                commentClicked(commentList.get(position - 1));
+            }
+        });
     }
 
     private void postClicked(Post post) {
+    }
+
+    private void commentClicked(Comment comment) {
     }
 
     private void fetchLists() {
@@ -69,24 +90,45 @@ public class MyContentActivity extends Activity{
 
     }
 
-    public static void updateLists() {
+    public static void updatePostList() {
         //TODO: remove these manual lists
         List<Post> testList = new ArrayList<Post>();
         testList.add(new Post("test", 1));
         testList.add(new Post("test", 1));
         testList.add(new Post("test", 1));
         testList.add(new Post("test", 1));
-        postList = new ArrayList<Post>(postList);
+        postList = new ArrayList<Post>();
         postList.addAll(testList);
 
-        if(listAdapter != null)
+        if(postListAdapter != null)
         {
             Log.i("cfeed", "TEST new post size: " + postList.size());
-            listAdapter.setCollegeFeedID(MainActivity.ALL_COLLEGES);
-            listAdapter.clear();
-            listAdapter.addAll(postList);
-            Log.i("cfeed","TEST last post size: " + listAdapter.getCount());
-            listAdapter.notifyDataSetChanged();
+            postListAdapter.setCollegeFeedID(MainActivity.ALL_COLLEGES);
+            postListAdapter.clear();
+            postListAdapter.addAll(postList);
+            Log.i("cfeed","TEST last post size: " + postListAdapter.getCount());
+            postListAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public static void updateCommentList() {
+        //TODO: remove these manual lists
+        List<Comment> testList = new ArrayList<Comment>();
+        testList.add(new Comment());
+        testList.add(new Comment());
+        testList.add(new Comment());
+        testList.add(new Comment());
+        commentList = new ArrayList<Comment>();
+        commentList.addAll(testList);
+
+        if(commentListAdapter != null)
+        {
+            Log.i("cfeed", "TEST new post size: " + postList.size());
+            //commentListAdapter.setCollegeFeedID(MainActivity.ALL_COLLEGES);
+            commentListAdapter.clear();
+            commentListAdapter.addAll(commentList);
+            Log.i("cfeed","TEST last post size: " + commentListAdapter.getCount());
+            commentListAdapter.notifyDataSetChanged();
         }
     }
 
