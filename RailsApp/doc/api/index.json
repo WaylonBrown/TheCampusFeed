@@ -7,6 +7,11 @@
           "description": "List all colleges",
           "link": "colleges/list_all_colleges.json",
           "groups": "all"
+        },
+        {
+          "description": "List trending colleges",
+          "link": "colleges/list_trending_colleges.json",
+          "groups": "all"
         }
       ]
     },
