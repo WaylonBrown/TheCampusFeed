@@ -95,6 +95,7 @@
 
 - (void)switchedToSpecificCollegeOrNil:(College *)college;
 - (BOOL)isNearCollege;
+- (BOOL)isNearCollegeWithId:(long)collegeId;
 
 //** Not called**********
 - (void)saveUserData;

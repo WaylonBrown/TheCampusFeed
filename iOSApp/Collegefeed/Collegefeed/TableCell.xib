@@ -98,15 +98,25 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gps.png" translatesAutoresizingMaskIntoConstraints="NO" id="sYS-sm-JCC">
+                                <rect key="frame" x="281" y="92" width="16" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="VMl-ef-Sq6"/>
+                                    <constraint firstAttribute="width" constant="16" id="wic-XH-FGH"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="sYS-sm-JCC" secondAttribute="trailing" constant="5" id="2Mt-Jy-CaQ"/>
                             <constraint firstItem="XTe-ec-ujB" firstAttribute="leading" secondItem="BxK-GL-rEc" secondAttribute="trailing" constant="14" id="4T0-i9-XpO"/>
                             <constraint firstItem="qqg-lP-j6a" firstAttribute="leading" secondItem="5I0-GL-s9J" secondAttribute="leading" id="4dS-lB-SfE"/>
                             <constraint firstItem="ZOu-h5-7eJ" firstAttribute="leading" secondItem="5I0-GL-s9J" secondAttribute="leading" constant="3" id="7AU-5y-o1r"/>
                             <constraint firstItem="XTe-ec-ujB" firstAttribute="top" secondItem="BbT-tS-GR7" secondAttribute="bottom" constant="8" id="AOC-Bw-Vxa"/>
                             <constraint firstItem="qqg-lP-j6a" firstAttribute="top" secondItem="ZOu-h5-7eJ" secondAttribute="bottom" constant="4" id="HhM-La-60C"/>
                             <constraint firstAttribute="trailing" secondItem="qqg-lP-j6a" secondAttribute="trailing" id="IdE-6M-UaN"/>
+                            <constraint firstItem="sYS-sm-JCC" firstAttribute="top" secondItem="wn0-nd-BMp" secondAttribute="bottom" constant="-19" id="Ij5-Yz-nUm"/>
                             <constraint firstItem="BbT-tS-GR7" firstAttribute="leading" secondItem="BxK-GL-rEc" secondAttribute="leading" id="NzM-iv-dry"/>
                             <constraint firstItem="XTe-ec-ujB" firstAttribute="width" secondItem="BxK-GL-rEc" secondAttribute="width" id="T7A-GG-Tby"/>
                             <constraint firstItem="XHq-5o-yd7" firstAttribute="leading" secondItem="5I0-GL-s9J" secondAttribute="leading" constant="3" id="U7s-wm-gzk"/>
@@ -141,6 +151,7 @@
                 <outlet property="commentCountLabel" destination="BxK-GL-rEc" id="9Gd-IQ-TjH"/>
                 <outlet property="downVoteButton" destination="ZOu-h5-7eJ" id="td3-nQ-eiT"/>
                 <outlet property="enclosingView" destination="5I0-GL-s9J" id="xME-DG-hTT"/>
+                <outlet property="gpsIconImageView" destination="sYS-sm-JCC" id="HWM-fy-HAJ"/>
                 <outlet property="messageLabel" destination="BbT-tS-GR7" id="ILP-eR-nRX"/>
                 <outlet property="scoreLabel" destination="oyO-37-LxI" id="VrO-Cd-oQG"/>
                 <outlet property="upVoteButton" destination="XHq-5o-yd7" id="37E-SD-x5U"/>
@@ -150,5 +161,6 @@
     <resources>
         <image name="arrowdown.png" width="60" height="60"/>
         <image name="arrowup.png" width="60" height="60"/>
+        <image name="gps.png" width="32" height="32"/>
     </resources>
 </document>

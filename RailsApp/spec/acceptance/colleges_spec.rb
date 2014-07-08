@@ -18,6 +18,15 @@ resource "Colleges" do
     end
 
   end
+
+  get "/api/v1/colleges/trending" do
+
+    example "List trending colleges" do
+      do_request
+      status.should == 200
+    end
+
+  end
 =begin
   get "/api/v1/colleges/listNearby" do
 
