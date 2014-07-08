@@ -136,26 +136,6 @@
         return 100;
     }
 }
-//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-//{
-//    
-//}
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height)
-//    {
-//        if (!self.isFetchingMorePosts)
-//        {
-//            self.isFetchingMorePosts = YES;
-//            if (self.viewType == RECENT_VIEW)
-//            {
-//                [self.dataController fetchNewPosts];
-//                [self refresh];
-//                self.isFetchingMorePosts = NO;
-//            }
-//        }
-//    }
-//}
 
 #pragma mark - Navigation
 

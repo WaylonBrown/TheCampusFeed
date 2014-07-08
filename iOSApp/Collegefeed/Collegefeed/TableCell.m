@@ -181,6 +181,7 @@
     {
         if ([word hasPrefix:@"#"])
         {
+
             NSRange range = [self.messageLabel.text rangeOfString:word];
             
             [self.messageLabel addLinkToURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", word]]
