@@ -131,6 +131,14 @@
         return 100;
     }
 }
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+//{
+//    
+//}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+}
 
 #pragma mark - Navigation
 
