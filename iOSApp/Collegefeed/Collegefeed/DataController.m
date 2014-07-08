@@ -297,6 +297,12 @@
 {
     return self.nearbyColleges.count > 0;
 }
+- (BOOL)isNearCollegeWithId:(long)collegeId
+{
+    College *college = [self getCollegeById:collegeId];
+    return [self.nearbyColleges containsObject:college];
+}
+
 - (void)saveUserData
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);

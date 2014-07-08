@@ -72,6 +72,9 @@
 
     // assign arrow colors according to user's vote
     [self updateVoteButtons];
+    
+    [self.gpsIconImageView setHidden:(!self.userIsNearCollege)];
+    
 }
 
 #pragma mark - Actions

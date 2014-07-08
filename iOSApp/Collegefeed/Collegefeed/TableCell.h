@@ -21,16 +21,18 @@
 
 @property (nonatomic, strong) NSObject<PostAndCommentProtocol, CFModelProtocol> *object;
 
-@property (nonatomic, weak) id<ChildCellDelegate> delegate;
+@property (weak, nonatomic) id<ChildCellDelegate> delegate;
+@property (nonatomic) BOOL userIsNearCollege;
 
-@property (nonatomic, weak) IBOutlet TTTAttributedLabel *messageLabel;
-@property (nonatomic, weak) IBOutlet UILabel *scoreLabel;
-@property (nonatomic, weak) IBOutlet UILabel *commentCountLabel;
-@property (nonatomic, weak) IBOutlet UILabel *ageLabel;
-@property (nonatomic, weak) IBOutlet UILabel *collegeLabel;
-@property (nonatomic, weak) IBOutlet UIButton *upVoteButton;
-@property (nonatomic, weak) IBOutlet UIButton *downVoteButton;
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel *messageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *ageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *collegeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *upVoteButton;
+@property (weak, nonatomic) IBOutlet UIButton *downVoteButton;
 @property (weak, nonatomic) IBOutlet UIView *enclosingView;
+@property (weak, nonatomic) IBOutlet UIImageView *gpsIconImageView;
 
 - (void)assign:(NSObject<PostAndCommentProtocol> *)obj;
 - (IBAction) upVotePressed:(id)sender;
