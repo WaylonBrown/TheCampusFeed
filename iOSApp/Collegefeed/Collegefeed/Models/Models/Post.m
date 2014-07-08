@@ -63,13 +63,15 @@
         NSString *lon       = (NSString*)[jsonObject valueForKey:@"lon"];
         NSString *created   = (NSString*)[jsonObject valueForKey:@"created_at"];
         NSString *collegeID = (NSString*)[jsonObject valueForKey:@"college_id"];
+        NSString *commCount = (NSString*)[jsonObject valueForKey:@"comment_count"];
+        NSString *hidden    = (NSString*)[jsonObject valueForKey:@"hidden"];
         
         if (score == (id)[NSNull null]) score = nil;
         if (lat == (id)[NSNull null]) lat = nil;
         if (lon == (id)[NSNull null]) lon = nil;
         if (collegeID == (id)[NSNull null]) collegeID = nil;
+        if (hidden == (id)[NSNull null]) hidden = nil;
         
-        //"created_at":"2014-06-03T00:09:22.621Z
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
         NSDate *createdDate = [dateFormatter dateFromString: created];
@@ -81,6 +83,8 @@
         [self setLon:[lon floatValue]];
         [self setCreatedAt:createdDate];
         [self setCollegeID:[collegeID integerValue]];
+//        [self setHidden:]
+        [self setCommentCount:[commCount integerValue]];
         [self validate];
         return self;
     }

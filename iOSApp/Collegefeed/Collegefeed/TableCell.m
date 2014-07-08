@@ -166,7 +166,7 @@
     if ([self.object class] == [Post class])
     {
         return [NSString stringWithFormat:@"%d comments",
-                (int)((Post*)self.object).commentList.count];
+                (int)((Post*)self.object).commentCount];
     }
     return @"";
 }

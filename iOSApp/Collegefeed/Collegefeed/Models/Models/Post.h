@@ -19,6 +19,7 @@
 @property (nonatomic) long postID;
 @property (nonatomic) long collegeID;
 @property (nonatomic) long score;
+@property (nonatomic) long commentCount;
 @property (nonatomic, strong) Vote *vote;
 
 @property (nonatomic, strong) NSString *message;
