@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -50,12 +51,20 @@ public class MyContentActivity extends Activity{
         commentListAdapter = new CommentListAdapter(this, R.layout.list_row_collegepost, commentList, null);
         myPostsListView = (ListView)findViewById(R.id.myPostsListView);
         myCommentsListView = (ListView)findViewById(R.id.myCommentsListView);
+        //if doesnt have footer, add it
+        if(myCommentsListView.getFooterViewsCount() == 0)
+        {
+            //for card UI
+            View footer = new View(this);
+            footer.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
+            myCommentsListView.addFooterView(footer, null, false);
+        }
         if(myPostsListView != null)
             myPostsListView.setAdapter(postListAdapter);
         else
             Log.e("cfeed", "MyContentPostList list adapter wasn't set.");
         if(myCommentsListView != null)
-            myCommentsListView.setAdapter(postListAdapter);
+            myCommentsListView.setAdapter(commentListAdapter);
         else
             Log.e("cfeed", "MyContentCommentList list adapter wasn't set.");
 
@@ -114,6 +123,7 @@ public class MyContentActivity extends Activity{
     public static void updateCommentList() {
         //TODO: remove these manual lists
         List<Comment> testList = new ArrayList<Comment>();
+        testList.add(new Comment());
         testList.add(new Comment());
         testList.add(new Comment());
         testList.add(new Comment());
