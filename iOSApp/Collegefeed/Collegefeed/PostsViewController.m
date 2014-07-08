@@ -137,7 +137,20 @@
 //}
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    
+    if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height)
+    {
+        if (!self.isFetchingMorePosts)
+        {
+            self.isFetchingMorePosts = YES;
+            if (self.viewType == RECENT_VIEW)
+            {
+                [self.dataController fetchNewPosts];
+                [self refresh];
+                self.isFetchingMorePosts = NO;
+            }
+
+        }
+    }
 }
 
 #pragma mark - Navigation
@@ -151,7 +164,7 @@
             [self setList:self.dataController.topPostsAllColleges];
             break;
         case RECENT_VIEW:
-            [self.dataController fetchNewPosts];
+//            [self.dataController fetchNewPosts];
             [self setList:self.dataController.recentPostsAllColleges];
             break;
         case TAG_VIEW:

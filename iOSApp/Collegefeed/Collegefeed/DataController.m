@@ -31,6 +31,9 @@
         self.allTags                = [[NSMutableArray alloc] init];
         self.userPosts              = [[NSMutableArray alloc] init];
         
+        [self setTopPostsPage:0];
+        [self setRecentPostsPage:0];
+        
         // Populate the initial arrays
         [self fetchTopPosts];
         [self fetchNewPosts];
@@ -144,8 +147,8 @@
 }
 - (void)fetchNewPosts
 {
-    [self setRecentPostsAllColleges:[[NSMutableArray alloc] init]];
-    NSData* data = [Networker GETRecentPosts];
+//    [self setRecentPostsAllColleges:[[NSMutableArray alloc] init]];
+    NSData* data = [Networker GETRecentPostsAtPageNum:self.recentPostsPage++];
     [self parseData:data asClass:[Post class] intoList:self.recentPostsAllColleges];
 }
 - (void)fetchNewPostsWithCollegeId:(long)collegeId
@@ -394,7 +397,12 @@
         {
             // Individual JSON object
             NSDictionary *jsonObject = (NSDictionary *) [jsonArray objectAtIndex:i];
-            [array addObject:[[class alloc] initFromJSON:jsonObject]];
+            NSObject *object = [[class alloc] initFromJSON:jsonObject];
+            if (![array containsObject:object])
+            {
+                [array addObject:object];
+            }
+            
         }
         return YES;
     }
