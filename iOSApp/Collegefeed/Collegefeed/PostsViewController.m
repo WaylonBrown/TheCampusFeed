@@ -110,10 +110,14 @@
 
     // get the post and display in this cell
     NSObject<PostAndCommentProtocol> *postAtIndex = [self.list objectAtIndex:indexPath.row];
-    NSString *collegeName = [self.dataController getCollegeNameById:[postAtIndex getCollegeID]];
-    [postAtIndex setCollegeName:collegeName];
-    [cell assign:postAtIndex];
     
+    // TODO: this assigning needs some cleanup, use all in the assign: call
+    long collegeId = [postAtIndex getCollegeID];
+    College *college = [self.dataController getCollegeById:collegeId];
+    [postAtIndex setCollegeName:college.name];
+    [cell setUserIsNearCollege:[self.dataController.nearbyColleges containsObject:college]];
+    [cell assign:postAtIndex];
+
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -126,6 +130,14 @@
     {
         return 100;
     }
+}
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+//{
+//    
+//}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
 }
 
 #pragma mark - Navigation

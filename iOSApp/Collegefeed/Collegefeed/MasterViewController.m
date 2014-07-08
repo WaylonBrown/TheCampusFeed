@@ -36,16 +36,7 @@
     if (self)
     {
         [self setDataController:controller];
-        self.toastController = [[ToastController alloc] initWithViewController:self];
-        
-        // Initialize a loading indicator, refresh control, and nearby college selector
-        self.refreshControl     = [[UIRefreshControl alloc] init];
-        self.activityIndicator  = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-
-        [self.refreshControl addTarget:self action:@selector(refresh)
-                      forControlEvents:UIControlEventValueChanged];
-        
-        
+        self.toastController = [[ToastController alloc] initWithViewController:self];        
     }
     return self;
 }
@@ -54,18 +45,14 @@
     
     [super loadView];
 
-//    // Show loading indicator until a nearby college is found,
-//    // then replace it with a create post button
-//    if ([self.dataController isNearCollege])
-//    {
-//        [self placeCreatePost];
-//    }
-//    else
-//    {
-//        [self placeLoadingIndicator];
-//    }
-    
-    [self.tableView addSubview:self.refreshControl];
+    // Add a refresh control to the top of the table view
+    // (assigned to a tableViewController to avoid a 'stutter' in the UI)
+    UITableViewController *tableViewController = [[UITableViewController alloc] init];
+    tableViewController.tableView = self.tableView;
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    tableViewController.refreshControl = self.refreshControl;
+
 
     // Place logo at the top of the navigation bar
     [self.navigationItem setTitleView:logoTitleView ];

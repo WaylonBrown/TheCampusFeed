@@ -1,17 +1,5 @@
 package com.appuccino.collegefeed.utils;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -28,6 +16,18 @@ import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Tag;
 import com.appuccino.collegefeed.objects.Vote;
+
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class NetWorker {
 	
@@ -120,10 +120,8 @@ public class NetWorker {
 			try {
 				response = client.execute(request, responseHandler);
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -133,7 +131,6 @@ public class NetWorker {
 			try {
 				ret = JSONParser.postListFromJSON(response);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return ret;
@@ -214,10 +211,8 @@ public class NetWorker {
 			try {
 				response = client.execute(request, responseHandler);
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			

@@ -1,10 +1,5 @@
 package com.appuccino.collegefeed;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
@@ -34,13 +29,18 @@ import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
 import com.appuccino.collegefeed.utils.FontManager;
-import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.NetWorker.GetCommentsTask;
 import com.appuccino.collegefeed.utils.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
+import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.TimeManager;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class CommentsActivity extends Activity{
 
@@ -60,7 +60,8 @@ public class CommentsActivity extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
+        requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_comment);
 		setupActionBar();
 		
@@ -76,7 +77,9 @@ public class CommentsActivity extends Activity{
 		
 		int collegeID = getIntent().getIntExtra("COLLEGE_ID", 0);
 		int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);
-		
+
+        Log.i("cfeed", "Section number: " + sectionNumber);
+
 		if(sectionNumber == 0)
 			post = TopPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
 		else if(sectionNumber == 1)
@@ -84,9 +87,10 @@ public class CommentsActivity extends Activity{
 		else if(sectionNumber == 2)
 			post = MyPostsFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
 		
-		if(MainActivity.hasPermissions(collegeID)){
+		Log.i("cfeed", "Post: " + post + " list: " + MainActivity.flagList + " post id: "
+                + getIntent().getIntExtra("POST_ID", -1));
+		if(MainActivity.hasPermissions(collegeID) && post != null){
 			newCommentButton.setVisibility(View.VISIBLE);
-			Log.i("cfeed", "Post: " + post + " list: " + MainActivity.flagList);
 			if(!MainActivity.flagList.contains(post.getID())){	//dont show flag button if already flagged
 				flagButton.setVisibility(View.VISIBLE);
 			}
@@ -240,7 +244,6 @@ public class CommentsActivity extends Activity{
 	}
 	
 	private void setupActionBar() {
-        requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		final ActionBar actionBar = getActionBar();
 		actionBar.setCustomView(R.layout.actionbar_comment);
 		actionBar.setDisplayShowTitleEnabled(false);
@@ -445,7 +448,7 @@ public class CommentsActivity extends Activity{
 	}
 
 	public static void setNewPermissionsIfAvailable() {
-		if(newCommentButton != null && MainActivity.hasPermissions(post.getCollegeID())){
+		if(newCommentButton != null && post != null && MainActivity.hasPermissions(post.getCollegeID())){
 			newCommentButton.setVisibility(View.VISIBLE);
 		}
 		hasPermissions = true;	//necessary that way if permissions updated while not on MainActivity, still allow to comment

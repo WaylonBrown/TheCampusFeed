@@ -72,6 +72,9 @@
 
     // assign arrow colors according to user's vote
     [self updateVoteButtons];
+    
+    [self.gpsIconImageView setHidden:(!self.userIsNearCollege)];
+    
 }
 
 #pragma mark - Actions
@@ -166,7 +169,7 @@
     if ([self.object class] == [Post class])
     {
         return [NSString stringWithFormat:@"%d comments",
-                (int)((Post*)self.object).commentList.count];
+                (int)((Post*)self.object).commentCount];
     }
     return @"";
 }
