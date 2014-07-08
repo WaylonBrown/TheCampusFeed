@@ -95,6 +95,11 @@
 {   // invoked every time a table row needs to be shown.
     // this specifies the prototype (PostTableCell) and assigns the labels
     
+    if ((indexPath.row + 5) % 25 == 0 && self.list.count < indexPath.row + 10)
+    {
+        [self loadMorePosts];
+    }
+    
     static NSString *CellIdentifier = @"TableCell";
     
     TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -135,23 +140,22 @@
 //{
 //    
 //}
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height)
-    {
-        if (!self.isFetchingMorePosts)
-        {
-            self.isFetchingMorePosts = YES;
-            if (self.viewType == RECENT_VIEW)
-            {
-                [self.dataController fetchNewPosts];
-                [self refresh];
-                self.isFetchingMorePosts = NO;
-            }
-
-        }
-    }
-}
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height)
+//    {
+//        if (!self.isFetchingMorePosts)
+//        {
+//            self.isFetchingMorePosts = YES;
+//            if (self.viewType == RECENT_VIEW)
+//            {
+//                [self.dataController fetchNewPosts];
+//                [self refresh];
+//                self.isFetchingMorePosts = NO;
+//            }
+//        }
+//    }
+//}
 
 #pragma mark - Navigation
 
@@ -160,7 +164,7 @@
     switch (self.viewType)
     {
         case TOP_VIEW:
-            [self.dataController fetchTopPosts];
+//            [self.dataController fetchTopPosts];
             [self setList:self.dataController.topPostsAllColleges];
             break;
         case RECENT_VIEW:
@@ -183,7 +187,7 @@
     switch (self.viewType)
     {
         case TOP_VIEW:
-            // TODO: this is calling dataController's function and passing its own variable to itself
+            // TODO: this is calling dataController's function and passing its own variable to itself...
             [self.dataController fetchTopPostsWithCollegeId:self.dataController.collegeInFocus.collegeID];
             [self setList:self.dataController.topPostsInCollege];
             break;
@@ -218,6 +222,21 @@
 }
 
 #pragma mark - Actions
+
+- (void)loadMorePosts
+{
+    if (self.viewType == RECENT_VIEW)
+    {
+        [self.dataController fetchNewPosts];
+        [self refresh];
+    }
+    else if (self.viewType == TOP_VIEW)
+    {
+        [self.dataController fetchTopPosts];
+        [self refresh];
+    }
+    [self.tableView reloadData];
+}
 
 - (void)refresh
 {   // refresh this post view

@@ -135,8 +135,7 @@
 }
 - (void)fetchTopPosts
 {
-    self.topPostsAllColleges = [[NSMutableArray alloc] init];
-    NSData* data = [Networker GETTrendingPosts];
+    NSData* data = [Networker GETTrendingPostsAtPageNum:self.topPostsPage++];
     [self parseData:data asClass:[Post class] intoList:self.topPostsAllColleges];
 }
 - (void)fetchTopPostsWithCollegeId:(long)collegeId
@@ -147,7 +146,6 @@
 }
 - (void)fetchNewPosts
 {
-//    [self setRecentPostsAllColleges:[[NSMutableArray alloc] init]];
     NSData* data = [Networker GETRecentPostsAtPageNum:self.recentPostsPage++];
     [self parseData:data asClass:[Post class] intoList:self.recentPostsAllColleges];
 }

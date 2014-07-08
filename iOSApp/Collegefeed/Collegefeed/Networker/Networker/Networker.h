@@ -40,11 +40,10 @@
 + (NSData *)GETAllPosts;
 + (NSData *)GETPostsWithCollegeId:(long)collegeId;
 
-+ (NSData *)GETRecentPostsAtPageNum:(long)pageNum; //** ONLY PAGINATION SO FAR
-
++ (NSData *)GETRecentPostsAtPageNum:(long)pageNum; // PAGINATION DONE
 + (NSData *)GETRecentPostsWithCollegeId:(long)collegeId;
 
-+ (NSData *)GETTrendingPosts;
++ (NSData *)GETTrendingPostsAtPageNum:(long)pageNum; // PAGINATION DONE
 + (NSData *)GETTrendingPostsWithCollegeId:(long)collegeId;
 + (NSData *)GETPostsWithIdArray:(NSArray *)Ids;
 
