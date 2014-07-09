@@ -421,6 +421,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		}		
 	}
 	
+    public void goToTopPostsAndScrollToTop() {
+        if(viewPager != null){
+            viewPager.setCurrentItem(0);
+            TopPostFragment.scrollToTop();
+        }
+    }
+
 	public static void goToNewPostsAndScrollToTop() {
 		if(viewPager != null){
 			viewPager.setCurrentItem(1);
