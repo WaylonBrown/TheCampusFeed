@@ -1,9 +1,5 @@
 package com.appuccino.collegefeed.adapters;
 
-import java.text.ParseException;
-import java.util.Calendar;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.text.Html;
@@ -20,7 +16,6 @@ import android.widget.Toast;
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.TagListActivity;
-import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Post;
@@ -29,6 +24,10 @@ import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.TimeManager;
+
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.List;
 
 public class PostListAdapter extends ArrayAdapter<Post>{
 
@@ -152,11 +151,8 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 				case 0:
 					TopPostFragment.updateList();
 					break;
-				case 1:
-					NewPostFragment.updateList();
-					break;
 				default:
-					MyPostsFragment.updateList();
+                    NewPostFragment.updateList();
 				}
 				new MakeVoteTask().execute(new Vote(thisPost.getID(), true));
 			}        	

@@ -22,7 +22,6 @@ import android.widget.Toast;
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
 import com.appuccino.collegefeed.dialogs.FlagDialog;
 import com.appuccino.collegefeed.dialogs.NewCommentDialog;
-import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Comment;
@@ -81,11 +80,9 @@ public class CommentsActivity extends Activity{
         Log.i("cfeed", "Section number: " + sectionNumber);
 
 		if(sectionNumber == 0)
-			post = TopPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
-		else if(sectionNumber == 1)
-			post = NewPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
-		else if(sectionNumber == 2)
-			post = MyPostsFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1), sectionNumber);
+			post = TopPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1));
+		else
+			post = NewPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1));
 		
 		Log.i("cfeed", "Post: " + post + " list: " + MainActivity.flagList + " post id: "
                 + getIntent().getIntExtra("POST_ID", -1));

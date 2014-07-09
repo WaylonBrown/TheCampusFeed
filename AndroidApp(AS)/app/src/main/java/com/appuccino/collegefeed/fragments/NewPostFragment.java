@@ -353,7 +353,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 	}
 	
-	public static Post getPostByID(int id, int sectionNumber)
+	public static Post getPostByID(int id)
 	{
 		if(postList != null)
 		{
