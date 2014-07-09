@@ -27,6 +27,14 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/pullDownText"
+        style="@style/fill"
+        android:gravity="center"
+        android:text="@string/emptyListString"
+        android:textSize="20sp"
+        android:visibility="gone"/>
     
     <LinearLayout
         android:id="@+id/footer"

@@ -148,7 +148,12 @@ public class NetWorker {
 				}else{
 					TopPostFragment.endOfListReached = true;
 				}
-				
+
+                //use these 2 test lines if you want to show the "pull down to load posts" test
+                /*
+                TopPostFragment.endOfListReached = true;
+                TopPostFragment.postList = new ArrayList<Post>();
+                */
 				TopPostFragment.updateList();
 				TopPostFragment.makeLoadingIndicator(false);
 				TopPostFragment.setupFooterListView();
