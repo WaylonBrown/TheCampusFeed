@@ -113,7 +113,6 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         try {
 			setTime(thisPost, postHolder.timeText);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         

@@ -218,7 +218,6 @@ public class NetWorker {
 			try {
 				ret = JSONParser.commentListFromJSON(response, postID);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return ret;
@@ -269,10 +268,8 @@ public class NetWorker {
 			try {
 				response = client.execute(request, responseHandler);
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -282,7 +279,6 @@ public class NetWorker {
 			try {
 				ret = JSONParser.tagListFromJSON(response);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return ret;
@@ -338,10 +334,8 @@ public class NetWorker {
 			try {
 				response = client.execute(request, responseHandler);
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -351,7 +345,6 @@ public class NetWorker {
 			try {
 				ret = JSONParser.postListFromJSON(response);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return ret;
@@ -387,11 +380,9 @@ public class NetWorker {
 				Log.d("cfeed", LOG_TAG + "Server response: " + response);
 				return true;
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			}
@@ -431,11 +422,9 @@ public class NetWorker {
 				Log.d("cfeed", LOG_TAG + "Server response: " + response);
 				return true;
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			}
@@ -462,11 +451,9 @@ public class NetWorker {
 				Log.d("cfeed", LOG_TAG + "Make vote server response: " + response);
 				return true;
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			}
@@ -505,11 +492,9 @@ public class NetWorker {
 				Log.d("cfeed", LOG_TAG + "Make flag server response: " + response);
 				return true;
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block 
 				e.printStackTrace();
 				return false;
 			}
