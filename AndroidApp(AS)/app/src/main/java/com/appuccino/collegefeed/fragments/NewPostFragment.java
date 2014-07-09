@@ -63,7 +63,8 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 	public static boolean endOfListReached = false;
 	static View lazyFooterView;
 	static View footerSpace;
-	
+    static TextView pullDownText;
+
 	//values for footer
 	static LinearLayout scrollAwayBottomView;
 	private static int mQuickReturnHeight;
@@ -93,7 +94,9 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		list = (QuickReturnListView)rootView.findViewById(R.id.fragmentListView);
 		loadingText = (ShimmerTextView)rootView.findViewById(R.id.loadingText);
 		scrollAwayBottomView = (LinearLayout)rootView.findViewById(R.id.footer);
-		
+        pullDownText = (TextView)rootView.findViewById(R.id.pullDownText);
+
+        pullDownText.setTypeface(FontManager.light);
 		loadingText.setTypeface(FontManager.light);
 		setupBottomViewUI();
 					
@@ -389,6 +392,9 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 			shimmer = new Shimmer();
 			shimmer.setDuration(600);
 			shimmer.start(loadingText);
+            if(pullDownText != null){
+               pullDownText.setVisibility(View.GONE);
+            }
 		}
 		else
 		{
@@ -403,6 +409,14 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 				// Notify PullToRefreshLayout that the refresh has finished
 	            pullToRefresh.setRefreshComplete();
 			}
+
+            if(pullDownText != null){
+                if(postList.size() == 0){
+                    pullDownText.setVisibility(View.VISIBLE);
+                } else {
+                    pullDownText.setVisibility(View.GONE);
+                }
+            }
 		}
 	}
 
