@@ -248,5 +248,32 @@
     [self showCreationDialogForCollege:college];
 }
 
+#pragma mark - Vanishing Bottom Toolbar
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGRect frame = self.feedToolbar.frame;
+    CGFloat size = frame.size.height;
+    CGFloat scrollOffset = scrollView.contentOffset.y;
+    CGFloat scrollDiff = scrollOffset - self.previousScrollViewYOffset;
+    CGFloat scrollHeight = scrollView.frame.size.height;
+
+    if (scrollOffset < 5)
+    {   // keep bar showing if at top of scrollView
+        frame.origin.y = scrollHeight - 50;
+    }
+    else if (scrollDiff > 0 && (frame.origin.y < scrollHeight))
+    {   // flick up / scroll down / hide bar
+        frame.origin.y += 4;
+    }
+    else if (scrollDiff < 0 && (frame.origin.y + size > scrollHeight))
+    {   // flick down / scroll up / show bar
+        frame.origin.y -= 4;
+    }
+    
+    [self.feedToolbar setFrame:frame];
+    
+    self.previousScrollViewYOffset = scrollOffset;
+}
 
 @end

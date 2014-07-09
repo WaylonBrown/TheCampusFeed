@@ -26,7 +26,7 @@
                     <color key="sectionIndexBackgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="sectionIndexTrackingBackgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                 </tableView>
-                <view opaque="NO" alpha="0.87" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="onw-bZ-Ayo">
+                <view opaque="NO" alpha="0.87" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="onw-bZ-Ayo">
                     <rect key="frame" x="0.0" y="469" width="320" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
@@ -88,7 +88,7 @@
             <constraints>
                 <constraint firstItem="aEV-VT-52H" firstAttribute="leading" secondItem="cKt-4a-JCZ" secondAttribute="leading" id="3ad-UP-V2U"/>
                 <constraint firstAttribute="trailing" secondItem="onw-bZ-Ayo" secondAttribute="trailing" id="8Re-ne-4Zw"/>
-                <constraint firstAttribute="bottom" secondItem="onw-bZ-Ayo" secondAttribute="bottom" constant="49" id="CAC-MK-eSD"/>
+                <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="onw-bZ-Ayo" secondAttribute="bottom" constant="49" id="CAC-MK-eSD"/>
                 <constraint firstItem="aEV-VT-52H" firstAttribute="top" secondItem="cKt-4a-JCZ" secondAttribute="top" id="HTI-BE-RpM"/>
                 <constraint firstAttribute="bottom" secondItem="aEV-VT-52H" secondAttribute="bottom" constant="49" id="JE9-8B-hTk"/>
                 <constraint firstItem="onw-bZ-Ayo" firstAttribute="leading" secondItem="cKt-4a-JCZ" secondAttribute="leading" id="VYU-mS-F2q"/>
