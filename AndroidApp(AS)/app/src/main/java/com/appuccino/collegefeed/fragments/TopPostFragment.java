@@ -447,6 +447,9 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 			else
 				collegeNameBottom.setText("");
 		}
+        if(postList != null){
+            postList.clear();
+        }
 		pullListFromServer(true);
 	}
 
