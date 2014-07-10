@@ -37,7 +37,7 @@
         android:textSize="16sp"
         android:gravity="center_horizontal"/>
 
-    <ListView
+     <ListView
         android:id="@+id/myCommentsListView"
         android:layout_height="0dp"
         android:layout_width="match_parent"
@@ -49,5 +49,29 @@
         android:listSelector="@android:color/transparent"
         android:scrollbars="none"
         android:background="@color/lightgray"/>
+
+    <View
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:background="@color/darkgray"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"/>
+
+    <TextView
+        android:id="@+id/postScore"
+        style="@style/block"
+        android:text="Post Score: 0"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:gravity="center_horizontal"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/commentScore"
+        style="@style/block"
+        android:paddingBottom="6dp"
+        android:text="Comment Score: 0"
+        android:gravity="center_horizontal"
+        android:textSize="16sp"/>
 
 </LinearLayout>
