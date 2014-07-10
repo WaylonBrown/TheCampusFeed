@@ -7,12 +7,12 @@
 //
 
 #import "DataController.h"
-#import "Models/Models/College.h"
-#import "Models/Models/Comment.h"
-#import "Models/Models/Post.h"
-#import "Models/Models/Tag.h"
-#import "Models/Models/Vote.h"
-#import "Networker/Networker/Networker.h"
+#import "College.h"
+#import "Comment.h"
+#import "Post.h"
+#import "Tag.h"
+#import "Vote.h"
+#import "Networker.h"
 
 @implementation DataController
 
@@ -30,6 +30,9 @@
         self.collegeList            = [[NSMutableArray alloc] init];
         self.allTags                = [[NSMutableArray alloc] init];
         self.userPosts              = [[NSMutableArray alloc] init];
+        
+        [self setTopPostsPage:0];
+        [self setRecentPostsPage:0];
         
         // Populate the initial arrays
         [self fetchTopPosts];
@@ -132,8 +135,7 @@
 }
 - (void)fetchTopPosts
 {
-    self.topPostsAllColleges = [[NSMutableArray alloc] init];
-    NSData* data = [Networker GETTrendingPosts];
+    NSData* data = [Networker GETTrendingPostsAtPageNum:self.topPostsPage++];
     [self parseData:data asClass:[Post class] intoList:self.topPostsAllColleges];
 }
 - (void)fetchTopPostsWithCollegeId:(long)collegeId
@@ -144,8 +146,7 @@
 }
 - (void)fetchNewPosts
 {
-    [self setRecentPostsAllColleges:[[NSMutableArray alloc] init]];
-    NSData* data = [Networker GETRecentPosts];
+    NSData* data = [Networker GETRecentPostsAtPageNum:self.recentPostsPage++];
     [self parseData:data asClass:[Post class] intoList:self.recentPostsAllColleges];
 }
 - (void)fetchNewPostsWithCollegeId:(long)collegeId
@@ -394,7 +395,12 @@
         {
             // Individual JSON object
             NSDictionary *jsonObject = (NSDictionary *) [jsonArray objectAtIndex:i];
-            [array addObject:[[class alloc] initFromJSON:jsonObject]];
+            NSObject *object = [[class alloc] initFromJSON:jsonObject];
+            if (![array containsObject:object])
+            {
+                [array addObject:object];
+            }
+            
         }
         return YES;
     }

@@ -1,8 +1,5 @@
 package com.appuccino.collegefeed.fragments;
 
-import java.util.ArrayList;
-
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,17 +8,17 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.adapters.FragmentCollegeListAdapter;
 import com.appuccino.collegefeed.objects.College;
 
+import java.util.ArrayList;
+
 public class MostActiveCollegesFragment extends Fragment
 {
 	static MainActivity mainActivity;
-	public static final String ARG_SECTION_NUMBER = "section_number";
 	static ArrayList<College> collegeList;
 
 	public MostActiveCollegesFragment()
@@ -43,9 +40,9 @@ public class MostActiveCollegesFragment extends Fragment
 		disableFooter(rootView);
 		
 		collegeList = new ArrayList<College>();
-		collegeList.add(new College("Texas A&M University"));
-		collegeList.add(new College("Harvard University"));
-		collegeList.add(new College("University of Texas at Austin"));
+		collegeList.add(new College("Texas A&M University", 1422));
+		collegeList.add(new College("Harvard University", 1066));
+		collegeList.add(new College("University of Texas at Austin", 1423));
 		
 		FragmentCollegeListAdapter adapter = new FragmentCollegeListAdapter(getActivity(), R.layout.list_row_college, collegeList, true);
 		
@@ -71,10 +68,7 @@ public class MostActiveCollegesFragment extends Fragment
 
 	public static void collegeClicked(College thisCollege) 
 	{
-//		Intent intent = new Intent(mainActivity, collegeListActivity.class);
-//		intent.putExtra("TAG_ID", tag.getText());
-//		
-//		mainActivity.startActivity(intent);
-//		mainActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);			
+        mainActivity.goToTopPostsAndScrollToTop();
+        mainActivity.changeFeed(thisCollege.getID());
 	}
 }

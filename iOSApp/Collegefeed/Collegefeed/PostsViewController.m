@@ -9,10 +9,10 @@
 #import "AppDelegate.h"
 #import "TableCell.h"
 #import "PostsViewController.h"
-#import "Models/Models/Post.h"
+#import "Post.h"
 #import "CommentViewController.h"
 #import "Shared.h"
-#import "Models/Models/College.h"
+#import "College.h"
 #import "ToastController.h"
 
 @implementation PostsViewController
@@ -95,6 +95,11 @@
 {   // invoked every time a table row needs to be shown.
     // this specifies the prototype (PostTableCell) and assigns the labels
     
+    if ((indexPath.row + 5) % 25 == 0 && self.list.count < indexPath.row + 10)
+    {
+        [self loadMorePosts];
+    }
+    
     static NSString *CellIdentifier = @"TableCell";
     
     TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -131,14 +136,6 @@
         return 100;
     }
 }
-//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-//{
-//    
-//}
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    
-}
 
 #pragma mark - Navigation
 
@@ -147,11 +144,11 @@
     switch (self.viewType)
     {
         case TOP_VIEW:
-            [self.dataController fetchTopPosts];
+//            [self.dataController fetchTopPosts];
             [self setList:self.dataController.topPostsAllColleges];
             break;
         case RECENT_VIEW:
-            [self.dataController fetchNewPosts];
+//            [self.dataController fetchNewPosts];
             [self setList:self.dataController.recentPostsAllColleges];
             break;
         case TAG_VIEW:
@@ -170,7 +167,7 @@
     switch (self.viewType)
     {
         case TOP_VIEW:
-            // TODO: this is calling dataController's function and passing its own variable to itself
+            // TODO: this is calling dataController's function and passing its own variable to itself...
             [self.dataController fetchTopPostsWithCollegeId:self.dataController.collegeInFocus.collegeID];
             [self setList:self.dataController.topPostsInCollege];
             break;
@@ -205,6 +202,21 @@
 }
 
 #pragma mark - Actions
+
+- (void)loadMorePosts
+{
+    if (self.viewType == RECENT_VIEW)
+    {
+        [self.dataController fetchNewPosts];
+        [self refresh];
+    }
+    else if (self.viewType == TOP_VIEW)
+    {
+        [self.dataController fetchTopPosts];
+        [self refresh];
+    }
+    [self.tableView reloadData];
+}
 
 - (void)refresh
 {   // refresh this post view

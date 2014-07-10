@@ -11,6 +11,7 @@
 #define CONTENT_TYPE    @"application/json;charset=UTF-8"
 #define API_URL         @"http://cfeed.herokuapp.com/api"
 #define API_VERSION     @"v1"
+#define PAGINATION_NUM  25
 
 @interface Networker : NSObject
 
@@ -39,10 +40,10 @@
 + (NSData *)GETAllPosts;
 + (NSData *)GETPostsWithCollegeId:(long)collegeId;
 
-+ (NSData *)GETRecentPosts;
++ (NSData *)GETRecentPostsAtPageNum:(long)pageNum; // PAGINATION DONE
 + (NSData *)GETRecentPostsWithCollegeId:(long)collegeId;
 
-+ (NSData *)GETTrendingPosts;
++ (NSData *)GETTrendingPostsAtPageNum:(long)pageNum; // PAGINATION DONE
 + (NSData *)GETTrendingPostsWithCollegeId:(long)collegeId;
 + (NSData *)GETPostsWithIdArray:(NSArray *)Ids;
 

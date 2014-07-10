@@ -8,7 +8,7 @@
 
 #import "CreatePostCommentViewController.h"
 #import "Shared.h"
-#import "Models/Models/College.h"
+#import "College.h"
 #import "ToastController.h"
 
 @implementation CreatePostCommentViewController

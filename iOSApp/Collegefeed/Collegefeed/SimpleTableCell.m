@@ -7,8 +7,8 @@
 //
 
 #import "SimpleTableCell.h"
-#import "Models/Models/Tag.h"
-#import "Models/Models/College.h"
+#import "Tag.h"
+#import "College.h"
 #import "Shared.h"
 
 @implementation SimpleTableCell

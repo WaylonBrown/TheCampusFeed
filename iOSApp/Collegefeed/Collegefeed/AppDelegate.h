@@ -14,6 +14,7 @@
 @class PostsViewController;
 @class TagViewController;
 @class CollegePickerViewController;
+@class UserContentViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, LocationFinderDelegateProtocol
     //AppDataDelegateProtocol,
@@ -29,5 +30,6 @@
 @property (strong, nonatomic) PostsViewController *recentPostsController;
 @property (strong, nonatomic) TagViewController *tagController;
 @property (strong, nonatomic) CollegePickerViewController *collegeController;
+@property (strong, nonatomic) UserContentViewController *userContentController;
 
 @end

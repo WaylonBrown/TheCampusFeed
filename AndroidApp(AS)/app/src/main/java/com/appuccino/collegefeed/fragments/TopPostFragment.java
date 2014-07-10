@@ -1,11 +1,5 @@
 package com.appuccino.collegefeed.fragments;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
-import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -43,6 +37,13 @@ import com.appuccino.collegefeed.utils.PrefManager;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+
 public class TopPostFragment extends Fragment implements OnRefreshListener
 {
 	static MainActivity mainActivity;
@@ -62,6 +63,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	public static boolean endOfListReached = false;
 	static View lazyFooterView;
 	static View footerSpace;
+    static TextView pullDownText;
 	
 	//values for footer
 	static LinearLayout scrollAwayBottomView;
@@ -92,7 +94,9 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		list = (QuickReturnListView)rootView.findViewById(R.id.fragmentListView);
 		loadingText = (ShimmerTextView)rootView.findViewById(R.id.loadingText);
 		scrollAwayBottomView = (LinearLayout)rootView.findViewById(R.id.footer);
-		
+        pullDownText = (TextView)rootView.findViewById(R.id.pullDownText);
+
+        pullDownText.setTypeface(FontManager.light);
 		loadingText.setTypeface(FontManager.light);
 		setupBottomViewUI();
 					
@@ -349,7 +353,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 	}
 	
-	public static Post getPostByID(int id, int sectionNumber)
+	public static Post getPostByID(int id)
 	{
 		if(postList != null)
 		{
@@ -388,6 +392,9 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 			shimmer = new Shimmer();
 			shimmer.setDuration(600);
 			shimmer.start(loadingText);
+            if(pullDownText != null){
+               pullDownText.setVisibility(View.GONE);
+            }
 		}
 		else
 		{
@@ -402,6 +409,14 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 				// Notify PullToRefreshLayout that the refresh has finished
 	            pullToRefresh.setRefreshComplete();
 			}
+
+            if(pullDownText != null){
+                if(postList.size() == 0){
+                    pullDownText.setVisibility(View.VISIBLE);
+                } else {
+                    pullDownText.setVisibility(View.GONE);
+                }
+            }
 		}
 	}
 
@@ -419,6 +434,8 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 
 	public static void changeFeed(int id) {
 		endOfListReached = false;
+        //go back to first page
+        currentPageNumber = 1;
 		currentFeedID = id;
 		College currentCollege = MainActivity.getCollegeByID(id);
 		if(collegeNameBottom != null)
@@ -432,6 +449,15 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 			else
 				collegeNameBottom.setText("");
 		}
+        if(postList != null){
+            postList.clear();
+        }
 		pullListFromServer(true);
+	}
+
+	public static void scrollToTop() {
+		if(list != null){
+			list.setSelectionAfterHeaderView();
+		}
 	}
 }

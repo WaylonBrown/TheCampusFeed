@@ -78,6 +78,9 @@
 @property (nonatomic) BOOL              showingAllColleges;
 @property (nonatomic) BOOL              showingSingleCollege;
 
+// Lazy Loading Counters
+@property (nonatomic) long topPostsPage;
+@property (nonatomic) long recentPostsPage;
 
 #pragma mark - Public Functions
 /****************************/

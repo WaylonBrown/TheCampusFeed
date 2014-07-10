@@ -207,11 +207,11 @@
     return [self GET:url];
 }
 
-+ (NSData *)GETRecentPosts
++ (NSData *)GETRecentPostsAtPageNum:(long)pageNum
 {
     NSURL *url = [[NSURL alloc] initWithString:
-                  [NSString stringWithFormat:@"%@/%@/posts/recent",
-                   API_URL, API_VERSION]];
+                  [NSString stringWithFormat:@"%@/%@/posts/recent?page=%ld&per_page=%d",
+                   API_URL, API_VERSION, pageNum, PAGINATION_NUM]];
     return [self GET:url];
 }
 + (NSData *)GETRecentPostsWithCollegeId:(long)collegeId
@@ -222,11 +222,11 @@
     return [self GET:url];
 }
 
-+ (NSData *)GETTrendingPosts
++ (NSData *)GETTrendingPostsAtPageNum:(long)pageNum
 {
     NSURL *url = [[NSURL alloc] initWithString:
-                  [NSString stringWithFormat:@"%@/%@/posts/trending",
-                   API_URL, API_VERSION]];
+                  [NSString stringWithFormat:@"%@/%@/posts/trending?page=%ld&per_page=%d",
+                   API_URL, API_VERSION, pageNum, PAGINATION_NUM]];
     return [self GET:url];
 }
 + (NSData *)GETTrendingPostsWithCollegeId:(long)collegeId

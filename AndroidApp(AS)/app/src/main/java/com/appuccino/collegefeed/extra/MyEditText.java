@@ -9,12 +9,10 @@ public class MyEditText extends EditText{
 
 	public MyEditText(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public MyEditText(Context context,AttributeSet attr) {
 	    super(context,attr);
-	    // TODO Auto-generated constructor stub
 	}
 	
 	//dont allow enter key to work

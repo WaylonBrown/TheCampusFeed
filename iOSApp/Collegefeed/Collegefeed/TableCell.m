@@ -7,8 +7,8 @@
 //
 
 #import "TableCell.h"
-#import "Models/Models/Post.h"
-#import "Models/Models/Vote.h"
+#import "Post.h"
+#import "Vote.h"
 #import "PostsViewController.h"
 #import "ChildCellDelegate.h"
 #import "Shared.h"
@@ -181,6 +181,7 @@
     {
         if ([word hasPrefix:@"#"])
         {
+
             NSRange range = [self.messageLabel.text rangeOfString:word];
             
             [self.messageLabel addLinkToURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", word]]

@@ -8,7 +8,6 @@ import android.widget.Toast;
 import com.appuccino.collegefeed.CommentsActivity;
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.TagListActivity;
-import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
@@ -67,10 +66,8 @@ public class NetWorker {
 			if(wasPullToRefresh){
 				if(whichFrag == 0)			//top posts
 					TopPostFragment.makeLoadingIndicator(true);
-				else if (whichFrag == 1)	//new posts
+				else                        //new posts
 					NewPostFragment.makeLoadingIndicator(true);
-				else if (whichFrag == 2)	//my posts
-					MyPostsFragment.makeLoadingIndicator(true);
 			}			
 			super.onPreExecute();
 		}
@@ -148,14 +145,19 @@ public class NetWorker {
 				}else{
 					TopPostFragment.endOfListReached = true;
 				}
-				
+
+                //use these 2 test lines if you want to show the "pull down to load posts" test
+                /*
+                TopPostFragment.endOfListReached = true;
+                TopPostFragment.postList = new ArrayList<Post>();
+                */
 				TopPostFragment.updateList();
 				TopPostFragment.makeLoadingIndicator(false);
 				TopPostFragment.setupFooterListView();
 				TopPostFragment.currentPageNumber++;
 				TopPostFragment.removeFooterSpinner();
 			}
-			else if(whichFrag == 1)	//new posts
+			else	//new posts
 			{
 				if(result != null && result.size() != 0){
 					//I have zero idea why this first line is needed, but without it the listadapter doesn't load the new list
@@ -171,12 +173,6 @@ public class NetWorker {
 				NewPostFragment.setupFooterListView();
 				NewPostFragment.currentPageNumber++;
 				NewPostFragment.removeFooterSpinner();
-			}
-			else if(whichFrag == 2)	//my posts
-			{
-				MyPostsFragment.postList = new ArrayList<Post>(result);
-				MyPostsFragment.updateList();
-				MyPostsFragment.makeLoadingIndicator(false);
 			}
 		}		
 	}
@@ -222,7 +218,6 @@ public class NetWorker {
 			try {
 				ret = JSONParser.commentListFromJSON(response, postID);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return ret;
@@ -273,10 +268,8 @@ public class NetWorker {
 			try {
 				response = client.execute(request, responseHandler);
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -286,7 +279,6 @@ public class NetWorker {
 			try {
 				ret = JSONParser.tagListFromJSON(response);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return ret;
@@ -342,10 +334,8 @@ public class NetWorker {
 			try {
 				response = client.execute(request, responseHandler);
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -355,7 +345,6 @@ public class NetWorker {
 			try {
 				ret = JSONParser.postListFromJSON(response);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return ret;
@@ -391,11 +380,9 @@ public class NetWorker {
 				Log.d("cfeed", LOG_TAG + "Server response: " + response);
 				return true;
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			}
@@ -435,11 +422,9 @@ public class NetWorker {
 				Log.d("cfeed", LOG_TAG + "Server response: " + response);
 				return true;
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			}
@@ -466,11 +451,9 @@ public class NetWorker {
 				Log.d("cfeed", LOG_TAG + "Make vote server response: " + response);
 				return true;
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			}
@@ -509,11 +492,9 @@ public class NetWorker {
 				Log.d("cfeed", LOG_TAG + "Make flag server response: " + response);
 				return true;
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block 
 				e.printStackTrace();
 				return false;
 			}

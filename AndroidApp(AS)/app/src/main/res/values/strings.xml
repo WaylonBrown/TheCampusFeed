@@ -23,7 +23,8 @@
         &#8226; Targets a specific person negatively to the point of bullying\n
         &#8226; Has a phone number\n
         \nUsers that have more than one post taken down get banned from posting on the app again.</string>
-    
+    <string name="emptyListString">Pull down to load posts</string>
+
     <string-array name="spinnerArray">
         <item>All Colleges</item>
         <item>Choose college...</item>

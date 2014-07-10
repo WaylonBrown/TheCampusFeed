@@ -12,7 +12,23 @@ public class College
 	{
 		this.name = name;
 	}
-	
+
+    /**
+     * For use with {@link com.appuccino.collegefeed.fragments.MostActiveCollegesFragment}
+     * @param name
+     * @param id
+     */
+    public College(String name, int id)
+    {
+        this.name = name;
+        this.id = id;
+    }
+
+    /**
+     * For use with {@link com.appuccino.collegefeed.utils.JSONParser}
+     * @param name
+     * @param id
+     */
 	public College(String name, int id, double lat, double lon)
 	{
 		this.name = name;

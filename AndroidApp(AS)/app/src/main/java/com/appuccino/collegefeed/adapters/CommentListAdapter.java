@@ -1,9 +1,5 @@
 package com.appuccino.collegefeed.adapters;
 
-import java.text.ParseException;
-import java.util.Calendar;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.text.Html;
@@ -14,7 +10,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +21,10 @@ import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.TimeManager;
+
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.List;
 
 public class CommentListAdapter extends ArrayAdapter<Comment>{
 
@@ -80,7 +79,6 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         try {
 			setTime(thisComment, commentHolder.timeText);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         
