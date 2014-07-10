@@ -10,9 +10,10 @@
 #import "PostsViewController.h"
 #import "CommentViewController.h"
 #import "TagViewController.h"
+#import "UserContentViewController.h"
 #import "Shared.h"
-#import "Models/Models/College.h"
-#import "Networker/Networker.h"
+#import "College.h"
+#import "Networker.h"
 
 @implementation AppDelegate
 
@@ -29,7 +30,7 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
 #pragma mark - Create ViewControllers
-    
+
     // *** Top Posts - PostsViewController *** //
     self.topPostsController = [[PostsViewController alloc] initAsType:TOP_VIEW
                                                    withDataController:self.dataController];
@@ -48,6 +49,10 @@
     UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:self.tagController];
     // *************************************** //
     
+    // *** User Posts/Comments - UserContentViewController *** //
+    self.userContentController = [[UserContentViewController alloc] initWithPosts:self.dataController.userPosts withComments:self.dataController.userComments];
+    UINavigationController *userNavController = [[UINavigationController alloc] initWithRootViewController:self.userContentController];
+    // ****************************************************** //
     
     // *** Top Colleges - CollegePickerViewController *** //
 //    self.collegeController = [[CollegePickerViewController alloc] initAsTopCollegesWithDataController:self.dataController];
@@ -62,6 +67,7 @@
                                topPostsNavController,
                                newPostsNavController,
                                tagNavController,
+                               userNavController,
 //                               collegeNavController,
                                nil];
     
@@ -73,9 +79,10 @@
     [[self.tabBarController.tabBar.items objectAtIndex:0] setImage:[UIImage imageNamed:@"top.png"]];
     [[self.tabBarController.tabBar.items objectAtIndex:1] setImage:[UIImage imageNamed:@"new.png"]];
     [[self.tabBarController.tabBar.items objectAtIndex:2] setImage:[UIImage imageNamed:@"tags.png"]];
+    [((UITabBarItem *)([self.tabBarController.tabBar.items objectAtIndex:3])) setTitle:@"My Content"];
 //    [[self.tabBarController.tabBar.items objectAtIndex:3] setImage:[UIImage imageNamed:@"colleges.png"]];
 
-    
+    [self.tabBarController setSelectedIndex:3];
     // finalize window specifications
     [self.window setRootViewController:self.tabBarController];
     [self.window makeKeyAndVisible];

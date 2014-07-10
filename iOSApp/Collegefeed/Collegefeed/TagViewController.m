@@ -7,8 +7,8 @@
 //
 
 
-#import "Models/Models/College.h"
-#import "Models/Models/Tag.h"
+#import "College.h"
+#import "Tag.h"
 #import "TagViewController.h"
 #import "PostsViewController.h"
 #import "Shared.h"

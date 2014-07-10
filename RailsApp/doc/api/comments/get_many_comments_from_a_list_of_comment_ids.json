@@ -7,7 +7,7 @@
   "parameters": [
     {
       "name": "many_ids",
-      "description": "An array of comment IDs for which to get information. In the query parameters screen below this displays incorrectly. A correct example would be many_ids=[1,2,3]"
+      "description": "An array of comment IDs for which to get information.HTTP GET request require arrays to be passed in the manner below. Your HTTP library should be able to easily translate an array into this format."
     }
   ],
   "requests": [
@@ -26,8 +26,8 @@
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "[{\"id\":1,\"text\":\"Test comment.\",\"score\":null,\"created_at\":\"2014-07-08T04:44:27.571Z\",\"updated_at\":\"2014-07-08T04:44:27.571Z\",\"post_id\":\"1\",\"hidden\":null},{\"id\":2,\"text\":\"Test comment number 2.\",\"score\":null,\"created_at\":\"2014-07-08T04:44:27.577Z\",\"updated_at\":\"2014-07-08T04:44:27.577Z\",\"post_id\":\"1\",\"hidden\":null}]",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"cccab04963dffee5f9a73bdcb779b406\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"9ab6dbc7-ad8e-474d-a69d-1e5d42258c88","X-Runtime":"0.011007","Content-Length":"316"},
+      "response_body": "[{\"id\":1,\"text\":\"Test comment.\",\"score\":null,\"created_at\":\"2014-07-10T06:40:35.361Z\",\"updated_at\":\"2014-07-10T06:40:35.361Z\",\"post_id\":\"1\",\"hidden\":null},{\"id\":2,\"text\":\"Test comment number 2.\",\"score\":null,\"created_at\":\"2014-07-10T06:40:35.366Z\",\"updated_at\":\"2014-07-10T06:40:35.366Z\",\"post_id\":\"1\",\"hidden\":null}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"f77eebcd907e19e521375b4264383c57\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"45af9644-f660-47ce-88e4-f569acb23be4","X-Runtime":"0.007004","Content-Length":"316"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

@@ -9,10 +9,10 @@
 #import "AppDelegate.h"
 #import "TableCell.h"
 #import "PostsViewController.h"
-#import "Models/Models/Post.h"
+#import "Post.h"
 #import "CommentViewController.h"
 #import "Shared.h"
-#import "Models/Models/College.h"
+#import "College.h"
 #import "ToastController.h"
 
 @implementation PostsViewController

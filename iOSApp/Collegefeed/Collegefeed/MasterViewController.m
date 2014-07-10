@@ -7,9 +7,9 @@
 //
 
 // Models
-#import "Models/Models/College.h"
-#import "Models/Models/Post.h"
-#import "Models/Models/Vote.h"
+#import "College.h"
+#import "Post.h"
+#import "Vote.h"
 
 // Full views
 #import "MasterViewController.h"
@@ -55,7 +55,7 @@
 
 
     // Place logo at the top of the navigation bar
-    [self.navigationItem setTitleView:logoTitleView ];
+    [self.navigationItem setTitleView:logoTitleView];
 
     // Assign fonts
     [self.currentFeedLabel      setAdjustsFontSizeToFitWidth:YES];

@@ -36,9 +36,9 @@
         return GETReply;
     }
     
-    [NSException raise:@"Error in networker.GET"
-                format:@"URL: %@\nResponse: %@\nError message: %@\n",
-     url, stringReply, [error localizedDescription]];
+//    [NSException raise:@"Error in networker.GET"
+//                format:@"URL: %@\nResponse: %@\nError message: %@\n",
+//     url, stringReply, [error localizedDescription]];
     
     return nil;
 }
@@ -70,9 +70,9 @@
         return POSTReply;
     }
     
-    [NSException raise:@"Error in networker.POST"
-                format:@"URL: %@\nResponse: %@\nError message: %@\n",
-     url, stringReply, [error localizedDescription]];
+//    [NSException raise:@"Error in networker.POST"
+//                format:@"URL: %@\nResponse: %@\nError message: %@\n",
+//     url, stringReply, [error localizedDescription]];
     return nil;
 }
 
@@ -119,6 +119,11 @@
 
 + (NSData *)GETCommentsWithIdArray:(NSArray *)Ids
 {
+    if (Ids.count == 0 || Ids == nil)
+    {
+        return nil;
+    }
+    
     //TODO: change this url if endpoint parameters get fixed
     NSString *idString = @"";
     for (int i = 0; i < Ids.count; i++)
@@ -239,6 +244,11 @@
 
 + (NSData *)GETPostsWithIdArray:(NSArray *)Ids
 {
+    if (Ids.count == 0 || Ids == nil)
+    {
+        return nil;
+    }
+    
     //TODO: change this url if endpoint parameters get fixed
     NSString *idString = @"";
     for (int i = 0; i < Ids.count; i++)

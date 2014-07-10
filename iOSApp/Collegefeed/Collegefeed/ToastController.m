@@ -11,7 +11,7 @@
 #import "CreatePostCommentViewController.h"
 #import "UIView+Toast.h"
 
-#import "Models/Models/College.h"
+#import "College.h"
 
 @implementation ToastController
 

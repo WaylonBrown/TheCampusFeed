@@ -8,10 +8,10 @@
 
 #import "TableCell.h"
 #import "PostsViewController.h"
-#import "Models/Models/Post.h"
+#import "Post.h"
 #import "PostsViewController.h"
 #import "CommentViewController.h"
-#import "Models/Models/Comment.h"
+#import "Comment.h"
 #import "TTTAttributedLabel.h"
 #import "Shared.h"
 #import "ToastController.h"

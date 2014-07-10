@@ -101,7 +101,10 @@
 - (BOOL)isNearCollegeWithId:(long)collegeId;
 
 //** Not called**********
-- (void)saveUserData;
+- (void)saveUserPosts;
+- (void)saveUserComments;
+- (void)saveUserVotes;
+- (void)saveAllUserData;
 - (void)retrieveUserData;
 //***********************
 
