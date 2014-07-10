@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Models/Models/CFModelProtocol.h"
+#import "CFModelProtocol.h"
 
 @class College;
 @class ToastController;

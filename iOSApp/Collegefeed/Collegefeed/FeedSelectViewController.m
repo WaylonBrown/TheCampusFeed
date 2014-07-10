@@ -8,7 +8,7 @@
 
 #import "FeedSelectViewController.h"
 #import "Shared.h"
-#import "Models/Models/College.h"
+#import "College.h"
 
 @implementation FeedSelectViewController
 

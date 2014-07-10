@@ -7,12 +7,12 @@
 //
 
 #import "DataController.h"
-#import "Models/Models/College.h"
-#import "Models/Models/Comment.h"
-#import "Models/Models/Post.h"
-#import "Models/Models/Tag.h"
-#import "Models/Models/Vote.h"
-#import "Networker/Networker/Networker.h"
+#import "College.h"
+#import "Comment.h"
+#import "Post.h"
+#import "Tag.h"
+#import "Vote.h"
+#import "Networker.h"
 
 @implementation DataController
 

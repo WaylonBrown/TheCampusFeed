@@ -12,8 +12,8 @@
 #import "TagViewController.h"
 #import "UserContentViewController.h"
 #import "Shared.h"
-#import "Models/Models/College.h"
-#import "Networker/Networker.h"
+#import "College.h"
+#import "Networker.h"
 
 @implementation AppDelegate
 

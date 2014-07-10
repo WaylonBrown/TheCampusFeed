@@ -10,9 +10,9 @@
 #import "Shared.h"
 #import "TableCell.h"
 #import "DataController.h"
-#import "Models/Models/Post.h"
-#import "Models/Models/Comment.h"
-#import "Models/Models/College.h"
+#import "Post.h"
+#import "Comment.h"
+#import "College.h"
 
 @implementation UserContentViewController
 
