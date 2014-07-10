@@ -9,12 +9,24 @@
 #import "UserContentViewController.h"
 #import "Shared.h"
 #import "TableCell.h"
+#import "DataController.h"
 #import "Models/Models/Post.h"
 #import "Models/Models/Comment.h"
 #import "Models/Models/College.h"
 
 @implementation UserContentViewController
 
+- (id)initWithPosts:(NSMutableArray *)userPosts withComments:(NSMutableArray *)userComments
+{
+    self = [super initWithNibName:@"UserContentViewController" bundle:nil];
+    if (self)
+    {
+        [self setPostArray:userPosts];
+        [self setCommentArray:userComments];
+    }
+    return self;
+
+}
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -28,6 +40,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self.navigationItem setTitleView:logoTitleView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -38,28 +51,28 @@
 
 #pragma mark - Table View Delegates
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{   // return the view for the header title
-    
-    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [headerLabel setTextAlignment:NSTextAlignmentCenter];
-    [headerLabel setFont:[UIFont systemFontOfSize:12]];
-    [headerLabel setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
-    
-    if (tableView == self.postTableView)
-    {
-        [headerLabel setText:@"My Posts"];
-    }
-    else if (tableView == self.commentTableView)
-    {
-        [headerLabel setText:@"Comments"];
-    }
-    return headerLabel;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 25.0;
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{   // return the view for the header title
+//    
+//    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+//    [headerLabel setTextAlignment:NSTextAlignmentCenter];
+//    [headerLabel setFont:[UIFont systemFontOfSize:12]];
+//    [headerLabel setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
+//    
+//    if (tableView == self.postTableView)
+//    {
+//        [headerLabel setText:@"My Posts"];
+//    }
+//    else if (tableView == self.commentTableView)
+//    {
+//        [headerLabel setText:@"Comments"];
+//    }
+//    return headerLabel;
+//}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return 25.0;
+//}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0)

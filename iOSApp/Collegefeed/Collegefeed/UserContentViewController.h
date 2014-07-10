@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class DataController;
+
 @interface UserContentViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+
+//- (id)initWithDataController:(DataController *)controller;
+- (id)initWithPosts:(NSArray *)userPosts withComments:(NSArray *)userComments;
 
 // UI properties
 @property (strong, nonatomic) IBOutlet UITableView *postTableView;
@@ -16,6 +21,7 @@
 
 
 // Data properties
+//@property (strong, nonatomic) DataController *dataController;
 @property (strong, nonatomic) NSMutableArray *postArray;
 @property (strong, nonatomic) NSMutableArray *commentArray;
 
