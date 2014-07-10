@@ -434,6 +434,8 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 
 	public static void changeFeed(int id) {
 		endOfListReached = false;
+        //go back to first page
+        currentPageNumber = 1;
 		currentFeedID = id;
 		College currentCollege = MainActivity.getCollegeByID(id);
 		if(collegeNameBottom != null)
