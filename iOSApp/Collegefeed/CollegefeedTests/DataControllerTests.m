@@ -44,14 +44,4 @@
     [self.controller getHardCodedCollegeList];
 }
 
-- (void)testSaveAndFetchUserPosts
-{
-    [self setUp];
-//    [self.controller fetchTopPosts];
-//    self.controller.userPosts = [self.controller.topPostsAllColleges copy];
-//    [self.controller saveUserDataIds];
-//    [self.controller.userPosts removeAllObjects];
-//    [self.controller retrieveUserData];
-}
-
 @end
