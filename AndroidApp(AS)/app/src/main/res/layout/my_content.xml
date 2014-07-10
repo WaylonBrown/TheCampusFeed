@@ -44,7 +44,7 @@
         android:layout_weight="1"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:divider="@android:color/transparent"d
+        android:divider="@android:color/transparent"
         android:dividerHeight="6dp"
         android:listSelector="@android:color/transparent"
         android:scrollbars="none"
