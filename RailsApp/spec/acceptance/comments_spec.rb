@@ -35,7 +35,7 @@ resource "Comments" do
   end
   get '/api/v1/comments/many' do
 
-    parameter :many_ids, "An array of comment IDs for which to get information. In the query parameters screen below this displays incorrectly. A correct example would be many_ids=[1,2,3]"
+    parameter :many_ids, "An array of comment IDs for which to get information.HTTP GET request require arrays to be passed in the manner below. Your HTTP library should be able to easily translate an array into this format."
     example 'Get many comments from a list of comment IDs' do
       comment_ids = [1,2]
       do_request(

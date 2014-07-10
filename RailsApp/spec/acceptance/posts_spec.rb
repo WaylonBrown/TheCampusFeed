@@ -97,7 +97,7 @@ resource "Posts" do
 
   get '/api/v1/posts/many' do
     let(:raw_post) { params.to_json }
-    parameter :many_ids, "An array of post IDs for which to get information. In the query parameters screen below this displays incorrectly. A correct example would be many_ids=[1,2,3]"
+    parameter :many_ids, "An array of post IDs for which to get information. HTTP GET request require arrays to be passed in the manner below. Your HTTP library should be able to easily translate an array into this format."
     example 'Get many posts from a list of post IDs' do
       post_ids = [1,2,3]
       do_request(
