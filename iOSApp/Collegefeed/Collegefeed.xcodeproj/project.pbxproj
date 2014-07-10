@@ -20,6 +20,8 @@
 		5350558019529FCA009C1911 /* FeedSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5350557E19529FCA009C1911 /* FeedSelectViewController.xib */; };
 		5350558F1953C75C009C1911 /* gps.png in Resources */ = {isa = PBXBuildFile; fileRef = 5350558E1953C75C009C1911 /* gps.png */; };
 		5352B5A2195F5C3100FEB2BF /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 5352B5A1195F5C3100FEB2BF /* UIView+Toast.m */; };
+		536D0E0D196D0F5700677C1B /* UserContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536D0E0B196D0F5700677C1B /* UserContentViewController.m */; };
+		536D0E0E196D0F5700677C1B /* UserContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 536D0E0C196D0F5700677C1B /* UserContentViewController.xib */; };
 		5390A91D1914B76800ACD082 /* arrowdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9141914B76800ACD082 /* arrowdown.png */; };
 		5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9151914B76800ACD082 /* arrowdownred.png */; };
 		5390A91F1914B76800ACD082 /* arrowup.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9161914B76800ACD082 /* arrowup.png */; };
@@ -141,6 +143,9 @@
 		5350558E1953C75C009C1911 /* gps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gps.png; sourceTree = "<group>"; };
 		5352B5A0195F5C3100FEB2BF /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
 		5352B5A1195F5C3100FEB2BF /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
+		536D0E0A196D0F5700677C1B /* UserContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserContentViewController.h; sourceTree = "<group>"; };
+		536D0E0B196D0F5700677C1B /* UserContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserContentViewController.m; sourceTree = "<group>"; };
+		536D0E0C196D0F5700677C1B /* UserContentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserContentViewController.xib; sourceTree = "<group>"; };
 		5390A9141914B76800ACD082 /* arrowdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdown.png; sourceTree = "<group>"; };
 		5390A9151914B76800ACD082 /* arrowdownred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdownred.png; sourceTree = "<group>"; };
 		5390A9161914B76800ACD082 /* arrowup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowup.png; sourceTree = "<group>"; };
@@ -290,6 +295,16 @@
 			name = "Tag View";
 			sourceTree = "<group>";
 		};
+		536D0E11196D0F5A00677C1B /* User Content */ = {
+			isa = PBXGroup;
+			children = (
+				536D0E0A196D0F5700677C1B /* UserContentViewController.h */,
+				536D0E0B196D0F5700677C1B /* UserContentViewController.m */,
+				536D0E0C196D0F5700677C1B /* UserContentViewController.xib */,
+			);
+			name = "User Content";
+			sourceTree = "<group>";
+		};
 		5390A9131914B76800ACD082 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -346,6 +361,7 @@
 			isa = PBXGroup;
 			children = (
 				53B1FE0119254EB900905E49 /* MasterView */,
+				536D0E11196D0F5A00677C1B /* User Content */,
 				535055881953B067009C1911 /* Post/Comment View */,
 				5350558119529FD5009C1911 /* Select College */,
 				5350557B1951458B009C1911 /* Create Post/Comment */,
@@ -606,6 +622,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */,
+				536D0E0E196D0F5700677C1B /* UserContentViewController.xib in Resources */,
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */,
 				53AB57C5194ABD11001D1B7B /* Omnes-Semibold.ttf in Resources */,
@@ -667,6 +684,7 @@
 				53D51E391949625300A8BA81 /* SimpleTableCell.m in Sources */,
 				5312942E196504CD00CF13DB /* ToastController.m in Sources */,
 				533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */,
+				536D0E0D196D0F5700677C1B /* UserContentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

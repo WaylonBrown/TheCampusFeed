@@ -33,6 +33,8 @@
 
 @property (strong, nonatomic) NSMutableArray *list;
 
+@property (nonatomic) float previousScrollViewYOffset;
+
 // Initialization
 - (id)initWithDataController:(DataController *)controller;
 
