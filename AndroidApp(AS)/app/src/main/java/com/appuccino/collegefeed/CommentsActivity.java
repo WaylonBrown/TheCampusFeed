@@ -33,8 +33,6 @@ import com.appuccino.collegefeed.utils.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
 import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.TimeManager;
-import com.romainpiel.shimmer.Shimmer;
-import com.romainpiel.shimmer.ShimmerTextView;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -44,8 +42,7 @@ import java.util.List;
 public class CommentsActivity extends Activity{
 
 	static CommentListAdapter listAdapter;
-	ShimmerTextView loadingText;
-	Shimmer shimmer;
+	ProgressBar loadingSpinner;
 	static Post post;
 	static ImageView newCommentButton;
 	static ImageView flagButton;
@@ -68,7 +65,7 @@ public class CommentsActivity extends Activity{
 		flagButton = (ImageView)findViewById(R.id.flagButton);
 		actionBarLoadingIcon = (ProgressBar)findViewById(R.id.commentActionbarLoadingIcon);
 		list = (ListView)findViewById(R.id.commentsList);
-		loadingText = (ShimmerTextView)findViewById(R.id.commentsLoadingText);
+		loadingSpinner = (ProgressBar)findViewById(R.id.commentsLoading);
 		final TextView scoreText = (TextView)findViewById(R.id.scoreText);
 		TextView messageText = (TextView)findViewById(R.id.messageText);
 		TextView timeText = (TextView)findViewById(R.id.timeText);
@@ -103,7 +100,6 @@ public class CommentsActivity extends Activity{
 		messageText.setTypeface(FontManager.light);
 		timeText.setTypeface(FontManager.medium);
 		commentsText.setTypeface(FontManager.light);
-		loadingText.setTypeface(FontManager.light);
 		if(post != null)
 		{
 			scoreText.setText(String.valueOf(post.getScore()));
@@ -400,20 +396,13 @@ public class CommentsActivity extends Activity{
 		if(makeLoading)
 		{
 			list.setVisibility(View.INVISIBLE);
-			loadingText.setVisibility(View.VISIBLE);
-			
-			shimmer = new Shimmer();
-			shimmer.setDuration(600);
-			shimmer.start(loadingText);
+			loadingSpinner.setVisibility(View.VISIBLE);
 		}
 		else
 		{
 			list.setVisibility(View.VISIBLE);
-			loadingText.setVisibility(View.INVISIBLE);
-			
-			if (shimmer != null && shimmer.isAnimating()) 
-	            shimmer.cancel();
-			
+			loadingSpinner.setVisibility(View.INVISIBLE);
+
 			//TODO: for PTR
 //			if(pullToRefresh != null)
 //			{

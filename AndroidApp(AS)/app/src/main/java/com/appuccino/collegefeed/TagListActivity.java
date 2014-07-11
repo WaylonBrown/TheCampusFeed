@@ -1,8 +1,5 @@
 package com.appuccino.collegefeed;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
@@ -22,6 +19,9 @@ import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.NetWorker.GetTagActivityTask;
 import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TagListActivity extends Activity{
 	private static PostListAdapter listAdapter;
@@ -118,7 +118,5 @@ public class TagListActivity extends Activity{
 		}else{
 			progressSpinner.setVisibility(View.GONE);
 		}
-		
 	}
-
 }
