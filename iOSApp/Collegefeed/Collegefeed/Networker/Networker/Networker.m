@@ -168,15 +168,15 @@
     return [self POST:data toUrl:url];
 }
 
-+ (NSData *)GETPostsWithTagName:(NSString*)tagName
-{
-    NSString* tagWithoutHash = [tagName stringByReplacingOccurrencesOfString:@"#"
-                                                                  withString:@""];
-    NSURL *url = [[NSURL alloc] initWithString:
-                  [NSString stringWithFormat:@"%@/%@/posts/byTag/%@",
-                   API_URL, API_VERSION, tagWithoutHash]];
-    return [self GET:url];
-}
+//+ (NSData *)GETPostsWithTagName:(NSString *)tagName;
+//{
+//    NSString* tagWithoutHash = [tagName stringByReplacingOccurrencesOfString:@"#"
+//                                                                  withString:@""];
+//    NSURL *url = [[NSURL alloc] initWithString:
+//                  [NSString stringWithFormat:@"%@/%@/posts/byTag/%@",
+//                   API_URL, API_VERSION, tagWithoutHash]];
+//    return [self GET:url];
+//}
 + (NSData *)GETPostsWithTagName:(NSString*)tagName
                   withCollegeId:(long)collegeId
 {
@@ -187,14 +187,14 @@
                    API_URL, API_VERSION, collegeId, tagWithoutHash]];
     return [self GET:url];
 }
-
 + (NSData *)GETAllPostsWithTag:(NSString*)tagName
-                withPageNumber:(long)page
-             withNumberPerPage:(long)perPage
+                     atPageNum:(long)pageNum
 {
+    NSString* tagWithoutHash = [tagName stringByReplacingOccurrencesOfString:@"#"
+                                                                  withString:@""];
     NSURL *url = [[NSURL alloc] initWithString:
-                  [NSString stringWithFormat:@"%@/%@/posts/byTag/%@?page=%ld&per_page=%ld",
-                   API_URL, API_VERSION, tagName, page, perPage]];
+                  [NSString stringWithFormat:@"%@/%@/posts/byTag/%@?page=%ld&per_page=%d",
+                   API_URL, API_VERSION, tagWithoutHash, pageNum, PAGINATION_NUM]];
     return [self GET:url];
 }
 + (NSData *)GETAllPosts

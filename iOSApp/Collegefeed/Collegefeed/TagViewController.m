@@ -122,12 +122,13 @@
     {
         [self.dataController fetchAllPostsWithTagMessage:tag];
         PostsViewController *postsView = [[PostsViewController alloc] initAsType:TAG_VIEW withDataController:self.dataController];
+        [postsView setTagMessage:tag];
         [self.navigationController pushViewController:postsView animated:YES];
         
     }
     else
     {
-        // toast an error or some shit
+        // TODO: toast an error or some shit and let 'em try again
     }
 }
 #pragma mark - Actions

@@ -164,8 +164,9 @@
 }
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage
 {
+    [self setTagPostsPage:0];
     [self setAllPostsWithTag:[[NSMutableArray alloc] init]];
-    NSData* data = [Networker GETPostsWithTagName:tagMessage];
+    NSData* data = [Networker GETAllPostsWithTag:tagMessage atPageNum:self.tagPostsPage];
     [self parseData:data asClass:[Post class] intoList:self.allPostsWithTag];
 }
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage
@@ -174,6 +175,12 @@
     [self setAllPostsWithTagInCollege:[[NSMutableArray alloc] init]];
     NSData* data = [Networker GETPostsWithTagName:tagMessage withCollegeId:collegeId];
     [self parseData:data asClass:[Post class] intoList:self.allPostsWithTagInCollege];
+}
+- (void)fetchMorePostsWithTagMessage:(NSString*)tagMessage
+{
+    self.tagPostsPage++;
+    NSData* data = [Networker GETAllPostsWithTag:tagMessage atPageNum:self.tagPostsPage];
+    [self parseData:data asClass:[Post class] intoList:self.allPostsWithTag];
 }
 - (void)fetchUserPostsWithIdArray:(NSArray *)postIds
 {
@@ -428,6 +435,10 @@
                                                                      error:nil];
     if (jsonArray != nil)
     {
+        if (jsonArray.count == 0)
+        {
+            return NO;
+        }
         for (int i = 0; i < jsonArray.count; i++)
         {
             // Individual JSON object

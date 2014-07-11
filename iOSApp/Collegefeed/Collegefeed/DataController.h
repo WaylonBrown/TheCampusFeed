@@ -81,6 +81,8 @@
 // Lazy Loading Counters
 @property (nonatomic) long topPostsPage;
 @property (nonatomic) long recentPostsPage;
+@property (nonatomic) long tagPostsPage;
+
 
 #pragma mark - Public Functions
 /****************************/
@@ -110,6 +112,7 @@
 /*************************/
 /***** Network Access ****/
 /*************************/
+
 // Colleges
 - (void)getNetworkCollegeList;
 
@@ -136,7 +139,7 @@
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage;
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage
                       withCollegeId:(long)collegeId;
-//- (void)fetchMorePostsWithTagMessage:(NSString*)tagMessage;
+- (void)fetchMorePostsWithTagMessage:(NSString*)tagMessage;
 
 - (void)fetchUserPostsWithIdArray:(NSArray *)postIds;
 

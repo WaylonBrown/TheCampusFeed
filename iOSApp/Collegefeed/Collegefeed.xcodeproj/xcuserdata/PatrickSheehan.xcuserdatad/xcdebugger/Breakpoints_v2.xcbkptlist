@@ -48,16 +48,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Collegefeed/TagViewController.m"
-            timestampString = "426747725.956105"
+            filePath = "Collegefeed/Networker/Networker/Networker.m"
+            timestampString = "426751036.597395"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
-            landmarkName = "-searchBarSearchButtonClicked:"
+            startingLineNumber = "193"
+            endingLineNumber = "193"
+            landmarkName = "+GETAllPostsWithTag:atPageNum:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Collegefeed/DataController.m"
+            timestampString = "426754787.885454"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "453"
+            endingLineNumber = "453"
+            landmarkName = "-parseData:asClass:intoList:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

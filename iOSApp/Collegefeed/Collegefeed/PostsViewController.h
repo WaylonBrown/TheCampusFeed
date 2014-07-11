@@ -19,7 +19,6 @@
 @property (strong, nonatomic) NSString* tagMessage;
 
 @property (nonatomic) ViewType viewType;
-@property (nonatomic) BOOL isFetchingMorePosts;
 
 - (id)initAsType:(ViewType)type withDataController:(DataController *)controller;
 
