@@ -483,7 +483,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public void chooseFeedDialog() {
 		LayoutInflater inflater = getLayoutInflater();
 		View layout = inflater.inflate(R.layout.dialog_choosefeed, null);
-		chooseFeedDialog = new ChooseFeedDialog(this, layout);
+        if(chooseFeedDialog == null || !chooseFeedDialog.isShowing()){
+            chooseFeedDialog = new ChooseFeedDialog(this, layout);
+        }
 	}
 
 	public void newPostClicked() 
