@@ -82,7 +82,6 @@
 
     [self.commentViewController setOriginalPost:self.selectedPost];
     
-//    [self.navigationController.navigationItem setHidesBackButton:YES];
     [self.navigationController pushViewController:self.commentViewController
                                          animated:YES];
 }
@@ -96,10 +95,11 @@
     // this specifies the prototype (PostTableCell) and assigns the labels
     int rowNum = indexPath.row;
     int listcount = self.list.count;
-    if ((rowNum + 5) % 25 == 0
+    if (!self.hasReachedEndOfList
+        && (rowNum + 5) % 25 == 0
         && listcount < rowNum + 10)
     {
-        [self loadMorePosts];
+        self.hasReachedEndOfList = ![self loadMorePosts];
     }
     
     static NSString *CellIdentifier = @"TableCell";
@@ -146,18 +146,12 @@
     switch (self.viewType)
     {
         case TOP_VIEW:
-//            [self.dataController fetchTopPosts];
             [self setList:self.dataController.topPostsAllColleges];
             break;
         case RECENT_VIEW:
-//            [self.dataController fetchNewPosts];
             [self setList:self.dataController.recentPostsAllColleges];
             break;
         case TAG_VIEW:
-//            if (self.tagMessage != nil)
-//            {
-//                [self.dataController fetchAllPostsWithTagMessage:self.tagMessage];
-//            }
             [self setList:self.dataController.allPostsWithTag];
             break;
         default:
@@ -205,8 +199,10 @@
 
 #pragma mark - Actions
 
-- (void)loadMorePosts
+- (BOOL)loadMorePosts
 {
+    BOOL success = false;
+    
     switch (self.viewType)
     {
         case RECENT_VIEW:
@@ -218,11 +214,12 @@
             [self refresh];
             break;
         case TAG_VIEW:
-            [self.dataController fetchMorePostsWithTagMessage:self.tagMessage];
+            success = [self.dataController fetchMorePostsWithTagMessage:self.tagMessage];
             [self refresh];
         default:
             break;
     }
+    return success;
 }
 
 - (void)refresh

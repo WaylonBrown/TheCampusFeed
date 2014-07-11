@@ -176,11 +176,11 @@
     NSData* data = [Networker GETPostsWithTagName:tagMessage withCollegeId:collegeId];
     [self parseData:data asClass:[Post class] intoList:self.allPostsWithTagInCollege];
 }
-- (void)fetchMorePostsWithTagMessage:(NSString*)tagMessage
+- (BOOL)fetchMorePostsWithTagMessage:(NSString*)tagMessage
 {
     self.tagPostsPage++;
     NSData* data = [Networker GETAllPostsWithTag:tagMessage atPageNum:self.tagPostsPage];
-    [self parseData:data asClass:[Post class] intoList:self.allPostsWithTag];
+    return [self parseData:data asClass:[Post class] intoList:self.allPostsWithTag];
 }
 - (void)fetchUserPostsWithIdArray:(NSArray *)postIds
 {

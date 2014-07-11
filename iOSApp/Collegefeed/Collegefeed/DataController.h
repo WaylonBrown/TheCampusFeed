@@ -139,7 +139,7 @@
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage;
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage
                       withCollegeId:(long)collegeId;
-- (void)fetchMorePostsWithTagMessage:(NSString*)tagMessage;
+- (BOOL)fetchMorePostsWithTagMessage:(NSString*)tagMessage;
 
 - (void)fetchUserPostsWithIdArray:(NSArray *)postIds;
 
