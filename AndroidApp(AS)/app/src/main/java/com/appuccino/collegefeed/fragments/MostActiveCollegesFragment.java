@@ -96,9 +96,18 @@ public class MostActiveCollegesFragment extends Fragment
     public static void updateList() {
         if(adapter != null)
         {
+            appendNumbersToCollegeList();
             adapter.clear();
             adapter.addAll(collegeList);
             adapter.notifyDataSetChanged();
+        }
+    }
+
+    private static void appendNumbersToCollegeList() {
+        if(collegeList != null && collegeList.size() != 0){
+            for(int i = 0; i < collegeList.size(); i++){
+                collegeList.get(i).setName(String.valueOf(i+1) + ". " + collegeList.get(i).getName());
+            }
         }
     }
 

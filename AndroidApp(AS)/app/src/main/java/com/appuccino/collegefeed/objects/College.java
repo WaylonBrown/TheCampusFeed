@@ -36,6 +36,10 @@ public class College
 		this.latitude = lat;
 		this.longitude = lon;
 	}
+
+    public void setName(String n){
+        name = n;
+    }
 	
 	public String getName()
 	{
