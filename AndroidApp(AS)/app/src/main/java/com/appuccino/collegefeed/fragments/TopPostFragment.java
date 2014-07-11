@@ -165,6 +165,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	}
 
 	public static void setupFooterListView() {
+        Log.i("cfeed","list scrollable1: " + willListScroll());
 		if(willListScroll()){
 			list.getViewTreeObserver().addOnGlobalLayoutListener(
 				new ViewTreeObserver.OnGlobalLayoutListener() {

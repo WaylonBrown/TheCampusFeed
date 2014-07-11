@@ -143,6 +143,7 @@ public class TagFragment extends Fragment
 	}
 	
 	public static void setupFooterListView() {
+        Log.i("cfeed","list scrollable2: " + willListScroll());
 		if(willListScroll()){
 			list.getViewTreeObserver().addOnGlobalLayoutListener(
 				new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -249,7 +250,7 @@ public class TagFragment extends Fragment
 	}
 	
 	private static boolean willListScroll() {
-		if(tagList == null || list.getLastVisiblePosition() + 1 == tagList.size() || tagList.size() == 0) {
+		if(tagList == null || list.getLastVisiblePosition() + 1 >= tagList.size() || tagList.size() == 0) {
 			return false;
 		}
 		return true; 
