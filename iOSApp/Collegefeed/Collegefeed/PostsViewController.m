@@ -82,7 +82,7 @@
 
     [self.commentViewController setOriginalPost:self.selectedPost];
     
-    [self.navigationController.navigationItem setHidesBackButton:YES];
+//    [self.navigationController.navigationItem setHidesBackButton:YES];
     [self.navigationController pushViewController:self.commentViewController
                                          animated:YES];
 }
@@ -205,6 +205,22 @@
 
 - (void)loadMorePosts
 {
+//    switch (self.viewType)
+//    {
+//        case RECENT_VIEW:
+//            [self.dataController fetchNewPosts];
+//            [self refresh];
+//            break;
+//        case TOP_VIEW:
+//            [self.dataController fetchTopPosts];
+//            [self refresh];
+//            break;
+//        case TAG_VIEW:
+//            [self.dataController fetchMorePostsWithTagMessage:self.tagMessage]
+//            
+//        default:
+//            break;
+//    }
     if (self.viewType == RECENT_VIEW)
     {
         [self.dataController fetchNewPosts];
@@ -215,6 +231,7 @@
         [self.dataController fetchTopPosts];
         [self refresh];
     }
+    
     [self.tableView reloadData];
 }
 

@@ -100,13 +100,11 @@
 - (BOOL)isNearCollege;
 - (BOOL)isNearCollegeWithId:(long)collegeId;
 
-//** Not called**********
 - (void)saveUserPosts;
 - (void)saveUserComments;
 - (void)saveUserVotes;
 - (void)saveAllUserData;
 - (void)retrieveUserData;
-//***********************
 
 
 /*************************/
@@ -138,6 +136,7 @@
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage;
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage
                       withCollegeId:(long)collegeId;
+//- (void)fetchMorePostsWithTagMessage:(NSString*)tagMessage;
 
 - (void)fetchUserPostsWithIdArray:(NSArray *)postIds;
 
