@@ -47,6 +47,7 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -76,6 +77,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	boolean locationFound = false;
 	public static LocationManager mgr;
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
+    public static Calendar lastCollegeListUpdate;
 	public static ArrayList<Integer> permissions = new ArrayList<Integer>();	//length of 0 or null = no perms, otherwise the college ID is the perm IDs
 	public static ArrayList<College> collegeList = new ArrayList<College>();
 	
@@ -123,6 +125,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		commentUpvoteList = PrefManager.getCommentUpvoteList();
 		commentDownvoteList = PrefManager.getCommentDownvoteList();
 		flagList = PrefManager.getFlagList();
+        lastCollegeListUpdate = PrefManager.getLastCollegeListUpdate();
 		
 		permissionsProgress = (ProgressBar)findViewById(R.id.permissionsLoadingIcon);
 		newPostButton = (ImageView)findViewById(R.id.newPostButton);
@@ -134,6 +137,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		});
 		
 		setupAdapter();
+        getNewCollegeListIfNeeded();
 	}
 	
 	private void setupAdapter() {
@@ -146,6 +150,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		viewPager.setOffscreenPageLimit(10);
 		tabs.setViewPager(viewPager);
 	}
+
+    private void getNewCollegeListIfNeeded(){
+        Calendar now = Calendar.getInstance();
+        Calendar last = (Calendar)lastCollegeListUpdate.clone();
+        last.add(Calendar.WEEK_OF_YEAR, 2);
+        //if last update was 2 or more weeks ago
+        if(now.after(last)){
+            sdfsdf
+        }
+    }
 
 	private void setupCollegeList() {
 		collegeList = new ArrayList<College>();
