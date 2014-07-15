@@ -172,18 +172,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 new NetWorker.GetFullCollegeListTask().execute(new NetWorker.PostSelector());
             } else {
                 Log.i("cfeed","COLLEGE_LIST list isn't outdated");
-                String storedCollegeListJSON1 = PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST1, "default_value");
-                String storedCollegeListJSON2 = PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST2, "default_value");
-                if(storedCollegeListJSON1.equals("default_value") || storedCollegeListJSON1.equals("default_value")){
-                    Log.i("cfeed","COLLEGE_LIST ERROR: no stored list in prefs, reverted to hardcoded list");
-                } else {
-                    try {
-                        Log.i("cfeed","COLLEGE_LIST using stored list");
-                        collegeList = JSONParser.collegeListFromJSON(storedCollegeListJSON1, storedCollegeListJSON2);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
             }
         }
     }
