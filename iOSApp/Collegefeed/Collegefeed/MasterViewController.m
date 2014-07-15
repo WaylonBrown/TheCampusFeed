@@ -222,7 +222,6 @@
 - (void)submitSelectionForFeedWithCollegeOrNil:(College *)college
 {
     [self.dataController switchedToSpecificCollegeOrNil:college];
-    [self.tabBarController setSelectedIndex:0];
     if (college == nil)
     {
         [self.currentFeedLabel setText:@"All Colleges"];

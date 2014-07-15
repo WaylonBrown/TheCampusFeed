@@ -67,6 +67,14 @@
     [self.navigationController pushViewController:controller
                                          animated:YES];
 }
+- (void)switchToAllColleges
+{
+    [self setList:self.dataController.allTags];
+}
+- (void)switchToSpecificCollege
+{
+    [self setList:self.dataController.allTagsInCollege];
+}
 
 #pragma mark - UITableView Functions
 
@@ -78,7 +86,7 @@
     }
     else
     {
-        return self.dataController.allTags.count;
+        return self.list.count;
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -100,8 +108,8 @@
     }
     else
     {
-        // get the post and display in this cell
-        Tag *tagAtIndex = (Tag*)[self.dataController.allTags objectAtIndex:indexPath.row];
+        // get the tag and display in this cell
+        Tag *tagAtIndex = (Tag *)[self.list objectAtIndex:indexPath.row];
         [cell assignTag:tagAtIndex];
     }
     return cell;
@@ -137,10 +145,12 @@
     if (self.dataController.showingAllColleges)
     {
         [self.dataController fetchAllTags];
+        [self switchToAllColleges];
     }
     else if (self.dataController.showingSingleCollege)
     {
         [self.dataController fetchAllTagsWithCollegeId:self.dataController.collegeInFocus.collegeID];
+        [self switchToSpecificCollege];
     }
     [super refresh];
 }

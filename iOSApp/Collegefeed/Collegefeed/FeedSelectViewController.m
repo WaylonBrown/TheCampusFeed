@@ -90,17 +90,6 @@
     }
     return 1;
 }
-//-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-////    if ([indexPath section] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).section
-////        &&
-//if (        [indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row)
-//    {
-//        [self fixHeights];
-//        NSLog(@"%f",self.tableView.contentSize.height);
-//        
-//    }
-//}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     int numNearby = self.nearbyCollegeList.count;

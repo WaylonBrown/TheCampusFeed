@@ -200,8 +200,7 @@
 - (void)fetchAllTagsWithCollegeId:(long)collegeId
 {   // fetch tags trending in a particular college
     self.allTagsInCollege = [[NSMutableArray alloc] init];
-    //TODO: need a url to get all trending tags for a school, but waiting on a server endpoint
-    NSData *data = [Networker GETTagsTrending];
+    NSData *data = [Networker GETTagsWithCollegeId:collegeId];
     [self parseData:data asClass:[Tag class] intoList:self.allTagsInCollege];
 }
 

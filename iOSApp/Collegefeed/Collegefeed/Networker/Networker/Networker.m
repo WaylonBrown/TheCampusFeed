@@ -280,6 +280,13 @@
                    API_URL, API_VERSION]];
     return [self GET:url];
 }
++ (NSData *)GETTagsWithCollegeId:(long)collegeId
+{
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/colleges/%ld/tags/trending",
+                   API_URL, API_VERSION, collegeId]];
+    return [self GET:url];
+}
 
 #pragma mark - Votes
 
