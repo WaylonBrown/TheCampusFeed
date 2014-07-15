@@ -11,4 +11,7 @@ class StaticPagesController < ApplicationController
 
   def stats
   end
+
+  def webapp
+  end
 end

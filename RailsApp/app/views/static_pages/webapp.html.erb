@@ -1,0 +1,59 @@
+<html>
+<head>
+  <link rel="stylesheet" href="stylesheets/webapp.css">
+</head>
+<body ng-app="cfeed">
+<nav class="navbar navbar-default" id="default" role="navigation">
+  <div class="absoluteFull" id="navBg" randombgpos>
+
+  </div>
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><%= fa_icon 'mortar-board' %>College<span class="light">Feed</span></a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown active">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="<%= admin_path %>">Control Panel</a></li>
+            <li><a href="<%= stats_path %>">Stat Panel</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container-fluid -->
+</nav>
+<div class="container-fluid" ng-controller="WebappCtrl">
+  <div class="row">
+    <div class="col-md-3">
+      <div>asdf</div>
+    </div>
+    <div class="col-md-6" id="posts">
+      <div class="card slide pointer" ng-repeat="post in recentPosts" ng-click="selectPost(post)" ng-class="{active: post.active}">
+        <h3>{{post.text}}</h3>
+        <hr/>
+        <span class="pull-left"><i collegenamefromid cid="{{post.college_id}}"></i></span>
+        <span class="pull-right">{{post.comment_count}} Comments</span>
+
+        <div class="clearfix"></div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div>asdf</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
