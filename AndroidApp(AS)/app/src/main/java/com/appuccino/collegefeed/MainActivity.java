@@ -39,6 +39,7 @@ import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.College;
+import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.JSONParser;
 import com.appuccino.collegefeed.utils.ListComparator;
@@ -87,7 +88,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public static List<Integer> postDownvoteList = new ArrayList<Integer>();
 	public static List<Integer> commentUpvoteList = new ArrayList<Integer>();
 	public static List<Integer> commentDownvoteList = new ArrayList<Integer>();
-	public static List<Integer> flagList = new ArrayList<Integer>();
+    public static List<Integer> flagList = new ArrayList<Integer>();
+    public static List<Integer> myPostsList = new ArrayList<Integer>();
+    public static List<Integer> myCommentsList = new ArrayList<Integer>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +131,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		commentUpvoteList = PrefManager.getCommentUpvoteList();
 		commentDownvoteList = PrefManager.getCommentDownvoteList();
 		flagList = PrefManager.getFlagList();
+        //TODO
+        //myPostsList = PrefManager.getMyPostsList();
+        //myCommentsList = PrefManager.getMyCommentsList();
 
 		permissionsProgress = (ProgressBar)findViewById(R.id.permissionsLoadingIcon);
 		newPostButton = (ImageView)findViewById(R.id.newPostButton);
@@ -151,6 +157,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		viewPager.setOffscreenPageLimit(10);
 		tabs.setViewPager(viewPager);
 	}
+
+    public static void addNewPostToListAndMyContent(Post post){
+        //instantly add to new posts
+        if(currentFeedCollegeID == ALL_COLLEGES || currentFeedCollegeID == post.getCollegeID()){
+            NewPostFragment.postList.add(0, post);
+            NewPostFragment.updateList();
+            MainActivity.goToNewPostsAndScrollToTop();
+        }
+    }
 
     private void getNewCollegeListIfNeeded(){
         setupCollegeList();

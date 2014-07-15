@@ -179,6 +179,70 @@ public class JSONParser {
 		return ret;
 	}
 
+    public static Post postFromJSON(String json) throws IOException{
+        Post ret = null;
+        JsonReader reader = new JsonReader(new StringReader(""));
+        try {
+            reader = new JsonReader(new StringReader(json));
+
+            int id = -1;
+            String text = null;
+            int score = 0;
+            int collegeID = -1;
+            String time = null;
+            int commentCount = 0;
+
+            reader.beginObject();
+            while(reader.hasNext()) {
+                String name = reader.nextName(); //property name of next property.
+                if (name.equals("id")) {
+                    //use in case null is passed in, which prim types can't take
+                    try {
+                        id = reader.nextInt();
+                    } catch (Exception e) {
+                        reader.skipValue();
+                    }
+                } else if (name.equals("text")) {
+                    text = reader.nextString();
+                } else if (name.equals("score")) {
+                    //use in case null is passed in, which prim types can't take
+                    try {
+                        score = reader.nextInt();
+                    } catch (Exception e) {
+                        reader.skipValue();
+                    }
+                } else if (name.equals("college_id")) {
+                    //use in case null is passed in, which prim types can't take
+                    try {
+                        collegeID = reader.nextInt();
+                    } catch (Exception e) {
+                        reader.skipValue();
+                    }
+                } else if (name.equals("created_at")) {
+                    time = reader.nextString();
+                } else if (name.equals("comment_count")) {
+                    //use in case null is passed in, which prim types can't take
+                    try {
+                        commentCount = reader.nextInt();
+                    } catch (Exception e) {
+                        reader.skipValue();
+                    }
+                } else {
+                    reader.skipValue();
+                }
+            }
+            reader.endObject();
+            ret = new Post(id, text, score, collegeID, time, commentCount);
+            return ret;
+        }catch(Exception e){
+            e.printStackTrace();
+        } finally{
+            reader.close();
+        }
+
+        return ret;
+    }
+
 	public static ArrayList<Comment> commentListFromJSON(String json, int postID) throws IOException{
 		ArrayList<Comment> ret = new ArrayList<Comment>();
 		JsonReader reader = new JsonReader(new StringReader(""));

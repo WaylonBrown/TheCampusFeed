@@ -463,6 +463,7 @@ public class NetWorker {
      public static class MakePostTask extends AsyncTask<Post, Void, Boolean>{
 
          Context c;
+         String response = null;
 
          public MakePostTask(Context context) {
              c = context;
@@ -477,8 +478,7 @@ public class NetWorker {
                  request.setHeader("Content-Type", "application/json");
                  request.setEntity(new ByteArrayEntity(posts[0].toJSONString().toByteArray()));
                  ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                 String response = client.execute(request, responseHandler);
-
+                 response = client.execute(request, responseHandler);
                  Log.d("cfeed", LOG_TAG + "Server response: " + response);
                  return true;
              } catch (ClientProtocolException e) {
@@ -494,9 +494,23 @@ public class NetWorker {
          protected void onPostExecute(Boolean result) {
              if(!result)
                  Toast.makeText(c, "Failed to post, please try again later.", Toast.LENGTH_LONG).show();
+             else{
+                 parseResponseIntoPostAndAdd(response);
+             }
              super.onPostExecute(result);
          }
 
+         private void parseResponseIntoPostAndAdd(String response) {
+             try {
+                 Log.i("cfeed","NETWORK: Successful parsing of post response, adding to list");
+                 Post responsePost = JSONParser.postFromJSON(response);
+                 MainActivity.addNewPostToListAndMyContent(responsePost);
+             } catch (IOException e) {
+                 Log.i("cfeed","ERROR: post not added");
+                 e.printStackTrace();
+             }
+
+         }
      }
 
      public static class MakeCommentTask extends AsyncTask<Comment, Void, Boolean>{

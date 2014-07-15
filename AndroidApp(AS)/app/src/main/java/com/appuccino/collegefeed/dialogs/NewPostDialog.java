@@ -1,8 +1,5 @@
 package com.appuccino.collegefeed.dialogs;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,10 +16,12 @@ import android.widget.Toast;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
-import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.NetWorker.MakePostTask;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NewPostDialog extends AlertDialog.Builder{
 	
@@ -97,12 +96,6 @@ public class NewPostDialog extends AlertDialog.Builder{
     			if(thisString.length() >= MainActivity.MIN_POST_LENGTH)
     			{
     				Post newPost = new Post(thisString, selectedCollegeID);
-    				//instantly add to new posts
-    				if(MainActivity.currentFeedCollegeID == MainActivity.ALL_COLLEGES || MainActivity.currentFeedCollegeID == selectedCollegeID){
-    					NewPostFragment.postList.add(0, newPost);
-            			NewPostFragment.updateList();
-            			MainActivity.goToNewPostsAndScrollToTop();
-    				}
         			new MakePostTask(context).execute(newPost);
         			dialog.dismiss();
     			}
