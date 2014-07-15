@@ -112,10 +112,12 @@ public class MostActiveCollegesFragment extends Fragment
     }
 
     public static void makeLoadingIndicator(boolean b) {
-        if(b){
-            progressSpinner.setVisibility(View.VISIBLE);
-        }else{
-            progressSpinner.setVisibility(View.GONE);
+        if(progressSpinner != null){
+            if(b){
+                progressSpinner.setVisibility(View.VISIBLE);
+            }else{
+                progressSpinner.setVisibility(View.GONE);
+            }
         }
     }
 }

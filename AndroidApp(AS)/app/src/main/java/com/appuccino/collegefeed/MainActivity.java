@@ -42,6 +42,7 @@ import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.JSONParser;
 import com.appuccino.collegefeed.utils.ListComparator;
+import com.appuccino.collegefeed.utils.NetWorker;
 import com.appuccino.collegefeed.utils.PrefManager;
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -73,6 +74,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public static final int LOCATION_TIMEOUT_SECONDS = 10;
 	public static final int MIN_POST_LENGTH = 10;
 	public static final int MIN_COMMENT_LENGTH = 5;
+    public static final int COLLEGE_LIST_UPDATE_IN_WEEKS = 2;
 	
 	boolean locationFound = false;
 	public static LocationManager mgr;
@@ -90,7 +92,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        PrefManager.setup(this);
 		setupApp();
+        lastCollegeListUpdate = PrefManager.getLastCollegeListUpdate();
+        getNewCollegeListIfNeeded();
 		getLocation();
 		Log.i("cfeed","APPSETUP: onCreate");		
 	}
@@ -116,17 +121,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		tabs.setIndicatorColor(getResources().getColor(R.color.tabunderlineblue));
 		
 		FontManager.setup(this);
-		PrefManager.setup(this);
 		setupActionbar();
-		setupCollegeList();
-		
+
 		postUpvoteList = PrefManager.getPostUpvoteList();
 		postDownvoteList = PrefManager.getPostDownvoteList();
 		commentUpvoteList = PrefManager.getCommentUpvoteList();
 		commentDownvoteList = PrefManager.getCommentDownvoteList();
 		flagList = PrefManager.getFlagList();
-        lastCollegeListUpdate = PrefManager.getLastCollegeListUpdate();
-		
+
 		permissionsProgress = (ProgressBar)findViewById(R.id.permissionsLoadingIcon);
 		newPostButton = (ImageView)findViewById(R.id.newPostButton);
 		newPostButton.setOnClickListener(new OnClickListener(){
@@ -137,7 +139,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		});
 		
 		setupAdapter();
-        getNewCollegeListIfNeeded();
 	}
 	
 	private void setupAdapter() {
@@ -152,12 +153,38 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	}
 
     private void getNewCollegeListIfNeeded(){
+        setupCollegeList();
         Calendar now = Calendar.getInstance();
-        Calendar last = (Calendar)lastCollegeListUpdate.clone();
-        last.add(Calendar.WEEK_OF_YEAR, 2);
-        //if last update was 2 or more weeks ago
-        if(now.after(last)){
-            sdfsdf
+        if(lastCollegeListUpdate == null){
+            Log.i("cfeed","COLLEGE_LIST no saved college retrieval time, setting update time to now");
+            PrefManager.putLastCollegeListUpdate(now);
+        } else {
+            Log.i("cfeed","COLLEGE_LIST there is a saved college retrieval time, checking....");
+            Calendar lastUpdate = (Calendar)lastCollegeListUpdate.clone();
+            lastUpdate.add(Calendar.WEEK_OF_YEAR , COLLEGE_LIST_UPDATE_IN_WEEKS);
+            Log.i("cfeed","COLLEGE_LIST Now: Month: " + now.get(Calendar.MONTH) + " Day: " + now.get(Calendar.DAY_OF_MONTH) +
+                " Hour: " + now.get(Calendar.HOUR_OF_DAY) + " Minute: " + now.get(Calendar.MINUTE) + " Second: " + now.get(Calendar.SECOND));
+            Log.i("cfeed","COLLEGE_LIST Last update: Month: " + lastUpdate.get(Calendar.MONTH) + " Day: " + lastUpdate.get(Calendar.DAY_OF_MONTH) +
+                    " Hour: " + lastUpdate.get(Calendar.HOUR_OF_DAY) + " Minute: " + lastUpdate.get(Calendar.MINUTE) + " Second: " + lastUpdate.get(Calendar.SECOND));
+            //if last update was 2 or more weeks ago
+            if(now.after(lastUpdate)){
+                Log.i("cfeed","COLLEGE_LIST list is old, getting new one from server");
+                new NetWorker.GetFullCollegeListTask().execute(new NetWorker.PostSelector());
+            } else {
+                Log.i("cfeed","COLLEGE_LIST list isn't outdated");
+                String storedCollegeListJSON1 = PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST1, "default_value");
+                String storedCollegeListJSON2 = PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST2, "default_value");
+                if(storedCollegeListJSON1.equals("default_value") || storedCollegeListJSON1.equals("default_value")){
+                    Log.i("cfeed","COLLEGE_LIST ERROR: no stored list in prefs, reverted to hardcoded list");
+                } else {
+                    try {
+                        Log.i("cfeed","COLLEGE_LIST using stored list");
+                        collegeList = JSONParser.collegeListFromJSON(storedCollegeListJSON1, storedCollegeListJSON2);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
     }
 
@@ -167,8 +194,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		String storedCollegeListJSON2 = PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST2, "default_value");
 		
 		//should only happen very first time, store the backup college string to SharedPrefs
-		if(storedCollegeListJSON1.equals("default_value"))
+		if(storedCollegeListJSON1.equals("default_value") || storedCollegeListJSON1.equals("default_value" ))
 		{
+            Log.i("cfeed","COLLEGE_LIST using hard coded strings");
 			PrefManager.putString(PREFERENCE_KEY_COLLEGE_LIST1, AllCollegeJSONString.ALL_COLLEGES_JSON1);
 			PrefManager.putString(PREFERENCE_KEY_COLLEGE_LIST2, AllCollegeJSONString.ALL_COLLEGES_JSON2);
 			storedCollegeListJSON1 = PrefManager.getString(PREFERENCE_KEY_COLLEGE_LIST1, "default_value");

@@ -29,6 +29,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class NetWorker {
 
@@ -409,6 +410,55 @@ public class NetWorker {
              MostActiveCollegesFragment.makeLoadingIndicator(false);
          }
      }
+
+    public static class GetFullCollegeListTask extends AsyncTask<PostSelector, Void, ArrayList<College> >
+    {
+        public GetFullCollegeListTask()
+        {
+        }
+
+        @Override
+        protected ArrayList<College> doInBackground(PostSelector... arg0) {
+            HttpGet request = new HttpGet(REQUEST_URL + "colleges");
+            return getCollegesFromURLRequest(request);
+        }
+
+        private ArrayList<College> getCollegesFromURLRequest(HttpGet request) {
+            ArrayList<College> ret = new ArrayList<College>();
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            String response = null;
+            try {
+                response = client.execute(request, responseHandler);
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if(response != null && !response.isEmpty()) {
+                Log.d("cfeed", LOG_TAG + response);
+                Log.d("cfeed", "COLLEGE_LIST storing new server college list into strings");
+                String first = response.substring(0, response.length() / 2);
+                String second = response.substring((response.length() / 2) + 1, response.length());
+                PrefManager.putString(MainActivity.PREFERENCE_KEY_COLLEGE_LIST1, first);
+                PrefManager.putString(MainActivity.PREFERENCE_KEY_COLLEGE_LIST2, second);
+            }
+
+            try {
+                ret = JSONParser.collegeListFromJSON(response);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return ret;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<College> result) {
+            MainActivity.collegeList = result;
+            PrefManager.putLastCollegeListUpdate(Calendar.getInstance());
+            Log.i("cfeed","COLLEGE_LIST Updated main college list.");
+        }
+    }
 
      public static class MakePostTask extends AsyncTask<Post, Void, Boolean>{
 

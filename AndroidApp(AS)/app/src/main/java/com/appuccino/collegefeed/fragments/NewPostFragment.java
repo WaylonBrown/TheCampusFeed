@@ -380,34 +380,36 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 
 	public static void makeLoadingIndicator(boolean makeLoading) 
 	{
-		if(makeLoading)
-		{
-			list.setVisibility(View.INVISIBLE);
-			loadingSpinner.setVisibility(View.VISIBLE);
+        if(loadingSpinner != null){
+            if(makeLoading)
+            {
+                list.setVisibility(View.INVISIBLE);
+                loadingSpinner.setVisibility(View.VISIBLE);
 
-            if(pullDownText != null){
-               pullDownText.setVisibility(View.GONE);
-            }
-		}
-		else
-		{
-			list.setVisibility(View.VISIBLE);
-			loadingSpinner.setVisibility(View.INVISIBLE);
-			
-			if(pullToRefresh != null)
-			{
-				// Notify PullToRefreshLayout that the refresh has finished
-	            pullToRefresh.setRefreshComplete();
-			}
-
-            if(pullDownText != null){
-                if(postList.size() == 0){
-                    pullDownText.setVisibility(View.VISIBLE);
-                } else {
+                if(pullDownText != null){
                     pullDownText.setVisibility(View.GONE);
                 }
             }
-		}
+            else
+            {
+                list.setVisibility(View.VISIBLE);
+                loadingSpinner.setVisibility(View.INVISIBLE);
+
+                if(pullToRefresh != null)
+                {
+                    // Notify PullToRefreshLayout that the refresh has finished
+                    pullToRefresh.setRefreshComplete();
+                }
+
+                if(pullDownText != null){
+                    if(postList.size() == 0){
+                        pullDownText.setVisibility(View.VISIBLE);
+                    } else {
+                        pullDownText.setVisibility(View.GONE);
+                    }
+                }
+            }
+        }
 	}
 
 	@Override

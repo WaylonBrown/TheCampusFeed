@@ -206,24 +206,26 @@ public class PrefManager {
         Calendar returnCal = Calendar.getInstance();
         String lastUpdateString = prefs.getString(LAST_COLLEGE_UPDATE, "");
         if(lastUpdateString.isEmpty()){
-            prefs.edit().putString(LAST_COLLEGE_UPDATE, lastUpdateString);
-            return returnCal;
+            return null;
         } else {
             //MM,DD,YYYY
             String[] splitString = lastUpdateString.split(",");
-            returnCal.set(Calendar.MONTH, Integer.valueOf(splitString[0]));
-            returnCal.set(Calendar.DAY_OF_MONTH, Integer.valueOf(splitString[1]));
-            returnCal.set(Calendar.YEAR, Integer.valueOf(splitString[2]));
+            returnCal.set(Calendar.WEEK_OF_MONTH, Integer.valueOf(splitString[0]));
+            returnCal.set(Calendar.MONTH, Integer.valueOf(splitString[1]));
+            returnCal.set(Calendar.DAY_OF_MONTH, Integer.valueOf(splitString[2]));
+            returnCal.set(Calendar.YEAR, Integer.valueOf(splitString[3]));
             return returnCal;
         }
     }
 
     public static void putLastCollegeListUpdate(Calendar c){
-        String storage = String.valueOf(c.get(Calendar.MONTH)) +
+        String storage = String.valueOf(c.get(Calendar.WEEK_OF_MONTH)) +
+                "," +
+                String.valueOf(c.get(Calendar.MONTH)) +
                 "," +
                 String.valueOf(c.get(Calendar.DAY_OF_MONTH)) +
                 "," +
                 String.valueOf(c.get(Calendar.YEAR));
-        prefs.edit().putString(LAST_COLLEGE_UPDATE, storage);
+        prefs.edit().putString(LAST_COLLEGE_UPDATE, storage).commit();
     }
 }

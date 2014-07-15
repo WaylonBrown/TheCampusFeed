@@ -393,23 +393,25 @@ public class CommentsActivity extends Activity{
 	
 	public void makeLoadingIndicator(boolean makeLoading) 
 	{
-		if(makeLoading)
-		{
-			list.setVisibility(View.INVISIBLE);
-			loadingSpinner.setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			list.setVisibility(View.VISIBLE);
-			loadingSpinner.setVisibility(View.INVISIBLE);
+        if(loadingSpinner != null){
+            if(makeLoading)
+            {
+                list.setVisibility(View.INVISIBLE);
+                loadingSpinner.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                list.setVisibility(View.VISIBLE);
+                loadingSpinner.setVisibility(View.INVISIBLE);
 
-			//TODO: for PTR
+                //TODO: for PTR
 //			if(pullToRefresh != null)
 //			{
 //				// Notify PullToRefreshLayout that the refresh has finished
 //	            pullToRefresh.setRefreshComplete();
 //			}
-		}
+            }
+        }
 	}
 
 	@Override
