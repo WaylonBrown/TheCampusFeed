@@ -22,5 +22,5 @@
            withName:(NSString*)name;
 - (id)initDummy;
 - (id)initFromJSON:(NSDictionary *)jsonObject;
-
++ (BOOL)withMessageIsValid:(NSString*)tagMessage;
 @end

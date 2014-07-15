@@ -116,9 +116,8 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    
     NSString *tag  = searchBar.text;
-    if ([tag characterAtIndex:0] == '#')
+    if ([Tag withMessageIsValid:tag])
     {
         [self.dataController fetchAllPostsWithTagMessage:tag];
         PostsViewController *postsView = [[PostsViewController alloc] initAsType:TAG_VIEW withDataController:self.dataController];
