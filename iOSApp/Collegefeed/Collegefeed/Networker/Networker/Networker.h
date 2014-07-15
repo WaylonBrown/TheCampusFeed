@@ -29,13 +29,12 @@
 // Posts
 + (NSData *)POSTPostData:(NSData *)data WithCollegeId:(long)collegeId;
 
-+ (NSData *)GETPostsWithTagName:(NSString *)tagName;
+//+ (NSData *)GETPostsWithTagName:(NSString *)tagName;
++ (NSData *)GETAllPostsWithTag:(NSString *)tagName
+                     atPageNum:(long)pageNum;  // PAGINATION IN PROGRESS
+
 + (NSData *)GETPostsWithTagName:(NSString *)tagName
                   withCollegeId:(long)collegeId;
-
-+ (NSData *)GETAllPostsWithTag:(NSString *)tagName
-                withPageNumber:(long)page
-             withNumberPerPage:(long)perPage;
 
 + (NSData *)GETAllPosts;
 + (NSData *)GETPostsWithCollegeId:(long)collegeId;

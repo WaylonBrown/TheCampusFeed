@@ -1,11 +1,12 @@
 package com.appuccino.collegefeed.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /*
  * This is used so that you don't have to set up the preference manager more than once throughout the app
@@ -19,6 +20,7 @@ public class PrefManager {
 	public static final String COMMENT_DOWNVOTE_LIST = "comment_downvote_list";
 	public static final String FLAG_LIST = "flag_list";
 	public static final String LAST_FEED = "last_feed";
+    public static final String LAST_COLLEGE_UPDATE = "last_college_update";
 	
 	public static void setup(Context c) 
 	{
@@ -199,4 +201,31 @@ public class PrefManager {
 		}
 		return returnList;
 	}
+
+    public static Calendar getLastCollegeListUpdate() {
+        Calendar returnCal = Calendar.getInstance();
+        String lastUpdateString = prefs.getString(LAST_COLLEGE_UPDATE, "");
+        if(lastUpdateString.isEmpty()){
+            return null;
+        } else {
+            //MM,DD,YYYY
+            String[] splitString = lastUpdateString.split(",");
+            returnCal.set(Calendar.WEEK_OF_MONTH, Integer.valueOf(splitString[0]));
+            returnCal.set(Calendar.MONTH, Integer.valueOf(splitString[1]));
+            returnCal.set(Calendar.DAY_OF_MONTH, Integer.valueOf(splitString[2]));
+            returnCal.set(Calendar.YEAR, Integer.valueOf(splitString[3]));
+            return returnCal;
+        }
+    }
+
+    public static void putLastCollegeListUpdate(Calendar c){
+        String storage = String.valueOf(c.get(Calendar.WEEK_OF_MONTH)) +
+                "," +
+                String.valueOf(c.get(Calendar.MONTH)) +
+                "," +
+                String.valueOf(c.get(Calendar.DAY_OF_MONTH)) +
+                "," +
+                String.valueOf(c.get(Calendar.YEAR));
+        prefs.edit().putString(LAST_COLLEGE_UPDATE, storage).commit();
+    }
 }

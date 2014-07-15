@@ -8,7 +8,8 @@
         android:id="@+id/otherCollegesText"
         style="@style/block"
         android:hint="Type a college's name..."
-        android:layout_marginTop="2dp"/>
+        android:layout_marginTop="2dp"
+        android:singleLine="true"/>
     
     
 

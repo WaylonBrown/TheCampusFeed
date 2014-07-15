@@ -30,6 +30,8 @@
         self.collegeList            = [[NSMutableArray alloc] init];
         self.allTags                = [[NSMutableArray alloc] init];
         self.userPosts              = [[NSMutableArray alloc] init];
+        self.userComments           = [[NSMutableArray alloc] init];
+        self.userVotes              = [[NSMutableArray alloc] init];
         
         [self setTopPostsPage:0];
         [self setRecentPostsPage:0];
@@ -40,6 +42,7 @@
 //        [self getHardCodedCollegeList];
         [self getNetworkCollegeList];
         [self fetchAllTags];
+        [self retrieveUserData];
         
         // Get the user's location
         [self setLocationManager:[[CLLocationManager alloc] init]];
@@ -75,7 +78,9 @@
         Comment *comment = [[Comment alloc] initWithCommentMessage:message
                                                           withPost:post];
         [Networker POSTCommentData:[comment toJSON] WithPostId:post.postID];
-        [self.commentList  insertObject:comment atIndex:0];
+        [self.commentList insertObject:comment atIndex:0];
+        [self.userComments insertObject:comment atIndex:0];
+        [self saveUserComments];
         return YES;
     }
     @catch (NSException *exception)
@@ -125,6 +130,8 @@
         [Networker POSTPostData:[post toJSON] WithCollegeId:post.collegeID];
         [self.topPostsAllColleges insertObject:post atIndex:0];
         [self.recentPostsAllColleges insertObject:post atIndex:0];
+        [self.userPosts insertObject:post atIndex:0];
+        [self saveUserPosts];
         return YES;
     }
     @catch (NSException *exception)
@@ -157,8 +164,9 @@
 }
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage
 {
+    [self setTagPostsPage:0];
     [self setAllPostsWithTag:[[NSMutableArray alloc] init]];
-    NSData* data = [Networker GETPostsWithTagName:tagMessage];
+    NSData* data = [Networker GETAllPostsWithTag:tagMessage atPageNum:self.tagPostsPage];
     [self parseData:data asClass:[Post class] intoList:self.allPostsWithTag];
 }
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage
@@ -167,6 +175,12 @@
     [self setAllPostsWithTagInCollege:[[NSMutableArray alloc] init]];
     NSData* data = [Networker GETPostsWithTagName:tagMessage withCollegeId:collegeId];
     [self parseData:data asClass:[Post class] intoList:self.allPostsWithTagInCollege];
+}
+- (BOOL)fetchMorePostsWithTagMessage:(NSString*)tagMessage
+{
+    self.tagPostsPage++;
+    NSData* data = [Networker GETAllPostsWithTag:tagMessage atPageNum:self.tagPostsPage];
+    return [self parseData:data asClass:[Post class] intoList:self.allPostsWithTag];
 }
 - (void)fetchUserPostsWithIdArray:(NSArray *)postIds
 {
@@ -195,18 +209,26 @@
 
 - (BOOL)createVote:(Vote *)vote
 {
-    NSData *result;
-    if (vote.votableType == COMMENT)
+    @try
     {
-        result = [Networker POSTVoteData:[vote toJSON]
-                           WithCommentId:vote.parentID];
+        NSData *result;
+        if (vote.votableType == COMMENT)
+        {
+            result = [Networker POSTVoteData:[vote toJSON]
+                               WithCommentId:vote.parentID];
+        }
+        else if (vote.votableType == POST)
+        {
+            result = [Networker POSTVoteData:[vote toJSON]
+                                  WithPostId:vote.parentID];
+        }
+        [self saveUserVotes];
+        return YES;
     }
-    else if (vote.votableType == POST)
+    @catch (NSException *exception)
     {
-        result = [Networker POSTVoteData:[vote toJSON]
-                              WithPostId:vote.parentID];
+        return NO;
     }
-    return YES;
 }
 
 #pragma mark - Local Data Access
@@ -303,15 +325,13 @@
     College *college = [self getCollegeById:collegeId];
     return [self.nearbyColleges containsObject:college];
 }
-
-- (void)saveUserData
+- (void)saveUserPosts
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docDir = [paths objectAtIndex: 0];
     NSString *postFile = [docDir stringByAppendingPathComponent: @"UserPostIds.txt"];
-    NSString *commentFile = [docDir stringByAppendingPathComponent: @"UserCommentIds.txt"];
-    NSString *voteFile = [docDir stringByAppendingPathComponent: @"UserVoteIds.txt"];
     
+    // TODO: consider saving the whole JSON posts for quicker retrieval later
     // Save Post Ids
     NSString *postIdsString = @"";
     for (Post *post in self.userPosts)
@@ -321,6 +341,12 @@
     }
     NSData *postData = [postIdsString dataUsingEncoding:NSUTF8StringEncoding];
     [postData writeToFile:postFile atomically:NO];
+}
+- (void)saveUserComments
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex: 0];
+    NSString *commentFile = [docDir stringByAppendingPathComponent: @"UserCommentIds.txt"];
     
     // Save Comment Ids
     NSString *commentIdsString = @"";
@@ -331,6 +357,13 @@
     }
     NSData *commentData = [commentIdsString dataUsingEncoding:NSUTF8StringEncoding];
     [commentData writeToFile:commentFile atomically:NO];
+
+}
+- (void)saveUserVotes
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex: 0];
+    NSString *voteFile = [docDir stringByAppendingPathComponent: @"UserVoteIds.txt"];
     
     // Save full Votes
     NSString *votesString = @"";
@@ -354,6 +387,13 @@
     }
     NSData *voteData = [votesString dataUsingEncoding:NSUTF8StringEncoding];
     [voteData writeToFile:voteFile atomically:NO];
+
+}
+- (void)saveAllUserData
+{
+    [self saveUserPosts];
+    [self saveUserComments];
+    [self saveUserVotes];
 }
 - (void)retrieveUserData
 {
@@ -382,6 +422,10 @@
 
 -(BOOL)parseData:(NSData *)data asClass:(Class)class intoList:(NSMutableArray *)array
 {
+    if (data == nil)
+    {
+        return NO;
+    }
     if (array == nil)
     {
         array = [[NSMutableArray alloc] init];
@@ -391,6 +435,10 @@
                                                                      error:nil];
     if (jsonArray != nil)
     {
+        if (jsonArray.count == 0)
+        {
+            return NO;
+        }
         for (int i = 0; i < jsonArray.count; i++)
         {
             // Individual JSON object
@@ -427,7 +475,6 @@
     double c = 2 * atan2(sqrt(a), sqrt(1-a));
     return (EARTH_RADIUS_MILES * c);
 }
-
 - (float)toRad:(float)value
 {   // Helper method for milesAway
     return value * PI_VALUE / 180;

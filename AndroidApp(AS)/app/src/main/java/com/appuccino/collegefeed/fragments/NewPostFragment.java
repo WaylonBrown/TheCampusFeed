@@ -34,8 +34,6 @@ import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.NetWorker.GetPostsTask;
 import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
 import com.appuccino.collegefeed.utils.PrefManager;
-import com.romainpiel.shimmer.Shimmer;
-import com.romainpiel.shimmer.ShimmerTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +52,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 	static QuickReturnListView list;
 	private static int currentFeedID;
 	//library objects
-	static ShimmerTextView loadingText;
-	static Shimmer shimmer;
+	static ProgressBar loadingSpinner;
 	private static PullToRefreshLayout pullToRefresh;
 	View rootView;
 	private static ProgressBar lazyLoadingFooterSpinner;
@@ -92,12 +89,11 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		rootView = inflater.inflate(R.layout.fragment_layout,
 				container, false);
 		list = (QuickReturnListView)rootView.findViewById(R.id.fragmentListView);
-		loadingText = (ShimmerTextView)rootView.findViewById(R.id.loadingText);
+		loadingSpinner = (ProgressBar)rootView.findViewById(R.id.loadingSpinner);
 		scrollAwayBottomView = (LinearLayout)rootView.findViewById(R.id.footer);
         pullDownText = (TextView)rootView.findViewById(R.id.pullDownText);
 
         pullDownText.setTypeface(FontManager.light);
-		loadingText.setTypeface(FontManager.light);
 		setupBottomViewUI();
 					
 		// Now give the find the PullToRefreshLayout and set it up
@@ -384,40 +380,36 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 
 	public static void makeLoadingIndicator(boolean makeLoading) 
 	{
-		if(makeLoading)
-		{
-			list.setVisibility(View.INVISIBLE);
-			loadingText.setVisibility(View.VISIBLE);
-			
-			shimmer = new Shimmer();
-			shimmer.setDuration(600);
-			shimmer.start(loadingText);
-            if(pullDownText != null){
-               pullDownText.setVisibility(View.GONE);
-            }
-		}
-		else
-		{
-			list.setVisibility(View.VISIBLE);
-			loadingText.setVisibility(View.INVISIBLE);
-			
-			if (shimmer != null && shimmer.isAnimating()) 
-	            shimmer.cancel();
-			
-			if(pullToRefresh != null)
-			{
-				// Notify PullToRefreshLayout that the refresh has finished
-	            pullToRefresh.setRefreshComplete();
-			}
+        if(loadingSpinner != null){
+            if(makeLoading)
+            {
+                list.setVisibility(View.INVISIBLE);
+                loadingSpinner.setVisibility(View.VISIBLE);
 
-            if(pullDownText != null){
-                if(postList.size() == 0){
-                    pullDownText.setVisibility(View.VISIBLE);
-                } else {
+                if(pullDownText != null){
                     pullDownText.setVisibility(View.GONE);
                 }
             }
-		}
+            else
+            {
+                list.setVisibility(View.VISIBLE);
+                loadingSpinner.setVisibility(View.INVISIBLE);
+
+                if(pullToRefresh != null)
+                {
+                    // Notify PullToRefreshLayout that the refresh has finished
+                    pullToRefresh.setRefreshComplete();
+                }
+
+                if(pullDownText != null){
+                    if(postList.size() == 0){
+                        pullDownText.setVisibility(View.VISIBLE);
+                    } else {
+                        pullDownText.setVisibility(View.GONE);
+                    }
+                }
+            }
+        }
 	}
 
 	@Override

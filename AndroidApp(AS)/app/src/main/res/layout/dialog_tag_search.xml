@@ -4,7 +4,7 @@
     android:orientation="vertical" >
     
     <!-- custom so that it cant do a carriage return -->
-    <EditText
+    <com.appuccino.collegefeed.extra.MyEditText
         android:id="@+id/searchTagEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

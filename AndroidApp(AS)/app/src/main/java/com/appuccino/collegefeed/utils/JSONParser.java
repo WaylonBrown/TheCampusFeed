@@ -1,19 +1,15 @@
 package com.appuccino.collegefeed.utils;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.ArrayList;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.util.JsonReader;
-import android.util.Log;
 
 import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Tag;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
 
 public class JSONParser {
 
@@ -62,6 +58,52 @@ public class JSONParser {
 		
 		return ret;
 	}
+
+    public static ArrayList<College> collegeListFromJSON(String storedCollegeListJSON) throws IOException {
+        ArrayList<College> ret = new ArrayList<College>();
+        JsonReader reader = new JsonReader(new StringReader(storedCollegeListJSON));
+
+        try {
+            reader.beginArray();
+            while(reader.hasNext()){
+
+                String name = null;
+                int id = Integer.MIN_VALUE;
+                double latitude = 0;
+                double longitude = 0;
+
+                reader.beginObject();
+                while(reader.hasNext()){
+                    String property = reader.nextName(); //property name of next property.
+                    if(property.equals("id")){
+                        id = reader.nextInt();
+                    }
+                    else if(property.equals("name")){
+                        name = reader.nextString();
+                    }
+                    else if(property.equals("lat")){
+                        latitude = reader.nextDouble();
+                    }
+                    else if(property.equals("lon")){
+                        longitude = reader.nextDouble();
+                    }
+                    else{
+                        reader.skipValue();
+                    }
+                }
+                reader.endObject();
+
+                ret.add(new College(name, id, latitude, longitude));
+            }
+            reader.endArray();
+        }catch(Exception e){
+            e.printStackTrace();
+        } finally{
+            reader.close();
+        }
+
+        return ret;
+    }
 	
 	public static ArrayList<Post> postListFromJSON(String json) throws IOException{
 		ArrayList<Post> ret = new ArrayList<Post>();

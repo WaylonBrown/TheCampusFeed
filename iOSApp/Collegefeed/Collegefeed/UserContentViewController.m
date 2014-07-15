@@ -51,35 +51,13 @@
 
 #pragma mark - Table View Delegates
 
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{   // return the view for the header title
-//    
-//    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-//    [headerLabel setTextAlignment:NSTextAlignmentCenter];
-//    [headerLabel setFont:[UIFont systemFontOfSize:12]];
-//    [headerLabel setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
-//    
-//    if (tableView == self.postTableView)
-//    {
-//        [headerLabel setText:@"My Posts"];
-//    }
-//    else if (tableView == self.commentTableView)
-//    {
-//        [headerLabel setText:@"Comments"];
-//    }
-//    return headerLabel;
-//}
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return 25.0;
-//}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0)
+    if (tableView == self.postTableView)
     {
         return self.postArray.count;
     }
-    else if (section == 1)
+    else if (tableView == self.commentTableView)
     {
         return self.commentArray.count;
     }

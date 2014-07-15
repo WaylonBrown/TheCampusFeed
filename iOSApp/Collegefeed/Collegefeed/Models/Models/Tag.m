@@ -92,15 +92,23 @@
     {
         self.name = [NSString stringWithFormat:@"#%@", self.name];
     }
-//    if (self.name.length < MIN_TAG_LENGTH)
-//    {
-//        NSException *e = [NSException exceptionWithName:@"TagLengthException" reason:@"Tag is too short" userInfo:nil];
-//        [e raise];
-//    }
 }
 - (ModelType)getType
 {
     return TAG;
+}
++ (BOOL)withMessageIsValid:(NSString*)tagMessage
+{
+    NSCharacterSet *specials = [NSCharacterSet characterSetWithCharactersInString:@"!@$%^&*+-."];
+    if (tagMessage.length < MIN_TAG_LENGTH
+        || tagMessage.length > MAX_TAG_LENGTH
+        || [tagMessage characterAtIndex:0] != '#'
+        || isnumber([tagMessage characterAtIndex:1])
+        || [tagMessage rangeOfCharacterFromSet:specials].location != NSNotFound)
+    {
+        return false;
+    }
+    return true;
 }
 
 @end

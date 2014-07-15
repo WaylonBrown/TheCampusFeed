@@ -16,6 +16,11 @@
 		android:listSelector="@android:color/transparent" 
 		android:scrollbars="none"
 		android:background="@color/lightgray"/>
+
+    <ProgressBar
+        android:id="@+id/progressSpinner"
+        android:layout_gravity="center"
+        style="@style/wrap" />
     
     <LinearLayout
         android:id="@+id/footer"

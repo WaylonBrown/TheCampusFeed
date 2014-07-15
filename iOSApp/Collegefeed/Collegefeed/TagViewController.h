@@ -11,7 +11,7 @@
 
 @class Tag;
 
-@interface TagViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate>
+@interface TagViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
 
 @property (weak, nonatomic) Tag* selectedTag;
 

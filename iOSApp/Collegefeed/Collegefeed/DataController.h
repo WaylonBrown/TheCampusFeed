@@ -81,6 +81,8 @@
 // Lazy Loading Counters
 @property (nonatomic) long topPostsPage;
 @property (nonatomic) long recentPostsPage;
+@property (nonatomic) long tagPostsPage;
+
 
 #pragma mark - Public Functions
 /****************************/
@@ -100,15 +102,17 @@
 - (BOOL)isNearCollege;
 - (BOOL)isNearCollegeWithId:(long)collegeId;
 
-//** Not called**********
-- (void)saveUserData;
+- (void)saveUserPosts;
+- (void)saveUserComments;
+- (void)saveUserVotes;
+- (void)saveAllUserData;
 - (void)retrieveUserData;
-//***********************
 
 
 /*************************/
 /***** Network Access ****/
 /*************************/
+
 // Colleges
 - (void)getNetworkCollegeList;
 
@@ -135,6 +139,7 @@
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage;
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage
                       withCollegeId:(long)collegeId;
+- (BOOL)fetchMorePostsWithTagMessage:(NSString*)tagMessage;
 
 - (void)fetchUserPostsWithIdArray:(NSArray *)postIds;
 

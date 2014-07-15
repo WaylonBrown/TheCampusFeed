@@ -53,7 +53,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
     [super viewWillAppear:animated];
-    if (self.viewType == TAG && self.tagMessage == nil)
+    if (self.viewType == TAG_VIEW && self.tagMessage == nil)
     {
         NSException *e = [NSException exceptionWithName:@"NoTagFoundException" reason:@"No Tag message provided for a PostsView filtered by Tag" userInfo:nil];
         [e raise];
@@ -82,7 +82,6 @@
 
     [self.commentViewController setOriginalPost:self.selectedPost];
     
-    [self.navigationController.navigationItem setHidesBackButton:YES];
     [self.navigationController pushViewController:self.commentViewController
                                          animated:YES];
 }
@@ -94,10 +93,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
     // this specifies the prototype (PostTableCell) and assigns the labels
-    
-    if ((indexPath.row + 5) % 25 == 0 && self.list.count < indexPath.row + 10)
+    int rowNum = indexPath.row;
+    int listcount = self.list.count;
+    if (!self.hasReachedEndOfList
+        && (rowNum + 5) % 25 == 0
+        && listcount < rowNum + 10)
     {
-        [self loadMorePosts];
+        self.hasReachedEndOfList = ![self loadMorePosts];
     }
     
     static NSString *CellIdentifier = @"TableCell";
@@ -144,18 +146,12 @@
     switch (self.viewType)
     {
         case TOP_VIEW:
-//            [self.dataController fetchTopPosts];
             [self setList:self.dataController.topPostsAllColleges];
             break;
         case RECENT_VIEW:
-//            [self.dataController fetchNewPosts];
             [self setList:self.dataController.recentPostsAllColleges];
             break;
         case TAG_VIEW:
-            if (self.tagMessage != nil)
-            {
-                [self.dataController fetchAllPostsWithTagMessage:self.tagMessage];
-            }
             [self setList:self.dataController.allPostsWithTag];
             break;
         default:
@@ -203,19 +199,27 @@
 
 #pragma mark - Actions
 
-- (void)loadMorePosts
+- (BOOL)loadMorePosts
 {
-    if (self.viewType == RECENT_VIEW)
+    BOOL success = false;
+    
+    switch (self.viewType)
     {
-        [self.dataController fetchNewPosts];
-        [self refresh];
+        case RECENT_VIEW:
+            [self.dataController fetchNewPosts];
+            [self refresh];
+            break;
+        case TOP_VIEW:
+            [self.dataController fetchTopPosts];
+            [self refresh];
+            break;
+        case TAG_VIEW:
+            success = [self.dataController fetchMorePostsWithTagMessage:self.tagMessage];
+            [self refresh];
+        default:
+            break;
     }
-    else if (self.viewType == TOP_VIEW)
-    {
-        [self.dataController fetchTopPosts];
-        [self refresh];
-    }
-    [self.tableView reloadData];
+    return success;
 }
 
 - (void)refresh

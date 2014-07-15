@@ -28,6 +28,8 @@ public class MyContentActivity extends Activity{
 
     ListView myPostsListView;
     ListView myCommentsListView;
+    static TextView postScore;
+    static TextView commentScore;
     public static PostListAdapter postListAdapter;
     public static CommentListAdapter commentListAdapter;
     public static List<Post> postList = new ArrayList<Post>();
@@ -117,17 +119,18 @@ public class MyContentActivity extends Activity{
             postListAdapter.addAll(postList);
             Log.i("cfeed","TEST last post size: " + postListAdapter.getCount());
             postListAdapter.notifyDataSetChanged();
+            updateUserPostScore();
         }
     }
 
     public static void updateCommentList() {
         //TODO: remove these manual lists
         List<Comment> testList = new ArrayList<Comment>();
-        testList.add(new Comment());
-        testList.add(new Comment());
-        testList.add(new Comment());
-        testList.add(new Comment());
-        testList.add(new Comment());
+        testList.add(new Comment(1));
+        testList.add(new Comment(2));
+        testList.add(new Comment(0));
+        testList.add(new Comment(6));
+        testList.add(new Comment(4));
         commentList = new ArrayList<Comment>();
         commentList.addAll(testList);
 
@@ -139,6 +142,27 @@ public class MyContentActivity extends Activity{
             commentListAdapter.addAll(commentList);
             Log.i("cfeed","TEST last post size: " + commentListAdapter.getCount());
             commentListAdapter.notifyDataSetChanged();
+            updateUserCommentScore();
+        }
+    }
+
+    private static void updateUserPostScore() {
+        if(postScore != null && postList != null && postList.size() != 0){
+            int scoreCount = 0;
+            for(Post p : postList){
+                scoreCount += p.getScore();
+            }
+            postScore.setText("Post Score: " + scoreCount);
+        }
+    }
+
+    private static void updateUserCommentScore() {
+        if(commentScore != null && commentList != null && commentList.size() != 0){
+            int scoreCount = 0;
+            for(Comment c : commentList){
+                scoreCount += c.getScore();
+            }
+            commentScore.setText("Comment Score: " + scoreCount);
         }
     }
 
@@ -158,10 +182,13 @@ public class MyContentActivity extends Activity{
     private void setupViews() {
         TextView myPostsText = (TextView)findViewById(R.id.myPostsTextView);
         TextView myCommentsText = (TextView)findViewById(R.id.myCommentsTextView);
-        //ListView myPostsListView = (ListView)findViewById()
+        postScore = (TextView)findViewById(R.id.postScore);
+        commentScore = (TextView)findViewById(R.id.commentScore);
 
         myPostsText.setTypeface(FontManager.light);
         myCommentsText.setTypeface(FontManager.light);
+        postScore.setTypeface(FontManager.light);
+        commentScore.setTypeface(FontManager.light);
     }
 
     public static void makeLoadingIndicator(boolean makeLoading){

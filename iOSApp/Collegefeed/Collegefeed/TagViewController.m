@@ -29,8 +29,11 @@
     // Search bar
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     self.tableView.tableHeaderView = searchBar;
-    
+    [searchBar setKeyboardType:UIKeyboardTypeAlphabet];
+    [searchBar setText:@"#"];
+    [searchBar setDelegate:self];
     self.searchDisplay = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
+    
     self.searchDisplay.delegate = self;
     self.searchDisplay.searchResultsDataSource = self;
     self.searchDisplay.searchResultsDelegate = self;
@@ -111,22 +114,21 @@
 
 #pragma mark - Search Bar 
 
-- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    [self.searchResult removeAllObjects];
-    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchText];
-    
-    self.searchResult = [NSMutableArray arrayWithArray: [self.dataController.allTags filteredArrayUsingPredicate:resultPredicate]];
-}
--(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
-{
-    [self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
-    
-    return YES;
-}
-- (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
-{
-    tableView.backgroundColor = [Shared getCustomUIColor:CF_LIGHTGRAY];
+    NSString *tag  = searchBar.text;
+    if ([Tag withMessageIsValid:tag])
+    {
+        [self.dataController fetchAllPostsWithTagMessage:tag];
+        PostsViewController *postsView = [[PostsViewController alloc] initAsType:TAG_VIEW withDataController:self.dataController];
+        [postsView setTagMessage:tag];
+        [self.navigationController pushViewController:postsView animated:YES];
+        
+    }
+    else
+    {
+        // TODO: toast an error or some shit and let 'em try again
+    }
 }
 #pragma mark - Actions
 

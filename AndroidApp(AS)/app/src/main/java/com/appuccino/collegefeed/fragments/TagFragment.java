@@ -1,7 +1,5 @@
 package com.appuccino.collegefeed.fragments;
 
-import java.util.ArrayList;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -24,6 +22,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,9 +34,11 @@ import com.appuccino.collegefeed.extra.QuickReturnListView;
 import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.objects.Tag;
 import com.appuccino.collegefeed.utils.FontManager;
-import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.NetWorker.GetTagFragmentTask;
 import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
+import com.appuccino.collegefeed.utils.PrefManager;
+
+import java.util.ArrayList;
 
 public class TagFragment extends Fragment
 {
@@ -48,6 +49,8 @@ public class TagFragment extends Fragment
 	static QuickReturnListView list;
 	View rootView;
 	private static int currentFeedID;
+    private static ProgressBar progressSpinner;
+    private static TagListAdapter listAdapter;
 	
 	//values for footer
 	static LinearLayout footer;
@@ -60,7 +63,6 @@ public class TagFragment extends Fragment
 	private static int mMinRawY = 0;
 	private static TranslateAnimation anim;
 	static TextView collegeNameBottom;
-	private static TagListAdapter listAdapter;
 
 	public TagFragment()
 	{
@@ -78,6 +80,7 @@ public class TagFragment extends Fragment
 				container, false);
 		list = (QuickReturnListView)rootView.findViewById(R.id.fragmentListView);
 		footer = (LinearLayout)rootView.findViewById(R.id.footer);
+        progressSpinner = (ProgressBar)rootView.findViewById(R.id.progressSpinner);
 		setupBottomViewUI();
 		
 		//if doesnt have header and footer, add them
@@ -140,6 +143,7 @@ public class TagFragment extends Fragment
 	}
 	
 	public static void setupFooterListView() {
+        Log.i("cfeed","list scrollable2: " + willListScroll());
 		if(willListScroll()){
 			list.getViewTreeObserver().addOnGlobalLayoutListener(
 				new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -246,7 +250,7 @@ public class TagFragment extends Fragment
 	}
 	
 	private static boolean willListScroll() {
-		if(tagList == null || list.getLastVisiblePosition() + 1 == tagList.size() || tagList.size() == 0) {
+		if(tagList == null || list.getLastVisiblePosition() + 1 >= tagList.size() || tagList.size() == 0) {
 			return false;
 		}
 		return true; 
@@ -338,11 +342,15 @@ public class TagFragment extends Fragment
 
 	private static void pullListFromServer() 
 	{
-		tagList = new ArrayList<Tag>();
-		ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);		
+        if(tagList == null){
+            tagList = new ArrayList<Tag>();
+        }
+		ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
 		if(cm.getActiveNetworkInfo() != null){
 			new GetTagFragmentTask(currentFeedID).execute(new PostSelector());
-		}
+		} else {
+            makeLoadingIndicator(false);
+        }
 	}
 	
 	public static void changeFeed(int id) {
@@ -359,6 +367,12 @@ public class TagFragment extends Fragment
 			else
 				collegeNameBottom.setText("");
 		}
+        if(tagList != null){
+            tagList.clear();
+        }
+        if(listAdapter != null) {
+            listAdapter.clear();
+        }
 		pullListFromServer();
 	}
 
@@ -372,6 +386,10 @@ public class TagFragment extends Fragment
 	}
 
 	public static void makeLoadingIndicator(boolean b) {
-		//TODO
+        if(b){
+            progressSpinner.setVisibility(View.VISIBLE);
+        }else{
+            progressSpinner.setVisibility(View.GONE);
+        }
 	}
 }
