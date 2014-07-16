@@ -558,11 +558,16 @@ public class NetWorker {
              if(!result)
                  Toast.makeText(c, "Failed to , please try again later.", Toast.LENGTH_LONG).show();
              else{
-                 Comment responseComment = JSONParser.commentFromJSON(response);
-                 int id = responseComment.getID();
-                 MainActivity.myCommentsList.add(id);
-                 PrefManager.putMyCommentsList(MainActivity.myCommentsList);
-                 Log.i("cfeed","New My Comments list is of size " + myCommentsList.size());
+                 Comment responseComment = null;
+                 try {
+                     responseComment = JSONParser.commentFromJSON(response);
+                     int id = responseComment.getID();
+                     MainActivity.myCommentsList.add(id);
+                     PrefManager.putMyCommentsList(MainActivity.myCommentsList);
+                     Log.i("cfeed","New My Comments list is of size " + MainActivity.myCommentsList.size());
+                 } catch (IOException e) {
+                     e.printStackTrace();
+                 }
              }
              super.onPostExecute(result);
          }
