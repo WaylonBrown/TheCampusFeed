@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
 import com.appuccino.collegefeed.adapters.PostListAdapter;
+import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
@@ -47,8 +48,6 @@ public class MyContentActivity extends Activity{
         setupViews();
         setupListViews();
         fetchLists();
-        //TODO: remove these
-        updateCommentList();
     }
 
     private void setupListViews() {
@@ -101,9 +100,12 @@ public class MyContentActivity extends Activity{
 
     private void fetchLists() {
         postList = new ArrayList<Post>();
+        commentList = new ArrayList<Comment>();
         ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(cm.getActiveNetworkInfo() != null)
+        if(cm.getActiveNetworkInfo() != null) {
             new NetWorker.GetMyPostsTask().execute(new NetWorker.PostSelector());
+            new NetWorker.GetMyCommentsTask().execute(new NetWorker.PostSelector());
+        }
         else {
             Toast.makeText(this, "You have no internet connection.", Toast.LENGTH_LONG).show();
             makeTopLoadingIndicator(false);
@@ -127,24 +129,16 @@ public class MyContentActivity extends Activity{
         }
     }
 
-    public static void updateCommentList() {
-        //TODO: remove these manual lists
-        List<Comment> testList = new ArrayList<Comment>();
-        testList.add(new Comment(1));
-        testList.add(new Comment(2));
-        testList.add(new Comment(0));
-        testList.add(new Comment(6));
-        testList.add(new Comment(4));
+    public static void updateCommentList(ArrayList<Comment> result) {
         commentList = new ArrayList<Comment>();
-        commentList.addAll(testList);
+        commentList.addAll(result);
 
         if(commentListAdapter != null)
         {
-            Log.i("cfeed", "TEST new post size: " + postList.size());
-            //commentListAdapter.setCollegeFeedID(MainActivity.ALL_COLLEGES);
+            Log.i("cfeed", "TEST new comment size: " + commentList.size());
             commentListAdapter.clear();
             commentListAdapter.addAll(commentList);
-            Log.i("cfeed","TEST last post size: " + commentListAdapter.getCount());
+            Log.i("cfeed","TEST last comment size: " + commentListAdapter.getCount());
             commentListAdapter.notifyDataSetChanged();
             updateUserCommentScore();
         }

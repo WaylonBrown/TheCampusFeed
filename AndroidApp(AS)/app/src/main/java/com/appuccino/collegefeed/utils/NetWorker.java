@@ -519,6 +519,69 @@ public class NetWorker {
         protected void onPostExecute(ArrayList<Post> result) {
             MyContentActivity.updatePostList(result);
             MyContentActivity.makeTopLoadingIndicator(false);
+            super.onPostExecute(result);
+        }
+    }
+
+    public static class GetMyCommentsTask extends AsyncTask<PostSelector, Void, ArrayList<Comment> >
+    {
+        public GetMyCommentsTask()
+        {
+        }
+
+        @Override
+        protected void onPreExecute() {
+            MyContentActivity.makeBottomLoadingIndicator(true);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected ArrayList<Comment> doInBackground(PostSelector... arg0) {
+            String arrayQuery = "";
+            if(MainActivity.myCommentsList == null || MainActivity.myCommentsList.size() == 0){
+                return new ArrayList<Comment>();
+            } else {
+                for(int n : MainActivity.myCommentsList){
+                    arrayQuery += ("many_ids[]=" + n + "&");
+                }
+                //remove final &
+                if(arrayQuery.length() > 0){
+                    arrayQuery = arrayQuery.substring(0, arrayQuery.length()-1);
+                }
+                HttpGet request = new HttpGet(REQUEST_URL + "comments/many?" + arrayQuery);
+                return getCommentsFromURLRequest(request);
+            }
+
+        }
+
+        private ArrayList<Comment> getCommentsFromURLRequest(HttpGet request) {
+            ArrayList<Comment> ret = new ArrayList<Comment>();
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            String response = null;
+            try {
+                response = client.execute(request, responseHandler);
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if(response != null)
+                Log.d("cfeed", LOG_TAG + response);
+
+            try {
+                ret = JSONParser.commentListFromJSON(response);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return ret;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Comment> result) {
+            MyContentActivity.updateCommentList(result);
+            MyContentActivity.makeBottomLoadingIndicator(false);
+            super.onPostExecute(result);
         }
     }
 
