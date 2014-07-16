@@ -39,6 +39,7 @@ import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.College;
+import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.JSONParser;
@@ -131,9 +132,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		commentUpvoteList = PrefManager.getCommentUpvoteList();
 		commentDownvoteList = PrefManager.getCommentDownvoteList();
 		flagList = PrefManager.getFlagList();
-        //TODO
-        //myPostsList = PrefManager.getMyPostsList();
-        //myCommentsList = PrefManager.getMyCommentsList();
+        myPostsList = PrefManager.getMyPostsList();
+        myCommentsList = PrefManager.getMyCommentsList();
 
 		permissionsProgress = (ProgressBar)findViewById(R.id.permissionsLoadingIcon);
 		newPostButton = (ImageView)findViewById(R.id.newPostButton);
@@ -162,8 +162,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         //instantly add to new posts
         if(currentFeedCollegeID == ALL_COLLEGES || currentFeedCollegeID == post.getCollegeID()){
             NewPostFragment.postList.add(0, post);
+            myPostsList.add(post.getID());
+            PrefManager.putMyPostsList(myPostsList);
             NewPostFragment.updateList();
             MainActivity.goToNewPostsAndScrollToTop();
+
+            Log.i("cfeed","New My Posts list is of size " + myPostsList.size());
         }
     }
 

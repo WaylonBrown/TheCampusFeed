@@ -504,7 +504,7 @@ public class NetWorker {
 
          private void parseResponseIntoPostAndAdd(String response) {
              try {
-                 Log.i("cfeed","NETWORK: Successful parsing of post response, adding to list");
+                 Log.i("cfeed","NETWORK: Successful post response, adding to list");
                  Post responsePost = JSONParser.postFromJSON(response);
                  responsePost.setCollegeID(postCollegeID);
                  if(MainActivity.getCollegeByID(postCollegeID) != null){
@@ -522,6 +522,7 @@ public class NetWorker {
      public static class MakeCommentTask extends AsyncTask<Comment, Void, Boolean>{
 
          Context c;
+         String response;
 
          public MakeCommentTask(Context context) {
              c = context;
@@ -539,7 +540,7 @@ public class NetWorker {
                  request.setHeader("Content-Type", "application/json");
                  request.setEntity(new ByteArrayEntity(comments[0].toJSONString().toByteArray()));
                  ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                 String response = client.execute(request, responseHandler);
+                 response = client.execute(request, responseHandler);
 
                  Log.d("cfeed", LOG_TAG + "Server response: " + response);
                  return true;
@@ -556,6 +557,13 @@ public class NetWorker {
          protected void onPostExecute(Boolean result) {
              if(!result)
                  Toast.makeText(c, "Failed to , please try again later.", Toast.LENGTH_LONG).show();
+             else{
+                 Comment responseComment = JSONParser.commentFromJSON(response);
+                 int id = responseComment.getID();
+                 MainActivity.myCommentsList.add(id);
+                 PrefManager.putMyCommentsList(MainActivity.myCommentsList);
+                 Log.i("cfeed","New My Comments list is of size " + myCommentsList.size());
+             }
              super.onPostExecute(result);
          }
 
