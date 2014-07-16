@@ -1,14 +1,9 @@
 package com.appuccino.collegefeed.objects;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-
-import android.util.JsonWriter;
-
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.utils.TimeManager;
+
+import java.util.ArrayList;
 
 public class Post extends AbstractPostComment{
 
@@ -84,6 +79,16 @@ public class Post extends AbstractPostComment{
 	{
 		return collegeName;
 	}
+
+    public void setCollegeID(int id)
+    {
+        collegeID = id;
+    }
+
+    public void setCollegeName(String n)
+    {
+        collegeName = n;
+    }
 	
 	public ArrayList<Comment> getCommentList()
 	{

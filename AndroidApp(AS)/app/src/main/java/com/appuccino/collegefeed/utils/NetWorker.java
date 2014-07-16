@@ -464,6 +464,7 @@ public class NetWorker {
 
          Context c;
          String response = null;
+         int postCollegeID;
 
          public MakePostTask(Context context) {
              c = context;
@@ -472,6 +473,7 @@ public class NetWorker {
          @Override
          protected Boolean doInBackground(Post... posts) {
              try{
+                 postCollegeID = posts[0].getCollegeID();
                  Log.i("cfeed",LOG_TAG + "Posting to feed with ID of " + posts[0].getCollegeID());
                  Log.i("cfeed",LOG_TAG + "Request URL: " + REQUEST_URL + "colleges/" + posts[0].getCollegeID() + "/posts");
                  HttpPost request = new HttpPost(REQUEST_URL + "colleges/" + posts[0].getCollegeID() + "/posts");
@@ -504,6 +506,10 @@ public class NetWorker {
              try {
                  Log.i("cfeed","NETWORK: Successful parsing of post response, adding to list");
                  Post responsePost = JSONParser.postFromJSON(response);
+                 responsePost.setCollegeID(postCollegeID);
+                 if(MainActivity.getCollegeByID(postCollegeID) != null){
+                     responsePost.setCollegeName(MainActivity.getCollegeByID(postCollegeID).getName());
+                 }
                  MainActivity.addNewPostToListAndMyContent(responsePost);
              } catch (IOException e) {
                  Log.i("cfeed","ERROR: post not added");
