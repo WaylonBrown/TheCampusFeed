@@ -2,7 +2,9 @@ package com.appuccino.collegefeed;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,12 +13,14 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
 import com.appuccino.collegefeed.adapters.PostListAdapter;
 import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
+import com.appuccino.collegefeed.utils.NetWorker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,14 +45,13 @@ public class MyContentActivity extends Activity{
         setContentView(R.layout.my_content);
         setupActionbar();
         setupViews();
-        setupLists();
+        setupListViews();
         fetchLists();
         //TODO: remove these
-        updatePostList();
         updateCommentList();
     }
 
-    private void setupLists() {
+    private void setupListViews() {
         postListAdapter = new PostListAdapter(this, R.layout.list_row_collegepost, postList, 0, MainActivity.ALL_COLLEGES);
         commentListAdapter = new CommentListAdapter(this, R.layout.list_row_collegepost, commentList, null);
         myPostsListView = (ListView)findViewById(R.id.myPostsListView);
@@ -97,19 +100,20 @@ public class MyContentActivity extends Activity{
     }
 
     private void fetchLists() {
-        //TODO: fetch from server here
-
+        postList = new ArrayList<Post>();
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(cm.getActiveNetworkInfo() != null)
+            new NetWorker.GetMyPostsTask().execute(new NetWorker.PostSelector());
+        else {
+            Toast.makeText(this, "You have no internet connection.", Toast.LENGTH_LONG).show();
+            makeTopLoadingIndicator(false);
+            makeBottomLoadingIndicator(false);
+        }
     }
 
-    public static void updatePostList() {
-        //TODO: remove these manual lists
-        List<Post> testList = new ArrayList<Post>();
-        testList.add(new Post("test", 1));
-        testList.add(new Post("test", 1));
-        testList.add(new Post("test", 1));
-        testList.add(new Post("test", 1));
+    public static void updatePostList(ArrayList<Post> result) {
         postList = new ArrayList<Post>();
-        postList.addAll(testList);
+        postList.addAll(result);
 
         if(postListAdapter != null)
         {
@@ -191,7 +195,11 @@ public class MyContentActivity extends Activity{
         commentScore.setTypeface(FontManager.light);
     }
 
-    public static void makeLoadingIndicator(boolean makeLoading){
+    public static void makeTopLoadingIndicator(boolean makeLoading){
+        //TODO
+    }
+
+    public static void makeBottomLoadingIndicator(boolean makeLoading){
         //TODO
     }
 }

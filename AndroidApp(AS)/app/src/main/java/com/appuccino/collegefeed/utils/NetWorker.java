@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.appuccino.collegefeed.CommentsActivity;
 import com.appuccino.collegefeed.MainActivity;
+import com.appuccino.collegefeed.MyContentActivity;
 import com.appuccino.collegefeed.TagListActivity;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
@@ -457,6 +458,67 @@ public class NetWorker {
             MainActivity.collegeList = result;
             PrefManager.putLastCollegeListUpdate(Calendar.getInstance());
             Log.i("cfeed","COLLEGE_LIST Updated main college list.");
+        }
+    }
+
+    public static class GetMyPostsTask extends AsyncTask<PostSelector, Void, ArrayList<Post> >
+    {
+        public GetMyPostsTask()
+        {
+        }
+
+        @Override
+        protected void onPreExecute() {
+            MyContentActivity.makeTopLoadingIndicator(true);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected ArrayList<Post> doInBackground(PostSelector... arg0) {
+            String arrayQuery = "";
+            if(MainActivity.myPostsList == null || MainActivity.myPostsList.size() == 0){
+                return new ArrayList<Post>();
+            } else {
+                for(int n : MainActivity.myPostsList){
+                    arrayQuery += ("many_ids[]=" + n + "&");
+                }
+                //remove final &
+                if(arrayQuery.length() > 0){
+                    arrayQuery = arrayQuery.substring(0, arrayQuery.length()-1);
+                }
+                HttpGet request = new HttpGet(REQUEST_URL + "posts/many?" + arrayQuery);
+                return getPostsFromURLRequest(request);
+            }
+
+        }
+
+        private ArrayList<Post> getPostsFromURLRequest(HttpGet request) {
+            ArrayList<Post> ret = new ArrayList<Post>();
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            String response = null;
+            try {
+                response = client.execute(request, responseHandler);
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if(response != null)
+                Log.d("cfeed", LOG_TAG + response);
+
+            try {
+                ret = JSONParser.postListFromJSON(response);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return ret;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Post> result) {
+            MyContentActivity.updatePostList(result);
+            MyContentActivity.makeTopLoadingIndicator(false);
         }
     }
 
