@@ -12,12 +12,12 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
 import com.appuccino.collegefeed.adapters.PostListAdapter;
-import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
@@ -31,10 +31,12 @@ import java.util.List;
  */
 public class MyContentActivity extends Activity{
 
-    ListView myPostsListView;
-    ListView myCommentsListView;
+    static ListView myPostsListView;
+    static ListView myCommentsListView;
     static TextView postScore;
     static TextView commentScore;
+    static ProgressBar topLoadingSpinner;
+    static ProgressBar bottomLoadingSpinner;
     public static PostListAdapter postListAdapter;
     public static CommentListAdapter commentListAdapter;
     public static List<Post> postList = new ArrayList<Post>();
@@ -55,6 +57,8 @@ public class MyContentActivity extends Activity{
         commentListAdapter = new CommentListAdapter(this, R.layout.list_row_collegepost, commentList, null);
         myPostsListView = (ListView)findViewById(R.id.myPostsListView);
         myCommentsListView = (ListView)findViewById(R.id.myCommentsListView);
+        topLoadingSpinner = (ProgressBar)findViewById(R.id.topLoadingSpinner);
+        bottomLoadingSpinner = (ProgressBar)findViewById(R.id.bottomLoadingSpinner);
         //if doesnt have footer, add it
         if(myCommentsListView.getFooterViewsCount() == 0)
         {
@@ -105,8 +109,7 @@ public class MyContentActivity extends Activity{
         if(cm.getActiveNetworkInfo() != null) {
             new NetWorker.GetMyPostsTask().execute(new NetWorker.PostSelector());
             new NetWorker.GetMyCommentsTask().execute(new NetWorker.PostSelector());
-        }
-        else {
+        } else {
             Toast.makeText(this, "You have no internet connection.", Toast.LENGTH_LONG).show();
             makeTopLoadingIndicator(false);
             makeBottomLoadingIndicator(false);
@@ -190,10 +193,32 @@ public class MyContentActivity extends Activity{
     }
 
     public static void makeTopLoadingIndicator(boolean makeLoading){
-        //TODO
+        if(topLoadingSpinner != null){
+            if(makeLoading)
+            {
+                myPostsListView.setVisibility(View.INVISIBLE);
+                topLoadingSpinner.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                myPostsListView.setVisibility(View.VISIBLE);
+                topLoadingSpinner.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 
     public static void makeBottomLoadingIndicator(boolean makeLoading){
-        //TODO
+        if(bottomLoadingSpinner != null){
+            if(makeLoading)
+            {
+                myCommentsListView.setVisibility(View.INVISIBLE);
+                bottomLoadingSpinner.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                myCommentsListView.setVisibility(View.VISIBLE);
+                bottomLoadingSpinner.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 }

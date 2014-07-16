@@ -14,19 +14,31 @@
         android:textSize="16sp"
         android:gravity="center_horizontal"/>
 
-    <ListView
-        android:id="@+id/myPostsListView"
-        android:layout_height="0dp"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="6dp"
-        android:listSelector="@android:color/transparent"
-        android:scrollbars="none"
-        android:background="@color/lightgray"
-        />
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ListView
+            android:id="@+id/myPostsListView"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="6dp"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none"
+            android:background="@color/lightgray"
+            android:visibility="gone"
+            />
+
+        <ProgressBar
+            android:id="@+id/topLoadingSpinner"
+            android:layout_gravity="center"
+            style="@style/wrap"/>
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/myCommentsTextView"
@@ -37,18 +49,31 @@
         android:textSize="16sp"
         android:gravity="center_horizontal"/>
 
-     <ListView
-        android:id="@+id/myCommentsListView"
-        android:layout_height="0dp"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="6dp"
-        android:listSelector="@android:color/transparent"
-        android:scrollbars="none"
-        android:background="@color/lightgray"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ListView
+            android:id="@+id/myCommentsListView"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="6dp"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none"
+            android:background="@color/lightgray"
+            android:visibility="gone"
+            />
+
+        <ProgressBar
+            android:id="@+id/bottomLoadingSpinner"
+            android:layout_gravity="center"
+            style="@style/wrap"/>
+
+    </FrameLayout>
 
     <View
         android:layout_height="1dp"
