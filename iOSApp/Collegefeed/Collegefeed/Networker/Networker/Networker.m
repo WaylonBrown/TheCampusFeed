@@ -167,16 +167,6 @@
                    API_URL, API_VERSION, collegeId]];
     return [self POST:data toUrl:url];
 }
-
-//+ (NSData *)GETPostsWithTagName:(NSString *)tagName;
-//{
-//    NSString* tagWithoutHash = [tagName stringByReplacingOccurrencesOfString:@"#"
-//                                                                  withString:@""];
-//    NSURL *url = [[NSURL alloc] initWithString:
-//                  [NSString stringWithFormat:@"%@/%@/posts/byTag/%@",
-//                   API_URL, API_VERSION, tagWithoutHash]];
-//    return [self GET:url];
-//}
 + (NSData *)GETPostsWithTagName:(NSString*)tagName
                   withCollegeId:(long)collegeId
 {

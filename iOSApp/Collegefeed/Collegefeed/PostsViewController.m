@@ -129,14 +129,27 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // TODO: This should not be hardcoded; revist
-    if (self.dataController.showingAllColleges)
-    {
-        return 120;
-    }
-    else
-    {
-        return 100;
-    }
+//    if (self.dataController.showingAllColleges)
+//    {
+//        return 120;
+//    }
+//    else
+//    {
+//        return 100;
+//    }
+    
+    #define LABEL_WIDTH 252.0f
+    #define TOP_TO_LABEL 7.0f
+    #define LABEL_TO_BOTTOM 59.0f
+    #define MIN_LABEL_HEIGHT 53.0f
+    
+
+    NSString *text = [((Post *)[self.list objectAtIndex:[indexPath row]]) getMessage];
+    CGSize constraint = CGSizeMake(LABEL_WIDTH, 20000.0f);
+    CGSize size = [text sizeWithFont:CF_FONT_LIGHT(16) constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+    CGFloat height = MAX(size.height, MIN_LABEL_HEIGHT);
+    float fullHeight = height + TOP_TO_LABEL + LABEL_TO_BOTTOM;
+    return fullHeight;
 }
 
 #pragma mark - Navigation
