@@ -40,12 +40,15 @@
         self.searchResult = [NSMutableArray arrayWithCapacity:[self.fullCollegeList count]];
         
         // Search bar
-        UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+        UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, 44)];
         self.tableView.tableHeaderView = searchBar;
+
         [searchBar setKeyboardType:UIKeyboardTypeAlphabet];
         [searchBar setDelegate:self];
         self.searchDisplay = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
         
+//        [self.searchDisplay.searchResultsTableView addSubview:searchBar];
+        self.searchDisplay.searchResultsTableView.frame = self.tableView.frame;
         self.searchDisplay.delegate = self;
         self.searchDisplay.searchResultsDataSource = self;
         self.searchDisplay.searchResultsDelegate = self;
@@ -379,6 +382,19 @@
 
 
 #pragma mark - Search Bar
+
+-(void)searchDisplayController:(UISearchDisplayController *)controller didShowSearchResultsTableView:(UITableView *)tableView
+{
+    [tableView setFrame:self.tableView.frame];
+    [self.alertView addSubview:tableView];
+//    float x = self.tableView.frame.origin.x + self.alertView.;
+//    float y = self.tableView.window.frame.origin.y + self.titleLabel.frame.size.height;
+//    float width = self.tableView.frame.size.width;
+//    float height = self.tableView.frame.size.height;
+//    
+//    CGRect newFrame = CGRectMake(x, y, width, height);
+//    tableView.frame = newFrame;
+}
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
