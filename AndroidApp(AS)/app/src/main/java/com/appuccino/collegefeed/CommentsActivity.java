@@ -72,14 +72,21 @@ public class CommentsActivity extends Activity{
 		commentsText = (TextView)findViewById(R.id.commentsText);
 		
 		int collegeID = getIntent().getIntExtra("COLLEGE_ID", 0);
-		int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);
+        int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);
+        int postIndex = getIntent().getIntExtra("POST_INDEX", 0);
 
         Log.i("cfeed", "Section number: " + sectionNumber);
 
-		if(sectionNumber == 0)
-			post = TopPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1));
-		else
-			post = NewPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1));
+        switch(sectionNumber){
+            case 0:
+                post = TopPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1));
+                break;
+            case 1:
+                post = NewPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1));
+                break;
+            default:
+                post = MyContentActivity.postList.get(postIndex);
+        }
 		
 		Log.i("cfeed", "Post: " + post + " list: " + MainActivity.flagList + " post id: "
                 + getIntent().getIntExtra("POST_ID", -1));

@@ -77,32 +77,13 @@ public class MyContentActivity extends Activity{
             myCommentsListView.setAdapter(commentListAdapter);
         else
             Log.e("cfeed", "MyContentCommentList list adapter wasn't set.");
-
-        myPostsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1,
-                                    int position, long arg3)
-            {
-                postClicked(postList.get(position - 1));
-            }
-        });
-        myCommentsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1,
-                                    int position, long arg3)
-            {
-                commentClicked(commentList.get(position - 1));
-            }
-        });
     }
 
     public void setupListClickListeners(){
         myPostsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                postClicked(postList.get(i));
+                postClicked(postList.get(i), i);
             }
         });
 
@@ -114,11 +95,12 @@ public class MyContentActivity extends Activity{
         });
     }
 
-    private void postClicked(Post post) {
+    private void postClicked(Post post, int index) {
         Intent intent = new Intent(this, CommentsActivity.class);
         intent.putExtra("POST_ID", post.getID());
         intent.putExtra("COLLEGE_ID", post.getCollegeID());
-        intent.putExtra("SECTION_NUMBER", 0);
+        intent.putExtra("POST_INDEX", index);
+        intent.putExtra("SECTION_NUMBER", 3);
 
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
