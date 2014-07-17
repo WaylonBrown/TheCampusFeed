@@ -328,7 +328,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
     	//check for tags, colorize them
     	for(int i = 0; i < wordArray.length; i++)
     	{
-    		if(wordArray[i].length() > 0 && wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
+    		if(wordArray[i].length() > 0 && wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1 && !containsSymbols(wordArray[i]))
     		{
     			wordArray[i] = "<font color='" + tagColor + "'>" + wordArray[i] + "</font>";
     		}
@@ -354,6 +354,20 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 //    	postHolder.messageText.setText(Html.fromHtml(message));
     	postHolder.messageText.setText(Html.fromHtml(message));
 	}
+
+    private boolean containsSymbols(String text) {
+        if(text.contains("!") ||
+                text.contains("$") ||
+                text.contains("%") ||
+                text.contains("^") ||
+                text.contains("&") ||
+                text.contains("*") ||
+                text.contains("+") ||
+                text.contains(".")){
+            return true;
+        }
+        return false;
+    }
     
     public void setCollegeFeedID(int id){
     	currentFeedID = id;
