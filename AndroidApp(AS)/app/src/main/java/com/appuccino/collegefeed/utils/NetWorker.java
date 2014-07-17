@@ -706,6 +706,9 @@ public class NetWorker {
                      PrefManager.putCommentUpvoteList(MainActivity.commentUpvoteList);
                      MainActivity.myCommentsList.add(id);
                      PrefManager.putMyCommentsList(MainActivity.myCommentsList);
+                     //instantly add to new comments
+                     CommentsActivity.commentList.add(0, responseComment);
+                     CommentsActivity.updateList();
                      Log.i("cfeed","New My Comments list is of size " + MainActivity.myCommentsList.size());
                  } catch (IOException e) {
                      e.printStackTrace();
