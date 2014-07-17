@@ -241,7 +241,7 @@ public class CommentsActivity extends Activity{
 					}
 				}        	
 	        });
-	        
+
 	        updateArrows(arrowUp, arrowDown);
 		}
 	}
@@ -354,6 +354,8 @@ public class CommentsActivity extends Activity{
 
 	protected void updateArrows(ImageView arrowUp, ImageView arrowDown) 
 	{
+        Log.i("cfeed","Updating arrows with post ID of" + post.getID());
+        post.setVote(MainActivity.getVoteByPostId(post.getID()));
 		int vote = post.getVote();
         if(vote == -1)
         {

@@ -648,6 +648,8 @@ public class NetWorker {
                  if(MainActivity.getCollegeByID(postCollegeID) != null){
                      responsePost.setCollegeName(MainActivity.getCollegeByID(postCollegeID).getName());
                  }
+                 MainActivity.postUpvoteList.add(responsePost.getID());
+                 PrefManager.putPostUpvoteList(MainActivity.postUpvoteList);
                  MainActivity.addNewPostToListAndMyContent(responsePost);
              } catch (IOException e) {
                  Log.i("cfeed","ERROR: post not added");
@@ -700,6 +702,8 @@ public class NetWorker {
                  try {
                      responseComment = JSONParser.commentFromJSON(response);
                      int id = responseComment.getID();
+                     MainActivity.commentUpvoteList.add(id);
+                     PrefManager.putCommentUpvoteList(MainActivity.commentUpvoteList);
                      MainActivity.myCommentsList.add(id);
                      PrefManager.putMyCommentsList(MainActivity.myCommentsList);
                      Log.i("cfeed","New My Comments list is of size " + MainActivity.myCommentsList.size());
