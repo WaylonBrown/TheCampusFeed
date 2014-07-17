@@ -256,15 +256,16 @@
     }
     
     NSData *collegeData = [Networker GETCollegeWithId:Id];
+    if (collegeData == nil)
+    {
+        return nil;
+    }
     NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:collegeData
                                                                options:0
                                                                  error:nil];
     
     College *college = [[College alloc] initFromJSON:jsonObject];
-    if (college != nil)
-    {
-        [self.collegeList addObject:college];
-    }
+    [self.collegeList addObject:college];
     
     return college;
 }

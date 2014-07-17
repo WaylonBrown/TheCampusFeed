@@ -70,9 +70,6 @@
         return POSTReply;
     }
     
-//    [NSException raise:@"Error in networker.POST"
-//                format:@"URL: %@\nResponse: %@\nError message: %@\n",
-//     url, stringReply, [error localizedDescription]];
     return nil;
 }
 

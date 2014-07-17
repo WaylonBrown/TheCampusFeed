@@ -264,7 +264,7 @@
 {
     CGRect frame = self.feedToolbar.frame;
     CGFloat size = frame.size.height;
-    CGFloat scrollOffset = scrollView.contentOffset.y + self.postTableView.frame.size.height;
+    CGFloat scrollOffset = scrollView.contentOffset.y;// + self.postTableView.frame.size.height;
     CGFloat scrollDiff = scrollOffset - self.previousScrollViewYOffset;
     CGFloat scrollHeight = scrollView.frame.size.height + self.postTableView.frame.size.height;
     
