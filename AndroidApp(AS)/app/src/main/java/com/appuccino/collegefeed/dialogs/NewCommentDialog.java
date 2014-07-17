@@ -119,7 +119,7 @@ public class NewCommentDialog extends AlertDialog.Builder{
 						//prevent indexoutofboundsexception
 						if(wordArray[i].length() > 0)
 						{
-							if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1)
+							if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1 && !containsSymbols(wordArray[i]))
 							{
 								currentTags += wordArray[i] + " ";
 							}
@@ -143,4 +143,18 @@ public class NewCommentDialog extends AlertDialog.Builder{
     		
     	});
 	}
+
+    private boolean containsSymbols(String text) {
+        if(text.contains("!") ||
+                text.contains("$") ||
+                text.contains("%") ||
+                text.contains("^") ||
+                text.contains("&") ||
+                text.contains("*") ||
+                text.contains("+") ||
+                text.contains(".")){
+            return true;
+        }
+        return false;
+    }
 }
