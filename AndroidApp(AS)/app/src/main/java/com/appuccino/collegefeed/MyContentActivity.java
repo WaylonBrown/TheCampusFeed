@@ -32,6 +32,7 @@ import java.util.List;
  */
 public class MyContentActivity extends Activity{
 
+    private static MyContentActivity thisActivity;
     static ListView myPostsListView;
     static ListView myCommentsListView;
     static TextView postScore;
@@ -42,10 +43,12 @@ public class MyContentActivity extends Activity{
     public static CommentListAdapter commentListAdapter;
     public static List<Post> postList = new ArrayList<Post>();
     public static List<Comment> commentList = new ArrayList<Comment>();
+    public static List<Post> commentParentList = new ArrayList<Post>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        thisActivity = this;
         setContentView(R.layout.my_content);
         setupActionbar();
         setupViews();
@@ -100,34 +103,65 @@ public class MyContentActivity extends Activity{
         intent.putExtra("POST_ID", post.getID());
         intent.putExtra("COLLEGE_ID", post.getCollegeID());
         intent.putExtra("POST_INDEX", index);
-        intent.putExtra("SECTION_NUMBER", 3);
+        intent.putExtra("SECTION_NUMBER", 2);
 
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void commentClicked(Comment comment) {
-//        Intent intent = new Intent(this, CommentsActivity.class);
-//        intent.putExtra("POST_ID", .getID());
-//        intent.putExtra("COLLEGE_ID", post.getCollegeID());
-//        intent.putExtra("SECTION_NUMBER", 0);
-//
-//        startActivity(intent);
-//        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        Post parentPost = getParentPostOfComment(comment);
+        int index = getIndexOfParentPost(parentPost);
+        Log.i("cfeed", "ID of parent post: " + parentPost.getID());
+        Intent intent = new Intent(this, CommentsActivity.class);
+        intent.putExtra("POST_INDEX", index);
+        if(parentPost != null){
+            intent.putExtra("POST_ID", parentPost.getID());
+            intent.putExtra("COLLEGE_ID", parentPost.getCollegeID());
+        }
+        intent.putExtra("SECTION_NUMBER", 3);
+
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void fetchLists() {
         postList = new ArrayList<Post>();
         commentList = new ArrayList<Comment>();
+        commentParentList = new ArrayList<Post>();
         ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         if(cm.getActiveNetworkInfo() != null) {
-            new NetWorker.GetMyPostsTask().execute(new NetWorker.PostSelector());
+            new NetWorker.GetManyPostsTask(MainActivity.myPostsList, 0).execute(new NetWorker.PostSelector());
             new NetWorker.GetMyCommentsTask().execute(new NetWorker.PostSelector());
         } else {
             Toast.makeText(this, "You have no internet connection.", Toast.LENGTH_LONG).show();
             makeTopLoadingIndicator(false);
             makeBottomLoadingIndicator(false);
         }
+    }
+
+    private static Post getParentPostOfComment(Comment c){
+        if(commentParentList == null || commentParentList.size() == 0){
+            Toast.makeText(thisActivity, "Please give the comment list another second to load.", Toast.LENGTH_LONG).show();
+        } else {
+            for(Post p : commentParentList){
+                if(p.getID() == c.getPostID()){
+                    return p;
+                }
+            }
+        }
+        return null;
+    }
+
+    private static int getIndexOfParentPost(Post p){
+        if(p != null && commentParentList != null && commentParentList.size() > 0){
+            for(int i = 0; i < commentParentList.size(); i++){
+                if(commentParentList.get(i).getID() == p.getID()){
+                    return i;
+                }
+            }
+        }
+        return 0;
     }
 
     public static void updatePostList(ArrayList<Post> result) {
@@ -159,6 +193,20 @@ public class MyContentActivity extends Activity{
             commentListAdapter.notifyDataSetChanged();
             updateUserCommentScore();
         }
+
+        //fetch comments parent IDs
+        if(result != null && result.size() > 0){
+            List<Integer> commentParentIDs = new ArrayList<Integer>();
+            for(Comment c : commentList){
+                commentParentIDs.add(c.getPostID());
+            }
+            new NetWorker.GetManyPostsTask(commentParentIDs, 1).execute(new NetWorker.PostSelector());
+        }
+    }
+
+    public static void updateCommentParentList(ArrayList<Post> result) {
+        commentParentList = new ArrayList<Post>();
+        commentParentList.addAll(result);
     }
 
     private static void updateUserPostScore() {

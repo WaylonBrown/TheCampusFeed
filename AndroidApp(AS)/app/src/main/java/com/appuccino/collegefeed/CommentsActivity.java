@@ -75,7 +75,7 @@ public class CommentsActivity extends Activity{
         int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);
         int postIndex = getIntent().getIntExtra("POST_INDEX", 0);
 
-        Log.i("cfeed", "Section number: " + sectionNumber);
+        Log.i("cfeed", "Section number: " + sectionNumber + " (Optional)Post Index: " + postIndex);
 
         switch(sectionNumber){
             case 0:
@@ -84,8 +84,11 @@ public class CommentsActivity extends Activity{
             case 1:
                 post = NewPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1));
                 break;
-            default:
+            case 2:
                 post = MyContentActivity.postList.get(postIndex);
+                break;
+            default:
+                post = MyContentActivity.commentParentList.get(postIndex);
         }
 		
 		Log.i("cfeed", "Post: " + post + " list: " + MainActivity.flagList + " post id: "

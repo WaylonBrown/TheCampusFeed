@@ -31,6 +31,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class NetWorker {
 
@@ -461,25 +462,32 @@ public class NetWorker {
         }
     }
 
-    public static class GetMyPostsTask extends AsyncTask<PostSelector, Void, ArrayList<Post> >
+    public static class GetManyPostsTask extends AsyncTask<PostSelector, Void, ArrayList<Post> >
     {
-        public GetMyPostsTask()
+        private List<Integer> postIDList;
+        private int whichList;  //0 = MyPosts, 1 = MyComments'Parents
+
+        public GetManyPostsTask(List<Integer> postIDList, int whichList)
         {
+            this.postIDList = postIDList;
+            this.whichList = whichList;
         }
 
         @Override
         protected void onPreExecute() {
-            MyContentActivity.makeTopLoadingIndicator(true);
+            if(whichList == 0){
+                MyContentActivity.makeTopLoadingIndicator(true);
+            }
             super.onPreExecute();
         }
 
         @Override
         protected ArrayList<Post> doInBackground(PostSelector... arg0) {
             String arrayQuery = "";
-            if(MainActivity.myPostsList == null || MainActivity.myPostsList.size() == 0){
+            if(postIDList == null || postIDList.size() == 0){
                 return new ArrayList<Post>();
             } else {
-                for(int n : MainActivity.myPostsList){
+                for(int n : postIDList){
                     arrayQuery += ("many_ids[]=" + n + "&");
                 }
                 //remove final &
@@ -517,8 +525,13 @@ public class NetWorker {
 
         @Override
         protected void onPostExecute(ArrayList<Post> result) {
-            MyContentActivity.updatePostList(result);
-            MyContentActivity.makeTopLoadingIndicator(false);
+            if(whichList == 0){
+                MyContentActivity.updatePostList(result);
+                MyContentActivity.makeTopLoadingIndicator(false);
+            }
+            else{
+                MyContentActivity.updateCommentParentList(result);
+            }
             super.onPostExecute(result);
         }
     }
