@@ -3,6 +3,7 @@ package com.appuccino.collegefeed;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ public class MyContentActivity extends Activity{
         setupActionbar();
         setupViews();
         setupListViews();
+        setupListClickListeners();
         fetchLists();
     }
 
@@ -96,10 +98,40 @@ public class MyContentActivity extends Activity{
         });
     }
 
+    public void setupListClickListeners(){
+        myPostsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                postClicked(postList.get(i));
+            }
+        });
+
+        myCommentsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                commentClicked(commentList.get(i));
+            }
+        });
+    }
+
     private void postClicked(Post post) {
+        Intent intent = new Intent(this, CommentsActivity.class);
+        intent.putExtra("POST_ID", post.getID());
+        intent.putExtra("COLLEGE_ID", post.getCollegeID());
+        intent.putExtra("SECTION_NUMBER", 0);
+
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void commentClicked(Comment comment) {
+//        Intent intent = new Intent(this, CommentsActivity.class);
+//        intent.putExtra("POST_ID", .getID());
+//        intent.putExtra("COLLEGE_ID", post.getCollegeID());
+//        intent.putExtra("SECTION_NUMBER", 0);
+//
+//        startActivity(intent);
+//        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void fetchLists() {
