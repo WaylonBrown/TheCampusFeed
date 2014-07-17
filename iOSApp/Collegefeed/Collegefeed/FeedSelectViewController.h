@@ -37,10 +37,12 @@ typedef NS_ENUM(NSInteger, FeedSelectorType)
     ONLY_NEARBY_COLLEGES,
 };
 
-@interface FeedSelectViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface FeedSelectViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
 
 @property (strong, nonatomic) id<FeedSelectionProtocol> feedDelegate;
 @property (strong, nonatomic) id<CollegeForPostingSelectionProtocol> postingDelegate;
+@property (nonatomic, strong) NSMutableArray *searchResult;
+@property (nonatomic, strong) UISearchDisplayController *searchDisplay;
 
 @property (weak,nonatomic) IBOutlet NSLayoutConstraint *tableHeightConstraint;
 

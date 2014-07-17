@@ -61,7 +61,6 @@
 
 - (void)getNetworkCollegeList
 {
-    // TODO: most recently, this only gets first 25 colleges
     self.collegeList = [[NSMutableArray alloc] init];
     NSData *data = [Networker GETAllColleges];
     [self parseData:data asClass:[College class] intoList:self.collegeList];
@@ -331,8 +330,6 @@
     NSString *docDir = [paths objectAtIndex: 0];
     NSString *postFile = [docDir stringByAppendingPathComponent: @"UserPostIds.txt"];
     
-    // TODO: consider saving the whole JSON posts for quicker retrieval later
-    // Save Post Ids
     NSString *postIdsString = @"";
     for (Post *post in self.userPosts)
     {
