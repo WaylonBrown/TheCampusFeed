@@ -128,16 +128,7 @@
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{   // TODO: This should not be hardcoded; revist
-//    if (self.dataController.showingAllColleges)
-//    {
-//        return 120;
-//    }
-//    else
-//    {
-//        return 100;
-//    }
-    
+{
     #define LABEL_WIDTH 252.0f
     #define TOP_TO_LABEL 7.0f
     #define LABEL_TO_BOTTOM 59.0f

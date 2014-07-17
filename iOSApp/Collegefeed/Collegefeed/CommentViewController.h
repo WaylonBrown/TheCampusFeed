@@ -16,6 +16,8 @@
 @interface CommentViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate, CreationViewProtocol>
 
 @property (strong, nonatomic) Post *originalPost;
+@property (strong, nonatomic) IBOutlet UITableView *postTableView;
+@property (strong, nonatomic) IBOutlet UITableView *commentTableView;
 
 
 @end
