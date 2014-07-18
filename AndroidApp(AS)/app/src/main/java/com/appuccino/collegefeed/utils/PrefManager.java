@@ -19,6 +19,8 @@ public class PrefManager {
 	public static final String COMMENT_UPVOTE_LIST = "comment_upvote_list";
 	public static final String COMMENT_DOWNVOTE_LIST = "comment_downvote_list";
 	public static final String FLAG_LIST = "flag_list";
+    public static final String MY_POSTS_LIST = "my_votes_list";
+    public static final String MY_COMMENTS_LIST = "my_comments_list";
 	public static final String LAST_FEED = "last_feed";
     public static final String LAST_COLLEGE_UPDATE = "last_college_update";
 	
@@ -29,7 +31,7 @@ public class PrefManager {
 	
 	public static void putBoolean(String key, boolean value)
 	{
-		prefs.edit().putBoolean(key, value).commit();
+		prefs.edit().putBoolean(key, value).apply();
 	}
 	
 	public static boolean getBoolean(String key, boolean defaultVal)
@@ -39,7 +41,7 @@ public class PrefManager {
 	
 	public static void putInt(String key, int value)
 	{
-		prefs.edit().putInt(key, value).commit();
+		prefs.edit().putInt(key, value).apply();
 	}
 	
 	public static int getInt(String key, int defaultVal)
@@ -49,7 +51,7 @@ public class PrefManager {
 	
 	public static void putString(String key, String value)
 	{
-		prefs.edit().putString(key, value).commit();
+		prefs.edit().putString(key, value).apply();
 	}
 	
 	public static String getString(String key, String defaultVal)
@@ -67,7 +69,7 @@ public class PrefManager {
 			storage = storage.substring(0, storage.length()-1);
 		}
 		
-		prefs.edit().putString(UPVOTE_LIST, storage).commit();
+		prefs.edit().putString(UPVOTE_LIST, storage).apply();
 	}
 	
 	public static List<Integer> getPostUpvoteList(){
@@ -96,7 +98,7 @@ public class PrefManager {
 			storage = storage.substring(0, storage.length()-1);
 		}
 		
-		prefs.edit().putString(DOWNVOTE_LIST, storage).commit();
+		prefs.edit().putString(DOWNVOTE_LIST, storage).apply();
 	}
 	
 	public static List<Integer> getPostDownvoteList(){
@@ -125,7 +127,7 @@ public class PrefManager {
 			storage = storage.substring(0, storage.length()-1);
 		}
 		
-		prefs.edit().putString(COMMENT_UPVOTE_LIST, storage).commit();
+		prefs.edit().putString(COMMENT_UPVOTE_LIST, storage).apply();
 	}
 	
 	public static List<Integer> getCommentUpvoteList(){
@@ -154,7 +156,7 @@ public class PrefManager {
 			storage = storage.substring(0, storage.length()-1);
 		}
 		
-		prefs.edit().putString(COMMENT_DOWNVOTE_LIST, storage).commit();
+		prefs.edit().putString(COMMENT_DOWNVOTE_LIST, storage).apply();
 	}
 	
 	public static List<Integer> getCommentDownvoteList(){
@@ -183,7 +185,7 @@ public class PrefManager {
 			storage = storage.substring(0, storage.length()-1);
 		}
 		
-		prefs.edit().putString(FLAG_LIST, storage).commit();
+		prefs.edit().putString(FLAG_LIST, storage).apply();
 	}
 	
 	public static List<Integer> getFlagList(){
@@ -226,6 +228,74 @@ public class PrefManager {
                 String.valueOf(c.get(Calendar.DAY_OF_MONTH)) +
                 "," +
                 String.valueOf(c.get(Calendar.YEAR));
-        prefs.edit().putString(LAST_COLLEGE_UPDATE, storage).commit();
+        prefs.edit().putString(LAST_COLLEGE_UPDATE, storage).apply();
+    }
+
+    public static void putMyPosttList(){
+
+    }
+
+    public static ArrayList<Integer> getMyPostsList(){
+        ArrayList<Integer> returnList = new ArrayList<Integer>();
+        String stringList = prefs.getString(MY_POSTS_LIST, "");
+        if(stringList.isEmpty()){
+            return returnList;
+        } else {
+            String[] splitList = stringList.split(",");
+            for(String s : splitList){
+                try {
+                    returnList.add(Integer.parseInt(s));
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        return returnList;
+    }
+
+    public static ArrayList<Integer> getMyCommentsList(){
+        ArrayList<Integer> returnList = new ArrayList<Integer>();
+        String stringList = prefs.getString(MY_COMMENTS_LIST, "");
+        if(stringList.isEmpty()){
+            return returnList;
+        } else {
+            String[] splitList = stringList.split(",");
+            for(String s : splitList){
+                try {
+                    returnList.add(Integer.parseInt(s));
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        return returnList;
+    }
+
+    public static void putMyPostsList(List<Integer> list){
+        String storage = "";
+        if(list != null && list.size() > 0){
+            for(int n : list){
+                storage += (n + ",");
+            }
+            //remove final ,
+            if(storage.length() > 0){
+                storage = storage.substring(0, storage.length()-1);
+            }
+        }
+        prefs.edit().putString(MY_POSTS_LIST, storage).apply();
+    }
+
+    public static void putMyCommentsList(List<Integer> list){
+        String storage = "";
+        if(list != null && list.size() > 0){
+            for(int n : list){
+                storage += (n + ",");
+            }
+            //remove final ,
+            if(storage.length() > 0){
+                storage = storage.substring(0, storage.length()-1);
+            }
+        }
+        prefs.edit().putString(MY_COMMENTS_LIST, storage).apply();
     }
 }

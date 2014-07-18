@@ -36,6 +36,7 @@
     if (self)
     {
         [self setDataController:controller];
+        self.activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         self.toastController = [[ToastController alloc] initWithViewController:self];        
     }
     return self;
@@ -75,6 +76,7 @@
     [self refresh];
     // Show loading indicator until a nearby college is found,
     // then replace it with a create post button
+     
     if ([self.dataController isNearCollege])
     {
         [self placeCreatePost];
@@ -111,7 +113,8 @@
     }
     else
     {
-        [self.navigationItem setRightBarButtonItem:nil];
+        [self placeLoadingIndicator];
+//        [self.navigationItem setRightBarButtonItem:nil];
         [self.toastController toastLocationFoundNotNearCollege];
     }
 }
@@ -222,7 +225,6 @@
 - (void)submitSelectionForFeedWithCollegeOrNil:(College *)college
 {
     [self.dataController switchedToSpecificCollegeOrNil:college];
-    [self.tabBarController setSelectedIndex:0];
     if (college == nil)
     {
         [self.currentFeedLabel setText:@"All Colleges"];

@@ -34,6 +34,25 @@
     [self.tableView setDelegate:self];
     // Set fonts
     [self.titleLabel setFont:CF_FONT_LIGHT(30)];
+    
+    if (self.type == ALL_COLLEGES_WITH_SEARCH)
+    {
+        self.searchResult = [NSMutableArray arrayWithCapacity:[self.fullCollegeList count]];
+        
+        // Search bar
+        UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, 44)];
+        self.tableView.tableHeaderView = searchBar;
+
+        [searchBar setKeyboardType:UIKeyboardTypeAlphabet];
+        [searchBar setDelegate:self];
+        self.searchDisplay = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
+        
+//        [self.searchDisplay.searchResultsTableView addSubview:searchBar];
+        self.searchDisplay.searchResultsTableView.frame = self.tableView.frame;
+        self.searchDisplay.delegate = self;
+        self.searchDisplay.searchResultsDataSource = self;
+        self.searchDisplay.searchResultsDelegate = self;
+    }
 }
 - (void)didReceiveMemoryWarning
 {
@@ -44,7 +63,6 @@
 {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
-
 - (void)fixHeights:(int)numNearbyColleges
 {
     bool isNearColleges = numNearbyColleges > 0;
@@ -90,17 +108,6 @@
     }
     return 1;
 }
-//-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-////    if ([indexPath section] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).section
-////        &&
-//if (        [indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row)
-//    {
-//        [self fixHeights];
-//        NSLog(@"%f",self.tableView.contentSize.height);
-//        
-//    }
-//}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     int numNearby = self.nearbyCollegeList.count;
@@ -111,7 +118,6 @@
         case ALL_NEARBY_OTHER:
             if (isNearColleges && section == 1)
             {
-                
                 [self fixHeights:numNearby];
                 return numNearby;
             }
@@ -121,8 +127,14 @@
             }
             break;
         case ALL_COLLEGES_WITH_SEARCH:
-            // TODO: this needs to account for the search filtration
-            return self.fullCollegeList.count;
+            if (tableView == self.searchDisplay.searchResultsTableView)
+            {
+                return [self.searchResult count];
+            }
+            else
+            {
+                return self.fullCollegeList.count;
+            }
             break;
         case ONLY_NEARBY_COLLEGES:
             [self fixHeights:numNearby];
@@ -156,7 +168,7 @@
     }
     else
     {
-        College *college = [self getCollegeForIndexPath:indexPath];
+        College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
         if (college != nil)
         {
             cellLabel = college.name;
@@ -170,7 +182,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    College *college = [self getCollegeForIndexPath:indexPath];
+    College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
     
     switch (self.type)
     {
@@ -302,7 +314,7 @@
 
 #pragma mark - Private Helpers
 
-- (College *)getCollegeForIndexPath:(NSIndexPath *)indexPath
+- (College *)getCollegeForIndexPath:(NSIndexPath *)indexPath inTableView:(UITableView *)tableView
 {   // Given the indexPath, and knowing own FeedSelectorType,
     // Call the appropriate delegate's method to alert about the
     // college selection and in what context
@@ -344,16 +356,14 @@
         }
         case ALL_COLLEGES_WITH_SEARCH:
         {   // When user wants to see all colleges and be able to search through them
-            
-//            college =
-            return self.fullCollegeList[row];
-            
-            //*****
-//            [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:college];
-            
-            // TODO: also need to account for if it has been filtered by a search
-            //          (see CollegePickerViewController.m)
-            
+            if (tableView == self.searchDisplay.searchResultsTableView)
+            {
+                return [self.searchResult objectAtIndex:row];
+            }
+            else
+            {
+                return [self.fullCollegeList objectAtIndex:row];
+            }
             break;
         }
         case ONLY_NEARBY_COLLEGES:
@@ -368,6 +378,37 @@
     }
 
     return nil;
+}
+
+
+#pragma mark - Search Bar
+
+-(void)searchDisplayController:(UISearchDisplayController *)controller didShowSearchResultsTableView:(UITableView *)tableView
+{
+    [tableView setFrame:self.tableView.frame];
+    [self.alertView addSubview:tableView];
+//    float x = self.tableView.frame.origin.x + self.alertView.;
+//    float y = self.tableView.window.frame.origin.y + self.titleLabel.frame.size.height;
+//    float width = self.tableView.frame.size.width;
+//    float height = self.tableView.frame.size.height;
+//    
+//    CGRect newFrame = CGRectMake(x, y, width, height);
+//    tableView.frame = newFrame;
+}
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+    [self.searchResult removeAllObjects];
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchText];
+    
+    self.searchResult = [NSMutableArray arrayWithArray: [self.fullCollegeList filteredArrayUsingPredicate:resultPredicate]];
+}
+
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    
+    return YES;
 }
 
 @end

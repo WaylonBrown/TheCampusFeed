@@ -2,7 +2,10 @@ package com.appuccino.collegefeed;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,13 +13,16 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
 import com.appuccino.collegefeed.adapters.PostListAdapter;
 import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
+import com.appuccino.collegefeed.utils.NetWorker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,33 +32,38 @@ import java.util.List;
  */
 public class MyContentActivity extends Activity{
 
-    ListView myPostsListView;
-    ListView myCommentsListView;
+    private static MyContentActivity thisActivity;
+    static ListView myPostsListView;
+    static ListView myCommentsListView;
     static TextView postScore;
     static TextView commentScore;
+    static ProgressBar topLoadingSpinner;
+    static ProgressBar bottomLoadingSpinner;
     public static PostListAdapter postListAdapter;
     public static CommentListAdapter commentListAdapter;
     public static List<Post> postList = new ArrayList<Post>();
     public static List<Comment> commentList = new ArrayList<Comment>();
+    public static List<Post> commentParentList = new ArrayList<Post>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        thisActivity = this;
         setContentView(R.layout.my_content);
         setupActionbar();
         setupViews();
-        setupLists();
+        setupListViews();
+        setupListClickListeners();
         fetchLists();
-        //TODO: remove these
-        updatePostList();
-        updateCommentList();
     }
 
-    private void setupLists() {
+    private void setupListViews() {
         postListAdapter = new PostListAdapter(this, R.layout.list_row_collegepost, postList, 0, MainActivity.ALL_COLLEGES);
         commentListAdapter = new CommentListAdapter(this, R.layout.list_row_collegepost, commentList, null);
         myPostsListView = (ListView)findViewById(R.id.myPostsListView);
         myCommentsListView = (ListView)findViewById(R.id.myCommentsListView);
+        topLoadingSpinner = (ProgressBar)findViewById(R.id.topLoadingSpinner);
+        bottomLoadingSpinner = (ProgressBar)findViewById(R.id.bottomLoadingSpinner);
         //if doesnt have footer, add it
         if(myCommentsListView.getFooterViewsCount() == 0)
         {
@@ -69,47 +80,93 @@ public class MyContentActivity extends Activity{
             myCommentsListView.setAdapter(commentListAdapter);
         else
             Log.e("cfeed", "MyContentCommentList list adapter wasn't set.");
+    }
 
-        myPostsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+    public void setupListClickListeners(){
+        myPostsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1,
-                                    int position, long arg3)
-            {
-                postClicked(postList.get(position - 1));
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                postClicked(postList.get(i), i);
             }
         });
-        myCommentsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+
+        myCommentsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1,
-                                    int position, long arg3)
-            {
-                commentClicked(commentList.get(position - 1));
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                commentClicked(commentList.get(i));
             }
         });
     }
 
-    private void postClicked(Post post) {
+    private void postClicked(Post post, int index) {
+        Intent intent = new Intent(this, CommentsActivity.class);
+        intent.putExtra("POST_ID", post.getID());
+        intent.putExtra("COLLEGE_ID", post.getCollegeID());
+        intent.putExtra("POST_INDEX", index);
+        intent.putExtra("SECTION_NUMBER", 2);
+
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void commentClicked(Comment comment) {
+        Post parentPost = getParentPostOfComment(comment);
+        int index = getIndexOfParentPost(parentPost);
+        Log.i("cfeed", "ID of parent post: " + parentPost.getID());
+        Intent intent = new Intent(this, CommentsActivity.class);
+        intent.putExtra("POST_INDEX", index);
+        if(parentPost != null){
+            intent.putExtra("POST_ID", parentPost.getID());
+            intent.putExtra("COLLEGE_ID", parentPost.getCollegeID());
+        }
+        intent.putExtra("SECTION_NUMBER", 3);
+
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void fetchLists() {
-        //TODO: fetch from server here
-
+        postList = new ArrayList<Post>();
+        commentList = new ArrayList<Comment>();
+        commentParentList = new ArrayList<Post>();
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(cm.getActiveNetworkInfo() != null) {
+            new NetWorker.GetManyPostsTask(MainActivity.myPostsList, 0).execute(new NetWorker.PostSelector());
+            new NetWorker.GetMyCommentsTask().execute(new NetWorker.PostSelector());
+        } else {
+            Toast.makeText(this, "You have no internet connection.", Toast.LENGTH_LONG).show();
+            makeTopLoadingIndicator(false);
+            makeBottomLoadingIndicator(false);
+        }
     }
 
-    public static void updatePostList() {
-        //TODO: remove these manual lists
-        List<Post> testList = new ArrayList<Post>();
-        testList.add(new Post("test", 1));
-        testList.add(new Post("test", 1));
-        testList.add(new Post("test", 1));
-        testList.add(new Post("test", 1));
+    private static Post getParentPostOfComment(Comment c){
+        if(commentParentList == null || commentParentList.size() == 0){
+            Toast.makeText(thisActivity, "Please give the comment list another second to load.", Toast.LENGTH_LONG).show();
+        } else {
+            for(Post p : commentParentList){
+                if(p.getID() == c.getPostID()){
+                    return p;
+                }
+            }
+        }
+        return null;
+    }
+
+    private static int getIndexOfParentPost(Post p){
+        if(p != null && commentParentList != null && commentParentList.size() > 0){
+            for(int i = 0; i < commentParentList.size(); i++){
+                if(commentParentList.get(i).getID() == p.getID()){
+                    return i;
+                }
+            }
+        }
+        return 0;
+    }
+
+    public static void updatePostList(ArrayList<Post> result) {
         postList = new ArrayList<Post>();
-        postList.addAll(testList);
+        postList.addAll(result);
 
         if(postListAdapter != null)
         {
@@ -123,27 +180,33 @@ public class MyContentActivity extends Activity{
         }
     }
 
-    public static void updateCommentList() {
-        //TODO: remove these manual lists
-        List<Comment> testList = new ArrayList<Comment>();
-        testList.add(new Comment(1));
-        testList.add(new Comment(2));
-        testList.add(new Comment(0));
-        testList.add(new Comment(6));
-        testList.add(new Comment(4));
+    public static void updateCommentList(ArrayList<Comment> result) {
         commentList = new ArrayList<Comment>();
-        commentList.addAll(testList);
+        commentList.addAll(result);
 
         if(commentListAdapter != null)
         {
-            Log.i("cfeed", "TEST new post size: " + postList.size());
-            //commentListAdapter.setCollegeFeedID(MainActivity.ALL_COLLEGES);
+            Log.i("cfeed", "TEST new comment size: " + commentList.size());
             commentListAdapter.clear();
             commentListAdapter.addAll(commentList);
-            Log.i("cfeed","TEST last post size: " + commentListAdapter.getCount());
+            Log.i("cfeed","TEST last comment size: " + commentListAdapter.getCount());
             commentListAdapter.notifyDataSetChanged();
             updateUserCommentScore();
         }
+
+        //fetch comments parent IDs
+        if(result != null && result.size() > 0){
+            List<Integer> commentParentIDs = new ArrayList<Integer>();
+            for(Comment c : commentList){
+                commentParentIDs.add(c.getPostID());
+            }
+            new NetWorker.GetManyPostsTask(commentParentIDs, 1).execute(new NetWorker.PostSelector());
+        }
+    }
+
+    public static void updateCommentParentList(ArrayList<Post> result) {
+        commentParentList = new ArrayList<Post>();
+        commentParentList.addAll(result);
     }
 
     private static void updateUserPostScore() {
@@ -191,7 +254,33 @@ public class MyContentActivity extends Activity{
         commentScore.setTypeface(FontManager.light);
     }
 
-    public static void makeLoadingIndicator(boolean makeLoading){
-        //TODO
+    public static void makeTopLoadingIndicator(boolean makeLoading){
+        if(topLoadingSpinner != null){
+            if(makeLoading)
+            {
+                myPostsListView.setVisibility(View.INVISIBLE);
+                topLoadingSpinner.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                myPostsListView.setVisibility(View.VISIBLE);
+                topLoadingSpinner.setVisibility(View.INVISIBLE);
+            }
+        }
+    }
+
+    public static void makeBottomLoadingIndicator(boolean makeLoading){
+        if(bottomLoadingSpinner != null){
+            if(makeLoading)
+            {
+                myCommentsListView.setVisibility(View.INVISIBLE);
+                bottomLoadingSpinner.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                myCommentsListView.setVisibility(View.VISIBLE);
+                bottomLoadingSpinner.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 }

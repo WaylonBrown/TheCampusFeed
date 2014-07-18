@@ -61,7 +61,6 @@
 
 - (void)getNetworkCollegeList
 {
-    // TODO: most recently, this only gets first 25 colleges
     self.collegeList = [[NSMutableArray alloc] init];
     NSData *data = [Networker GETAllColleges];
     [self parseData:data asClass:[College class] intoList:self.collegeList];
@@ -200,8 +199,7 @@
 - (void)fetchAllTagsWithCollegeId:(long)collegeId
 {   // fetch tags trending in a particular college
     self.allTagsInCollege = [[NSMutableArray alloc] init];
-    //TODO: need a url to get all trending tags for a school, but waiting on a server endpoint
-    NSData *data = [Networker GETTagsTrending];
+    NSData *data = [Networker GETTagsWithCollegeId:collegeId];
     [self parseData:data asClass:[Tag class] intoList:self.allTagsInCollege];
 }
 
@@ -257,15 +255,16 @@
     }
     
     NSData *collegeData = [Networker GETCollegeWithId:Id];
+    if (collegeData == nil)
+    {
+        return nil;
+    }
     NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:collegeData
                                                                options:0
                                                                  error:nil];
     
     College *college = [[College alloc] initFromJSON:jsonObject];
-    if (college != nil)
-    {
-        [self.collegeList addObject:college];
-    }
+    [self.collegeList addObject:college];
     
     return college;
 }
@@ -331,8 +330,6 @@
     NSString *docDir = [paths objectAtIndex: 0];
     NSString *postFile = [docDir stringByAppendingPathComponent: @"UserPostIds.txt"];
     
-    // TODO: consider saving the whole JSON posts for quicker retrieval later
-    // Save Post Ids
     NSString *postIdsString = @"";
     for (Post *post in self.userPosts)
     {

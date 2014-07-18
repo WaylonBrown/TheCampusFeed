@@ -51,6 +51,7 @@
 
 // Tags
 + (NSData *)GETTagsTrending;
++ (NSData *)GETTagsWithCollegeId:(long)collegeId;
 
 // Votes
 + (NSData *)POSTVoteData:(NSData *)data WithPostId:(long)postId;

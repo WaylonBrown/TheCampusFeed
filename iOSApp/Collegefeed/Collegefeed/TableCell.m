@@ -21,6 +21,7 @@
 {
     // Initialization code
     
+    
     // TODO: Keep trying ways to speed up this shadow rendering
     UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.enclosingView.bounds];
     self.enclosingView.layer.masksToBounds = NO;
@@ -30,13 +31,17 @@
     self.enclosingView.layer.shadowOpacity = 0.5;
     self.enclosingView.layer.shadowPath = path.CGPath;
     
-    
     // Set font styles
     [self.messageLabel      setFont:CF_FONT_LIGHT(16)];
     [self.commentCountLabel setFont:CF_FONT_MEDIUM(12)];
     [self.ageLabel          setFont:CF_FONT_MEDIUM(12)];
     [self.scoreLabel        setFont:CF_FONT_BOLD(12)];
     [self.collegeLabel      setFont:CF_FONT_ITALIC(14)];
+
+}
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
 
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

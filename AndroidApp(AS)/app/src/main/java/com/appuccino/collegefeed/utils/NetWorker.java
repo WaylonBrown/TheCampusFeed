@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.appuccino.collegefeed.CommentsActivity;
 import com.appuccino.collegefeed.MainActivity;
+import com.appuccino.collegefeed.MyContentActivity;
 import com.appuccino.collegefeed.TagListActivity;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
@@ -30,6 +31,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class NetWorker {
 
@@ -460,9 +462,147 @@ public class NetWorker {
         }
     }
 
+    public static class GetManyPostsTask extends AsyncTask<PostSelector, Void, ArrayList<Post> >
+    {
+        private List<Integer> postIDList;
+        private int whichList;  //0 = MyPosts, 1 = MyComments'Parents
+
+        public GetManyPostsTask(List<Integer> postIDList, int whichList)
+        {
+            this.postIDList = postIDList;
+            this.whichList = whichList;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            if(whichList == 0){
+                MyContentActivity.makeTopLoadingIndicator(true);
+            }
+            super.onPreExecute();
+        }
+
+        @Override
+        protected ArrayList<Post> doInBackground(PostSelector... arg0) {
+            String arrayQuery = "";
+            if(postIDList == null || postIDList.size() == 0){
+                return new ArrayList<Post>();
+            } else {
+                for(int n : postIDList){
+                    arrayQuery += ("many_ids[]=" + n + "&");
+                }
+                //remove final &
+                if(arrayQuery.length() > 0){
+                    arrayQuery = arrayQuery.substring(0, arrayQuery.length()-1);
+                }
+                HttpGet request = new HttpGet(REQUEST_URL + "posts/many?" + arrayQuery);
+                return getPostsFromURLRequest(request);
+            }
+
+        }
+
+        private ArrayList<Post> getPostsFromURLRequest(HttpGet request) {
+            ArrayList<Post> ret = new ArrayList<Post>();
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            String response = null;
+            try {
+                response = client.execute(request, responseHandler);
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if(response != null)
+                Log.d("cfeed", LOG_TAG + response);
+
+            try {
+                ret = JSONParser.postListFromJSON(response);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return ret;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Post> result) {
+            if(whichList == 0){
+                MyContentActivity.updatePostList(result);
+                MyContentActivity.makeTopLoadingIndicator(false);
+            }
+            else{
+                MyContentActivity.updateCommentParentList(result);
+            }
+            super.onPostExecute(result);
+        }
+    }
+
+    public static class GetMyCommentsTask extends AsyncTask<PostSelector, Void, ArrayList<Comment> >
+    {
+        public GetMyCommentsTask()
+        {
+        }
+
+        @Override
+        protected void onPreExecute() {
+            MyContentActivity.makeBottomLoadingIndicator(true);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected ArrayList<Comment> doInBackground(PostSelector... arg0) {
+            String arrayQuery = "";
+            if(MainActivity.myCommentsList == null || MainActivity.myCommentsList.size() == 0){
+                return new ArrayList<Comment>();
+            } else {
+                for(int n : MainActivity.myCommentsList){
+                    arrayQuery += ("many_ids[]=" + n + "&");
+                }
+                //remove final &
+                if(arrayQuery.length() > 0){
+                    arrayQuery = arrayQuery.substring(0, arrayQuery.length()-1);
+                }
+                HttpGet request = new HttpGet(REQUEST_URL + "comments/many?" + arrayQuery);
+                return getCommentsFromURLRequest(request);
+            }
+
+        }
+
+        private ArrayList<Comment> getCommentsFromURLRequest(HttpGet request) {
+            ArrayList<Comment> ret = new ArrayList<Comment>();
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            String response = null;
+            try {
+                response = client.execute(request, responseHandler);
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if(response != null)
+                Log.d("cfeed", LOG_TAG + response);
+
+            try {
+                ret = JSONParser.commentListFromJSON(response);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return ret;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Comment> result) {
+            MyContentActivity.updateCommentList(result);
+            MyContentActivity.makeBottomLoadingIndicator(false);
+            super.onPostExecute(result);
+        }
+    }
+
      public static class MakePostTask extends AsyncTask<Post, Void, Boolean>{
 
          Context c;
+         String response = null;
+         int postCollegeID;
 
          public MakePostTask(Context context) {
              c = context;
@@ -471,14 +611,14 @@ public class NetWorker {
          @Override
          protected Boolean doInBackground(Post... posts) {
              try{
+                 postCollegeID = posts[0].getCollegeID();
                  Log.i("cfeed",LOG_TAG + "Posting to feed with ID of " + posts[0].getCollegeID());
                  Log.i("cfeed",LOG_TAG + "Request URL: " + REQUEST_URL + "colleges/" + posts[0].getCollegeID() + "/posts");
                  HttpPost request = new HttpPost(REQUEST_URL + "colleges/" + posts[0].getCollegeID() + "/posts");
                  request.setHeader("Content-Type", "application/json");
                  request.setEntity(new ByteArrayEntity(posts[0].toJSONString().toByteArray()));
                  ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                 String response = client.execute(request, responseHandler);
-
+                 response = client.execute(request, responseHandler);
                  Log.d("cfeed", LOG_TAG + "Server response: " + response);
                  return true;
              } catch (ClientProtocolException e) {
@@ -494,14 +634,33 @@ public class NetWorker {
          protected void onPostExecute(Boolean result) {
              if(!result)
                  Toast.makeText(c, "Failed to post, please try again later.", Toast.LENGTH_LONG).show();
+             else{
+                 parseResponseIntoPostAndAdd(response);
+             }
              super.onPostExecute(result);
          }
 
+         private void parseResponseIntoPostAndAdd(String response) {
+             try {
+                 Log.i("cfeed","NETWORK: Successful post response, adding to list");
+                 Post responsePost = JSONParser.postFromJSON(response);
+                 responsePost.setCollegeID(postCollegeID);
+                 if(MainActivity.getCollegeByID(postCollegeID) != null){
+                     responsePost.setCollegeName(MainActivity.getCollegeByID(postCollegeID).getName());
+                 }
+                 MainActivity.addNewPostToListAndMyContent(responsePost);
+             } catch (IOException e) {
+                 Log.i("cfeed","ERROR: post not added");
+                 e.printStackTrace();
+             }
+
+         }
      }
 
      public static class MakeCommentTask extends AsyncTask<Comment, Void, Boolean>{
 
          Context c;
+         String response;
 
          public MakeCommentTask(Context context) {
              c = context;
@@ -519,7 +678,7 @@ public class NetWorker {
                  request.setHeader("Content-Type", "application/json");
                  request.setEntity(new ByteArrayEntity(comments[0].toJSONString().toByteArray()));
                  ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                 String response = client.execute(request, responseHandler);
+                 response = client.execute(request, responseHandler);
 
                  Log.d("cfeed", LOG_TAG + "Server response: " + response);
                  return true;
@@ -536,6 +695,18 @@ public class NetWorker {
          protected void onPostExecute(Boolean result) {
              if(!result)
                  Toast.makeText(c, "Failed to , please try again later.", Toast.LENGTH_LONG).show();
+             else{
+                 Comment responseComment = null;
+                 try {
+                     responseComment = JSONParser.commentFromJSON(response);
+                     int id = responseComment.getID();
+                     MainActivity.myCommentsList.add(id);
+                     PrefManager.putMyCommentsList(MainActivity.myCommentsList);
+                     Log.i("cfeed","New My Comments list is of size " + MainActivity.myCommentsList.size());
+                 } catch (IOException e) {
+                     e.printStackTrace();
+                 }
+             }
              super.onPostExecute(result);
          }
 
