@@ -3,7 +3,7 @@
   <link rel="stylesheet" href="stylesheets/webapp.css">
 </head>
 <body ng-app="cfeed">
-<nav class="navbar navbar-default" id="default" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" id="default" role="navigation">
   <div class="absoluteFull" id="navBg" randombgpos>
 
   </div>
@@ -38,7 +38,9 @@
 <div class="container-fluid" ng-controller="WebappCtrl">
   <div class="row">
     <div class="col-md-3">
-      <div>asdf</div>
+      <div class="well">
+        asdf
+      </div>
     </div>
     <div class="col-md-6" id="posts">
       <div class="card slide pointer" ng-repeat="post in recentPosts" ng-click="selectPost(post)" ng-class="{active: post.active}">
