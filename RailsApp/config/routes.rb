@@ -69,7 +69,7 @@ CollegeFeed::Application.routes.draw do
       get '/colleges/search/:searchText' => 'colleges#search'
       get '/colleges/search/:searchText/count' => 'colleges#searchCount'
       get '/colleges/count' => 'colleges#count'
-      get '/colleges/trending' => 'colleges#index'
+      get '/colleges/trending' => 'colleges#trending'
       resources :colleges do
 
         get '/posts/byTag/:tagText' => 'posts#byTag'

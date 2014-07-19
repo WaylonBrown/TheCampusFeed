@@ -21,6 +21,11 @@ class CollegesController < ApplicationController
     render json: suckr.get_image_url({"q" => @college.name + " logo", "as_filetype" => 'png'})
   end
 
+  def trending
+    @colleges = College.all.page(params[:page]).per(params[:per_page])
+    render json: @colleges
+  end
+
   # GET /colleges
   # GET /colleges.json
   def index
