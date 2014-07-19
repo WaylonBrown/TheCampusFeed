@@ -22,12 +22,11 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="dropdown active">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="<%= admin_path %>">Control Panel</a></li>
-            <li><a href="<%= stats_path %>">Stat Panel</a></li>
-          </ul>
+        <li class="active">
+          <a href="#"><%= fa_icon 'file-text' %> Posts</a>
+        </li>
+        <li>
+          <a href="#"><%= fa_icon 'university' %> Colleges</a>
         </li>
       </ul>
     </div>
@@ -37,12 +36,23 @@
 </nav>
 <div class="container-fluid" ng-controller="WebappCtrl">
   <div class="row">
-    <div class="col-md-3">
-      <div class="well">
-        asdf
+    <div class="col-md-4">
+      <div style="position:relative;float:right;">
+        <div class="well" data-spy="affix" data-offset-top="0" data-offset-bottom="0" style="width:inherit;">
+          <h4>
+            Trending Tags
+          </h4>
+          <hr/>
+          <div>
+
+            <div ng-repeat="tag in tags.trendingTags">
+              #{{tag.text}}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-md-6" id="posts">
+    <div class="col-md-4" id="posts">
       <div class="card slide pointer" ng-repeat="post in recentPosts" ng-click="selectPost(post)" ng-class="{active: post.active}">
         <h3>{{post.text}}</h3>
         <hr/>
@@ -52,8 +62,18 @@
         <div class="clearfix"></div>
       </div>
     </div>
-    <div class="col-md-3">
-      <div>asdf</div>
+    <div class="col-md-4">
+      <div class="well" data-spy="affix" data-offset-top="0" data-offset-bottom="0">
+        <h4>
+          Trending Colleges
+        </h4>
+        <hr/>
+        <div>
+          <div ng-repeat="college in colleges.trendingColleges">
+            {{college.name}}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

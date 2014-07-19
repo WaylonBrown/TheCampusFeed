@@ -22,14 +22,6 @@
 
 /* Change Colors */
 
-.navbar-default .navbar-nav > li > a {
-  color: #EDEDED
-}
-
-.navbar-default .navbar-brand {
-  color: #EFEFEF
-}
-
 /* Change Animations */
 
 .collapsing {
@@ -69,7 +61,7 @@ div.panel-collapse input {
     font-size: 60pt;
     height: 100%;
     padding-top: 20%;
-    background-attachment:fixed;
+    background-attachment: fixed;
   }
 }
 
@@ -81,13 +73,13 @@ div.panel-collapse input {
     padding-top: 20%;
   }
 }
+
 @font-face {
   font-family: 'Lato';
   font-style: normal;
   font-weight: 100;
   src: local('Lato Skeleton'), local('Lato-Skeleton'), url('fonts/Lato100.woff') format('woff');
 }
-
 
 @font-face {
   font-family: 'Lato';
@@ -126,6 +118,25 @@ nav#default {
     }
     i {
       margin-right: 10px;
+    }
+  }
+
+  ul.nav > li {
+    background-color: rgba(0, 0, 0, .2);
+    &:hover {
+      background-color: rgba(255, 255, 255, .4);
+      a{
+        color: #232323;
+      }
+    }
+    &.active {
+      a{
+        color: #232323;
+      }
+    }
+
+    a {
+      color: #EFEFEF;
     }
   }
 

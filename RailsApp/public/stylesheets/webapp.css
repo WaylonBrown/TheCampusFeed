@@ -5,3 +5,15 @@ body{
     background-attachment: fixed;
     padding-top: 70px;
 }
+
+.fixed-column{
+    position: relative;
+}
+
+.fixed-well{
+    position: fixed;
+    padding: 0;
+    width: inherit;
+}
+
+
