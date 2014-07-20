@@ -18,9 +18,20 @@
 		    android:textColor="@color/darkgray" 
 		    android:text="Posts with #notfound"
 		    android:layout_marginTop="6dp"
-		    android:layout_marginBottom="6dp"
 		    android:singleLine="true"
 		    android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tagFeedName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/darkgray"
+            android:text="in the feed All Colleges"
+            android:layout_marginTop="-4dp"
+            android:layout_marginBottom="6dp"
+            android:singleLine="true"
+            android:textSize="18sp"/>
 	
 	    <ListView
 	        android:id="@+id/fragmentListView"

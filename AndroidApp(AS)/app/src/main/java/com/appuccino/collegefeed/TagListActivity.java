@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.adapters.PostListAdapter;
+import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.NetWorker.GetTagActivityTask;
@@ -28,7 +29,8 @@ public class TagListActivity extends Activity{
 	private ListView list;
 	public static List<Post> postList = new ArrayList<Post>();
 	private static String tagText = "";
-	private static TextView topTagText;
+    private static TextView topTagText;
+    private static TextView tagFeedName;
 	private static ProgressBar progressSpinner;
 	
 	@Override
@@ -51,13 +53,9 @@ public class TagListActivity extends Activity{
 		tagText = tagText.replace("#", "");
         
         topTagText = (TextView)findViewById(R.id.topTagText);
-        if(postList.size() > 0){
-			topTagText.setText("Posts with #" + tagText);
-		}else{
-			topTagText.setText("No posts with #" + tagText);
-		}
-        topTagText.setTypeface(FontManager.light);
-		
+        tagFeedName = (TextView)findViewById(R.id.tagFeedName);
+        setTopTexts();
+
 		list = (ListView)findViewById(R.id.fragmentListView);
 		if(!tagText.isEmpty() && tagText != null)
 		{			
@@ -80,7 +78,23 @@ public class TagListActivity extends Activity{
 		}
 	}
 
-	private void pullListFromServer() {
+    private void setTopTexts() {
+        topTagText.setTypeface(FontManager.light);
+        tagFeedName.setTypeface(FontManager.light);
+
+        if(postList.size() > 0){
+            topTagText.setText("Posts with #" + tagText);
+        }else{
+            topTagText.setText("No posts with #" + tagText);
+        }
+
+        College currentFeed = MainActivity.getCollegeByID(MainActivity.currentFeedCollegeID);
+        if(tagFeedName != null && currentFeed != null){
+            tagFeedName.setText("in the feed " + currentFeed.getName());
+        }
+    }
+
+    private void pullListFromServer() {
 		postList = new ArrayList<Post>();
 		tagText = tagText.replace(" ", "");	//whitespace causes crash
 		ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);		
