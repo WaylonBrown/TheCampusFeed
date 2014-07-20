@@ -82,7 +82,7 @@
     [((UITabBarItem *)([self.tabBarController.tabBar.items objectAtIndex:3])) setTitle:@"My Content"];
 //    [[self.tabBarController.tabBar.items objectAtIndex:3] setImage:[UIImage imageNamed:@"colleges.png"]];
 
-    [self.tabBarController setSelectedIndex:2];
+    [self.tabBarController setSelectedIndex:0];
     // finalize window specifications
     [self.window setRootViewController:self.tabBarController];
     [self.window makeKeyAndVisible];

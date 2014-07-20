@@ -1,9 +1,25 @@
 angular.module("cfeed").controller "WebappCtrl", [
-  "$scope", "$http", "$interval", "$resource"
-  ($scope, $http, $interval, $resource) ->
+  "$scope", "$http", "$interval", "$resource", "$rootScope"
+  ($scope, $http, $interval, $resource, $rootScope) ->
+    $scope.tags = {}
+    $scope.colleges = {}
     $scope.options = {}
     $scope.options.post_selected = null;
     $scope.recentPosts = []
+
+    $rootScope.College = $resource('/api/v1/colleges/:collegeId', {collegeId: '@id'},{
+      trending: {method: 'GET', url: '/api/v1/colleges/trending/', isArray: true}
+    })
+    $rootScope.Post = $resource('/api/v1/colleges/:collegeId/posts/:postId', {postId: '@id'})
+    $rootScope.Comment = $resource('/api/v1/colleges/:collegeId/posts/:postId/comments/:commentId', {commentId: '@id'},{
+    })
+    $rootScope.Tag = $resource('/api/v1/tags/:tagId', {tagId: '@id'}, {
+      trending: {method: 'GET', url: '/api/v1/tags/trending/', isArray: true}
+    })
+
+    $scope.tags.trendingTags = $rootScope.Tag.trending()
+    $scope.colleges.trendingColleges = $rootScope.College.trending()
+
     $scope.loadRecentPosts = ->
       $http.get("api/v1/posts/recent").success((res) ->
         $scope.recentPosts = res

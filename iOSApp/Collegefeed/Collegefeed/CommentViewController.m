@@ -20,6 +20,16 @@
 
 #pragma mark - Initialization and view loading
 
+- (id)initWithDataController:(DataController *)controller
+{
+    self = [super initWithNibName:@"CommentView" bundle:nil];
+    if (self)
+    {
+        [self setDataController:controller];
+        self.toastController = [[ToastController alloc] initWithViewController:self];
+    }
+    return self;
+}
 - (void)viewWillAppear:(BOOL)animated
 {   // this function called right before the comments view appears
     [super viewWillAppear:animated];
@@ -29,7 +39,15 @@
         [self.dataController setPostInFocus:self.originalPost];
         long postID = (long)self.originalPost.postID;
         [self.dataController fetchCommentsWithPostId:postID];
-        [self.tableView reloadData];
+
+        float postCellHeight = [self tableView:self.postTableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        CGRect frame = self.postTableView.frame;
+        frame.size.height = postCellHeight;
+        [self.postTableView setFrame:frame];
+        
+         [self.postTableView reloadData];
+        [self.commentTableView reloadData];
+//        [self.tableView reloadData];
         
         College *college = [self.dataController getCollegeById:self.originalPost.collegeID];
         if ([self.dataController.nearbyColleges containsObject:college])
@@ -53,10 +71,10 @@
 {   // called once the comment view has loaded
     [super viewDidLoad];
     
-    [self.tableView setDataSource:self];
-    [self.tableView setDelegate:self];
     
-    [self.tableView reloadData];
+    [self.postTableView reloadData];
+    [self.commentTableView reloadData];
+    //        [self.tableView reloadData];
 }
 - (void)loadView
 {   // called when the comment view is initially loaded
@@ -68,12 +86,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {   // first section is the original post, second is the post's comments
-    return 2;
+    return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Number of rows in table views
-    if (section == 0) return 1;
-    else return [self.dataController.commentList count];
+    if (tableView == self.postTableView) return 1;
+    else if (tableView == self.commentTableView) return [self.dataController.commentList count];
+    
+    return 0;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Get the table view cell for the given row
@@ -90,12 +110,12 @@
     
     [cell setDelegate: self];
 
-    if (indexPath.section == 0)
+    if (tableView == self.postTableView)
     {   // PostView table; get the original post to display in this table
         [cell assign:self.originalPost];
         return cell;
     }
-    else
+    else if (tableView == self.commentTableView)
     {   // CommentView table; get the comment to be displayed in this cell
         Comment *commentAtIndex = (Comment*)[self.dataController.commentList objectAtIndex:indexPath.row];
         [cell assign:commentAtIndex];
@@ -116,24 +136,45 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    #define LABEL_WIDTH 252.0f
+    #define TOP_TO_LABEL 7.0f
+    #define LABEL_TO_BOTTOM 59.0f
+    #define MIN_LABEL_HEIGHT 53.0f
+    NSString *text = @"";
+    
+    if (tableView == self.postTableView)
+    {
+        text = self.originalPost.message;
+    }
+    else if (tableView == self.commentTableView)
+    {
+        text = [(Comment *)[self.list objectAtIndex:[indexPath row]] getMessage];
+    }
+    
+    CGSize constraint = CGSizeMake(LABEL_WIDTH, 20000.0f);
+    CGSize size = [text sizeWithFont:CF_FONT_LIGHT(16) constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+    CGFloat height = MAX(size.height, MIN_LABEL_HEIGHT);
+    float fullHeight = height + TOP_TO_LABEL + LABEL_TO_BOTTOM;
+    return fullHeight;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {   // return the header title for the 'Comments' section
     
-    if (section != 1) return nil;//[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-    
-    UILabel *commentHeader = [[UILabel alloc] initWithFrame:CGRectZero];
-    [commentHeader setText:@"Comments"];
-    [commentHeader setTextAlignment:NSTextAlignmentCenter];
-    [commentHeader setFont:[UIFont systemFontOfSize:12]];
-    [commentHeader setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
-    
-    return commentHeader;
+    if (tableView == self.commentTableView)
+    {
+        UILabel *commentHeader = [[UILabel alloc] initWithFrame:CGRectZero];
+        [commentHeader setText:@"Comments"];
+        [commentHeader setTextAlignment:NSTextAlignmentCenter];
+        [commentHeader setFont:[UIFont systemFontOfSize:12]];
+        [commentHeader setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
+        
+        return commentHeader;
+    }
+    return nil;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section == 1) return 25.0;
+    if (tableView == self.commentTableView) return 25.0;
     else return 5.0;
 }
 
@@ -215,6 +256,34 @@
     }
     [self refresh];
     
+}
+
+#pragma mark - Vanishing Bottom Toolbar
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGRect frame = self.feedToolbar.frame;
+    CGFloat size = frame.size.height;
+    CGFloat scrollOffset = scrollView.contentOffset.y;// + self.postTableView.frame.size.height;
+    CGFloat scrollDiff = scrollOffset - self.previousScrollViewYOffset;
+    CGFloat scrollHeight = scrollView.frame.size.height + self.postTableView.frame.size.height;
+    
+    if (scrollOffset < 5)
+    {   // keep bar showing if at top of scrollView
+        frame.origin.y = scrollHeight - 50;
+    }
+    else if (scrollDiff > 0 && (frame.origin.y < scrollHeight))
+    {   // flick up / scroll down / hide bar
+        frame.origin.y += 4;
+    }
+    else if (scrollDiff < 0 && (frame.origin.y + size > scrollHeight))
+    {   // flick down / scroll up / show bar
+        frame.origin.y -= 4;
+    }
+    
+    [self.feedToolbar setFrame:frame];
+    
+    self.previousScrollViewYOffset = scrollOffset;
 }
 
 @end
