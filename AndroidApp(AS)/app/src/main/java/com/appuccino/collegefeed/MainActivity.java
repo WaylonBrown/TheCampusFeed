@@ -32,6 +32,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.dialogs.ChooseFeedDialog;
+import com.appuccino.collegefeed.dialogs.GettingStartedDialog;
 import com.appuccino.collegefeed.dialogs.NewPostDialog;
 import com.appuccino.collegefeed.extra.AllCollegeJSONString;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
@@ -246,7 +247,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		TopPostFragment.changeFeed(id);
 		NewPostFragment.changeFeed(id);
 		TagFragment.changeFeed(id);
+
+        TopPostFragment.scrollToTop();
+        NewPostFragment.scrollToTop();
 	}
+
+    public void showFirstTimeMessages(){
+        chooseFeedDialog();
+        //this one is called second as it has to be on top
+        new GettingStartedDialog(this, "Getting Started");
+    }
 	
 	private void showPermissionsToast() 
 	{
