@@ -23,11 +23,12 @@
         &#8226; Targets a specific person negatively to the point of bullying\n
         &#8226; Has a phone number\n
         \nUsers that have more than one post taken down get banned from posting on the app again.</string>
-    <string name="gettingStartedMessage">TestTesttestTestTesttestTestTesttestTestTesttestTestTesttestTestTesttestTestTesttest
-    TestTesttestTestTesttestTestTesttestTestTesttestTestTesttestTestTesttestTestTesttestTestTesttestTestTesttest
-    TestTesttestTestTesttestTestTesttestTestTesttestTestTesttestTestTesttestTestTesttestTestTesttestTestTesttest
-    TestTesttestTestTesttestTestTesttestTestTesttestTestTesttestTestTesttestTestTesttestTestTesttestTestTesttestTestTesttestTestTesttestTestTesttest
-    TestTesttestTestTesttestTestTesttestTestTesttestTestTesttestTestTesttest</string>
+    <string name="gettingStartedMessage">CollegeFeed is an anonymous message board. No logins, no accounts. Anyone
+        can view any college\'s feed, as well as the All Colleges feed which is a mixture of all colleges\' posts put
+        together. You can upvote any post or comment from any college, but you must be near the college in order to downvote,
+        make your own post, or make your own comment.\n\nIf you make a post that gets a certain amount of flags,
+        it will be automatically removed. If you have multiple posts removed, you will be banned from posting to the app.
+        Think before you post! To view the rules, click the Flag icon for any post near you.</string>
     <string name="emptyListString">Pull down to load posts</string>
 
     <string-array name="spinnerArray">
