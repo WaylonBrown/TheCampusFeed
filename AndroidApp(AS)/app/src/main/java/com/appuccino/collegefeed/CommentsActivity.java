@@ -116,7 +116,6 @@ public class CommentsActivity extends Activity{
 			try {
 				setTime(post.getTime(), timeText);
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -429,13 +428,6 @@ public class CommentsActivity extends Activity{
             {
                 list.setVisibility(View.VISIBLE);
                 loadingSpinner.setVisibility(View.INVISIBLE);
-
-                //TODO: for PTR
-//			if(pullToRefresh != null)
-//			{
-//				// Notify PullToRefreshLayout that the refresh has finished
-//	            pullToRefresh.setRefreshComplete();
-//			}
             }
         }
 	}

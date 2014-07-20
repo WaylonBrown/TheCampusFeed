@@ -223,6 +223,11 @@ public class PostListAdapter extends ArrayAdapter<Post>{
     private void setTime(Post thisPost, TextView timeText) throws ParseException {
     	Calendar thisPostTime = TimeManager.toCalendar(thisPost.getTime());
     	Calendar now = Calendar.getInstance();
+
+//        int timeZoneDifferenceinMS = TimeZone.getTimeZone("GMT-6").getOffset(Calendar.ZONE_OFFSET) - TimeZone.getDefault().getOffset(Calendar.ZONE_OFFSET);
+//        Double timeZoneDifferenceinS = timeZoneDifferenceinMS / 1000.0;
+//        Double timeZoneDifferenceinH = timeZoneDifferenceinS / 3600.0;
+//        Log.i("cfeed", "timezone: " + timeZoneDifferenceinH);
     	
     	int yearsDiff;
     	int monthsDiff;
@@ -239,7 +244,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
     	hoursDiff = now.get(Calendar.HOUR_OF_DAY) - thisPostTime.get(Calendar.HOUR_OF_DAY);
     	minutesDiff = now.get(Calendar.MINUTE) - thisPostTime.get(Calendar.MINUTE);
     	secondsDiff = now.get(Calendar.SECOND) - thisPostTime.get(Calendar.SECOND);
-    	
+
 //    	Log.i("cfeed","Time difference for post " + thisPost.getMessage().substring(0, 10) + ": Years: " + yearsDiff + " Months: " + monthsDiff +
 //    			" Weeks: " + weeksDiff + " Days: " + daysDiff + " Hours: " + hoursDiff + " Minutes: " + minutesDiff + " Seconds: " + secondsDiff);
     	

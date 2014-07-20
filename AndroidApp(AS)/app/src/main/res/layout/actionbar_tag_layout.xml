@@ -11,19 +11,5 @@
 	    android:layout_height="60dp"
 	    android:layout_marginTop="3dp"
 	    android:src="@drawable/postcampuslogosmall" />
-	   
-	<LinearLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:gravity="right">
-	    
-	    <Spinner 
-	    android:id="@+id/spinner"
-	    android:entries="@array/spinnerArray"
-	    android:layout_width="130dp"
-	    android:layout_height="match_parent"/>
-	    
-	</LinearLayout>
-	
 	
 </LinearLayout>
