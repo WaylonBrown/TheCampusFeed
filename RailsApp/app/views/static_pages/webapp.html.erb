@@ -35,6 +35,22 @@
   <!-- /.container-fluid -->
 </nav>
 <div class="container-fluid" ng-controller="WebappCtrl">
+  <div class="modal fade" id="getAppModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="myModalLabel">App Only Action</h4>
+        </div>
+        <div class="modal-body">
+          Sorry, you'll need to get our Android or iOS app to do that.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-4">
       <div style="position:relative;float:right;">
@@ -52,14 +68,30 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4" id="posts">
+    <div class="col-md-4" id="posts" >
       <div class="card slide pointer" ng-repeat="post in recentPosts" ng-click="selectPost(post)" ng-class="{active: post.active}">
-        <h3>{{post.text}}</h3>
-        <hr/>
-        <span class="pull-left"><i collegenamefromid cid="{{post.college_id}}"></i></span>
-        <span class="pull-right">{{post.comment_count}} Comments</span>
+        <div class="card-background absoluteFull" randombgpos>
+        </div>
+        <div class="card-controls">
+          <div class="button-container">
+            <div class="button" data-toggle="modal" data-target="#getAppModal"><div class="button-text"><%= fa_icon "arrow-up" %></div></div>
+            <div class="button" data-toggle="modal" data-target="#getAppModal"><div class="button-text"><%= fa_icon "arrow-down" %></div></div>
+            <div class="button" data-toggle="modal" data-target="#getAppModal"><div class="button-text"><%= fa_icon "flag" %></div></div>
+          </div>
+        </div>
+        <div class="card-content">
+          <h3>{{post.text}}</h3>
+          <hr/>
+          <div class="pull-left"><i collegenamefromid cid="{{post.college_id}}"></i></div>
+          <div class="pull-right">
+            <div class="badge">{{post.comment_count}}</div>
+            <span class="comments-string">Comments</span></div>
 
-        <div class="clearfix"></div>
+          <div class="clearfix"></div>
+          <hr/>
+          <div postcollege="{{post.college_id}}" postcomments="{{post.id}}">
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-md-4">

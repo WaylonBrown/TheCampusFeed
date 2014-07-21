@@ -125,12 +125,12 @@ nav#default {
     background-color: rgba(0, 0, 0, .2);
     &:hover {
       background-color: rgba(255, 255, 255, .4);
-      a{
+      a {
         color: #232323;
       }
     }
     &.active {
-      a{
+      a {
         color: #232323;
       }
     }
@@ -144,15 +144,22 @@ nav#default {
     position: relative;
     z-index: 100;
   }
-
   .absoluteFull {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
+    opacity: .4;
     background-image: url('/images/congruent_pentagon.png');
     z-index: 1;
-    opacity: .4;
   }
+
+}
+
+hr {
+  color: #222222;
+}
+
+.absoluteFull {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
 }
