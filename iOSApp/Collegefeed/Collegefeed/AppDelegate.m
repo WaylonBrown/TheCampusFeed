@@ -10,7 +10,7 @@
 #import "PostsViewController.h"
 #import "CommentViewController.h"
 #import "TagViewController.h"
-#import "UserContentViewController.h"
+#import "UserCommentsViewController.h"
 #import "UserPostsViewController.h"
 #import "Shared.h"
 #import "College.h"
@@ -30,7 +30,6 @@
     [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
-#pragma mark - Create ViewControllers
 
     // *** Top Posts - PostsViewController *** //
     self.topPostsController = [[PostsViewController alloc] initAsType:TOP_VIEW
@@ -50,14 +49,18 @@
     UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:self.tagController];
     // *************************************** //
     
-    // *** User Posts/Comments - UserContentViewController *** //
-//    self.userContentController = [[UserContentViewController alloc] initWithPosts:self.dataController.userPosts withComments:self.dataController.userComments];
-//    UINavigationController *userNavController = [[UINavigationController alloc] initWithRootViewController:self.userContentController];
-    // ****************************************************** //
-    
     // *** User Posts - UserPostsViewController *** //
-    self.userPostsController = [[UserPostsViewController alloc] initAsType:USER_POSTS withDataController:self.dataController];
+    self.userPostsController = [[UserPostsViewController alloc] initAsType:USER_POSTS
+                                                        withDataController:self.dataController];
     UINavigationController *userPostsNavController = [[UINavigationController alloc] initWithRootViewController:self.userPostsController];
+    // *************************************** //
+
+    // *** User Comments - UserCommentsViewController *** //
+    self.userCommentsController = [[UserCommentsViewController alloc] initAsType:USER_COMMENTS
+                                                              withDataController:self.dataController];
+    UINavigationController *userCommentsNavController = [[UINavigationController alloc] initWithRootViewController:self.userCommentsController];
+    // *************************************** //
+
     
     // *** Top Colleges - CollegePickerViewController *** //
 //    self.collegeController = [[CollegePickerViewController alloc] initAsTopCollegesWithDataController:self.dataController];
@@ -73,7 +76,7 @@
                                newPostsNavController,
                                tagNavController,
                                userPostsNavController,
-//                               userNavController,
+                               userCommentsNavController,
 //                               collegeNavController,
                                nil];
     
@@ -86,6 +89,7 @@
     [[self.tabBarController.tabBar.items objectAtIndex:1] setImage:[UIImage imageNamed:@"new.png"]];
     [[self.tabBarController.tabBar.items objectAtIndex:2] setImage:[UIImage imageNamed:@"tags.png"]];
     [((UITabBarItem *)([self.tabBarController.tabBar.items objectAtIndex:3])) setTitle:@"My Posts"];
+    [((UITabBarItem *)([self.tabBarController.tabBar.items objectAtIndex:4])) setTitle:@"My Comments"];
 //    [[self.tabBarController.tabBar.items objectAtIndex:3] setImage:[UIImage imageNamed:@"colleges.png"]];
 
     [self.tabBarController setSelectedIndex:0];

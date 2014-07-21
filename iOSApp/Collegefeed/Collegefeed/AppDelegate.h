@@ -14,15 +14,13 @@
 @class PostsViewController;
 @class TagViewController;
 @class CollegePickerViewController;
-@class UserContentViewController;
 @class UserPostsViewController;
-@interface AppDelegate : UIResponder <UIApplicationDelegate, LocationFinderDelegateProtocol
-    //AppDataDelegateProtocol,
-    >
+@class UserCommentsViewController;
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate, LocationFinderDelegateProtocol>
 
 @property (strong, nonatomic) UIWindow              *window;
 @property (strong, nonatomic) UITabBarController    *tabBarController;
-//@property (strong, nonatomic) AppData               *appData;
 
 @property (strong, nonatomic) DataController *dataController;
 
@@ -30,7 +28,7 @@
 @property (strong, nonatomic) PostsViewController *recentPostsController;
 @property (strong, nonatomic) TagViewController *tagController;
 @property (strong, nonatomic) CollegePickerViewController *collegeController;
-@property (strong, nonatomic) UserContentViewController *userContentController;
 @property (strong, nonatomic) UserPostsViewController* userPostsController;
+@property (strong, nonatomic) UserCommentsViewController *userCommentsController;
 
 @end

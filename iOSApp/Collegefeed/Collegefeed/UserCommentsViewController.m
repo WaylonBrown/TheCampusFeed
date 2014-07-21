@@ -1,25 +1,25 @@
 //
-//  UserPostsViewController.m
+//  UserCommentsViewController.m
 //  Collegefeed
 //
 //  Created by Patrick Sheehan on 7/21/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
-#import "UserPostsViewController.h"
+#import "UserCommentsViewController.h"
 
-@interface UserPostsViewController ()
+@interface UserCommentsViewController ()
 
 @end
 
-@implementation UserPostsViewController
+@implementation UserCommentsViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    long points = [self.dataController getUserPostScore];
-    NSString *feedLabel = [NSString stringWithFormat:@"My Posts (%ld total points)", points];
+    // Do any additional setup after loading the view.
+    long points = [self.dataController getUserCommentScore];
+    NSString *feedLabel = [NSString stringWithFormat:@"My Comments (%ld total points)", points];
     [self.currentFeedLabel setText:feedLabel];
     [self.tableView reloadData];
     [self.toolbarSeparator removeFromSuperview];
