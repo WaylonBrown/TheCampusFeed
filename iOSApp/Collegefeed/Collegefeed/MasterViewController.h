@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UILabel            *currentFeedLabel;
 @property (weak, nonatomic) IBOutlet UILabel            *showingLabel;
 @property (weak, nonatomic) IBOutlet UIButton           *feedButton;
+@property (strong, nonatomic) IBOutlet UIView *toolbarSeparator;
 
 @property (strong, nonatomic) NSMutableArray *list;
 
@@ -56,5 +57,7 @@ typedef NS_ENUM(NSInteger, ViewType)
     TOP_VIEW,
     RECENT_VIEW,
     USER_VIEW,
+    USER_POSTS,
+    USER_COMMENTS,
     TAG_VIEW,
 };

@@ -14,6 +14,7 @@
 		533475A51923344100E84CC8 /* TableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 533475A31923344100E84CC8 /* TableCell.xib */; };
 		533FCA4D193EDE3B00754C07 /* aggieland.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 533FCA4C193EDE3B00754C07 /* aggieland.gpx */; };
 		533FCA4F193FCD8200754C07 /* austin.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 533FCA4E193FCD8200754C07 /* austin.gpx */; };
+		5347EE9D197DC7CC001B2214 /* UserPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5347EE9B197DC7CC001B2214 /* UserPostsViewController.m */; };
 		5350557719514587009C1911 /* CreatePostCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5350557519514587009C1911 /* CreatePostCommentViewController.m */; };
 		5350557819514587009C1911 /* CreatePostCommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5350557619514587009C1911 /* CreatePostCommentViewController.xib */; };
 		5350557F19529FCA009C1911 /* FeedSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5350557D19529FCA009C1911 /* FeedSelectViewController.m */; };
@@ -135,6 +136,8 @@
 		533475A31923344100E84CC8 /* TableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TableCell.xib; path = Collegefeed/TableCell.xib; sourceTree = "<group>"; };
 		533FCA4C193EDE3B00754C07 /* aggieland.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = aggieland.gpx; sourceTree = "<group>"; };
 		533FCA4E193FCD8200754C07 /* austin.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = austin.gpx; sourceTree = "<group>"; };
+		5347EE9A197DC7CC001B2214 /* UserPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPostsViewController.h; sourceTree = "<group>"; };
+		5347EE9B197DC7CC001B2214 /* UserPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPostsViewController.m; sourceTree = "<group>"; };
 		5350557419514587009C1911 /* CreatePostCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatePostCommentViewController.h; sourceTree = "<group>"; };
 		5350557519514587009C1911 /* CreatePostCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatePostCommentViewController.m; sourceTree = "<group>"; };
 		5350557619514587009C1911 /* CreatePostCommentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreatePostCommentViewController.xib; sourceTree = "<group>"; };
@@ -313,6 +316,8 @@
 				536D0E0A196D0F5700677C1B /* UserContentViewController.h */,
 				536D0E0B196D0F5700677C1B /* UserContentViewController.m */,
 				536D0E0C196D0F5700677C1B /* UserContentViewController.xib */,
+				5347EE9A197DC7CC001B2214 /* UserPostsViewController.h */,
+				5347EE9B197DC7CC001B2214 /* UserPostsViewController.m */,
 			);
 			name = "User Content";
 			sourceTree = "<group>";
@@ -675,6 +680,7 @@
 			files = (
 				5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */,
 				5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */,
+				5347EE9D197DC7CC001B2214 /* UserPostsViewController.m in Sources */,
 				5350557F19529FCA009C1911 /* FeedSelectViewController.m in Sources */,
 				53F878A119133F60002A578B /* AppDelegate.m in Sources */,
 				5352B5A2195F5C3100FEB2BF /* UIView+Toast.m in Sources */,

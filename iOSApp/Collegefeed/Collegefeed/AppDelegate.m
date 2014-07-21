@@ -11,6 +11,7 @@
 #import "CommentViewController.h"
 #import "TagViewController.h"
 #import "UserContentViewController.h"
+#import "UserPostsViewController.h"
 #import "Shared.h"
 #import "College.h"
 #import "Networker.h"
@@ -50,9 +51,13 @@
     // *************************************** //
     
     // *** User Posts/Comments - UserContentViewController *** //
-    self.userContentController = [[UserContentViewController alloc] initWithPosts:self.dataController.userPosts withComments:self.dataController.userComments];
-    UINavigationController *userNavController = [[UINavigationController alloc] initWithRootViewController:self.userContentController];
+//    self.userContentController = [[UserContentViewController alloc] initWithPosts:self.dataController.userPosts withComments:self.dataController.userComments];
+//    UINavigationController *userNavController = [[UINavigationController alloc] initWithRootViewController:self.userContentController];
     // ****************************************************** //
+    
+    // *** User Posts - UserPostsViewController *** //
+    self.userPostsController = [[UserPostsViewController alloc] initAsType:USER_POSTS withDataController:self.dataController];
+    UINavigationController *userPostsNavController = [[UINavigationController alloc] initWithRootViewController:self.userPostsController];
     
     // *** Top Colleges - CollegePickerViewController *** //
 //    self.collegeController = [[CollegePickerViewController alloc] initAsTopCollegesWithDataController:self.dataController];
@@ -67,7 +72,8 @@
                                topPostsNavController,
                                newPostsNavController,
                                tagNavController,
-                               userNavController,
+                               userPostsNavController,
+//                               userNavController,
 //                               collegeNavController,
                                nil];
     
@@ -79,7 +85,7 @@
     [[self.tabBarController.tabBar.items objectAtIndex:0] setImage:[UIImage imageNamed:@"top.png"]];
     [[self.tabBarController.tabBar.items objectAtIndex:1] setImage:[UIImage imageNamed:@"new.png"]];
     [[self.tabBarController.tabBar.items objectAtIndex:2] setImage:[UIImage imageNamed:@"tags.png"]];
-    [((UITabBarItem *)([self.tabBarController.tabBar.items objectAtIndex:3])) setTitle:@"My Content"];
+    [((UITabBarItem *)([self.tabBarController.tabBar.items objectAtIndex:3])) setTitle:@"My Posts"];
 //    [[self.tabBarController.tabBar.items objectAtIndex:3] setImage:[UIImage imageNamed:@"colleges.png"]];
 
     [self.tabBarController setSelectedIndex:0];

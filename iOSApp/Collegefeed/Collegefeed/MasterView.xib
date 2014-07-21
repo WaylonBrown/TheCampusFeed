@@ -11,6 +11,7 @@
                 <outlet property="feedToolbar" destination="onw-bZ-Ayo" id="guM-k8-k3E"/>
                 <outlet property="showingLabel" destination="q0Q-LO-cjs" id="udx-dq-wdK"/>
                 <outlet property="tableView" destination="aEV-VT-52H" id="gZ0-54-1eh"/>
+                <outlet property="toolbarSeparator" destination="sMK-hB-0KP" id="YOc-LB-f30"/>
                 <outlet property="view" destination="cKt-4a-JCZ" id="cpw-7Q-b8c"/>
             </connections>
         </placeholder>
