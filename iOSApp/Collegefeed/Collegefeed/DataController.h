@@ -48,6 +48,7 @@
 // College Arrays
 @property (strong, nonatomic) NSMutableArray *collegeList;
 @property (strong, nonatomic) NSMutableArray *nearbyColleges;
+@property (strong, nonatomic) NSMutableArray *trendingColleges;
 
 // Comment Array
 @property (nonatomic, strong) NSMutableArray *commentList;
@@ -86,6 +87,7 @@
 @property (nonatomic) long topPostsPage;
 @property (nonatomic) long recentPostsPage;
 @property (nonatomic) long tagPostsPage;
+@property (nonatomic) long trendingCollegesPage;
 
 
 #pragma mark - Public Functions
@@ -121,6 +123,7 @@
 
 // Colleges
 - (void)getNetworkCollegeList;
+- (void)getTrendingCollegeList;
 
 // Comments
 - (BOOL)createCommentWithMessage:(NSString *)message

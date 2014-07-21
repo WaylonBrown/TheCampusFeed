@@ -18,7 +18,7 @@
 // Colleges
 + (NSData *)GETAllColleges;
 + (NSData *)GETCollegeWithId:(long)collegeId;
-+ (NSData *)GETTrendingColleges;
++ (NSData *)GETTrendingCollegesAtPageNum:(long)pageNum;
 
 // Comments
 + (NSData *)POSTCommentData:(NSData *)data WithPostId:(long)postId;

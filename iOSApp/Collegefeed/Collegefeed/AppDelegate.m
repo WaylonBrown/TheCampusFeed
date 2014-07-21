@@ -12,6 +12,7 @@
 #import "TagViewController.h"
 #import "UserCommentsViewController.h"
 #import "UserPostsViewController.h"
+#import "TrendingCollegesViewController.h"
 #import "Shared.h"
 #import "College.h"
 #import "Networker.h"
@@ -49,6 +50,11 @@
     UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:self.tagController];
     // *************************************** //
     
+    // *** Trending Colleges - TrendingCollegesViewController *** //
+    self.trendingCollegesController = [[TrendingCollegesViewController alloc] initWithDataController:self.dataController];
+    UINavigationController *collegeNavController = [[UINavigationController alloc] initWithRootViewController:self.trendingCollegesController];
+    // *************************************** //
+    
     // *** User Posts - UserPostsViewController *** //
     self.userPostsController = [[UserPostsViewController alloc] initAsType:USER_POSTS
                                                         withDataController:self.dataController];
@@ -61,23 +67,15 @@
     UINavigationController *userCommentsNavController = [[UINavigationController alloc] initWithRootViewController:self.userCommentsController];
     // *************************************** //
 
-    
-    // *** Top Colleges - CollegePickerViewController *** //
-//    self.collegeController = [[CollegePickerViewController alloc] initAsTopCollegesWithDataController:self.dataController];
-//    [self.collegeController setDelegate:self.topPostsController];
-//    UINavigationController *collegeNavController =
-//            [[UINavigationController alloc] initWithRootViewController:self.collegeController];
-    // *************************************** //
-
-    
+        
     // assign all navigation controllers to the TabBar
     NSArray *navControllers = [NSArray arrayWithObjects:
                                topPostsNavController,
                                newPostsNavController,
                                tagNavController,
+                               collegeNavController,
                                userPostsNavController,
                                userCommentsNavController,
-//                               collegeNavController,
                                nil];
     
     [self setTabBarController:[[UITabBarController alloc] init]];
@@ -88,9 +86,10 @@
     [[self.tabBarController.tabBar.items objectAtIndex:0] setImage:[UIImage imageNamed:@"top.png"]];
     [[self.tabBarController.tabBar.items objectAtIndex:1] setImage:[UIImage imageNamed:@"new.png"]];
     [[self.tabBarController.tabBar.items objectAtIndex:2] setImage:[UIImage imageNamed:@"tags.png"]];
-    [((UITabBarItem *)([self.tabBarController.tabBar.items objectAtIndex:3])) setTitle:@"My Posts"];
-    [((UITabBarItem *)([self.tabBarController.tabBar.items objectAtIndex:4])) setTitle:@"My Comments"];
-//    [[self.tabBarController.tabBar.items objectAtIndex:3] setImage:[UIImage imageNamed:@"colleges.png"]];
+    [[self.tabBarController.tabBar.items objectAtIndex:3] setImage:[UIImage imageNamed:@"colleges.png"]];
+    
+    [((UITabBarItem *)([self.tabBarController.tabBar.items objectAtIndex:4])) setTitle:@"My Posts"];
+//    [((UITabBarItem *)([self.tabBarController.tabBar.items objectAtIndex:5])) setTitle:@"My Comments"];
 
     [self.tabBarController setSelectedIndex:0];
     // finalize window specifications

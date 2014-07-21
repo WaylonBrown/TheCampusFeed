@@ -29,17 +29,21 @@
         self.recentPostsAllColleges = [[NSMutableArray alloc] init];
         self.collegeList            = [[NSMutableArray alloc] init];
         self.allTags                = [[NSMutableArray alloc] init];
+        self.trendingColleges       = [[NSMutableArray alloc] init];
         self.userPosts              = [[NSMutableArray alloc] init];
         self.userComments           = [[NSMutableArray alloc] init];
         self.userVotes              = [[NSMutableArray alloc] init];
         
         [self setTopPostsPage:0];
         [self setRecentPostsPage:0];
+        [self setTagPostsPage:0];
+        [self setTrendingCollegesPage:0];
         
         // Populate the initial arrays
         [self fetchTopPosts];
         [self fetchNewPosts];
-//        [self getHardCodedCollegeList];
+        // [self getHardCodedCollegeList];
+        [self getTrendingCollegeList];
         [self getNetworkCollegeList];
         [self fetchAllTags];
         [self retrieveUserData];
@@ -65,6 +69,12 @@
     NSData *data = [Networker GETAllColleges];
     [self parseData:data asClass:[College class] intoList:self.collegeList];
     [self writeCollegesToFileWithData:data];
+}
+- (void)getTrendingCollegeList
+{
+    self.trendingColleges = [[NSMutableArray alloc] init];
+    NSData *data = [Networker GETTrendingCollegesAtPageNum:self.trendingCollegesPage++];
+    [self parseData:data asClass:[College class] intoList:self.trendingColleges];
 }
 
 #pragma mark - Networker Access - Comments
@@ -137,9 +147,6 @@
                                                                    options:0
                                                                      error:nil];
         Post *networkPost = [[Post alloc] initFromJSON:jsonObject];
-        // Convert to the network version of the post before saving it everywhere
-        
-        
         
         [self.topPostsAllColleges insertObject:networkPost atIndex:0];
         [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
