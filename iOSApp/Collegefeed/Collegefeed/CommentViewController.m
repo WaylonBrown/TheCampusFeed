@@ -219,7 +219,13 @@
         }
     }
 }
-
+- (void)refresh
+{
+    [super refresh];
+    
+    [self.postTableView reloadData];
+    [self.commentTableView reloadData];
+}
 #pragma mark - Helper Methods
 
 - (NSString *)getAgeOfCommentAsString:(NSDate *)commentDate

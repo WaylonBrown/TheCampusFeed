@@ -76,9 +76,15 @@
     {
         Comment *comment = [[Comment alloc] initWithCommentMessage:message
                                                           withPost:post];
-        [Networker POSTCommentData:[comment toJSON] WithPostId:post.postID];
-        [self.commentList insertObject:comment atIndex:0];
-        [self.userComments insertObject:comment atIndex:0];
+        NSData *result = [Networker POSTCommentData:[comment toJSON] WithPostId:post.postID];
+        
+        NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
+                                                                   options:0
+                                                                     error:nil];
+        Comment *networkComment = [[Comment alloc] initFromJSON:jsonObject];
+        
+        [self.commentList insertObject:networkComment atIndex:0];
+        [self.userComments insertObject:networkComment atIndex:0];
         [self saveUserComments];
         return YES;
     }
@@ -126,10 +132,18 @@
     {
         Post *post = [[Post alloc] initWithMessage:message
                                      withCollegeId:collegeId];
-        [Networker POSTPostData:[post toJSON] WithCollegeId:post.collegeID];
-        [self.topPostsAllColleges insertObject:post atIndex:0];
-        [self.recentPostsAllColleges insertObject:post atIndex:0];
-        [self.userPosts insertObject:post atIndex:0];
+        NSData *result = [Networker POSTPostData:[post toJSON] WithCollegeId:post.collegeID];
+        NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
+                                                                   options:0
+                                                                     error:nil];
+        Post *networkPost = [[Post alloc] initFromJSON:jsonObject];
+        // Convert to the network version of the post before saving it everywhere
+        
+        
+        
+        [self.topPostsAllColleges insertObject:networkPost atIndex:0];
+        [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
+        [self.userPosts insertObject:networkPost atIndex:0];
         [self saveUserPosts];
         return YES;
     }
@@ -364,7 +378,7 @@
         for (Comment *comment in self.userComments)
         {
             long commentId = comment.commentID;
-            commentIdsString = [NSString stringWithFormat:@"%@\n%ld", commentIdsString, commentId];
+            commentIdsString = [NSString stringWithFormat:@"%ld\n%@", commentId, commentIdsString];
         }
         NSData *commentData = [commentIdsString dataUsingEncoding:NSUTF8StringEncoding];
         [commentData writeToFile:commentFile atomically:NO];
