@@ -241,15 +241,18 @@
     for (int i = 0; i < Ids.count; i++)
     {
         NSString *postId = [Ids objectAtIndex:i];
-        if ([postId isEqualToString:@""]) continue;
+        if ([[NSCharacterSet decimalDigitCharacterSet] isSupersetOfSet:[NSCharacterSet characterSetWithCharactersInString:postId]]
+            && ![postId isEqualToString:@""])
+        {
         
-        if (i == 0)
-        {
-            idString = [NSString stringWithFormat:@"many_ids[]=%@", postId];
-        }
-        else if (i > 0)
-        {
-            idString = [NSString stringWithFormat:@"%@&many_ids[]=%@", idString, postId];
+            if (i == 0)
+            {
+                idString = [NSString stringWithFormat:@"many_ids[]=%@", postId];
+            }
+            else if (i > 0)
+            {
+                idString = [NSString stringWithFormat:@"%@&many_ids[]=%@", idString, postId];
+            }
         }
     }
     NSURL *url = [[NSURL alloc] initWithString:

@@ -326,65 +326,73 @@
 }
 - (void)saveUserPosts
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docDir = [paths objectAtIndex: 0];
-    NSString *postFile = [docDir stringByAppendingPathComponent: @"UserPostIds.txt"];
-    
-    NSString *postIdsString = @"";
-    for (Post *post in self.userPosts)
+    if (self.userPosts.count > 0)
     {
-        long postId = post.postID;
-        postIdsString = [NSString stringWithFormat:@"%ld\n%@",postId, postIdsString];
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docDir = [paths objectAtIndex: 0];
+        NSString *postFile = [docDir stringByAppendingPathComponent: @"UserPostIds.txt"];
+        
+        NSString *postIdsString = @"";
+        for (Post *post in self.userPosts)
+        {
+            long postId = post.postID;
+            postIdsString = [NSString stringWithFormat:@"%ld\n%@", postId, postIdsString];
+        }
+        
+        NSData *postData = [postIdsString dataUsingEncoding:NSUTF8StringEncoding];
+        [postData writeToFile:postFile atomically:NO];
     }
-    NSData *postData = [postIdsString dataUsingEncoding:NSUTF8StringEncoding];
-    [postData writeToFile:postFile atomically:NO];
 }
 - (void)saveUserComments
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docDir = [paths objectAtIndex: 0];
-    NSString *commentFile = [docDir stringByAppendingPathComponent: @"UserCommentIds.txt"];
-    
-    // Save Comment Ids
-    NSString *commentIdsString = @"";
-    for (Comment *comment in self.userComments)
+    if (self.userComments.count > 0)
     {
-        long commentId = comment.commentID;
-        commentIdsString = [NSString stringWithFormat:@"%@\n%ld", commentIdsString, commentId];
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docDir = [paths objectAtIndex: 0];
+        NSString *commentFile = [docDir stringByAppendingPathComponent: @"UserCommentIds.txt"];
+        
+        // Save Comment Ids
+        NSString *commentIdsString = @"";
+        for (Comment *comment in self.userComments)
+        {
+            long commentId = comment.commentID;
+            commentIdsString = [NSString stringWithFormat:@"%@\n%ld", commentIdsString, commentId];
+        }
+        NSData *commentData = [commentIdsString dataUsingEncoding:NSUTF8StringEncoding];
+        [commentData writeToFile:commentFile atomically:NO];
     }
-    NSData *commentData = [commentIdsString dataUsingEncoding:NSUTF8StringEncoding];
-    [commentData writeToFile:commentFile atomically:NO];
-
 }
 - (void)saveUserVotes
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docDir = [paths objectAtIndex: 0];
-    NSString *voteFile = [docDir stringByAppendingPathComponent: @"UserVoteIds.txt"];
-    
-    // Save full Votes
-    NSString *votesString = @"";
-    int numVotes = self.userVotes.count;
-    for (int i = 0; i < numVotes; i++)
+    if (self.userVotes.count)
     {
-        Vote *vote = [self.userVotes objectAtIndex:i];
-        NSString *singleVoteString = [NSString stringWithUTF8String:[[vote toJSON] bytes]];
-        if (i == 0)
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docDir = [paths objectAtIndex: 0];
+        NSString *voteFile = [docDir stringByAppendingPathComponent: @"UserVoteIds.txt"];
+        
+        // Save full Votes
+        NSString *votesString = @"";
+        int numVotes = self.userVotes.count;
+        for (int i = 0; i < numVotes; i++)
         {
-            votesString = [NSString stringWithFormat:@"[%@,", singleVoteString];
+            Vote *vote = [self.userVotes objectAtIndex:i];
+            NSString *singleVoteString = [NSString stringWithUTF8String:[[vote toJSON] bytes]];
+            if (i == 0)
+            {
+                votesString = [NSString stringWithFormat:@"[%@,", singleVoteString];
+            }
+            else if (i == numVotes - 1)
+            {
+                votesString = [NSString stringWithFormat:@"%@%@]", votesString, singleVoteString];
+            }
+            else
+            {
+                votesString = [NSString stringWithFormat:@"%@%@,", votesString, singleVoteString];
+            }
         }
-        else if (i == numVotes - 1)
-        {
-            votesString = [NSString stringWithFormat:@"%@%@]", votesString, singleVoteString];
-        }
-        else
-        {
-            votesString = [NSString stringWithFormat:@"%@%@,", votesString, singleVoteString];
-        }
+        NSData *voteData = [votesString dataUsingEncoding:NSUTF8StringEncoding];
+        [voteData writeToFile:voteFile atomically:NO];
     }
-    NSData *voteData = [votesString dataUsingEncoding:NSUTF8StringEncoding];
-    [voteData writeToFile:voteFile atomically:NO];
-
 }
 - (void)saveAllUserData
 {
