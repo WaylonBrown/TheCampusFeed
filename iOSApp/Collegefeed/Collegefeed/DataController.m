@@ -220,6 +220,14 @@
             result = [Networker POSTVoteData:[vote toJSON]
                                   WithPostId:vote.parentID];
         }
+        if (result != nil)
+        {
+            NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
+                                                                       options:0
+                                                                         error:nil];
+            Vote *networkVote = [[Vote alloc] initFromJSON:jsonObject];
+            [self.userVotes addObject:networkVote];
+        }
         [self saveUserVotes];
         return YES;
     }
@@ -330,7 +338,7 @@
     {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docDir = [paths objectAtIndex: 0];
-        NSString *postFile = [docDir stringByAppendingPathComponent: @"UserPostIds.txt"];
+        NSString *postFile = [docDir stringByAppendingPathComponent: USER_POST_IDS_FILE];
         
         NSString *postIdsString = @"";
         for (Post *post in self.userPosts)
@@ -349,7 +357,7 @@
     {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docDir = [paths objectAtIndex: 0];
-        NSString *commentFile = [docDir stringByAppendingPathComponent: @"UserCommentIds.txt"];
+        NSString *commentFile = [docDir stringByAppendingPathComponent: USER_COMMENT_IDS_FILE];
         
         // Save Comment Ids
         NSString *commentIdsString = @"";
@@ -364,25 +372,22 @@
 }
 - (void)saveUserVotes
 {
-    if (self.userVotes.count)
+    if (self.userVotes.count > 0)
     {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docDir = [paths objectAtIndex: 0];
-        NSString *voteFile = [docDir stringByAppendingPathComponent: @"UserVoteIds.txt"];
+        NSString *voteFile = [docDir stringByAppendingPathComponent: USER_VOTES_FILE];
         
         // Save full Votes
-        NSString *votesString = @"";
+        NSString *votesString = @"[";
         int numVotes = self.userVotes.count;
         for (int i = 0; i < numVotes; i++)
         {
             Vote *vote = [self.userVotes objectAtIndex:i];
-            NSString *singleVoteString = [NSString stringWithUTF8String:[[vote toJSON] bytes]];
-            if (i == 0)
-            {
-                votesString = [NSString stringWithFormat:@"[%@,", singleVoteString];
-            }
-            else if (i == numVotes - 1)
-            {
+            NSString *singleVoteString = [[NSString alloc] initWithData:[vote toJSON] encoding:NSUTF8StringEncoding];
+            
+            if (i == numVotes - 1)
+            {   // close bracket if last vote
                 votesString = [NSString stringWithFormat:@"%@%@]", votesString, singleVoteString];
             }
             else
@@ -404,9 +409,9 @@
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docDir = [paths objectAtIndex: 0];
-    NSString *postFile = [docDir stringByAppendingPathComponent: @"UserPostIds.txt"];
-    NSString *commentFile = [docDir stringByAppendingPathComponent: @"UserCommentIds.txt"];
-    NSString *voteFile = [docDir stringByAppendingPathComponent: @"UserVoteIds.txt"];
+    NSString *postFile = [docDir stringByAppendingPathComponent: USER_POST_IDS_FILE];
+    NSString *commentFile = [docDir stringByAppendingPathComponent: USER_COMMENT_IDS_FILE];
+    NSString *voteFile = [docDir stringByAppendingPathComponent: USER_VOTES_FILE];
     
     // Retrieve Posts
     NSString *postsString = [NSString stringWithContentsOfFile:postFile encoding:NSUTF8StringEncoding error:nil];

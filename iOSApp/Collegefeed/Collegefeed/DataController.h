@@ -20,6 +20,10 @@
 #define EARTH_RADIUS_MILES          3959
 #define LOCATION_MANAGER_TIMEOUT    10
 
+#define USER_POST_IDS_FILE          @"UserPostIds.txt"
+#define USER_COMMENT_IDS_FILE       @"UserCommentIds.txt"
+#define USER_VOTES_FILE             @"UserVotes.txt"
+
 #pragma mark - Protocol Definitions
 /********************************/
 /***** PROTOCOL DEFINITIONS *****/
