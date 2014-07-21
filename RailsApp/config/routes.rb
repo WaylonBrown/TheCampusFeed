@@ -50,7 +50,7 @@ CollegeFeed::Application.routes.draw do
         get '/comments/count' => 'comments#count'
         resources :comments, except: [:show] do
           get 'votes/score' => 'votes#score'
-          resources :votes, only: [:create]
+          resources :votes, only: [:create, :score]
           resources :flags
         end
         get 'votes/score' => 'votes#score'
@@ -81,7 +81,7 @@ CollegeFeed::Application.routes.draw do
           get '/comments/count' => 'comments#count'
           resources :comments, except: [:show] do
             get 'votes/score' => 'votes#score'
-            resources :votes, only: [:create]
+            resources :votes, only: [:create, :score]
             resources :flags
           end
           get 'votes/score' => 'votes#score'

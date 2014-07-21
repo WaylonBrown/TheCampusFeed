@@ -144,8 +144,18 @@
       "name": "Votes",
       "examples": [
         {
+          "description": "Casting a vote on comment ID 1",
+          "link": "votes/casting_a_vote_on_comment_id_.json",
+          "groups": "all"
+        },
+        {
           "description": "Casting a vote on post ID 101",
           "link": "votes/casting_a_vote_on_post_id_.json",
+          "groups": "all"
+        },
+        {
+          "description": "Get the score of comment ID 1",
+          "link": "votes/get_the_score_of_comment_id_.json",
           "groups": "all"
         },
         {
