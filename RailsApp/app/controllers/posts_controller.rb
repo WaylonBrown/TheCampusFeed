@@ -7,7 +7,10 @@ class PostsController < ApplicationController
   def many
     posts = []
     params[:many_ids].each{ |id|
-      posts.push Post.find(id)
+      @cur = Post.find_by_id(id)
+      if @cur
+        posts.push @cur
+      end
     }
     render json: posts
   end

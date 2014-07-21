@@ -5,7 +5,10 @@ class CommentsController < ApplicationController
   def many
     comments = []
     params[:many_ids].each{ |id|
-      comments.push Comment.find(id)
+      @cur = Comment.find_by_id(id)
+      if @cur
+        comments.push @cur
+      end
     }
     render json: comments
   end
