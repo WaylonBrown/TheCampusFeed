@@ -441,6 +441,24 @@
     NSData *voteData = [NSData dataWithContentsOfFile:voteFile];
     [self parseData:voteData asClass:[Vote class] intoList:self.userVotes];
 }
+- (long)getUserPostScore
+{
+    long totalScore = 0;
+    for (Post* post in self.userPosts)
+    {
+        totalScore += post.score;
+    }
+    return totalScore;
+}
+- (long)getUserCommentScore
+{
+    long totalScore = 0;
+    for (Comment* comment in self.userComments)
+    {
+        totalScore += comment.score;
+    }
+    return totalScore;
+}
 
 #pragma mark - Helper Methods
 

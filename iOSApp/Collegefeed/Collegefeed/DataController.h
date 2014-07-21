@@ -111,6 +111,8 @@
 - (void)saveUserVotes;
 - (void)saveAllUserData;
 - (void)retrieveUserData;
+- (long)getUserPostScore;
+- (long)getUserCommentScore;
 
 
 /*************************/
