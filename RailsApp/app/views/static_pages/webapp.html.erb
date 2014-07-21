@@ -52,21 +52,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-4">
-      <div style="position:relative;float:right;">
-        <div class="well" data-spy="affix" data-offset-top="0" data-offset-bottom="0" style="width:inherit;">
-          <h4>
-            Trending Tags
-          </h4>
-          <hr/>
-          <div>
-
-            <div ng-repeat="tag in tags.trendingTags">
-              #{{tag.text}}
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="col-md-2">
     </div>
     <div class="col-md-4" id="posts" >
       <div class="card slide pointer" ng-repeat="post in recentPosts" ng-click="selectPost(post)" ng-class="{active: post.active}">
@@ -94,7 +80,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
       <div class="well" data-spy="affix" data-offset-top="0" data-offset-bottom="0">
         <h4>
           Trending Colleges
@@ -103,6 +89,19 @@
         <div>
           <div ng-repeat="college in colleges.trendingColleges">
             {{college.name}}
+          </div>
+        </div>
+
+        <hr/>
+
+        <h4>
+          Trending Tags
+        </h4>
+        <hr/>
+        <div>
+
+          <div ng-repeat="tag in tags.trendingTags">
+            #{{tag.text}}
           </div>
         </div>
       </div>

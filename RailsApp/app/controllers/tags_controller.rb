@@ -13,17 +13,7 @@ class TagsController < ApplicationController
   end
 
   def trending
-    if @college.nil?
-      @tags = Tag.top25
-    else
-      @tags = Tag.select('tags.id, tags.text, count(posts.id) AS posts_count').
-        joins(:posts).
-        #on('college_id = '+@college.id.to_s).
-        where(posts:{college_id: @college.id}).
-        group('tags.id').
-        order('posts_count DESC').
-        limit(25)
-    end
+    @tags = Tag.top(@college, params[:per_page])
   end
 
   # GET /api/v1/tags/1
