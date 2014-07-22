@@ -38,4 +38,9 @@
     [self.refreshControl endRefreshing];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [super tableView:tableView heightForRowAtIndexPath:indexPath] - 20;
+}
+
 @end

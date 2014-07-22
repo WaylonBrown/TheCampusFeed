@@ -69,8 +69,17 @@
     [self.messageLabel      setText:[obj getMessage]];
     [self.commentCountLabel setText:[self getCommentLabelString]];
     [self.ageLabel          setText:[self getAgeAsString:[obj getCreatedAt]]];
-    [self.scoreLabel        setText:[NSString stringWithFormat:@"%lu", [obj getScore]]];
-    [self.collegeLabel      setText:[obj getCollegeName]];
+    
+    if ([obj getType] == COMMENT)
+    {
+        [self setDividerView:nil];
+        [self setCollegeLabel:nil];
+    }
+    else
+    {
+        [self.scoreLabel        setText:[NSString stringWithFormat:@"%lu", [obj getScore]]];
+        [self.collegeLabel      setText:[obj getCollegeName]];
+    }
     
     // Parse message for Tags
     [self findHashTags];

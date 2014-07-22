@@ -212,6 +212,14 @@
     NSData *data = [Networker GETPostsWithIdArray:postIds];
     [self parseData:data asClass:[Post class] intoList:self.userPosts];
 }
+- (Post *)fetchPostWithId:(long)postId
+{
+    NSArray *singleton = @[[NSString stringWithFormat:@"%ld", postId]];
+    NSData *data = [Networker GETPostsWithIdArray:singleton];
+    NSMutableArray *singlePostArray = [NSMutableArray new];
+    [self parseData:data asClass:[Post class] intoList:singlePostArray];
+    return singlePostArray.count ? [singlePostArray firstObject] : nil;
+}
 
 #pragma mark - Networker Access - Tags
 

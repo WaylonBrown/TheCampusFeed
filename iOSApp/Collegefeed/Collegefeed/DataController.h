@@ -151,6 +151,7 @@
 - (BOOL)fetchMorePostsWithTagMessage:(NSString*)tagMessage;
 
 - (void)fetchUserPostsWithIdArray:(NSArray *)postIds;
+- (Post *)fetchPostWithId:(long)postId;
 
 // Tags
 - (void)fetchAllTags;

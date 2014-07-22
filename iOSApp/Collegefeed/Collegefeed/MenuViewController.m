@@ -40,7 +40,7 @@
            @"Trending Tags",
            @"Most Active Colleges",
            @"My Posts",
-           @"My Content"];
+           @"My Comments"];
 }
 
 

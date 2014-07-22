@@ -14,6 +14,7 @@
 #import "Shared.h"
 #import "College.h"
 #import "ToastController.h"
+#import "Comment.h"
 
 @implementation PostsViewController
 
@@ -83,10 +84,15 @@
 
     if (self.viewType == USER_COMMENTS)
     {
-        // TODO: navigate differently
+        Comment *selectedComment = (Comment *)[self.list objectAtIndex:indexPath.row];
+        long postId = selectedComment.postID;
+        self.selectedPost = [self.dataController fetchPostWithId:postId];
     }
-    self.selectedPost = (Post *)[self.list objectAtIndex:indexPath.row];
-
+    else
+    {
+        self.selectedPost = (Post *)[self.list objectAtIndex:indexPath.row];
+    }
+    
     [self.commentViewController setOriginalPost:self.selectedPost];
     
     [self.navigationController pushViewController:self.commentViewController
@@ -147,6 +153,7 @@
     CGSize size = [text sizeWithFont:CF_FONT_LIGHT(16) constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
     CGFloat height = MAX(size.height, MIN_LABEL_HEIGHT);
     float fullHeight = height + TOP_TO_LABEL + LABEL_TO_BOTTOM;
+
     return fullHeight;
 }
 
