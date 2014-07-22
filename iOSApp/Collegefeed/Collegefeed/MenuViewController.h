@@ -13,6 +13,8 @@
 @interface MenuViewController : UIViewController<UITableViewDataSource>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
-//@property (nonatomic, strong) UINavigationController *transitionsNavigationController;
+@property (strong, nonatomic) NSArray *navControllers;
+
+- (id)initWithNavControllers:(NSArray *)navControllers;
 
 @end

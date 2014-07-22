@@ -12,27 +12,25 @@
 
 @interface MenuViewController ()
 
-//@property (nonatomic, strong) UINavigationController *transitionsNavigationController;
-
 @end
 
 @implementation MenuViewController
 
+- (id)initWithNavControllers:(NSArray *)navControllers
+{
+    self = [super init];
+    if (self != nil)
+    {
+        self.navControllers = navControllers;
+    }
+    return self;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-//    self.transitionsNavigationController = (UINavigationController *)self.slidingViewController.topViewController;
-    // Need to set tableview delegate and datasource?
-    //
 }
-//
-//- (void)didReceiveMemoryWarning
-//{
-//    [super didReceiveMemoryWarning];
-//    // Dispose of any resources that can be recreated.
-//}
+
 #pragma mark - Properties
 
 - (NSArray *)menuItems
@@ -62,12 +60,12 @@
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
     }
     
     NSString *menuItem = self.menuItems[indexPath.row];
     
     cell.textLabel.text = menuItem;
-//    [cell setBackgroundColor:[UIColor clearColor]];
     
     return cell;
 }
@@ -76,18 +74,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *menuItem = self.menuItems[indexPath.row];
-    
-    // This undoes the Zoom Transition's scale because it affects the other transitions.
-    // You normally wouldn't need to do anything like this, but we're changing transitions
-    // dynamically so everything needs to start in a consistent state.
-//    self.slidingViewController.topViewController.view.layer.transform = CATransform3DMakeScale(1, 1, 1);
-    
-    if ([menuItem isEqualToString:@"Top Posts"])
+    UINavigationController *navController = self.navControllers[indexPath.row];
+    if (navController == nil || [navController class] != [UINavigationController class])
     {
-        // Show Top Posts!!
+        [self.slidingViewController resetTopViewAnimated:YES];
+        return;
     }
-    
+    else
+    {
+        [self.slidingViewController setTopViewController:navController];
+        [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
+    }
     
     [self.slidingViewController resetTopViewAnimated:YES];
 }
