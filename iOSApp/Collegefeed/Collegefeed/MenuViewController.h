@@ -10,9 +10,9 @@
 
 #import "ECSlidingViewController.h"
 
-@interface MenuViewController : UIViewController//<UITableViewDataSource>
+@interface MenuViewController : UIViewController<UITableViewDataSource>
 
-//@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 //@property (nonatomic, strong) UINavigationController *transitionsNavigationController;
 
 @end

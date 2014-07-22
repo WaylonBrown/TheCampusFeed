@@ -80,7 +80,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Comment View for the selected post
-    
+
     if (self.viewType == USER_COMMENTS)
     {
         // TODO: navigate differently

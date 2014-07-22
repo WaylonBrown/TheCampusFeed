@@ -38,8 +38,6 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    
-    UIViewController *underLeftViewController  = [[UIViewController alloc] init];
 
     
     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(anchorRight)];
@@ -55,40 +53,24 @@
     self.topPostsController.navigationItem.leftBarButtonItem = menuButton;
     
     
-    
+    // configure under left menu view controller
     MenuViewController *menuViewController  = [[MenuViewController alloc] init];
-    
-    
-    // configure under left view controller
-    underLeftViewController.view.layer.borderWidth     = 20;
-    underLeftViewController.view.layer.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
-    underLeftViewController.view.layer.borderColor     = [UIColor colorWithWhite:0.8 alpha:1.0].CGColor;
-    underLeftViewController.edgesForExtendedLayout     = UIRectEdgeTop | UIRectEdgeBottom | UIRectEdgeLeft; // don't go under the top view
-    
-
-    
-    // configure under left view controller
-    menuViewController.view.layer.borderWidth     = 20;
+    menuViewController.view.layer.borderWidth     = 0;
     menuViewController.view.layer.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
     menuViewController.view.layer.borderColor     = [UIColor colorWithWhite:0.8 alpha:1.0].CGColor;
     menuViewController.edgesForExtendedLayout     = UIRectEdgeTop | UIRectEdgeBottom | UIRectEdgeLeft; // don't go under the top view
     
     
     self.slidingViewController = [ECSlidingViewController slidingWithTopViewController:topPostsNavController];
-//    self.slidingViewController.underLeftViewController  = underLeftViewController;
-
     self.slidingViewController.underLeftViewController  = menuViewController;
     
     
     [topPostsNavController.view addGestureRecognizer:self.slidingViewController.panGesture];
 
-
     self.slidingViewController.anchorRightRevealAmount = 250.0;
     
     self.window.rootViewController = self.slidingViewController;
 
-//    
-//    
 //    // *** New Posts - PostsViewController *** //
 //    self.recentPostsController = [[PostsViewController alloc] initAsType:RECENT_VIEW
 //                                                      withDataController:self.dataController];
