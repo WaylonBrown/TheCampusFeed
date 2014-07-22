@@ -86,7 +86,6 @@
 
         
     // assign all navigation controllers to the Menu View Controller
-
     NSArray *navControllers = [NSArray arrayWithObjects:
                                topPostsNavController,
                                newPostsNavController,
@@ -107,7 +106,7 @@
     [topPostsNavController.view addGestureRecognizer:self.slidingViewController.panGesture];
     self.slidingViewController.underLeftViewController  = menuViewController;
     
-    self.slidingViewController.anchorRightRevealAmount = 250.0;
+    self.slidingViewController.anchorRightRevealAmount = 225.0;
     // *************************************** //
 
     self.window.rootViewController = self.slidingViewController;

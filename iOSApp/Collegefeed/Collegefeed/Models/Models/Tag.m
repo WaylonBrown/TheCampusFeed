@@ -103,7 +103,6 @@
     if (tagMessage.length < MIN_TAG_LENGTH
         || tagMessage.length > MAX_TAG_LENGTH
         || [tagMessage characterAtIndex:0] != '#'
-        || isnumber([tagMessage characterAtIndex:1])
         || [tagMessage rangeOfCharacterFromSet:specials].location != NSNotFound)
     {
         return false;

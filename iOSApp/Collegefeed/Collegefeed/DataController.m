@@ -147,6 +147,10 @@
                                                                    options:0
                                                                      error:nil];
         Post *networkPost = [[Post alloc] initFromJSON:jsonObject];
+        if (networkPost.collegeID == 0)
+        {
+            [networkPost setCollegeID:collegeId];
+        }
         
         [self.topPostsAllColleges insertObject:networkPost atIndex:0];
         [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
