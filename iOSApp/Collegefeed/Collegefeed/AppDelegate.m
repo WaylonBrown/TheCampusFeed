@@ -17,9 +17,12 @@
 #import "College.h"
 #import "Networker.h"
 #import "ECSlidingViewController.h"
+#import "MenuViewController.h"
 
 @interface AppDelegate ()
+
 @property (nonatomic, strong) ECSlidingViewController *slidingViewController;
+
 @end
 
 @implementation AppDelegate
@@ -36,29 +39,51 @@
     [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
+    UIViewController *underLeftViewController  = [[UIViewController alloc] init];
+
+    
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(anchorRight)];
+
+    
+    
+    
     // *** Top Posts - PostsViewController *** //
     self.topPostsController = [[PostsViewController alloc] initAsType:TOP_VIEW
                                                    withDataController:self.dataController];
     UINavigationController *topPostsNavController = [[UINavigationController alloc] initWithRootViewController:self.topPostsController];
     // *************************************** //
+    self.topPostsController.navigationItem.leftBarButtonItem = menuButton;
     
     
     
+    MenuViewController *menuViewController  = [[MenuViewController alloc] init];
     
-    UIViewController *underLeftViewController  = [[UIViewController alloc] init];
+    
     // configure under left view controller
     underLeftViewController.view.layer.borderWidth     = 20;
     underLeftViewController.view.layer.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
     underLeftViewController.view.layer.borderColor     = [UIColor colorWithWhite:0.8 alpha:1.0].CGColor;
     underLeftViewController.edgesForExtendedLayout     = UIRectEdgeTop | UIRectEdgeBottom | UIRectEdgeLeft; // don't go under the top view
     
+
+    
+    // configure under left view controller
+    menuViewController.view.layer.borderWidth     = 20;
+    menuViewController.view.layer.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
+    menuViewController.view.layer.borderColor     = [UIColor colorWithWhite:0.8 alpha:1.0].CGColor;
+    menuViewController.edgesForExtendedLayout     = UIRectEdgeTop | UIRectEdgeBottom | UIRectEdgeLeft; // don't go under the top view
+    
     
     self.slidingViewController = [ECSlidingViewController slidingWithTopViewController:topPostsNavController];
-    self.slidingViewController.underLeftViewController  = underLeftViewController;
+//    self.slidingViewController.underLeftViewController  = underLeftViewController;
+
+    self.slidingViewController.underLeftViewController  = menuViewController;
+    
     
     [topPostsNavController.view addGestureRecognizer:self.slidingViewController.panGesture];
 
-    self.slidingViewController.anchorLeftRevealAmount = 250.0;
+
+    self.slidingViewController.anchorRightRevealAmount = 250.0;
     
     self.window.rootViewController = self.slidingViewController;
 
@@ -158,5 +183,8 @@
 //    [self.recentPostsController didNotFindLocation];
 //    [self.tagController didNotFindLocation];
 }
-
+- (void)anchorRight
+{
+    [self.slidingViewController anchorTopViewToRightAnimated:YES];
+}
 @end
