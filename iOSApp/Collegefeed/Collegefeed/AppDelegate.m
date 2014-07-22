@@ -16,6 +16,11 @@
 #import "Shared.h"
 #import "College.h"
 #import "Networker.h"
+#import "ECSlidingViewController.h"
+
+@interface AppDelegate ()
+@property (nonatomic, strong) ECSlidingViewController *slidingViewController;
+@end
 
 @implementation AppDelegate
 
@@ -31,69 +36,90 @@
     [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
-
     // *** Top Posts - PostsViewController *** //
     self.topPostsController = [[PostsViewController alloc] initAsType:TOP_VIEW
                                                    withDataController:self.dataController];
     UINavigationController *topPostsNavController = [[UINavigationController alloc] initWithRootViewController:self.topPostsController];
     // *************************************** //
     
-    // *** New Posts - PostsViewController *** //
-    self.recentPostsController = [[PostsViewController alloc] initAsType:RECENT_VIEW
-                                                      withDataController:self.dataController];
-    UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:self.recentPostsController];
-    // *************************************** //
     
     
-    // *** Trending Tags - TagViewController *** //
-    self.tagController = [[TagViewController alloc] initWithDataController:self.dataController];
-    UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:self.tagController];
-    // *************************************** //
     
-    // *** Trending Colleges - TrendingCollegesViewController *** //
-    self.trendingCollegesController = [[TrendingCollegesViewController alloc] initWithDataController:self.dataController];
-    UINavigationController *collegeNavController = [[UINavigationController alloc] initWithRootViewController:self.trendingCollegesController];
-    // *************************************** //
+    UIViewController *underLeftViewController  = [[UIViewController alloc] init];
+    // configure under left view controller
+    underLeftViewController.view.layer.borderWidth     = 20;
+    underLeftViewController.view.layer.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
+    underLeftViewController.view.layer.borderColor     = [UIColor colorWithWhite:0.8 alpha:1.0].CGColor;
+    underLeftViewController.edgesForExtendedLayout     = UIRectEdgeTop | UIRectEdgeBottom | UIRectEdgeLeft; // don't go under the top view
     
-    // *** User Posts - UserPostsViewController *** //
-    self.userPostsController = [[UserPostsViewController alloc] initAsType:USER_POSTS
-                                                        withDataController:self.dataController];
-    UINavigationController *userPostsNavController = [[UINavigationController alloc] initWithRootViewController:self.userPostsController];
-    // *************************************** //
+    
+    self.slidingViewController = [ECSlidingViewController slidingWithTopViewController:topPostsNavController];
+    self.slidingViewController.underLeftViewController  = underLeftViewController;
+    
+    [topPostsNavController.view addGestureRecognizer:self.slidingViewController.panGesture];
 
-    // *** User Comments - UserCommentsViewController *** //
-    self.userCommentsController = [[UserCommentsViewController alloc] initAsType:USER_COMMENTS
-                                                              withDataController:self.dataController];
-    UINavigationController *userCommentsNavController = [[UINavigationController alloc] initWithRootViewController:self.userCommentsController];
-    // *************************************** //
+    self.slidingViewController.anchorLeftRevealAmount = 250.0;
+    
+    self.window.rootViewController = self.slidingViewController;
 
-        
-    // assign all navigation controllers to the TabBar
-    NSArray *navControllers = [NSArray arrayWithObjects:
-                               topPostsNavController,
-                               newPostsNavController,
-                               tagNavController,
-                               collegeNavController,
-                               userPostsNavController,
-                               userCommentsNavController,
-                               nil];
-    
-    [self setTabBarController:[[UITabBarController alloc] init]];
-    [self.tabBarController setViewControllers:navControllers];
-    
-    
-    // assign images to tabbar
-    [[self.tabBarController.tabBar.items objectAtIndex:0] setImage:[UIImage imageNamed:@"top.png"]];
-    [[self.tabBarController.tabBar.items objectAtIndex:1] setImage:[UIImage imageNamed:@"new.png"]];
-    [[self.tabBarController.tabBar.items objectAtIndex:2] setImage:[UIImage imageNamed:@"tags.png"]];
-    [[self.tabBarController.tabBar.items objectAtIndex:3] setImage:[UIImage imageNamed:@"colleges.png"]];
-    
-    [((UITabBarItem *)([self.tabBarController.tabBar.items objectAtIndex:4])) setTitle:@"My Posts"];
-//    [((UITabBarItem *)([self.tabBarController.tabBar.items objectAtIndex:5])) setTitle:@"My Comments"];
-
-    [self.tabBarController setSelectedIndex:0];
-    // finalize window specifications
-    [self.window setRootViewController:self.tabBarController];
+//    
+//    
+//    // *** New Posts - PostsViewController *** //
+//    self.recentPostsController = [[PostsViewController alloc] initAsType:RECENT_VIEW
+//                                                      withDataController:self.dataController];
+//    UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:self.recentPostsController];
+//    // *************************************** //
+//    
+//    
+//    // *** Trending Tags - TagViewController *** //
+//    self.tagController = [[TagViewController alloc] initWithDataController:self.dataController];
+//    UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:self.tagController];
+//    // *************************************** //
+//    
+//    // *** Trending Colleges - TrendingCollegesViewController *** //
+//    self.trendingCollegesController = [[TrendingCollegesViewController alloc] initWithDataController:self.dataController];
+//    UINavigationController *collegeNavController = [[UINavigationController alloc] initWithRootViewController:self.trendingCollegesController];
+//    // *************************************** //
+//    
+//    // *** User Posts - UserPostsViewController *** //
+//    self.userPostsController = [[UserPostsViewController alloc] initAsType:USER_POSTS
+//                                                        withDataController:self.dataController];
+//    UINavigationController *userPostsNavController = [[UINavigationController alloc] initWithRootViewController:self.userPostsController];
+//    // *************************************** //
+//
+//    // *** User Comments - UserCommentsViewController *** //
+//    self.userCommentsController = [[UserCommentsViewController alloc] initAsType:USER_COMMENTS
+//                                                              withDataController:self.dataController];
+//    UINavigationController *userCommentsNavController = [[UINavigationController alloc] initWithRootViewController:self.userCommentsController];
+//    // *************************************** //
+//
+//        
+//    // assign all navigation controllers to the TabBar
+//    NSArray *navControllers = [NSArray arrayWithObjects:
+//                               topPostsNavController,
+//                               newPostsNavController,
+//                               tagNavController,
+//                               collegeNavController,
+//                               userPostsNavController,
+//                               userCommentsNavController,
+//                               nil];
+//    
+//    [self setTabBarController:[[UITabBarController alloc] init]];
+//    [self.tabBarController setViewControllers:navControllers];
+//    
+//    
+//    // assign images to tabbar
+//    [[self.tabBarController.tabBar.items objectAtIndex:0] setImage:[UIImage imageNamed:@"top.png"]];
+//    [[self.tabBarController.tabBar.items objectAtIndex:1] setImage:[UIImage imageNamed:@"new.png"]];
+//    [[self.tabBarController.tabBar.items objectAtIndex:2] setImage:[UIImage imageNamed:@"tags.png"]];
+//    [[self.tabBarController.tabBar.items objectAtIndex:3] setImage:[UIImage imageNamed:@"colleges.png"]];
+//    
+//    [((UITabBarItem *)([self.tabBarController.tabBar.items objectAtIndex:4])) setTitle:@"My Posts"];
+////    [((UITabBarItem *)([self.tabBarController.tabBar.items objectAtIndex:5])) setTitle:@"My Comments"];
+//
+//    [self.tabBarController setSelectedIndex:0];
+//    // finalize window specifications
+//    [self.window setRootViewController:self.tabBarController];
     [self.window makeKeyAndVisible];
 
     return YES;
