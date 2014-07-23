@@ -598,6 +598,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             case R.id.myContent:
                 launchMyContentActivity();
                 return true;
+            case R.id.menu_help:
+                new GettingStartedDialog(this, "Help");
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
