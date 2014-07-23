@@ -233,6 +233,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		actionBar.setDisplayUseLogoEnabled(false);
 		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
 		actionBar.setIcon(R.drawable.logofake);
+        actionBar.setDisplayShowHomeEnabled(false);
 	}
 
 	public void changeFeed(int id) {

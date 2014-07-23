@@ -253,6 +253,7 @@ public class CommentsActivity extends Activity{
 		actionBar.setDisplayUseLogoEnabled(false);
 		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
 		actionBar.setIcon(R.drawable.logofake);
+        actionBar.setDisplayShowHomeEnabled(false);
 	}
 
 	private void pullListFromServer() {

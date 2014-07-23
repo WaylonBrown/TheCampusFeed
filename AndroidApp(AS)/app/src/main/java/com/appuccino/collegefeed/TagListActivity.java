@@ -48,6 +48,7 @@ public class TagListActivity extends Activity{
 		actionBar.setDisplayUseLogoEnabled(false);
 		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
 		actionBar.setIcon(R.drawable.logofake);
+        actionBar.setDisplayShowHomeEnabled(false);
 				
 		tagText = getIntent().getStringExtra("TAG_ID");
 		tagText = tagText.replace("#", "");

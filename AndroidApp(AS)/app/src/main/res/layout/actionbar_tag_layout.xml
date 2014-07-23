@@ -7,9 +7,15 @@
     android:gravity="center_vertical">
 
     <ImageView
-        android:layout_width="180dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="1dp"
-        android:src="@drawable/thecampusfeedlogosmall" />
+        android:id="@+id/backButtonTag"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:src="@drawable/ic_action_previous_item"
+        android:background="@drawable/postbuttonclick"
+        android:layout_gravity="center_vertical"
+        android:clickable="true"/>
 	
 </LinearLayout>
