@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ public class TagListActivity extends Activity{
 	private static String tagText = "";
     private static TextView topTagText;
     private static TextView tagFeedName;
+    private static ImageView backButton;
 	private static ProgressBar progressSpinner;
 	
 	@Override
@@ -55,6 +57,7 @@ public class TagListActivity extends Activity{
         
         topTagText = (TextView)findViewById(R.id.topTagText);
         tagFeedName = (TextView)findViewById(R.id.tagFeedName);
+        backButton = (ImageView)findViewById(R.id.backButtonTag);
         setTopTexts();
 
 		list = (ListView)findViewById(R.id.fragmentListView);
@@ -77,6 +80,15 @@ public class TagListActivity extends Activity{
 			else
 				Log.e("cfeed", "TopPostFragment list adapter wasn't set.");
 		}
+
+        if(backButton != null){
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
+                }
+            });
+        }
 	}
 
     private void setTopTexts() {

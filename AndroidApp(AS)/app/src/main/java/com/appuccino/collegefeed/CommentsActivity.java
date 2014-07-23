@@ -48,6 +48,7 @@ public class CommentsActivity extends Activity{
 	static ImageView newCommentButton;
     static ImageView flagButton;
     static ImageView shareButton;
+    static ImageView backButton;
 	static ProgressBar actionBarLoadingIcon;
 	static TextView commentsText;
 	final int minCommentLength = 3;
@@ -66,6 +67,7 @@ public class CommentsActivity extends Activity{
 		newCommentButton = (ImageView)findViewById(R.id.newCommentButton);
 		flagButton = (ImageView)findViewById(R.id.flagButton);
         shareButton = (ImageView)findViewById(R.id.shareButton);
+        backButton = (ImageView)findViewById(R.id.backButton);
 		actionBarLoadingIcon = (ProgressBar)findViewById(R.id.commentActionbarLoadingIcon);
 		list = (ListView)findViewById(R.id.commentsList);
 		loadingSpinner = (ProgressBar)findViewById(R.id.commentsLoading);
@@ -253,6 +255,13 @@ public class CommentsActivity extends Activity{
 
 	        updateArrows(arrowUp, arrowDown);
 		}
+
+        backButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 	}
 
     private void shareClicked() {
