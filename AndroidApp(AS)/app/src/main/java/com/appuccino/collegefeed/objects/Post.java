@@ -7,9 +7,11 @@ import java.util.ArrayList;
 
 public class Post extends AbstractPostComment{
 
-	ArrayList<Comment> commentList = new ArrayList<Comment>();
-	String collegeName;
-	int commentCount = 0;
+	private ArrayList<Comment> commentList = new ArrayList<Comment>();
+    private String collegeName;
+    private int commentCount = 0;
+    private String webURL;
+    private String appURL;
 	
 	public Post(String m, int c)
 	{
@@ -21,6 +23,8 @@ public class Post extends AbstractPostComment{
 			collegeName = MainActivity.getCollegeByID(collegeID).getName();
 		}catch(Exception e){
 		}
+        webURL = "";
+        appURL = "";
 	}
 	
 	public Post(int id, String message, int score, int collegeID, String time)
@@ -42,6 +46,8 @@ public class Post extends AbstractPostComment{
 			//TODO: make call to get updated college list here
 			collegeName = "";
 		}
+        webURL = "www.thecampusfeed.com/posttest/" + id;
+        appURL = "thecampusfeed://posts/" + id;
 	}
 	
 	public Post(int id, String message, int score, int collegeID, String time, int commentCount)
@@ -64,11 +70,8 @@ public class Post extends AbstractPostComment{
 			//TODO: make call to get updated college list here
 			collegeName = "";
 		}
-	}
-	
-	public void addComment(Comment comment)
-	{
-		commentList.add(comment);
+        webURL = "www.thecampusfeed.com/posttest/" + id;
+        appURL = "thecampusfeed://posts/" + id;
 	}
 	
 	public int getCommentCount() {
@@ -95,4 +98,11 @@ public class Post extends AbstractPostComment{
 		return commentList;
 	}
 
+    public String getWebURL(){
+        return webURL;
+    }
+
+    public String getAppURL(){
+        return appURL;
+    }
 }

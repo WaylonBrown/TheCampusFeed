@@ -3,6 +3,7 @@ package com.appuccino.collegefeed;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -45,7 +46,8 @@ public class CommentsActivity extends Activity{
 	ProgressBar loadingSpinner;
 	static Post post;
 	static ImageView newCommentButton;
-	static ImageView flagButton;
+    static ImageView flagButton;
+    static ImageView shareButton;
 	static ProgressBar actionBarLoadingIcon;
 	static TextView commentsText;
 	final int minCommentLength = 3;
@@ -63,6 +65,7 @@ public class CommentsActivity extends Activity{
 		
 		newCommentButton = (ImageView)findViewById(R.id.newCommentButton);
 		flagButton = (ImageView)findViewById(R.id.flagButton);
+        shareButton = (ImageView)findViewById(R.id.shareButton);
 		actionBarLoadingIcon = (ProgressBar)findViewById(R.id.commentActionbarLoadingIcon);
 		list = (ListView)findViewById(R.id.commentsList);
 		loadingSpinner = (ProgressBar)findViewById(R.id.commentsLoading);
@@ -241,11 +244,26 @@ public class CommentsActivity extends Activity{
 				}        	
 	        });
 
+            shareButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    shareClicked();
+                }
+            });
+
 	        updateArrows(arrowUp, arrowDown);
 		}
 	}
-	
-	private void setupActionBar() {
+
+    private void shareClicked() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out this post on TheCampusFeed\n\n" + post.getWebURL());
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.sendTo)));
+    }
+
+    private void setupActionBar() {
 		final ActionBar actionBar = getActionBar();
 		actionBar.setCustomView(R.layout.actionbar_comment);
 		actionBar.setDisplayShowTitleEnabled(false);

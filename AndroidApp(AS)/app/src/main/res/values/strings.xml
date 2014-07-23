@@ -10,7 +10,8 @@
     <string name="section4">Most Active Colleges</string>
     <string name="section5">My Posts</string>
     <string name="section6">My Comments</string>
-    
+
+    <string name="sendTo">Share this Post via...</string>
     <string name="chooseFeedDialogTitle">Choose a Feed</string>
     <string name="allColleges">All Colleges</string>
     <string name="searchColleges">Choose a College</string>
