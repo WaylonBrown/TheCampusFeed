@@ -473,7 +473,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				}
 				
 				if(chooseFeedDialog != null && chooseFeedDialog.isShowing()){
-					chooseFeedDialog.populateNearYouList();
+					chooseFeedDialog.populateNearYouList(true);
 				}
 			}
 		}		

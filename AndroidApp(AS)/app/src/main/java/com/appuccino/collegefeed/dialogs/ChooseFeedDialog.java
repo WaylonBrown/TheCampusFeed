@@ -1,8 +1,5 @@
 package com.appuccino.collegefeed.dialogs;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,7 +15,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
@@ -26,6 +22,9 @@ import com.appuccino.collegefeed.adapters.AutoCompleteDropdownAdapter;
 import com.appuccino.collegefeed.adapters.DialogCollegeListAdapter;
 import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.utils.FontManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChooseFeedDialog extends AlertDialog.Builder{
 	
@@ -59,7 +58,7 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
     	otherTitle.setTypeface(FontManager.light);
     	otherCollegesText.setTypeface(FontManager.light);
     	
-    	populateNearYouList();
+    	populateNearYouList(false);
     	setupClickListeners(searchColleges, allColleges);
 	}
 	
@@ -80,7 +79,7 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 		});
 	}
 
-	public void populateNearYouList() {
+	public void populateNearYouList(boolean locationFound) {
 		if(nearYouListView != null){
 			nearYouListArray = new ArrayList<College>();
 			boolean enableListClicking = true;	//false if no colleges so that the item can't be clicked
@@ -96,13 +95,21 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 				}
 				else
 				{
-					nearYouListArray.add(new College("(none)"));
+                    if(locationFound){
+                        nearYouListArray.add(new College("(none)"));
+                    } else {
+                        nearYouListArray.add(new College("Loading..."));
+                    }
 					enableListClicking = false;
 				}
 			}
 			else
 			{
-				nearYouListArray.add(new College("(none)"));
+                if(locationFound){
+                    nearYouListArray.add(new College("(none)"));
+                } else {
+                    nearYouListArray.add(new College("Loading..."));
+                }
 				enableListClicking = false;
 			}
 			
