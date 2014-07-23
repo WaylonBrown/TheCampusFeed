@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -49,6 +50,8 @@ public class CommentsActivity extends Activity{
     static ImageView flagButton;
     static ImageView shareButton;
     static ImageView backButton;
+    static ImageView facebookButton;
+    static ImageView twitterButton;
 	static ProgressBar actionBarLoadingIcon;
 	static TextView commentsText;
 	final int minCommentLength = 3;
@@ -68,6 +71,8 @@ public class CommentsActivity extends Activity{
 		flagButton = (ImageView)findViewById(R.id.flagButton);
         shareButton = (ImageView)findViewById(R.id.shareButton);
         backButton = (ImageView)findViewById(R.id.backButton);
+        facebookButton = (ImageView)findViewById(R.id.facebookButton);
+        twitterButton = (ImageView)findViewById(R.id.twitterButton);
 		actionBarLoadingIcon = (ProgressBar)findViewById(R.id.commentActionbarLoadingIcon);
 		list = (ListView)findViewById(R.id.commentsList);
 		loadingSpinner = (ProgressBar)findViewById(R.id.commentsLoading);
@@ -253,6 +258,20 @@ public class CommentsActivity extends Activity{
                 }
             });
 
+            facebookButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    initShareIntent("face");
+                }
+            });
+
+            twitterButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    initShareIntent("twi");
+                }
+            });
+
 	        updateArrows(arrowUp, arrowDown);
 		}
 
@@ -270,6 +289,40 @@ public class CommentsActivity extends Activity{
         sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out this post on TheCampusFeed\n\n" + post.getWebURL());
         sendIntent.setType("text/plain");
         startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.sendTo)));
+    }
+
+    private void initShareIntent(String type) {
+        boolean found = false;
+        Intent share = new Intent(android.content.Intent.ACTION_SEND);
+        share.setType("image/jpeg");
+
+        // gets the list of intents that can be loaded.
+        List<ResolveInfo> resInfo = getPackageManager().queryIntentActivities(share, 0);
+        if (!resInfo.isEmpty()){
+            for (ResolveInfo info : resInfo) {
+                if (info.activityInfo.packageName.toLowerCase().contains(type) ||
+                        info.activityInfo.name.toLowerCase().contains(type) ) {
+                    share.setAction(Intent.ACTION_SEND);
+                    share.putExtra(Intent.EXTRA_TEXT, post.getWebURL());
+                    share.setType("text/plain");
+                    share.setPackage(info.activityInfo.packageName);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found){
+                String toastMessage = "";
+                if(type.equals("face")){
+                    toastMessage = "You need to have the Facebook app installed to share on Facebook.";
+                } else if (type.equals("twi")) {
+                    toastMessage = "You need to have the Twitter app installed to tweet this post.";
+                }
+                Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            startActivity(Intent.createChooser(share, "Select"));
+        }
     }
 
     private void setupActionBar() {
