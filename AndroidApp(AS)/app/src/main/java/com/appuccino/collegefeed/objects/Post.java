@@ -46,7 +46,8 @@ public class Post extends AbstractPostComment{
 			//TODO: make call to get updated college list here
 			collegeName = "";
 		}
-        webURL = "www.thecampusfeed.com/posttest/" + id;
+        //webURL = "www.thecampusfeed.com/posttest/" + id;
+        webURL = "http://cfeed.herokuapp.com/webapp";
         appURL = "thecampusfeed://posts/" + id;
 	}
 	
@@ -70,9 +71,11 @@ public class Post extends AbstractPostComment{
 			//TODO: make call to get updated college list here
 			collegeName = "";
 		}
-        webURL = "www.thecampusfeed.com/posttest/" + id;
+        //webURL = "www.thecampusfeed.com/posttest/" + id;
+        webURL = "http://cfeed.herokuapp.com/webapp";
         appURL = "thecampusfeed://posts/" + id;
 	}
+
 	
 	public int getCommentCount() {
 		return commentCount;
