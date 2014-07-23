@@ -32,7 +32,7 @@
     {
         NSString *voteID    = (NSString*)[jsonObject valueForKey:@"id"];
         NSString *upvote    = (NSString*)[jsonObject valueForKey:@"upvote"];
-        NSString *parentID  = (NSString*)[jsonObject valueForKey:@"votable_ID"];
+        NSString *parentID  = (NSString*)[jsonObject valueForKey:@"votable_id"];
         NSString *type      = (NSString*)[jsonObject valueForKey:@"votable_type"];
         
         [self setVoteID:[voteID integerValue]];
@@ -55,9 +55,24 @@
 }
 - (NSData*)toJSON
 {   // Returns an NSData representation of this Vote in JSON
-    
-    NSString *voteString = [NSString stringWithFormat:@"{\"upvote\":%@}",
-                            self.upvote == YES ? @"true" : @"false"];
+    NSString *voteString;
+    if (self.voteID == 0)
+    {   // Not yet posted to network; use only simple JSON conversion
+        
+        voteString = [NSString stringWithFormat:
+                      @"{\"upvote\":%@}",
+                      self.upvote == YES ? @"true" : @"false"];
+    }
+    else
+    {   // Converting a vote that has been accepted by network; use full conversion
+        //      Being converted like this so it can be written to file
+        voteString = [NSString stringWithFormat:
+                      @"{\"id\":%ld,\"upvote\":%@,\"votable_id\":%ld,\"votable_type\":%@}",
+                      self.voteID,
+                      self.upvote == YES ? @"true" : @"false",
+                      self.parentID,
+                      self.votableType == POST ? @"Post" : @"Comment"];
+    }
     
     NSData *voteData = [voteString dataUsingEncoding:NSASCIIStringEncoding
                                 allowLossyConversion:YES];

@@ -35,19 +35,19 @@
                     </connections>
                 </tableView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" directionalLockEnabled="YES" bounces="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="25" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="e2t-m9-f0M" userLabel="Comment Table">
-                    <rect key="frame" x="0.0" y="164" width="320" height="355"/>
+                    <rect key="frame" x="0.0" y="164" width="320" height="404"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="355" id="2kI-q2-uRD"/>
+                        <constraint firstAttribute="height" constant="404" id="2kI-q2-uRD"/>
                     </constraints>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="Hme-1y-mCk"/>
                         <outlet property="delegate" destination="-1" id="71e-9R-dh8"/>
                     </connections>
                 </tableView>
-                <view opaque="NO" alpha="0.87" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="onw-bZ-Ayo" userLabel="Feed Label">
-                    <rect key="frame" x="0.0" y="469" width="320" height="50"/>
+                <view opaque="NO" alpha="0.87" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="onw-bZ-Ayo" userLabel="Feed Label">
+                    <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1L3-iO-Uw7" userLabel="Change Feed Button">
@@ -96,7 +96,7 @@
             </subviews>
             <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="e2t-m9-f0M" secondAttribute="bottom" constant="49" id="0fU-Pw-A52"/>
+                <constraint firstAttribute="bottom" secondItem="e2t-m9-f0M" secondAttribute="bottom" id="0fU-Pw-A52"/>
                 <constraint firstItem="e2t-m9-f0M" firstAttribute="leading" secondItem="cKt-4a-JCZ" secondAttribute="leading" id="3g9-ga-uAd"/>
                 <constraint firstItem="onw-bZ-Ayo" firstAttribute="leading" secondItem="cKt-4a-JCZ" secondAttribute="leading" id="5FO-m3-3w3"/>
                 <constraint firstAttribute="trailing" secondItem="aEV-VT-52H" secondAttribute="trailing" id="GIW-2t-Cpm"/>

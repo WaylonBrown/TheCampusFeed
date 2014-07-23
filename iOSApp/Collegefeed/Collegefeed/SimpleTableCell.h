@@ -18,6 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIView *enclosingView;
 
 - (void)assignTag:(Tag *)tag;
-- (void)assignCollege:(College *)college;
+- (void)assignCollege:(College *)college withRankNumber:(long)rankNo;
 
 @end

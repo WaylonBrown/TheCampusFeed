@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *downVoteButton;
 @property (weak, nonatomic) IBOutlet UIView *enclosingView;
 @property (weak, nonatomic) IBOutlet UIImageView *gpsIconImageView;
+@property (strong, nonatomic) IBOutlet UIView *dividerView;
 
 - (void)assign:(NSObject<PostAndCommentProtocol> *)obj;
 - (IBAction) upVotePressed:(id)sender;

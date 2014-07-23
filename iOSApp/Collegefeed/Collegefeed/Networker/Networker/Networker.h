@@ -18,6 +18,7 @@
 // Colleges
 + (NSData *)GETAllColleges;
 + (NSData *)GETCollegeWithId:(long)collegeId;
++ (NSData *)GETTrendingCollegesAtPageNum:(long)pageNum;
 
 // Comments
 + (NSData *)POSTCommentData:(NSData *)data WithPostId:(long)postId;
@@ -31,7 +32,7 @@
 
 //+ (NSData *)GETPostsWithTagName:(NSString *)tagName;
 + (NSData *)GETAllPostsWithTag:(NSString *)tagName
-                     atPageNum:(long)pageNum;  // PAGINATION IN PROGRESS
+                     atPageNum:(long)pageNum;
 
 + (NSData *)GETPostsWithTagName:(NSString *)tagName
                   withCollegeId:(long)collegeId;
@@ -39,10 +40,10 @@
 + (NSData *)GETAllPosts;
 + (NSData *)GETPostsWithCollegeId:(long)collegeId;
 
-+ (NSData *)GETRecentPostsAtPageNum:(long)pageNum; // PAGINATION DONE
++ (NSData *)GETRecentPostsAtPageNum:(long)pageNum;
 + (NSData *)GETRecentPostsWithCollegeId:(long)collegeId;
 
-+ (NSData *)GETTrendingPostsAtPageNum:(long)pageNum; // PAGINATION DONE
++ (NSData *)GETTrendingPostsAtPageNum:(long)pageNum;
 + (NSData *)GETTrendingPostsWithCollegeId:(long)collegeId;
 + (NSData *)GETPostsWithIdArray:(NSArray *)Ids;
 

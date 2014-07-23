@@ -14,6 +14,7 @@
 #import "Shared.h"
 #import "College.h"
 #import "ToastController.h"
+#import "Comment.h"
 
 @implementation PostsViewController
 
@@ -35,8 +36,11 @@
             case RECENT_VIEW:
                 [self setList:controller.recentPostsAllColleges];
                 break;
-            case USER_VIEW:
+            case USER_POSTS:
                 [self setList:controller.userPosts];
+                break;
+            case USER_COMMENTS:
+                [self setList:controller.userComments];
                 break;
             case TAG_VIEW:
                 [self setList:controller.allPostsWithTag];
@@ -77,9 +81,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Comment View for the selected post
-    
-    self.selectedPost = (Post *)[self.list objectAtIndex:indexPath.row];
 
+    if (self.viewType == USER_COMMENTS)
+    {
+        Comment *selectedComment = (Comment *)[self.list objectAtIndex:indexPath.row];
+        long postId = selectedComment.postID;
+        self.selectedPost = [self.dataController fetchPostWithId:postId];
+    }
+    else
+    {
+        self.selectedPost = (Post *)[self.list objectAtIndex:indexPath.row];
+    }
+    
     [self.commentViewController setOriginalPost:self.selectedPost];
     
     [self.navigationController pushViewController:self.commentViewController
@@ -140,6 +153,7 @@
     CGSize size = [text sizeWithFont:CF_FONT_LIGHT(16) constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
     CGFloat height = MAX(size.height, MIN_LABEL_HEIGHT);
     float fullHeight = height + TOP_TO_LABEL + LABEL_TO_BOTTOM;
+
     return fullHeight;
 }
 

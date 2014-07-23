@@ -149,6 +149,7 @@
                 <outlet property="ageLabel" destination="XTe-ec-ujB" id="GcE-fB-ycd"/>
                 <outlet property="collegeLabel" destination="wn0-nd-BMp" id="5so-NG-NfC"/>
                 <outlet property="commentCountLabel" destination="BxK-GL-rEc" id="9Gd-IQ-TjH"/>
+                <outlet property="dividerView" destination="qqg-lP-j6a" id="0GV-gg-VLl"/>
                 <outlet property="downVoteButton" destination="ZOu-h5-7eJ" id="td3-nQ-eiT"/>
                 <outlet property="enclosingView" destination="5I0-GL-s9J" id="xME-DG-hTT"/>
                 <outlet property="gpsIconImageView" destination="sYS-sm-JCC" id="HWM-fy-HAJ"/>

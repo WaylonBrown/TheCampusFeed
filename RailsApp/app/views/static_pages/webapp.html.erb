@@ -35,34 +35,52 @@
   <!-- /.container-fluid -->
 </nav>
 <div class="container-fluid" ng-controller="WebappCtrl">
+  <div class="modal fade" id="getAppModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="myModalLabel">App Only Action</h4>
+        </div>
+        <div class="modal-body">
+          Sorry, you'll need to get our Android or iOS app to do that.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="row">
-    <div class="col-md-4">
-      <div style="position:relative;float:right;">
-        <div class="well" data-spy="affix" data-offset-top="0" data-offset-bottom="0" style="width:inherit;">
-          <h4>
-            Trending Tags
-          </h4>
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-4" id="posts" >
+      <div class="card slide pointer" ng-repeat="post in recentPosts" ng-click="selectPost(post)" ng-class="{active: post.active}">
+        <div class="card-background absoluteFull" randombgpos>
+        </div>
+        <div class="card-controls">
+          <div class="button-container">
+            <div class="button" data-toggle="modal" data-target="#getAppModal"><div class="button-text"><%= fa_icon "arrow-up" %></div></div>
+            <div class="button" data-toggle="modal" data-target="#getAppModal"><div class="button-text"><%= fa_icon "arrow-down" %></div></div>
+            <div class="button" data-toggle="modal" data-target="#getAppModal"><div class="button-text"><%= fa_icon "flag" %></div></div>
+          </div>
+        </div>
+        <div class="card-content">
+          <h3>{{post.text}}</h3>
           <hr/>
-          <div>
+          <div class="pull-left"><i collegenamefromid cid="{{post.college_id}}"></i></div>
+          <div class="pull-right">
+            <div class="badge">{{post.comment_count}}</div>
+            <span class="comments-string">Comments</span></div>
 
-            <div ng-repeat="tag in tags.trendingTags">
-              #{{tag.text}}
-            </div>
+          <div class="clearfix"></div>
+          <hr/>
+          <div postcollege="{{post.college_id}}" postcomments="{{post.id}}">
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-4" id="posts">
-      <div class="card slide pointer" ng-repeat="post in recentPosts" ng-click="selectPost(post)" ng-class="{active: post.active}">
-        <h3>{{post.text}}</h3>
-        <hr/>
-        <span class="pull-left"><i collegenamefromid cid="{{post.college_id}}"></i></span>
-        <span class="pull-right">{{post.comment_count}} Comments</span>
-
-        <div class="clearfix"></div>
-      </div>
-    </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
       <div class="well" data-spy="affix" data-offset-top="0" data-offset-bottom="0">
         <h4>
           Trending Colleges
@@ -71,6 +89,19 @@
         <div>
           <div ng-repeat="college in colleges.trendingColleges">
             {{college.name}}
+          </div>
+        </div>
+
+        <hr/>
+
+        <h4>
+          Trending Tags
+        </h4>
+        <hr/>
+        <div>
+
+          <div ng-repeat="tag in tags.trendingTags">
+            #{{tag.text}}
           </div>
         </div>
       </div>

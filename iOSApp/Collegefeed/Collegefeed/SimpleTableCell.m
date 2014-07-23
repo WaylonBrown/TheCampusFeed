@@ -23,7 +23,6 @@
     self.enclosingView.layer.shadowOpacity = 0.5;
     
     // Set font styles
-    [self.messageLabel  setFont:CF_FONT_LIGHT(22)];
     [self.messageLabel setTintColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
     [self.countLabel    setFont:CF_FONT_MEDIUM(12)];
 }
@@ -37,6 +36,8 @@
 
 - (void)assignTag:(Tag *)tag
 {
+    [self.messageLabel setFont:CF_FONT_LIGHT(22)];
+
     if (tag != nil)
     {
         [self.messageLabel setText:tag.name];
@@ -48,11 +49,13 @@
         [self.countLabel setText:@""];
     }
 }
-- (void)assignCollege:(College *)college
+- (void)assignCollege:(College *)college withRankNumber:(long)rankNo
 {
+    [self.messageLabel setFont:CF_FONT_LIGHT(18)];
+
     if (college != nil)
     {
-        [self.messageLabel setText:college.name];
+        [self.messageLabel setText:[NSString stringWithFormat:@"#%ld) %@", rankNo, college.name]];
         [self.countLabel setText:@""];
     }
     else

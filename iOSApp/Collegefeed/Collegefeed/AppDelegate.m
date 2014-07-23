@@ -10,10 +10,20 @@
 #import "PostsViewController.h"
 #import "CommentViewController.h"
 #import "TagViewController.h"
-#import "UserContentViewController.h"
+#import "UserCommentsViewController.h"
+#import "UserPostsViewController.h"
+#import "TrendingCollegesViewController.h"
 #import "Shared.h"
 #import "College.h"
 #import "Networker.h"
+#import "ECSlidingViewController.h"
+#import "MenuViewController.h"
+
+@interface AppDelegate ()
+
+@property (nonatomic, strong) ECSlidingViewController *slidingViewController;
+
+@end
 
 @implementation AppDelegate
 
@@ -29,62 +39,78 @@
     [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
-#pragma mark - Create ViewControllers
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(anchorRight)];
 
+    
     // *** Top Posts - PostsViewController *** //
     self.topPostsController = [[PostsViewController alloc] initAsType:TOP_VIEW
                                                    withDataController:self.dataController];
     UINavigationController *topPostsNavController = [[UINavigationController alloc] initWithRootViewController:self.topPostsController];
+    self.topPostsController.navigationItem.leftBarButtonItem = menuButton;
     // *************************************** //
-    
+
+
     // *** New Posts - PostsViewController *** //
     self.recentPostsController = [[PostsViewController alloc] initAsType:RECENT_VIEW
                                                       withDataController:self.dataController];
     UINavigationController *newPostsNavController = [[UINavigationController alloc] initWithRootViewController:self.recentPostsController];
+    self.recentPostsController.navigationItem.leftBarButtonItem = menuButton;
     // *************************************** //
     
     
     // *** Trending Tags - TagViewController *** //
     self.tagController = [[TagViewController alloc] initWithDataController:self.dataController];
     UINavigationController *tagNavController = [[UINavigationController alloc] initWithRootViewController:self.tagController];
+    self.tagController.navigationItem.leftBarButtonItem = menuButton;
     // *************************************** //
     
-    // *** User Posts/Comments - UserContentViewController *** //
-    self.userContentController = [[UserContentViewController alloc] initWithPosts:self.dataController.userPosts withComments:self.dataController.userComments];
-    UINavigationController *userNavController = [[UINavigationController alloc] initWithRootViewController:self.userContentController];
-    // ****************************************************** //
+    // *** Trending Colleges - TrendingCollegesViewController *** //
+    self.trendingCollegesController = [[TrendingCollegesViewController alloc] initWithDataController:self.dataController];
+    UINavigationController *collegeNavController = [[UINavigationController alloc] initWithRootViewController:self.trendingCollegesController];
+    self.trendingCollegesController.navigationItem.leftBarButtonItem = menuButton;
+    // *************************************** //
     
-    // *** Top Colleges - CollegePickerViewController *** //
-//    self.collegeController = [[CollegePickerViewController alloc] initAsTopCollegesWithDataController:self.dataController];
-//    [self.collegeController setDelegate:self.topPostsController];
-//    UINavigationController *collegeNavController =
-//            [[UINavigationController alloc] initWithRootViewController:self.collegeController];
+    // *** User Posts - UserPostsViewController *** //
+    self.userPostsController = [[UserPostsViewController alloc] initAsType:USER_POSTS
+                                                        withDataController:self.dataController];
+    UINavigationController *userPostsNavController = [[UINavigationController alloc] initWithRootViewController:self.userPostsController];
+    self.userPostsController.navigationItem.leftBarButtonItem = menuButton;
     // *************************************** //
 
-    
-    // assign all navigation controllers to the TabBar
+    // *** User Comments - UserCommentsViewController *** //
+    self.userCommentsController = [[UserCommentsViewController alloc] initAsType:USER_COMMENTS
+                                                              withDataController:self.dataController];
+    UINavigationController *userCommentsNavController = [[UINavigationController alloc] initWithRootViewController:self.userCommentsController];
+    self.userCommentsController.navigationItem.leftBarButtonItem = menuButton;
+    // *************************************** //
+
+        
+    // assign all navigation controllers to the Menu View Controller
     NSArray *navControllers = [NSArray arrayWithObjects:
                                topPostsNavController,
                                newPostsNavController,
                                tagNavController,
-                               userNavController,
-//                               collegeNavController,
+                               collegeNavController,
+                               userPostsNavController,
+                               userCommentsNavController,
                                nil];
-    
-    [self setTabBarController:[[UITabBarController alloc] init]];
-    [self.tabBarController setViewControllers:navControllers];
-    
-    
-    // assign images to tabbar
-    [[self.tabBarController.tabBar.items objectAtIndex:0] setImage:[UIImage imageNamed:@"top.png"]];
-    [[self.tabBarController.tabBar.items objectAtIndex:1] setImage:[UIImage imageNamed:@"new.png"]];
-    [[self.tabBarController.tabBar.items objectAtIndex:2] setImage:[UIImage imageNamed:@"tags.png"]];
-    [((UITabBarItem *)([self.tabBarController.tabBar.items objectAtIndex:3])) setTitle:@"My Content"];
-//    [[self.tabBarController.tabBar.items objectAtIndex:3] setImage:[UIImage imageNamed:@"colleges.png"]];
 
-    [self.tabBarController setSelectedIndex:0];
-    // finalize window specifications
-    [self.window setRootViewController:self.tabBarController];
+    // *** Side Menu - MenuViewController *** //
+    MenuViewController *menuViewController  = [[MenuViewController alloc] initWithNavControllers:navControllers];
+    menuViewController.view.layer.borderWidth     = 0;
+    menuViewController.view.layer.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
+    menuViewController.view.layer.borderColor     = [UIColor colorWithWhite:0.8 alpha:1.0].CGColor;
+    menuViewController.edgesForExtendedLayout     = UIRectEdgeTop | UIRectEdgeBottom | UIRectEdgeLeft;
+    
+    self.slidingViewController = [ECSlidingViewController slidingWithTopViewController:topPostsNavController];
+    [topPostsNavController.view addGestureRecognizer:self.slidingViewController.panGesture];
+    self.slidingViewController.underLeftViewController  = menuViewController;
+    
+    self.slidingViewController.anchorRightRevealAmount = 225.0;
+    // *************************************** //
+
+    self.window.rootViewController = self.slidingViewController;
+
     [self.window makeKeyAndVisible];
 
     return YES;
@@ -123,5 +149,8 @@
 //    [self.recentPostsController didNotFindLocation];
 //    [self.tagController didNotFindLocation];
 }
-
+- (void)anchorRight
+{
+    [self.slidingViewController anchorTopViewToRightAnimated:YES];
+}
 @end

@@ -94,6 +94,13 @@
     
     return [self GET:url];
 }
++ (NSData *)GETTrendingCollegesAtPageNum:(long)pageNum
+{
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/colleges/trending?page=%ld&per_page=%d",
+                   API_URL, API_VERSION, pageNum, PAGINATION_NUM]];
+    return [self GET:url];
+}
 
 #pragma mark - Comments
 

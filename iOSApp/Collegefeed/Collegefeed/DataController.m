@@ -29,17 +29,21 @@
         self.recentPostsAllColleges = [[NSMutableArray alloc] init];
         self.collegeList            = [[NSMutableArray alloc] init];
         self.allTags                = [[NSMutableArray alloc] init];
+        self.trendingColleges       = [[NSMutableArray alloc] init];
         self.userPosts              = [[NSMutableArray alloc] init];
         self.userComments           = [[NSMutableArray alloc] init];
         self.userVotes              = [[NSMutableArray alloc] init];
         
         [self setTopPostsPage:0];
         [self setRecentPostsPage:0];
+        [self setTagPostsPage:0];
+        [self setTrendingCollegesPage:0];
         
         // Populate the initial arrays
         [self fetchTopPosts];
         [self fetchNewPosts];
-//        [self getHardCodedCollegeList];
+        // [self getHardCodedCollegeList];
+        [self getTrendingCollegeList];
         [self getNetworkCollegeList];
         [self fetchAllTags];
         [self retrieveUserData];
@@ -66,6 +70,12 @@
     [self parseData:data asClass:[College class] intoList:self.collegeList];
     [self writeCollegesToFileWithData:data];
 }
+- (void)getTrendingCollegeList
+{
+    self.trendingColleges = [[NSMutableArray alloc] init];
+    NSData *data = [Networker GETTrendingCollegesAtPageNum:self.trendingCollegesPage++];
+    [self parseData:data asClass:[College class] intoList:self.trendingColleges];
+}
 
 #pragma mark - Networker Access - Comments
 
@@ -76,9 +86,15 @@
     {
         Comment *comment = [[Comment alloc] initWithCommentMessage:message
                                                           withPost:post];
-        [Networker POSTCommentData:[comment toJSON] WithPostId:post.postID];
-        [self.commentList insertObject:comment atIndex:0];
-        [self.userComments insertObject:comment atIndex:0];
+        NSData *result = [Networker POSTCommentData:[comment toJSON] WithPostId:post.postID];
+        
+        NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
+                                                                   options:0
+                                                                     error:nil];
+        Comment *networkComment = [[Comment alloc] initFromJSON:jsonObject];
+        
+        [self.commentList insertObject:networkComment atIndex:0];
+        [self.userComments insertObject:networkComment atIndex:0];
         [self saveUserComments];
         return YES;
     }
@@ -126,10 +142,19 @@
     {
         Post *post = [[Post alloc] initWithMessage:message
                                      withCollegeId:collegeId];
-        [Networker POSTPostData:[post toJSON] WithCollegeId:post.collegeID];
-        [self.topPostsAllColleges insertObject:post atIndex:0];
-        [self.recentPostsAllColleges insertObject:post atIndex:0];
-        [self.userPosts insertObject:post atIndex:0];
+        NSData *result = [Networker POSTPostData:[post toJSON] WithCollegeId:post.collegeID];
+        NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
+                                                                   options:0
+                                                                     error:nil];
+        Post *networkPost = [[Post alloc] initFromJSON:jsonObject];
+        if (networkPost.collegeID == 0)
+        {
+            [networkPost setCollegeID:collegeId];
+        }
+        
+        [self.topPostsAllColleges insertObject:networkPost atIndex:0];
+        [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
+        [self.userPosts insertObject:networkPost atIndex:0];
         [self saveUserPosts];
         return YES;
     }
@@ -187,6 +212,14 @@
     NSData *data = [Networker GETPostsWithIdArray:postIds];
     [self parseData:data asClass:[Post class] intoList:self.userPosts];
 }
+- (Post *)fetchPostWithId:(long)postId
+{
+    NSArray *singleton = @[[NSString stringWithFormat:@"%ld", postId]];
+    NSData *data = [Networker GETPostsWithIdArray:singleton];
+    NSMutableArray *singlePostArray = [NSMutableArray new];
+    [self parseData:data asClass:[Post class] intoList:singlePostArray];
+    return singlePostArray.count ? [singlePostArray firstObject] : nil;
+}
 
 #pragma mark - Networker Access - Tags
 
@@ -219,6 +252,14 @@
         {
             result = [Networker POSTVoteData:[vote toJSON]
                                   WithPostId:vote.parentID];
+        }
+        if (result != nil)
+        {
+            NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
+                                                                       options:0
+                                                                         error:nil];
+            Vote *networkVote = [[Vote alloc] initFromJSON:jsonObject];
+            [self.userVotes addObject:networkVote];
         }
         [self saveUserVotes];
         return YES;
@@ -330,7 +371,7 @@
     {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docDir = [paths objectAtIndex: 0];
-        NSString *postFile = [docDir stringByAppendingPathComponent: @"UserPostIds.txt"];
+        NSString *postFile = [docDir stringByAppendingPathComponent: USER_POST_IDS_FILE];
         
         NSString *postIdsString = @"";
         for (Post *post in self.userPosts)
@@ -349,14 +390,14 @@
     {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docDir = [paths objectAtIndex: 0];
-        NSString *commentFile = [docDir stringByAppendingPathComponent: @"UserCommentIds.txt"];
+        NSString *commentFile = [docDir stringByAppendingPathComponent: USER_COMMENT_IDS_FILE];
         
         // Save Comment Ids
         NSString *commentIdsString = @"";
         for (Comment *comment in self.userComments)
         {
             long commentId = comment.commentID;
-            commentIdsString = [NSString stringWithFormat:@"%@\n%ld", commentIdsString, commentId];
+            commentIdsString = [NSString stringWithFormat:@"%ld\n%@", commentId, commentIdsString];
         }
         NSData *commentData = [commentIdsString dataUsingEncoding:NSUTF8StringEncoding];
         [commentData writeToFile:commentFile atomically:NO];
@@ -364,25 +405,22 @@
 }
 - (void)saveUserVotes
 {
-    if (self.userVotes.count)
+    if (self.userVotes.count > 0)
     {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docDir = [paths objectAtIndex: 0];
-        NSString *voteFile = [docDir stringByAppendingPathComponent: @"UserVoteIds.txt"];
+        NSString *voteFile = [docDir stringByAppendingPathComponent: USER_VOTES_FILE];
         
         // Save full Votes
-        NSString *votesString = @"";
+        NSString *votesString = @"[";
         int numVotes = self.userVotes.count;
         for (int i = 0; i < numVotes; i++)
         {
             Vote *vote = [self.userVotes objectAtIndex:i];
-            NSString *singleVoteString = [NSString stringWithUTF8String:[[vote toJSON] bytes]];
-            if (i == 0)
-            {
-                votesString = [NSString stringWithFormat:@"[%@,", singleVoteString];
-            }
-            else if (i == numVotes - 1)
-            {
+            NSString *singleVoteString = [[NSString alloc] initWithData:[vote toJSON] encoding:NSUTF8StringEncoding];
+            
+            if (i == numVotes - 1)
+            {   // close bracket if last vote
                 votesString = [NSString stringWithFormat:@"%@%@]", votesString, singleVoteString];
             }
             else
@@ -404,9 +442,9 @@
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docDir = [paths objectAtIndex: 0];
-    NSString *postFile = [docDir stringByAppendingPathComponent: @"UserPostIds.txt"];
-    NSString *commentFile = [docDir stringByAppendingPathComponent: @"UserCommentIds.txt"];
-    NSString *voteFile = [docDir stringByAppendingPathComponent: @"UserVoteIds.txt"];
+    NSString *postFile = [docDir stringByAppendingPathComponent: USER_POST_IDS_FILE];
+    NSString *commentFile = [docDir stringByAppendingPathComponent: USER_COMMENT_IDS_FILE];
+    NSString *voteFile = [docDir stringByAppendingPathComponent: USER_VOTES_FILE];
     
     // Retrieve Posts
     NSString *postsString = [NSString stringWithContentsOfFile:postFile encoding:NSUTF8StringEncoding error:nil];
@@ -421,6 +459,24 @@
     // Retrieve Votes
     NSData *voteData = [NSData dataWithContentsOfFile:voteFile];
     [self parseData:voteData asClass:[Vote class] intoList:self.userVotes];
+}
+- (long)getUserPostScore
+{
+    long totalScore = 0;
+    for (Post* post in self.userPosts)
+    {
+        totalScore += post.score;
+    }
+    return totalScore;
+}
+- (long)getUserCommentScore
+{
+    long totalScore = 0;
+    for (Comment* comment in self.userComments)
+    {
+        totalScore += comment.score;
+    }
+    return totalScore;
 }
 
 #pragma mark - Helper Methods

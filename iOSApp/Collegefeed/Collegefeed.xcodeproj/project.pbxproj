@@ -14,6 +14,11 @@
 		533475A51923344100E84CC8 /* TableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 533475A31923344100E84CC8 /* TableCell.xib */; };
 		533FCA4D193EDE3B00754C07 /* aggieland.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 533FCA4C193EDE3B00754C07 /* aggieland.gpx */; };
 		533FCA4F193FCD8200754C07 /* austin.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 533FCA4E193FCD8200754C07 /* austin.gpx */; };
+		5347EE9D197DC7CC001B2214 /* UserPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5347EE9B197DC7CC001B2214 /* UserPostsViewController.m */; };
+		5347EEA6197DCE9F001B2214 /* UserCommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5347EEA5197DCE9F001B2214 /* UserCommentsViewController.m */; };
+		5347EEAA197DD407001B2214 /* TrendingCollegesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5347EEA9197DD407001B2214 /* TrendingCollegesViewController.m */; };
+		5347EEB5197E9EC7001B2214 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5347EEB3197E9EC7001B2214 /* MenuViewController.m */; };
+		5347EEB6197E9EC7001B2214 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5347EEB4197E9EC7001B2214 /* MenuViewController.xib */; };
 		5350557719514587009C1911 /* CreatePostCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5350557519514587009C1911 /* CreatePostCommentViewController.m */; };
 		5350557819514587009C1911 /* CreatePostCommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5350557619514587009C1911 /* CreatePostCommentViewController.xib */; };
 		5350557F19529FCA009C1911 /* FeedSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5350557D19529FCA009C1911 /* FeedSelectViewController.m */; };
@@ -21,8 +26,6 @@
 		5350558F1953C75C009C1911 /* gps.png in Resources */ = {isa = PBXBuildFile; fileRef = 5350558E1953C75C009C1911 /* gps.png */; };
 		5352B5A2195F5C3100FEB2BF /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 5352B5A1195F5C3100FEB2BF /* UIView+Toast.m */; };
 		5358CE74196E5DF800FF4E45 /* libModels.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5358CE6F196E5D7F00FF4E45 /* libModels.a */; };
-		536D0E0D196D0F5700677C1B /* UserContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536D0E0B196D0F5700677C1B /* UserContentViewController.m */; };
-		536D0E0E196D0F5700677C1B /* UserContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 536D0E0C196D0F5700677C1B /* UserContentViewController.xib */; };
 		5390A91D1914B76800ACD082 /* arrowdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9141914B76800ACD082 /* arrowdown.png */; };
 		5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9151914B76800ACD082 /* arrowdownred.png */; };
 		5390A91F1914B76800ACD082 /* arrowup.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9161914B76800ACD082 /* arrowup.png */; };
@@ -68,6 +71,7 @@
 		53FF2D06195BCE430040E872 /* UserPosts.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D05195BCE430040E872 /* UserPosts.txt */; };
 		53FF2D0A195BCE7D0040E872 /* UserComments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D09195BCE7D0040E872 /* UserComments.txt */; };
 		53FF2D0C195BCE850040E872 /* UserVotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D0B195BCE850040E872 /* UserVotes.txt */; };
+		71BE5D8E66D048B0A34447BC /* libPods-Collegefeed.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C0F4C92259A409D9670D8DA /* libPods-Collegefeed.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +139,15 @@
 		533475A31923344100E84CC8 /* TableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TableCell.xib; path = Collegefeed/TableCell.xib; sourceTree = "<group>"; };
 		533FCA4C193EDE3B00754C07 /* aggieland.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = aggieland.gpx; sourceTree = "<group>"; };
 		533FCA4E193FCD8200754C07 /* austin.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = austin.gpx; sourceTree = "<group>"; };
+		5347EE9A197DC7CC001B2214 /* UserPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPostsViewController.h; sourceTree = "<group>"; };
+		5347EE9B197DC7CC001B2214 /* UserPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPostsViewController.m; sourceTree = "<group>"; };
+		5347EEA4197DCE9F001B2214 /* UserCommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCommentsViewController.h; sourceTree = "<group>"; };
+		5347EEA5197DCE9F001B2214 /* UserCommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCommentsViewController.m; sourceTree = "<group>"; };
+		5347EEA8197DD407001B2214 /* TrendingCollegesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingCollegesViewController.h; sourceTree = "<group>"; };
+		5347EEA9197DD407001B2214 /* TrendingCollegesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingCollegesViewController.m; sourceTree = "<group>"; };
+		5347EEB2197E9EC7001B2214 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		5347EEB3197E9EC7001B2214 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		5347EEB4197E9EC7001B2214 /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
 		5350557419514587009C1911 /* CreatePostCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatePostCommentViewController.h; sourceTree = "<group>"; };
 		5350557519514587009C1911 /* CreatePostCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatePostCommentViewController.m; sourceTree = "<group>"; };
 		5350557619514587009C1911 /* CreatePostCommentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreatePostCommentViewController.xib; sourceTree = "<group>"; };
@@ -145,9 +158,6 @@
 		5352B5A0195F5C3100FEB2BF /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
 		5352B5A1195F5C3100FEB2BF /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		5358CE69196E5D7F00FF4E45 /* Models.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Models.xcodeproj; path = Collegefeed/Models/Models.xcodeproj; sourceTree = "<group>"; };
-		536D0E0A196D0F5700677C1B /* UserContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserContentViewController.h; sourceTree = "<group>"; };
-		536D0E0B196D0F5700677C1B /* UserContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserContentViewController.m; sourceTree = "<group>"; };
-		536D0E0C196D0F5700677C1B /* UserContentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserContentViewController.xib; sourceTree = "<group>"; };
 		5390A9141914B76800ACD082 /* arrowdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdown.png; sourceTree = "<group>"; };
 		5390A9151914B76800ACD082 /* arrowdownred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdownred.png; sourceTree = "<group>"; };
 		5390A9161914B76800ACD082 /* arrowup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowup.png; sourceTree = "<group>"; };
@@ -203,6 +213,8 @@
 		53FF2D05195BCE430040E872 /* UserPosts.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserPosts.txt; sourceTree = "<group>"; };
 		53FF2D09195BCE7D0040E872 /* UserComments.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserComments.txt; sourceTree = "<group>"; };
 		53FF2D0B195BCE850040E872 /* UserVotes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserVotes.txt; sourceTree = "<group>"; };
+		6C0F4C92259A409D9670D8DA /* libPods-Collegefeed.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Collegefeed.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C8DC49E4448409EA9BF63D4 /* Pods-Collegefeed.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Collegefeed.xcconfig"; path = "Pods/Pods-Collegefeed.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +228,7 @@
 				53F8789319133F60002A578B /* CoreGraphics.framework in Frameworks */,
 				53F8789519133F60002A578B /* UIKit.framework in Frameworks */,
 				53F8789119133F60002A578B /* Foundation.framework in Frameworks */,
+				71BE5D8E66D048B0A34447BC /* libPods-Collegefeed.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +268,25 @@
 			);
 			name = "Custom Cells";
 			path = ..;
+			sourceTree = "<group>";
+		};
+		5347EEA7197DD3C3001B2214 /* Trending Colleges */ = {
+			isa = PBXGroup;
+			children = (
+				5347EEA8197DD407001B2214 /* TrendingCollegesViewController.h */,
+				5347EEA9197DD407001B2214 /* TrendingCollegesViewController.m */,
+			);
+			name = "Trending Colleges";
+			sourceTree = "<group>";
+		};
+		5347EEAF197E9E9E001B2214 /* Menu Navigation View */ = {
+			isa = PBXGroup;
+			children = (
+				5347EEB2197E9EC7001B2214 /* MenuViewController.h */,
+				5347EEB3197E9EC7001B2214 /* MenuViewController.m */,
+				5347EEB4197E9EC7001B2214 /* MenuViewController.xib */,
+			);
+			name = "Menu Navigation View";
 			sourceTree = "<group>";
 		};
 		5350557B1951458B009C1911 /* Create Post/Comment */ = {
@@ -310,9 +342,10 @@
 		536D0E11196D0F5A00677C1B /* User Content */ = {
 			isa = PBXGroup;
 			children = (
-				536D0E0A196D0F5700677C1B /* UserContentViewController.h */,
-				536D0E0B196D0F5700677C1B /* UserContentViewController.m */,
-				536D0E0C196D0F5700677C1B /* UserContentViewController.xib */,
+				5347EE9A197DC7CC001B2214 /* UserPostsViewController.h */,
+				5347EE9B197DC7CC001B2214 /* UserPostsViewController.m */,
+				5347EEA4197DCE9F001B2214 /* UserCommentsViewController.h */,
+				5347EEA5197DCE9F001B2214 /* UserCommentsViewController.m */,
 			);
 			name = "User Content";
 			sourceTree = "<group>";
@@ -372,7 +405,9 @@
 		53B090B5192DA13100E3D996 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5347EEAF197E9E9E001B2214 /* Menu Navigation View */,
 				53B1FE0119254EB900905E49 /* MasterView */,
+				5347EEA7197DD3C3001B2214 /* Trending Colleges */,
 				536D0E11196D0F5A00677C1B /* User Content */,
 				535055881953B067009C1911 /* Post/Comment View */,
 				5350558119529FD5009C1911 /* Select College */,
@@ -435,6 +470,7 @@
 				53F878BB19133F60002A578B /* CollegefeedTests */,
 				53F8788F19133F60002A578B /* Frameworks */,
 				53F8788E19133F60002A578B /* Products */,
+				8C8DC49E4448409EA9BF63D4 /* Pods-Collegefeed.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -455,6 +491,7 @@
 				53F8789219133F60002A578B /* CoreGraphics.framework */,
 				53F8789419133F60002A578B /* UIKit.framework */,
 				53F878B519133F60002A578B /* XCTest.framework */,
+				6C0F4C92259A409D9670D8DA /* libPods-Collegefeed.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -512,9 +549,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 53F878C519133F60002A578B /* Build configuration list for PBXNativeTarget "Collegefeed" */;
 			buildPhases = (
+				73051738B88C4952BA0B62E7 /* Check Pods Manifest.lock */,
 				53F8788919133F60002A578B /* Sources */,
 				53F8788A19133F60002A578B /* Frameworks */,
 				53F8788B19133F60002A578B /* Resources */,
+				B54EC36E2E984131A831B2CB /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -625,7 +664,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */,
-				536D0E0E196D0F5700677C1B /* UserContentViewController.xib in Resources */,
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */,
 				53AB57C5194ABD11001D1B7B /* Omnes-Semibold.ttf in Resources */,
@@ -633,6 +671,7 @@
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,
 				53FF2D0A195BCE7D0040E872 /* UserComments.txt in Resources */,
 				5350558019529FCA009C1911 /* FeedSelectViewController.xib in Resources */,
+				5347EEB6197E9EC7001B2214 /* MenuViewController.xib in Resources */,
 				53AB57BC194AAFF8001D1B7B /* mplus-2c-bold.ttf in Resources */,
 				5390A9201914B76800ACD082 /* arrowupblue.png in Resources */,
 				53FF2D06195BCE430040E872 /* UserPosts.txt in Resources */,
@@ -668,6 +707,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		73051738B88C4952BA0B62E7 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B54EC36E2E984131A831B2CB /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-Collegefeed-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		53F8788919133F60002A578B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -675,9 +747,12 @@
 			files = (
 				5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */,
 				5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */,
+				5347EE9D197DC7CC001B2214 /* UserPostsViewController.m in Sources */,
 				5350557F19529FCA009C1911 /* FeedSelectViewController.m in Sources */,
+				5347EEB5197E9EC7001B2214 /* MenuViewController.m in Sources */,
 				53F878A119133F60002A578B /* AppDelegate.m in Sources */,
 				5352B5A2195F5C3100FEB2BF /* UIView+Toast.m in Sources */,
+				5347EEAA197DD407001B2214 /* TrendingCollegesViewController.m in Sources */,
 				53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */,
 				53AE73C71928354F00BE6B02 /* DataController.m in Sources */,
 				53CF33A0194E7A7A008BB733 /* Shared.m in Sources */,
@@ -688,7 +763,7 @@
 				53D51E391949625300A8BA81 /* SimpleTableCell.m in Sources */,
 				5312942E196504CD00CF13DB /* ToastController.m in Sources */,
 				533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */,
-				536D0E0D196D0F5700677C1B /* UserContentViewController.m in Sources */,
+				5347EEA6197DCE9F001B2214 /* UserCommentsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -817,6 +892,7 @@
 		};
 		53F878C619133F60002A578B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C8DC49E4448409EA9BF63D4 /* Pods-Collegefeed.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -838,6 +914,7 @@
 		};
 		53F878C719133F60002A578B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C8DC49E4448409EA9BF63D4 /* Pods-Collegefeed.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

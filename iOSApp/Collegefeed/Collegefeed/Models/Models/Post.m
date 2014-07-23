@@ -92,7 +92,20 @@
 }
 - (NSData*)toJSON
 {   // Returns an NSData representation of this Post in JSON
-    NSString *postString = [NSString stringWithFormat:@"{\"text\":\"%@\"}", self.message];
+    
+    NSString *postString;
+    if (self.postID == 0)
+    {   // simple conversion for a POST request
+        postString = [NSString stringWithFormat:@"{\"text\":\"%@\"}", self.message];
+    }
+    else
+    {   // full conversion when being saved
+        postString = [NSString stringWithFormat:
+                      @"{\"id\":%ld,\"text\":\"%@\",\"score\":%ld}",
+                      self.postID,
+                      self.message,
+                      self.score];
+    }
     NSData *postData = [postString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     return postData;
 }

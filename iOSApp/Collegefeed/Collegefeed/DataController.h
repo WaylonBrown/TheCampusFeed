@@ -20,6 +20,10 @@
 #define EARTH_RADIUS_MILES          3959
 #define LOCATION_MANAGER_TIMEOUT    10
 
+#define USER_POST_IDS_FILE          @"UserPostIds.txt"
+#define USER_COMMENT_IDS_FILE       @"UserCommentIds.txt"
+#define USER_VOTES_FILE             @"UserVotes.txt"
+
 #pragma mark - Protocol Definitions
 /********************************/
 /***** PROTOCOL DEFINITIONS *****/
@@ -44,6 +48,7 @@
 // College Arrays
 @property (strong, nonatomic) NSMutableArray *collegeList;
 @property (strong, nonatomic) NSMutableArray *nearbyColleges;
+@property (strong, nonatomic) NSMutableArray *trendingColleges;
 
 // Comment Array
 @property (nonatomic, strong) NSMutableArray *commentList;
@@ -82,6 +87,7 @@
 @property (nonatomic) long topPostsPage;
 @property (nonatomic) long recentPostsPage;
 @property (nonatomic) long tagPostsPage;
+@property (nonatomic) long trendingCollegesPage;
 
 
 #pragma mark - Public Functions
@@ -107,6 +113,8 @@
 - (void)saveUserVotes;
 - (void)saveAllUserData;
 - (void)retrieveUserData;
+- (long)getUserPostScore;
+- (long)getUserCommentScore;
 
 
 /*************************/
@@ -115,6 +123,7 @@
 
 // Colleges
 - (void)getNetworkCollegeList;
+- (void)getTrendingCollegeList;
 
 // Comments
 - (BOOL)createCommentWithMessage:(NSString *)message
@@ -142,6 +151,7 @@
 - (BOOL)fetchMorePostsWithTagMessage:(NSString*)tagMessage;
 
 - (void)fetchUserPostsWithIdArray:(NSArray *)postIds;
+- (Post *)fetchPostWithId:(long)postId;
 
 // Tags
 - (void)fetchAllTags;
