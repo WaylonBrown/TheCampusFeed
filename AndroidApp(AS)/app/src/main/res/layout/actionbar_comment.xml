@@ -5,12 +5,12 @@
     android:orientation="horizontal" 
     android:background="@color/blue"
     android:gravity="center_vertical">
-    
-	<ImageView
-	    android:layout_width="140dp"
-	    android:layout_height="60dp"
-	    android:layout_marginTop="3dp"
-	    android:src="@drawable/thecampusfeedlogosmall" />
+
+    <ImageView
+        android:layout_width="180dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="1dp"
+        android:src="@drawable/thecampusfeedlogosmall" />
 	
 	<!-- push comment button to right -->
 	<View
