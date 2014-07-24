@@ -120,6 +120,11 @@ public class TagFragment extends Fragment
 		return rootView;
 	}
 
+    public void onResume(){
+        super.onResume();
+        setupFooterListView();
+    }
+
 	private void setupBottomViewUI() {
 		collegeNameBottom = (TextView)rootView.findViewById(R.id.collegeNameBottomText);
 		TextView showingText = (TextView)rootView.findViewById(R.id.showingFeedText);

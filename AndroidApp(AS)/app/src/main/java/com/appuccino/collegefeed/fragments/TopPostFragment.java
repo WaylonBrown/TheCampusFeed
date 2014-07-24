@@ -142,6 +142,11 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	    	
 		return rootView;
 	}
+
+    public void onResume(){
+        super.onResume();
+        setupFooterListView();
+    }
 	
 	private static void addLazyFooterView() {
 		if(list.getFooterViewsCount() == 0){
