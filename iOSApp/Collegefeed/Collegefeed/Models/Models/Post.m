@@ -125,6 +125,14 @@
 {
     return self.score;
 }
+- (void)decrementScore
+{
+    self.score--;
+}
+- (void)incrementScore
+{
+    self.score++;
+}
 - (NSString *)getCollegeName
 {
     return self.collegeName;
@@ -132,10 +140,6 @@
 - (long)getCollegeID
 {
     return self.collegeID;
-}
-- (void)setVote:(Vote *)vote
-{
-//    [self setVote:vote];
 }
 - (Vote *)getVote
 {

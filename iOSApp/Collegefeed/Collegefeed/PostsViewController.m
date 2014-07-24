@@ -10,6 +10,7 @@
 #import "TableCell.h"
 #import "PostsViewController.h"
 #import "Post.h"
+#import "Vote.h"
 #import "CommentViewController.h"
 #import "Shared.h"
 #import "College.h"
@@ -27,6 +28,8 @@
     {
         [self setViewType:type];
         [self switchToAllColleges];
+        
+        [self setCommentViewController:[[CommentViewController alloc] initWithDataController:self.dataController]];
         
         switch (type)
         {
@@ -65,12 +68,11 @@
 }
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
-    [self refresh];
-    [self setCommentViewController:[[CommentViewController alloc] initWithDataController:self.dataController]];
+
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
 }
 - (void)loadView
 {
@@ -129,30 +131,24 @@
     [cell setDelegate: self];
 
     // get the post and display in this cell
-    NSObject<PostAndCommentProtocol> *postAtIndex = [self.list objectAtIndex:indexPath.row];
+    Post *post = [self.list objectAtIndex:indexPath.row];
     
-    // TODO: this assigning needs some cleanup, use all in the assign: call
-    long collegeId = [postAtIndex getCollegeID];
+    long collegeId = [post getCollegeID];
     College *college = [self.dataController getCollegeById:collegeId];
-    [postAtIndex setCollegeName:college.name];
-    [cell setUserIsNearCollege:[self.dataController.nearbyColleges containsObject:college]];
-    [cell assign:postAtIndex];
+    [post setCollegeName:college.name];
+    BOOL nearCollege = [self.dataController.nearbyColleges containsObject:college];
+    
+    [cell assignWith:post IsNearCollege:nearCollege];
 
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    #define LABEL_WIDTH 252.0f
-    #define TOP_TO_LABEL 7.0f
-    #define LABEL_TO_BOTTOM 59.0f
-    #define MIN_LABEL_HEIGHT 53.0f
-    
-
     NSString *text = [((Post *)[self.list objectAtIndex:[indexPath row]]) getMessage];
-    CGSize constraint = CGSizeMake(LABEL_WIDTH, 20000.0f);
+    CGSize constraint = CGSizeMake(LARGE_CELL_LABEL_WIDTH, 20000.0f);
     CGSize size = [text sizeWithFont:CF_FONT_LIGHT(16) constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-    CGFloat height = MAX(size.height, MIN_LABEL_HEIGHT);
-    float fullHeight = height + TOP_TO_LABEL + LABEL_TO_BOTTOM;
+    CGFloat height = MAX(size.height, LARGE_CELL_MIN_LABEL_HEIGHT);
+    float fullHeight = height + LARGE_CELL_TOP_TO_LABEL + LARGE_CELL_LABEL_TO_BOTTOM;
 
     return fullHeight;
 }
@@ -181,22 +177,19 @@
     switch (self.viewType)
     {
         case TOP_VIEW:
-            // TODO: this is calling dataController's function and passing its own variable to itself...
-            [self.dataController fetchTopPostsWithCollegeId:self.dataController.collegeInFocus.collegeID];
+            [self.dataController fetchTopPostsInCollege];
             [self setList:self.dataController.topPostsInCollege];
             break;
         case RECENT_VIEW:
-            [self.dataController fetchNewPostsWithCollegeId:self.dataController.collegeInFocus.collegeID];
+            [self.dataController fetchNewPostsInCollege];
             [self setList:self.dataController.recentPostsInCollege];
             break;
         case TAG_VIEW:
             if (self.tagMessage != nil)
             {
-                [self setList:self.dataController.allPostsWithTagInCollege];
+                [self.dataController fetchAllPostsInCollegeWithTagMessage:self.tagMessage];
             }
-            [self.dataController fetchAllPostsWithTagMessage:self.tagMessage
-                                               withCollegeId:self.dataController.collegeInFocus.collegeID];
-
+            [self setList:self.dataController.allPostsWithTagInCollege];
             break;
         default:
             break;

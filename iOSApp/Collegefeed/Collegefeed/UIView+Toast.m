@@ -138,6 +138,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 
 - (void)toastTimerDidFinish:(NSTimer *)timer {
     [self hideToast:(UIView *)timer.userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ToastHidden" object:self];
 }
 
 - (void)handleToastTapped:(UITapGestureRecognizer *)recognizer {

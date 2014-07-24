@@ -130,6 +130,14 @@
 {
     return self.score;
 }
+- (void)decrementScore
+{
+    self.score--;
+}
+- (void)incrementScore
+{
+    self.score++;
+}
 - (NSString *)getCollegeName
 {
     return self.collegeName;

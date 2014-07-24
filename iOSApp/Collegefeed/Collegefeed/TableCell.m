@@ -20,8 +20,7 @@
 - (void)awakeFromNib
 {
     // Initialization code
-    
-    
+
     // TODO: Keep trying ways to speed up this shadow rendering
     UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.enclosingView.bounds];
     self.enclosingView.layer.masksToBounds = NO;
@@ -53,6 +52,12 @@
 
 #pragma mark - Data Population
 
+- (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby;
+{
+    [self assign:post];
+    [self.gpsIconImageView setHidden:(!isNearby)];
+}
+
 - (void)assign:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj;
 {   // configure view of the cell according to obj's properties
     
@@ -72,8 +77,8 @@
     
     if ([obj getType] == COMMENT)
     {
-        [self setDividerView:nil];
-        [self setCollegeLabel:nil];
+        [self.dividerView removeFromSuperview];
+        [self.collegeLabel removeFromSuperview];
     }
     else
     {
@@ -86,36 +91,60 @@
 
     // assign arrow colors according to user's vote
     [self updateVoteButtons];
-    
-    [self.gpsIconImageView setHidden:(!self.userIsNearCollege)];
-    
 }
 
 #pragma mark - Actions
 
 - (IBAction)upVotePressed:(id)sender
 {   // User clicked upvote button
-    Vote *vote = [[Vote alloc] initWithVotableID:[self.object getID]
-                                 withUpvoteValue:YES
-                                   asVotableType:[self.object getType]];
-
-    [vote setCollegeId:[self.object getCollegeID]];
-    [self.object setVote:vote];
-    [self updateVoteButtons];
     
+    BOOL undoingUpvote = [self.object getVote] != nil && [self.object getVote].upvote == true;
+    
+    BOOL newUpvoteValue = !undoingUpvote;
+    
+    Vote *vote = [[Vote alloc] initWithVotableID:[self.object getID]
+                                 withUpvoteValue:newUpvoteValue
+                                   asVotableType:[self.object getType]];
+    
+    if (undoingUpvote)
+    {
+        [self.object setVote:nil];
+        [self.object decrementScore];
+    }
+    else
+    {
+        [vote setCollegeId:[self.object getCollegeID]];
+        [self.object incrementScore];
+        [self.object setVote:vote];
+    }
+    
+    [self updateVoteButtons];
     id<ChildCellDelegate> strongDelegate = self.delegate;
     [strongDelegate castVote:vote];
 }
 - (IBAction)downVotePresed:(id)sender
 {   // User clicked downvote button
+    
+    BOOL undoingDownvote = [self.object getVote] != nil && [self.object getVote].upvote == false;
+    BOOL newUpvoteValue = undoingDownvote;
+    
     Vote *vote = [[Vote alloc] initWithVotableID:[self.object getID]
-                                 withUpvoteValue:NO
+                                 withUpvoteValue:newUpvoteValue
                                    asVotableType:[self.object getType]];
     
-    [vote setCollegeId:[self.object getCollegeID]];
-    [self.object setVote:vote];
-    [self updateVoteButtons];
+    if (undoingDownvote)
+    {
+        [self.object setVote:nil];
+        [self.object incrementScore];
+    }
+    else
+    {
+        [vote setCollegeId:[self.object getCollegeID]];
+        [self.object decrementScore];
+        [self.object setVote:vote];
+    }
     
+    [self updateVoteButtons];
     id<ChildCellDelegate> strongDelegate = self.delegate;
     [strongDelegate castVote:vote];
 }
@@ -221,10 +250,10 @@
     }
     else if (vote.upvote == NO)
     {
-            [self.upVoteButton setImage:regularUp
-                               forState:UIControlStateNormal];
-            [self.downVoteButton setImage:selectedDown
-                                 forState:UIControlStateNormal];
+        [self.upVoteButton setImage:regularUp
+                           forState:UIControlStateNormal];
+        [self.downVoteButton setImage:selectedDown
+                             forState:UIControlStateNormal];
     }
     else if (vote.upvote == YES)
     {

@@ -10,6 +10,7 @@
 #import "Shared.h"
 #import "College.h"
 #import "ToastController.h"
+#import "UIView+Toast.h"
 
 @implementation CreatePostCommentViewController
 
@@ -23,7 +24,7 @@
         [self setTransitioningDelegate:self];
         [self setModelType:type];
         [self setCollegeForPost:college];
-        self.toastController = [[ToastController alloc] initWithViewController:self];
+        self.toastController = [[ToastController alloc] init];
     }
     return self;
 }
@@ -31,6 +32,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedNotification:) name:@"Toast" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self.toastController selector:@selector(toastHidden) name:@"ToastHidden" object:nil];
+
     self.alertView.layer.borderWidth = 2;
     self.alertView.layer.cornerRadius = 5;
     [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
@@ -89,6 +94,16 @@
 - (IBAction)dismiss:(id)sender
 {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)receivedNotification:(NSNotification *) notification
+{
+    NSDictionary *dictionary = [notification userInfo];
+    NSString *toast = [dictionary objectForKey:@"message"];
+    
+    [self.view makeToast:toast
+                duration:2.0
+                position:@"top"];
 }
 
 #pragma mark - Transitioning Protocol Methods

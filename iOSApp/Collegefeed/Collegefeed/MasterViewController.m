@@ -37,7 +37,7 @@
     {
         [self setDataController:controller];
         self.activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        self.toastController = [[ToastController alloc] initWithViewController:self];        
+        self.toastController = [[ToastController alloc] init];
     }
     return self;
 }
@@ -45,7 +45,7 @@
 {   // called when this view is initially loaded
     
     [super loadView];
-
+    
     // Add a refresh control to the top of the table view
     // (assigned to a tableViewController to avoid a 'stutter' in the UI)
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
@@ -66,6 +66,9 @@
 }
 - (void)viewDidLoad
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedNotification:) name:@"Toast" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self.toastController selector:@selector(toastHidden) name:@"ToastHidden" object:nil];
+    
     [self.navigationController.navigationBar setTranslucent:YES];
     [self.navigationController.navigationBar setAlpha:0.9f];
     [self refresh];
@@ -74,6 +77,7 @@
 {   // View is about to appear after being inactive
     [super viewWillAppear:animated];
     [self refresh];
+    
     // Show loading indicator until a nearby college is found,
     // then replace it with a create post button
      
@@ -94,7 +98,6 @@
     [self.navigationItem setRightBarButtonItem:button];
     
     [self.activityIndicator startAnimating];
-    [self refresh];
 }
 - (void)placeCreatePost
 {   // Place the create post button in the navigation bar (instead of loading indicator)
@@ -102,7 +105,6 @@
     UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
                                                                                   target:self action:@selector(create)];
     [self.navigationItem setRightBarButtonItem:createButton];
-    [self refresh];
 }
 - (void)foundLocation
 {   // Called when the user's location is determined. Allow them to create posts
@@ -114,7 +116,6 @@
     else
     {
         [self placeLoadingIndicator];
-//        [self.navigationItem setRightBarButtonItem:nil];
         [self.toastController toastLocationFoundNotNearCollege];
     }
 }
@@ -191,6 +192,25 @@
     [self.currentFeedLabel setText:feedName];
     [self.tableView reloadData];
     [self.refreshControl endRefreshing];
+}
+
+#pragma mark - Toasts
+
+- (void)receivedNotification:(NSNotification *) notification
+{
+    NSDictionary *dictionary = [notification userInfo];
+    NSString *toast = [dictionary objectForKey:@"message"];
+    [self toastMessage:toast];
+}
+- (void)toastMessage:(NSString *)message
+{
+    float x = self.view.frame.size.width / 2;
+    float y = self.view.frame.size.height - 95;
+    CGPoint point = CGPointMake(x, y);
+    
+    [self.view makeToast:message
+                duration:2.0
+                position:[NSValue valueWithCGPoint:point]];
 }
 
 #pragma mark - Delegate Methods

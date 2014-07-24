@@ -30,7 +30,6 @@
 // Posts
 + (NSData *)POSTPostData:(NSData *)data WithCollegeId:(long)collegeId;
 
-//+ (NSData *)GETPostsWithTagName:(NSString *)tagName;
 + (NSData *)GETAllPostsWithTag:(NSString *)tagName
                      atPageNum:(long)pageNum;
 
@@ -56,7 +55,7 @@
 
 // Votes
 + (NSData *)POSTVoteData:(NSData *)data WithPostId:(long)postId;
-+ (NSData *)POSTVoteData:(NSData *)data WithCommentId:(long)commentId;
++ (NSData *)POSTVoteData:(NSData *)data WithCommentId:(long)commentId WithPostId:(long)postId;
 + (NSData *)GETVoteScoreWithPostId:(long)postId;
 + (NSData *)GETVoteScoreWithCommentId:(long)commentId;
 

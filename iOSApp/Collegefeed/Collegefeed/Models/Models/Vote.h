@@ -21,6 +21,10 @@
 // parentID: ID of what was voted on (comment/post)
 @property (nonatomic) long parentID;
 
+// grandparentID: if this is a comment vote,
+//                we need the post ID also for API
+@property (nonatomic) long grandparentID;
+
 // votableType: "Post" or "Comment"
 @property (nonatomic) ModelType votableType;
 

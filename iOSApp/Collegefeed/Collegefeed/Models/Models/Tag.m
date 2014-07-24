@@ -99,7 +99,7 @@
 }
 + (BOOL)withMessageIsValid:(NSString*)tagMessage
 {
-    NSCharacterSet *specials = [NSCharacterSet characterSetWithCharactersInString:@"!@$%^&*+-."];
+    NSCharacterSet *specials = [NSCharacterSet characterSetWithCharactersInString:@"!@$%^&*+."];
     if (tagMessage.length < MIN_TAG_LENGTH
         || tagMessage.length > MAX_TAG_LENGTH
         || [tagMessage characterAtIndex:0] != '#'

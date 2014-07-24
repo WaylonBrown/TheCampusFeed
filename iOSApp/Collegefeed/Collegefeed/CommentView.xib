@@ -34,13 +34,15 @@
                         <outlet property="delegate" destination="-1" id="VLI-zg-g2l"/>
                     </connections>
                 </tableView>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" directionalLockEnabled="YES" bounces="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="25" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="e2t-m9-f0M" userLabel="Comment Table">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" directionalLockEnabled="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="25" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="e2t-m9-f0M" userLabel="Comment Table">
                     <rect key="frame" x="0.0" y="164" width="320" height="404"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="404" id="2kI-q2-uRD"/>
                     </constraints>
+                    <color key="sectionIndexBackgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="sectionIndexTrackingBackgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="Hme-1y-mCk"/>
                         <outlet property="delegate" destination="-1" id="71e-9R-dh8"/>

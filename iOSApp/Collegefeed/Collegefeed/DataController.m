@@ -33,6 +33,10 @@
         self.userPosts              = [[NSMutableArray alloc] init];
         self.userComments           = [[NSMutableArray alloc] init];
         self.userVotes              = [[NSMutableArray alloc] init];
+        self.userPostUpvotes        = [[NSMutableArray alloc] init];
+        self.userPostDownvotes      = [[NSMutableArray alloc] init];
+        self.userCommentUpvotes     = [[NSMutableArray alloc] init];
+        self.userCommentDownvotes   = [[NSMutableArray alloc] init];
         
         [self setTopPostsPage:0];
         [self setRecentPostsPage:0];
@@ -42,9 +46,9 @@
         // Populate the initial arrays
         [self fetchTopPosts];
         [self fetchNewPosts];
-        // [self getHardCodedCollegeList];
+//        [self getNetworkCollegeList];
+        [self getHardCodedCollegeList];
         [self getTrendingCollegeList];
-        [self getNetworkCollegeList];
         [self fetchAllTags];
         [self retrieveUserData];
         
@@ -169,9 +173,10 @@
     NSData* data = [Networker GETTrendingPostsAtPageNum:self.topPostsPage++];
     [self parseData:data asClass:[Post class] intoList:self.topPostsAllColleges];
 }
-- (void)fetchTopPostsWithCollegeId:(long)collegeId
+- (void)fetchTopPostsInCollege
 {
     self.topPostsInCollege = [[NSMutableArray alloc] init];
+    long collegeId = self.collegeInFocus.collegeID;
     NSData* data = [Networker GETTrendingPostsWithCollegeId:collegeId];
     [self parseData:data asClass:[Post class] intoList:self.topPostsInCollege];
 }
@@ -180,9 +185,10 @@
     NSData* data = [Networker GETRecentPostsAtPageNum:self.recentPostsPage++];
     [self parseData:data asClass:[Post class] intoList:self.recentPostsAllColleges];
 }
-- (void)fetchNewPostsWithCollegeId:(long)collegeId
+- (void)fetchNewPostsInCollege
 {
     [self setRecentPostsInCollege:[[NSMutableArray alloc] init]];
+    long collegeId = self.collegeInFocus.collegeID;
     NSData* data = [Networker GETRecentPostsWithCollegeId:collegeId];
     [self parseData:data asClass:[Post class] intoList:self.recentPostsInCollege];
 }
@@ -193,10 +199,10 @@
     NSData* data = [Networker GETAllPostsWithTag:tagMessage atPageNum:self.tagPostsPage];
     [self parseData:data asClass:[Post class] intoList:self.allPostsWithTag];
 }
-- (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage
-                      withCollegeId:(long)collegeId
+- (void)fetchAllPostsInCollegeWithTagMessage:(NSString *)tagMessage
 {
     [self setAllPostsWithTagInCollege:[[NSMutableArray alloc] init]];
+    long collegeId = self.collegeInFocus.collegeID;
     NSData* data = [Networker GETPostsWithTagName:tagMessage withCollegeId:collegeId];
     [self parseData:data asClass:[Post class] intoList:self.allPostsWithTagInCollege];
 }
@@ -246,7 +252,8 @@
         if (vote.votableType == COMMENT)
         {
             result = [Networker POSTVoteData:[vote toJSON]
-                               WithCommentId:vote.parentID];
+                               WithCommentId:vote.parentID
+                                  WithPostId:vote.grandparentID];
         }
         else if (vote.votableType == POST)
         {
@@ -259,7 +266,46 @@
                                                                        options:0
                                                                          error:nil];
             Vote *networkVote = [[Vote alloc] initFromJSON:jsonObject];
-            [self.userVotes addObject:networkVote];
+            NSNumber *voteID = [NSNumber numberWithLong:networkVote.parentID];
+            
+            
+            // When a vote is cast, add it to the appropriate user's vote list, UNLESS
+            // it already exists in the opposite vote list; in which case it gets removed from that one
+            if (networkVote.votableType == POST)
+            {
+                if (networkVote.upvote == true)
+                {
+                    if ([self.userPostDownvotes containsObject:voteID])
+                        [self.userPostDownvotes removeObject:voteID];
+                    else if (![self.userPostUpvotes containsObject:voteID])
+                        [self.userPostUpvotes addObject:voteID];
+                }
+                else
+                {
+                    if ([self.userPostUpvotes containsObject:voteID])
+                        [self.userPostUpvotes removeObject:voteID];
+                    else if (![self.userPostDownvotes containsObject:voteID])
+                        [self.userPostDownvotes addObject:voteID];
+                    
+                }
+            }
+            else if (networkVote.votableType == COMMENT)
+            {
+                if (networkVote.upvote == true)
+                {
+                    if ([self.userCommentDownvotes containsObject:voteID])
+                        [self.userCommentDownvotes removeObject:voteID];
+                    else if (![self.userCommentUpvotes containsObject:voteID])
+                        [self.userCommentUpvotes addObject:voteID];
+                }
+                else
+                {
+                    if ([self.userCommentUpvotes containsObject:voteID])
+                        [self.userCommentUpvotes removeObject:voteID];
+                    else if (![self.userCommentDownvotes containsObject:voteID])
+                        [self.userCommentDownvotes addObject:voteID];
+                }
+            }
         }
         [self saveUserVotes];
         return YES;
@@ -276,7 +322,7 @@
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docDir = [paths objectAtIndex: 0];
-    NSString *docFile = [docDir stringByAppendingPathComponent: @"NewCollegeList.txt"];
+    NSString *docFile = [docDir stringByAppendingPathComponent: COLLEGE_LIST_FILE];
     
     [data writeToFile:docFile atomically: NO];
 }
@@ -315,7 +361,7 @@
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docDir = [paths objectAtIndex: 0];
-    NSString *docFile = [docDir stringByAppendingPathComponent: @"NewCollegeList.txt"];
+    NSString *docFile = [docDir stringByAppendingPathComponent: COLLEGE_LIST_FILE];
     NSData *data = [NSData dataWithContentsOfFile:docFile];
     
     if (data == nil)
@@ -403,34 +449,63 @@
         [commentData writeToFile:commentFile atomically:NO];
     }
 }
+- (void)saveUserUpVotes
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex: 0];
+    
+    // Save user post upvotes
+    NSString *postFile = [docDir stringByAppendingPathComponent: USER_UPVOTE_POST_IDS_FILE];
+    NSString *postIdsString = @"";
+    for (NSNumber *postID in self.userPostUpvotes)
+    {
+        postIdsString = [NSString stringWithFormat:@"%@\n%@", postID, postIdsString];
+    }
+    NSData *postData = [postIdsString dataUsingEncoding:NSUTF8StringEncoding];
+    [postData writeToFile:postFile atomically:NO];
+
+
+    // Save user comment upvotes
+    NSString *commentFile = [docDir stringByAppendingPathComponent: USER_UPVOTE_COMMENT_IDS_FILE];
+    NSString *commentIdsString = @"";
+    for (NSNumber *commentID in self.userCommentUpvotes)
+    {
+        commentIdsString = [NSString stringWithFormat:@"%@\n%@", commentID, commentIdsString];
+    }
+    NSData *commentData = [commentIdsString dataUsingEncoding:NSUTF8StringEncoding];
+    [commentData writeToFile:commentFile atomically:NO];
+
+}
+- (void)saveUserDownVotes
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex: 0];
+    
+    // Save user post downvotes
+    NSString *postFile = [docDir stringByAppendingPathComponent: USER_DOWNVOTE_POST_IDS_FILE];
+    NSString *postIdsString = @"";
+    for (NSNumber *postID in self.userPostDownvotes)
+    {
+        postIdsString = [NSString stringWithFormat:@"%@\n%@", postID, postIdsString];
+    }
+    NSData *postData = [postIdsString dataUsingEncoding:NSUTF8StringEncoding];
+    [postData writeToFile:postFile atomically:NO];
+
+
+    // Save user comment downvotes
+    NSString *commentFile = [docDir stringByAppendingPathComponent: USER_DOWNVOTE_COMMENT_IDS_FILE];
+    NSString *commentIdsString = @"";
+    for (NSNumber *commentID in self.userCommentDownvotes)
+    {
+        commentIdsString = [NSString stringWithFormat:@"%@\n%@", commentID, commentIdsString];
+    }
+    NSData *commentData = [commentIdsString dataUsingEncoding:NSUTF8StringEncoding];
+    [commentData writeToFile:commentFile atomically:NO];
+}
 - (void)saveUserVotes
 {
-    if (self.userVotes.count > 0)
-    {
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *docDir = [paths objectAtIndex: 0];
-        NSString *voteFile = [docDir stringByAppendingPathComponent: USER_VOTES_FILE];
-        
-        // Save full Votes
-        NSString *votesString = @"[";
-        int numVotes = self.userVotes.count;
-        for (int i = 0; i < numVotes; i++)
-        {
-            Vote *vote = [self.userVotes objectAtIndex:i];
-            NSString *singleVoteString = [[NSString alloc] initWithData:[vote toJSON] encoding:NSUTF8StringEncoding];
-            
-            if (i == numVotes - 1)
-            {   // close bracket if last vote
-                votesString = [NSString stringWithFormat:@"%@%@]", votesString, singleVoteString];
-            }
-            else
-            {
-                votesString = [NSString stringWithFormat:@"%@%@,", votesString, singleVoteString];
-            }
-        }
-        NSData *voteData = [votesString dataUsingEncoding:NSUTF8StringEncoding];
-        [voteData writeToFile:voteFile atomically:NO];
-    }
+    [self saveUserUpVotes];
+    [self saveUserDownVotes];
 }
 - (void)saveAllUserData
 {
@@ -440,25 +515,60 @@
 }
 - (void)retrieveUserData
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docDir = [paths objectAtIndex: 0];
-    NSString *postFile = [docDir stringByAppendingPathComponent: USER_POST_IDS_FILE];
-    NSString *commentFile = [docDir stringByAppendingPathComponent: USER_COMMENT_IDS_FILE];
-    NSString *voteFile = [docDir stringByAppendingPathComponent: USER_VOTES_FILE];
+    NSArray *paths      = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir    = [paths objectAtIndex: 0];
+    
+    NSString *postFile              = [docDir stringByAppendingPathComponent:USER_POST_IDS_FILE];
+    NSString *commentFile           = [docDir stringByAppendingPathComponent:USER_COMMENT_IDS_FILE];
+    NSString *postUpvoteFile        = [docDir stringByAppendingPathComponent:USER_UPVOTE_POST_IDS_FILE];
+    NSString *postDownvoteFile      = [docDir stringByAppendingPathComponent:USER_DOWNVOTE_POST_IDS_FILE];
+    NSString *commentUpvoteFile     = [docDir stringByAppendingPathComponent:USER_UPVOTE_COMMENT_IDS_FILE];
+    NSString *commentDownvoteFile   = [docDir stringByAppendingPathComponent:USER_DOWNVOTE_COMMENT_IDS_FILE];
     
     // Retrieve Posts
     NSString *postsString = [NSString stringWithContentsOfFile:postFile encoding:NSUTF8StringEncoding error:nil];
-    NSArray *postIds = [postsString componentsSeparatedByString: @"\n"];
+    NSArray *postIds = [postsString componentsSeparatedByString:@"\n"];
     [self fetchUserPostsWithIdArray:postIds];
     
     // Retrieve Comments
     NSString *commentsString = [NSString stringWithContentsOfFile:commentFile encoding:NSUTF8StringEncoding error:nil];
-    NSArray *commentIds = [commentsString componentsSeparatedByString: @"\n"];
+    NSArray *commentIds = [commentsString componentsSeparatedByString:@"\n"];
     [self fetchUserCommentsWithIdArray:commentIds];
     
     // Retrieve Votes
-    NSData *voteData = [NSData dataWithContentsOfFile:voteFile];
-    [self parseData:voteData asClass:[Vote class] intoList:self.userVotes];
+    NSString *postUpvotesString      = [NSString stringWithContentsOfFile:postUpvoteFile encoding:NSUTF8StringEncoding error:nil];
+    NSString *postDownvotesString    = [NSString stringWithContentsOfFile:postDownvoteFile encoding:NSUTF8StringEncoding error:nil];
+    NSString *commentUpvotesString   = [NSString stringWithContentsOfFile:commentUpvoteFile encoding:NSUTF8StringEncoding error:nil];
+    NSString *commentDownvotesString = [NSString stringWithContentsOfFile:commentDownvoteFile encoding:NSUTF8StringEncoding error:nil];
+
+    NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+    NSArray *postUpvoteIds = [postUpvotesString componentsSeparatedByString:@"\n"];
+    for (NSString *stringID in postUpvoteIds)
+    {
+        if (![stringID isEqual: @""])
+            [self.userPostUpvotes addObject:[f numberFromString:stringID]];
+    }
+    
+    NSArray *postDownvoteIds = [postDownvotesString componentsSeparatedByString:@"\n"];
+    for (NSString *stringID in postDownvoteIds)
+    {
+        if (![stringID isEqual: @""])
+            [self.userPostDownvotes addObject:[f numberFromString:stringID]];
+    }
+    
+    NSArray *commentUpvoteIds = [commentUpvotesString componentsSeparatedByString:@"\n"];
+    for (NSString *stringID in commentUpvoteIds)
+    {
+        if (![stringID isEqual: @""])
+            [self.userCommentUpvotes addObject:[f numberFromString:stringID]];
+    }
+    
+    NSArray *commentDownvoteIds = [commentDownvotesString componentsSeparatedByString:@"\n"];
+    for (NSString *stringID in commentDownvoteIds)
+    {
+        if (![stringID isEqual: @""])
+            [self.userCommentDownvotes addObject:[f numberFromString:stringID]];
+    }
 }
 - (long)getUserPostScore
 {
@@ -504,8 +614,48 @@
         {
             // Individual JSON object
             NSDictionary *jsonObject = (NSDictionary *) [jsonArray objectAtIndex:i];
-            NSObject *object = [[class alloc] initFromJSON:jsonObject];
-            if (![array containsObject:object])
+            NSObject *object;
+            
+            if ([Post class] == class)
+            {
+                Post *post = [[Post alloc] initFromJSON:jsonObject];
+                NSNumber *postID = [NSNumber numberWithLong:[post getID]];
+                long collegeID = [post getCollegeID];
+                College *college = [self getCollegeById:collegeID];
+                [post setCollegeName:college.name];
+
+                if ([self.userPostUpvotes containsObject:postID])
+                {
+                    [post setVote:[[Vote alloc] initWithVotableID:postID.longValue withUpvoteValue:YES asVotableType:POST]];
+                }
+                else if ([self.userPostDownvotes containsObject:postID])
+                {
+                    [post setVote:[[Vote alloc] initWithVotableID:postID.longValue withUpvoteValue:NO asVotableType:POST]];
+                }
+                object = post;
+            }
+            else if ([Comment class] == class)
+            {
+                Comment *comment = [[Comment alloc] initFromJSON:jsonObject];
+                NSNumber *commentID = [NSNumber numberWithLong:[comment getID]];
+                if ([self.userCommentUpvotes containsObject:commentID])
+                {
+                    [comment setVote:[[Vote alloc] initWithVotableID:commentID.longValue withUpvoteValue:YES asVotableType:COMMENT]];
+                }
+                else if ([self.userCommentDownvotes containsObject:commentID])
+                {
+                    [comment setVote:[[Vote alloc] initWithVotableID:commentID.longValue withUpvoteValue:NO asVotableType:COMMENT]];
+                }
+                object = comment;
+                
+            }
+            else
+            {   // college or tag
+                object = [[class alloc] initFromJSON:jsonObject];
+            }
+            
+            
+            if (object != nil && ![array containsObject:object])
             {
                 [array addObject:object];
             }

@@ -15,6 +15,7 @@
 #import "TTTAttributedLabel.h"
 #import "Shared.h"
 #import "ToastController.h"
+#import "Vote.h"
 
 @implementation CommentViewController
 
@@ -26,7 +27,7 @@
     if (self)
     {
         [self setDataController:controller];
-        self.toastController = [[ToastController alloc] initWithViewController:self];
+        self.toastController = [[ToastController alloc] init];
     }
     return self;
 }
@@ -47,7 +48,6 @@
         
          [self.postTableView reloadData];
         [self.commentTableView reloadData];
-//        [self.tableView reloadData];
         
         College *college = [self.dataController getCollegeById:self.originalPost.collegeID];
         if ([self.dataController.nearbyColleges containsObject:college])
@@ -74,7 +74,6 @@
     
     [self.postTableView reloadData];
     [self.commentTableView reloadData];
-    //        [self.tableView reloadData];
 }
 - (void)loadView
 {   // called when the comment view is initially loaded
@@ -136,11 +135,8 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    #define LABEL_WIDTH 252.0f
-    #define TOP_TO_LABEL 7.0f
-    #define LABEL_TO_BOTTOM 59.0f
-    #define MIN_LABEL_HEIGHT 53.0f
     NSString *text = @"";
+    float offset = 0; // to omit extra height of college label
     
     if (tableView == self.postTableView)
     {
@@ -149,13 +145,15 @@
     else if (tableView == self.commentTableView)
     {
         text = [(Comment *)[self.list objectAtIndex:[indexPath row]] getMessage];
+        offset = -20;
     }
     
-    CGSize constraint = CGSizeMake(LABEL_WIDTH, 20000.0f);
+    CGSize constraint = CGSizeMake(LARGE_CELL_LABEL_WIDTH, 20000.0f);
     CGSize size = [text sizeWithFont:CF_FONT_LIGHT(16) constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-    CGFloat height = MAX(size.height, MIN_LABEL_HEIGHT);
-    float fullHeight = height + TOP_TO_LABEL + LABEL_TO_BOTTOM;
-    return fullHeight;
+    CGFloat height = MAX(size.height, LARGE_CELL_MIN_LABEL_HEIGHT);
+    float fullHeight = height + LARGE_CELL_TOP_TO_LABEL + LARGE_CELL_LABEL_TO_BOTTOM;
+    
+    return fullHeight + offset;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {   // return the header title for the 'Comments' section
@@ -246,6 +244,7 @@
 }
 - (void)castVote:(Vote *)vote
 {
+    [vote setGrandparentID:self.originalPost.postID];
     [super castVote:vote];
 }
 

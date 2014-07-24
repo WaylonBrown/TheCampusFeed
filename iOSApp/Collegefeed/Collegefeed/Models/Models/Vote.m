@@ -31,13 +31,13 @@
     if (self)
     {
         NSString *voteID    = (NSString*)[jsonObject valueForKey:@"id"];
-        NSString *upvote    = (NSString*)[jsonObject valueForKey:@"upvote"];
+        NSString *upvote    = [jsonObject valueForKey:@"upvote"];
         NSString *parentID  = (NSString*)[jsonObject valueForKey:@"votable_id"];
         NSString *type      = (NSString*)[jsonObject valueForKey:@"votable_type"];
         
         [self setVoteID:[voteID integerValue]];
         [self setParentID:[parentID integerValue]];
-        [self setUpvote:(upvote ? YES : NO)];
+        [self setUpvote:([upvote isEqual:@(YES)] ? YES : NO)];
         [self setCollegeId:-1];
 
         if ([type isEqualToString:@"Post"])
@@ -46,6 +46,7 @@
         }
         else if ([type isEqualToString:@"Comment"])
         {
+            
             [self setVotableType:COMMENT];
         }
 
