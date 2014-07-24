@@ -270,9 +270,11 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		}
 
 		int rawY = mScrollY;
+        Log.i("cfeed","QUICKRETURN rawY: " + rawY + " mScrollY " + mScrollY);
 
 		switch (mState) {
 		case STATE_OFFSCREEN:
+            Log.i("cfeed","QUICKRETURN state_offscreen");
 			if (rawY >= mMinRawY) {
 				mMinRawY = rawY;
 			} else {
@@ -282,6 +284,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 			break;
 
 		case STATE_ONSCREEN:
+            Log.i("cfeed","QUICKRETURN onscreen");
 			if (rawY > mQuickReturnHeight) {
 				mState = STATE_OFFSCREEN;
 				mMinRawY = rawY;
@@ -290,7 +293,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 			break;
 
 		case STATE_RETURNING:
-
+            Log.i("cfeed","QUICKRETURN returning with rawY " + rawY + " mMinRawY " + mMinRawY + " mQuickReturnHeight " + mQuickReturnHeight);
 			translationY = (rawY - mMinRawY) + mQuickReturnHeight;
 
 			if (translationY < 0) {
@@ -309,6 +312,8 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 			}
 			break;
 		}
+
+        Log.i("cfeed","QUICKRETURN translationY is " + translationY);
 
 		/** this can be used if the build is below honeycomb **/
 		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
@@ -372,15 +377,19 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		return null;
 	}
 
+    public static void addToList(List<Post> newList){
+        for(Post p : newList){
+            listAdapter.add(p);
+        }
+    }
+
 	public static void updateList() 
 	{	
 		if(listAdapter != null)
 		{
 			Log.i("cfeed","TEST new post size: " + postList.size());
 			listAdapter.setCollegeFeedID(currentFeedID);
-			listAdapter.clear();
-			listAdapter.addAll(postList);
-			Log.i("cfeed","TEST last post size: " + listAdapter.getCount());
+
 			listAdapter.notifyDataSetChanged();
 		}
 	}

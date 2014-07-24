@@ -156,7 +156,7 @@ public class NetWorker {
                  TopPostFragment.endOfListReached = true;
                  TopPostFragment.postList = new ArrayList<Post>();
                  */
-                 TopPostFragment.updateList();
+                 TopPostFragment.addToList(result);
                  TopPostFragment.makeLoadingIndicator(false);
                  TopPostFragment.setupFooterListView();
                  TopPostFragment.currentPageNumber++;

@@ -18,6 +18,7 @@ package com.appuccino.collegefeed.extra;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -53,8 +54,10 @@ public class QuickReturnListView extends ListView {
 					MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
 					MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
 			mItemOffsetY[i] = mHeight;
+            Log.i("cfeed","offset: " + mHeight);
 			mHeight += view.getMeasuredHeight() + dividerHeight;
 		}
+        Log.i("cfeed","offset computed");
 		scrollIsComputed = true;
 	}
 

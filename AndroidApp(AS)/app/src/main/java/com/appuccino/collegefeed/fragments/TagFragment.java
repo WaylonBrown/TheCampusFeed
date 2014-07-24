@@ -117,10 +117,6 @@ public class TagFragment extends Fragment
 			}
 	    });
 	    
-	    //when implementing NetWorking with the list, make sure to call this from that, 
-	    //not from here
-	    setupFooterListView();
-	    
 		return rootView;
 	}
 
