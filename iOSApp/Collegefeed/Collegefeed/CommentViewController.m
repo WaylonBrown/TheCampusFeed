@@ -27,7 +27,7 @@
     if (self)
     {
         [self setDataController:controller];
-        self.toastController = [[ToastController alloc] initWithViewController:self];
+        self.toastController = [[ToastController alloc] init];
     }
     return self;
 }

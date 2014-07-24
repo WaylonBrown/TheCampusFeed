@@ -7,35 +7,28 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class MasterViewController;
-@class CreatePostCommentViewController;
-
-typedef NS_ENUM(NSInteger, ToastViewType)
-{
-    MASTER,
-    CREATE
-};
-
+#import <CoreLocation/CoreLocation.h>
 
 @interface ToastController : NSObject
 
-@property (strong, nonatomic) MasterViewController *masterView;
-@property (strong, nonatomic) CreatePostCommentViewController *createView;
 @property (strong, nonatomic) NSMutableArray *toastQueue;
-@property (nonatomic) ToastViewType toastViewType;
+@property (nonatomic, strong) NSCondition *condition;
+@property (nonatomic) BOOL showingNotification;
 
-- (id)initWithViewController:(UIViewController *)viewController;
+- (id)init;
+
+- (void)dequeueToast;
+- (void)toastHidden;
 
 // Validation Error
 - (void)toastInvalidDownvote;
 - (void)toastCommentTooShortWithLength:(int)minLength;
 - (void)toastPostTooShortWithLength:(int)minLength;
-- (void)toastTagSearchTooShortWithLength:(int)minLength; // ****
-- (void)toastTagNeedsHash; // ****
+- (void)toastTagSearchTooShortWithLength:(int)minLength;
+- (void)toastTagNeedsHash;
 
 // Network Error
-- (void)toastNoInternetConnection; // ****
+- (void)toastNoInternetConnection;
 - (void)toastPostFailed;
 - (void)toastFlagFailed;
 - (void)toastFlagSuccess;
@@ -49,7 +42,4 @@ typedef NS_ENUM(NSInteger, ToastViewType)
 - (void)toastLocationFoundNotNearCollege;
 - (void)toastNearbyColleges:(NSArray *)colleges;
 
-
-// **** = Need to place toast
-//   11/16 placed
 @end

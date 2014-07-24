@@ -7,32 +7,15 @@
 //
 
 #import "ToastController.h"
-#import "MasterViewController.h"
-#import "CreatePostCommentViewController.h"
 #import "UIView+Toast.h"
-
 #import "College.h"
 
 @implementation ToastController
 
-- (id)initWithViewController:(UIViewController *)viewController
+- (id)init
 {
-    if ([viewController isKindOfClass:[MasterViewController class]])
-    {
-        [self setMasterView:(MasterViewController *)viewController];
-        [self setToastViewType:MASTER];
-    }
-    else if ([viewController class] == [CreatePostCommentViewController class])
-    {
-        [self setToastViewType:CREATE];
-        [self setCreateView:(CreatePostCommentViewController *)viewController];
-    }
-    else
-    {
-        NSException *e = [NSException exceptionWithName:@"InvalidViewController" reason:@"An invalid subclass of UIViewController was passed to ToastController's initialization" userInfo:nil];
-        [e raise];
-        return nil;
-    }
+    self.showingNotification = NO;
+    self.condition = [[NSCondition alloc] init];
 
     self.toastQueue = [NSMutableArray new];
     if (![CLLocationManager locationServicesEnabled])
@@ -40,12 +23,18 @@
         [self toastNoLocationServices];
     }
     
-    [NSTimer scheduledTimerWithTimeInterval:2.0
-                                     target:self
-                                   selector:@selector(dequeueToast)
-                                   userInfo:nil
-                                    repeats:YES];
     return self;
+}
+
+- (void)addToQueue:(NSString *)message
+{
+    [self.toastQueue addObject:message];
+    [self dequeueToast];
+}
+- (void)toastHidden
+{
+    self.showingNotification = NO;
+    [self dequeueToast];
 }
 
 #pragma mark - Public Functions
@@ -53,62 +42,62 @@
 - (void)toastInvalidDownvote
 {
     NSString *message = @"You need to be near the college to downvote";
-    [self.toastQueue addObject:message];
+    [self addToQueue:message];
 }
 - (void)toastCommentTooShortWithLength:(int)minLength
 {
     NSString *message = [NSString stringWithFormat:@"Comment must be at least %d characters long.", minLength];
-    [self.toastQueue addObject:message];
+    [self addToQueue:message];
 }
 - (void)toastPostTooShortWithLength:(int)minLength
 {
     NSString *message = [NSString stringWithFormat:@"Post must be at least %d characters long.", minLength];
-    [self.toastQueue addObject:message];
+    [self addToQueue:message];
 }
 - (void)toastNoInternetConnection
 {
     NSString *message = @"You have no internet connection. Pull down to refresh and try again.";
-    [self.toastQueue addObject:message];
+    [self addToQueue:message];
 }
 - (void)toastTagSearchTooShortWithLength:(int)minLength
 {
     NSString *message = [NSString stringWithFormat:@"Must be at least %d characters long.", minLength];
-    [self.toastQueue addObject:message];
+    [self addToQueue:message];
 }
 - (void)toastTagNeedsHash
 {
     NSString *message = @"Must start with #";
-    [self.toastQueue addObject:message];
+    [self addToQueue:message];
 }
 - (void)toastPostFailed
 {
     NSString *message = @"Failed to post, please try again later.";
-    [self.toastQueue addObject:message];
+    [self addToQueue:message];
 }
 - (void)toastFlagFailed
 {
     NSString *message = @"Failed to flag post, please try again later.";
-    [self.toastQueue addObject:message];
+    [self addToQueue:message];
 }
 - (void)toastFlagSuccess
 {
     NSString *message = @"Post has been flagged, thank you :)";
-    [self.toastQueue addObject:message];
+    [self addToQueue:message];
 }
 - (void)toastErrorFetchingCollegeList
 {
     NSString *message = @"Error fetching college list.";
-    [self.toastQueue addObject:message];
+    [self addToQueue:message];
 }
 - (void)toastFeedSwitchedToNearbyCollege:(NSString *)collegeName
 {
     NSString *message = [NSString stringWithFormat:@"Since you are near %@, you can upvote, downvote, post, and comment", collegeName];
-    [self.toastQueue addObject:message];
+    [self addToQueue:message];
 }
 - (void)toastFeedSwitchedToDistantCollege:(NSString *)collegeName
 {
     NSString *message = [NSString stringWithFormat:@"Since you aren't near %@, you can only upvote", collegeName];
-    [self.toastQueue addObject:message];
+    [self addToQueue:message];
 }
 - (void)toastNoLocationServices
 {
@@ -120,12 +109,12 @@
 - (void)toastLocationNotFoundOnTimeout
 {
     NSString *message = @"Couldn't find location. You can upvote, but nothing else.";
-    [self.toastQueue addObject:message];
+    [self addToQueue:message];
 }
 - (void)toastLocationFoundNotNearCollege
 {
     NSString *message = @"You aren't near a college, you can upvote but nothing else.";
-    [self.toastQueue addObject:message];
+    [self addToQueue:message];
 }
 - (void)toastNearbyColleges:(NSArray *)colleges
 {
@@ -143,46 +132,27 @@
             collegeMessage = [NSString stringWithFormat:@"%@ and %@", collegeMessage, college.name];
         }
     }
-    [self.toastQueue addObject:collegeMessage];
+    [self addToQueue:collegeMessage];
     
     NSString *infoMessage = @"You can upvote, downvote, post, and comment on that college's posts";
-    [self.toastQueue addObject:infoMessage];
+    [self addToQueue:infoMessage];
 }
 
 #pragma mark - Private Helpers
 
 - (void)dequeueToast
 {
-    if (self.toastQueue.count > 0)
+    if (self.toastQueue.count > 0 && !self.showingNotification)
     {
         NSString *message = [self.toastQueue objectAtIndex:0];
     
         [self.toastQueue removeObjectAtIndex:0];
-        switch (self.toastViewType)
-        {
-            case MASTER:
-                [self showToast:message inView:self.masterView];
-                break;
-            case CREATE:
-                [self.createView.view makeToast:message
-                                       duration:2.0
-                                       position:@"top"];
-
-                break;
-            default: break;
-        }
-
+        
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObject:message forKey:@"message"];
+        NSNotification *notification = [[NSNotification alloc] initWithName:@"Toast" object:self userInfo:dictionary];
+        self.showingNotification = YES;
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
     }
-}
-- (void)showToast:(NSString *)message inView:(MasterViewController *)sender
-{
-    float x = sender.feedToolbar.frame.size.width / 2;
-    float y = sender.feedToolbar.frame.origin.y - 45;
-    CGPoint point = CGPointMake(x, y);
-    
-    [sender.view makeToast:message
-                  duration:2.0
-                  position:[NSValue valueWithCGPoint:point]];
 }
 
 

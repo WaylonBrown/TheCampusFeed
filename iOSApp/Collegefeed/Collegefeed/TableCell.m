@@ -96,7 +96,6 @@
 {   // User clicked upvote button
     
     BOOL undoingUpvote = [self.object getVote] != nil && [self.object getVote].upvote == true;
-//    BOOL switchingToUpvote = [self.object getVote] != nil && [self.object getVote].upvote == false;
     
     BOOL newUpvoteValue = !undoingUpvote;
     
