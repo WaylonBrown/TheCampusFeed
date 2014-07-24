@@ -88,52 +88,61 @@
     [self updateVoteButtons];
     
     [self.gpsIconImageView setHidden:(!self.userIsNearCollege)];
-    
 }
 
 #pragma mark - Actions
 
 - (IBAction)upVotePressed:(id)sender
 {   // User clicked upvote button
-    if ([self.object getVote] != nil
-        && [self.object getVote].upvote == true)
+    
+    BOOL undoingUpvote = [self.object getVote] != nil && [self.object getVote].upvote == true;
+//    BOOL switchingToUpvote = [self.object getVote] != nil && [self.object getVote].upvote == false;
+    
+    BOOL newUpvoteValue = !undoingUpvote;
+    
+    Vote *vote = [[Vote alloc] initWithVotableID:[self.object getID]
+                                 withUpvoteValue:newUpvoteValue
+                                   asVotableType:[self.object getType]];
+    
+    if (undoingUpvote)
     {
         [self.object setVote:nil];
         [self.object decrementScore];
-        [self updateVoteButtons];
-        return;
     }
-    Vote *vote = [[Vote alloc] initWithVotableID:[self.object getID]
-                                 withUpvoteValue:YES
-                                   asVotableType:[self.object getType]];
-
-    [vote setCollegeId:[self.object getCollegeID]];
-    [self.object incrementScore];
-    [self.object setVote:vote];
-    [self updateVoteButtons];
+    else
+    {
+        [vote setCollegeId:[self.object getCollegeID]];
+        [self.object incrementScore];
+        [self.object setVote:vote];
+    }
     
+    [self updateVoteButtons];
     id<ChildCellDelegate> strongDelegate = self.delegate;
     [strongDelegate castVote:vote];
 }
 - (IBAction)downVotePresed:(id)sender
 {   // User clicked downvote button
-    if ([self.object getVote] != nil
-        && [self.object getVote].upvote == false)
+    
+    BOOL undoingDownvote = [self.object getVote] != nil && [self.object getVote].upvote == false;
+    BOOL newUpvoteValue = undoingDownvote;
+    
+    Vote *vote = [[Vote alloc] initWithVotableID:[self.object getID]
+                                 withUpvoteValue:newUpvoteValue
+                                   asVotableType:[self.object getType]];
+    
+    if (undoingDownvote)
     {
         [self.object setVote:nil];
         [self.object incrementScore];
-        [self updateVoteButtons];
-        return;
     }
-    Vote *vote = [[Vote alloc] initWithVotableID:[self.object getID]
-                                 withUpvoteValue:NO
-                                   asVotableType:[self.object getType]];
+    else
+    {
+        [vote setCollegeId:[self.object getCollegeID]];
+        [self.object decrementScore];
+        [self.object setVote:vote];
+    }
     
-    [vote setCollegeId:[self.object getCollegeID]];
-    [self.object decrementScore];
-    [self.object setVote:vote];
     [self updateVoteButtons];
-    
     id<ChildCellDelegate> strongDelegate = self.delegate;
     [strongDelegate castVote:vote];
 }

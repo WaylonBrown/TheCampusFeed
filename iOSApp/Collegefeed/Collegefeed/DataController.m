@@ -266,38 +266,42 @@
             Vote *networkVote = [[Vote alloc] initFromJSON:jsonObject];
             NSNumber *voteID = [NSNumber numberWithLong:networkVote.parentID];
             
+            
+            // When a vote is cast, add it to the appropriate user's vote list, UNLESS
+            // it already exists in the opposite vote list; in which case it gets removed from that one
             if (networkVote.votableType == POST)
             {
                 if (networkVote.upvote == true)
                 {
-                    if (![self.userPostUpvotes containsObject:voteID])
-                        [self.userPostUpvotes addObject:voteID];
                     if ([self.userPostDownvotes containsObject:voteID])
                         [self.userPostDownvotes removeObject:voteID];
+                    else if (![self.userPostUpvotes containsObject:voteID])
+                        [self.userPostUpvotes addObject:voteID];
                 }
                 else
                 {
-                    if (![self.userPostDownvotes containsObject:voteID])
-                        [self.userPostDownvotes addObject:voteID];
                     if ([self.userPostUpvotes containsObject:voteID])
                         [self.userPostUpvotes removeObject:voteID];
+                    else if (![self.userPostDownvotes containsObject:voteID])
+                        [self.userPostDownvotes addObject:voteID];
+                    
                 }
             }
             else if (networkVote.votableType == COMMENT)
             {
                 if (networkVote.upvote == true)
                 {
-                    if (![self.userCommentUpvotes containsObject:voteID])
-                        [self.userCommentUpvotes addObject:voteID];
                     if ([self.userCommentDownvotes containsObject:voteID])
                         [self.userCommentDownvotes removeObject:voteID];
+                    else if (![self.userCommentUpvotes containsObject:voteID])
+                        [self.userCommentUpvotes addObject:voteID];
                 }
                 else
                 {
-                    if (![self.userCommentDownvotes containsObject:voteID])
-                        [self.userCommentDownvotes addObject:voteID];
                     if ([self.userCommentUpvotes containsObject:voteID])
                         [self.userCommentUpvotes removeObject:voteID];
+                    else if (![self.userCommentDownvotes containsObject:voteID])
+                        [self.userCommentDownvotes addObject:voteID];
                 }
             }
         }
@@ -445,7 +449,7 @@
 }
 - (void)saveUserUpVotes
 {
-    if (self.userPostUpvotes.count > 0)
+//    if (self.userPostUpvotes.count > 0)
     {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docDir = [paths objectAtIndex: 0];
@@ -460,7 +464,7 @@
         NSData *postData = [postIdsString dataUsingEncoding:NSUTF8StringEncoding];
         [postData writeToFile:postFile atomically:NO];
     }
-    if (self.userCommentUpvotes.count > 0)
+//    if (self.userCommentUpvotes.count > 0)
     {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docDir = [paths objectAtIndex: 0];
@@ -478,7 +482,7 @@
 }
 - (void)saveUserDownVotes
 {
-    if (self.userPostDownvotes.count > 0)
+//    if (self.userPostDownvotes.count > 0)
     {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docDir = [paths objectAtIndex: 0];
@@ -493,7 +497,7 @@
         NSData *postData = [postIdsString dataUsingEncoding:NSUTF8StringEncoding];
         [postData writeToFile:postFile atomically:NO];
     }
-    if (self.userCommentDownvotes.count > 0)
+//    if (self.userCommentDownvotes.count > 0)
     {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docDir = [paths objectAtIndex: 0];
