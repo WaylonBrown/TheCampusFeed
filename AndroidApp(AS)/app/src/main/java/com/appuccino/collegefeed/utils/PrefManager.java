@@ -23,6 +23,9 @@ public class PrefManager {
     public static final String MY_COMMENTS_LIST = "my_comments_list";
 	public static final String LAST_FEED = "last_feed";
     public static final String LAST_COLLEGE_UPDATE = "last_college_update";
+    public static final String APP_RUN_COUNT = "app_run_count";
+    public static final String FIRST_DIALOG_DISPLAYED = "first_displayed";
+    public static final String SECOND_DIALOG_DISPLAYED = "second_displayed";
 	
 	public static void setup(Context c) 
 	{

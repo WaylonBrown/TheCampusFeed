@@ -41,6 +41,7 @@ import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.utils.PopupManager;
 import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.JSONParser;
 import com.appuccino.collegefeed.utils.ListComparator;
@@ -101,7 +102,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         lastCollegeListUpdate = PrefManager.getLastCollegeListUpdate();
         getNewCollegeListIfNeeded();
 		getLocation();
-		Log.i("cfeed","APPSETUP: onCreate");		
+        PopupManager.run();
+		Log.i("cfeed", "APPSETUP: onCreate");
 	}
 	
 	//this is called when orientation changes
