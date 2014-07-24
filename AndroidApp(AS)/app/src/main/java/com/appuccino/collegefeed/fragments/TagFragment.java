@@ -123,6 +123,7 @@ public class TagFragment extends Fragment
     public void onResume(){
         super.onResume();
         setupFooterListView();
+        makeLoadingIndicator(false);
     }
 
 	private void setupBottomViewUI() {
