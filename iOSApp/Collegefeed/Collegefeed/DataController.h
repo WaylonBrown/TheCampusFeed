@@ -24,6 +24,12 @@
 #define USER_COMMENT_IDS_FILE       @"UserCommentIds.txt"
 #define USER_VOTES_FILE             @"UserVotes.txt"
 
+#define USER_UPVOTE_POST_IDS_FILE       @"UserPostUpvoteIds.txt"
+#define USER_UPVOTE_COMMENT_IDS_FILE    @"UserCommentUpvoteIds.txt"
+#define USER_DOWNVOTE_POST_IDS_FILE     @"UserPostDownvoteIds.txt"
+#define USER_DOWNVOTE_COMMENT_IDS_FILE  @"UserCommentDownvoteIds.txt"
+
+
 #pragma mark - Protocol Definitions
 /********************************/
 /***** PROTOCOL DEFINITIONS *****/
@@ -70,6 +76,10 @@
 
 // Vote Arrays
 @property (nonatomic, strong) NSMutableArray *userVotes;
+@property (nonatomic, strong) NSMutableArray *userPostUpvotes;
+@property (nonatomic, strong) NSMutableArray *userPostDownvotes;
+@property (nonatomic, strong) NSMutableArray *userCommentUpvotes;
+@property (nonatomic, strong) NSMutableArray *userCommentDownvotes;
 
 // Location Information
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -111,6 +121,8 @@
 - (void)saveUserPosts;
 - (void)saveUserComments;
 - (void)saveUserVotes;
+- (void)saveUserUpVotes;
+- (void)saveUserDownVotes;
 - (void)saveAllUserData;
 - (void)retrieveUserData;
 - (long)getUserPostScore;

@@ -294,11 +294,11 @@
                    API_URL, API_VERSION, postId]];
     return [self POST:data toUrl:url];
 }
-+ (NSData *)POSTVoteData:(NSData *)data WithCommentId:(long)commentId
++ (NSData *)POSTVoteData:(NSData *)data WithCommentId:(long)commentId WithPostId:(long)postId
 {
     NSURL *url = [[NSURL alloc] initWithString:
-                  [NSString stringWithFormat:@"%@/%@/comment/%ld/votes",
-                   API_URL, API_VERSION, commentId]];
+                  [NSString stringWithFormat:@"%@/%@/posts/%ld/comments/%ld/votes",
+                   API_URL, API_VERSION, postId, commentId]];
     return [self POST:data toUrl:url];
 }
 + (NSData *)GETVoteScoreWithPostId:(long)postId

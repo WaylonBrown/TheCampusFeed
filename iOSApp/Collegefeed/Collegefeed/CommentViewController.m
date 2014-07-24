@@ -15,6 +15,7 @@
 #import "TTTAttributedLabel.h"
 #import "Shared.h"
 #import "ToastController.h"
+#import "Vote.h"
 
 @implementation CommentViewController
 
@@ -246,6 +247,7 @@
 }
 - (void)castVote:(Vote *)vote
 {
+    [vote setGrandparentID:self.originalPost.postID];
     [super castVote:vote];
 }
 

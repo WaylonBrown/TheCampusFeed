@@ -33,6 +33,10 @@
         self.userPosts              = [[NSMutableArray alloc] init];
         self.userComments           = [[NSMutableArray alloc] init];
         self.userVotes              = [[NSMutableArray alloc] init];
+        self.userPostUpvotes        = [[NSMutableArray alloc] init];
+        self.userPostDownvotes      = [[NSMutableArray alloc] init];
+        self.userCommentUpvotes     = [[NSMutableArray alloc] init];
+        self.userCommentDownvotes   = [[NSMutableArray alloc] init];
         
         [self setTopPostsPage:0];
         [self setRecentPostsPage:0];
@@ -246,7 +250,8 @@
         if (vote.votableType == COMMENT)
         {
             result = [Networker POSTVoteData:[vote toJSON]
-                               WithCommentId:vote.parentID];
+                               WithCommentId:vote.parentID
+                                  WithPostId:vote.grandparentID];
         }
         else if (vote.votableType == POST)
         {
@@ -259,7 +264,29 @@
                                                                        options:0
                                                                          error:nil];
             Vote *networkVote = [[Vote alloc] initFromJSON:jsonObject];
-            [self.userVotes addObject:networkVote];
+            
+            if (networkVote.votableType == POST)
+            {
+                if (networkVote.upvote == true)
+                {
+                    [self.userPostUpvotes addObject:networkVote];
+                }
+                else
+                {
+                    [self.userPostDownvotes addObject:networkVote];
+                }
+            }
+            else if (networkVote.votableType == COMMENT)
+            {
+                if (networkVote.upvote == true)
+                {
+                    [self.userCommentUpvotes addObject:networkVote];
+                }
+                else
+                {
+                    [self.userCommentDownvotes addObject:networkVote];
+                }
+            }
         }
         [self saveUserVotes];
         return YES;
@@ -403,34 +430,107 @@
         [commentData writeToFile:commentFile atomically:NO];
     }
 }
-- (void)saveUserVotes
+- (void)saveUserUpVotes
 {
-    if (self.userVotes.count > 0)
+    if (self.userPostUpvotes.count > 0)
     {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docDir = [paths objectAtIndex: 0];
-        NSString *voteFile = [docDir stringByAppendingPathComponent: USER_VOTES_FILE];
+        NSString *postFile = [docDir stringByAppendingPathComponent: USER_UPVOTE_POST_IDS_FILE];
         
-        // Save full Votes
-        NSString *votesString = @"[";
-        int numVotes = self.userVotes.count;
-        for (int i = 0; i < numVotes; i++)
+        // Save Post Upvote Ids
+        NSString *postIdsString = @"";
+        for (Vote *vote in self.userPostUpvotes)
         {
-            Vote *vote = [self.userVotes objectAtIndex:i];
-            NSString *singleVoteString = [[NSString alloc] initWithData:[vote toJSON] encoding:NSUTF8StringEncoding];
-            
-            if (i == numVotes - 1)
-            {   // close bracket if last vote
-                votesString = [NSString stringWithFormat:@"%@%@]", votesString, singleVoteString];
-            }
-            else
-            {
-                votesString = [NSString stringWithFormat:@"%@%@,", votesString, singleVoteString];
-            }
+            long postId = vote.parentID;
+            postIdsString = [NSString stringWithFormat:@"%ld\n%@", postId, postIdsString];
         }
-        NSData *voteData = [votesString dataUsingEncoding:NSUTF8StringEncoding];
-        [voteData writeToFile:voteFile atomically:NO];
+        NSData *postData = [postIdsString dataUsingEncoding:NSUTF8StringEncoding];
+        [postData writeToFile:postFile atomically:NO];
     }
+    if (self.userCommentUpvotes.count > 0)
+    {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docDir = [paths objectAtIndex: 0];
+        NSString *commentFile = [docDir stringByAppendingPathComponent: USER_UPVOTE_COMMENT_IDS_FILE];
+        
+        // Save Comment Upvote Ids
+        NSString *commentIdsString = @"";
+        for (Vote *vote in self.userCommentUpvotes)
+        {
+            long commentId = vote.parentID;
+            commentIdsString = [NSString stringWithFormat:@"%ld\n%@", commentId, commentIdsString];
+        }
+        NSData *commentData = [commentIdsString dataUsingEncoding:NSUTF8StringEncoding];
+        [commentData writeToFile:commentFile atomically:NO];
+    }
+}
+- (void)saveUserDownVotes
+{
+    if (self.userPostDownvotes.count > 0)
+    {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docDir = [paths objectAtIndex: 0];
+        NSString *postFile = [docDir stringByAppendingPathComponent: USER_DOWNVOTE_POST_IDS_FILE];
+        
+        // Save Post Upvote Ids
+        NSString *postIdsString = @"";
+        for (Vote *vote in self.userPostDownvotes)
+        {
+            long postId = vote.parentID;
+            postIdsString = [NSString stringWithFormat:@"%ld\n%@", postId, postIdsString];
+        }
+        NSData *postData = [postIdsString dataUsingEncoding:NSUTF8StringEncoding];
+        [postData writeToFile:postFile atomically:NO];
+    }
+    if (self.userCommentDownvotes.count > 0)
+    {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docDir = [paths objectAtIndex: 0];
+        NSString *commentFile = [docDir stringByAppendingPathComponent: USER_DOWNVOTE_COMMENT_IDS_FILE];
+        
+        // Save Comment Upvote Ids
+        NSString *commentIdsString = @"";
+        for (Vote *vote in self.userCommentDownvotes)
+        {
+            long commentId = vote.parentID;
+            commentIdsString = [NSString stringWithFormat:@"%ld\n%@", commentId, commentIdsString];
+        }
+        NSData *commentData = [commentIdsString dataUsingEncoding:NSUTF8StringEncoding];
+        [commentData writeToFile:commentFile atomically:NO];
+    }
+}
+- (void)saveUserVotes
+{
+    [self saveUserUpVotes];
+    [self saveUserDownVotes];
+    
+//    if (self.userVotes.count > 0)
+//    {
+//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//        NSString *docDir = [paths objectAtIndex: 0];
+//        NSString *voteFile = [docDir stringByAppendingPathComponent: USER_VOTES_FILE];
+//        
+//        // Save full Votes
+//        NSString *votesString = @"[";
+//        int numVotes = self.userVotes.count;
+//        for (int i = 0; i < numVotes; i++)
+//        {
+//            Vote *vote = [self.userVotes objectAtIndex:i];
+//            NSString *singleVoteString = [[NSString alloc] initWithData:[vote toJSON] encoding:NSUTF8StringEncoding];
+//            
+//            if (i == numVotes - 1)
+//            {   // close bracket if last vote
+//                votesString = [NSString stringWithFormat:@"%@%@]", votesString, singleVoteString];
+//            }
+//            else
+//            {
+//                votesString = [NSString stringWithFormat:@"%@%@,", votesString, singleVoteString];
+//            }
+//        }
+//        NSData *voteData = [votesString dataUsingEncoding:NSUTF8StringEncoding];
+//        [voteData writeToFile:voteFile atomically:NO];
+//    }
 }
 - (void)saveAllUserData
 {
