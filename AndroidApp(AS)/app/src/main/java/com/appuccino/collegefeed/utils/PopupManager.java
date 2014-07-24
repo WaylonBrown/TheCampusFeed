@@ -6,9 +6,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 
 /**
@@ -25,7 +28,8 @@ public class PopupManager {
         boolean firstDialogPrevDisplayed = PrefManager.getBoolean(PrefManager.FIRST_DIALOG_DISPLAYED, false);
         boolean secondDialogPrevDisplayed = PrefManager.getBoolean(PrefManager.SECOND_DIALOG_DISPLAYED, false);
 
-        PrefManager.putInt(PrefManager.APP_RUN_COUNT, runCount + 1);
+        runCount++;
+        PrefManager.putInt(PrefManager.APP_RUN_COUNT, runCount);
 
         Log.i("cfeed", "App run count: " + runCount);
 
@@ -78,6 +82,28 @@ public class PopupManager {
 
     private static void displaySecondDialog() {
         Log.i("cfeed", "Displaying second dialog");
+        LayoutInflater inflater = ((MainActivity)context).getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.web_dialog_layout, null);
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context)
+                .setTitle("Don't forget TheCampusFeed is also on the web!")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        dialog.setView(dialogLayout);
+        AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
+
+        TextView titleText = (TextView) alertDialog.findViewById(context.getResources().getIdentifier("alertTitle", "id", "android"));
+        TextView messageText = (TextView)dialogLayout.findViewById(R.id.webDialogMessage);
+        Button yesButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+
+        titleText.setTypeface(FontManager.light);
+        messageText.setTypeface(FontManager.light);
+        yesButton.setTypeface(FontManager.light);
     }
 
     private static void goToTwitter(){

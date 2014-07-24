@@ -259,14 +259,14 @@ public class CommentsActivity extends Activity{
             facebookButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    initShareIntent("face");
+                    initShareIntent("com.facebook.katana");
                 }
             });
 
             twitterButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    initShareIntent("twi");
+                    initShareIntent("com.twitter.android");
                 }
             });
 
@@ -316,7 +316,9 @@ public class CommentsActivity extends Activity{
     private void initShareIntent(String type) {
         boolean found = false;
         Intent share = new Intent(android.content.Intent.ACTION_SEND);
-        share.setType("image/jpeg");
+        share.setAction(Intent.ACTION_SEND);
+        share.putExtra(Intent.EXTRA_TEXT, post.getWebURL());
+        share.setType("text/plain");
 
         // gets the list of intents that can be loaded.
         List<ResolveInfo> resInfo = getPackageManager().queryIntentActivities(share, 0);
@@ -324,9 +326,7 @@ public class CommentsActivity extends Activity{
             for (ResolveInfo info : resInfo) {
                 if (info.activityInfo.packageName.toLowerCase().contains(type) ||
                         info.activityInfo.name.toLowerCase().contains(type) ) {
-                    share.setAction(Intent.ACTION_SEND);
-                    share.putExtra(Intent.EXTRA_TEXT, post.getWebURL());
-                    share.setType("text/plain");
+                    Toast.makeText(this, "Package name: " + info.activityInfo.packageName + " Name: " + info.activityInfo.name, Toast.LENGTH_LONG).show();
                     share.setPackage(info.activityInfo.packageName);
                     found = true;
                     break;
@@ -334,9 +334,9 @@ public class CommentsActivity extends Activity{
             }
             if (!found){
                 String toastMessage = "";
-                if(type.equals("face")){
+                if(type.equals("com.facebook.katana")){
                     toastMessage = "You need to have the Facebook app installed to share on Facebook.";
-                } else if (type.equals("twi")) {
+                } else if (type.equals("com.twitter.android")) {
                     toastMessage = "You need to have the Twitter app installed to tweet this post.";
                 }
                 Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
