@@ -504,33 +504,6 @@
 {
     [self saveUserUpVotes];
     [self saveUserDownVotes];
-    
-//    if (self.userVotes.count > 0)
-//    {
-//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//        NSString *docDir = [paths objectAtIndex: 0];
-//        NSString *voteFile = [docDir stringByAppendingPathComponent: USER_VOTES_FILE];
-//        
-//        // Save full Votes
-//        NSString *votesString = @"[";
-//        int numVotes = self.userVotes.count;
-//        for (int i = 0; i < numVotes; i++)
-//        {
-//            Vote *vote = [self.userVotes objectAtIndex:i];
-//            NSString *singleVoteString = [[NSString alloc] initWithData:[vote toJSON] encoding:NSUTF8StringEncoding];
-//            
-//            if (i == numVotes - 1)
-//            {   // close bracket if last vote
-//                votesString = [NSString stringWithFormat:@"%@%@]", votesString, singleVoteString];
-//            }
-//            else
-//            {
-//                votesString = [NSString stringWithFormat:@"%@%@,", votesString, singleVoteString];
-//            }
-//        }
-//        NSData *voteData = [votesString dataUsingEncoding:NSUTF8StringEncoding];
-//        [voteData writeToFile:voteFile atomically:NO];
-//    }
 }
 - (void)saveAllUserData
 {
@@ -540,25 +513,36 @@
 }
 - (void)retrieveUserData
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docDir = [paths objectAtIndex: 0];
-    NSString *postFile = [docDir stringByAppendingPathComponent: USER_POST_IDS_FILE];
-    NSString *commentFile = [docDir stringByAppendingPathComponent: USER_COMMENT_IDS_FILE];
-    NSString *voteFile = [docDir stringByAppendingPathComponent: USER_VOTES_FILE];
+    NSArray *paths      = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir    = [paths objectAtIndex: 0];
+    
+    NSString *postFile              = [docDir stringByAppendingPathComponent:USER_POST_IDS_FILE];
+    NSString *commentFile           = [docDir stringByAppendingPathComponent:USER_COMMENT_IDS_FILE];
+    NSString *postUpvoteFile        = [docDir stringByAppendingPathComponent:USER_UPVOTE_POST_IDS_FILE];
+    NSString *postDownvoteFile      = [docDir stringByAppendingPathComponent:USER_DOWNVOTE_POST_IDS_FILE];
+    NSString *commentUpvoteFile     = [docDir stringByAppendingPathComponent:USER_UPVOTE_COMMENT_IDS_FILE];
+    NSString *commentDownvoteFile   = [docDir stringByAppendingPathComponent:USER_DOWNVOTE_COMMENT_IDS_FILE];
     
     // Retrieve Posts
     NSString *postsString = [NSString stringWithContentsOfFile:postFile encoding:NSUTF8StringEncoding error:nil];
-    NSArray *postIds = [postsString componentsSeparatedByString: @"\n"];
+    NSArray *postIds = [postsString componentsSeparatedByString:@"\n"];
     [self fetchUserPostsWithIdArray:postIds];
     
     // Retrieve Comments
     NSString *commentsString = [NSString stringWithContentsOfFile:commentFile encoding:NSUTF8StringEncoding error:nil];
-    NSArray *commentIds = [commentsString componentsSeparatedByString: @"\n"];
+    NSArray *commentIds = [commentsString componentsSeparatedByString:@"\n"];
     [self fetchUserCommentsWithIdArray:commentIds];
     
     // Retrieve Votes
-    NSData *voteData = [NSData dataWithContentsOfFile:voteFile];
-    [self parseData:voteData asClass:[Vote class] intoList:self.userVotes];
+    NSString *postUpvotesString      = [NSString stringWithContentsOfFile:postUpvoteFile encoding:NSUTF8StringEncoding error:nil];
+    NSString *postDownvotesString    = [NSString stringWithContentsOfFile:postDownvoteFile encoding:NSUTF8StringEncoding error:nil];
+    NSString *commentUpvotesString   = [NSString stringWithContentsOfFile:commentUpvoteFile encoding:NSUTF8StringEncoding error:nil];
+    NSString *commentDownvotesString = [NSString stringWithContentsOfFile:commentDownvoteFile encoding:NSUTF8StringEncoding error:nil];
+    
+    [self setUserPostUpvotes:       (NSMutableArray *)[postUpvotesString componentsSeparatedByString:@"\n"]];
+    [self setUserPostDownvotes:     (NSMutableArray *)[postDownvotesString componentsSeparatedByString:@"\n"]];
+    [self setUserCommentUpvotes:    (NSMutableArray *)[commentUpvotesString componentsSeparatedByString:@"\n"]];
+    [self setUserCommentDownvotes:  (NSMutableArray *)[commentDownvotesString componentsSeparatedByString:@"\n"]];
 }
 - (long)getUserPostScore
 {
