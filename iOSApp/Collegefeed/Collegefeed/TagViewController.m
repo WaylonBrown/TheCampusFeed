@@ -13,6 +13,7 @@
 #import "PostsViewController.h"
 #import "Shared.h"
 #import "SimpleTableCell.h"
+#import "ToastController.h"
 
 @implementation TagViewController
 
@@ -116,7 +117,6 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // TODO: This should not be hardcoded; revist
-    
     return 56;
 }
 
@@ -135,7 +135,7 @@
     }
     else
     {
-        // TODO: toast an error or some shit and let 'em try again
+        [self.toastController toastInvalidTagSearch];
     }
 }
 #pragma mark - Actions

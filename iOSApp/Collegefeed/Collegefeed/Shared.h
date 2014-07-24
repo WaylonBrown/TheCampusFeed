@@ -23,10 +23,15 @@
 #define CF_WHITE       0xFFFFFF
 
 // Cell height prediction values
-#define CELL_LABEL_WIDTH        252.0f
-#define CELL_TOP_TO_LABEL       7.0f
-#define CELL_LABEL_TO_BOTTOM    59.0f
-#define CELL_MIN_LABEL_HEIGHT   53.0f
+#define LARGE_CELL_LABEL_WIDTH        252.0f
+#define LARGE_CELL_TOP_TO_LABEL       7.0f
+#define LARGE_CELL_LABEL_TO_BOTTOM    59.0f
+#define LARGE_CELL_MIN_LABEL_HEIGHT   53.0f
+
+#define SMALL_CELL_LABEL_WIDTH        252.0f
+#define SMALL_CELL_TOP_TO_LABEL       7.0f
+#define SMALL_CELL_LABEL_TO_BOTTOM    59.0f
+#define SMALL_CELL_MIN_LABEL_HEIGHT   53.0f
 
 
 // Custom fonts

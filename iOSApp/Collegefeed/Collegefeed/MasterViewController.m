@@ -77,6 +77,7 @@
 {   // View is about to appear after being inactive
     [super viewWillAppear:animated];
     [self refresh];
+    
     // Show loading indicator until a nearby college is found,
     // then replace it with a create post button
      
@@ -97,7 +98,6 @@
     [self.navigationItem setRightBarButtonItem:button];
     
     [self.activityIndicator startAnimating];
-    [self refresh];
 }
 - (void)placeCreatePost
 {   // Place the create post button in the navigation bar (instead of loading indicator)
@@ -105,7 +105,6 @@
     UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
                                                                                   target:self action:@selector(create)];
     [self.navigationItem setRightBarButtonItem:createButton];
-    [self refresh];
 }
 - (void)foundLocation
 {   // Called when the user's location is determined. Allow them to create posts
@@ -117,7 +116,6 @@
     else
     {
         [self placeLoadingIndicator];
-//        [self.navigationItem setRightBarButtonItem:nil];
         [self.toastController toastLocationFoundNotNearCollege];
     }
 }

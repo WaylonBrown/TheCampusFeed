@@ -26,6 +26,7 @@
 - (void)toastPostTooShortWithLength:(int)minLength;
 - (void)toastTagSearchTooShortWithLength:(int)minLength;
 - (void)toastTagNeedsHash;
+- (void)toastInvalidTagSearch;
 
 // Network Error
 - (void)toastNoInternetConnection;

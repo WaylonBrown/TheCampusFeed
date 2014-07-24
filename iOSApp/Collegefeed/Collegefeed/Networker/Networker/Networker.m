@@ -79,9 +79,8 @@
 
 + (NSData *)GETAllColleges
 {
-    // TODO: find a more elegant solution for getting all colleges
     NSURL *url = [[NSURL alloc] initWithString:
-                  [NSString stringWithFormat:@"%@/%@/colleges?per_page=99999",
+                  [NSString stringWithFormat:@"%@/%@/colleges",
                    API_URL, API_VERSION]];
     
     return [self GET:url];

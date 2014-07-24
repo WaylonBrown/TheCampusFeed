@@ -46,9 +46,9 @@
         // Populate the initial arrays
         [self fetchTopPosts];
         [self fetchNewPosts];
-        // [self getHardCodedCollegeList];
+//        [self getNetworkCollegeList];
+        [self getHardCodedCollegeList];
         [self getTrendingCollegeList];
-        [self getNetworkCollegeList];
         [self fetchAllTags];
         [self retrieveUserData];
         
@@ -173,9 +173,10 @@
     NSData* data = [Networker GETTrendingPostsAtPageNum:self.topPostsPage++];
     [self parseData:data asClass:[Post class] intoList:self.topPostsAllColleges];
 }
-- (void)fetchTopPostsWithCollegeId:(long)collegeId
+- (void)fetchTopPostsInCollege
 {
     self.topPostsInCollege = [[NSMutableArray alloc] init];
+    long collegeId = self.collegeInFocus.collegeID;
     NSData* data = [Networker GETTrendingPostsWithCollegeId:collegeId];
     [self parseData:data asClass:[Post class] intoList:self.topPostsInCollege];
 }
@@ -184,9 +185,10 @@
     NSData* data = [Networker GETRecentPostsAtPageNum:self.recentPostsPage++];
     [self parseData:data asClass:[Post class] intoList:self.recentPostsAllColleges];
 }
-- (void)fetchNewPostsWithCollegeId:(long)collegeId
+- (void)fetchNewPostsInCollege
 {
     [self setRecentPostsInCollege:[[NSMutableArray alloc] init]];
+    long collegeId = self.collegeInFocus.collegeID;
     NSData* data = [Networker GETRecentPostsWithCollegeId:collegeId];
     [self parseData:data asClass:[Post class] intoList:self.recentPostsInCollege];
 }
@@ -197,10 +199,10 @@
     NSData* data = [Networker GETAllPostsWithTag:tagMessage atPageNum:self.tagPostsPage];
     [self parseData:data asClass:[Post class] intoList:self.allPostsWithTag];
 }
-- (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage
-                      withCollegeId:(long)collegeId
+- (void)fetchAllPostsInCollegeWithTagMessage:(NSString *)tagMessage
 {
     [self setAllPostsWithTagInCollege:[[NSMutableArray alloc] init]];
+    long collegeId = self.collegeInFocus.collegeID;
     NSData* data = [Networker GETPostsWithTagName:tagMessage withCollegeId:collegeId];
     [self parseData:data asClass:[Post class] intoList:self.allPostsWithTagInCollege];
 }
@@ -320,7 +322,7 @@
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docDir = [paths objectAtIndex: 0];
-    NSString *docFile = [docDir stringByAppendingPathComponent: @"NewCollegeList.txt"];
+    NSString *docFile = [docDir stringByAppendingPathComponent: COLLEGE_LIST_FILE];
     
     [data writeToFile:docFile atomically: NO];
 }
@@ -359,7 +361,7 @@
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docDir = [paths objectAtIndex: 0];
-    NSString *docFile = [docDir stringByAppendingPathComponent: @"NewCollegeList.txt"];
+    NSString *docFile = [docDir stringByAppendingPathComponent: COLLEGE_LIST_FILE];
     NSData *data = [NSData dataWithContentsOfFile:docFile];
     
     if (data == nil)

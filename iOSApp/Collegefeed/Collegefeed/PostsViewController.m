@@ -29,6 +29,8 @@
         [self setViewType:type];
         [self switchToAllColleges];
         
+        [self setCommentViewController:[[CommentViewController alloc] initWithDataController:self.dataController]];
+        
         switch (type)
         {
             case TOP_VIEW:
@@ -66,12 +68,11 @@
 }
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
-    [self refresh];
-    [self setCommentViewController:[[CommentViewController alloc] initWithDataController:self.dataController]];
+
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
 }
 - (void)loadView
 {
@@ -144,10 +145,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *text = [((Post *)[self.list objectAtIndex:[indexPath row]]) getMessage];
-    CGSize constraint = CGSizeMake(CELL_LABEL_WIDTH, 20000.0f);
+    CGSize constraint = CGSizeMake(LARGE_CELL_LABEL_WIDTH, 20000.0f);
     CGSize size = [text sizeWithFont:CF_FONT_LIGHT(16) constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-    CGFloat height = MAX(size.height, CELL_MIN_LABEL_HEIGHT);
-    float fullHeight = height + CELL_TOP_TO_LABEL + CELL_LABEL_TO_BOTTOM;
+    CGFloat height = MAX(size.height, LARGE_CELL_MIN_LABEL_HEIGHT);
+    float fullHeight = height + LARGE_CELL_TOP_TO_LABEL + LARGE_CELL_LABEL_TO_BOTTOM;
 
     return fullHeight;
 }
@@ -176,22 +177,19 @@
     switch (self.viewType)
     {
         case TOP_VIEW:
-            // TODO: this is calling dataController's function and passing its own variable to itself...
-            [self.dataController fetchTopPostsWithCollegeId:self.dataController.collegeInFocus.collegeID];
+            [self.dataController fetchTopPostsInCollege];
             [self setList:self.dataController.topPostsInCollege];
             break;
         case RECENT_VIEW:
-            [self.dataController fetchNewPostsWithCollegeId:self.dataController.collegeInFocus.collegeID];
+            [self.dataController fetchNewPostsInCollege];
             [self setList:self.dataController.recentPostsInCollege];
             break;
         case TAG_VIEW:
             if (self.tagMessage != nil)
             {
-                [self setList:self.dataController.allPostsWithTagInCollege];
+                [self.dataController fetchAllPostsInCollegeWithTagMessage:self.tagMessage];
             }
-            [self.dataController fetchAllPostsWithTagMessage:self.tagMessage
-                                               withCollegeId:self.dataController.collegeInFocus.collegeID];
-
+            [self setList:self.dataController.allPostsWithTagInCollege];
             break;
         default:
             break;

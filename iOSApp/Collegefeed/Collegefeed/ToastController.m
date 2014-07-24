@@ -69,6 +69,11 @@
     NSString *message = @"Must start with #";
     [self addToQueue:message];
 }
+- (void)toastInvalidTagSearch
+{
+    NSString *message = @"A search for a tag cannot include the symbols !, $, %, ^, &, *, +, or .";
+    [self addToQueue:message];
+}
 - (void)toastPostFailed
 {
     NSString *message = @"Failed to post, please try again later.";

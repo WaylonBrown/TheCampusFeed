@@ -148,10 +148,10 @@
         offset = -20;
     }
     
-    CGSize constraint = CGSizeMake(CELL_LABEL_WIDTH, 20000.0f);
+    CGSize constraint = CGSizeMake(LARGE_CELL_LABEL_WIDTH, 20000.0f);
     CGSize size = [text sizeWithFont:CF_FONT_LIGHT(16) constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-    CGFloat height = MAX(size.height, CELL_MIN_LABEL_HEIGHT);
-    float fullHeight = height + CELL_TOP_TO_LABEL + CELL_LABEL_TO_BOTTOM;
+    CGFloat height = MAX(size.height, LARGE_CELL_MIN_LABEL_HEIGHT);
+    float fullHeight = height + LARGE_CELL_TOP_TO_LABEL + LARGE_CELL_LABEL_TO_BOTTOM;
     
     return fullHeight + offset;
 }
