@@ -719,30 +719,55 @@ public class NetWorker {
 
      }
 
-     public static class MakeVoteTask extends AsyncTask<Vote, Void, Boolean>{
-         public Boolean doInBackground(Vote... votes){
-             try{
-                 HttpGet request = new HttpGet(REQUEST_URL + "posts/" + votes[0].id + "/votes");
-                 //request.setEntity(new ByteArrayEntity(
-                   //  votes[0].toString().getBytes("UTF8")));
-                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                 String response = client.execute(request, responseHandler);
+    public static class MakePostVoteTask extends AsyncTask<Vote, Void, Boolean>{
+        public Boolean doInBackground(Vote... votes){
+            try{
+                HttpGet request = new HttpGet(REQUEST_URL + "posts/" + votes[0].id + "/votes");
+                //request.setEntity(new ByteArrayEntity(
+                //  votes[0].toString().getBytes("UTF8")));
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                String response = client.execute(request, responseHandler);
 
-                 Log.d("cfeed", LOG_TAG + "Make vote server response: " + response);
-                 return true;
-             } catch (ClientProtocolException e) {
-                 e.printStackTrace();
-                 return false;
-             } catch (IOException e) {
-                 e.printStackTrace();
-                 return false;
-             }
-         }
+                Log.d("cfeed", LOG_TAG + "Make vote server response: " + response);
+                return true;
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+                return false;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
 
-         public void onPostExecute(Boolean result){
-             Log.d("http", LOG_TAG + "success: " + result);
-         }
-     }
+        public void onPostExecute(Boolean result){
+            Log.d("http", LOG_TAG + "success: " + result);
+        }
+    }
+
+    public static class MakeCommentVoteTask extends AsyncTask<Vote, Void, Boolean>{
+        public Boolean doInBackground(Vote... votes){
+            try{
+                HttpGet request = new HttpGet(REQUEST_URL + "posts/" + votes[0].parentID + "/comments/" + votes[0].id + "/votes");
+                //request.setEntity(new ByteArrayEntity(
+                //  votes[0].toString().getBytes("UTF8")));
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                String response = client.execute(request, responseHandler);
+
+                Log.d("cfeed", LOG_TAG + "Make vote server response: " + response);
+                return true;
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+                return false;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        public void onPostExecute(Boolean result){
+            Log.d("http", LOG_TAG + "success: " + result);
+        }
+    }
 
      public static class MakeFlagTask extends AsyncTask<Integer, Void, Boolean>{
 

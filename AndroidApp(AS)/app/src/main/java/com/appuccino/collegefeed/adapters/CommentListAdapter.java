@@ -18,7 +18,9 @@ import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
 import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
+import com.appuccino.collegefeed.objects.Vote;
 import com.appuccino.collegefeed.utils.FontManager;
+import com.appuccino.collegefeed.utils.NetWorker;
 import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.TimeManager;
 
@@ -114,6 +116,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 				}
 
 				CommentsActivity.updateList();
+                new NetWorker.MakeCommentVoteTask().execute(new Vote(thisComment.getID(), post.getID(), true));
 			}        	
         });
         commentHolder.arrowDown.setOnClickListener(new OnClickListener(){
@@ -149,6 +152,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 						PrefManager.putCommentUpvoteList(MainActivity.commentUpvoteList);
 					}
 					CommentsActivity.updateList();
+                    new NetWorker.MakeCommentVoteTask().execute(new Vote(thisComment.getID(), post.getID(), false));
 				}
 				else
 				{

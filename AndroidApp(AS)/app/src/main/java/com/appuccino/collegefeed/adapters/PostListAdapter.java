@@ -21,7 +21,7 @@ import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
 import com.appuccino.collegefeed.utils.FontManager;
-import com.appuccino.collegefeed.utils.NetWorker.MakeVoteTask;
+import com.appuccino.collegefeed.utils.NetWorker.MakePostVoteTask;
 import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.TimeManager;
 
@@ -153,7 +153,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 				default:
                     NewPostFragment.updateList();
 				}
-				new MakeVoteTask().execute(new Vote(thisPost.getID(), true));
+				new MakePostVoteTask().execute(new Vote(thisPost.getID(), true));
 			}        	
         });
         postHolder.arrowDown.setOnClickListener(new OnClickListener(){
@@ -190,7 +190,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 					TopPostFragment.updateList();
 					NewPostFragment.updateList();
 					TagListActivity.updateList();
-					new MakeVoteTask().execute(new Vote(thisPost.getID(), false));
+					new MakePostVoteTask().execute(new Vote(thisPost.getID(), false));
 				}
 				else
 				{

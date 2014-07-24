@@ -30,8 +30,8 @@ import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
 import com.appuccino.collegefeed.utils.FontManager;
+import com.appuccino.collegefeed.utils.NetWorker;
 import com.appuccino.collegefeed.utils.NetWorker.GetCommentsTask;
-import com.appuccino.collegefeed.utils.NetWorker.MakeVoteTask;
 import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
 import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.TimeManager;
@@ -173,7 +173,7 @@ public class CommentsActivity extends Activity{
 					NewPostFragment.updateList();
 					TagListActivity.updateList();
 					updateArrows(arrowUp, arrowDown);
-					new MakeVoteTask().execute(new Vote(post.getID(), true));
+					new NetWorker.MakePostVoteTask().execute(new Vote(post.getID(), true));
 				}        	
 	        });
 	        arrowDown.setOnClickListener(new OnClickListener(){
@@ -214,6 +214,7 @@ public class CommentsActivity extends Activity{
 						NewPostFragment.updateList();
 						TagListActivity.updateList();
 						updateArrows(arrowUp, arrowDown);
+                        new NetWorker.MakePostVoteTask().execute(new Vote(post.getID(), false));
 					}
 					else
 					{
