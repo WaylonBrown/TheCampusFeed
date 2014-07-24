@@ -52,6 +52,7 @@ public class CommentsActivity extends Activity{
     static ImageView backButton;
     static ImageView facebookButton;
     static ImageView twitterButton;
+    static View divider;
 	static ProgressBar actionBarLoadingIcon;
 	static TextView commentsText;
 	final int minCommentLength = 3;
@@ -66,16 +67,8 @@ public class CommentsActivity extends Activity{
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_comment);
 		setupActionBar();
-		
-		newCommentButton = (ImageView)findViewById(R.id.newCommentButton);
-		flagButton = (ImageView)findViewById(R.id.flagButton);
-        shareButton = (ImageView)findViewById(R.id.shareButton);
-        backButton = (ImageView)findViewById(R.id.backButton);
-        facebookButton = (ImageView)findViewById(R.id.facebookButton);
-        twitterButton = (ImageView)findViewById(R.id.twitterButton);
-		actionBarLoadingIcon = (ProgressBar)findViewById(R.id.commentActionbarLoadingIcon);
-		list = (ListView)findViewById(R.id.commentsList);
-		loadingSpinner = (ProgressBar)findViewById(R.id.commentsLoading);
+		getViews();
+
 		final TextView scoreText = (TextView)findViewById(R.id.scoreText);
 		TextView messageText = (TextView)findViewById(R.id.messageText);
 		TextView timeText = (TextView)findViewById(R.id.timeText);
@@ -105,6 +98,7 @@ public class CommentsActivity extends Activity{
                 + getIntent().getIntExtra("POST_ID", -1));
 		if(MainActivity.hasPermissions(collegeID) && post != null){
 			newCommentButton.setVisibility(View.VISIBLE);
+
 			if(!MainActivity.flagList.contains(post.getID())){	//dont show flag button if already flagged
 				flagButton.setVisibility(View.VISIBLE);
 			}
@@ -281,7 +275,31 @@ public class CommentsActivity extends Activity{
                 onBackPressed();
             }
         });
+
+        setActionBarDividerVisibility();
 	}
+
+    private static void setActionBarDividerVisibility() {
+        if(flagButton != null && newCommentButton != null &&
+                (flagButton.getVisibility() == View.VISIBLE || newCommentButton.getVisibility() == View.VISIBLE)){
+            divider.setVisibility(View.VISIBLE);
+        } else {
+            divider.setVisibility(View.GONE);
+        }
+    }
+
+    private void getViews() {
+        newCommentButton = (ImageView)findViewById(R.id.newCommentButton);
+        flagButton = (ImageView)findViewById(R.id.flagButton);
+        shareButton = (ImageView)findViewById(R.id.shareButton);
+        backButton = (ImageView)findViewById(R.id.backButton);
+        facebookButton = (ImageView)findViewById(R.id.facebookButton);
+        twitterButton = (ImageView)findViewById(R.id.twitterButton);
+        actionBarLoadingIcon = (ProgressBar)findViewById(R.id.commentActionbarLoadingIcon);
+        divider = (View)findViewById(R.id.actionBarDivider);
+        list = (ListView)findViewById(R.id.commentsList);
+        loadingSpinner = (ProgressBar)findViewById(R.id.commentsLoading);
+    }
 
     private void shareClicked() {
         Intent sendIntent = new Intent();
@@ -537,6 +555,10 @@ public class CommentsActivity extends Activity{
 	public static void setNewPermissionsIfAvailable() {
 		if(newCommentButton != null && post != null && MainActivity.hasPermissions(post.getCollegeID())){
 			newCommentButton.setVisibility(View.VISIBLE);
+            if(!MainActivity.flagList.contains(post.getID())){
+                flagButton.setVisibility(View.VISIBLE);
+            }
+            setActionBarDividerVisibility();
 		}
 		hasPermissions = true;	//necessary that way if permissions updated while not on MainActivity, still allow to comment
 	}
@@ -546,6 +568,7 @@ public class CommentsActivity extends Activity{
 			flagButton.setVisibility(View.GONE);
 			actionBarLoadingIcon.setVisibility(View.GONE);
 		}
+        setActionBarDividerVisibility();
 	}
 
 	public static void addActionBarLoadingIndicatorAndRemoveFlag() {
@@ -560,5 +583,6 @@ public class CommentsActivity extends Activity{
 			flagButton.setVisibility(View.VISIBLE);
 			actionBarLoadingIcon.setVisibility(View.GONE);
 		}
+        setActionBarDividerVisibility();
 	}
 }
