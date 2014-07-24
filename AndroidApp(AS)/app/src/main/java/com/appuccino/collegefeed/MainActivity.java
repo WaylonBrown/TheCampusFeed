@@ -102,7 +102,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         lastCollegeListUpdate = PrefManager.getLastCollegeListUpdate();
         getNewCollegeListIfNeeded();
 		getLocation();
-        PopupManager.run();
+        PopupManager.run(this);
 		Log.i("cfeed", "APPSETUP: onCreate");
 	}
 	

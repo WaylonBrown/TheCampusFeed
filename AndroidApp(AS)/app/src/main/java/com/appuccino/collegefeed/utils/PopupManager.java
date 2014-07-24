@@ -1,13 +1,26 @@
 package com.appuccino.collegefeed.utils;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.appuccino.collegefeed.R;
 
 /**
  * Created by Waylon on 7/23/2014.
  */
 public class PopupManager {
 
-    public static void run(){
+    static Context context;
+
+    public static void run(Context c){
+        context = c;
+
         int runCount = PrefManager.getInt(PrefManager.APP_RUN_COUNT, 0);
         boolean firstDialogPrevDisplayed = PrefManager.getBoolean(PrefManager.FIRST_DIALOG_DISPLAYED, false);
         boolean secondDialogPrevDisplayed = PrefManager.getBoolean(PrefManager.SECOND_DIALOG_DISPLAYED, false);
@@ -33,9 +46,42 @@ public class PopupManager {
 
     private static void displayFirstDialog() {
         Log.i("cfeed", "Displaying first dialog");
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context)
+                .setTitle("Follow TheCampusFeed on Twitter!")
+                .setMessage(R.string.twitterMessage)
+                .setPositiveButton("Follow on Twitter", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        goToTwitter();
+                        dialogInterface.dismiss();
+                    }
+                })
+                .setNegativeButton("No thanks", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
+
+        TextView titleText = (TextView) alertDialog.findViewById(context.getResources().getIdentifier("alertTitle", "id", "android"));
+        TextView messageText = (TextView)alertDialog.findViewById(android.R.id.message);
+        Button yesButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        Button noButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+        titleText.setTypeface(FontManager.light);
+        messageText.setTypeface(FontManager.light);
+        yesButton.setTypeface(FontManager.light);
+        noButton.setTypeface(FontManager.light);
     }
 
     private static void displaySecondDialog() {
         Log.i("cfeed", "Displaying second dialog");
+    }
+
+    private static void goToTwitter(){
+        Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse("https://twitter.com/The_Campus_Feed") );
+        context.startActivity(browse);
     }
 }

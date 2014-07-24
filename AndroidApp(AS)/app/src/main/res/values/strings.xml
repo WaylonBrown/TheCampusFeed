@@ -12,6 +12,7 @@
     <string name="section6">My Comments</string>
 
     <string name="sendTo">Share this Post via...</string>
+    <string name="twitterMessage">Want to see our pick of the top post on TheCampusFeed per day? Be sure to follow us on Twitter at @The_Campus_Feed!</string>
     <string name="chooseFeedDialogTitle">Choose a Feed</string>
     <string name="allColleges">All Colleges</string>
     <string name="searchColleges">Choose a College</string>
