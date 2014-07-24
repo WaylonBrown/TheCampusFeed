@@ -3,12 +3,14 @@ package com.appuccino.collegefeed;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -79,6 +81,13 @@ public class TagListActivity extends Activity{
 				list.setAdapter(listAdapter);	
 			else
 				Log.e("cfeed", "TopPostFragment list adapter wasn't set.");
+
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    postClicked(i);
+                }
+            });
 		}
 
         if(backButton != null){
@@ -90,6 +99,18 @@ public class TagListActivity extends Activity{
             });
         }
 	}
+
+    private void postClicked(int index) {
+        Post clickedPost = postList.get(index);
+        Intent intent = new Intent(this, CommentsActivity.class);
+        intent.putExtra("POST_ID", clickedPost.getID());
+        intent.putExtra("COLLEGE_ID", clickedPost.getCollegeID());
+        intent.putExtra("SECTION_NUMBER", 4);
+        intent.putExtra("POST_INDEX", index);
+
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
 
     private void setTopTexts() {
         topTagText.setTypeface(FontManager.light);

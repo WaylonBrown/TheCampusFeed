@@ -90,8 +90,11 @@ public class CommentsActivity extends Activity{
             case 2:
                 post = MyContentActivity.postList.get(postIndex);
                 break;
-            default:
+            case 3:
                 post = MyContentActivity.commentParentList.get(postIndex);
+                break;
+            default:
+                post = TagListActivity.postList.get(postIndex);
         }
 		
 		Log.i("cfeed", "Post: " + post + " list: " + MainActivity.flagList + " post id: "
