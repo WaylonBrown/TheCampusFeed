@@ -10,6 +10,7 @@
 #import "TTTAttributedLabel.h"
 
 @class Model;
+@class Post;
 @class Vote;
 
 @protocol SubViewDelegate;
@@ -36,6 +37,8 @@
 @property (strong, nonatomic) IBOutlet UIView *dividerView;
 
 - (void)assign:(NSObject<PostAndCommentProtocol> *)obj;
+- (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby;
+
 - (IBAction) upVotePressed:(id)sender;
 - (IBAction) downVotePresed:(id)sender;
 

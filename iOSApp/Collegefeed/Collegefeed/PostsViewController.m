@@ -130,39 +130,24 @@
     [cell setDelegate: self];
 
     // get the post and display in this cell
-    NSObject<PostAndCommentProtocol> *postAtIndex = [self.list objectAtIndex:indexPath.row];
+    Post *post = [self.list objectAtIndex:indexPath.row];
     
-    // TODO: this assigning needs some cleanup, use all in the assign: call
-    NSNumber *postID = [NSNumber numberWithLong:[postAtIndex getID]];
-    if ([self.dataController.userPostUpvotes containsObject:postID])
-    {
-        [postAtIndex setVote:[[Vote alloc] initWithVotableID:postID.longValue withUpvoteValue:YES asVotableType:POST]];
-    }
-    else if ([self.dataController.userPostDownvotes containsObject:postID])
-    {
-        [postAtIndex setVote:[[Vote alloc] initWithVotableID:postID.longValue withUpvoteValue:NO asVotableType:POST]];
-    }
-    long collegeId = [postAtIndex getCollegeID];
+    long collegeId = [post getCollegeID];
     College *college = [self.dataController getCollegeById:collegeId];
-    [postAtIndex setCollegeName:college.name];
-    [cell setUserIsNearCollege:[self.dataController.nearbyColleges containsObject:college]];
-    [cell assign:postAtIndex];
+    [post setCollegeName:college.name];
+    BOOL nearCollege = [self.dataController.nearbyColleges containsObject:college];
+    
+    [cell assignWith:post IsNearCollege:nearCollege];
 
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    #define LABEL_WIDTH 252.0f
-    #define TOP_TO_LABEL 7.0f
-    #define LABEL_TO_BOTTOM 59.0f
-    #define MIN_LABEL_HEIGHT 53.0f
-    
-
     NSString *text = [((Post *)[self.list objectAtIndex:[indexPath row]]) getMessage];
-    CGSize constraint = CGSizeMake(LABEL_WIDTH, 20000.0f);
+    CGSize constraint = CGSizeMake(CELL_LABEL_WIDTH, 20000.0f);
     CGSize size = [text sizeWithFont:CF_FONT_LIGHT(16) constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-    CGFloat height = MAX(size.height, MIN_LABEL_HEIGHT);
-    float fullHeight = height + TOP_TO_LABEL + LABEL_TO_BOTTOM;
+    CGFloat height = MAX(size.height, CELL_MIN_LABEL_HEIGHT);
+    float fullHeight = height + CELL_TOP_TO_LABEL + CELL_LABEL_TO_BOTTOM;
 
     return fullHeight;
 }

@@ -19,7 +19,7 @@
 
     self.toastQueue = [NSMutableArray new];
     if (![CLLocationManager locationServicesEnabled])
-    {   // In the UI is probably not proper place to put this, but it works
+    {   
         [self toastNoLocationServices];
     }
     

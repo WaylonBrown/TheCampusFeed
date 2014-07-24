@@ -20,8 +20,7 @@
 - (void)awakeFromNib
 {
     // Initialization code
-    
-    
+
     // TODO: Keep trying ways to speed up this shadow rendering
     UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.enclosingView.bounds];
     self.enclosingView.layer.masksToBounds = NO;
@@ -53,6 +52,12 @@
 
 #pragma mark - Data Population
 
+- (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby;
+{
+    [self assign:post];
+    [self.gpsIconImageView setHidden:(!isNearby)];
+}
+
 - (void)assign:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj;
 {   // configure view of the cell according to obj's properties
     
@@ -72,8 +77,8 @@
     
     if ([obj getType] == COMMENT)
     {
-        [self setDividerView:nil];
-        [self setCollegeLabel:nil];
+        [self.dividerView removeFromSuperview];
+        [self.collegeLabel removeFromSuperview];
     }
     else
     {
@@ -86,8 +91,6 @@
 
     // assign arrow colors according to user's vote
     [self updateVoteButtons];
-    
-    [self.gpsIconImageView setHidden:(!self.userIsNearCollege)];
 }
 
 #pragma mark - Actions

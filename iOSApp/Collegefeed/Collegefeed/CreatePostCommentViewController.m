@@ -100,10 +100,10 @@
 {
     NSDictionary *dictionary = [notification userInfo];
     NSString *toast = [dictionary objectForKey:@"message"];
-
-    [self.view.window makeToast:toast
+    
+    [self.view makeToast:toast
                 duration:2.0
-                position:@"bottom"];
+                position:@"top"];
 }
 
 #pragma mark - Transitioning Protocol Methods
