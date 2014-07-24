@@ -264,27 +264,40 @@
                                                                        options:0
                                                                          error:nil];
             Vote *networkVote = [[Vote alloc] initFromJSON:jsonObject];
+            NSNumber *voteID = [NSNumber numberWithLong:networkVote.parentID];
             
             if (networkVote.votableType == POST)
             {
                 if (networkVote.upvote == true)
                 {
-                    [self.userPostUpvotes addObject:networkVote];
+                    if (![self.userPostUpvotes containsObject:voteID])
+                        [self.userPostUpvotes addObject:voteID];
+                    if ([self.userPostDownvotes containsObject:voteID])
+                        [self.userPostDownvotes removeObject:voteID];
                 }
                 else
                 {
-                    [self.userPostDownvotes addObject:networkVote];
+                    if (![self.userPostDownvotes containsObject:voteID])
+                        [self.userPostDownvotes addObject:voteID];
+                    if ([self.userPostUpvotes containsObject:voteID])
+                        [self.userPostUpvotes removeObject:voteID];
                 }
             }
             else if (networkVote.votableType == COMMENT)
             {
                 if (networkVote.upvote == true)
                 {
-                    [self.userCommentUpvotes addObject:networkVote];
+                    if (![self.userCommentUpvotes containsObject:voteID])
+                        [self.userCommentUpvotes addObject:voteID];
+                    if ([self.userCommentDownvotes containsObject:voteID])
+                        [self.userCommentDownvotes removeObject:voteID];
                 }
                 else
                 {
-                    [self.userCommentDownvotes addObject:networkVote];
+                    if (![self.userCommentDownvotes containsObject:voteID])
+                        [self.userCommentDownvotes addObject:voteID];
+                    if ([self.userCommentUpvotes containsObject:voteID])
+                        [self.userCommentUpvotes removeObject:voteID];
                 }
             }
         }
@@ -440,10 +453,9 @@
         
         // Save Post Upvote Ids
         NSString *postIdsString = @"";
-        for (Vote *vote in self.userPostUpvotes)
+        for (NSNumber *postID in self.userPostUpvotes)
         {
-            long postId = vote.parentID;
-            postIdsString = [NSString stringWithFormat:@"%ld\n%@", postId, postIdsString];
+            postIdsString = [NSString stringWithFormat:@"%@\n%@", postID, postIdsString];
         }
         NSData *postData = [postIdsString dataUsingEncoding:NSUTF8StringEncoding];
         [postData writeToFile:postFile atomically:NO];
@@ -456,10 +468,9 @@
         
         // Save Comment Upvote Ids
         NSString *commentIdsString = @"";
-        for (Vote *vote in self.userCommentUpvotes)
+        for (NSNumber *commentID in self.userCommentUpvotes)
         {
-            long commentId = vote.parentID;
-            commentIdsString = [NSString stringWithFormat:@"%ld\n%@", commentId, commentIdsString];
+            commentIdsString = [NSString stringWithFormat:@"%@\n%@", commentID, commentIdsString];
         }
         NSData *commentData = [commentIdsString dataUsingEncoding:NSUTF8StringEncoding];
         [commentData writeToFile:commentFile atomically:NO];
@@ -475,10 +486,9 @@
         
         // Save Post Upvote Ids
         NSString *postIdsString = @"";
-        for (Vote *vote in self.userPostDownvotes)
+        for (NSNumber *postID in self.userPostDownvotes)
         {
-            long postId = vote.parentID;
-            postIdsString = [NSString stringWithFormat:@"%ld\n%@", postId, postIdsString];
+            postIdsString = [NSString stringWithFormat:@"%@\n%@", postID, postIdsString];
         }
         NSData *postData = [postIdsString dataUsingEncoding:NSUTF8StringEncoding];
         [postData writeToFile:postFile atomically:NO];
@@ -491,10 +501,9 @@
         
         // Save Comment Upvote Ids
         NSString *commentIdsString = @"";
-        for (Vote *vote in self.userCommentDownvotes)
+        for (NSNumber *commentID in self.userCommentDownvotes)
         {
-            long commentId = vote.parentID;
-            commentIdsString = [NSString stringWithFormat:@"%ld\n%@", commentId, commentIdsString];
+            commentIdsString = [NSString stringWithFormat:@"%@\n%@", commentID, commentIdsString];
         }
         NSData *commentData = [commentIdsString dataUsingEncoding:NSUTF8StringEncoding];
         [commentData writeToFile:commentFile atomically:NO];
@@ -538,11 +547,35 @@
     NSString *postDownvotesString    = [NSString stringWithContentsOfFile:postDownvoteFile encoding:NSUTF8StringEncoding error:nil];
     NSString *commentUpvotesString   = [NSString stringWithContentsOfFile:commentUpvoteFile encoding:NSUTF8StringEncoding error:nil];
     NSString *commentDownvotesString = [NSString stringWithContentsOfFile:commentDownvoteFile encoding:NSUTF8StringEncoding error:nil];
+
+    NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+    NSArray *postUpvoteIds = [postUpvotesString componentsSeparatedByString:@"\n"];
+    for (NSString *stringID in postUpvoteIds)
+    {
+        if (![stringID isEqual: @""])
+            [self.userPostUpvotes addObject:[f numberFromString:stringID]];
+    }
     
-    [self setUserPostUpvotes:       (NSMutableArray *)[postUpvotesString componentsSeparatedByString:@"\n"]];
-    [self setUserPostDownvotes:     (NSMutableArray *)[postDownvotesString componentsSeparatedByString:@"\n"]];
-    [self setUserCommentUpvotes:    (NSMutableArray *)[commentUpvotesString componentsSeparatedByString:@"\n"]];
-    [self setUserCommentDownvotes:  (NSMutableArray *)[commentDownvotesString componentsSeparatedByString:@"\n"]];
+    NSArray *postDownvoteIds = [postDownvotesString componentsSeparatedByString:@"\n"];
+    for (NSString *stringID in postDownvoteIds)
+    {
+        if (![stringID isEqual: @""])
+            [self.userPostDownvotes addObject:[f numberFromString:stringID]];
+    }
+    
+    NSArray *commentUpvoteIds = [commentUpvotesString componentsSeparatedByString:@"\n"];
+    for (NSString *stringID in commentUpvoteIds)
+    {
+        if (![stringID isEqual: @""])
+            [self.userCommentUpvotes addObject:[f numberFromString:stringID]];
+    }
+    
+    NSArray *commentDownvoteIds = [commentDownvotesString componentsSeparatedByString:@"\n"];
+    for (NSString *stringID in commentDownvoteIds)
+    {
+        if (![stringID isEqual: @""])
+            [self.userCommentDownvotes addObject:[f numberFromString:stringID]];
+    }
 }
 - (long)getUserPostScore
 {

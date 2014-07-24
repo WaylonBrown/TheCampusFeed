@@ -100,11 +100,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Collegefeed/DataController.m"
-            timestampString = "427907293.34606"
+            timestampString = "427910453.438969"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "614"
-            endingLineNumber = "614"
+            startingLineNumber = "647"
+            endingLineNumber = "647"
             landmarkName = "-numberMilesAwayFromLat:fromLon:AtLat:atLon:"
             landmarkType = "5">
          </BreakpointContent>
@@ -164,11 +164,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Collegefeed/DataController.m"
-            timestampString = "427907293.34606"
+            timestampString = "427910453.438969"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "563"
-            endingLineNumber = "563"
+            startingLineNumber = "596"
+            endingLineNumber = "596"
             landmarkName = "-getUserCommentScore"
             landmarkType = "5">
          </BreakpointContent>

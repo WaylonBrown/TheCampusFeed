@@ -21,6 +21,8 @@
 - (NSString *)getMessage;
 - (NSDate *)getCreatedAt;
 - (long)getScore;
+- (void)decrementScore;
+- (void)incrementScore;
 - (NSString *)getCollegeName;
 - (long)getCollegeID;
 - (void)setVote:(Vote *)vote;

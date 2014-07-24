@@ -10,6 +10,7 @@
 #import "TableCell.h"
 #import "PostsViewController.h"
 #import "Post.h"
+#import "Vote.h"
 #import "CommentViewController.h"
 #import "Shared.h"
 #import "College.h"
@@ -132,6 +133,15 @@
     NSObject<PostAndCommentProtocol> *postAtIndex = [self.list objectAtIndex:indexPath.row];
     
     // TODO: this assigning needs some cleanup, use all in the assign: call
+    NSNumber *postID = [NSNumber numberWithLong:[postAtIndex getID]];
+    if ([self.dataController.userPostUpvotes containsObject:postID])
+    {
+        [postAtIndex setVote:[[Vote alloc] initWithVotableID:postID.longValue withUpvoteValue:YES asVotableType:POST]];
+    }
+    else if ([self.dataController.userPostDownvotes containsObject:postID])
+    {
+        [postAtIndex setVote:[[Vote alloc] initWithVotableID:postID.longValue withUpvoteValue:NO asVotableType:POST]];
+    }
     long collegeId = [postAtIndex getCollegeID];
     College *college = [self.dataController getCollegeById:collegeId];
     [postAtIndex setCollegeName:college.name];
