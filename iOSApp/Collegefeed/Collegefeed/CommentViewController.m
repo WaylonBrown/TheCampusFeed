@@ -148,12 +148,7 @@
         offset = -20;
     }
     
-    CGSize constraint = CGSizeMake(LARGE_CELL_LABEL_WIDTH, 20000.0f);
-    CGSize size = [text sizeWithFont:CF_FONT_LIGHT(16) constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-    CGFloat height = MAX(size.height, LARGE_CELL_MIN_LABEL_HEIGHT);
-    float fullHeight = height + LARGE_CELL_TOP_TO_LABEL + LARGE_CELL_LABEL_TO_BOTTOM;
-    
-    return fullHeight + offset;
+    return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)] + offset;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {   // return the header title for the 'Comments' section

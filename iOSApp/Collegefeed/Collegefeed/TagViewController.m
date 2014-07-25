@@ -116,8 +116,20 @@
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{   // TODO: This should not be hardcoded; revist
-    return 56;
+{
+    NSString *text;
+    if (tableView == self.searchDisplay.searchResultsTableView)
+    {
+        Tag *tag = (Tag*)[self.searchResult objectAtIndex:indexPath.row];
+        text = [tag name];
+    }
+    else
+    {
+        Tag *tag = (Tag *)[self.list objectAtIndex:indexPath.row];
+        text = [tag name];
+    }
+    
+    return [Shared getSmallCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(22)];
 }
 
 #pragma mark - Search Bar 
