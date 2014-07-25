@@ -20,15 +20,12 @@
 - (void)awakeFromNib
 {
     // Initialization code
-
-    // TODO: Keep trying ways to speed up this shadow rendering
-    UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.enclosingView.bounds];
+    
     self.enclosingView.layer.masksToBounds = NO;
     self.enclosingView.layer.cornerRadius = 2;
     self.enclosingView.layer.shadowOffset = CGSizeMake(0, 1);
     self.enclosingView.layer.shadowRadius = 2;
     self.enclosingView.layer.shadowOpacity = 0.5;
-    self.enclosingView.layer.shadowPath = path.CGPath;
     
     // Set font styles
     [self.messageLabel      setFont:CF_FONT_LIGHT(16)];
@@ -52,13 +49,13 @@
 
 #pragma mark - Data Population
 
-- (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby;
+- (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby WithCellHeight:(float)height;
 {
-    [self assign:post];
+    [self assign:post WithCellHeight:height];
     [self.gpsIconImageView setHidden:(!isNearby)];
 }
 
-- (void)assign:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj;
+- (void)assign:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj WithCellHeight:(float)height;
 {   // configure view of the cell according to obj's properties
     
     if (obj == nil)
@@ -91,6 +88,13 @@
 
     // assign arrow colors according to user's vote
     [self updateVoteButtons];
+    
+    // Shadow Rendering
+    CGRect rect = self.contentView.bounds;
+    
+    rect.size.height = height;
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:rect];
+    self.contentView.layer.shadowPath = path.CGPath;
 }
 
 #pragma mark - Actions

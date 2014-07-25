@@ -140,8 +140,8 @@
     College *college = [self.dataController getCollegeById:collegeId];
     [post setCollegeName:college.name];
     BOOL nearCollege = [self.dataController.nearbyColleges containsObject:college];
-    
-    [cell assignWith:post IsNearCollege:nearCollege];
+    float cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
+    [cell assignWith:post IsNearCollege:nearCollege WithCellHeight:cellHeight];
 
     return cell;
 }

@@ -109,24 +109,21 @@
     
     [cell setDelegate: self];
 
+    float height = [self tableView:tableView heightForRowAtIndexPath:indexPath];
+    
     if (tableView == self.postTableView)
     {   // PostView table; get the original post to display in this table
-        [cell assign:self.originalPost];
+        [cell assign:self.originalPost WithCellHeight:height];
         return cell;
     }
     else if (tableView == self.commentTableView)
     {   // CommentView table; get the comment to be displayed in this cell
         Comment *commentAtIndex = (Comment*)[self.dataController.commentList objectAtIndex:indexPath.row];
-        [cell assign:commentAtIndex];
+        [cell assign:commentAtIndex WithCellHeight:height];
         return cell;
     }
     
     return nil;
-}
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{   // Return NO if you do not want the specified item to be editable.
-    
-    return YES;
 }
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Return NO if you do not want the item to be re-orderable.
@@ -136,7 +133,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *text = @"";
-    float offset = 0; // to omit extra height of college label
+    float offset = -20; // to omit extra height of college label
     
     if (tableView == self.postTableView)
     {
@@ -145,7 +142,6 @@
     else if (tableView == self.commentTableView)
     {
         text = [(Comment *)[self.list objectAtIndex:[indexPath row]] getMessage];
-        offset = -20;
     }
     
     return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)] + offset;

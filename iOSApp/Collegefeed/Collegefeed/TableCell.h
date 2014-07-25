@@ -36,8 +36,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *gpsIconImageView;
 @property (strong, nonatomic) IBOutlet UIView *dividerView;
 
-- (void)assign:(NSObject<PostAndCommentProtocol> *)obj;
-- (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby;
+- (void)assign:(NSObject<PostAndCommentProtocol> *)obj WithCellHeight:(float)height;
+- (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby WithCellHeight:(float)height;
 
 - (IBAction) upVotePressed:(id)sender;
 - (IBAction) downVotePresed:(id)sender;
