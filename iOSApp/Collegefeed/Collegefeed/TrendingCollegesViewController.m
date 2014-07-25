@@ -9,7 +9,7 @@
 #import "TrendingCollegesViewController.h"
 #import "SimpleTableCell.h"
 #import "College.h"
-
+#import "Shared.h"
 
 @implementation TrendingCollegesViewController
 
@@ -63,9 +63,9 @@
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{   // TODO: This should not be hardcoded; revist
-    
-    return 56;
+{
+    NSString *text = [[self.list objectAtIndex:indexPath.row] name];
+    return [Shared getSmallCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(18)];
 }
 
 - (void)refresh

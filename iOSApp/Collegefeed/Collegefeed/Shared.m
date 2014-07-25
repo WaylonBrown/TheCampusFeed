@@ -19,5 +19,24 @@
     
     return color;
 }
++ (float)getSmallCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font
+{
+    CGSize constraint = CGSizeMake(SMALL_CELL_LABEL_WIDTH, 20000.0f);
+    CGSize size = [text sizeWithFont:font constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+    CGFloat height = MAX(size.height, SMALL_CELL_MIN_LABEL_HEIGHT);
+    float fullHeight = height + SMALL_CELL_TOP_TO_LABEL + SMALL_CELL_LABEL_TO_BOTTOM;
+    
+    return fullHeight;
+}
+
++ (float)getLargeCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font
+{
+    CGSize constraint = CGSizeMake(LARGE_CELL_LABEL_WIDTH, 20000.0f);
+    CGSize size = [text sizeWithFont:font constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+    CGFloat height = MAX(size.height, LARGE_CELL_MIN_LABEL_HEIGHT);
+    float fullHeight = height + LARGE_CELL_TOP_TO_LABEL + LARGE_CELL_LABEL_TO_BOTTOM;
+    
+    return fullHeight;
+}
 
 @end

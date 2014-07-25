@@ -28,10 +28,10 @@
 #define LARGE_CELL_LABEL_TO_BOTTOM    59.0f
 #define LARGE_CELL_MIN_LABEL_HEIGHT   53.0f
 
-#define SMALL_CELL_LABEL_WIDTH        252.0f
-#define SMALL_CELL_TOP_TO_LABEL       7.0f
-#define SMALL_CELL_LABEL_TO_BOTTOM    59.0f
-#define SMALL_CELL_MIN_LABEL_HEIGHT   53.0f
+#define SMALL_CELL_LABEL_WIDTH        282.0f
+#define SMALL_CELL_TOP_TO_LABEL       10.0f
+#define SMALL_CELL_LABEL_TO_BOTTOM    10.0f
+#define SMALL_CELL_MIN_LABEL_HEIGHT   36.0f
 
 
 // Custom fonts
@@ -49,6 +49,8 @@
 #define logoTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:logoImage]]
 
 + (UIColor*)getCustomUIColor:(int)hexValue;
++ (float)getSmallCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font;
++ (float)getLargeCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font;
 
 
 @end
