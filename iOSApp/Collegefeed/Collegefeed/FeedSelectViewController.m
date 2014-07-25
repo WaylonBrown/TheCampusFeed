@@ -9,6 +9,7 @@
 #import "FeedSelectViewController.h"
 #import "Shared.h"
 #import "College.h"
+#import "SimpleTableCell.h"
 
 @implementation FeedSelectViewController
 
@@ -47,7 +48,6 @@
         [searchBar setDelegate:self];
         self.searchDisplay = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
         
-//        [self.searchDisplay.searchResultsTableView addSubview:searchBar];
         self.searchDisplay.searchResultsTableView.frame = self.tableView.frame;
         self.searchDisplay.delegate = self;
         self.searchDisplay.searchResultsDataSource = self;
@@ -147,17 +147,17 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"TableCell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"SimpleTableCell";
+    SimpleTableCell *cell = (SimpleTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
     if (cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:CellIdentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier
+                                                     owner:self options:nil];
+        cell = [nib objectAtIndex:0];
     }
     
     NSString *cellLabel = @"";
-    
     if (self.type == ALL_NEARBY_OTHER && indexPath.section == 0)
     {
         cellLabel = @"All Colleges";
@@ -174,9 +174,7 @@
             cellLabel = college.name;
         }
     }
-    [cell.textLabel setFont:CF_FONT_LIGHT(18)];
-    [cell.textLabel setTextAlignment:NSTextAlignmentCenter];
-    [cell.textLabel setText:cellLabel];
+    [cell assignSimpleText:cellLabel];
     
     return cell;
 }
@@ -262,6 +260,25 @@
 - (float)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return (section == 0) ? 0 : TABLE_HEADER_HEIGHT;
+}
+- (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.type == ALL_NEARBY_OTHER
+        && (indexPath.section == 0 || indexPath.section == 2))
+    {
+        return TABLE_CELL_HEIGHT;
+    }
+    else
+    {
+        College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
+        if (college != nil)
+        {
+            NSString *text = college.name;
+            return [Shared getSmallCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(18)];
+        }
+    }
+    
+    return TABLE_CELL_HEIGHT;
 }
 
 #pragma mark - Transitioning Protocol Methods

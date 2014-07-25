@@ -19,5 +19,6 @@
 
 - (void)assignTag:(Tag *)tag;
 - (void)assignCollege:(College *)college withRankNumber:(long)rankNo;
+- (void)assignSimpleText:(NSString *)text;
 
 @end

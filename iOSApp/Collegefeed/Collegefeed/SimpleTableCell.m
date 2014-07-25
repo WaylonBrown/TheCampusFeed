@@ -33,6 +33,12 @@
 
     // Configure the view for the selected state
 }
+- (void)assignSimpleText:(NSString *)text
+{
+    [self.messageLabel setFont:CF_FONT_LIGHT(18)];
+    [self.messageLabel setText:text];
+    [self.messageLabel setTextAlignment:NSTextAlignmentCenter];
+}
 
 - (void)assignTag:(Tag *)tag
 {

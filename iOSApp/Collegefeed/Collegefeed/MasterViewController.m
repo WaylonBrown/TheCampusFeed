@@ -54,10 +54,6 @@
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     tableViewController.refreshControl = self.refreshControl;
 
-
-    // Place logo at the top of the navigation bar
-    [self.navigationItem setTitleView:logoTitleView];
-
     // Assign fonts
     [self.currentFeedLabel      setAdjustsFontSizeToFitWidth:YES];
     [self.currentFeedLabel      setFont:CF_FONT_LIGHT(20)];

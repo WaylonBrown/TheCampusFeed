@@ -19,6 +19,12 @@
     [self setList:self.dataController.trendingColleges];
     return self;
 }
+- (void)loadView
+{
+    [super loadView];
+    // Place logo at the top of the navigation bar
+    [self.navigationItem setTitleView:logoTitleView];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

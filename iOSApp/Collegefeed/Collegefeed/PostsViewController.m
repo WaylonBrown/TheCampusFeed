@@ -77,6 +77,9 @@
 - (void)loadView
 {
     [super loadView];
+    
+    // Place logo at the top of the navigation bar
+    [self.navigationItem setTitleView:logoTitleView];
 }
 
 #pragma mark - Table View Override Functions
