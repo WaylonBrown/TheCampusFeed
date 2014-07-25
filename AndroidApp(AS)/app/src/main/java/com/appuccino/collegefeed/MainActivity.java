@@ -78,11 +78,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public static final int MIN_POST_LENGTH = 10;
 	public static final int MIN_COMMENT_LENGTH = 5;
     public static final int COLLEGE_LIST_UPDATE_IN_WEEKS = 2;
+    public static final int TIME_BETWEEN_POSTS = 5;     //in minutes
+    public static final int TIME_BETWEEN_COMMENTS = 3;  //in minutes
 	
 	boolean locationFound = false;
 	public static LocationManager mgr;
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
     public static Calendar lastCollegeListUpdate;
+    public static Calendar lastPostTime;
+    public static Calendar lastCommentTime;
 	public static ArrayList<Integer> permissions = new ArrayList<Integer>();	//length of 0 or null = no perms, otherwise the college ID is the perm IDs
 	public static ArrayList<College> collegeList = new ArrayList<College>();
 	
@@ -99,7 +103,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		super.onCreate(savedInstanceState);
         PrefManager.setup(this);
 		setupApp();
+
         lastCollegeListUpdate = PrefManager.getLastCollegeListUpdate();
+        lastPostTime = PrefManager.getLastPostTime();
+        lastCommentTime = PrefManager.getLastCommentTime();
+
         getNewCollegeListIfNeeded();
 		getLocation();
         PopupManager.run(this);
@@ -165,12 +173,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         if(currentFeedCollegeID == ALL_COLLEGES || currentFeedCollegeID == post.getCollegeID()){
             NewPostFragment.postList.add(0, post);
             myPostsList.add(post.getID());
-            PrefManager.putMyPostsList(myPostsList);
             NewPostFragment.updateList();
             MainActivity.goToNewPostsAndScrollToTop();
 
             Log.i("cfeed","New My Posts list is of size " + myPostsList.size());
         }
+        PrefManager.putMyPostsList(myPostsList);
+        lastPostTime = Calendar.getInstance();
+        PrefManager.putLastPostTime(lastPostTime);
     }
 
     private void getNewCollegeListIfNeeded(){
@@ -553,11 +563,25 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	{
 		if(permissions != null)
 		{
-			LayoutInflater inflater = getLayoutInflater();
-			View postDialogLayout = inflater.inflate(R.layout.dialog_post, null);
-			new NewPostDialog(this, postDialogLayout);
+            if(haventPostedIn5Minutes()){
+                LayoutInflater inflater = getLayoutInflater();
+                View postDialogLayout = inflater.inflate(R.layout.dialog_post, null);
+                new NewPostDialog(this, postDialogLayout);
+            } else {
+                Toast.makeText(this, "Sorry, you can only post once every 5 minutes.", Toast.LENGTH_LONG).show();
+            }
+
 		}
 	}
+
+    private boolean haventPostedIn5Minutes(){
+        Calendar now = Calendar.getInstance();
+        now.add(Calendar.MINUTE, -TIME_BETWEEN_POSTS);
+        if(lastPostTime != null && now.before(lastPostTime)){
+            return false;
+        }
+        return true;
+    }
 	
 	public static int getIdByCollegeName(String name) {
 		for(College c: collegeList)

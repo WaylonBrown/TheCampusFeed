@@ -232,9 +232,13 @@ public class CommentsActivity extends Activity{
 				{					
 					if(MainActivity.hasPermissions(post.getCollegeID()) || hasPermissions)
 					{
-						LayoutInflater inflater = getLayoutInflater();
-						View commentDialogLayout = inflater.inflate(R.layout.dialog_comment, null);
-						new NewCommentDialog(CommentsActivity.this, commentDialogLayout, post);
+                        if(haventCommentedIn3Minutes()){
+                            LayoutInflater inflater = getLayoutInflater();
+                            View commentDialogLayout = inflater.inflate(R.layout.dialog_comment, null);
+                            new NewCommentDialog(CommentsActivity.this, commentDialogLayout, post);
+                        } else {
+                            Toast.makeText(CommentsActivity.this, "Sorry, you can only comment once every 3 minutes.", Toast.LENGTH_LONG).show();
+                        }
 					}
 				}        	
 	        });
@@ -283,6 +287,15 @@ public class CommentsActivity extends Activity{
         setActionBarDividerVisibility();
 	}
 
+    private boolean haventCommentedIn3Minutes(){
+        Calendar now = Calendar.getInstance();
+        now.add(Calendar.MINUTE, -MainActivity.TIME_BETWEEN_COMMENTS);
+        if(MainActivity.lastCommentTime != null && now.before(MainActivity.lastCommentTime)){
+            return false;
+        }
+        return true;
+    }
+
     private static void setActionBarDividerVisibility() {
         if(flagButton != null && newCommentButton != null &&
                 (flagButton.getVisibility() == View.VISIBLE || newCommentButton.getVisibility() == View.VISIBLE)){
@@ -326,7 +339,6 @@ public class CommentsActivity extends Activity{
             for (ResolveInfo info : resInfo) {
                 if (info.activityInfo.packageName.toLowerCase().contains(type) ||
                         info.activityInfo.name.toLowerCase().contains(type) ) {
-                    Toast.makeText(this, "Package name: " + info.activityInfo.packageName + " Name: " + info.activityInfo.name, Toast.LENGTH_LONG).show();
                     share.setPackage(info.activityInfo.packageName);
                     found = true;
                     break;

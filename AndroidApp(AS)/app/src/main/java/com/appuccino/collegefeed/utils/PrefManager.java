@@ -26,6 +26,8 @@ public class PrefManager {
     public static final String APP_RUN_COUNT = "app_run_count";
     public static final String FIRST_DIALOG_DISPLAYED = "first_displayed";
     public static final String SECOND_DIALOG_DISPLAYED = "second_displayed";
+    public static final String LAST_POST_TIME = "last_post_time";
+    public static final String LAST_COMMENT_TIME = "last_comment_time";
 	
 	public static void setup(Context c) 
 	{
@@ -234,10 +236,6 @@ public class PrefManager {
         prefs.edit().putString(LAST_COLLEGE_UPDATE, storage).apply();
     }
 
-    public static void putMyPosttList(){
-
-    }
-
     public static ArrayList<Integer> getMyPostsList(){
         ArrayList<Integer> returnList = new ArrayList<Integer>();
         String stringList = prefs.getString(MY_POSTS_LIST, "");
@@ -300,5 +298,71 @@ public class PrefManager {
             }
         }
         prefs.edit().putString(MY_COMMENTS_LIST, storage).apply();
+    }
+
+    public static Calendar getLastPostTime() {
+        Calendar returnCal = Calendar.getInstance();
+        String lastString = prefs.getString(LAST_POST_TIME, "");
+        if(lastString.isEmpty()){
+            return null;
+        } else {
+            //MM,DD,YYYY
+            String[] splitString = lastString.split(",");
+            returnCal.set(Calendar.SECOND, Integer.valueOf(splitString[0]));
+            returnCal.set(Calendar.MINUTE, Integer.valueOf(splitString[1]));
+            returnCal.set(Calendar.HOUR_OF_DAY, Integer.valueOf(splitString[2]));
+            returnCal.set(Calendar.MONTH, Integer.valueOf(splitString[3]));
+            returnCal.set(Calendar.DAY_OF_MONTH, Integer.valueOf(splitString[4]));
+            returnCal.set(Calendar.YEAR, Integer.valueOf(splitString[5]));
+            return returnCal;
+        }
+    }
+
+    public static void putLastPostTime(Calendar c){
+        String storage = String.valueOf(c.get(Calendar.SECOND)) +
+                "," +
+                String.valueOf(c.get(Calendar.MINUTE)) +
+                "," +
+                String.valueOf(c.get(Calendar.HOUR_OF_DAY)) +
+                "," +
+                String.valueOf(c.get(Calendar.MONTH)) +
+                "," +
+                String.valueOf(c.get(Calendar.DAY_OF_MONTH)) +
+                "," +
+                String.valueOf(c.get(Calendar.YEAR));
+        prefs.edit().putString(LAST_POST_TIME, storage).apply();
+    }
+
+    public static Calendar getLastCommentTime() {
+        Calendar returnCal = Calendar.getInstance();
+        String lastString = prefs.getString(LAST_COMMENT_TIME, "");
+        if(lastString.isEmpty()){
+            return null;
+        } else {
+            //MM,DD,YYYY
+            String[] splitString = lastString.split(",");
+            returnCal.set(Calendar.SECOND, Integer.valueOf(splitString[0]));
+            returnCal.set(Calendar.MINUTE, Integer.valueOf(splitString[1]));
+            returnCal.set(Calendar.HOUR_OF_DAY, Integer.valueOf(splitString[2]));
+            returnCal.set(Calendar.MONTH, Integer.valueOf(splitString[3]));
+            returnCal.set(Calendar.DAY_OF_MONTH, Integer.valueOf(splitString[4]));
+            returnCal.set(Calendar.YEAR, Integer.valueOf(splitString[5]));
+            return returnCal;
+        }
+    }
+
+    public static void putLastCommentTime(Calendar c){
+        String storage = String.valueOf(c.get(Calendar.SECOND)) +
+                "," +
+                String.valueOf(c.get(Calendar.MINUTE)) +
+                "," +
+                String.valueOf(c.get(Calendar.HOUR_OF_DAY)) +
+                "," +
+                String.valueOf(c.get(Calendar.MONTH)) +
+                "," +
+                String.valueOf(c.get(Calendar.DAY_OF_MONTH)) +
+                "," +
+                String.valueOf(c.get(Calendar.YEAR));
+        prefs.edit().putString(LAST_COMMENT_TIME, storage).apply();
     }
 }

@@ -709,6 +709,10 @@ public class NetWorker {
                      //instantly add to new comments
                      CommentsActivity.commentList.add(0, responseComment);
                      CommentsActivity.updateList();
+
+                     MainActivity.lastCommentTime = Calendar.getInstance();
+                     PrefManager.putLastCommentTime(MainActivity.lastCommentTime);
+
                      Log.i("cfeed","New My Comments list is of size " + MainActivity.myCommentsList.size());
                  } catch (IOException e) {
                      e.printStackTrace();
