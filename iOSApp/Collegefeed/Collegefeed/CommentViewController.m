@@ -70,7 +70,13 @@
 - (void)viewDidLoad
 {   // called once the comment view has loaded
     [super viewDidLoad];
+    float cellHeight = [self tableView:self.postTableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    CGRect ptFrame = [self.postTableView frame];
+    float origHeight = ptFrame.size.height;
+    ptFrame.size.height = 250;
+    [self.postTableView setFrame:ptFrame];
     
+    //TODO: TRYING TO MODIFY THE SIZE OF THE POST TABLE VIEW IN THE COMMENT VIEW
     
     [self.postTableView reloadData];
     [self.commentTableView reloadData];
@@ -133,7 +139,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *text = @"";
-    float offset = -20; // to omit extra height of college label
+    float offset = 0; // to omit extra height of college label
     
     if (tableView == self.postTableView)
     {
@@ -142,6 +148,7 @@
     else if (tableView == self.commentTableView)
     {
         text = [(Comment *)[self.list objectAtIndex:[indexPath row]] getMessage];
+        offset = -20;
     }
     
     return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)] + offset;

@@ -20,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="aEV-VT-52H" userLabel="Post Table">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="aEV-VT-52H" userLabel="Post Table">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="164"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -34,12 +34,12 @@
                         <outlet property="delegate" destination="-1" id="VLI-zg-g2l"/>
                     </connections>
                 </tableView>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" directionalLockEnabled="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="25" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="e2t-m9-f0M" userLabel="Comment Table">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" directionalLockEnabled="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="25" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="e2t-m9-f0M" userLabel="Comment Table">
                     <rect key="frame" x="0.0" y="164" width="320" height="404"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="404" id="2kI-q2-uRD"/>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="404" id="2kI-q2-uRD"/>
                     </constraints>
                     <color key="sectionIndexBackgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="sectionIndexTrackingBackgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
@@ -103,7 +103,7 @@
                 <constraint firstItem="onw-bZ-Ayo" firstAttribute="leading" secondItem="cKt-4a-JCZ" secondAttribute="leading" id="5FO-m3-3w3"/>
                 <constraint firstAttribute="trailing" secondItem="aEV-VT-52H" secondAttribute="trailing" id="GIW-2t-Cpm"/>
                 <constraint firstItem="aEV-VT-52H" firstAttribute="leading" secondItem="cKt-4a-JCZ" secondAttribute="leading" id="Gua-aS-4vw"/>
-                <constraint firstItem="e2t-m9-f0M" firstAttribute="top" secondItem="cKt-4a-JCZ" secondAttribute="top" constant="164" id="Z1f-kw-QGD"/>
+                <constraint firstItem="e2t-m9-f0M" firstAttribute="top" relation="greaterThanOrEqual" secondItem="cKt-4a-JCZ" secondAttribute="top" constant="164" id="Z1f-kw-QGD"/>
                 <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="onw-bZ-Ayo" secondAttribute="bottom" constant="49" id="ZVX-IL-eo0"/>
                 <constraint firstItem="e2t-m9-f0M" firstAttribute="top" secondItem="aEV-VT-52H" secondAttribute="bottom" id="nea-ap-qJS"/>
                 <constraint firstAttribute="trailing" secondItem="e2t-m9-f0M" secondAttribute="trailing" id="nxD-wF-aYj"/>
