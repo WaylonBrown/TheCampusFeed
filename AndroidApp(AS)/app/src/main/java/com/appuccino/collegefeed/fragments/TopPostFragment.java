@@ -382,19 +382,15 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		return null;
 	}
 
-    public static void addToList(List<Post> newList){
-        for(Post p : newList){
-            listAdapter.add(p);
-        }
-    }
-
 	public static void updateList() 
 	{	
 		if(listAdapter != null)
 		{
 			Log.i("cfeed","TEST new post size: " + postList.size());
 			listAdapter.setCollegeFeedID(currentFeedID);
-
+            listAdapter.clear();;
+            listAdapter.addAll(postList);
+            Log.i("cfeed","TEST last post size: " + listAdapter.getCount());
 			listAdapter.notifyDataSetChanged();
 		}
 	}
