@@ -246,6 +246,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
 		actionBar.setIcon(R.drawable.logofake);
         actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(false);
 	}
 
 	public void changeFeed(int id) {

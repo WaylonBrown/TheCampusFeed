@@ -100,8 +100,9 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
         pullToRefresh = (PullToRefreshLayout) rootView.findViewById(R.id.pullToRefresh);
         ActionBarPullToRefresh.from(getActivity())
 //                .options(Options.create()
-//                    .headerLayout(R.layout.pull_to_refresh_header)
-//                    .build())
+//                        .headerLayout(R.layout.pull_to_refresh_header)
+//                        .headerTransformer(new CustomisedHeaderTransformer())
+//                        .build())
                 .allChildrenArePullable()
                 .listener(this)
                 .setup(pullToRefresh);
@@ -472,4 +473,33 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 			list.setSelectionAfterHeaderView();
 		}
 	}
+
+//    /**
+//     * Here's a customised header transformer which displays the scroll progress as text.
+//     */
+//    static class CustomisedHeaderTransformer extends HeaderTransformer {
+//
+//        private View mHeaderView;
+//        private TextView mMainTextView;
+//        private TextView mProgressTextView;
+//
+//        @Override
+//        public void onViewCreated(Activity activity, View headerView) {
+//            mHeaderView = headerView;
+//            mMainTextView = (TextView) headerView.findViewById(R.id.ptr_text);
+//            mMainTextView.setTextColor(mainActivity.getResources().getColor(R.color.white));
+//        }
+//
+//        @Override
+//        public boolean showHeaderView() {
+//            return super.showHeaderView();
+//        }
+//
+//        @Override
+//        public boolean hideHeaderView() {
+//            return true;
+//        }
+//
+//
+//    }
 }
