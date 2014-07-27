@@ -231,15 +231,22 @@ public class MyContentActivity extends Activity{
 
     private void setupActionbar() {
         ActionBar actionBar = getActionBar();
-        actionBar.setCustomView(R.layout.actionbar_main);
+        actionBar.setCustomView(R.layout.actionbar_tag_layout);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayUseLogoEnabled(false);
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
         actionBar.setIcon(R.drawable.logofake);
 
-        ImageView postButton = (ImageView)findViewById(R.id.newPostButton);
-        postButton.setVisibility(View.GONE);
+        ImageView backButton = (ImageView)findViewById(R.id.backButtonTag);
+        if(backButton != null){
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
+                }
+            });
+        }
     }
 
     private void setupViews() {
@@ -282,5 +289,11 @@ public class MyContentActivity extends Activity{
                 bottomLoadingSpinner.setVisibility(View.INVISIBLE);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }
