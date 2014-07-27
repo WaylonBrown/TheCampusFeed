@@ -111,17 +111,20 @@ resource "Posts" do
     let(:raw_post) { params.to_json }
 
     parameter :text, "The new post's text.", :required => true
+    parameter :user_token, "The user token.", :required => true
 
     example "Creating a post (tags objects are created automatically)" do
       do_request(
-        :text => "This is a #comment #wtih #tag #testing #yo #yo #yo"
+        :text => "This is a #post #wtih #tag #testing #yo #yo #yo",
+        :user_token => "18006969696"
       )
       status.should == 201
     end
 
     example "Error when post is too short" do
       do_request(
-        :text => "S"
+        :text => "S",
+        :user_token => "18006969696"
       )
       status.should == 422
     end
@@ -131,7 +134,8 @@ resource "Posts" do
       longString = (0...150).map { o[rand(o.length)] }.join
 
       do_request(
-        :text => longString
+        :text => longString,
+        :user_token => "18006969696"
       )
       status.should == 422
     end

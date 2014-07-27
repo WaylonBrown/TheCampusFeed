@@ -9,13 +9,18 @@
       "required": true,
       "name": "text",
       "description": "The new post's text."
+    },
+    {
+      "required": true,
+      "name": "user_token",
+      "description": "The user token."
     }
   ],
   "requests": [
     {
       "request_method": "POST",
       "request_path": "/api/v1/colleges/2015/posts",
-      "request_body": "{\"text\":\"This is a #comment #wtih #tag #testing #yo #yo #yo\"}",
+      "request_body": "{\"text\":\"This is a #post #wtih #tag #testing #yo #yo #yo\",\"user_token\":\"18006969696\"}",
       "request_headers": {
         "Content-Type": "application/json",
         "Host": "example.org",
@@ -26,8 +31,8 @@
       "request_content_type": "application/json",
       "response_status": 201,
       "response_status_text": "Created",
-      "response_body": "{\"id\":1070,\"text\":\"This is a #comment #wtih #tag #testing #yo #yo #yo\",\"score\":null,\"hidden\":null,\"created_at\":\"2014-07-21T01:14:45.815Z\",\"updated_at\":\"2014-07-21T01:14:45.815Z\"}",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/posts/1070","Content-Type":"application/json; charset=utf-8","ETag":"\"5e9e80bd2f8c6a56ed0bde8dd10590f3\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"429aecef-95c4-495b-8ebf-98e6f881b3d6","X-Runtime":"0.076054","Content-Length":"178"},
+      "response_body": "{\"id\":1075,\"text\":\"This is a #post #wtih #tag #testing #yo #yo #yo\",\"score\":null,\"hidden\":null,\"created_at\":\"2014-07-27T23:24:28.442Z\",\"updated_at\":\"2014-07-27T23:24:28.442Z\"}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/posts/1075","Content-Type":"application/json; charset=utf-8","ETag":"\"4391b165f9f7901b27bd0c51394eb7d3\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"1704d2c8-7b9d-47d3-9ee9-75ffb872b3cd","X-Runtime":"0.112460","Content-Length":"175"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

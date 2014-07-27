@@ -9,13 +9,18 @@
       "required": true,
       "name": "text",
       "description": "The new post's text."
+    },
+    {
+      "required": true,
+      "name": "user_token",
+      "description": "The user token."
     }
   ],
   "requests": [
     {
       "request_method": "POST",
       "request_path": "/api/v1/colleges/2015/posts",
-      "request_body": "{\"text\":\"S\"}",
+      "request_body": "{\"text\":\"S\",\"user_token\":\"18006969696\"}",
       "request_headers": {
         "Content-Type": "application/json",
         "Host": "example.org",
@@ -27,7 +32,7 @@
       "response_status": 422,
       "response_status_text": "Unprocessable Entity",
       "response_body": "{\"text\":[\"is too short (minimum is 10 characters)\"]}",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","Cache-Control":"no-cache","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"46273575-00f6-4c48-8302-d57778f25758","X-Runtime":"0.023017","Content-Length":"52"},
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","Cache-Control":"no-cache","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"2c07fc88-8edb-47d8-80f7-4c72db053deb","X-Runtime":"0.065044","Content-Length":"52"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

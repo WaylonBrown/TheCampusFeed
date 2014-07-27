@@ -109,6 +109,8 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
 
+    params.require(:user_token)
+
     @post = @college.posts.build(post_params)
 
     respond_to do |format|

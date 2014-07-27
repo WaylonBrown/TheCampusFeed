@@ -28,8 +28,6 @@ CollegeFeed::Application.routes.draw do
     scope '/api/v1', defaults: {format: :json}, shallow_path: '/api/v1' do
 
 
-
-
       get '/comments/many' => 'comments#many'
       get '/posts/many' => 'posts#many'
 
