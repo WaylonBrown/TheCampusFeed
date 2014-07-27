@@ -99,6 +99,9 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		// Now give the find the PullToRefreshLayout and set it up
         pullToRefresh = (PullToRefreshLayout) rootView.findViewById(R.id.pullToRefresh);
         ActionBarPullToRefresh.from(getActivity())
+//                .options(Options.create()
+//                    .headerLayout(R.layout.pull_to_refresh_header)
+//                    .build())
                 .allChildrenArePullable()
                 .listener(this)
                 .setup(pullToRefresh);
