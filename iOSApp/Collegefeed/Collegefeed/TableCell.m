@@ -54,6 +54,7 @@
 {
     [self assign:post WithCellHeight:height];
     [self.gpsIconImageView setHidden:(!isNearby)];
+
 }
 
 - (void)assign:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj WithCellHeight:(float)height;
@@ -92,7 +93,6 @@
     
     // Shadow Rendering
     CGRect rect = self.contentView.bounds;
-    
     rect.size.height = height;
     UIBezierPath *path = [UIBezierPath bezierPathWithRect:rect];
     self.contentView.layer.shadowPath = path.CGPath;

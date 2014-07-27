@@ -42,11 +42,10 @@
         [self.dataController fetchCommentsWithPostId:postID];
 
         float postCellHeight = [self tableView:self.postTableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-        CGRect frame = self.postTableView.frame;
-        frame.size.height = postCellHeight;
-        [self.postTableView setFrame:frame];
+        self.postTableHeightConstraint.constant = postCellHeight + self.navigationController.navigationBar.frame.size.height;
+        [self.view setNeedsUpdateConstraints];
         
-         [self.postTableView reloadData];
+        [self.postTableView reloadData];
         [self.commentTableView reloadData];
         
         College *college = [self.dataController getCollegeById:self.originalPost.collegeID];
@@ -70,13 +69,6 @@
 - (void)viewDidLoad
 {   // called once the comment view has loaded
     [super viewDidLoad];
-    float cellHeight = [self tableView:self.postTableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    CGRect ptFrame = [self.postTableView frame];
-    float origHeight = ptFrame.size.height;
-    ptFrame.size.height = 250;
-    [self.postTableView setFrame:ptFrame];
-    
-    //TODO: TRYING TO MODIFY THE SIZE OF THE POST TABLE VIEW IN THE COMMENT VIEW
     
     [self.postTableView reloadData];
     [self.commentTableView reloadData];
@@ -85,6 +77,7 @@
 {   // called when the comment view is initially loaded
   
     [super loadView];
+    
 }
 
 #pragma mark - Table view methods
@@ -119,7 +112,11 @@
     
     if (tableView == self.postTableView)
     {   // PostView table; get the original post to display in this table
+        [cell.dividerView removeFromSuperview];
+        [cell.collegeLabel removeFromSuperview];
+        [cell.commentCountLabel removeFromSuperview];
         [cell assign:self.originalPost WithCellHeight:height];
+
         return cell;
     }
     else if (tableView == self.commentTableView)
@@ -151,7 +148,7 @@
         text = [(Comment *)[self.list objectAtIndex:[indexPath row]] getMessage];
         offset = -20;
     }
-    
+
     return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)] + offset;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
