@@ -611,6 +611,21 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		return 0;
 	}
 
+    public static boolean containsSymbols(String text) {
+        if(text.contains("!") ||
+                text.contains("$") ||
+                text.contains("%") ||
+                text.contains("^") ||
+                text.contains("&") ||
+                text.contains("*") ||
+                text.contains("+") ||
+                text.contains(".") ||
+                text.contains(",")){
+            return true;
+        }
+        return false;
+    }
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

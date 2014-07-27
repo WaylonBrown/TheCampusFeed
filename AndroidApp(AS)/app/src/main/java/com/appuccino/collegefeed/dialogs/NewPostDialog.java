@@ -152,7 +152,7 @@ public class NewPostDialog extends AlertDialog.Builder{
 						//prevent indexoutofboundsexception
 						if(wordArray[i].length() > 0)
 						{
-							if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1 && !containsSymbols(wordArray[i]))
+							if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1 && !MainActivity.containsSymbols(wordArray[i]))
 							{
 								currentTags += wordArray[i] + " ";
 							}
@@ -178,20 +178,6 @@ public class NewPostDialog extends AlertDialog.Builder{
     	
     	setupCollege(college);
 	}
-
-    private boolean containsSymbols(String text) {
-        if(text.contains("!") ||
-                text.contains("$") ||
-                text.contains("%") ||
-                text.contains("^") ||
-                text.contains("&") ||
-                text.contains("*") ||
-                text.contains("+") ||
-                text.contains(".")){
-            return true;
-        }
-        return false;
-    }
 
 	private void setupCollege(TextView college) {
 		String collegeString = "Posting to ";
