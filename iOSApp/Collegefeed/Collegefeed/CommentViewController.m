@@ -125,6 +125,7 @@
     else if (tableView == self.commentTableView)
     {   // CommentView table; get the comment to be displayed in this cell
         Comment *commentAtIndex = (Comment*)[self.dataController.commentList objectAtIndex:indexPath.row];
+        [commentAtIndex setCollegeID:self.originalPost.collegeID];
         [cell assign:commentAtIndex WithCellHeight:height];
         return cell;
     }
@@ -240,10 +241,10 @@
     }
     return [NSString stringWithFormat:@"%d seconds ago", commentAgeSeconds];
 }
-- (void)castVote:(Vote *)vote
+- (BOOL)castVote:(Vote *)vote
 {
     [vote setGrandparentID:self.originalPost.postID];
-    [super castVote:vote];
+    return [super castVote:vote];
 }
 
 #pragma mark - CreationViewProtocol Delegate Methods

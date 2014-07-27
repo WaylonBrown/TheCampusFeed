@@ -14,7 +14,6 @@
 
 @protocol ChildCellDelegate <NSObject>
 
-- (void)castVote:(Vote *)vote;
-- (void)castCancellationVote:(Vote *)vote;
+- (BOOL)castVote:(Vote *)vote;
 
 @end

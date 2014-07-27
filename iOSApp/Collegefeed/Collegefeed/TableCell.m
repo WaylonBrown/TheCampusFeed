@@ -12,6 +12,7 @@
 #import "PostsViewController.h"
 #import "ChildCellDelegate.h"
 #import "Shared.h"
+#import "Tag.h"
 
 @implementation TableCell
 
@@ -128,7 +129,7 @@
 }
 - (IBAction)downVotePresed:(id)sender
 {   // User clicked downvote button
-    
+
     BOOL undoingDownvote = [self.object getVote] != nil && [self.object getVote].upvote == false;
     BOOL newUpvoteValue = undoingDownvote;
     
@@ -148,9 +149,11 @@
         [self.object setVote:vote];
     }
     
-    [self updateVoteButtons];
     id<ChildCellDelegate> strongDelegate = self.delegate;
-    [strongDelegate castVote:vote];
+    if ([strongDelegate castVote:vote])
+    {   // Need to check if it was a valid downvote before updating UI
+        [self updateVoteButtons];
+    }
 }
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
 {
@@ -226,9 +229,8 @@
     NSArray *words = [self.messageLabel.text componentsSeparatedByString:@" "];
     for (NSString *word in words)
     {
-        if ([word hasPrefix:@"#"])
+        if ([Tag withMessageIsValid:word])
         {
-
             NSRange range = [self.messageLabel.text rangeOfString:word];
             
             [self.messageLabel addLinkToURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", word]]

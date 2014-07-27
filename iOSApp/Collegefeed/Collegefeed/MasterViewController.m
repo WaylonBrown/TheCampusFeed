@@ -211,7 +211,7 @@
 
 #pragma mark - Delegate Methods
 
-- (void)castVote:(Vote *)vote
+- (BOOL)castVote:(Vote *)vote
 {   // vote was cast in a table cell
 
     College *college = [self.dataController getCollegeById:vote.collegeId];
@@ -220,11 +220,14 @@
         && vote.upvote == NO)
     {   // users cannot cast downvotes to a distant school
         [self.toastController toastInvalidDownvote];
+        return NO;
     }
     else
     {
         [self.dataController createVote:vote];
+        return YES;
     }
+    return NO;
 }
 
 #pragma mark - CreationViewProtocol Delegate Methods
