@@ -41,13 +41,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Collegefeed/TableCell.m"
-            timestampString = "428195994.221737"
+            filePath = "Collegefeed/MasterViewController.m"
+            timestampString = "428201300.433339"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
-            landmarkName = "-downVotePresed:"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
+            landmarkName = "-castVote:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -57,13 +57,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Collegefeed/TableCell.m"
-            timestampString = "428195994.221737"
+            filePath = "Collegefeed/Networker/Networker/Networker.m"
+            timestampString = "428202672.875365"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
-            landmarkName = "-downVotePresed:"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "+DELETE:toUrl:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

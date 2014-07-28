@@ -275,16 +275,12 @@
             {
                 if (networkVote.upvote == true)
                 {
-                    if ([self.userPostDownvotes containsObject:voteID])
-                        [self.userPostDownvotes removeObject:voteID];
-                    else if (![self.userPostUpvotes containsObject:voteID])
+                    if (![self.userPostUpvotes containsObject:voteID])
                         [self.userPostUpvotes addObject:voteID];
                 }
                 else
                 {
-                    if ([self.userPostUpvotes containsObject:voteID])
-                        [self.userPostUpvotes removeObject:voteID];
-                    else if (![self.userPostDownvotes containsObject:voteID])
+                    if (![self.userPostDownvotes containsObject:voteID])
                         [self.userPostDownvotes addObject:voteID];
                     
                 }
@@ -293,16 +289,12 @@
             {
                 if (networkVote.upvote == true)
                 {
-                    if ([self.userCommentDownvotes containsObject:voteID])
-                        [self.userCommentDownvotes removeObject:voteID];
-                    else if (![self.userCommentUpvotes containsObject:voteID])
+                    if (![self.userCommentUpvotes containsObject:voteID])
                         [self.userCommentUpvotes addObject:voteID];
                 }
                 else
                 {
-                    if ([self.userCommentUpvotes containsObject:voteID])
-                        [self.userCommentUpvotes removeObject:voteID];
-                    else if (![self.userCommentDownvotes containsObject:voteID])
+                    if (![self.userCommentDownvotes containsObject:voteID])
                         [self.userCommentDownvotes addObject:voteID];
                 }
             }
@@ -314,6 +306,31 @@
     {
         return NO;
     }
+}
+- (BOOL)cancelVote:(Vote *)vote
+{
+    BOOL success = NO;
+    NSNumber *voteID = [NSNumber numberWithLong:vote.parentID];
+
+    if (vote.votableType == COMMENT)
+    {
+        success = [Networker DELETEVoteData:[vote toJSON]
+                             WithCommentId:vote.parentID
+                                WithPostId:vote.grandparentID];
+        [self.userCommentUpvotes removeObject:voteID];
+        [self.userCommentDownvotes removeObject:voteID];
+    }
+    else if (vote.votableType == POST)
+    {
+        success = [Networker DELETEVoteData:[vote toJSON]
+                                WithPostId:vote.parentID];
+        
+        [self.userPostUpvotes removeObject:voteID];
+        [self.userCommentDownvotes removeObject:voteID];
+    }
+    
+    [self saveUserVotes];
+    return success;
 }
 
 #pragma mark - Local Data Access

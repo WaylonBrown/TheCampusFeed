@@ -68,6 +68,7 @@
     [self.navigationController.navigationBar setTranslucent:YES];
     [self.navigationController.navigationBar setAlpha:0.9f];
     [self refresh];
+    
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
@@ -209,25 +210,25 @@
                 position:[NSValue valueWithCGPoint:point]];
 }
 
-#pragma mark - Delegate Methods
+#pragma mark - ChildCellDelegate Methods
 
 - (BOOL)castVote:(Vote *)vote
 {   // vote was cast in a table cell
-
     College *college = [self.dataController getCollegeById:vote.collegeId];
     if (college != nil
-        && ![self.dataController.nearbyColleges containsObject:college]
-        && vote.upvote == NO)
-    {   // users cannot cast downvotes to a distant school
-        [self.toastController toastInvalidDownvote];
-        return NO;
-    }
-    else
+        && [self.dataController.nearbyColleges containsObject:college]
+        && vote.upvote == YES)
     {
-        [self.dataController createVote:vote];
-        return YES;
+        return [self.dataController createVote:vote];
     }
+
+    // users cannot cast downvotes to a distant school
+    [self.toastController toastInvalidDownvote];
     return NO;
+}
+- (BOOL)cancelVote:(Vote *)vote
+{
+    return [self.dataController cancelVote:vote];
 }
 
 #pragma mark - CreationViewProtocol Delegate Methods

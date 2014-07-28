@@ -103,29 +103,60 @@
 - (IBAction)upVotePressed:(id)sender
 {   // User clicked upvote button
     
-    BOOL undoingUpvote = [self.object getVote] != nil && [self.object getVote].upvote == true;
+    id<ChildCellDelegate> strongDelegate = self.delegate;
     
-    BOOL newUpvoteValue = !undoingUpvote;
+    Vote *existingVote = [self.object getVote];
+    Vote *newVote = [[Vote alloc] initWithVotableID:[self.object getID]
+                                    withUpvoteValue:true
+                                      asVotableType:[self.object getType]];
+    [newVote setCollegeId:[self.object getCollegeID]];
     
-    Vote *vote = [[Vote alloc] initWithVotableID:[self.object getID]
-                                 withUpvoteValue:newUpvoteValue
-                                   asVotableType:[self.object getType]];
-    
-    if (undoingUpvote)
-    {
-        [self.object setVote:nil];
-        [self.object decrementScore];
+    if (existingVote == nil)
+    {   // User is submitting a normal upvote
+        if ([strongDelegate castVote:newVote])
+        {
+            [self.object setVote:newVote];
+            [self.object incrementScore];
+        }
     }
     else
     {
-        [vote setCollegeId:[self.object getCollegeID]];
-        [self.object incrementScore];
-        [self.object setVote:vote];
+        [strongDelegate cancelVote:existingVote];
+        
+        if (existingVote.upvote == true)
+        {   // User is undoing an existing upvote; cancel it
+            [self.object setVote:nil];
+            [self.object decrementScore];
+        }
+        else if (existingVote.upvote == false)
+        {   // User is changing their downvote to an upvote;
+            // cancel downvote and cast an upvote
+            if ([strongDelegate castVote:newVote])
+            {
+                [self.object setVote:newVote];
+            }
+        }
     }
     
     [self updateVoteButtons];
-    id<ChildCellDelegate> strongDelegate = self.delegate;
-    [strongDelegate castVote:vote];
+    
+//    BOOL undoingUpvote = [self.object getVote] != nil && [self.object getVote].upvote == true;
+//    BOOL newUpvoteValue = !undoingUpvote;
+
+//    if (undoingUpvote)
+//    {
+//        [self.object setVote:nil];
+//        [self.object decrementScore];
+//    }
+//    else
+//    {
+//        [vote setCollegeId:[self.object getCollegeID]];
+//        [self.object incrementScore];
+//        [self.object setVote:vote];
+//    }
+    
+//    id<ChildCellDelegate> strongDelegate = self.delegate;
+//    [strongDelegate castVote:vote];
 }
 - (IBAction)downVotePresed:(id)sender
 {   // User clicked downvote button

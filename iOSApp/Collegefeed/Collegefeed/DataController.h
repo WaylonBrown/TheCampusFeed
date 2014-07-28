@@ -172,5 +172,6 @@
 
 // Votes
 - (BOOL)createVote:(Vote *)vote;
+- (BOOL)cancelVote:(Vote *)vote;
 
 @end

@@ -72,6 +72,10 @@
     
     return nil;
 }
++ (NSData *)DELETE:(NSData *)data toUrl:(NSURL *)url
+{
+    return nil;
+}
 
 #pragma mark - Specific API Requests
 
@@ -313,6 +317,14 @@
                   [NSString stringWithFormat:@"%@/%@/comments/%ld/votes/score",
                    API_URL, API_VERSION, commentId]];
     return [self GET:url];
+}
++ (BOOL)DELETEVoteData:(NSData *)data WithPostId:(long)postId
+{
+    return NO;
+}
++ (BOOL)DELETEVoteData:(NSData *)data WithCommentId:(long)commentId WithPostId:(long)postId
+{
+    return NO;
 }
 
 @end
