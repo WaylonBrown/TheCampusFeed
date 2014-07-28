@@ -52,7 +52,7 @@ public class NetWorker {
          int feedID = 0;
          int pageNumber;
          boolean wasPullToRefresh;
-         final int POSTS_PER_PAGE = 8;
+         final int POSTS_PER_PAGE = 20;
 
          public GetPostsTask()
          {

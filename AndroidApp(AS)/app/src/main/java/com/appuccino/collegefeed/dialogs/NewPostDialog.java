@@ -3,6 +3,7 @@ package com.appuccino.collegefeed.dialogs;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -95,7 +96,10 @@ public class NewPostDialog extends AlertDialog.Builder{
     			String thisString = postMessage.getText().toString().trim();
     			if(thisString.length() >= MainActivity.MIN_POST_LENGTH)
     			{
-    				Post newPost = new Post(thisString, selectedCollegeID);
+                    TelephonyManager tMgr = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+                    String phoneNumber = tMgr.getLine1Number();
+
+    				Post newPost = new Post(thisString, selectedCollegeID, phoneNumber);
         			new MakePostTask(context).execute(newPost);
         			dialog.dismiss();
     			}

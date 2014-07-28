@@ -1,8 +1,13 @@
 package com.appuccino.collegefeed.objects;
 
+import android.util.JsonWriter;
+
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.utils.TimeManager;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class Post extends AbstractPostComment{
@@ -12,8 +17,9 @@ public class Post extends AbstractPostComment{
     private int commentCount = 0;
     private String webURL;
     private String appURL;
+    private String phoneNumber;
 	
-	public Post(String m, int c)
+	public Post(String m, int c, String p)
 	{
 		score = 1;
 		message = m;
@@ -25,6 +31,7 @@ public class Post extends AbstractPostComment{
 		}
         webURL = "";
         appURL = "";
+        phoneNumber = p;
 	}
 	
 	public Post(int id, String message, int score, int collegeID, String time)
@@ -107,5 +114,24 @@ public class Post extends AbstractPostComment{
 
     public String getAppURL(){
         return appURL;
+    }
+
+    public String getPhoneNumber(){
+        return phoneNumber;
+    }
+
+    @Override
+    public ByteArrayOutputStream toJSONString() throws IOException {
+        ByteArrayOutputStream ret = new ByteArrayOutputStream();
+        JsonWriter writer = new JsonWriter(new OutputStreamWriter(ret, "UTF-8"));
+
+        writer.setIndent("  ");
+        writer.beginObject();
+        writer.name("text"); writer.value(message);
+        writer.name("user_token"); writer.value(phoneNumber);
+        writer.endObject();
+        writer.close();
+
+        return ret;
     }
 }
