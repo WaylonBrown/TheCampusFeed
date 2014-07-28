@@ -53,8 +53,9 @@
 - (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby WithCellHeight:(float)height;
 {
     [self assign:post WithCellHeight:height];
+    
     [self.gpsIconImageView setHidden:(!isNearby)];
-
+    [self setNeedsDisplay];
 }
 
 - (void)assign:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj WithCellHeight:(float)height;
@@ -134,57 +135,55 @@
             if ([strongDelegate castVote:newVote])
             {
                 [self.object setVote:newVote];
+                [self.object incrementScore];
+                [self.object incrementScore];
             }
         }
     }
     
     [self updateVoteButtons];
-    
-//    BOOL undoingUpvote = [self.object getVote] != nil && [self.object getVote].upvote == true;
-//    BOOL newUpvoteValue = !undoingUpvote;
-
-//    if (undoingUpvote)
-//    {
-//        [self.object setVote:nil];
-//        [self.object decrementScore];
-//    }
-//    else
-//    {
-//        [vote setCollegeId:[self.object getCollegeID]];
-//        [self.object incrementScore];
-//        [self.object setVote:vote];
-//    }
-    
-//    id<ChildCellDelegate> strongDelegate = self.delegate;
-//    [strongDelegate castVote:vote];
 }
 - (IBAction)downVotePresed:(id)sender
 {   // User clicked downvote button
 
-    BOOL undoingDownvote = [self.object getVote] != nil && [self.object getVote].upvote == false;
-    BOOL newUpvoteValue = undoingDownvote;
+    id<ChildCellDelegate> strongDelegate = self.delegate;
     
-    Vote *vote = [[Vote alloc] initWithVotableID:[self.object getID]
-                                 withUpvoteValue:newUpvoteValue
-                                   asVotableType:[self.object getType]];
+    Vote *existingVote = [self.object getVote];
+    Vote *newVote = [[Vote alloc] initWithVotableID:[self.object getID]
+                                    withUpvoteValue:false
+                                      asVotableType:[self.object getType]];
+    [newVote setCollegeId:[self.object getCollegeID]];
     
-    if (undoingDownvote)
-    {
-        [self.object setVote:nil];
-        [self.object incrementScore];
+    if (existingVote == nil)
+    {   // User is submitting a normal upvote
+        if ([strongDelegate castVote:newVote])
+        {
+            [self.object setVote:newVote];
+            [self.object decrementScore];
+        }
     }
     else
     {
-        [vote setCollegeId:[self.object getCollegeID]];
-        [self.object decrementScore];
-        [self.object setVote:vote];
+        [strongDelegate cancelVote:existingVote];
+        
+        if (existingVote.upvote == false)
+        {   // User is undoing an existing downvote; cancel it
+            [self.object setVote:nil];
+            [self.object incrementScore];
+        }
+        else if (existingVote.upvote == true)
+        {   // User is changing their upvote to a downvote
+            // cancel upvote and cast an downvote
+            if ([strongDelegate castVote:newVote])
+            {
+                [self.object setVote:newVote];
+                [self.object decrementScore];
+                [self.object decrementScore];
+            }
+        }
     }
     
-    id<ChildCellDelegate> strongDelegate = self.delegate;
-    if ([strongDelegate castVote:vote])
-    {   // Need to check if it was a valid downvote before updating UI
-        [self updateVoteButtons];
-    }
+    [self updateVoteButtons];
 }
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
 {
@@ -204,7 +203,7 @@
         controller.navigationItem.rightBarButtonItem = nil;
     }
     [masterView.navigationController pushViewController:controller
-                                        animated:YES];
+                                               animated:YES];
 }
 
 #pragma mark - Helper Methods

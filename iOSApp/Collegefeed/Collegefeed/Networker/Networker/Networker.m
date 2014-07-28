@@ -72,9 +72,35 @@
     
     return nil;
 }
-+ (NSData *)DELETE:(NSData *)data toUrl:(NSURL *)url
++ (BOOL)DELETE:(NSData *)data toUrl:(NSURL *)url
 {
-    return nil;
+    NSLog(@"URL: %@", url);
+    
+    // Build request
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    NSString *length = [NSString stringWithFormat:@"%lu", (unsigned long)[data length]];
+    [request setURL:url];
+    [request setHTTPMethod:@"DELETE"];
+    [request setValue:length forHTTPHeaderField:@"Content-Length"];
+    [request setValue:CONTENT_TYPE forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:data];
+    
+    // Send request and get the response
+    NSHTTPURLResponse *response;
+    NSError     *error;
+    NSData      *POSTReply = [NSURLConnection sendSynchronousRequest:request
+                                                   returningResponse:&response
+                                                               error:&error];
+    NSString    *stringReply = [[NSString alloc] initWithBytes:[POSTReply bytes]
+                                                        length:[POSTReply length]
+                                                      encoding: NSASCIIStringEncoding];
+    
+    if ([response statusCode] == 202)
+    {
+        return YES;
+    }
+    
+    return NO;
 }
 
 #pragma mark - Specific API Requests

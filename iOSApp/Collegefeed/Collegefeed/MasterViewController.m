@@ -215,9 +215,8 @@
 - (BOOL)castVote:(Vote *)vote
 {   // vote was cast in a table cell
     College *college = [self.dataController getCollegeById:vote.collegeId];
-    if (college != nil
-        && [self.dataController.nearbyColleges containsObject:college]
-        && vote.upvote == YES)
+    if ((college != nil && [self.dataController.nearbyColleges containsObject:college])
+        || vote.upvote == YES)
     {
         return [self.dataController createVote:vote];
     }
