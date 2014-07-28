@@ -16,5 +16,6 @@
 
 - (BOOL)castVote:(Vote *)vote;
 - (BOOL)cancelVote:(Vote *)vote;
+- (void)didSelectTag:(NSString *)tagMessage;
 
 @end

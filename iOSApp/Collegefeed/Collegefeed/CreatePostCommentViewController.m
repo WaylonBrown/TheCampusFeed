@@ -33,9 +33,6 @@
 {
     [super viewDidLoad];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedNotification:) name:@"Toast" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self.toastController selector:@selector(toastHidden) name:@"ToastHidden" object:nil];
-
     self.alertView.layer.borderWidth = 2;
     self.alertView.layer.cornerRadius = 5;
     [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];

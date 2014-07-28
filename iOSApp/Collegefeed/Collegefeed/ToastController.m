@@ -139,8 +139,16 @@
     }
     [self addToQueue:collegeMessage];
     
-    NSString *infoMessage = @"You can upvote, downvote, post, and comment on that college's posts";
-    [self addToQueue:infoMessage];
+    if (colleges.count > 1)
+    {
+        NSString *infoMessage = @"You can upvote, downvote, post, and comment on those colleges' posts";
+        [self addToQueue:infoMessage];
+    }
+    else if (colleges.count == 1)
+    {
+        NSString *infoMessage = @"You can upvote, downvote, post, and comment on that college's posts";
+        [self addToQueue:infoMessage];
+    }
 }
 
 #pragma mark - Private Helpers

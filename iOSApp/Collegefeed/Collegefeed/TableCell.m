@@ -187,23 +187,8 @@
 }
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
 {
-    NSString             *tagMessage = [url absoluteString];
-    MasterViewController *masterView        = (MasterViewController*)self.delegate;
-    
-    PostsViewController  *controller = [[PostsViewController alloc] initAsType:TAG_VIEW
-                                                            withDataController:masterView.dataController];
-    [controller setTagMessage:tagMessage];
-    
-    if (masterView.dataController.nearbyColleges.count > 0)
-    {
-        [controller placeCreatePost];
-    }
-    else
-    {
-        controller.navigationItem.rightBarButtonItem = nil;
-    }
-    [masterView.navigationController pushViewController:controller
-                                               animated:YES];
+    NSString  *tagMessage = [url absoluteString];
+    [self.delegate didSelectTag:tagMessage];
 }
 
 #pragma mark - Helper Methods

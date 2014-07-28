@@ -14,6 +14,7 @@
 // Full views
 #import "MasterViewController.h"
 #import "CommentViewController.h"
+#import "PostsViewController.h"
 
 // Minor views and dialogs
 #import "TableCell.h"
@@ -228,6 +229,24 @@
 - (BOOL)cancelVote:(Vote *)vote
 {
     return [self.dataController cancelVote:vote];
+}
+- (void)didSelectTag:(NSString *)tagMessage
+{
+    PostsViewController  *controller = [[PostsViewController alloc] initAsType:TAG_VIEW
+                                                            withDataController:self.dataController];
+    [controller setTagMessage:tagMessage];
+    if (self.dataController.showingSingleCollege)
+    {
+        [self.dataController fetchAllPostsInCollegeWithTagMessage:tagMessage];
+    }
+    else
+    {
+        [self.dataController fetchAllPostsWithTagMessage:tagMessage];
+    }
+    
+    
+    [self.navigationController pushViewController:controller
+                                         animated:YES];
 }
 
 #pragma mark - CreationViewProtocol Delegate Methods
