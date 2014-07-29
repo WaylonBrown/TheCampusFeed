@@ -115,7 +115,7 @@ public class NewCommentDialog extends AlertDialog.Builder{
 						//prevent indexoutofboundsexception
 						if(wordArray[i].length() > 0)
 						{
-							if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1 && !MainActivity.containsSymbols(wordArray[i]))
+							if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1 && !MainActivity.containsSymbols(wordArray[i].substring(1, wordArray[i].length())))
 							{
 								currentTags += wordArray[i] + " ";
 							}

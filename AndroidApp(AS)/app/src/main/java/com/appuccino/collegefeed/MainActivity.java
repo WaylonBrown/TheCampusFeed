@@ -79,7 +79,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public static final int MIN_COMMENT_LENGTH = 5;
     public static final int COLLEGE_LIST_UPDATE_IN_WEEKS = 2;
     public static final int TIME_BETWEEN_POSTS = 5;     //in minutes
-    public static final int TIME_BETWEEN_COMMENTS = 3;  //in minutes
+    public static final int TIME_BETWEEN_COMMENTS = 1;  //in minutes
 	
 	boolean locationFound = false;
 	public static LocationManager mgr;
@@ -621,7 +621,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 text.contains("*") ||
                 text.contains("+") ||
                 text.contains(".") ||
-                text.contains(",")){
+                text.contains(",") ||
+                text.contains("#")){
             return true;
         }
         return false;
