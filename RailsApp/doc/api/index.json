@@ -172,6 +172,11 @@
           "description": "Get the score of post ID 101",
           "link": "votes/get_the_score_of_post_id_.json",
           "groups": "all"
+        },
+        {
+          "description": "Removing vote id 69",
+          "link": "votes/removing_vote_id_.json",
+          "groups": "all"
         }
       ]
     }
