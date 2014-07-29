@@ -22,8 +22,8 @@
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "[]",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"d751713988987e9331980363e24189ce\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"2e2318db-bad3-438a-9469-17ea08b224c7","X-Runtime":"0.004063","Content-Length":"2"},
+      "response_body": "[{\"id\":7,\"text\":\"its a #test post 2.0\",\"score\":null,\"created_at\":\"2014-07-29T07:11:02.794Z\",\"updated_at\":\"2014-07-29T07:11:02.794Z\",\"college_id\":2016,\"lat\":null,\"lon\":null,\"hidden\":true,\"comment_count\":0}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"898219c463d774876ba2ff47d7cedfea\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"84c87c93-c2cd-424d-8176-f227b5a15426","X-Runtime":"0.005640","Content-Length":"205"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

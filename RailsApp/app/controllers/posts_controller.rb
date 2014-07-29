@@ -8,7 +8,7 @@ class PostsController < ApplicationController
     posts = []
     params[:many_ids].each{ |id|
       @cur = Post.find_by_id(id)
-      if @cur
+      if @cur && !@cur.hidden
         posts.push @cur
       end
     }

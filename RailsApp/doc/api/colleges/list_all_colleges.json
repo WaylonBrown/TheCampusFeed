@@ -22,8 +22,8 @@
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "[{\"id\":156,\"name\":\"Texas A\\u0026M University\",\"lat\":30.614997,\"lon\":-96.342311,\"created_at\":\"2014-07-29T06:45:03.923Z\",\"updated_at\":\"2014-07-29T06:45:03.923Z\",\"size\":null,\"primary_color\":null},{\"id\":157,\"name\":\"University of Texas\",\"lat\":30.28496,\"lon\":-97.734239,\"created_at\":\"2014-07-29T06:45:03.929Z\",\"updated_at\":\"2014-07-29T06:45:03.929Z\",\"size\":null,\"primary_color\":null}]",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"cd2419a5358054c798ed0f768d9eedb4\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"94a85e13-b345-41f1-bb81-2225984969a2","X-Runtime":"0.054792","Content-Length":"378"},
+      "response_body": "[{\"id\":188,\"name\":\"Texas A\\u0026M University\",\"lat\":30.614997,\"lon\":-96.342311,\"created_at\":\"2014-07-29T07:11:01.769Z\",\"updated_at\":\"2014-07-29T07:11:01.769Z\",\"size\":null,\"primary_color\":null},{\"id\":189,\"name\":\"University of Texas\",\"lat\":30.28496,\"lon\":-97.734239,\"created_at\":\"2014-07-29T07:11:01.771Z\",\"updated_at\":\"2014-07-29T07:11:01.771Z\",\"size\":null,\"primary_color\":null}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"71655acdaabda42d54af513e4b58301b\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"a842ce80-ab97-4b0b-8117-60a21e8ecb94","X-Runtime":"0.004427","Content-Length":"378"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }
