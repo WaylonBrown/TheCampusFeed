@@ -11,6 +11,9 @@
 		531EAADE19860E6200C1E1AA /* thecampusfeedlogosmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAADD19860E6200C1E1AA /* thecampusfeedlogosmall.png */; };
 		531EAAE719881E6600C1E1AA /* fb_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAAE519881E6600C1E1AA /* fb_logo.png */; };
 		531EAAE819881E6600C1E1AA /* twitter_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAAE619881E6600C1E1AA /* twitter_logo.png */; };
+		531EAAEC198828B800C1E1AA /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 531EAAEB198828B800C1E1AA /* Social.framework */; };
+		531EAAEF1988300C00C1E1AA /* icon_light_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAAED1988300C00C1E1AA /* icon_light_small.png */; };
+		531EAAF01988300C00C1E1AA /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAAEE1988300C00C1E1AA /* icon.png */; };
 		533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 533475881922B88300E84CC8 /* TTTAttributedLabel.m */; };
 		5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5334758B1922D9B700E84CC8 /* TagViewController.m */; };
 		533475A41923344100E84CC8 /* TableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533475A21923344100E84CC8 /* TableCell.m */; };
@@ -48,10 +51,6 @@
 		53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B1FDFC19254E4700905E49 /* MasterView.xib */; };
 		53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B1FDFF19254E8F00905E49 /* MasterViewController.m */; };
 		53BDB4CE192F3E4400F45D5C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */; };
-		53BDB4D61930669100F45D5C /* top.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D51930669100F45D5C /* top.png */; };
-		53BDB4DA1930688200F45D5C /* colleges.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D71930688200F45D5C /* colleges.png */; };
-		53BDB4DB1930688200F45D5C /* new.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D81930688200F45D5C /* new.png */; };
-		53BDB4DC1930688200F45D5C /* tags.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BDB4D91930688200F45D5C /* tags.png */; };
 		53C44EA719669FB400367E33 /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C44EA619669FB400367E33 /* flag.png */; };
 		53CEAE2F197778C700DCE476 /* CommentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53CEAE2E197778C700DCE476 /* CommentView.xib */; };
 		53CF330E194E53DB008BB733 /* libNetworker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CF3309194E53B6008BB733 /* libNetworker.a */; };
@@ -136,6 +135,9 @@
 		531EAADD19860E6200C1E1AA /* thecampusfeedlogosmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thecampusfeedlogosmall.png; sourceTree = "<group>"; };
 		531EAAE519881E6600C1E1AA /* fb_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb_logo.png; sourceTree = "<group>"; };
 		531EAAE619881E6600C1E1AA /* twitter_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter_logo.png; sourceTree = "<group>"; };
+		531EAAEB198828B800C1E1AA /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		531EAAED1988300C00C1E1AA /* icon_light_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_light_small.png; sourceTree = "<group>"; };
+		531EAAEE1988300C00C1E1AA /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		533475871922B88300E84CC8 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		533475881922B88300E84CC8 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		5334758A1922D9B700E84CC8 /* TagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagViewController.h; sourceTree = "<group>"; };
@@ -187,10 +189,6 @@
 		53B1FDFE19254E8F00905E49 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MasterViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		53B1FDFF19254E8F00905E49 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MasterViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		53BDB4D51930669100F45D5C /* top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = top.png; sourceTree = "<group>"; };
-		53BDB4D71930688200F45D5C /* colleges.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colleges.png; sourceTree = "<group>"; };
-		53BDB4D81930688200F45D5C /* new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = new.png; sourceTree = "<group>"; };
-		53BDB4D91930688200F45D5C /* tags.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tags.png; sourceTree = "<group>"; };
 		53C44EA619669FB400367E33 /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
 		53CEAE2E197778C700DCE476 /* CommentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentView.xib; sourceTree = "<group>"; };
 		53CF3303194E53B6008BB733 /* Networker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Networker.xcodeproj; path = Collegefeed/Networker/Networker.xcodeproj; sourceTree = "<group>"; };
@@ -228,6 +226,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				531EAAEC198828B800C1E1AA /* Social.framework in Frameworks */,
 				5358CE74196E5DF800FF4E45 /* libModels.a in Frameworks */,
 				53CF330E194E53DB008BB733 /* libNetworker.a in Frameworks */,
 				53BDB4CE192F3E4400F45D5C /* CoreLocation.framework in Frameworks */,
@@ -359,16 +358,14 @@
 		5390A9131914B76800ACD082 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				531EAAED1988300C00C1E1AA /* icon_light_small.png */,
+				531EAAEE1988300C00C1E1AA /* icon.png */,
 				531EAAE519881E6600C1E1AA /* fb_logo.png */,
 				531EAAE619881E6600C1E1AA /* twitter_logo.png */,
 				531EAADD19860E6200C1E1AA /* thecampusfeedlogosmall.png */,
 				53F878AE19133F60002A578B /* Images.xcassets */,
-				53BDB4D71930688200F45D5C /* colleges.png */,
 				53C44EA619669FB400367E33 /* flag.png */,
 				5350558E1953C75C009C1911 /* gps.png */,
-				53BDB4D81930688200F45D5C /* new.png */,
-				53BDB4D91930688200F45D5C /* tags.png */,
-				53BDB4D51930669100F45D5C /* top.png */,
 				5390A9141914B76800ACD082 /* arrowdown.png */,
 				5390A9151914B76800ACD082 /* arrowdownred.png */,
 				5390A9161914B76800ACD082 /* arrowup.png */,
@@ -495,6 +492,7 @@
 		53F8788F19133F60002A578B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				531EAAEB198828B800C1E1AA /* Social.framework */,
 				53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */,
 				53F8789019133F60002A578B /* Foundation.framework */,
 				53F8789219133F60002A578B /* CoreGraphics.framework */,
@@ -675,6 +673,8 @@
 				5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */,
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */,
+				531EAAEF1988300C00C1E1AA /* icon_light_small.png in Resources */,
+				531EAAF01988300C00C1E1AA /* icon.png in Resources */,
 				53AB57C5194ABD11001D1B7B /* Omnes-Semibold.ttf in Resources */,
 				53C44EA719669FB400367E33 /* flag.png in Resources */,
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,
@@ -693,16 +693,12 @@
 				5390A9241914B76800ACD082 /* postbuttonclick.xml in Resources */,
 				53AB57BF194AAFF8001D1B7B /* Roboto-LightItalic.ttf in Resources */,
 				53F878AF19133F60002A578B /* Images.xcassets in Resources */,
-				53BDB4DB1930688200F45D5C /* new.png in Resources */,
 				531EAADE19860E6200C1E1AA /* thecampusfeedlogosmall.png in Resources */,
 				53D51E3A1949625300A8BA81 /* SimpleTableCell.xib in Resources */,
 				53AB57BE194AAFF8001D1B7B /* Roboto-Light.ttf in Resources */,
-				53BDB4DA1930688200F45D5C /* colleges.png in Resources */,
 				5390A91F1914B76800ACD082 /* arrowup.png in Resources */,
 				53CEAE2F197778C700DCE476 /* CommentView.xib in Resources */,
-				53BDB4DC1930688200F45D5C /* tags.png in Resources */,
 				53CF339E194E7235008BB733 /* CollegeList.txt in Resources */,
-				53BDB4D61930669100F45D5C /* top.png in Resources */,
 				53F8789B19133F60002A578B /* InfoPlist.strings in Resources */,
 				531EAAE719881E6600C1E1AA /* fb_logo.png in Resources */,
 				533475A51923344100E84CC8 /* TableCell.xib in Resources */,

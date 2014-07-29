@@ -43,6 +43,8 @@
 
 #define CF_FONT_BOLD(s)     [UIFont fontWithName:@"mplus-2c-bold" size:s]
 
+// Website
+#define WEBSITE_LINK    @"http://cfeed.herokuapp.com"
 
 // Title view for navigation bar
 #define logoImage @"thecampusfeedlogosmall.png"

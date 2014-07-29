@@ -213,7 +213,19 @@
 }
 - (void)shareOnFacebook
 {
-    
+    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        
+        [controller setInitialText:@"Check out TheCampusFeed!"];
+        [controller addImage:[UIImage imageNamed:@"icon.png"]];
+        [controller addURL:[NSURL URLWithString:WEBSITE_LINK]];
+
+        [self presentViewController:controller animated:YES completion:Nil];
+    }
+    else
+    {
+        [self.toastController toastFacebookUnavailable];
+    }
 }
 - (void)shareOnTwitter
 {
@@ -221,7 +233,9 @@
     {
         SLComposeViewController *tweetSheet = [SLComposeViewController
                                                composeViewControllerForServiceType:SLServiceTypeTwitter];
-        [tweetSheet setInitialText:@"Check out TheCampusFeed on Twitter!"];
+        [tweetSheet setInitialText:[NSString stringWithFormat:@"Check out TheCampusFeed! %@", WEBSITE_LINK]];
+        [tweetSheet addImage:[UIImage imageNamed:@"icon.png"]];
+
         [self presentViewController:tweetSheet animated:YES completion:nil];
     }
     else
