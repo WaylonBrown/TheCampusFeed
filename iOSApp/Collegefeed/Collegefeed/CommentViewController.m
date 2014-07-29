@@ -55,10 +55,17 @@
                                                                                     target:self
                                                                                     action:@selector(create)];
             
-            UIImage *image = [UIImage imageNamed:@"flag.png"];
-            UIBarButtonItem *flag = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
+            UIImage *flagImage = [UIImage imageNamed:@"flag.png"];
+            UIImage *facebookImage = [UIImage imageNamed:@"fb_logo.png"];
+            UIImage *twitterImage = [UIImage imageNamed:@"twitter_logo.png"];
+            UIBarButtonItem *flag = [[UIBarButtonItem alloc] initWithImage:flagImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
             
-            self.navigationItem.rightBarButtonItems = @[create, flag];
+            
+//            UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithImage:flagImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
+            UIBarButtonItem *facebook = [[UIBarButtonItem alloc] initWithImage:facebookImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
+            UIBarButtonItem *twitter = [[UIBarButtonItem alloc] initWithImage:twitterImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
+            
+            self.navigationItem.rightBarButtonItems = @[create, flag, facebook, twitter];
         }
         else
         {

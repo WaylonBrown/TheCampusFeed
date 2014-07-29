@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5312942E196504CD00CF13DB /* ToastController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5312942D196504CD00CF13DB /* ToastController.m */; };
 		531EAADE19860E6200C1E1AA /* thecampusfeedlogosmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAADD19860E6200C1E1AA /* thecampusfeedlogosmall.png */; };
+		531EAAE719881E6600C1E1AA /* fb_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAAE519881E6600C1E1AA /* fb_logo.png */; };
+		531EAAE819881E6600C1E1AA /* twitter_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAAE619881E6600C1E1AA /* twitter_logo.png */; };
 		533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 533475881922B88300E84CC8 /* TTTAttributedLabel.m */; };
 		5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5334758B1922D9B700E84CC8 /* TagViewController.m */; };
 		533475A41923344100E84CC8 /* TableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533475A21923344100E84CC8 /* TableCell.m */; };
@@ -132,6 +134,8 @@
 		5312942C196504CD00CF13DB /* ToastController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastController.h; sourceTree = "<group>"; };
 		5312942D196504CD00CF13DB /* ToastController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToastController.m; sourceTree = "<group>"; };
 		531EAADD19860E6200C1E1AA /* thecampusfeedlogosmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thecampusfeedlogosmall.png; sourceTree = "<group>"; };
+		531EAAE519881E6600C1E1AA /* fb_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb_logo.png; sourceTree = "<group>"; };
+		531EAAE619881E6600C1E1AA /* twitter_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter_logo.png; sourceTree = "<group>"; };
 		533475871922B88300E84CC8 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		533475881922B88300E84CC8 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		5334758A1922D9B700E84CC8 /* TagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagViewController.h; sourceTree = "<group>"; };
@@ -355,6 +359,8 @@
 		5390A9131914B76800ACD082 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				531EAAE519881E6600C1E1AA /* fb_logo.png */,
+				531EAAE619881E6600C1E1AA /* twitter_logo.png */,
 				531EAADD19860E6200C1E1AA /* thecampusfeedlogosmall.png */,
 				53F878AE19133F60002A578B /* Images.xcassets */,
 				53BDB4D71930688200F45D5C /* colleges.png */,
@@ -678,6 +684,7 @@
 				53AB57BC194AAFF8001D1B7B /* mplus-2c-bold.ttf in Resources */,
 				5390A9201914B76800ACD082 /* arrowupblue.png in Resources */,
 				53FF2D06195BCE430040E872 /* UserPosts.txt in Resources */,
+				531EAAE819881E6600C1E1AA /* twitter_logo.png in Resources */,
 				533FCA4D193EDE3B00754C07 /* aggieland.gpx in Resources */,
 				53FF2D0C195BCE850040E872 /* UserVotes.txt in Resources */,
 				533FCA4F193FCD8200754C07 /* austin.gpx in Resources */,
@@ -697,6 +704,7 @@
 				53CF339E194E7235008BB733 /* CollegeList.txt in Resources */,
 				53BDB4D61930669100F45D5C /* top.png in Resources */,
 				53F8789B19133F60002A578B /* InfoPlist.strings in Resources */,
+				531EAAE719881E6600C1E1AA /* fb_logo.png in Resources */,
 				533475A51923344100E84CC8 /* TableCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
