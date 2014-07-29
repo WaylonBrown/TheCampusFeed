@@ -121,6 +121,17 @@ resource "Posts" do
       status.should == 201
     end
 
+
+    
+    example "Creating a post with an invalid hashtag" do
+
+      do_request(
+        :text => "This is a ##@$@#%",
+        :user_token => "18006969696"
+      )
+      status.should == 201
+    end
+
     example "Error when post is too short" do
       do_request(
         :text => "S",

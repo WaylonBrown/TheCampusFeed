@@ -1,0 +1,40 @@
+{
+  "resource": "Posts",
+  "http_method": "POST",
+  "route": "/api/v1/colleges/2015/posts",
+  "description": "Creating a post with an invalid hashtag",
+  "explanation": null,
+  "parameters": [
+    {
+      "required": true,
+      "name": "text",
+      "description": "The new post's text."
+    },
+    {
+      "required": true,
+      "name": "user_token",
+      "description": "The user token."
+    }
+  ],
+  "requests": [
+    {
+      "request_method": "POST",
+      "request_path": "/api/v1/colleges/2015/posts",
+      "request_body": "{\"text\":\"This is a ##@$@#%\",\"user_token\":\"18006969696\"}",
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 201,
+      "response_status_text": "Created",
+      "response_body": "{\"id\":23,\"text\":\"This is a ##@$@#%\",\"score\":null,\"hidden\":null,\"created_at\":\"2014-07-29T04:56:31.283Z\",\"updated_at\":\"2014-07-29T04:56:31.283Z\"}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/posts/23","Content-Type":"application/json; charset=utf-8","ETag":"\"8a7bde050ce2627b77b602b66dd9f774\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"7b17ad69-464b-4469-a803-f708b82c823c","X-Runtime":"0.029442","Content-Length":"143"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

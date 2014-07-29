@@ -19,22 +19,12 @@
       "name": "Comments",
       "examples": [
         {
-          "description": "Creating a comment for a given post",
-          "link": "comments/creating_a_comment_for_a_given_post.json",
-          "groups": "all"
-        },
-        {
           "description": "Get many comments from a list of comment IDs",
           "link": "comments/get_many_comments_from_a_list_of_comment_ids.json",
           "groups": "all"
         },
         {
           "description": "Listing comments for post ID 1",
-          "link": "comments/listing_comments_for_post_id_.json",
-          "groups": "all"
-        },
-        {
-          "description": "Listing comments for post ID 2",
           "link": "comments/listing_comments_for_post_id_.json",
           "groups": "all"
         }
@@ -59,6 +49,11 @@
           "groups": "all"
         },
         {
+          "description": "Creating a post with an invalid hashtag",
+          "link": "posts/creating_a_post_with_an_invalid_hashtag.json",
+          "groups": "all"
+        },
+        {
           "description": "Error when post is too long",
           "link": "posts/error_when_post_is_too_long.json",
           "groups": "all"
@@ -69,23 +64,8 @@
           "groups": "all"
         },
         {
-          "description": "Get all posts using tag #test from all colleges",
-          "link": "posts/get_all_posts_using_tag_test_from_all_colleges.json",
-          "groups": "all"
-        },
-        {
-          "description": "Get all posts using tag #test from college ID 2016",
-          "link": "posts/get_all_posts_using_tag_test_from_college_id_.json",
-          "groups": "all"
-        },
-        {
           "description": "Get many posts from a list of post IDs",
           "link": "posts/get_many_posts_from_a_list_of_post_ids.json",
-          "groups": "all"
-        },
-        {
-          "description": "Get page 2 of all posts using tag #test from all colleges",
-          "link": "posts/get_page__of_all_posts_using_tag_test_from_all_colleges.json",
           "groups": "all"
         },
         {
