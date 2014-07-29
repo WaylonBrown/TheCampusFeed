@@ -27,6 +27,16 @@ resource "Colleges" do
     end
 
   end
+
+  get "/api/v1/colleges/listVersion" do
+
+    example "Get the current version of the college list. Could be any string!" do
+      do_request
+      status.should == 200
+    end
+
+  end
+  
 =begin
   get "/api/v1/colleges/listNearby" do
 

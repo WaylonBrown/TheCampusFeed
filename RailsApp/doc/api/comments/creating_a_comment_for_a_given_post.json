@@ -1,0 +1,35 @@
+{
+  "resource": "Comments",
+  "http_method": "POST",
+  "route": "/api/v1/posts/1/comments",
+  "description": "Creating a comment for a given post",
+  "explanation": null,
+  "parameters": [
+    {
+      "required": true,
+      "name": "text",
+      "description": "The new comment's text."
+    }
+  ],
+  "requests": [
+    {
+      "request_method": "POST",
+      "request_path": "/api/v1/posts/1/comments",
+      "request_body": "{\"text\":\"This is my comment on post id 1\"}",
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 201,
+      "response_status_text": "Created",
+      "response_body": "{\"id\":75,\"text\":\"This is my comment on post id 1\",\"score\":null,\"post_id\":1,\"created_at\":\"2014-07-29T06:45:05.246Z\",\"updated_at\":\"2014-07-29T06:45:05.246Z\"}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/comments/75","Content-Type":"application/json; charset=utf-8","ETag":"\"40e9c9cc3d16c8251bb60767741cb3f1\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"f7aadbf3-64df-405d-93d4-4c1a36e132db","X-Runtime":"0.011337","Content-Length":"155"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

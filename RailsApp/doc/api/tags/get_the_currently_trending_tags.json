@@ -22,8 +22,8 @@
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "[]",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"d751713988987e9331980363e24189ce\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"94af9eec-536b-46c8-9a3a-e82fb4a29d15","X-Runtime":"0.016897","Content-Length":"2"},
+      "response_body": "[{\"id\":240,\"text\":\"yolo\",\"posts_count\":2},{\"id\":242,\"text\":\"making\",\"posts_count\":1},{\"id\":241,\"text\":\"swag\",\"posts_count\":1},{\"id\":243,\"text\":\"money\",\"posts_count\":1}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"bf8ffb7c360c2bf884467a8984f8bd1a\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"1a5280bf-0296-479f-bf89-7ac076af8157","X-Runtime":"0.012132","Content-Length":"168"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

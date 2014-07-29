@@ -4,6 +4,11 @@
       "name": "Colleges",
       "examples": [
         {
+          "description": "Get the current version of the college list. Could be any string!",
+          "link": "colleges/get_the_current_version_of_the_college_list_could_be_any_string.json",
+          "groups": "all"
+        },
+        {
           "description": "List all colleges",
           "link": "colleges/list_all_colleges.json",
           "groups": "all"
@@ -19,12 +24,22 @@
       "name": "Comments",
       "examples": [
         {
+          "description": "Creating a comment for a given post",
+          "link": "comments/creating_a_comment_for_a_given_post.json",
+          "groups": "all"
+        },
+        {
           "description": "Get many comments from a list of comment IDs",
           "link": "comments/get_many_comments_from_a_list_of_comment_ids.json",
           "groups": "all"
         },
         {
           "description": "Listing comments for post ID 1",
+          "link": "comments/listing_comments_for_post_id_.json",
+          "groups": "all"
+        },
+        {
+          "description": "Listing comments for post ID 2",
           "link": "comments/listing_comments_for_post_id_.json",
           "groups": "all"
         }
@@ -64,8 +79,23 @@
           "groups": "all"
         },
         {
+          "description": "Get all posts using tag #test from all colleges",
+          "link": "posts/get_all_posts_using_tag_test_from_all_colleges.json",
+          "groups": "all"
+        },
+        {
+          "description": "Get all posts using tag #test from college ID 2016",
+          "link": "posts/get_all_posts_using_tag_test_from_college_id_.json",
+          "groups": "all"
+        },
+        {
           "description": "Get many posts from a list of post IDs",
           "link": "posts/get_many_posts_from_a_list_of_post_ids.json",
+          "groups": "all"
+        },
+        {
+          "description": "Get page 2 of all posts using tag #test from all colleges",
+          "link": "posts/get_page__of_all_posts_using_tag_test_from_all_colleges.json",
           "groups": "all"
         },
         {

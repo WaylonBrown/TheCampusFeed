@@ -1,0 +1,31 @@
+{
+  "resource": "Posts",
+  "http_method": "GET",
+  "route": "/api/v1/colleges/2015/posts/byTag/test",
+  "description": "Get all posts using tag #test from college ID 2016",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/v1/colleges/2015/posts/byTag/test",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "[{\"id\":3,\"text\":\"its a #test post 3\",\"score\":null,\"created_at\":\"2014-07-29T06:45:04.593Z\",\"updated_at\":\"2014-07-29T06:45:04.593Z\",\"college_id\":2015,\"lat\":null,\"lon\":null,\"hidden\":null,\"comment_count\":0},{\"id\":2,\"text\":\"its a #test post 2\",\"score\":null,\"created_at\":\"2014-07-29T06:45:04.587Z\",\"updated_at\":\"2014-07-29T06:45:04.587Z\",\"college_id\":2015,\"lat\":null,\"lon\":null,\"hidden\":null,\"comment_count\":0},{\"id\":1,\"text\":\"its a #test post 1\",\"score\":null,\"created_at\":\"2014-07-29T06:45:04.581Z\",\"updated_at\":\"2014-07-29T06:45:04.581Z\",\"college_id\":2015,\"lat\":null,\"lon\":null,\"hidden\":null,\"comment_count\":0}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"adfa81abbaadb220d755928377388f59\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"3b303e3f-880c-44ce-b372-d9927201a01d","X-Runtime":"0.010783","Content-Length":"607"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}
