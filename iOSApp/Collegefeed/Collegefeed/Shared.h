@@ -45,7 +45,7 @@
 
 
 // Title view for navigation bar
-#define logoImage @"collegefeedlogosmall.png"
+#define logoImage @"thecampusfeedlogosmall.png"
 #define logoTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:logoImage]]
 
 + (UIColor*)getCustomUIColor:(int)hexValue;
