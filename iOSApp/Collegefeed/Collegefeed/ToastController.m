@@ -116,6 +116,26 @@
     NSString *message = @"Couldn't find location. You can upvote, but nothing else.";
     [self addToQueue:message];
 }
+- (void)toastTwitterUnavailable
+{
+    NSString *message = @"You need to have the Twitter app installed to tweet this post.";
+    [self addToQueue:message];
+}
+- (void)toastFacebookUnavailable
+{
+    NSString *message = @"You need to have the Facebook app installed to share on Facebook.";
+    [self addToQueue:message];
+}
+- (void)toastPostingTooSoon
+{
+    NSString *message = @"Sorry, you can only post once every 5 minutes";
+    [self addToQueue:message];
+}
+- (void)toastCommentingTooSoon
+{
+    NSString *message = @"Sorry, you can only comment once every 3 minutes";
+    [self addToQueue:message];
+}
 - (void)toastLocationFoundNotNearCollege
 {
     NSString *message = @"You aren't near a college, you can upvote but nothing else.";

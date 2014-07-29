@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
+#import <Social/Social.h>
+
 #import "TableCell.h"
 #import "PostsViewController.h"
 #import "Post.h"
@@ -48,6 +50,14 @@
         [self.postTableView reloadData];
         [self.commentTableView reloadData];
         
+        UIImage *facebookImage = [UIImage imageNamed:@"fb_logo.png"];
+        UIImage *twitterImage = [UIImage imageNamed:@"twitter_logo.png"];
+        
+        //            UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithImage:flagImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
+        UIBarButtonItem *facebook = [[UIBarButtonItem alloc] initWithImage:facebookImage style:UIBarButtonItemStylePlain target:self action:@selector(shareOnFacebook)];
+        UIBarButtonItem *twitter = [[UIBarButtonItem alloc] initWithImage:twitterImage style:UIBarButtonItemStylePlain target:self action:@selector(shareOnTwitter)];
+
+        
         College *college = [self.dataController getCollegeById:self.originalPost.collegeID];
         if ([self.dataController.nearbyColleges containsObject:college])
         {
@@ -56,21 +66,16 @@
                                                                                     action:@selector(create)];
             
             UIImage *flagImage = [UIImage imageNamed:@"flag.png"];
-            UIImage *facebookImage = [UIImage imageNamed:@"fb_logo.png"];
-            UIImage *twitterImage = [UIImage imageNamed:@"twitter_logo.png"];
-            UIBarButtonItem *flag = [[UIBarButtonItem alloc] initWithImage:flagImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
-            
-            
-//            UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithImage:flagImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
-            UIBarButtonItem *facebook = [[UIBarButtonItem alloc] initWithImage:facebookImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
-            UIBarButtonItem *twitter = [[UIBarButtonItem alloc] initWithImage:twitterImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
+              UIBarButtonItem *flag = [[UIBarButtonItem alloc] initWithImage:flagImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
             
             self.navigationItem.rightBarButtonItems = @[create, flag, facebook, twitter];
         }
         else
         {
-            [self.navigationItem setRightBarButtonItems:nil];
+            self.navigationItem.rightBarButtonItems = @[facebook, twitter];
+
         }
+        
     }
 }
 - (void)viewDidLoad
@@ -205,6 +210,24 @@
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Flag as Inappropriate?" message:message delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
     [alert show];
+}
+- (void)shareOnFacebook
+{
+    
+}
+- (void)shareOnTwitter
+{
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+    {
+        SLComposeViewController *tweetSheet = [SLComposeViewController
+                                               composeViewControllerForServiceType:SLServiceTypeTwitter];
+        [tweetSheet setInitialText:@"Check out TheCampusFeed on Twitter!"];
+        [self presentViewController:tweetSheet animated:YES completion:nil];
+    }
+    else
+    {
+        [self.toastController toastTwitterUnavailable];
+    }
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
