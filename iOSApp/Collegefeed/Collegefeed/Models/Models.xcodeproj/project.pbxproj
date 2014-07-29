@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		531EAB40198847B700C1E1AA /* Vote.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 531EAB3E198847B700C1E1AA /* Vote.xcdatamodeld */; };
 		53CF334E194E56F7008BB733 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CF334D194E56F7008BB733 /* Foundation.framework */; };
 		53CF3353194E56F7008BB733 /* CFModelProtocol.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 53CF3352194E56F7008BB733 /* CFModelProtocol.h */; };
 		53CF335C194E56F7008BB733 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CF335B194E56F7008BB733 /* XCTest.framework */; };
@@ -46,6 +47,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		531EAB3F198847B700C1E1AA /* Vote.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Vote.xcdatamodel; sourceTree = "<group>"; };
 		535055711951349F009C1911 /* PostAndCommentProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostAndCommentProtocol.h; sourceTree = "<group>"; };
 		53CF334A194E56F7008BB733 /* libModels.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libModels.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		53CF334D194E56F7008BB733 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -154,6 +156,7 @@
 				53CF338C194E57F0008BB733 /* Tag.m */,
 				53CF338D194E57F0008BB733 /* Vote.h */,
 				53CF338E194E57F0008BB733 /* Vote.m */,
+				531EAB3E198847B700C1E1AA /* Vote.xcdatamodeld */,
 				53CF3350194E56F7008BB733 /* Supporting Files */,
 			);
 			name = "Tag, Vote, College";
@@ -267,6 +270,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53CF3390194E57F0008BB733 /* Comment.m in Sources */,
+				531EAB40198847B700C1E1AA /* Vote.xcdatamodeld in Sources */,
 				53CF338F194E57F0008BB733 /* College.m in Sources */,
 				53CF3391194E57F0008BB733 /* Post.m in Sources */,
 				53CF3392194E57F0008BB733 /* Tag.m in Sources */,
@@ -463,6 +467,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		531EAB3E198847B700C1E1AA /* Vote.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				531EAB3F198847B700C1E1AA /* Vote.xcdatamodel */,
+			);
+			currentVersion = 531EAB3F198847B700C1E1AA /* Vote.xcdatamodel */;
+			path = Vote.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 53CF3342194E56F7008BB733 /* Project object */;
 }

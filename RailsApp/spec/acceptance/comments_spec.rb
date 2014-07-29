@@ -12,6 +12,7 @@ resource "Comments" do
     @p2 = Post.create(:text => "Test post number 2.", :id => 2);
     @p2.comments.create(:text => "Test comment number 3.");
     @p2.comments.create(:text => "Test comment number 4.");
+    @p2.comments.create(:text => "another test", :id => 7, :hidden => true);
   end
   get "/api/v1/posts/1/comments" do
 
@@ -35,9 +36,9 @@ resource "Comments" do
   end
   get '/api/v1/comments/many' do
 
-    parameter :many_ids, "An array of comment IDs for which to get information.HTTP GET request require arrays to be passed in the manner below. Your HTTP library should be able to easily translate an array into this format."
+    parameter :many_ids, "An array of comment IDs for which to get information. Hides hidden comments."
     example 'Get many comments from a list of comment IDs' do
-      comment_ids = [1,2]
+      comment_ids = [1,2,7]
       do_request(
           :many_ids => comment_ids
       )

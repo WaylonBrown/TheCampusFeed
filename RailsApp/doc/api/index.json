@@ -4,6 +4,11 @@
       "name": "Colleges",
       "examples": [
         {
+          "description": "Get the current version of the college list. Could be any string!",
+          "link": "colleges/get_the_current_version_of_the_college_list_could_be_any_string.json",
+          "groups": "all"
+        },
+        {
           "description": "List all colleges",
           "link": "colleges/list_all_colleges.json",
           "groups": "all"
@@ -56,6 +61,11 @@
         {
           "description": "Creating a post (tags objects are created automatically)",
           "link": "posts/creating_a_post_tags_objects_are_created_automatically.json",
+          "groups": "all"
+        },
+        {
+          "description": "Creating a post with an invalid hashtag",
+          "link": "posts/creating_a_post_with_an_invalid_hashtag.json",
           "groups": "all"
         },
         {
@@ -161,6 +171,11 @@
         {
           "description": "Get the score of post ID 101",
           "link": "votes/get_the_score_of_post_id_.json",
+          "groups": "all"
+        },
+        {
+          "description": "Removing vote id 69",
+          "link": "votes/removing_vote_id_.json",
           "groups": "all"
         }
       ]

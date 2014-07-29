@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
     comments = []
     params[:many_ids].each{ |id|
       @cur = Comment.find_by_id(id)
-      if @cur
+      if @cur && !@cur.hidden
         comments.push @cur
       end
     }

@@ -7,13 +7,13 @@
   "parameters": [
     {
       "name": "many_ids",
-      "description": "An array of comment IDs for which to get information.HTTP GET request require arrays to be passed in the manner below. Your HTTP library should be able to easily translate an array into this format."
+      "description": "An array of comment IDs for which to get information. Hides hidden comments."
     }
   ],
   "requests": [
     {
       "request_method": "GET",
-      "request_path": "/api/v1/comments/many?many_ids[]=1&many_ids[]=2",
+      "request_path": "/api/v1/comments/many?many_ids[]=1&many_ids[]=2&many_ids[]=7",
       "request_body": null,
       "request_headers": {
         "Content-Type": "application/json",
@@ -21,13 +21,13 @@
         "Cookie": ""
       },
       "request_query_parameters": {
-        "many_ids[]": "2"
+        "many_ids[]": "7"
       },
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "[{\"id\":1,\"text\":\"Test comment.\",\"score\":null,\"created_at\":\"2014-07-27T23:24:29.210Z\",\"updated_at\":\"2014-07-27T23:24:29.210Z\",\"post_id\":\"1\",\"hidden\":null},{\"id\":2,\"text\":\"Test comment number 2.\",\"score\":null,\"created_at\":\"2014-07-27T23:24:29.215Z\",\"updated_at\":\"2014-07-27T23:24:29.215Z\",\"post_id\":\"1\",\"hidden\":null}]",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"3468d49eec87ce43ccb78c02348a33d9\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"5c5d1db5-94cb-42ee-9175-82c3993df116","X-Runtime":"0.014013","Content-Length":"316"},
+      "response_body": "[{\"id\":1,\"text\":\"Test comment.\",\"score\":null,\"created_at\":\"2014-07-29T07:15:37.286Z\",\"updated_at\":\"2014-07-29T07:15:37.286Z\",\"post_id\":\"1\",\"hidden\":null},{\"id\":2,\"text\":\"Test comment number 2.\",\"score\":null,\"created_at\":\"2014-07-29T07:15:37.288Z\",\"updated_at\":\"2014-07-29T07:15:37.288Z\",\"post_id\":\"1\",\"hidden\":null}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"6e960a3718267be4052571a7ee28d03d\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"e8e645f1-ebc3-4011-9afd-fc33698d45dc","X-Runtime":"0.007372","Content-Length":"316"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

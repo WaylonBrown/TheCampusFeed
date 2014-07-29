@@ -1,7 +1,12 @@
+require 'digest/md5'
 include CollegesHelper
 
 class CollegesController < ApplicationController
   before_action :set_college, only: [:show, :edit, :update, :destroy, :within, :image]
+
+  def listVersion 
+    render json: {version: 1}
+  end
 
   def search
     colleges = College.search_by_text(params[:searchText]).page(params[:page]).per(params[:per_page])

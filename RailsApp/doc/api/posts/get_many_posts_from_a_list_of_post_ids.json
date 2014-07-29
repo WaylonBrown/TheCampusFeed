@@ -7,13 +7,13 @@
   "parameters": [
     {
       "name": "many_ids",
-      "description": "An array of post IDs for which to get information. HTTP GET request require arrays to be passed in the manner below. Your HTTP library should be able to easily translate an array into this format."
+      "description": "An array of post IDs for which to get information. Hides hidden posts"
     }
   ],
   "requests": [
     {
       "request_method": "GET",
-      "request_path": "/api/v1/posts/many?many_ids[]=1&many_ids[]=2&many_ids[]=3",
+      "request_path": "/api/v1/posts/many?many_ids[]=1&many_ids[]=2&many_ids[]=3&many_ids[]=7",
       "request_body": null,
       "request_headers": {
         "Content-Type": "application/json",
@@ -21,13 +21,13 @@
         "Cookie": ""
       },
       "request_query_parameters": {
-        "many_ids[]": "3"
+        "many_ids[]": "7"
       },
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "[{\"id\":1,\"text\":\"its a #test post 1\",\"score\":null,\"created_at\":\"2014-07-27T23:24:28.267Z\",\"updated_at\":\"2014-07-27T23:24:28.267Z\",\"college_id\":2015,\"lat\":null,\"lon\":null,\"hidden\":null,\"comment_count\":0},{\"id\":2,\"text\":\"its a #test post 2\",\"score\":null,\"created_at\":\"2014-07-27T23:24:28.277Z\",\"updated_at\":\"2014-07-27T23:24:28.277Z\",\"college_id\":2015,\"lat\":null,\"lon\":null,\"hidden\":null,\"comment_count\":0},{\"id\":3,\"text\":\"its a #test post 3\",\"score\":null,\"created_at\":\"2014-07-27T23:24:28.288Z\",\"updated_at\":\"2014-07-27T23:24:28.288Z\",\"college_id\":2015,\"lat\":null,\"lon\":null,\"hidden\":null,\"comment_count\":0}]",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"742e147ea250155fdeb51d6cae0678be\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"586233c9-f673-4ccb-9a5a-eaa1fc227580","X-Runtime":"0.017012","Content-Length":"607"},
+      "response_body": "[{\"id\":1,\"text\":\"its a #test post 1\",\"score\":null,\"created_at\":\"2014-07-29T07:15:38.413Z\",\"updated_at\":\"2014-07-29T07:15:38.413Z\",\"college_id\":2015,\"lat\":null,\"lon\":null,\"hidden\":null,\"comment_count\":0},{\"id\":2,\"text\":\"its a #test post 2\",\"score\":null,\"created_at\":\"2014-07-29T07:15:38.421Z\",\"updated_at\":\"2014-07-29T07:15:38.421Z\",\"college_id\":2015,\"lat\":null,\"lon\":null,\"hidden\":null,\"comment_count\":0},{\"id\":3,\"text\":\"its a #test post 3\",\"score\":null,\"created_at\":\"2014-07-29T07:15:38.428Z\",\"updated_at\":\"2014-07-29T07:15:38.428Z\",\"college_id\":2015,\"lat\":null,\"lon\":null,\"hidden\":null,\"comment_count\":0}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"6d9c519ba3e00abfcc013486603c1e4b\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"169240b5-a797-4112-af16-526eb60c7975","X-Runtime":"0.011081","Content-Length":"607"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

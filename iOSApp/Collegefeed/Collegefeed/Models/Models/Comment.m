@@ -146,6 +146,10 @@
 {
     return self.collegeID;
 }
+- (long)getPostID
+{
+    return self.postID;
+}
 - (Vote *)getVote
 {
     return self.vote;

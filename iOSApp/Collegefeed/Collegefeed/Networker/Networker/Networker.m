@@ -95,7 +95,9 @@
                                                         length:[POSTReply length]
                                                       encoding: NSASCIIStringEncoding];
     
-    if ([response statusCode] == 202)
+    if ([response statusCode] == 200
+        || [response statusCode] == 202
+        || [response statusCode] == 204)
     {
         return YES;
     }
@@ -344,13 +346,19 @@
                    API_URL, API_VERSION, commentId]];
     return [self GET:url];
 }
-+ (BOOL)DELETEVoteData:(NSData *)data WithPostId:(long)postId
++ (BOOL)DELETEVoteId:(long)voteId WithPostId:(long)postId
 {
-    return NO;
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/posts/%ld/votes/%ld",
+                   API_URL, API_VERSION, postId, voteId]];
+    return [self DELETE:nil toUrl:url];
 }
-+ (BOOL)DELETEVoteData:(NSData *)data WithCommentId:(long)commentId WithPostId:(long)postId
++ (BOOL)DELETEVoteId:(long)voteId WithPostId:(long)postId WithCommentId:(long)commentId
 {
-    return NO;
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/posts/%ld/comments/%ld/votes/%ld",
+                   API_URL, API_VERSION, postId, commentId, voteId]];
+    return [self DELETE:nil toUrl:url];
 }
 
 @end

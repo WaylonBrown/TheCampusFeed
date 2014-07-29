@@ -36,6 +36,10 @@
 - (void)toastErrorFetchingCollegeList;
 - (void)toastNoLocationServices;
 - (void)toastLocationNotFoundOnTimeout;
+- (void)toastTwitterUnavailable;
+- (void)toastFacebookUnavailable;
+- (void)toastPostingTooSoon;
+- (void)toastCommentingTooSoon;
 
 // Navigation Notification
 - (void)toastFeedSwitchedToNearbyCollege:(NSString *)collegeName;

@@ -14,6 +14,8 @@ resource "Posts" do
     (4..6).each do |i|
       @c2.posts.create(:text => "its a #test post 2.0 #{i}", :id => i);
     end
+
+      @c2.posts.create(:text => "its a #test post 2.0", :id => 7, :hidden => true);
     
   end
 
@@ -97,9 +99,9 @@ resource "Posts" do
 
   get '/api/v1/posts/many' do
     let(:raw_post) { params.to_json }
-    parameter :many_ids, "An array of post IDs for which to get information. HTTP GET request require arrays to be passed in the manner below. Your HTTP library should be able to easily translate an array into this format."
+    parameter :many_ids, "An array of post IDs for which to get information. Hides hidden posts"
     example 'Get many posts from a list of post IDs' do
-      post_ids = [1,2,3]
+      post_ids = [1,2,3,7]
       do_request(
           :many_ids => post_ids
       )
@@ -116,6 +118,17 @@ resource "Posts" do
     example "Creating a post (tags objects are created automatically)" do
       do_request(
         :text => "This is a #post #wtih #tag #testing #yo #yo #yo",
+        :user_token => "18006969696"
+      )
+      status.should == 201
+    end
+
+
+    
+    example "Creating a post with an invalid hashtag" do
+
+      do_request(
+        :text => "This is a ##@$@#%",
         :user_token => "18006969696"
       )
       status.should == 201
