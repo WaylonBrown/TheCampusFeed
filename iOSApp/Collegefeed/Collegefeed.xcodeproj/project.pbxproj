@@ -14,6 +14,7 @@
 		531EAAEC198828B800C1E1AA /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 531EAAEB198828B800C1E1AA /* Social.framework */; };
 		531EAAEF1988300C00C1E1AA /* icon_light_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAAED1988300C00C1E1AA /* icon_light_small.png */; };
 		531EAAF01988300C00C1E1AA /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAAEE1988300C00C1E1AA /* icon.png */; };
+		531EAB431988533500C1E1AA /* Vote.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 531EAB411988533500C1E1AA /* Vote.xcdatamodeld */; };
 		533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 533475881922B88300E84CC8 /* TTTAttributedLabel.m */; };
 		5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5334758B1922D9B700E84CC8 /* TagViewController.m */; };
 		533475A41923344100E84CC8 /* TableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533475A21923344100E84CC8 /* TableCell.m */; };
@@ -138,6 +139,7 @@
 		531EAAEB198828B800C1E1AA /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		531EAAED1988300C00C1E1AA /* icon_light_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_light_small.png; sourceTree = "<group>"; };
 		531EAAEE1988300C00C1E1AA /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		531EAB421988533500C1E1AA /* Vote.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Vote.xcdatamodel; sourceTree = "<group>"; };
 		533475871922B88300E84CC8 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		533475881922B88300E84CC8 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		5334758A1922D9B700E84CC8 /* TagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagViewController.h; sourceTree = "<group>"; };
@@ -433,6 +435,7 @@
 				53F8789F19133F60002A578B /* AppDelegate.h */,
 				53F878A019133F60002A578B /* AppDelegate.m */,
 				53AB57B7194AAFB3001D1B7B /* Other */,
+				531EAB411988533500C1E1AA /* Vote.xcdatamodeld */,
 			);
 			name = "Source Code";
 			sourceTree = "<group>";
@@ -764,6 +767,7 @@
 				53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */,
 				53AE73C71928354F00BE6B02 /* DataController.m in Sources */,
 				53CF33A0194E7A7A008BB733 /* Shared.m in Sources */,
+				531EAB431988533500C1E1AA /* Vote.xcdatamodeld in Sources */,
 				5350557719514587009C1911 /* CreatePostCommentViewController.m in Sources */,
 				533475A41923344100E84CC8 /* TableCell.m in Sources */,
 				53963DE71916E5F50084E646 /* PostsViewController.m in Sources */,
@@ -1015,6 +1019,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		531EAB411988533500C1E1AA /* Vote.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				531EAB421988533500C1E1AA /* Vote.xcdatamodel */,
+			);
+			currentVersion = 531EAB421988533500C1E1AA /* Vote.xcdatamodel */;
+			path = Vote.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 53F8788519133F60002A578B /* Project object */;
 }
