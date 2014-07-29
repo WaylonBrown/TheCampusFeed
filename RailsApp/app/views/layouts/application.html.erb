@@ -5,6 +5,11 @@
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
+
+  <link rel="image_src" href="/logo.png" />
+  <% if content_for? :for_head %>
+    <%= yield :for_head %>
+  <% end %>
 </head>
 <body>
 
