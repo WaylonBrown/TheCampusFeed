@@ -125,19 +125,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *text;
-    if (tableView == self.searchDisplay.searchResultsTableView)
-    {
-        Tag *tag = (Tag*)[self.searchResult objectAtIndex:indexPath.row];
-        text = [tag name];
-    }
-    else
-    {
-        Tag *tag = (Tag *)[self.list objectAtIndex:indexPath.row];
-        text = [tag name];
-    }
-    
-    return [Shared getSmallCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(22)];
+    return 56;
 }
 
 #pragma mark - Search Bar 

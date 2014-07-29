@@ -43,7 +43,9 @@
 - (void)assignTag:(Tag *)tag
 {
     [self.messageLabel setFont:CF_FONT_LIGHT(22)];
-
+    [self.messageLabel setNumberOfLines:1];
+    [self.messageLabel setLineBreakMode:NSLineBreakByTruncatingTail];
+    
     if (tag != nil)
     {
         [self.messageLabel setText:tag.name];
@@ -58,6 +60,8 @@
 - (void)assignCollege:(College *)college withRankNumber:(long)rankNo
 {
     [self.messageLabel setFont:CF_FONT_LIGHT(18)];
+    [self.messageLabel setNumberOfLines:6];
+    [self.messageLabel setLineBreakMode:NSLineBreakByWordWrapping];
 
     if (college != nil)
     {
