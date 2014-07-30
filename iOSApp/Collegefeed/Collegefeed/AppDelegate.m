@@ -116,34 +116,21 @@
     self.window.rootViewController = self.slidingViewController;
 
     
-    
     NSManagedObjectContext *context = [self managedObjectContext];
-    NSManagedObject *vote = [NSEntityDescription insertNewObjectForEntityForName:@"Vote" inManagedObjectContext:context];
-    [vote setValue:[NSNumber numberWithInt:12341234] forKeyPath:@"grandparentId"];
-    [vote setValue:[NSNumber numberWithInt:978780] forKeyPath:@"parentId"];
-    [vote setValue:[NSNumber numberWithInt:81456] forKeyPath:@"voteId"];
-    [vote setValue:@"Comment" forKeyPath:@"type"];
-    [vote setValue:[NSNumber numberWithBool:YES] forKeyPath:@"upvote"];
-    
-//    NSManagedObject *failedBankInfo = [NSEntityDescription
-//                                       insertNewObjectForEntityForName:@"FailedBankInfo"
-//                                       inManagedObjectContext:context];
-//    [failedBankInfo setValue:@"Test Bank" forKey:@"name"];
-//    [failedBankInfo setValue:@"Testville" forKey:@"city"];
-//    [failedBankInfo setValue:@"Testland" forKey:@"state"];
-//    NSManagedObject *failedBankDetails = [NSEntityDescription
-//                                          insertNewObjectForEntityForName:@"FailedBankDetails"
-//                                          inManagedObjectContext:context];
-//    [failedBankDetails setValue:[NSDate date] forKey:@"closeDate"];
-//    [failedBankDetails setValue:[NSDate date] forKey:@"updateDate"];
-//    [failedBankDetails setValue:[NSNumber numberWithInt:12345] forKey:@"zip"];
-//    [failedBankDetails setValue:failedBankInfo forKey:@"info"];
-//    [failedBankInfo setValue:failedBankDetails forKey:@"details"];
     NSError *error;
-    if (![context save:&error]) {
-        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-    }
     
+    //    NSManagedObject *vote = [NSEntityDescription insertNewObjectForEntityForName:@"Vote" inManagedObjectContext:context];
+//    [vote setValue:[NSNumber numberWithInt:12341234] forKeyPath:@"grandparentId"];
+//    [vote setValue:[NSNumber numberWithInt:978780] forKeyPath:@"parentId"];
+//    [vote setValue:[NSNumber numberWithInt:81456] forKeyPath:@"voteId"];
+//    [vote setValue:@"Comment" forKeyPath:@"type"];
+//    [vote setValue:[NSNumber numberWithBool:YES] forKeyPath:@"upvote"];
+//    
+
+//    if (![context save:&error]) {
+//        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+//    }
+//    
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
