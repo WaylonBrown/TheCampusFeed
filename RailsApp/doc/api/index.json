@@ -174,13 +174,13 @@
           "groups": "all"
         },
         {
-          "description": "Removing vote id 68",
+          "description": "Removing vote id 69",
           "link": "votes/removing_vote_id_.json",
           "groups": "all"
         },
         {
-          "description": "Removing vote id 69",
-          "link": "votes/removing_vote_id_.json",
+          "description": "Removing(short) vote id 68",
+          "link": "votes/removingshort_vote_id_.json",
           "groups": "all"
         }
       ]
