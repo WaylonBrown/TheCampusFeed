@@ -95,6 +95,8 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 				{
 					thisComment.setVote(1);
 					thisComment.score += 2;
+                    new NetWorker.MakeCommentVoteDeleteTask().execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
+                    new NetWorker.MakeCommentVoteTask().execute(new Vote(asdf, post.getID(), thisComment.getID(), true));
 					MainActivity.commentDownvoteList.remove(Integer.valueOf(thisComment.getID()));
 					MainActivity.commentUpvoteList.add(thisComment.getID());
 					PrefManager.putCommentDownvoteList(MainActivity.commentDownvoteList);
@@ -104,6 +106,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 				{
 					thisComment.setVote(1);
 					thisComment.score++;
+                    new NetWorker.MakeCommentVoteTask().execute(new Vote(asdf, post.getID(), thisComment.getID(), true));
 					MainActivity.commentUpvoteList.add(thisComment.getID());
 					PrefManager.putCommentUpvoteList(MainActivity.commentUpvoteList);
 				}
@@ -111,12 +114,12 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 				{
 					thisComment.setVote(0);
 					thisComment.score--;
+                    new NetWorker.MakeCommentVoteDeleteTask().execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
 					MainActivity.commentUpvoteList.remove(Integer.valueOf(thisComment.getID()));
 					PrefManager.putCommentUpvoteList(MainActivity.commentUpvoteList);
 				}
 
 				CommentsActivity.updateList();
-                new NetWorker.MakeCommentVoteTask().execute(new Vote(thisComment.getID(), post.getID(), true));
 			}        	
         });
         commentHolder.arrowDown.setOnClickListener(new OnClickListener(){
@@ -132,6 +135,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 					{
 						thisComment.setVote(0);
 						thisComment.score++;
+                        new NetWorker.MakeCommentVoteDeleteTask().execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
 						MainActivity.commentDownvoteList.remove(Integer.valueOf(thisComment.getID()));
 						PrefManager.putCommentDownvoteList(MainActivity.commentDownvoteList);
 					}
@@ -139,6 +143,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 					{
 						thisComment.setVote(-1);
 						thisComment.score--;
+                        new NetWorker.MakeCommentVoteTask().execute(new Vote(asdf, post.getID(), thisComment.getID(), false));
 						MainActivity.commentDownvoteList.add(thisComment.getID());
 						PrefManager.putCommentDownvoteList(MainActivity.commentDownvoteList);
 					}
@@ -146,13 +151,14 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 					{
 						thisComment.setVote(-1);
 						thisComment.score -= 2;
+                        new NetWorker.MakeCommentVoteDeleteTask().execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
+                        new NetWorker.MakeCommentVoteTask().execute(new Vote(asdf, post.getID(), thisComment.getID(), false));
 						MainActivity.commentUpvoteList.remove(Integer.valueOf(thisComment.getID()));
 						MainActivity.commentDownvoteList.add(thisComment.getID());
 						PrefManager.putCommentDownvoteList(MainActivity.commentDownvoteList);
 						PrefManager.putCommentUpvoteList(MainActivity.commentUpvoteList);
 					}
 					CommentsActivity.updateList();
-                    new NetWorker.MakeCommentVoteTask().execute(new Vote(thisComment.getID(), post.getID(), false));
 				}
 				else
 				{

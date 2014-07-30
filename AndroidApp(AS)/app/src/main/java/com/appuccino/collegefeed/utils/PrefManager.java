@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.appuccino.collegefeed.objects.Vote;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -64,10 +66,10 @@ public class PrefManager {
 		return prefs.getString(key, defaultVal);
 	}
 	
-	public static void putPostUpvoteList(List<Integer> list){
+	public static void putPostUpvoteList(List<Vote> list){
 		String storage = "";
-		for(int id : list){
-			storage += (id + ";");
+		for(Vote vote : list){
+			storage += (vote.toSavableFormat() + ";");
 		}
 		//remove final ;
 		if(storage.length() > 0){
@@ -77,14 +79,14 @@ public class PrefManager {
 		prefs.edit().putString(UPVOTE_LIST, storage).apply();
 	}
 	
-	public static List<Integer> getPostUpvoteList(){
-		List<Integer> returnList = new ArrayList<Integer>();
+	public static List<Vote> getPostUpvoteList(){
+		List<Vote> returnList = new ArrayList<Vote>();
 		String retrieval = prefs.getString(UPVOTE_LIST, "");
 		if(retrieval != null && !retrieval.isEmpty()){
 			String[] split = retrieval.split(";");
-			for(String id : split){
+			for(String vote : split){
 				try{
-					returnList.add(Integer.valueOf(id));
+					returnList.add(new Vote(vote));
 				}catch(Exception e){
 					e.printStackTrace();
 				}
@@ -93,10 +95,10 @@ public class PrefManager {
 		return returnList;
 	}
 	
-	public static void putPostDownvoteList(List<Integer> list){
+	public static void putPostDownvoteList(List<Vote> list){
 		String storage = "";
-		for(int id : list){
-			storage += (id + ";");
+		for(Vote vote : list){
+			storage += (vote.toSavableFormat() + ";");
 		}
 		//remove final ;
 		if(storage.length() > 0){
@@ -106,14 +108,14 @@ public class PrefManager {
 		prefs.edit().putString(DOWNVOTE_LIST, storage).apply();
 	}
 	
-	public static List<Integer> getPostDownvoteList(){
-		List<Integer> returnList = new ArrayList<Integer>();
+	public static List<Vote> getPostDownvoteList(){
+		List<Vote> returnList = new ArrayList<Vote>();
 		String retrieval = prefs.getString(DOWNVOTE_LIST, "");
 		if(retrieval != null && !retrieval.isEmpty()){
 			String[] split = retrieval.split(";");
-			for(String id : split){
+			for(String vote : split){
 				try{
-					returnList.add(Integer.valueOf(id));
+					returnList.add(new Vote(vote));
 				}catch(Exception e){
 					e.printStackTrace();
 				}
@@ -122,10 +124,10 @@ public class PrefManager {
 		return returnList;
 	}
 	
-	public static void putCommentUpvoteList(List<Integer> list){
+	public static void putCommentUpvoteList(List<Vote> list){
 		String storage = "";
-		for(int id : list){
-			storage += (id + ";");
+		for(Vote vote : list){
+			storage += (vote.toSavableFormat() + ";");
 		}
 		//remove final ;
 		if(storage.length() > 0){
@@ -135,14 +137,14 @@ public class PrefManager {
 		prefs.edit().putString(COMMENT_UPVOTE_LIST, storage).apply();
 	}
 	
-	public static List<Integer> getCommentUpvoteList(){
-		List<Integer> returnList = new ArrayList<Integer>();
+	public static List<Vote> getCommentUpvoteList(){
+		List<Vote> returnList = new ArrayList<Vote>();
 		String retrieval = prefs.getString(COMMENT_UPVOTE_LIST, "");
 		if(retrieval != null && !retrieval.isEmpty()){
 			String[] split = retrieval.split(";");
-			for(String id : split){
+			for(String vote : split){
 				try{
-					returnList.add(Integer.valueOf(id));
+					returnList.add(new Vote(vote));
 				}catch(Exception e){
 					e.printStackTrace();
 				}
@@ -151,10 +153,10 @@ public class PrefManager {
 		return returnList;
 	}
 	
-	public static void putCommentDownvoteList(List<Integer> list){
+	public static void putCommentDownvoteList(List<Vote> list){
 		String storage = "";
-		for(int id : list){
-			storage += (id + ";");
+		for(Vote vote : list){
+			storage += (vote.toSavableFormat() + ";");
 		}
 		//remove final ;
 		if(storage.length() > 0){
@@ -164,14 +166,14 @@ public class PrefManager {
 		prefs.edit().putString(COMMENT_DOWNVOTE_LIST, storage).apply();
 	}
 	
-	public static List<Integer> getCommentDownvoteList(){
-		List<Integer> returnList = new ArrayList<Integer>();
+	public static List<Vote> getCommentDownvoteList(){
+		List<Vote> returnList = new ArrayList<Vote>();
 		String retrieval = prefs.getString(COMMENT_DOWNVOTE_LIST, "");
 		if(retrieval != null && !retrieval.isEmpty()){
 			String[] split = retrieval.split(";");
-			for(String id : split){
+			for(String vote : split){
 				try{
-					returnList.add(Integer.valueOf(id));
+					returnList.add(new Vote(vote));
 				}catch(Exception e){
 					e.printStackTrace();
 				}

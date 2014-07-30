@@ -151,6 +151,8 @@ public class CommentsActivity extends Activity{
 						post.setVote(1);
 						post.score += 2;
 						scoreText.setText(String.valueOf(post.score));
+                        new NetWorker.MakePostVoteDeleteTask().execute(MainActivity.voteObjectFromPostID(post.getID()));
+                        new NetWorker.MakePostVoteTask().execute(new Vote(0, post.getID(), true));
 						MainActivity.postDownvoteList.remove(Integer.valueOf(post.getID()));
 						MainActivity.postUpvoteList.add(post.getID());
 						PrefManager.putPostDownvoteList(MainActivity.postDownvoteList);
@@ -161,6 +163,7 @@ public class CommentsActivity extends Activity{
 						post.setVote(1);
 						post.score++;
 						scoreText.setText(String.valueOf(post.score));
+                        new NetWorker.MakePostVoteTask().execute(new Vote(0, post.getID(), true));
 						MainActivity.postUpvoteList.add(post.getID());
 						PrefManager.putPostUpvoteList(MainActivity.postUpvoteList);
 					}
@@ -169,6 +172,7 @@ public class CommentsActivity extends Activity{
 						post.setVote(0);
 						post.score--;
 						scoreText.setText(String.valueOf(post.score));
+                        new NetWorker.MakePostVoteDeleteTask().execute(MainActivity.voteObjectFromPostID(post.getID()));
 						MainActivity.postUpvoteList.remove(Integer.valueOf(post.getID()));
 						PrefManager.putPostUpvoteList(MainActivity.postUpvoteList);
 					}
@@ -176,7 +180,6 @@ public class CommentsActivity extends Activity{
 					NewPostFragment.updateList();
 					TagListActivity.updateList();
 					updateArrows(arrowUp, arrowDown);
-					new NetWorker.MakePostVoteTask().execute(new Vote(post.getID(), true));
 				}        	
 	        });
 	        arrowDown.setOnClickListener(new OnClickListener(){
@@ -192,6 +195,7 @@ public class CommentsActivity extends Activity{
 							post.setVote(0);
 							post.score++;
 							scoreText.setText(String.valueOf(post.score));
+                            new NetWorker.MakePostVoteDeleteTask().execute(MainActivity.voteObjectFromPostID(post.getID()));
 							MainActivity.postDownvoteList.remove(Integer.valueOf(post.getID()));
 							PrefManager.putPostDownvoteList(MainActivity.postDownvoteList);
 						}
@@ -200,6 +204,7 @@ public class CommentsActivity extends Activity{
 							post.setVote(-1);
 							post.score--;
 							scoreText.setText(String.valueOf(post.score));
+                            new NetWorker.MakePostVoteTask().execute(new Vote(0, post.getID(), false));
 							MainActivity.postDownvoteList.add(post.getID());
 							PrefManager.putPostDownvoteList(MainActivity.postDownvoteList);
 						}
@@ -207,6 +212,8 @@ public class CommentsActivity extends Activity{
 						{
 							post.setVote(-1);
 							post.score -= 2;
+                            new NetWorker.MakePostVoteDeleteTask().execute(MainActivity.voteObjectFromPostID(post.getID()));
+                            new NetWorker.MakePostVoteTask().execute(new Vote(0, post.getID(), false));
 							scoreText.setText(String.valueOf(post.score));
 							MainActivity.postUpvoteList.remove(Integer.valueOf(post.getID()));
 							MainActivity.postDownvoteList.add(post.getID());
@@ -217,7 +224,6 @@ public class CommentsActivity extends Activity{
 						NewPostFragment.updateList();
 						TagListActivity.updateList();
 						updateArrows(arrowUp, arrowDown);
-                        new NetWorker.MakePostVoteTask().execute(new Vote(post.getID(), false));
 					}
 					else
 					{

@@ -41,11 +41,12 @@ import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.objects.Post;
-import com.appuccino.collegefeed.utils.PopupManager;
+import com.appuccino.collegefeed.objects.Vote;
 import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.JSONParser;
 import com.appuccino.collegefeed.utils.ListComparator;
 import com.appuccino.collegefeed.utils.NetWorker;
+import com.appuccino.collegefeed.utils.PopupManager;
 import com.appuccino.collegefeed.utils.PrefManager;
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -90,10 +91,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public static ArrayList<Integer> permissions = new ArrayList<Integer>();	//length of 0 or null = no perms, otherwise the college ID is the perm IDs
 	public static ArrayList<College> collegeList = new ArrayList<College>();
 	
-	public static List<Integer> postUpvoteList = new ArrayList<Integer>();
-	public static List<Integer> postDownvoteList = new ArrayList<Integer>();
-	public static List<Integer> commentUpvoteList = new ArrayList<Integer>();
-	public static List<Integer> commentDownvoteList = new ArrayList<Integer>();
+	public static List<Vote> postUpvoteList = new ArrayList<Vote>();
+	public static List<Vote> postDownvoteList = new ArrayList<Vote>();
+	public static List<Vote> commentUpvoteList = new ArrayList<Vote>();
+	public static List<Vote> commentDownvoteList = new ArrayList<Vote>();
     public static List<Integer> flagList = new ArrayList<Integer>();
     public static List<Integer> myPostsList = new ArrayList<Integer>();
     public static List<Integer> myCommentsList = new ArrayList<Integer>();
