@@ -499,7 +499,7 @@ public class CommentsActivity extends Activity{
     	{
     		if(wordArray[i].length() > 0)	//in case empty, doesn't throw nullpointer
     		{
-    			if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1 && !MainActivity.containsSymbols(wordArray[i]))
+    			if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1 && !MainActivity.containsSymbols(wordArray[i].substring(1, wordArray[i].length())))
         		{
         			wordArray[i] = "<font color='" + tagColor + "'>" + wordArray[i] + "</font>";
         		}

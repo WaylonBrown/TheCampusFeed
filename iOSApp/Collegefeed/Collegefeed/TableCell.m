@@ -13,6 +13,7 @@
 #import "ChildCellDelegate.h"
 #import "Shared.h"
 #import "Tag.h"
+#import "Comment.h"
 
 @implementation TableCell
 
@@ -122,6 +123,11 @@
     }
     else
     {
+        existingVote.parentID = [self.object getID];
+        if ([self.object getType] == COMMENT)
+        {
+            existingVote.grandparentID = [(Comment*)self.object getPostID];
+        }
         [strongDelegate cancelVote:existingVote];
         
         if (existingVote.upvote == true)

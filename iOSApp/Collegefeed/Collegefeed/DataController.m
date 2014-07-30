@@ -310,23 +310,26 @@
 - (BOOL)cancelVote:(Vote *)vote
 {
     BOOL success = NO;
-    NSNumber *voteID = [NSNumber numberWithLong:vote.parentID];
+    long voteId = vote.voteID;
+    long parentId = vote.parentID;
+    
+    NSNumber *nsnParentId = [NSNumber numberWithLong:parentId];
 
     if (vote.votableType == COMMENT)
     {
-        success = [Networker DELETEVoteData:[vote toJSON]
-                             WithCommentId:vote.parentID
-                                WithPostId:vote.grandparentID];
-        [self.userCommentUpvotes removeObject:voteID];
-        [self.userCommentDownvotes removeObject:voteID];
+        long grandparentId = vote.grandparentID;
+        success = [Networker DELETEVoteId:voteId
+                               WithPostId:parentId
+                            WithCommentId:grandparentId];
+        [self.userCommentUpvotes removeObject:nsnParentId];
+        [self.userCommentDownvotes removeObject:nsnParentId];
     }
     else if (vote.votableType == POST)
     {
-        success = [Networker DELETEVoteData:[vote toJSON]
-                                WithPostId:vote.parentID];
-        
-        [self.userPostUpvotes removeObject:voteID];
-        [self.userCommentDownvotes removeObject:voteID];
+        success = [Networker DELETEVoteId:voteId
+                               WithPostId:parentId];
+        [self.userPostUpvotes removeObject:nsnParentId];
+        [self.userPostDownvotes removeObject:nsnParentId];
     }
     
     [self saveUserVotes];

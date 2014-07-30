@@ -58,6 +58,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	private static ProgressBar lazyLoadingFooterSpinner;
 	public static int currentPageNumber = 1;
 	public static boolean endOfListReached = false;
+    private static boolean isLoadingMorePosts = false;
 	static View lazyFooterView;
 	static View footerSpace;
     static TextView pullDownText;
@@ -198,9 +199,8 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 						int visibleItemCount, int totalItemCount) {
 
 					handleScrollAwayBottomViewOnScroll();
-					if (list.getLastVisiblePosition() == list.getAdapter().getCount() -1 &&
-							list.getChildAt(list.getChildCount() - 1).getBottom() <= list.getHeight() &&
-							!endOfListReached)
+					if (list.getLastVisiblePosition() == list.getAdapter().getCount() -3 &&
+							!endOfListReached && !isLoadingMorePosts)
 					{
 						loadMorePosts();
 					}else if (endOfListReached){
@@ -237,6 +237,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	}
 
 	protected static void replaceFooterBecauseEndOfList() {
+        isLoadingMorePosts = false;
 		if(list.getFooterViewsCount() > 0 && lazyFooterView != null){
 			list.removeFooterView(lazyFooterView);
 		}
@@ -258,6 +259,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	}
 
 	protected static void loadMorePosts() {
+        isLoadingMorePosts = true;
 		if(lazyLoadingFooterSpinner != null){
 			lazyLoadingFooterSpinner.setVisibility(View.VISIBLE);
 		}
@@ -265,6 +267,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	}
 	
 	public static void removeFooterSpinner() {
+        isLoadingMorePosts = false;
 		if(lazyLoadingFooterSpinner != null){
 			lazyLoadingFooterSpinner.setVisibility(View.INVISIBLE);
 		}
@@ -392,7 +395,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		{
 			Log.i("cfeed","TEST new post size: " + postList.size());
 			listAdapter.setCollegeFeedID(currentFeedID);
-            listAdapter.clear();;
+            listAdapter.clear();
             listAdapter.addAll(postList);
             Log.i("cfeed","TEST last post size: " + listAdapter.getCount());
 			listAdapter.notifyDataSetChanged();
@@ -404,6 +407,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
         if(loadingSpinner != null){
             if(makeLoading)
             {
+                isLoadingMorePosts = true;
                 list.setVisibility(View.INVISIBLE);
                 loadingSpinner.setVisibility(View.VISIBLE);
 
@@ -413,6 +417,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
             }
             else
             {
+                isLoadingMorePosts = false;
                 list.setVisibility(View.VISIBLE);
                 loadingSpinner.setVisibility(View.INVISIBLE);
 

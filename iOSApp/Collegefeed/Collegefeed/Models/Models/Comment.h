@@ -40,5 +40,5 @@
              withPostID:(NSInteger)newPostID;
 
 - (id)initWithPost:(Post *)post;
-
+- (long)getPostID;
 @end

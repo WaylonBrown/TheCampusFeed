@@ -278,7 +278,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
     	//check for tags, colorize them
     	for(int i = 0; i < wordArray.length; i++)
     	{
-    		if(wordArray[i].length() > 0 && wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1 && !MainActivity.containsSymbols(wordArray[i]))
+    		if(wordArray[i].length() > 0 && wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1 && !MainActivity.containsSymbols(wordArray[i].substring(1, wordArray[i].length())))
     		{
     			wordArray[i] = "<font color='" + tagColor + "'>" + wordArray[i] + "</font>";
     		}
