@@ -53,7 +53,7 @@ resource "Votes" do
   end
 
   delete "/api/v1/votes/68" do
-    example "Removing vote id 68" do
+    example "Removing(short) vote id 68" do
       do_request
       status.should == 204
     end
