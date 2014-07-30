@@ -7,6 +7,7 @@ resource "Votes" do
   before do
     @p = Post.create(:text => "Test post.", :id => 101);
     @c = @p.comments.create(:text => "Test comment.", :id => 1);
+    @p.votes.create(:upvote => true, :id => 68);
     @p.votes.create(:upvote => true, :id => 69);
     @c.votes.create(:upvote => true);
   end
@@ -49,6 +50,13 @@ resource "Votes" do
       status.should == 201
     end
 
+  end
+
+  delete "/api/v1/votes/68" do
+    example "Removing vote id 68" do
+      do_request
+      status.should == 204
+    end
   end
 
   delete "/api/v1/posts/101/comments/1/votes/69" do
