@@ -5,6 +5,7 @@
 //  Created by Patrick Sheehan on 5/2/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
+#import <CoreData/CoreData.h>
 
 #import "DataController.h"
 #import "College.h"
@@ -16,11 +17,12 @@
 
 @implementation DataController
 
-- (id)init
+- (id)initWithManagedObjectContext:(NSManagedObjectContext *)context
 {
     self = [super init];
     if (self)
     {
+        [self setContext:context];
         [self setShowingAllColleges:YES];
         [self setShowingSingleCollege:NO];
         
@@ -471,30 +473,38 @@
 }
 - (void)saveUserUpVotes
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docDir = [paths objectAtIndex: 0];
-    
     // Save user post upvotes
-    NSString *postFile = [docDir stringByAppendingPathComponent: USER_UPVOTE_POST_IDS_FILE];
-    NSString *postIdsString = @"";
-    for (NSNumber *postID in self.userPostUpvotes)
+    NSError *error;
+    for (Vote *voteModel in self.userPostUpvotes)
     {
-        postIdsString = [NSString stringWithFormat:@"%@\n%@", postID, postIdsString];
+        NSManagedObject *vote = [NSEntityDescription insertNewObjectForEntityForName:KEY_UPVOTED_POSTS
+                                                              inManagedObjectContext:self.context];
+        [vote setValue:[NSNumber numberWithLong:voteModel.parentID] forKeyPath:KEY_PARENT_ID];
+        [vote setValue:[NSNumber numberWithLong:voteModel.voteID] forKeyPath:KEY_VOTE_ID];
+        [vote setValue:VALUE_POST forKeyPath:KEY_TYPE];
+        [vote setValue:[NSNumber numberWithBool:YES] forKeyPath:KEY_UPVOTE];
     }
-    NSData *postData = [postIdsString dataUsingEncoding:NSUTF8StringEncoding];
-    [postData writeToFile:postFile atomically:NO];
-
-
+    if (![self.context save:&error])
+    {
+        NSLog(@"Failed to save user's upvoted posts: %@",
+              [error localizedDescription]);
+    }
+    
     // Save user comment upvotes
-    NSString *commentFile = [docDir stringByAppendingPathComponent: USER_UPVOTE_COMMENT_IDS_FILE];
-    NSString *commentIdsString = @"";
-    for (NSNumber *commentID in self.userCommentUpvotes)
+    for (Vote *voteModel in self.userCommentUpvotes)
     {
-        commentIdsString = [NSString stringWithFormat:@"%@\n%@", commentID, commentIdsString];
+        NSManagedObject *vote = [NSEntityDescription insertNewObjectForEntityForName:KEY_UPVOTED_COMMENTS
+                                                              inManagedObjectContext:self.context];
+        [vote setValue:[NSNumber numberWithLong:voteModel.parentID] forKeyPath:KEY_PARENT_ID];
+        [vote setValue:[NSNumber numberWithLong:voteModel.voteID] forKeyPath:KEY_VOTE_ID];
+        [vote setValue:VALUE_COMMENT forKeyPath:KEY_TYPE];
+        [vote setValue:[NSNumber numberWithBool:YES] forKeyPath:KEY_UPVOTE];
     }
-    NSData *commentData = [commentIdsString dataUsingEncoding:NSUTF8StringEncoding];
-    [commentData writeToFile:commentFile atomically:NO];
-
+    if (![self.context save:&error])
+    {
+        NSLog(@"Failed to save user's upvoted comments: %@",
+              [error localizedDescription]);
+    }
 }
 - (void)saveUserDownVotes
 {

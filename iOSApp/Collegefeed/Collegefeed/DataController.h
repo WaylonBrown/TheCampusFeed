@@ -31,6 +31,16 @@
 #define USER_DOWNVOTE_POST_IDS_FILE     @"UserPostDownvoteIds.txt"
 #define USER_DOWNVOTE_COMMENT_IDS_FILE  @"UserCommentDownvoteIds.txt"
 
+#define KEY_PARENT_ID           @"parentId"
+#define KEY_VOTE_ID             @"voteId"
+#define KEY_TYPE                @"type"
+#define KEY_UPVOTE              @"upvote"
+#define KEY_UPVOTED_POSTS       @"UpvotedPosts"
+#define KEY_UPVOTED_COMMENTS    @"UpvotedComments"
+#define KEY_DOWNVOTED_POSTS     @"DownvotedPosts"
+#define KEY_DOWNVOTED_COMMENTS  @"DownvotedComments"
+#define VALUE_POST              @"Post"
+#define VALUE_COMMENT           @"Comment"
 
 #pragma mark - Protocol Definitions
 /********************************/
@@ -52,6 +62,7 @@
 /***** MEMBER VARIABLES *****/
 /****************************/
 @property (strong, nonatomic) id<LocationFinderDelegateProtocol> appDelegate;
+@property (strong, nonatomic) NSManagedObjectContext *context;
 
 // College Arrays
 @property (strong, nonatomic) NSMutableArray *collegeList;
@@ -106,7 +117,7 @@
 /****************************/
 /***** PUBLIC FUNCTIONS *****/
 /****************************/
-
+- (id)initWithManagedObjectContext:(NSManagedObjectContext *)context;
 
 /****************************/
 /***** Local Data Access ****/

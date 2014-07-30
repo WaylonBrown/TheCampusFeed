@@ -35,9 +35,10 @@
 {   // Set up ViewControllers and DataControllers
 
     // ***SIMULATE YOUR LOCATION***
-    
-    self.dataController = [DataController new];
-    [self.dataController setAppDelegate:self];
+    NSManagedObjectContext *context = [self managedObjectContext];
+
+    self.dataController = [[DataController alloc] initWithManagedObjectContext:context];
+
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
@@ -116,21 +117,20 @@
     self.window.rootViewController = self.slidingViewController;
 
     
-    NSManagedObjectContext *context = [self managedObjectContext];
     NSError *error;
     
-    //    NSManagedObject *vote = [NSEntityDescription insertNewObjectForEntityForName:@"Vote" inManagedObjectContext:context];
-//    [vote setValue:[NSNumber numberWithInt:12341234] forKeyPath:@"grandparentId"];
-//    [vote setValue:[NSNumber numberWithInt:978780] forKeyPath:@"parentId"];
-//    [vote setValue:[NSNumber numberWithInt:81456] forKeyPath:@"voteId"];
-//    [vote setValue:@"Comment" forKeyPath:@"type"];
-//    [vote setValue:[NSNumber numberWithBool:YES] forKeyPath:@"upvote"];
-//    
+    NSManagedObject *vote = [NSEntityDescription insertNewObjectForEntityForName:@"Vote" inManagedObjectContext:context];
+    [vote setValue:[NSNumber numberWithInt:12341234] forKeyPath:@"grandparentId"];
+    [vote setValue:[NSNumber numberWithInt:978780] forKeyPath:@"parentId"];
+    [vote setValue:[NSNumber numberWithInt:81456] forKeyPath:@"voteId"];
+    [vote setValue:@"Comment" forKeyPath:@"type"];
+    [vote setValue:[NSNumber numberWithBool:YES] forKeyPath:@"upvote"];
+    
 
-//    if (![context save:&error]) {
-//        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-//    }
-//    
+    if (![context save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
+    
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
