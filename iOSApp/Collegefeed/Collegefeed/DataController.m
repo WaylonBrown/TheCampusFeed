@@ -508,29 +508,38 @@
 }
 - (void)saveUserDownVotes
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docDir = [paths objectAtIndex: 0];
-    
     // Save user post downvotes
-    NSString *postFile = [docDir stringByAppendingPathComponent: USER_DOWNVOTE_POST_IDS_FILE];
-    NSString *postIdsString = @"";
-    for (NSNumber *postID in self.userPostDownvotes)
+    NSError *error;
+    for (Vote *voteModel in self.userPostUpvotes)
     {
-        postIdsString = [NSString stringWithFormat:@"%@\n%@", postID, postIdsString];
+        NSManagedObject *vote = [NSEntityDescription insertNewObjectForEntityForName:KEY_DOWNVOTED_POSTS
+                                                              inManagedObjectContext:self.context];
+        [vote setValue:[NSNumber numberWithLong:voteModel.parentID] forKeyPath:KEY_PARENT_ID];
+        [vote setValue:[NSNumber numberWithLong:voteModel.voteID] forKeyPath:KEY_VOTE_ID];
+        [vote setValue:VALUE_POST forKeyPath:KEY_TYPE];
+        [vote setValue:[NSNumber numberWithBool:NO] forKeyPath:KEY_UPVOTE];
     }
-    NSData *postData = [postIdsString dataUsingEncoding:NSUTF8StringEncoding];
-    [postData writeToFile:postFile atomically:NO];
-
-
+    if (![self.context save:&error])
+    {
+        NSLog(@"Failed to save user's downvoted posts: %@",
+              [error localizedDescription]);
+    }
+    
     // Save user comment downvotes
-    NSString *commentFile = [docDir stringByAppendingPathComponent: USER_DOWNVOTE_COMMENT_IDS_FILE];
-    NSString *commentIdsString = @"";
-    for (NSNumber *commentID in self.userCommentDownvotes)
+    for (Vote *voteModel in self.userCommentUpvotes)
     {
-        commentIdsString = [NSString stringWithFormat:@"%@\n%@", commentID, commentIdsString];
+        NSManagedObject *vote = [NSEntityDescription insertNewObjectForEntityForName:KEY_DOWNVOTED_COMMENTS
+                                                              inManagedObjectContext:self.context];
+        [vote setValue:[NSNumber numberWithLong:voteModel.parentID] forKeyPath:KEY_PARENT_ID];
+        [vote setValue:[NSNumber numberWithLong:voteModel.voteID] forKeyPath:KEY_VOTE_ID];
+        [vote setValue:VALUE_COMMENT forKeyPath:KEY_TYPE];
+        [vote setValue:[NSNumber numberWithBool:NO] forKeyPath:KEY_UPVOTE];
     }
-    NSData *commentData = [commentIdsString dataUsingEncoding:NSUTF8StringEncoding];
-    [commentData writeToFile:commentFile atomically:NO];
+    if (![self.context save:&error])
+    {
+        NSLog(@"Failed to save user's downvoted comments: %@",
+              [error localizedDescription]);
+    }
 }
 - (void)saveUserVotes
 {
