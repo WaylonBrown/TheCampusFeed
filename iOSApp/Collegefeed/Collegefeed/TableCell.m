@@ -108,7 +108,7 @@
     id<ChildCellDelegate> strongDelegate = self.delegate;
     
     Vote *existingVote = [self.object getVote];
-    Vote *newVote = [[Vote alloc] initWithVotableID:[self.object getID]
+    Vote *newVote = [[Vote alloc] initWithParentID:[self.object getID]
                                     withUpvoteValue:true
                                       asVotableType:[self.object getType]];
     [newVote setCollegeId:[self.object getCollegeID]];
@@ -123,11 +123,6 @@
     }
     else
     {
-        existingVote.parentID = [self.object getID];
-        if ([self.object getType] == COMMENT)
-        {
-            existingVote.grandparentID = [(Comment*)self.object getPostID];
-        }
         [strongDelegate cancelVote:existingVote];
         
         if (existingVote.upvote == true)
@@ -155,7 +150,7 @@
     id<ChildCellDelegate> strongDelegate = self.delegate;
     
     Vote *existingVote = [self.object getVote];
-    Vote *newVote = [[Vote alloc] initWithVotableID:[self.object getID]
+    Vote *newVote = [[Vote alloc] initWithParentID:[self.object getID]
                                     withUpvoteValue:false
                                       asVotableType:[self.object getType]];
     [newVote setCollegeId:[self.object getCollegeID]];

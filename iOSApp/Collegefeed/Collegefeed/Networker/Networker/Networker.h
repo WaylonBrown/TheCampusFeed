@@ -58,9 +58,7 @@
 + (NSData *)POSTVoteData:(NSData *)data WithCommentId:(long)commentId WithPostId:(long)postId;
 + (NSData *)GETVoteScoreWithPostId:(long)postId;
 + (NSData *)GETVoteScoreWithCommentId:(long)commentId;
-+ (BOOL)DELETEVoteId:(long)voteId WithPostId:(long)postId;
-+ (BOOL)DELETEVoteId:(long)voteId WithPostId:(long)postId WithCommentId:(long)commentId;
-//+ (BOOL)DELETEVoteData:(NSData *)data WithPostId:(long)postId;
-//+ (BOOL)DELETEVoteData:(NSData *)data WithCommentId:(long)commentId WithPostId:(long)postId;
++ (BOOL)DELETEVoteId:(long)voteId;
+
 @end
 

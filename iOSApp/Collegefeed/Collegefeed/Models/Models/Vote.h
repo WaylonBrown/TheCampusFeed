@@ -30,9 +30,12 @@
 
 @property (nonatomic) long collegeId;
 
-//@property (nonatomic, strong) NSURL *POSTurl;
+- (id)initWithVoteId:(long)voteId
+        WithParentId:(long)parentId
+     WithUpvoteValue:(BOOL)isUpvote
+       AsVotableType:(ModelType)type;
 
-- (id)initWithVotableID:(NSInteger)ID
+- (id)initWithParentID:(NSInteger)ID
         withUpvoteValue:(BOOL)isUpvote
           asVotableType:(ModelType)type;
 

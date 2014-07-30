@@ -10,7 +10,23 @@
 
 @implementation Vote
 
-- (id)initWithVotableID:(NSInteger)ID
+- (id)initWithVoteId:(long)voteId
+        WithParentId:(long)parentId
+     WithUpvoteValue:(BOOL)isUpvote
+       AsVotableType:(ModelType)type
+{
+    self = [super init];
+    if (self)
+    {
+        [self setVoteID:voteId];
+        [self setParentID:parentId];
+        [self setUpvote:isUpvote];
+        [self setVotableType:type];
+        return self;
+    }
+    return nil;
+}
+- (id)initWithParentID:(NSInteger)ID
         withUpvoteValue:(BOOL)isUpvote
           asVotableType:(ModelType)type
 {
@@ -88,8 +104,8 @@
     
 }
 - (ModelType)getType
-{
-    return VOTE;
+{   // return POST or COMMENT
+    return self.votableType;
 }
 
 @end

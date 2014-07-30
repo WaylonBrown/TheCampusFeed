@@ -115,35 +115,6 @@
     // *************************************** //
 
     self.window.rootViewController = self.slidingViewController;
-
-    
-    NSError *error;
-    
-    NSManagedObject *vote = [NSEntityDescription insertNewObjectForEntityForName:@"Vote" inManagedObjectContext:context];
-    [vote setValue:[NSNumber numberWithInt:12341234] forKeyPath:@"grandparentId"];
-    [vote setValue:[NSNumber numberWithInt:978780] forKeyPath:@"parentId"];
-    [vote setValue:[NSNumber numberWithInt:81456] forKeyPath:@"voteId"];
-    [vote setValue:@"Comment" forKeyPath:@"type"];
-    [vote setValue:[NSNumber numberWithBool:YES] forKeyPath:@"upvote"];
-    
-
-    if (![context save:&error]) {
-        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-    }
-    
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:@"Vote" inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-    for (NSManagedObject *vote in fetchedObjects) {
-        NSLog(@"Type: %@", [vote valueForKey:@"type"]);
-        NSLog(@"Upvote: %@", [vote valueForKey:@"upvote"]);
-    }
-    
-    
-    
     
     [self.window makeKeyAndVisible];
 
@@ -259,6 +230,16 @@
     }
     
     return _persistentStoreCoordinator;
+}
+- (void) deleteAllObjects
+{
+    NSArray *stores = [_persistentStoreCoordinator persistentStores];
+    
+    for(NSPersistentStore *store in stores)
+    {
+        [_persistentStoreCoordinator removePersistentStore:store error:nil];
+        [[NSFileManager defaultManager] removeItemAtPath:store.URL.path error:nil];
+    }
 }
 
 #pragma mark - Application's Documents directory
