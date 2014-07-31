@@ -1,4 +1,4 @@
-angular.module "cfeed", ["ui.bootstrap", "ngAnimate", "ngResource"]
+angular.module "cfeed", ["ui.bootstrap", "ngAnimate", "ngResource", "infinite-scroll"]
 angular.element(document).ready ->
 
 angular.module("cfeed").run ["$rootScope", "$resource", ($rootScope, $resource) ->

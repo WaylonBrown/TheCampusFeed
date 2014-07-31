@@ -54,8 +54,8 @@
   <div class="row">
     <div class="col-md-2">
     </div>
-    <div class="col-md-4" id="posts" >
-      <div class="card slide pointer" ng-repeat="post in recentPosts" ng-click="selectPost(post)" ng-class="{active: post.active}">
+    <div class="col-md-4" id="posts" infinite-scroll="atBottom()">
+      <div class="card slide pointer" ng-repeat="post in posts.recentPosts" ng-click="selectPost(post)" ng-class="{active: post.active}">
         <div class="card-background absoluteFull" randombgpos>
         </div>
         <div class="card-controls">
