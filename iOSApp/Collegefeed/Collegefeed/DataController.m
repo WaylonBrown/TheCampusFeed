@@ -450,38 +450,38 @@
 {
     if (self.userPosts.count > 0)
     {
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *docDir = [paths objectAtIndex: 0];
-        NSString *postFile = [docDir stringByAppendingPathComponent: USER_POST_IDS_FILE];
-        
-        NSString *postIdsString = @"";
-        for (Post *post in self.userPosts)
+        NSManagedObjectContext *context = [self managedObjectContext];
+        NSError *error;
+        for (Post *postModel in self.userPosts)
         {
-            long postId = post.postID;
-            postIdsString = [NSString stringWithFormat:@"%ld\n%@", postId, postIdsString];
+            NSManagedObject *post = [NSEntityDescription insertNewObjectForEntityForName:POST_ENTITY
+                                                                  inManagedObjectContext:context];
+            [post setValue:[NSNumber numberWithLong:postModel.postID] forKeyPath:KEY_POST_ID];
         }
-        
-        NSData *postData = [postIdsString dataUsingEncoding:NSUTF8StringEncoding];
-        [postData writeToFile:postFile atomically:NO];
+        if (![_managedObjectContext save:&error])
+        {
+            NSLog(@"Failed to save user's posts: %@",
+                  [error localizedDescription]);
+        }
     }
 }
 - (void)saveUserComments
 {
     if (self.userComments.count > 0)
     {
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *docDir = [paths objectAtIndex: 0];
-        NSString *commentFile = [docDir stringByAppendingPathComponent: USER_COMMENT_IDS_FILE];
-        
-        // Save Comment Ids
-        NSString *commentIdsString = @"";
-        for (Comment *comment in self.userComments)
+        NSManagedObjectContext *context = [self managedObjectContext];
+        NSError *error;
+        for (Comment *commentModel in self.userComments)
         {
-            long commentId = comment.commentID;
-            commentIdsString = [NSString stringWithFormat:@"%ld\n%@", commentId, commentIdsString];
+            NSManagedObject *comment = [NSEntityDescription insertNewObjectForEntityForName:COMMENT_ENTITY
+                                                                  inManagedObjectContext:context];
+            [comment setValue:[NSNumber numberWithLong:commentModel.commentID] forKeyPath:KEY_COMMENT_ID];
         }
-        NSData *commentData = [commentIdsString dataUsingEncoding:NSUTF8StringEncoding];
-        [commentData writeToFile:commentFile atomically:NO];
+        if (![_managedObjectContext save:&error])
+        {
+            NSLog(@"Failed to save user's comments: %@",
+                  [error localizedDescription]);
+        }
     }
 }
 - (void)saveUserPostVotes

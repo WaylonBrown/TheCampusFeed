@@ -26,9 +26,11 @@
 #define USER_POST_IDS_FILE          @"UserPostIds.txt"
 #define USER_COMMENT_IDS_FILE       @"UserCommentIds.txt"
 
-
 #define POST_ENTITY             @"Post"
+#define KEY_POST_ID             @"postId"
+
 #define COMMENT_ENTITY          @"Comment"
+#define KEY_COMMENT_ID          @"commentId"
 
 #define COLLEGE_ENTITY          @"College"
 #define KEY_COLLEGE_ID          @"collegeId"

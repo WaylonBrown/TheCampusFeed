@@ -7,15 +7,23 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shortName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Comment" syncable="YES">
+        <attribute name="commentId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Post" syncable="YES">
+        <attribute name="postId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
     <entity name="Vote" syncable="YES">
-        <attribute name="grandparentId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="parentId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="postId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="upvote" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="voteId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Vote" positionX="-36" positionY="9" width="128" height="120"/>
+        <element name="Vote" positionX="-36" positionY="9" width="128" height="118"/>
         <element name="College" positionX="-27" positionY="54" width="128" height="120"/>
+        <element name="Post" positionX="0" positionY="99" width="128" height="60"/>
+        <element name="Comment" positionX="27" positionY="117" width="128" height="60"/>
     </elements>
 </model>
