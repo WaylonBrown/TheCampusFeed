@@ -18,7 +18,7 @@ angular.module("cfeed").controller "WebappCtrl", [
     })
 
     $scope.tags.trendingTags = $rootScope.Tag.trending({page: 1, per_page: 10})
-    $scope.colleges.trendingColleges = $rootScope.College.trending()
+    $scope.colleges.trendingColleges = $rootScope.College.trending({page: 1, per_page: 10})
 
     $scope.loadRecentPosts = ->
       $http.get("api/v1/posts/recent").success((res) ->
