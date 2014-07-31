@@ -4,7 +4,7 @@ public class Vote
 {
     public int id;
 	public int postID;
-    public int parentID;    //only used for comment votes
+    public int commentID;    //only used for comment votes
 	public boolean upvote;
 
 	public Vote(int id, int postID, boolean upvote)
@@ -12,14 +12,15 @@ public class Vote
 		this.id = id;
         this.postID = id;
 		this.upvote = upvote;
-        this.parentID = 0;
+        this.commentID = 0;
 	}
 
-    public Vote(int id, int postID, int parentID, boolean upvote)
+    //only used for comment votes
+    public Vote(int id, int postID, int commentID, boolean upvote)
     {
         this.id = id;
         this.postID = postID;
-        this.parentID = parentID;
+        this.commentID = commentID;
         this.upvote = upvote;
     }
 
@@ -29,7 +30,7 @@ public class Vote
         try{
             this.id = Integer.valueOf(split[0]);
             this.postID = Integer.valueOf(split[1]);
-            this.parentID = Integer.valueOf(split[2]);
+            this.commentID = Integer.valueOf(split[2]);
             if(split[3].equals("1")){
                 upvote = true;
             } else {
@@ -46,6 +47,6 @@ public class Vote
             upvoteString = "1";
         else
             upvoteString = "0";
-        return id + "," + postID + "," + parentID + "," + upvoteString;
+        return id + "," + postID + "," + commentID + "," + upvoteString;
     }
 }

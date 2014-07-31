@@ -151,30 +151,22 @@ public class CommentsActivity extends Activity{
 						post.setVote(1);
 						post.score += 2;
 						scoreText.setText(String.valueOf(post.score));
-                        new NetWorker.MakePostVoteDeleteTask().execute(MainActivity.voteObjectFromPostID(post.getID()));
-                        new NetWorker.MakePostVoteTask().execute(new Vote(0, post.getID(), true));
-						MainActivity.postDownvoteList.remove(Integer.valueOf(post.getID()));
-						MainActivity.postUpvoteList.add(post.getID());
-						PrefManager.putPostDownvoteList(MainActivity.postDownvoteList);
-						PrefManager.putPostUpvoteList(MainActivity.postUpvoteList);
+                        new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
+                        new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), true));
 					}
 					else if(post.getVote() == 0)
 					{
 						post.setVote(1);
 						post.score++;
 						scoreText.setText(String.valueOf(post.score));
-                        new NetWorker.MakePostVoteTask().execute(new Vote(0, post.getID(), true));
-						MainActivity.postUpvoteList.add(post.getID());
-						PrefManager.putPostUpvoteList(MainActivity.postUpvoteList);
+                        new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), true));
 					}
 					else 
 					{
 						post.setVote(0);
 						post.score--;
 						scoreText.setText(String.valueOf(post.score));
-                        new NetWorker.MakePostVoteDeleteTask().execute(MainActivity.voteObjectFromPostID(post.getID()));
-						MainActivity.postUpvoteList.remove(Integer.valueOf(post.getID()));
-						PrefManager.putPostUpvoteList(MainActivity.postUpvoteList);
+                        new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
 					}
 					TopPostFragment.updateList();
 					NewPostFragment.updateList();
@@ -195,30 +187,22 @@ public class CommentsActivity extends Activity{
 							post.setVote(0);
 							post.score++;
 							scoreText.setText(String.valueOf(post.score));
-                            new NetWorker.MakePostVoteDeleteTask().execute(MainActivity.voteObjectFromPostID(post.getID()));
-							MainActivity.postDownvoteList.remove(Integer.valueOf(post.getID()));
-							PrefManager.putPostDownvoteList(MainActivity.postDownvoteList);
+                            new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
 						}
 						else if(post.getVote() == 0)
 						{
 							post.setVote(-1);
 							post.score--;
 							scoreText.setText(String.valueOf(post.score));
-                            new NetWorker.MakePostVoteTask().execute(new Vote(0, post.getID(), false));
-							MainActivity.postDownvoteList.add(post.getID());
-							PrefManager.putPostDownvoteList(MainActivity.postDownvoteList);
+                            new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), false));
 						}
 						else 
 						{
 							post.setVote(-1);
 							post.score -= 2;
-                            new NetWorker.MakePostVoteDeleteTask().execute(MainActivity.voteObjectFromPostID(post.getID()));
-                            new NetWorker.MakePostVoteTask().execute(new Vote(0, post.getID(), false));
+                            new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
+                            new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), false));
 							scoreText.setText(String.valueOf(post.score));
-							MainActivity.postUpvoteList.remove(Integer.valueOf(post.getID()));
-							MainActivity.postDownvoteList.add(post.getID());
-							PrefManager.putPostDownvoteList(MainActivity.postDownvoteList);
-							PrefManager.putPostUpvoteList(MainActivity.postUpvoteList);
 						}
 						TopPostFragment.updateList();
 						NewPostFragment.updateList();

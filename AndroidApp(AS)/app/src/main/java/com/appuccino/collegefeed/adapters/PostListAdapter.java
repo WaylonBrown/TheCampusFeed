@@ -118,6 +118,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 		}
         
         //arrow click listeners
+        final PostHolder finalPostHolder = postHolder;
         postHolder.arrowUp.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -127,28 +128,23 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 				{
 					thisPost.setVote(1);
 					thisPost.score += 2;
-                    new MakePostVoteDeleteTask().execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
-                    new MakePostVoteTask().execute(new Vote(0, thisPost.getID(), true));
-					MainActivity.postDownvoteList.remove(Integer.valueOf(thisPost.getID()));
-					MainActivity.postUpvoteList.add(thisPost.getID());
-                    PrefManager.putPostDownvoteList(MainActivity.postDownvoteList);
-                    PrefManager.putPostUpvoteList(MainActivity.postUpvoteList);
+                    setArrowDrawable(finalPostHolder, 1);
+                    new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
+                    new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), true));
 				}
 				else if(thisPost.getVote() == 0)
 				{
 					thisPost.setVote(1);
 					thisPost.score++;
-                    new MakePostVoteTask().execute(new Vote(0, thisPost.getID(), true));
-					MainActivity.postUpvoteList.add(thisPost.getID());
-                    PrefManager.putPostUpvoteList(MainActivity.postUpvoteList);
+                    setArrowDrawable(finalPostHolder, 1);
+                    new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), true));
 				}
 				else 
 				{
 					thisPost.setVote(0);
 					thisPost.score--;
-                    new MakePostVoteDeleteTask().execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
-					MainActivity.postUpvoteList.remove(Integer.valueOf(thisPost.getID()));
-                    PrefManager.putPostUpvoteList(MainActivity.postUpvoteList);
+                    setArrowDrawable(finalPostHolder, 0);
+                    new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
                 }
 				
 				switch(whichList){
@@ -172,28 +168,23 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 					{
 						thisPost.setVote(0);
 						thisPost.score++;
-                        new MakePostVoteDeleteTask().execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
-						MainActivity.postDownvoteList.remove(Integer.valueOf(thisPost.getID()));
-                        PrefManager.putPostDownvoteList(MainActivity.postDownvoteList);
+                        setArrowDrawable(finalPostHolder, 0);
+                        new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
                     }
 					else if(thisPost.getVote() == 0)
 					{
 						thisPost.setVote(-1);
 						thisPost.score--;
-                        new MakePostVoteTask().execute(new Vote(0, thisPost.getID(), false));
-						MainActivity.postDownvoteList.add(thisPost.getID());
-                        PrefManager.putPostDownvoteList(MainActivity.postDownvoteList);
+                        setArrowDrawable(finalPostHolder, -1);
+                        new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), false));
                     }
 					else 
 					{
 						thisPost.setVote(-1);
 						thisPost.score -= 2;
-                        new MakePostVoteDeleteTask().execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
-                        new MakePostVoteTask().execute(new Vote(0, thisPost.getID(), false));
-						MainActivity.postUpvoteList.remove(Integer.valueOf(thisPost.getID()));
-						MainActivity.postDownvoteList.add(thisPost.getID());
-                        PrefManager.putPostDownvoteList(MainActivity.postDownvoteList);
-                        PrefManager.putPostUpvoteList(MainActivity.postUpvoteList);
+                        setArrowDrawable(finalPostHolder, -1);
+                        new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
+                        new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), false));
                     }
 					TopPostFragment.updateList();
 					NewPostFragment.updateList();
@@ -208,25 +199,30 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         
         thisPost.setVote(MainActivity.getVoteByPostId(thisPost.getID()));
         int vote = thisPost.getVote();
+
+        setArrowDrawable(postHolder, vote);
+
+        return row;
+    }
+
+    private void setArrowDrawable(PostHolder postHolder, int vote) {
         if(vote == -1)
         {
-        	postHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdownred));
-        	postHolder.arrowUp.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowup));
+            postHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdownred));
+            postHolder.arrowUp.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowup));
         }
         else if (vote == 1)
         {
-        	postHolder.arrowUp.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowupblue));
-        	postHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdown));
+            postHolder.arrowUp.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowupblue));
+            postHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdown));
         }
         else	//no votes
         {
-        	postHolder.arrowUp.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowup));
-        	postHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdown));
+            postHolder.arrowUp.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowup));
+            postHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdown));
         }
-        
-        return row;
     }
-        
+
     private void setTime(Post thisPost, TextView timeText) throws ParseException {
     	Calendar thisPostTime = TimeManager.toCalendar(thisPost.getTime());
     	Calendar now = Calendar.getInstance();

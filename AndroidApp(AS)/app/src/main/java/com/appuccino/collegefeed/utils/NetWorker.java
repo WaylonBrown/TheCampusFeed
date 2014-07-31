@@ -648,8 +648,8 @@ public class NetWorker {
                  if(MainActivity.getCollegeByID(postCollegeID) != null){
                      responsePost.setCollegeName(MainActivity.getCollegeByID(postCollegeID).getName());
                  }
-                 MainActivity.postUpvoteList.add(responsePost.getID());
-                 PrefManager.putPostUpvoteList(MainActivity.postUpvoteList);
+                 MainActivity.postVoteList.add(new Vote(-1, responsePost.getID(), true));
+                 PrefManager.putPostVoteList(MainActivity.postVoteList);
                  MainActivity.addNewPostToListAndMyContent(responsePost);
              } catch (IOException e) {
                  Log.i("cfeed","ERROR: post not added");
@@ -702,8 +702,8 @@ public class NetWorker {
                  try {
                      responseComment = JSONParser.commentFromJSON(response);
                      int id = responseComment.getID();
-                     MainActivity.commentUpvoteList.add(id);
-                     PrefManager.putCommentUpvoteList(MainActivity.commentUpvoteList);
+                     MainActivity.commentVoteList.add(new Vote(-1, responseComment.getID(), true));
+                     PrefManager.putCommentVoteList(MainActivity.commentVoteList);
                      MainActivity.myCommentsList.add(id);
                      PrefManager.putMyCommentsList(MainActivity.myCommentsList);
                      //instantly add to new comments
@@ -724,6 +724,11 @@ public class NetWorker {
      }
 
     public static class MakePostVoteTask extends AsyncTask<Vote, Void, Boolean>{
+        Context c;
+
+        public MakePostVoteTask(Context c){
+            this.c = c;
+        }
         public Boolean doInBackground(Vote... votes){
             try{
                 HttpGet request = new HttpGet(REQUEST_URL + "posts/" + votes[0].id + "/votes");
@@ -744,11 +749,23 @@ public class NetWorker {
         }
 
         public void onPostExecute(Boolean result){
-            Log.d("http", LOG_TAG + "success: " + result);
+            if(!result){
+                //TODO: remove this
+                Toast.makeText(c, "Vote didnt work", Toast.LENGTH_LONG).show();
+            }
+
+            MainActivity.postVoteList.add(serverresult);
+            PrefManager.putPostVoteList(MainActivity.postVoteList);
         }
     }
 
     public static class MakeCommentVoteTask extends AsyncTask<Vote, Void, Boolean>{
+        Context c;
+
+        public MakeCommentVoteTask(Context c){
+            this.c = c;
+        }
+
         public Boolean doInBackground(Vote... votes){
             try{
                 HttpGet request = new HttpGet(REQUEST_URL + "posts/" + votes[0].parentID + "/comments/" + votes[0].id + "/votes");
@@ -769,14 +786,27 @@ public class NetWorker {
         }
 
         public void onPostExecute(Boolean result){
-            Log.d("http", LOG_TAG + "success: " + result);
+            if(!result){
+                //TODO: remove this
+                Toast.makeText(c, "Vote didnt work", Toast.LENGTH_LONG).show();
+            }
+
+            MainActivity.commentVoteList.add(serverresult);
+            PrefManager.putCommentVoteList(MainActivity.commentVoteList);
         }
     }
 
     public static class MakePostVoteDeleteTask extends AsyncTask<Vote, Void, Boolean>{
+        Vote vote;
+        Context c;
+
+        public MakePostVoteDeleteTask(Context c){
+            this.c = c;
+        }
         public Boolean doInBackground(Vote... votes){
             try{
-                HttpGet request = new HttpGet(REQUEST_URL + "posts/" + votes[0].id + "/votes");
+                vote = votes[0];
+                HttpGet request = new HttpGet(REQUEST_URL + "posts/" + vote.id + "/votes");
                 //request.setEntity(new ByteArrayEntity(
                 //  votes[0].toString().getBytes("UTF8")));
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -794,14 +824,28 @@ public class NetWorker {
         }
 
         public void onPostExecute(Boolean result){
-            Log.d("http", LOG_TAG + "success: " + result);
+            if(!result){
+                //TODO: remove this
+                Toast.makeText(c, "Vote delete didnt work", Toast.LENGTH_LONG).show();
+            }
+
+            MainActivity.removePostVoteByPostID(vote.postID);
+            PrefManager.putPostVoteList(MainActivity.postVoteList);
         }
     }
 
     public static class MakeCommentVoteDeleteTask extends AsyncTask<Vote, Void, Boolean>{
+        Vote vote;
+        Context c;
+
+        public MakeCommentVoteDeleteTask(Context c){
+            this.c = c;
+        }
+
         public Boolean doInBackground(Vote... votes){
             try{
-                HttpGet request = new HttpGet(REQUEST_URL + "posts/" + votes[0].id + "/votes");
+                vote = votes[0];
+                HttpGet request = new HttpGet(REQUEST_URL + "posts/" + vote.id + "/votes");
                 //request.setEntity(new ByteArrayEntity(
                 //  votes[0].toString().getBytes("UTF8")));
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -819,7 +863,13 @@ public class NetWorker {
         }
 
         public void onPostExecute(Boolean result){
-            Log.d("http", LOG_TAG + "success: " + result);
+            if(!result){
+                //TODO: remove this
+                Toast.makeText(c, "Vote delete didnt work", Toast.LENGTH_LONG).show();
+            }
+
+            MainActivity.removeCommentVoteByVoteID(vote.id);
+            PrefManager.putCommentVoteList(MainActivity.commentVoteList);
         }
     }
 

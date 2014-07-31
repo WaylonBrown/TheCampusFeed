@@ -16,10 +16,8 @@ import java.util.List;
 public class PrefManager {
 	
 	public static SharedPreferences prefs;
-	public static final String UPVOTE_LIST = "upvote_list";
-	public static final String DOWNVOTE_LIST = "downvote_list";
-	public static final String COMMENT_UPVOTE_LIST = "comment_upvote_list";
-	public static final String COMMENT_DOWNVOTE_LIST = "comment_downvote_list";
+	public static final String POST_VOTE_LIST = "post_vote_list";
+	public static final String COMMENT_VOTE_LIST = "comment_vote_list";
 	public static final String FLAG_LIST = "flag_list";
     public static final String MY_POSTS_LIST = "my_votes_list";
     public static final String MY_COMMENTS_LIST = "my_comments_list";
@@ -66,7 +64,7 @@ public class PrefManager {
 		return prefs.getString(key, defaultVal);
 	}
 	
-	public static void putPostUpvoteList(List<Vote> list){
+	public static void putPostVoteList(List<Vote> list){
 		String storage = "";
 		for(Vote vote : list){
 			storage += (vote.toSavableFormat() + ";");
@@ -76,12 +74,12 @@ public class PrefManager {
 			storage = storage.substring(0, storage.length()-1);
 		}
 		
-		prefs.edit().putString(UPVOTE_LIST, storage).apply();
+		prefs.edit().putString(POST_VOTE_LIST, storage).apply();
 	}
 	
-	public static List<Vote> getPostUpvoteList(){
+	public static List<Vote> getPostVoteList(){
 		List<Vote> returnList = new ArrayList<Vote>();
-		String retrieval = prefs.getString(UPVOTE_LIST, "");
+		String retrieval = prefs.getString(POST_VOTE_LIST, "");
 		if(retrieval != null && !retrieval.isEmpty()){
 			String[] split = retrieval.split(";");
 			for(String vote : split){
@@ -95,7 +93,7 @@ public class PrefManager {
 		return returnList;
 	}
 	
-	public static void putPostDownvoteList(List<Vote> list){
+	public static void putCommentVoteList(List<Vote> list){
 		String storage = "";
 		for(Vote vote : list){
 			storage += (vote.toSavableFormat() + ";");
@@ -105,70 +103,12 @@ public class PrefManager {
 			storage = storage.substring(0, storage.length()-1);
 		}
 		
-		prefs.edit().putString(DOWNVOTE_LIST, storage).apply();
+		prefs.edit().putString(COMMENT_VOTE_LIST, storage).apply();
 	}
 	
-	public static List<Vote> getPostDownvoteList(){
+	public static List<Vote> getCommentVoteList(){
 		List<Vote> returnList = new ArrayList<Vote>();
-		String retrieval = prefs.getString(DOWNVOTE_LIST, "");
-		if(retrieval != null && !retrieval.isEmpty()){
-			String[] split = retrieval.split(";");
-			for(String vote : split){
-				try{
-					returnList.add(new Vote(vote));
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-			}
-		}
-		return returnList;
-	}
-	
-	public static void putCommentUpvoteList(List<Vote> list){
-		String storage = "";
-		for(Vote vote : list){
-			storage += (vote.toSavableFormat() + ";");
-		}
-		//remove final ;
-		if(storage.length() > 0){
-			storage = storage.substring(0, storage.length()-1);
-		}
-		
-		prefs.edit().putString(COMMENT_UPVOTE_LIST, storage).apply();
-	}
-	
-	public static List<Vote> getCommentUpvoteList(){
-		List<Vote> returnList = new ArrayList<Vote>();
-		String retrieval = prefs.getString(COMMENT_UPVOTE_LIST, "");
-		if(retrieval != null && !retrieval.isEmpty()){
-			String[] split = retrieval.split(";");
-			for(String vote : split){
-				try{
-					returnList.add(new Vote(vote));
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-			}
-		}
-		return returnList;
-	}
-	
-	public static void putCommentDownvoteList(List<Vote> list){
-		String storage = "";
-		for(Vote vote : list){
-			storage += (vote.toSavableFormat() + ";");
-		}
-		//remove final ;
-		if(storage.length() > 0){
-			storage = storage.substring(0, storage.length()-1);
-		}
-		
-		prefs.edit().putString(COMMENT_DOWNVOTE_LIST, storage).apply();
-	}
-	
-	public static List<Vote> getCommentDownvoteList(){
-		List<Vote> returnList = new ArrayList<Vote>();
-		String retrieval = prefs.getString(COMMENT_DOWNVOTE_LIST, "");
+		String retrieval = prefs.getString(COMMENT_VOTE_LIST, "");
 		if(retrieval != null && !retrieval.isEmpty()){
 			String[] split = retrieval.split(";");
 			for(String vote : split){

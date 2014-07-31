@@ -91,10 +91,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public static ArrayList<Integer> permissions = new ArrayList<Integer>();	//length of 0 or null = no perms, otherwise the college ID is the perm IDs
 	public static ArrayList<College> collegeList = new ArrayList<College>();
 	
-	public static List<Vote> postUpvoteList = new ArrayList<Vote>();
-	public static List<Vote> postDownvoteList = new ArrayList<Vote>();
-	public static List<Vote> commentUpvoteList = new ArrayList<Vote>();
-	public static List<Vote> commentDownvoteList = new ArrayList<Vote>();
+	public static List<Vote> postVoteList = new ArrayList<Vote>();
+	public static List<Vote> commentVoteList = new ArrayList<Vote>();
     public static List<Integer> flagList = new ArrayList<Integer>();
     public static List<Integer> myPostsList = new ArrayList<Integer>();
     public static List<Integer> myCommentsList = new ArrayList<Integer>();
@@ -138,10 +136,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		FontManager.setup(this);
 		setupActionbar();
 
-		postUpvoteList = PrefManager.getPostUpvoteList();
-		postDownvoteList = PrefManager.getPostDownvoteList();
-		commentUpvoteList = PrefManager.getCommentUpvoteList();
-		commentDownvoteList = PrefManager.getCommentDownvoteList();
+		postVoteList = PrefManager.getPostVoteList();
+		commentVoteList = PrefManager.getCommentVoteList();
 		flagList = PrefManager.getFlagList();
         myPostsList = PrefManager.getMyPostsList();
         myCommentsList = PrefManager.getMyCommentsList();
@@ -249,6 +245,24 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(false);
 	}
+
+    public static Vote voteObjectFromPostID(int postID){
+        for(Vote v : postVoteList){
+            if(v.postID == postID){
+                return v;
+            }
+        }
+        return null;
+    }
+
+    public static Vote voteObjectFromCommentID(int postID){
+        for(Vote v : commentVoteList){
+            if(v.postID == postID){
+                return v;
+            }
+        }
+        return null;
+    }
 
 	public void changeFeed(int id) {
 		Log.i("cfeed","Changing to feed with ID " + id);
@@ -593,24 +607,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		}
 		
 		return -1;
-	}
-	
-	public static int getVoteByPostId(int id){
-		if(postUpvoteList.contains(id)){
-			return 1;
-		}else if(postDownvoteList.contains(id)){
-			return -1;
-		}
-		return 0;
-	}
-	
-	public static int getVoteByCommentId(int id){
-		if(commentUpvoteList.contains(id)){
-			return 1;
-		}else if(commentDownvoteList.contains(id)){
-			return -1;
-		}
-		return 0;
 	}
 
     public static boolean containsSymbols(String text) {

@@ -95,28 +95,20 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 				{
 					thisComment.setVote(1);
 					thisComment.score += 2;
-                    new NetWorker.MakeCommentVoteDeleteTask().execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
-                    new NetWorker.MakeCommentVoteTask().execute(new Vote(asdf, post.getID(), thisComment.getID(), true));
-					MainActivity.commentDownvoteList.remove(Integer.valueOf(thisComment.getID()));
-					MainActivity.commentUpvoteList.add(thisComment.getID());
-					PrefManager.putCommentDownvoteList(MainActivity.commentDownvoteList);
-					PrefManager.putCommentUpvoteList(MainActivity.commentUpvoteList);
+                    new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
+                    new NetWorker.MakeCommentVoteTask(context).execute(new Vote(0, post.getID(), thisComment.getID(), true));
 				}
 				else if(thisComment.getVote() == 0)
 				{
 					thisComment.setVote(1);
 					thisComment.score++;
-                    new NetWorker.MakeCommentVoteTask().execute(new Vote(asdf, post.getID(), thisComment.getID(), true));
-					MainActivity.commentUpvoteList.add(thisComment.getID());
-					PrefManager.putCommentUpvoteList(MainActivity.commentUpvoteList);
+                    new NetWorker.MakeCommentVoteTask(context).execute(new Vote(0, post.getID(), thisComment.getID(), true));
 				}
 				else 
 				{
 					thisComment.setVote(0);
 					thisComment.score--;
-                    new NetWorker.MakeCommentVoteDeleteTask().execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
-					MainActivity.commentUpvoteList.remove(Integer.valueOf(thisComment.getID()));
-					PrefManager.putCommentUpvoteList(MainActivity.commentUpvoteList);
+                    new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
 				}
 
 				CommentsActivity.updateList();
@@ -135,28 +127,20 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 					{
 						thisComment.setVote(0);
 						thisComment.score++;
-                        new NetWorker.MakeCommentVoteDeleteTask().execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
-						MainActivity.commentDownvoteList.remove(Integer.valueOf(thisComment.getID()));
-						PrefManager.putCommentDownvoteList(MainActivity.commentDownvoteList);
+                        new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
 					}
 					else if(thisComment.getVote() == 0)
 					{
 						thisComment.setVote(-1);
 						thisComment.score--;
-                        new NetWorker.MakeCommentVoteTask().execute(new Vote(asdf, post.getID(), thisComment.getID(), false));
-						MainActivity.commentDownvoteList.add(thisComment.getID());
-						PrefManager.putCommentDownvoteList(MainActivity.commentDownvoteList);
+                        new NetWorker.MakeCommentVoteTask(context).execute(new Vote(0, post.getID(), thisComment.getID(), false));
 					}
 					else 
 					{
 						thisComment.setVote(-1);
 						thisComment.score -= 2;
-                        new NetWorker.MakeCommentVoteDeleteTask().execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
-                        new NetWorker.MakeCommentVoteTask().execute(new Vote(asdf, post.getID(), thisComment.getID(), false));
-						MainActivity.commentUpvoteList.remove(Integer.valueOf(thisComment.getID()));
-						MainActivity.commentDownvoteList.add(thisComment.getID());
-						PrefManager.putCommentDownvoteList(MainActivity.commentDownvoteList);
-						PrefManager.putCommentUpvoteList(MainActivity.commentUpvoteList);
+                        new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
+                        new NetWorker.MakeCommentVoteTask(context).execute(new Vote(0, post.getID(), thisComment.getID(), false));
 					}
 					CommentsActivity.updateList();
 				}
@@ -176,25 +160,30 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         
         thisComment.setVote(MainActivity.getVoteByCommentId(thisComment.getID()));
         int vote = thisComment.getVote();
+
+        setArrowDrawable(commentHolder, vote);
+
+        return row;
+    }
+
+    private void setArrowDrawable(CommentHolder commentHolder, int vote) {
         if(vote == -1)
         {
-        	commentHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdownred));
-        	commentHolder.arrowUp.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowup));
+            commentHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdownred));
+            commentHolder.arrowUp.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowup));
         }
         else if (vote == 1)
         {
-        	commentHolder.arrowUp.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowupblue));
-        	commentHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdown));
+            commentHolder.arrowUp.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowupblue));
+            commentHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdown));
         }
         else	//no votes
         {
-        	commentHolder.arrowUp.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowup));
-        	commentHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdown));
+            commentHolder.arrowUp.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowup));
+            commentHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdown));
         }
-        
-        return row;
     }
-    
+
     private void setTime(Comment thisComment, TextView timeText) throws ParseException {
     	Calendar thisCommentTime = TimeManager.toCalendar(thisComment.getTime());
     	Calendar now = Calendar.getInstance();
