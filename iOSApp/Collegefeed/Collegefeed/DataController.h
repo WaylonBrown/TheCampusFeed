@@ -26,11 +26,18 @@
 #define USER_POST_IDS_FILE          @"UserPostIds.txt"
 #define USER_COMMENT_IDS_FILE       @"UserCommentIds.txt"
 
-#define COLLEGE_ENTITY          @"College"
+
 #define POST_ENTITY             @"Post"
 #define COMMENT_ENTITY          @"Comment"
-#define VOTE_ENTITY             @"Vote"
 
+#define COLLEGE_ENTITY          @"College"
+#define KEY_COLLEGE_ID          @"collegeId"
+#define KEY_LAT                 @"lat"
+#define KEY_LON                 @"lon"
+#define KEY_NAME                @"name"
+#define KEY_SHORT_NAME          @"shortName"
+
+#define VOTE_ENTITY             @"Vote"
 #define KEY_PARENT_ID           @"parentId"
 #define KEY_VOTE_ID             @"voteId"
 #define KEY_TYPE                @"type"

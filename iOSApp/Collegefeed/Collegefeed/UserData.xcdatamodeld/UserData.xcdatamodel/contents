@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="College" syncable="YES">
+        <attribute name="collegeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="lat" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="lon" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shortName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Vote" syncable="YES">
         <attribute name="grandparentId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="parentId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -9,5 +16,6 @@
     </entity>
     <elements>
         <element name="Vote" positionX="-36" positionY="9" width="128" height="120"/>
+        <element name="College" positionX="-27" positionY="54" width="128" height="120"/>
     </elements>
 </model>

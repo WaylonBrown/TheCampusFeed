@@ -50,8 +50,8 @@
 
         [self fetchTopPosts];
         [self fetchNewPosts];
-//        [self getNetworkCollegeList];
-        [self getHardCodedCollegeList];
+        [self getNetworkCollegeList];
+//        [self getHardCodedCollegeList];
         [self getTrendingCollegeList];
         [self fetchAllTags];
         
@@ -75,7 +75,8 @@
     self.collegeList = [[NSMutableArray alloc] init];
     NSData *data = [Networker GETAllColleges];
     [self parseData:data asClass:[College class] intoList:self.collegeList];
-    [self writeCollegesToFileWithData:data];
+    [self writeCollegestoCoreData];
+//    [self writeCollegesToFileWithData:data];
 }
 - (void)getTrendingCollegeList
 {
@@ -311,6 +312,40 @@
 
 #pragma mark - Local Data Access
 
+- (void)writeCollegestoCoreData
+{
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSError *error;
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:COLLEGE_ENTITY
+                                              inManagedObjectContext:context];
+    
+    
+    [fetchRequest setEntity:entity];
+    
+//    NSArray *myObjectsToDelete = [context executeFetchRequest:fetchRequest error:nil];
+//    for (NSManagedObject *oldCollege in myObjectsToDelete)
+//    {
+//        [context deleteObject:oldCollege];
+//    }
+    
+    for (College *collegeModel in self.collegeList)
+    {
+        NSManagedObject *college = [NSEntityDescription insertNewObjectForEntityForName:COLLEGE_ENTITY
+                                                              inManagedObjectContext:context];
+        [college setValue:[NSNumber numberWithLong:collegeModel.collegeID] forKeyPath:KEY_COLLEGE_ID];
+        [college setValue:[NSNumber numberWithFloat:collegeModel.lat] forKeyPath:KEY_LAT];
+        [college setValue:[NSNumber numberWithFloat:collegeModel.lon] forKeyPath:KEY_LON];
+        [college setValue:collegeModel.name forKeyPath:KEY_NAME];
+        [college setValue:collegeModel.shortName forKeyPath:KEY_SHORT_NAME];
+    }
+    if (![_managedObjectContext save:&error])
+    {
+        NSLog(@"Failed to save user's post votes: %@",
+              [error localizedDescription]);
+    }
+}
 - (void)writeCollegesToFileWithData:(NSData *)data
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -717,7 +752,7 @@
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Vote" withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"UserData" withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
 }
@@ -730,7 +765,7 @@
         return _persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Vote.sqlite"];
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"UserData.sqlite"];
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
