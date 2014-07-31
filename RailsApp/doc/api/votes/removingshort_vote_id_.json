@@ -1,8 +1,8 @@
 {
   "resource": "Votes",
   "http_method": "DELETE",
-  "route": "/api/v1/posts/101/comments/1/votes/69",
-  "description": "Removing vote id 69",
+  "route": "/api/v1/votes/68",
+  "description": "Removing(short) vote id 68",
   "explanation": null,
   "parameters": [
 
@@ -10,7 +10,7 @@
   "requests": [
     {
       "request_method": "DELETE",
-      "request_path": "/api/v1/posts/101/comments/1/votes/69",
+      "request_path": "/api/v1/votes/68",
       "request_body": null,
       "request_headers": {
         "Content-Type": "application/json",
@@ -23,7 +23,7 @@
       "response_status": 204,
       "response_status_text": "No Content",
       "response_body": null,
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Cache-Control":"no-cache","Set-Cookie":"request_method=DELETE; path=/","X-Request-Id":"cfd909a5-14ac-462d-ab75-37c9cfb144c1","X-Runtime":"0.004706"},
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Cache-Control":"no-cache","Set-Cookie":"request_method=DELETE; path=/","X-Request-Id":"f3f0ca54-1d26-4ef5-a480-02d9fe8e3564","X-Runtime":"0.005406"},
       "response_content_type": null,
       "curl": null
 }

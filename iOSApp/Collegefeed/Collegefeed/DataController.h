@@ -24,13 +24,19 @@
 
 #define USER_POST_IDS_FILE          @"UserPostIds.txt"
 #define USER_COMMENT_IDS_FILE       @"UserCommentIds.txt"
-#define USER_VOTES_FILE             @"UserVotes.txt"
 
-#define USER_UPVOTE_POST_IDS_FILE       @"UserPostUpvoteIds.txt"
-#define USER_UPVOTE_COMMENT_IDS_FILE    @"UserCommentUpvoteIds.txt"
-#define USER_DOWNVOTE_POST_IDS_FILE     @"UserPostDownvoteIds.txt"
-#define USER_DOWNVOTE_COMMENT_IDS_FILE  @"UserCommentDownvoteIds.txt"
 
+#define VOTE_ENTITY             @"Vote"
+#define KEY_PARENT_ID           @"parentId"
+#define KEY_VOTE_ID             @"voteId"
+#define KEY_TYPE                @"type"
+#define KEY_UPVOTE              @"upvote"
+#define KEY_UPVOTED_POSTS       @"UpvotedPosts"
+#define KEY_UPVOTED_COMMENTS    @"UpvotedComments"
+#define KEY_DOWNVOTED_POSTS     @"DownvotedPosts"
+#define KEY_DOWNVOTED_COMMENTS  @"DownvotedComments"
+#define VALUE_POST              @"Post"
+#define VALUE_COMMENT           @"Comment"
 
 #pragma mark - Protocol Definitions
 /********************************/
@@ -52,6 +58,7 @@
 /***** MEMBER VARIABLES *****/
 /****************************/
 @property (strong, nonatomic) id<LocationFinderDelegateProtocol> appDelegate;
+@property (strong, nonatomic) NSManagedObjectContext *context;
 
 // College Arrays
 @property (strong, nonatomic) NSMutableArray *collegeList;
@@ -77,11 +84,8 @@
 @property (nonatomic, strong) NSMutableArray *allTagsInCollege;
 
 // Vote Arrays
-@property (nonatomic, strong) NSMutableArray *userVotes;
-@property (nonatomic, strong) NSMutableArray *userPostUpvotes;
-@property (nonatomic, strong) NSMutableArray *userPostDownvotes;
-@property (nonatomic, strong) NSMutableArray *userCommentUpvotes;
-@property (nonatomic, strong) NSMutableArray *userCommentDownvotes;
+@property (nonatomic, strong) NSMutableArray *userPostVotes;
+@property (nonatomic, strong) NSMutableArray *userCommentVotes;
 
 // Location Information
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -106,7 +110,7 @@
 /****************************/
 /***** PUBLIC FUNCTIONS *****/
 /****************************/
-
+- (id)initWithManagedObjectContext:(NSManagedObjectContext *)context;
 
 /****************************/
 /***** Local Data Access ****/
@@ -123,8 +127,6 @@
 - (void)saveUserPosts;
 - (void)saveUserComments;
 - (void)saveUserVotes;
-- (void)saveUserUpVotes;
-- (void)saveUserDownVotes;
 - (void)saveAllUserData;
 - (void)retrieveUserData;
 - (long)getUserPostScore;

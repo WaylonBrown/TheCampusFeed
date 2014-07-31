@@ -26,8 +26,8 @@
       "request_content_type": "application/json",
       "response_status": 201,
       "response_status_text": "Created",
-      "response_body": "{\"id\":338,\"upvote\":true,\"votable_id\":1,\"votable_type\":\"Comment\",\"created_at\":\"2014-07-29T07:15:38.676Z\",\"updated_at\":\"2014-07-29T07:15:38.676Z\"}",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"34b354f2c4ee1d06c464bfeb75ab45cf\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"e30728ae-d654-4108-bbcf-228e641a5269","X-Runtime":"0.008419","Content-Length":"144"},
+      "response_body": "{\"id\":367,\"upvote\":true,\"votable_id\":1,\"votable_type\":\"Comment\",\"created_at\":\"2014-07-30T07:06:49.667Z\",\"updated_at\":\"2014-07-30T07:06:49.667Z\"}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"8dea17c27958da84b4bf21e2e6fea8dc\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"bb42dbe6-e64e-49dd-a4a8-2e084146dbe1","X-Runtime":"0.009191","Content-Length":"144"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

@@ -33,6 +33,7 @@ CollegeFeed::Application.routes.draw do
 
       resources :comments, only: [:show]
       resources :flags, only: [:show]
+      resources :votes, only: [:show, :destroy]
 
 
       get '/posts/search/:searchText' => 'posts#search'

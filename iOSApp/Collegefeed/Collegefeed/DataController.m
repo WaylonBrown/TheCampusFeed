@@ -5,6 +5,7 @@
 //  Created by Patrick Sheehan on 5/2/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
+#import <CoreData/CoreData.h>
 
 #import "DataController.h"
 #import "College.h"
@@ -16,11 +17,12 @@
 
 @implementation DataController
 
-- (id)init
+- (id)initWithManagedObjectContext:(NSManagedObjectContext *)context
 {
     self = [super init];
     if (self)
     {
+        [self setContext:context];
         [self setShowingAllColleges:YES];
         [self setShowingSingleCollege:NO];
         
@@ -32,11 +34,9 @@
         self.trendingColleges       = [[NSMutableArray alloc] init];
         self.userPosts              = [[NSMutableArray alloc] init];
         self.userComments           = [[NSMutableArray alloc] init];
-        self.userVotes              = [[NSMutableArray alloc] init];
-        self.userPostUpvotes        = [[NSMutableArray alloc] init];
-        self.userPostDownvotes      = [[NSMutableArray alloc] init];
-        self.userCommentUpvotes     = [[NSMutableArray alloc] init];
-        self.userCommentDownvotes   = [[NSMutableArray alloc] init];
+        self.userPostVotes          = [[NSMutableArray alloc] init];
+        self.userCommentVotes       = [[NSMutableArray alloc] init];
+
         
         [self setTopPostsPage:0];
         [self setRecentPostsPage:0];
@@ -44,13 +44,14 @@
         [self setTrendingCollegesPage:0];
         
         // Populate the initial arrays
+        [self retrieveUserData];
+
         [self fetchTopPosts];
         [self fetchNewPosts];
 //        [self getNetworkCollegeList];
         [self getHardCodedCollegeList];
         [self getTrendingCollegeList];
         [self fetchAllTags];
-        [self retrieveUserData];
         
         // Get the user's location
         [self setLocationManager:[[CLLocationManager alloc] init]];
@@ -265,38 +266,16 @@
             NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
                                                                        options:0
                                                                          error:nil];
-            Vote *networkVote = [[Vote alloc] initFromJSON:jsonObject];
-            NSNumber *voteID = [NSNumber numberWithLong:networkVote.parentID];
+            vote = [vote initFromJSON:jsonObject];
             
-            
-            // When a vote is cast, add it to the appropriate user's vote list, UNLESS
-            // it already exists in the opposite vote list; in which case it gets removed from that one
-            if (networkVote.votableType == POST)
+            // When a vote is cast, add it to the appropriate user's vote list
+            if (vote.votableType == POST)
             {
-                if (networkVote.upvote == true)
-                {
-                    if (![self.userPostUpvotes containsObject:voteID])
-                        [self.userPostUpvotes addObject:voteID];
-                }
-                else
-                {
-                    if (![self.userPostDownvotes containsObject:voteID])
-                        [self.userPostDownvotes addObject:voteID];
-                    
-                }
+                [self.userPostVotes addObject:vote];
             }
-            else if (networkVote.votableType == COMMENT)
+            else if (vote.votableType == COMMENT)
             {
-                if (networkVote.upvote == true)
-                {
-                    if (![self.userCommentUpvotes containsObject:voteID])
-                        [self.userCommentUpvotes addObject:voteID];
-                }
-                else
-                {
-                    if (![self.userCommentDownvotes containsObject:voteID])
-                        [self.userCommentDownvotes addObject:voteID];
-                }
+                [self.userCommentVotes addObject:vote];
             }
         }
         [self saveUserVotes];
@@ -309,27 +288,18 @@
 }
 - (BOOL)cancelVote:(Vote *)vote
 {
-    BOOL success = NO;
     long voteId = vote.voteID;
-    long parentId = vote.parentID;
-    
-    NSNumber *nsnParentId = [NSNumber numberWithLong:parentId];
-
-    if (vote.votableType == COMMENT)
+    BOOL success = [Networker DELETEVoteId:voteId];
+    if (success)
     {
-        long grandparentId = vote.grandparentID;
-        success = [Networker DELETEVoteId:voteId
-                               WithPostId:parentId
-                            WithCommentId:grandparentId];
-        [self.userCommentUpvotes removeObject:nsnParentId];
-        [self.userCommentDownvotes removeObject:nsnParentId];
-    }
-    else if (vote.votableType == POST)
-    {
-        success = [Networker DELETEVoteId:voteId
-                               WithPostId:parentId];
-        [self.userPostUpvotes removeObject:nsnParentId];
-        [self.userPostDownvotes removeObject:nsnParentId];
+        if (vote.votableType == POST)
+        {
+            [self.userPostVotes removeObject:vote];
+        }
+        else if (vote.votableType == COMMENT)
+        {
+            [self.userCommentVotes removeObject:vote];
+        }
     }
     
     [self saveUserVotes];
@@ -469,63 +439,46 @@
         [commentData writeToFile:commentFile atomically:NO];
     }
 }
-- (void)saveUserUpVotes
+- (void)saveUserPostVotes
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docDir = [paths objectAtIndex: 0];
-    
-    // Save user post upvotes
-    NSString *postFile = [docDir stringByAppendingPathComponent: USER_UPVOTE_POST_IDS_FILE];
-    NSString *postIdsString = @"";
-    for (NSNumber *postID in self.userPostUpvotes)
+    NSError *error;
+    for (Vote *voteModel in self.userPostVotes)
     {
-        postIdsString = [NSString stringWithFormat:@"%@\n%@", postID, postIdsString];
+        NSManagedObject *vote = [NSEntityDescription insertNewObjectForEntityForName:VOTE_ENTITY
+                                                              inManagedObjectContext:self.context];
+        [vote setValue:[NSNumber numberWithLong:voteModel.parentID] forKeyPath:KEY_PARENT_ID];
+        [vote setValue:[NSNumber numberWithLong:voteModel.voteID] forKeyPath:KEY_VOTE_ID];
+        [vote setValue:VALUE_POST forKeyPath:KEY_TYPE];
+        [vote setValue:[NSNumber numberWithBool:voteModel.upvote] forKeyPath:KEY_UPVOTE];
     }
-    NSData *postData = [postIdsString dataUsingEncoding:NSUTF8StringEncoding];
-    [postData writeToFile:postFile atomically:NO];
-
-
-    // Save user comment upvotes
-    NSString *commentFile = [docDir stringByAppendingPathComponent: USER_UPVOTE_COMMENT_IDS_FILE];
-    NSString *commentIdsString = @"";
-    for (NSNumber *commentID in self.userCommentUpvotes)
+    if (![self.context save:&error])
     {
-        commentIdsString = [NSString stringWithFormat:@"%@\n%@", commentID, commentIdsString];
+        NSLog(@"Failed to save user's post votes: %@",
+              [error localizedDescription]);
     }
-    NSData *commentData = [commentIdsString dataUsingEncoding:NSUTF8StringEncoding];
-    [commentData writeToFile:commentFile atomically:NO];
-
 }
-- (void)saveUserDownVotes
+- (void)saveUserCommentVotes
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docDir = [paths objectAtIndex: 0];
-    
-    // Save user post downvotes
-    NSString *postFile = [docDir stringByAppendingPathComponent: USER_DOWNVOTE_POST_IDS_FILE];
-    NSString *postIdsString = @"";
-    for (NSNumber *postID in self.userPostDownvotes)
+    NSError *error;
+    for (Vote *voteModel in self.userCommentVotes)
     {
-        postIdsString = [NSString stringWithFormat:@"%@\n%@", postID, postIdsString];
+        NSManagedObject *vote = [NSEntityDescription insertNewObjectForEntityForName:VOTE_ENTITY
+                                                              inManagedObjectContext:self.context];
+        [vote setValue:[NSNumber numberWithLong:voteModel.parentID] forKeyPath:KEY_PARENT_ID];
+        [vote setValue:[NSNumber numberWithLong:voteModel.voteID] forKeyPath:KEY_VOTE_ID];
+        [vote setValue:VALUE_COMMENT forKeyPath:KEY_TYPE];
+        [vote setValue:[NSNumber numberWithBool:voteModel.upvote] forKeyPath:KEY_UPVOTE];
     }
-    NSData *postData = [postIdsString dataUsingEncoding:NSUTF8StringEncoding];
-    [postData writeToFile:postFile atomically:NO];
-
-
-    // Save user comment downvotes
-    NSString *commentFile = [docDir stringByAppendingPathComponent: USER_DOWNVOTE_COMMENT_IDS_FILE];
-    NSString *commentIdsString = @"";
-    for (NSNumber *commentID in self.userCommentDownvotes)
+    if (![self.context save:&error])
     {
-        commentIdsString = [NSString stringWithFormat:@"%@\n%@", commentID, commentIdsString];
+        NSLog(@"Failed to save user's comment votes: %@",
+              [error localizedDescription]);
     }
-    NSData *commentData = [commentIdsString dataUsingEncoding:NSUTF8StringEncoding];
-    [commentData writeToFile:commentFile atomically:NO];
 }
 - (void)saveUserVotes
 {
-    [self saveUserUpVotes];
-    [self saveUserDownVotes];
+    [self saveUserPostVotes];
+    [self saveUserCommentVotes];
 }
 - (void)saveAllUserData
 {
@@ -535,15 +488,48 @@
 }
 - (void)retrieveUserData
 {
+    NSError *error;
+    
+    // Retrieve Votes
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:VOTE_ENTITY inManagedObjectContext:self.context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedVotes = [self.context executeFetchRequest:fetchRequest error:&error];
+    for (NSManagedObject *vote in fetchedVotes)
+    {
+        long voteId = [[vote valueForKey:KEY_VOTE_ID] longValue];
+        long parentId = [[vote valueForKey:KEY_PARENT_ID] longValue];
+        bool upvote = [[vote valueForKey:KEY_UPVOTE] boolValue];
+        NSString *type = [vote valueForKey:KEY_TYPE];
+        
+        ModelType modelType;
+        if ([type isEqual:@"Post"]) modelType = POST;
+        else if ([type isEqual:@"Comment"]) modelType = COMMENT;
+        else continue;
+        
+        Vote *voteModel = [[Vote alloc] initWithVoteId:voteId
+                                          WithParentId:parentId
+                                       WithUpvoteValue:upvote
+                                         AsVotableType:modelType];
+        
+        if ([voteModel getType] == POST)
+        {
+            [self.userPostVotes addObject:voteModel];
+        }
+        else if ([voteModel getType] == COMMENT)
+        {
+            [self.userCommentVotes addObject:voteModel];
+        }
+    }
+
+    
+    
     NSArray *paths      = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docDir    = [paths objectAtIndex: 0];
     
     NSString *postFile              = [docDir stringByAppendingPathComponent:USER_POST_IDS_FILE];
     NSString *commentFile           = [docDir stringByAppendingPathComponent:USER_COMMENT_IDS_FILE];
-    NSString *postUpvoteFile        = [docDir stringByAppendingPathComponent:USER_UPVOTE_POST_IDS_FILE];
-    NSString *postDownvoteFile      = [docDir stringByAppendingPathComponent:USER_DOWNVOTE_POST_IDS_FILE];
-    NSString *commentUpvoteFile     = [docDir stringByAppendingPathComponent:USER_UPVOTE_COMMENT_IDS_FILE];
-    NSString *commentDownvoteFile   = [docDir stringByAppendingPathComponent:USER_DOWNVOTE_COMMENT_IDS_FILE];
     
     // Retrieve Posts
     NSString *postsString = [NSString stringWithContentsOfFile:postFile encoding:NSUTF8StringEncoding error:nil];
@@ -555,40 +541,6 @@
     NSArray *commentIds = [commentsString componentsSeparatedByString:@"\n"];
     [self fetchUserCommentsWithIdArray:commentIds];
     
-    // Retrieve Votes
-    NSString *postUpvotesString      = [NSString stringWithContentsOfFile:postUpvoteFile encoding:NSUTF8StringEncoding error:nil];
-    NSString *postDownvotesString    = [NSString stringWithContentsOfFile:postDownvoteFile encoding:NSUTF8StringEncoding error:nil];
-    NSString *commentUpvotesString   = [NSString stringWithContentsOfFile:commentUpvoteFile encoding:NSUTF8StringEncoding error:nil];
-    NSString *commentDownvotesString = [NSString stringWithContentsOfFile:commentDownvoteFile encoding:NSUTF8StringEncoding error:nil];
-
-    NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
-    NSArray *postUpvoteIds = [postUpvotesString componentsSeparatedByString:@"\n"];
-    for (NSString *stringID in postUpvoteIds)
-    {
-        if (![stringID isEqual: @""])
-            [self.userPostUpvotes addObject:[f numberFromString:stringID]];
-    }
-    
-    NSArray *postDownvoteIds = [postDownvotesString componentsSeparatedByString:@"\n"];
-    for (NSString *stringID in postDownvoteIds)
-    {
-        if (![stringID isEqual: @""])
-            [self.userPostDownvotes addObject:[f numberFromString:stringID]];
-    }
-    
-    NSArray *commentUpvoteIds = [commentUpvotesString componentsSeparatedByString:@"\n"];
-    for (NSString *stringID in commentUpvoteIds)
-    {
-        if (![stringID isEqual: @""])
-            [self.userCommentUpvotes addObject:[f numberFromString:stringID]];
-    }
-    
-    NSArray *commentDownvoteIds = [commentDownvotesString componentsSeparatedByString:@"\n"];
-    for (NSString *stringID in commentDownvoteIds)
-    {
-        if (![stringID isEqual: @""])
-            [self.userCommentDownvotes addObject:[f numberFromString:stringID]];
-    }
 }
 - (long)getUserPostScore
 {
@@ -639,35 +591,33 @@
             if ([Post class] == class)
             {
                 Post *post = [[Post alloc] initFromJSON:jsonObject];
-                NSNumber *postID = [NSNumber numberWithLong:[post getID]];
+                long postID = [post getID];
                 long collegeID = [post getCollegeID];
                 College *college = [self getCollegeById:collegeID];
                 [post setCollegeName:college.name];
-
-                if ([self.userPostUpvotes containsObject:postID])
-                {
-                    [post setVote:[[Vote alloc] initWithVotableID:postID.longValue withUpvoteValue:YES asVotableType:POST]];
-                }
-                else if ([self.userPostDownvotes containsObject:postID])
-                {
-                    [post setVote:[[Vote alloc] initWithVotableID:postID.longValue withUpvoteValue:NO asVotableType:POST]];
-                }
                 object = post;
+                for (Vote *vote in self.userPostVotes)
+                {
+                    if (vote.parentID == postID)
+                    {
+                        [post setVote:vote];
+                        break;
+                    }
+                }
             }
             else if ([Comment class] == class)
             {
                 Comment *comment = [[Comment alloc] initFromJSON:jsonObject];
-                NSNumber *commentID = [NSNumber numberWithLong:[comment getID]];
-                if ([self.userCommentUpvotes containsObject:commentID])
-                {
-                    [comment setVote:[[Vote alloc] initWithVotableID:commentID.longValue withUpvoteValue:YES asVotableType:COMMENT]];
-                }
-                else if ([self.userCommentDownvotes containsObject:commentID])
-                {
-                    [comment setVote:[[Vote alloc] initWithVotableID:commentID.longValue withUpvoteValue:NO asVotableType:COMMENT]];
-                }
+                long commentID = [comment getID];
                 object = comment;
-                
+                for (Vote *vote in self.userCommentVotes)
+                {
+                    if (vote.parentID == commentID)
+                    {
+                        [comment setVote:vote];
+                        break;
+                    }
+                }
             }
             else
             {   // college or tag
