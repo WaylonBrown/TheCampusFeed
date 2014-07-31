@@ -732,13 +732,13 @@ public class NetWorker {
         }
         public Boolean doInBackground(Vote... votes){
             try{
-                HttpGet request = new HttpGet(REQUEST_URL + "posts/" + votes[0].id + "/votes");
-                //request.setEntity(new ByteArrayEntity(
-                //  votes[0].toString().getBytes("UTF8")));
+                HttpPost request = new HttpPost(REQUEST_URL + "posts/" + votes[0].postID + "/votes");
+                request.setHeader("Content-Type", "application/json");
+                request.setEntity(new ByteArrayEntity(votes[0].toJSONString().toByteArray()));
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 response = client.execute(request, responseHandler);
 
-                Log.d("cfeed", LOG_TAG + "Make vote server response: " + response);
+                Log.i("cfeed", LOG_TAG + " Make vote server response: " + response);
                 return true;
             } catch (ClientProtocolException e) {
                 e.printStackTrace();
@@ -778,9 +778,9 @@ public class NetWorker {
 
         public Boolean doInBackground(Vote... votes){
             try{
-                HttpGet request = new HttpGet(REQUEST_URL + "posts/" + votes[0].postID + "/comments/" + votes[0].commentID + "/votes");
-                //request.setEntity(new ByteArrayEntity(
-                //  votes[0].toString().getBytes("UTF8")));
+                HttpPost request = new HttpPost(REQUEST_URL + "posts/" + votes[0].postID + "/comments/" + votes[0].commentID + "/votes");
+                request.setHeader("Content-Type", "application/json");
+                request.setEntity(new ByteArrayEntity(votes[0].toJSONString().toByteArray()));
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 response = client.execute(request, responseHandler);
 

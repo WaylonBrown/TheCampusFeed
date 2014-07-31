@@ -1,6 +1,12 @@
 package com.appuccino.collegefeed.objects;
 
-public class Vote 
+import android.util.JsonWriter;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
+public class Vote
 {
     public int id;
 	public int postID;
@@ -10,7 +16,7 @@ public class Vote
 	public Vote(int id, int postID, boolean upvote)
 	{
 		this.id = id;
-        this.postID = id;
+        this.postID = postID;
 		this.upvote = upvote;
         this.commentID = 0;
 	}
@@ -48,5 +54,19 @@ public class Vote
         else
             upvoteString = "0";
         return id + "," + postID + "," + commentID + "," + upvoteString;
+    }
+
+    public ByteArrayOutputStream toJSONString() throws IOException {
+        ByteArrayOutputStream ret = new ByteArrayOutputStream();
+        JsonWriter writer = new JsonWriter(new OutputStreamWriter(ret, "UTF-8"));
+
+        //String upVoteString =
+        writer.setIndent("  ");
+        writer.beginObject();
+        writer.name("upvote"); writer.value(upvote);
+        writer.endObject();
+        writer.close();
+
+        return ret;
     }
 }
