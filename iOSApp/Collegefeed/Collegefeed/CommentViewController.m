@@ -292,6 +292,7 @@
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
                                withCollegeId:(long)collegeId
+                               withUserToken:(NSString *)userToken
 {
     BOOL success = [self.dataController createCommentWithMessage:message withPost:self.originalPost];
     

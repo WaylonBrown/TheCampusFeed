@@ -15,7 +15,9 @@
 @protocol CreationViewProtocol <NSObject>
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
-                               withCollegeId:(long)collegeId;
+                               withCollegeId:(long)collegeId
+                               withUserToken:(NSString *)userToken;
+
 
 @end
 

@@ -161,7 +161,7 @@
     NSString *idString = @"";
     for (int i = 0; i < Ids.count; i++)
     {
-        NSString *commentId = [Ids objectAtIndex:i];
+        NSString *commentId = [NSString stringWithFormat:@"%@", [Ids objectAtIndex:i]];
         if ([commentId isEqualToString:@""]) continue;
         
         if (i == 0)
@@ -272,11 +272,10 @@
         return nil;
     }
     
-    //TODO: change this url if endpoint parameters get fixed
     NSString *idString = @"";
     for (int i = 0; i < Ids.count; i++)
     {
-        NSString *postId = [Ids objectAtIndex:i];
+        NSString *postId = [NSString stringWithFormat:@"%@", [Ids objectAtIndex:i]];
         if ([[NSCharacterSet decimalDigitCharacterSet] isSupersetOfSet:[NSCharacterSet characterSetWithCharactersInString:postId]]
             && ![postId isEqualToString:@""])
         {

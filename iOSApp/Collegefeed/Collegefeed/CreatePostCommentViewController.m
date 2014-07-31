@@ -70,7 +70,9 @@
     if (message.length > MIN_POST_LENGTH
         && message.length < MAX_POST_LENGTH)
     {
-        [self.delegate submitPostCommentCreationWithMessage:message withCollegeId:self.collegeForPost.collegeID];
+        [self.delegate submitPostCommentCreationWithMessage:message
+                                              withCollegeId:self.collegeForPost.collegeID
+                                              withUserToken:@"EMPTY_TOKEN"];
         [self dismiss:nil];
     }
     else if (message.length < MIN_POST_LENGTH)

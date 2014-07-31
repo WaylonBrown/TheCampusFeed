@@ -252,9 +252,12 @@
 #pragma mark - CreationViewProtocol Delegate Methods
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
-                                 withCollegeId:(long)collegeId
+                               withCollegeId:(long)collegeId
+                               withUserToken:(NSString *)userToken
 {
-    [self.dataController createPostWithMessage:message withCollegeId:collegeId];
+    [self.dataController createPostWithMessage:message
+                                 withCollegeId:collegeId
+                                 withUserToken:userToken];
     [self refresh];
 }
 

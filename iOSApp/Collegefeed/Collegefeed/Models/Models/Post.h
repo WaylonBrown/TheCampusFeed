@@ -22,6 +22,7 @@
 @property (nonatomic) long commentCount;
 @property (nonatomic, strong) Vote *vote;
 
+@property (nonatomic, strong) NSString *userToken;
 @property (nonatomic, strong) NSString *message;
 @property (nonatomic, strong) NSString *collegeName;
 @property (nonatomic, strong) NSDate *date;
@@ -31,9 +32,9 @@
 
 @property (nonatomic, strong) NSURL *POSTurl;
 
-// NOTE: Use this constructor!
 - (id)initWithMessage:(NSString *)newMessage
-        withCollegeId:(long)collegeId;
+        withCollegeId:(long)collegeId
+        withUserToken:(NSString *)userToken;
 
 - (id)initWithPostID:(NSInteger)newPostID
            withScore:(NSInteger)newScore

@@ -249,7 +249,7 @@
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
 {
     BOOL success = [self.dataController createPostWithMessage:message
-                                 withCollegeId:self.dataController.collegeInFocus.collegeID];
+                                 withCollegeId:self.dataController.collegeInFocus.collegeID withUserToken:@"EMPTY_TOKEN"];
     
     if (!success)
     {

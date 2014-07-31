@@ -14,6 +14,7 @@
 
 - (id)initWithMessage:(NSString *)newMessage
         withCollegeId:(long)collegeId
+        withUserToken:(NSString *)userToken
 {   // NOTE: This constructor to be used when sending to server
     // initializer to create a new post
     
@@ -22,6 +23,7 @@
     {
         [self setMessage:newMessage];
         [self setCollegeID:collegeId];
+        [self setUserToken:userToken];
         [self validate];
         return self;
     }
@@ -93,19 +95,8 @@
 - (NSData*)toJSON
 {   // Returns an NSData representation of this Post in JSON
     
-    NSString *postString;
-    if (self.postID == 0)
-    {   // simple conversion for a POST request
-        postString = [NSString stringWithFormat:@"{\"text\":\"%@\"}", self.message];
-    }
-    else
-    {   // full conversion when being saved
-        postString = [NSString stringWithFormat:
-                      @"{\"id\":%ld,\"text\":\"%@\",\"score\":%ld}",
-                      self.postID,
-                      self.message,
-                      self.score];
-    }
+    NSString *postString = [NSString stringWithFormat:@"{\"text\":\"%@\", \"user_token\":\"%@\"}", self.message, self.userToken];
+    
     NSData *postData = [postString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     return postData;
 }

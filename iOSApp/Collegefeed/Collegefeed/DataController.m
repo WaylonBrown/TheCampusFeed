@@ -45,13 +45,14 @@
         [self setTagPostsPage:0];
         [self setTrendingCollegesPage:0];
         
+//        [self getNetworkCollegeList];
+        [self getHardCodedCollegeList];
+        
         // Populate the initial arrays
         [self retrieveUserData];
 
         [self fetchTopPosts];
         [self fetchNewPosts];
-//        [self getNetworkCollegeList];
-        [self getHardCodedCollegeList];
         [self getTrendingCollegeList];
         [self fetchAllTags];
         
@@ -145,11 +146,13 @@
 
 - (BOOL)createPostWithMessage:(NSString *)message
                 withCollegeId:(long)collegeId
+                withUserToken:(NSString *)userToken
 {
     @try
     {
         Post *post = [[Post alloc] initWithMessage:message
-                                     withCollegeId:collegeId];
+                                     withCollegeId:collegeId
+                                     withUserToken:userToken];
         NSData *result = [Networker POSTPostData:[post toJSON] WithCollegeId:post.collegeID];
         NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
                                                                    options:0
@@ -465,6 +468,26 @@
         }
     }
 }
+- (void)retrieveUserPosts
+{
+    // Retrieve Posts
+    NSMutableArray *postIds = [[NSMutableArray alloc] init];
+    
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:POST_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedPosts = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    for (NSManagedObject *post in fetchedPosts)
+    {
+        NSNumber *postId = [post valueForKey:KEY_POST_ID];
+        [postIds addObject:postId];
+    }
+    [self fetchUserPostsWithIdArray:postIds];
+}
 - (void)saveUserComments
 {
     if (self.userComments.count > 0)
@@ -483,6 +506,26 @@
                   [error localizedDescription]);
         }
     }
+}
+- (void)retrieveUserComments
+{
+    // Retrieve Comments
+    NSMutableArray *commentIds = [[NSMutableArray alloc] init];
+    
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:COMMENT_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedComments = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    for (NSManagedObject *comment in fetchedComments)
+    {
+        NSNumber *commentId = [comment valueForKey:KEY_COMMENT_ID];
+        [commentIds addObject:commentId];
+    }
+    [self fetchUserCommentsWithIdArray:commentIds];
 }
 - (void)saveUserPostVotes
 {
@@ -528,16 +571,10 @@
     [self saveUserPostVotes];
     [self saveUserCommentVotes];
 }
-- (void)saveAllUserData
+- (void)retrieveUserVotes
 {
-    [self saveUserPosts];
-    [self saveUserComments];
-    [self saveUserVotes];
-}
-- (void)retrieveUserData
-{
-    NSError *error;
     // Retrieve Votes
+    NSError *error;
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
@@ -570,25 +607,18 @@
             [self.userCommentVotes addObject:voteModel];
         }
     }
-
-    
-    
-    NSArray *paths      = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docDir    = [paths objectAtIndex: 0];
-    
-    NSString *postFile              = [docDir stringByAppendingPathComponent:USER_POST_IDS_FILE];
-    NSString *commentFile           = [docDir stringByAppendingPathComponent:USER_COMMENT_IDS_FILE];
-    
-    // Retrieve Posts
-    NSString *postsString = [NSString stringWithContentsOfFile:postFile encoding:NSUTF8StringEncoding error:nil];
-    NSArray *postIds = [postsString componentsSeparatedByString:@"\n"];
-    [self fetchUserPostsWithIdArray:postIds];
-    
-    // Retrieve Comments
-    NSString *commentsString = [NSString stringWithContentsOfFile:commentFile encoding:NSUTF8StringEncoding error:nil];
-    NSArray *commentIds = [commentsString componentsSeparatedByString:@"\n"];
-    [self fetchUserCommentsWithIdArray:commentIds];
-    
+}
+- (void)saveAllUserData
+{
+    [self saveUserPosts];
+    [self saveUserComments];
+    [self saveUserVotes];
+}
+- (void)retrieveUserData
+{
+    [self retrieveUserVotes];
+    [self retrieveUserPosts];
+    [self retrieveUserComments];
 }
 - (long)getUserPostScore
 {
