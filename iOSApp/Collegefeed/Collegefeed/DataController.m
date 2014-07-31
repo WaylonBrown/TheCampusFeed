@@ -50,8 +50,8 @@
 
         [self fetchTopPosts];
         [self fetchNewPosts];
-        [self getNetworkCollegeList];
-//        [self getHardCodedCollegeList];
+//        [self getNetworkCollegeList];
+        [self getHardCodedCollegeList];
         [self getTrendingCollegeList];
         [self fetchAllTags];
         
@@ -387,18 +387,25 @@
 {   // Populate the college list with a recent
     // list of colleges instead of accessing the network
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docDir = [paths objectAtIndex: 0];
-    NSString *docFile = [docDir stringByAppendingPathComponent: COLLEGE_LIST_FILE];
-    NSData *data = [NSData dataWithContentsOfFile:docFile];
-    
-    if (data == nil)
+    NSError *error;
+    // Retrieve Votes
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:COLLEGE_ENTITY inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedVotes = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    for (NSManagedObject *vote in fetchedVotes)
     {
-        NSLog(@"Could not get hard-coded list in CollegeList.txt");
-        return;
+        long collegeId = [[vote valueForKey:KEY_COLLEGE_ID] longValue];
+        float lon = [[vote valueForKey:KEY_LON] floatValue];
+        float lat = [[vote valueForKey:KEY_LAT] floatValue];
+        NSString *name = [vote valueForKey:KEY_NAME];
+//        NSString *shortName = [vote valueForKey:KEY_SHORT_NAME];
+        
+        College *collegeModel = [[College alloc] initWithCollegeID:collegeId withName:name withLat:lat withLon:lon];
+        [self.collegeList addObject:collegeModel];
     }
-    self.collegeList = [[NSMutableArray alloc] init];
-    [self parseData:data asClass:[College class] intoList:self.collegeList];
 }
 - (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon
 {
