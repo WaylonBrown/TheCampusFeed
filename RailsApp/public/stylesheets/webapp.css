@@ -24,3 +24,7 @@ div.well.affix > div > div {
     max-width: 100%;
     word-wrap: break-word;
 }
+
+.tag-container{
+  max-width: 200px;
+}
