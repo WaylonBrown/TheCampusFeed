@@ -9,6 +9,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
 @class Comment;
 @class College;
@@ -25,8 +26,11 @@
 #define USER_POST_IDS_FILE          @"UserPostIds.txt"
 #define USER_COMMENT_IDS_FILE       @"UserCommentIds.txt"
 
-
+#define COLLEGE_ENTITY          @"College"
+#define POST_ENTITY             @"Post"
+#define COMMENT_ENTITY          @"Comment"
 #define VOTE_ENTITY             @"Vote"
+
 #define KEY_PARENT_ID           @"parentId"
 #define KEY_VOTE_ID             @"voteId"
 #define KEY_TYPE                @"type"
@@ -58,7 +62,9 @@
 /***** MEMBER VARIABLES *****/
 /****************************/
 @property (strong, nonatomic) id<LocationFinderDelegateProtocol> appDelegate;
-@property (strong, nonatomic) NSManagedObjectContext *context;
+@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 // College Arrays
 @property (strong, nonatomic) NSMutableArray *collegeList;
@@ -110,7 +116,6 @@
 /****************************/
 /***** PUBLIC FUNCTIONS *****/
 /****************************/
-- (id)initWithManagedObjectContext:(NSManagedObjectContext *)context;
 
 /****************************/
 /***** Local Data Access ****/
@@ -132,7 +137,7 @@
 - (long)getUserPostScore;
 - (long)getUserCommentScore;
 
-
+- (NSURL *)applicationDocumentsDirectory;
 /*************************/
 /***** Network Access ****/
 /*************************/
