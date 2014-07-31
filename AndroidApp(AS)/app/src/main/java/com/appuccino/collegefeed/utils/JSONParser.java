@@ -6,6 +6,7 @@ import com.appuccino.collegefeed.objects.College;
 import com.appuccino.collegefeed.objects.Comment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Tag;
+import com.appuccino.collegefeed.objects.Vote;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -233,6 +234,106 @@ public class JSONParser {
             }
             reader.endObject();
             ret = new Post(id, text, score, collegeID, time, commentCount);
+            return ret;
+        }catch(Exception e){
+            e.printStackTrace();
+        } finally{
+            reader.close();
+        }
+
+        return ret;
+    }
+
+    public static Vote postVoteFromJSON(String json) throws IOException{
+        Vote ret = null;
+        JsonReader reader = new JsonReader(new StringReader(""));
+        try {
+            reader = new JsonReader(new StringReader(json));
+
+            int voteID = -1;
+            boolean upvote = true;
+            int postID = 0;
+
+            reader.beginObject();
+            while(reader.hasNext()) {
+                String name = reader.nextName(); //property name of next property.
+                if (name.equals("id")) {
+                    //use in case null is passed in, which prim types can't take
+                    try {
+                        voteID = reader.nextInt();
+                    } catch (Exception e) {
+                        reader.skipValue();
+                    }
+                } else if (name.equals("upvote")) {
+                    //use in case null is passed in, which prim types can't take
+                    try {
+                        upvote = reader.nextBoolean();
+                    } catch (Exception e) {
+                        reader.skipValue();
+                    }
+                } else if (name.equals("votable_id")) {
+                    //use in case null is passed in, which prim types can't take
+                    try {
+                        postID = reader.nextInt();
+                    } catch (Exception e) {
+                        reader.skipValue();
+                    }
+                } else {
+                    reader.skipValue();
+                }
+            }
+            reader.endObject();
+            ret = new Vote(voteID, postID, upvote);
+            return ret;
+        }catch(Exception e){
+            e.printStackTrace();
+        } finally{
+            reader.close();
+        }
+
+        return ret;
+    }
+
+    public static Vote commentVoteFromJSON(String json, Comment comment) throws IOException{
+        Vote ret = null;
+        JsonReader reader = new JsonReader(new StringReader(""));
+        try {
+            reader = new JsonReader(new StringReader(json));
+
+            int voteID = -1;
+            boolean upvote = true;
+            int postID = 0;
+
+            reader.beginObject();
+            while(reader.hasNext()) {
+                String name = reader.nextName(); //property name of next property.
+                if (name.equals("id")) {
+                    //use in case null is passed in, which prim types can't take
+                    try {
+                        voteID = reader.nextInt();
+                    } catch (Exception e) {
+                        reader.skipValue();
+                    }
+                } else if (name.equals("upvote")) {
+                    //use in case null is passed in, which prim types can't take
+                    try {
+                        upvote = reader.nextBoolean();
+                    } catch (Exception e) {
+                        reader.skipValue();
+                    }
+                } else if (name.equals("votable_id")) {
+                    //use in case null is passed in, which prim types can't take
+                    try {
+                        postID = reader.nextInt();
+                    } catch (Exception e) {
+                        reader.skipValue();
+                    }
+                } else {
+                    reader.skipValue();
+                }
+            }
+            reader.endObject();
+            ret = new Vote(voteID, postID, comment.getID(), upvote);
             return ret;
         }catch(Exception e){
             e.printStackTrace();

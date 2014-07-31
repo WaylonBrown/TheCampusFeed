@@ -725,6 +725,7 @@ public class NetWorker {
 
     public static class MakePostVoteTask extends AsyncTask<Vote, Void, Boolean>{
         Context c;
+        String response = null;
 
         public MakePostVoteTask(Context c){
             this.c = c;
@@ -735,7 +736,7 @@ public class NetWorker {
                 //request.setEntity(new ByteArrayEntity(
                 //  votes[0].toString().getBytes("UTF8")));
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                String response = client.execute(request, responseHandler);
+                response = client.execute(request, responseHandler);
 
                 Log.d("cfeed", LOG_TAG + "Make vote server response: " + response);
                 return true;
@@ -754,25 +755,34 @@ public class NetWorker {
                 Toast.makeText(c, "Vote didnt work", Toast.LENGTH_LONG).show();
             }
 
-            MainActivity.postVoteList.add(serverresult);
-            PrefManager.putPostVoteList(MainActivity.postVoteList);
+            Vote returnedVote = null;
+            try {
+                returnedVote = JSONParser.postVoteFromJSON(response);
+                MainActivity.postVoteList.add(returnedVote);
+                PrefManager.putPostVoteList(MainActivity.postVoteList);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public static class MakeCommentVoteTask extends AsyncTask<Vote, Void, Boolean>{
         Context c;
+        String response = "";
+        Comment comment;
 
-        public MakeCommentVoteTask(Context c){
+        public MakeCommentVoteTask(Context c, Comment comment){
             this.c = c;
+            this.comment = comment;
         }
 
         public Boolean doInBackground(Vote... votes){
             try{
-                HttpGet request = new HttpGet(REQUEST_URL + "posts/" + votes[0].parentID + "/comments/" + votes[0].id + "/votes");
+                HttpGet request = new HttpGet(REQUEST_URL + "posts/" + votes[0].postID + "/comments/" + votes[0].commentID + "/votes");
                 //request.setEntity(new ByteArrayEntity(
                 //  votes[0].toString().getBytes("UTF8")));
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                String response = client.execute(request, responseHandler);
+                response = client.execute(request, responseHandler);
 
                 Log.d("cfeed", LOG_TAG + "Make vote server response: " + response);
                 return true;
@@ -791,8 +801,14 @@ public class NetWorker {
                 Toast.makeText(c, "Vote didnt work", Toast.LENGTH_LONG).show();
             }
 
-            MainActivity.commentVoteList.add(serverresult);
-            PrefManager.putCommentVoteList(MainActivity.commentVoteList);
+            Vote returnedVote = null;
+            try {
+                returnedVote = JSONParser.commentVoteFromJSON(response, comment);
+                MainActivity.commentVoteList.add(returnedVote);
+                PrefManager.putCommentVoteList(MainActivity.commentVoteList);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -868,7 +884,7 @@ public class NetWorker {
                 Toast.makeText(c, "Vote delete didnt work", Toast.LENGTH_LONG).show();
             }
 
-            MainActivity.removeCommentVoteByVoteID(vote.id);
+            MainActivity.removeCommentVoteByCommentID(vote.commentID);
             PrefManager.putCommentVoteList(MainActivity.commentVoteList);
         }
     }

@@ -246,6 +246,32 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         actionBar.setDisplayHomeAsUpEnabled(false);
 	}
 
+    public static int getVoteByPostId(int postID){
+        for(Vote v : postVoteList){
+            if(v.postID == postID){
+                if(v.upvote){
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+        }
+        return 0;
+    }
+
+    public static int getVoteByCommentId(int commentID){
+        for(Vote v : commentVoteList){
+            if(v.commentID == commentID){
+                if(v.upvote){
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+        }
+        return 0;
+    }
+
     public static Vote voteObjectFromPostID(int postID){
         for(Vote v : postVoteList){
             if(v.postID == postID){
@@ -255,13 +281,29 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         return null;
     }
 
-    public static Vote voteObjectFromCommentID(int postID){
+    public static Vote voteObjectFromCommentID(int commentID){
         for(Vote v : commentVoteList){
-            if(v.postID == postID){
+            if(v.postID == commentID){
                 return v;
             }
         }
         return null;
+    }
+
+    public static void removePostVoteByPostID(int postID){
+        for(Vote v : postVoteList){
+            if(v.postID == postID){
+                postVoteList.remove(v);
+            }
+        }
+    }
+
+    public static void removeCommentVoteByCommentID(int commentID){
+        for(Vote v : commentVoteList){
+            if(v.commentID == commentID){
+                commentVoteList.remove(v);
+            }
+        }
     }
 
 	public void changeFeed(int id) {

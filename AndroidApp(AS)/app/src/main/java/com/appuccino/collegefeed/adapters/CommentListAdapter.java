@@ -21,7 +21,6 @@ import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
 import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.NetWorker;
-import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.TimeManager;
 
 import java.text.ParseException;
@@ -96,13 +95,13 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 					thisComment.setVote(1);
 					thisComment.score += 2;
                     new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
-                    new NetWorker.MakeCommentVoteTask(context).execute(new Vote(0, post.getID(), thisComment.getID(), true));
+                    new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), true));
 				}
 				else if(thisComment.getVote() == 0)
 				{
 					thisComment.setVote(1);
 					thisComment.score++;
-                    new NetWorker.MakeCommentVoteTask(context).execute(new Vote(0, post.getID(), thisComment.getID(), true));
+                    new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), true));
 				}
 				else 
 				{
@@ -133,14 +132,14 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 					{
 						thisComment.setVote(-1);
 						thisComment.score--;
-                        new NetWorker.MakeCommentVoteTask(context).execute(new Vote(0, post.getID(), thisComment.getID(), false));
+                        new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), false));
 					}
 					else 
 					{
 						thisComment.setVote(-1);
 						thisComment.score -= 2;
                         new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
-                        new NetWorker.MakeCommentVoteTask(context).execute(new Vote(0, post.getID(), thisComment.getID(), false));
+                        new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), false));
 					}
 					CommentsActivity.updateList();
 				}
