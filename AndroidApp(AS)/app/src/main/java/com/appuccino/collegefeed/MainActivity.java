@@ -294,6 +294,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         for(Vote v : postVoteList){
             if(v.postID == postID){
                 postVoteList.remove(v);
+                break;
             }
         }
     }
@@ -302,6 +303,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         for(Vote v : commentVoteList){
             if(v.commentID == commentID){
                 commentVoteList.remove(v);
+                break;
             }
         }
     }

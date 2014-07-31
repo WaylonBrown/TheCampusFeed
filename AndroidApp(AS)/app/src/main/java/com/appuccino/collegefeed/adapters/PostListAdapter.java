@@ -15,15 +15,13 @@ import android.widget.Toast;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
-import com.appuccino.collegefeed.TagListActivity;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
 import com.appuccino.collegefeed.utils.FontManager;
-import com.appuccino.collegefeed.utils.NetWorker.MakePostVoteTask;
 import com.appuccino.collegefeed.utils.NetWorker.MakePostVoteDeleteTask;
-import com.appuccino.collegefeed.utils.PrefManager;
+import com.appuccino.collegefeed.utils.NetWorker.MakePostVoteTask;
 import com.appuccino.collegefeed.utils.TimeManager;
 
 import java.text.ParseException;
@@ -186,9 +184,13 @@ public class PostListAdapter extends ArrayAdapter<Post>{
                         new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
                         new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), false));
                     }
-					TopPostFragment.updateList();
-					NewPostFragment.updateList();
-					TagListActivity.updateList();
+                    switch(whichList) {
+                        case 0:
+                            TopPostFragment.updateList();
+                            break;
+                        default:
+                            NewPostFragment.updateList();
+                    }
 				}
 				else
 				{

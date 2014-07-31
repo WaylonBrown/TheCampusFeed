@@ -22,6 +22,7 @@ import com.appuccino.collegefeed.objects.Vote;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
@@ -822,7 +823,7 @@ public class NetWorker {
         public Boolean doInBackground(Vote... votes){
             try{
                 vote = votes[0];
-                HttpGet request = new HttpGet(REQUEST_URL + "posts/" + vote.id + "/votes");
+                HttpDelete request = new HttpDelete(REQUEST_URL + "votes/" + vote.id);
                 //request.setEntity(new ByteArrayEntity(
                 //  votes[0].toString().getBytes("UTF8")));
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -861,7 +862,7 @@ public class NetWorker {
         public Boolean doInBackground(Vote... votes){
             try{
                 vote = votes[0];
-                HttpGet request = new HttpGet(REQUEST_URL + "posts/" + vote.id + "/votes");
+                HttpDelete request = new HttpDelete(REQUEST_URL + "votes/" + vote.id);
                 //request.setEntity(new ByteArrayEntity(
                 //  votes[0].toString().getBytes("UTF8")));
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
