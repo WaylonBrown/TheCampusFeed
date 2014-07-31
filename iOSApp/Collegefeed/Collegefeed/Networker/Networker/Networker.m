@@ -36,10 +36,6 @@
         return GETReply;
     }
     
-//    [NSException raise:@"Error in networker.GET"
-//                format:@"URL: %@\nResponse: %@\nError message: %@\n",
-//     url, stringReply, [error localizedDescription]];
-    
     return nil;
 }
 + (NSData *)POST:(NSData *)data toUrl:(NSURL *)url
