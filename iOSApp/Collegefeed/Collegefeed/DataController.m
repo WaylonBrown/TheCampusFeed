@@ -91,6 +91,33 @@
 - (BOOL)createCommentWithMessage:(NSString *)message
                         withPost:(Post*)post
 {
+    
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedPermissions.count > 1)
+    {
+        NSLog(@"Too many permissions");
+        return NO;
+    }
+    NSManagedObject *permission = [fetchedPermissions firstObject];
+    NSDate *lastComment = [permission valueForKey:KEY_COMMENT_TIME];
+    if (lastComment != nil)
+    {
+        NSTimeInterval diff = [lastComment timeIntervalSinceNow];
+        float minSeconds = MINIMUM_COMMENTING_INTERVAL_MINUTES * 60;
+        if (abs(diff) < minSeconds)
+        {
+            // TODO: toast message
+            return NO;
+        }
+    }
+    
+
     @try
     {
         Comment *comment = [[Comment alloc] initWithCommentMessage:message
@@ -102,6 +129,19 @@
                                                                      error:nil];
         Comment *networkComment = [[Comment alloc] initFromJSON:jsonObject];
         
+        NSDate *commentTime = [networkComment getCreatedAt];
+        if (permission == nil)
+        {
+            permission = [NSEntityDescription insertNewObjectForEntityForName:PERMISSION_ENTITY
+                                                       inManagedObjectContext:context];
+        }
+        [permission setValue:commentTime forKeyPath:KEY_COMMENT_TIME];
+        if (![_managedObjectContext save:&error])
+        {
+            NSLog(@"Failed to save user's comment time: %@",
+                  [error localizedDescription]);
+        }
+
         [self.commentList insertObject:networkComment atIndex:0];
         [self.userComments insertObject:networkComment atIndex:0];
         [self saveUserComments];
@@ -196,7 +236,7 @@
         [permission setValue:postTime forKeyPath:KEY_POST_TIME];
         if (![_managedObjectContext save:&error])
         {
-            NSLog(@"Failed to save user's post votes: %@",
+            NSLog(@"Failed to save user's post time: %@",
                   [error localizedDescription]);
         }
 
