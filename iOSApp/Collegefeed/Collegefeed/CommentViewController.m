@@ -294,13 +294,20 @@
                                withCollegeId:(long)collegeId
                                withUserToken:(NSString *)userToken
 {
-    BOOL success = [self.dataController createCommentWithMessage:message withPost:self.originalPost];
-    
-    if (!success)
+    if ([self.dataController isAbleToComment])
     {
-        [self.toastController toastPostFailed];
+        BOOL success = [self.dataController createCommentWithMessage:message withPost:self.originalPost];
+        
+        if (!success)
+        {
+            [self.toastController toastPostFailed];
+        }
+        [self refresh];
     }
-    [self refresh];
+    else
+    {
+        [self.toastController toastCommentingTooSoon];
+    }
     
 }
 

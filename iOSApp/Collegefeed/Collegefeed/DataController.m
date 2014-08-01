@@ -91,33 +91,6 @@
 - (BOOL)createCommentWithMessage:(NSString *)message
                         withPost:(Post*)post
 {
-    
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedPermissions.count > 1)
-    {
-        NSLog(@"Too many permissions");
-        return NO;
-    }
-    NSManagedObject *permission = [fetchedPermissions firstObject];
-    NSDate *lastComment = [permission valueForKey:KEY_COMMENT_TIME];
-    if (lastComment != nil)
-    {
-        NSTimeInterval diff = [lastComment timeIntervalSinceNow];
-        float minSeconds = MINIMUM_COMMENTING_INTERVAL_MINUTES * 60;
-        if (abs(diff) < minSeconds)
-        {
-            // TODO: toast message
-            return NO;
-        }
-    }
-    
-
     @try
     {
         Comment *comment = [[Comment alloc] initWithCommentMessage:message
@@ -128,20 +101,11 @@
                                                                    options:0
                                                                      error:nil];
         Comment *networkComment = [[Comment alloc] initFromJSON:jsonObject];
-        
-        NSDate *commentTime = [networkComment getCreatedAt];
-        if (permission == nil)
-        {
-            permission = [NSEntityDescription insertNewObjectForEntityForName:PERMISSION_ENTITY
-                                                       inManagedObjectContext:context];
-        }
-        [permission setValue:commentTime forKeyPath:KEY_COMMENT_TIME];
-        if (![_managedObjectContext save:&error])
-        {
-            NSLog(@"Failed to save user's comment time: %@",
-                  [error localizedDescription]);
-        }
 
+        NSDate *commentTime = [networkComment getCreatedAt];
+        [self updateLastCommentTime:commentTime];
+
+        
         [self.commentList insertObject:networkComment atIndex:0];
         [self.userComments insertObject:networkComment atIndex:0];
         [self saveUserComments];
@@ -188,31 +152,10 @@
                 withCollegeId:(long)collegeId
                 withUserToken:(NSString *)userToken
 {
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedPermissions.count > 1)
+    if (![self isAbleToPost])
     {
-        NSLog(@"Too many permissions");
         return NO;
     }
-    NSManagedObject *permission = [fetchedPermissions firstObject];
-    NSDate *lastPost = [permission valueForKey:KEY_POST_TIME];
-    if (lastPost != nil)
-    {
-        NSTimeInterval diff = [lastPost timeIntervalSinceNow];
-        float minSeconds = MINIMUM_POSTING_INTERVAL_MINUTES * 60;
-        if (abs(diff) < minSeconds)
-        {
-            // TODO: toast message
-            return NO;
-        }
-    }
-    
     @try
     {
         Post *post = [[Post alloc] initWithMessage:message
@@ -228,18 +171,8 @@
             [networkPost setCollegeID:collegeId];
         }
         NSDate *postTime = [networkPost getCreatedAt];
-        if (permission == nil)
-        {
-            permission = [NSEntityDescription insertNewObjectForEntityForName:PERMISSION_ENTITY
-                                                                  inManagedObjectContext:context];
-        }
-        [permission setValue:postTime forKeyPath:KEY_POST_TIME];
-        if (![_managedObjectContext save:&error])
-        {
-            NSLog(@"Failed to save user's post time: %@",
-                  [error localizedDescription]);
-        }
-
+        [self updateLastPostTime:postTime];
+        
         [self.topPostsAllColleges insertObject:networkPost atIndex:0];
         [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
         [self.userPosts insertObject:networkPost atIndex:0];
@@ -806,6 +739,114 @@
 - (float)toRad:(float)value
 {   // Helper method for milesAway
     return value * PI_VALUE / 180;
+}
+- (BOOL)isAbleToPost
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedPermissions.count > 1)
+    {
+        NSLog(@"Too many permissions");
+    }
+    NSManagedObject *permission = [fetchedPermissions firstObject];
+    NSDate *lastPost = [permission valueForKey:KEY_POST_TIME];
+    if (lastPost != nil)
+    {
+        NSTimeInterval diff = [lastPost timeIntervalSinceNow];
+        float minSeconds = MINIMUM_POSTING_INTERVAL_MINUTES * 60;
+        if (abs(diff) < minSeconds)
+        {
+            return NO;
+        }
+    }
+    return YES;
+}
+- (BOOL)isAbleToComment
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedPermissions.count > 1)
+    {
+        NSLog(@"Too many permissions");
+    }
+    NSManagedObject *permission = [fetchedPermissions firstObject];
+    NSDate *lastComment = [permission valueForKey:KEY_COMMENT_TIME];
+    if (lastComment != nil)
+    {
+        NSTimeInterval diff = [lastComment timeIntervalSinceNow];
+        float minSeconds = MINIMUM_COMMENTING_INTERVAL_MINUTES * 60;
+        if (abs(diff) < minSeconds)
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+- (void)updateLastPostTime:(NSDate *)postTime
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedPermissions.count > 1)
+    {
+        NSLog(@"Too many permissions");
+    }
+    NSManagedObject *permission = [fetchedPermissions firstObject];
+    
+    if (permission == nil)
+    {
+        permission = [NSEntityDescription insertNewObjectForEntityForName:PERMISSION_ENTITY
+                                                   inManagedObjectContext:context];
+    }
+    [permission setValue:postTime forKeyPath:KEY_POST_TIME];
+    if (![_managedObjectContext save:&error])
+    {
+        NSLog(@"Failed to save user's post time: %@",
+              [error localizedDescription]);
+    }
+
+    
+}
+- (void)updateLastCommentTime:(NSDate *)commentTime
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedPermissions.count > 1)
+    {
+        NSLog(@"Too many permissions");
+    }
+    NSManagedObject *permission = [fetchedPermissions firstObject];
+    if (permission == nil)
+    {
+        permission = [NSEntityDescription insertNewObjectForEntityForName:PERMISSION_ENTITY
+                                                   inManagedObjectContext:context];
+    }
+    [permission setValue:commentTime forKeyPath:KEY_COMMENT_TIME];
+    if (![_managedObjectContext save:&error])
+    {
+        NSLog(@"Failed to save user's comment time: %@",
+              [error localizedDescription]);
+    }
 }
 
 #pragma mark - CLLocationManager Delegate Functions

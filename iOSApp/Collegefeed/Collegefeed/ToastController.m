@@ -133,7 +133,7 @@
 }
 - (void)toastCommentingTooSoon
 {
-    NSString *message = @"Sorry, you can only comment once every 3 minutes";
+    NSString *message = @"Sorry, you can only comment once every minute";
     [self addToQueue:message];
 }
 - (void)toastLocationFoundNotNearCollege

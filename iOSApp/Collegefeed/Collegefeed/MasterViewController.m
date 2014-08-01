@@ -255,10 +255,25 @@
                                withCollegeId:(long)collegeId
                                withUserToken:(NSString *)userToken
 {
-    [self.dataController createPostWithMessage:message
-                                 withCollegeId:collegeId
-                                 withUserToken:userToken];
-    [self refresh];
+    if ([self.dataController isAbleToPost])
+    {
+        [self.dataController createPostWithMessage:message
+                                     withCollegeId:collegeId
+                                     withUserToken:userToken];
+        [self refresh];
+    }
+    else
+    {
+        [self.toastController toastPostingTooSoon];
+    }
+}
+- (void)postingTooFrequently
+{
+    [self.toastController toastPostingTooSoon];
+}
+- (void)commentingTooFrequently
+{
+    [self.toastController toastCommentingTooSoon];
 }
 
 #pragma mark - FeedSelectionProtocol Delegate Methods

@@ -70,6 +70,8 @@
     if (message.length > MIN_POST_LENGTH
         && message.length < MAX_POST_LENGTH)
     {
+        // TODO: call delegate to make toast if too frequent
+
         [self.delegate submitPostCommentCreationWithMessage:message
                                               withCollegeId:self.collegeForPost.collegeID
                                               withUserToken:@"EMPTY_TOKEN"];

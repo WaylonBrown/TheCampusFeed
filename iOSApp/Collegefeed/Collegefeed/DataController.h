@@ -151,6 +151,8 @@
 - (void)retrieveUserData;
 - (long)getUserPostScore;
 - (long)getUserCommentScore;
+- (BOOL)isAbleToPost;
+- (BOOL)isAbleToComment;
 
 - (NSURL *)applicationDocumentsDirectory;
 /*************************/
