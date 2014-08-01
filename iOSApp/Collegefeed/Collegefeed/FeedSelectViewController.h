@@ -64,6 +64,6 @@ typedef NS_ENUM(NSInteger, FeedSelectorType)
 
 
 - (IBAction)dismiss;
-- (void)fixHeights:(int)numNearbyColleges;
+- (void)fixHeights;
 
 @end

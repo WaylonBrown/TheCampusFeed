@@ -77,7 +77,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self fixHeights:self.dataController.nearbyColleges.count];
+    [self fixHeights];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -88,20 +88,25 @@
 {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
-- (void)fixHeights:(int)numNearbyColleges
+- (void)fixHeights
 {
-    bool isNearColleges = numNearbyColleges > 0;
+    int numNearbyColleges = self.dataController.nearbyColleges.count;
     
     int collegeSection = 0;
     float tableViewHeight = 0;
     
+    bool showLoadingIndicator = !self.dataController.foundLocation;
+    bool noCollegesNearby = self.dataController.foundLocation && ![self.dataController isNearCollege];
+    bool collegesNearby = [self.dataController isNearCollege];
+
+
     switch (self.type)
     {
         case ALL_COLLEGES_WITH_SEARCH:
             return;
         case ALL_NEARBY_OTHER:
             collegeSection = 1;
-            int numHeaders = isNearColleges ? 2 : 1;
+            int numHeaders = (showLoadingIndicator || collegesNearby) ? 2 : 1;
             tableViewHeight += (TABLE_HEADER_HEIGHT * numHeaders);
             tableViewHeight += (TABLE_CELL_HEIGHT * 2); // 'All' and 'Other' options
             break;
@@ -110,11 +115,17 @@
         default:
             break;
     }
-    
-    for (int i = 0; i < numNearbyColleges; i++)
+    if (collegesNearby)
     {
-        float collegeCellHeight = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForItem:i inSection:collegeSection]];
-        tableViewHeight += collegeCellHeight;
+        for (int i = 0; i < numNearbyColleges; i++)
+        {
+            float collegeCellHeight = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForItem:i inSection:collegeSection]];
+            tableViewHeight += collegeCellHeight;
+        }
+    }
+    else if (showLoadingIndicator)
+    {
+        tableViewHeight += TABLE_CELL_HEIGHT;
     }
     
     self.tableHeightConstraint.constant = tableViewHeight;
@@ -125,12 +136,15 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    bool isNearColleges = self.nearbyCollegeList.count > 0;
 
+    bool showLoadingIndicator = !self.dataController.foundLocation;
+    bool collegesNearby = [self.dataController isNearCollege];
+    
+    
     switch (self.type)
     {
         case ALL_NEARBY_OTHER:
-            return isNearColleges ? 3 : 2;
+            return (showLoadingIndicator || collegesNearby) ? 3 : 2;
             break;
         default:
             break;
@@ -142,6 +156,8 @@
     int numNearby = self.nearbyCollegeList.count;
     bool isNearColleges = numNearby > 0;
     
+    bool collegesNearby = [self.dataController isNearCollege];
+
     switch (self.type)
     {
         case ALL_NEARBY_OTHER:
@@ -183,16 +199,37 @@
                                                      owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
+
+    bool showLoadingIndicator = !self.dataController.foundLocation;
+    bool noCollegesNearby = self.dataController.foundLocation && ![self.dataController isNearCollege];
+    bool collegesNearby = [self.dataController isNearCollege];
     
     NSString *cellLabel = @"";
-    if (self.type == ALL_NEARBY_OTHER && indexPath.section == 0)
+    if (self.type == ALL_NEARBY_OTHER)
     {
-        cellLabel = @"All Colleges";
+        if (indexPath.section == 0)
+        {
+            cellLabel = @"All Colleges";
+        }
+        else if (showLoadingIndicator && indexPath.section == 1)
+        {
+            // TODO: DRAW LOADING INDICATOR ON THIS CELL
+            cellLabel = @"Loading...";
+        }
+        else if (indexPath.section == 2 || (noCollegesNearby && indexPath.section == 1))
+        {
+            cellLabel = @"Choose a College";
+        }
+        else if (collegesNearby && indexPath.section == 1)
+        {
+            College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
+            if (college != nil)
+            {
+                cellLabel = college.name;
+            }
+        }
     }
-    else if (self.type == ALL_NEARBY_OTHER && indexPath.section == 2)
-    {
-        cellLabel = @"Choose a College";
-    }
+    
     else
     {
         College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
@@ -204,6 +241,7 @@
     [cell assignSimpleText:cellLabel];
     
     return cell;
+    
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -213,6 +251,15 @@
     {
         case ALL_NEARBY_OTHER:
         {   // Initial prompt given to user to select which feed to view
+            
+            bool showLoadingIndicator = !self.dataController.foundLocation;
+            bool noCollegesNearby = self.dataController.foundLocation && ![self.dataController isNearCollege];
+            bool collegesNearby = [self.dataController isNearCollege];
+
+            if (showLoadingIndicator && indexPath.section == 1)
+            {
+                return;
+            }
             if (indexPath.section == 2)
             {   // Show new dialog of: all colleges to let user choose one they are not close to
                 
@@ -251,6 +298,10 @@
 {
     const int headerWidth = tableView.frame.size.width;
 
+    bool showLoadingIndicator = !self.dataController.foundLocation;
+    bool noCollegesNearby = self.dataController.foundLocation && ![self.dataController isNearCollege];
+    bool collegesNearby = [self.dataController isNearCollege];
+    
     if (section == 0)
     {
         return [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerWidth, 1)];
@@ -259,7 +310,7 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
     UILabel *headerLabel;
     
-    if (section == 1 && self.nearbyCollegeList.count > 0)
+    if (section == 1 && (collegesNearby || showLoadingIndicator))
     {   // section of colleges 'near you'
         
         headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
@@ -271,7 +322,7 @@
         [headerView addSubview:gpsIcon];
         
     }
-    else
+    else// if ((noCollegesNearby && section == 1) || (collegesNearby && section == 2))
     {   // section of all colleges
         headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
         [headerLabel setText:@"Other Colleges"];
