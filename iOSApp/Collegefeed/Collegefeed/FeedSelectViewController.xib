@@ -29,8 +29,8 @@
                         <action selector="dismiss" destination="-1" eventType="touchUpInside" id="gQr-qM-8yv"/>
                     </connections>
                 </button>
-                <view clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="llI-Ec-hur">
-                    <rect key="frame" x="20" y="115" width="280" height="300"/>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="llI-Ec-hur">
+                    <rect key="frame" x="20" y="134" width="280" height="300"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="huS-AO-Bb1">
@@ -46,12 +46,12 @@
                             <color key="textColor" red="0.20000000300000001" green="0.70980393890000004" blue="0.89803922179999995" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="749" ambiguous="YES" misplaced="YES" bounces="NO" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="5P2-ay-ia0">
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="749" bounces="NO" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="5P2-ay-ia0">
                             <rect key="frame" x="5" y="53" width="270" height="242"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="232" id="Kn1-rs-kdC"/>
+                                <constraint firstAttribute="height" constant="242" id="Kn1-rs-kdC"/>
                             </constraints>
                         </tableView>
                     </subviews>
@@ -60,9 +60,7 @@
                         <constraint firstAttribute="trailing" secondItem="5P2-ay-ia0" secondAttribute="trailing" constant="5" id="7SO-WH-655"/>
                         <constraint firstAttribute="bottom" secondItem="5P2-ay-ia0" secondAttribute="bottom" constant="5" id="H9G-Sj-L56"/>
                         <constraint firstItem="5P2-ay-ia0" firstAttribute="leading" secondItem="llI-Ec-hur" secondAttribute="leading" constant="5" id="IrQ-YV-k4B"/>
-                        <constraint firstItem="5P2-ay-ia0" firstAttribute="top" relation="greaterThanOrEqual" secondItem="llI-Ec-hur" secondAttribute="top" constant="53" id="KNw-Ji-dQR"/>
-                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="300" id="LKl-mX-Qld"/>
-                        <constraint firstItem="5P2-ay-ia0" firstAttribute="top" secondItem="llI-Ec-hur" secondAttribute="top" constant="53" id="O4N-WI-3hN"/>
+                        <constraint firstItem="5P2-ay-ia0" firstAttribute="top" secondItem="llI-Ec-hur" secondAttribute="top" constant="53" id="KNw-Ji-dQR"/>
                         <constraint firstAttribute="width" constant="280" id="z4w-kI-mhZ"/>
                     </constraints>
                 </view>

@@ -75,6 +75,10 @@
         self.searchDisplay.searchResultsDelegate = self;
     }
 }
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self fixHeights:self.dataController.nearbyColleges.count];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -88,29 +92,33 @@
 {
     bool isNearColleges = numNearbyColleges > 0;
     
-    int numCells = 0;
-    int numHeaders = 0;
+    int collegeSection = 0;
+    float tableViewHeight = 0;
     
     switch (self.type)
     {
         case ALL_COLLEGES_WITH_SEARCH:
             return;
         case ALL_NEARBY_OTHER:
-            numCells = numNearbyColleges + 2;
-            numHeaders = isNearColleges ? 3 : 2;
+            collegeSection = 1;
+            int numHeaders = isNearColleges ? 2 : 1;
+            tableViewHeight += (TABLE_HEADER_HEIGHT * numHeaders);
+            tableViewHeight += (TABLE_CELL_HEIGHT * 2); // 'All' and 'Other' options
             break;
         case ONLY_NEARBY_COLLEGES:
-            numCells = numNearbyColleges;
-            numHeaders = 0;
             break;
         default:
             break;
     }
-
-    float tableViewHeight = (TABLE_HEADER_HEIGHT * numHeaders) + (TABLE_CELL_HEIGHT * numCells);
+    
+    for (int i = 0; i < numNearbyColleges; i++)
+    {
+        float collegeCellHeight = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForItem:i inSection:collegeSection]];
+        tableViewHeight += collegeCellHeight;
+    }
+    
     self.tableHeightConstraint.constant = tableViewHeight;
-    [self.tableView needsUpdateConstraints];
-    [self.alertView needsUpdateConstraints];
+    [self.view setNeedsUpdateConstraints];
 }
 
 #pragma mark - Table View Protocol Methods
@@ -139,7 +147,6 @@
         case ALL_NEARBY_OTHER:
             if (isNearColleges && section == 1)
             {
-                [self fixHeights:numNearby];
                 return numNearby;
             }
             else
@@ -158,7 +165,6 @@
             }
             break;
         case ONLY_NEARBY_COLLEGES:
-            [self fixHeights:numNearby];
             return numNearby;
             break;
         default:
@@ -260,7 +266,7 @@
         [headerLabel setText:@"Near You"];
         
         UIImageView *gpsIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gps.png"]];
-        [gpsIcon setFrame:CGRectMake((headerWidth / 2) + 35, 5, 20, 20)];
+        [gpsIcon setFrame:CGRectMake((headerWidth / 2) + 35, 0, 20, 20)];
         
         [headerView addSubview:gpsIcon];
         

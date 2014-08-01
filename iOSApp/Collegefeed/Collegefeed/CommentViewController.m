@@ -53,7 +53,7 @@
         UIImage *facebookImage = [UIImage imageNamed:@"fb_logo.png"];
         UIImage *twitterImage = [UIImage imageNamed:@"twitter_logo.png"];
         
-        //            UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithImage:flagImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
+        // UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithImage:flagImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
         UIBarButtonItem *facebook = [[UIBarButtonItem alloc] initWithImage:facebookImage style:UIBarButtonItemStylePlain target:self action:@selector(shareOnFacebook)];
         UIBarButtonItem *twitter = [[UIBarButtonItem alloc] initWithImage:twitterImage style:UIBarButtonItemStylePlain target:self action:@selector(shareOnTwitter)];
 
