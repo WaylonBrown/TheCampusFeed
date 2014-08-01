@@ -16,15 +16,21 @@
 @class Post;
 @class Vote;
 
-#define MILES_FOR_PERMISSION        15
-#define PI_VALUE                    3.14159
-#define EARTH_RADIUS_MILES          3959
-#define LOCATION_MANAGER_TIMEOUT    10
+#define MILES_FOR_PERMISSION                15
+#define PI_VALUE                            3.14159
+#define EARTH_RADIUS_MILES                  3959
+#define LOCATION_MANAGER_TIMEOUT            10
+#define MINIMUM_POSTING_INTERVAL_MINUTES    5
+#define MINIMUM_COMMENTING_INTERVAL_MINUTES 1
 
-#define COLLEGE_LIST_FILE           @"CollegeList.txt"
 
 #define USER_POST_IDS_FILE          @"UserPostIds.txt"
 #define USER_COMMENT_IDS_FILE       @"UserCommentIds.txt"
+
+#define PERMISSION_ENTITY       @"Permissions"
+#define KEY_COMMENT_TIME        @"lastCommentTime"
+#define KEY_POST_TIME           @"lastPostTime"
+#define KEY_IS_BANNED           @"isBanned"
 
 #define POST_ENTITY             @"Post"
 #define KEY_POST_ID             @"postId"

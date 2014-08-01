@@ -10,6 +10,11 @@
     <entity name="Comment" syncable="YES">
         <attribute name="commentId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="Permissions" syncable="YES">
+        <attribute name="isBanned" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="lastCommentTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastPostTime" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
     <entity name="Post" syncable="YES">
         <attribute name="postId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
@@ -25,5 +30,6 @@
         <element name="College" positionX="-27" positionY="54" width="128" height="120"/>
         <element name="Post" positionX="0" positionY="99" width="128" height="60"/>
         <element name="Comment" positionX="27" positionY="117" width="128" height="60"/>
+        <element name="Permissions" positionX="54" positionY="135" width="128" height="30"/>
     </elements>
 </model>

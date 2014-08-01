@@ -148,6 +148,31 @@
                 withCollegeId:(long)collegeId
                 withUserToken:(NSString *)userToken
 {
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedPermissions.count > 1)
+    {
+        NSLog(@"Too many permissions");
+        return NO;
+    }
+    NSManagedObject *permission = [fetchedPermissions firstObject];
+    NSDate *lastPost = [permission valueForKey:KEY_POST_TIME];
+    if (lastPost != nil)
+    {
+        NSTimeInterval diff = [lastPost timeIntervalSinceNow];
+        float minSeconds = MINIMUM_POSTING_INTERVAL_MINUTES * 60;
+        if (abs(diff) < minSeconds)
+        {
+            // TODO: toast message
+            return NO;
+        }
+    }
+    
     @try
     {
         Post *post = [[Post alloc] initWithMessage:message
@@ -162,7 +187,19 @@
         {
             [networkPost setCollegeID:collegeId];
         }
-        
+        NSDate *postTime = [networkPost getCreatedAt];
+        if (permission == nil)
+        {
+            permission = [NSEntityDescription insertNewObjectForEntityForName:PERMISSION_ENTITY
+                                                                  inManagedObjectContext:context];
+        }
+        [permission setValue:postTime forKeyPath:KEY_POST_TIME];
+        if (![_managedObjectContext save:&error])
+        {
+            NSLog(@"Failed to save user's post votes: %@",
+                  [error localizedDescription]);
+        }
+
         [self.topPostsAllColleges insertObject:networkPost atIndex:0];
         [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
         [self.userPosts insertObject:networkPost atIndex:0];
@@ -348,14 +385,6 @@
         NSLog(@"Failed to save user's post votes: %@",
               [error localizedDescription]);
     }
-}
-- (void)writeCollegesToFileWithData:(NSData *)data
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docDir = [paths objectAtIndex: 0];
-    NSString *docFile = [docDir stringByAppendingPathComponent: COLLEGE_LIST_FILE];
-    
-    [data writeToFile:docFile atomically: NO];
 }
 - (NSString *)getCollegeNameById:(long)Id
 {
