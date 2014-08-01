@@ -45,7 +45,6 @@
         [self setTagPostsPage:0];
         [self setTrendingCollegesPage:0];
         
-//        [self getNetworkCollegeList];
         [self getHardCodedCollegeList];
         
         // Populate the initial arrays
@@ -77,7 +76,6 @@
     NSData *data = [Networker GETAllColleges];
     [self parseData:data asClass:[College class] intoList:self.collegeList];
     [self writeCollegestoCoreData];
-//    [self writeCollegesToFileWithData:data];
 }
 - (void)getTrendingCollegeList
 {
@@ -393,19 +391,24 @@
     // list of colleges instead of accessing the network
     
     NSError *error;
-    // Retrieve Votes
+    // Retrieve Colleges
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
                                    entityForName:COLLEGE_ENTITY inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    NSArray *fetchedVotes = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    for (NSManagedObject *vote in fetchedVotes)
+    NSArray *fetchedColleges = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedColleges.count < 50)
     {
-        long collegeId = [[vote valueForKey:KEY_COLLEGE_ID] longValue];
-        float lon = [[vote valueForKey:KEY_LON] floatValue];
-        float lat = [[vote valueForKey:KEY_LAT] floatValue];
-        NSString *name = [vote valueForKey:KEY_NAME];
+        [self getNetworkCollegeList];
+        return;
+    }
+    for (NSManagedObject *college in fetchedColleges)
+    {
+        long collegeId = [[college valueForKey:KEY_COLLEGE_ID] longValue];
+        float lon = [[college valueForKey:KEY_LON] floatValue];
+        float lat = [[college valueForKey:KEY_LAT] floatValue];
+        NSString *name = [college valueForKey:KEY_NAME];
 //        NSString *shortName = [vote valueForKey:KEY_SHORT_NAME];
         
         College *collegeModel = [[College alloc] initWithCollegeID:collegeId withName:name withLat:lat withLon:lon];

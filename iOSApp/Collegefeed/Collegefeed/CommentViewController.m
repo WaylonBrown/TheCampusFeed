@@ -205,7 +205,7 @@
 }
 - (void)flag
 {   // Display popup to let user type a new comment
-    NSString *message = @"Are you sure you wish to flag this post as inappropriate? Posts with a certain amount of flags per views are automatically removed. Do your part for the CollegeFeed community and flag any post that: \n\n - Is offensive, bad-natured, or threatening\n - Targets a specific person negatively to the point of bullying\n - Has a phone number\n\nUsers that have more than one post taken down get banned from posting on the app again.";
+    NSString *message = @"Are you sure you wish to flag this post as inappropriate? Posts with a certain amount of flags per views are automatically removed. Do your part for TheCampusFeed community and flag any post that: \n\n- Is offensive, bad-natured, or threatening\n- Targets a specific person negatively to the point of bullying\n- Has a phone number\n\nUsers that have more than one post taken down get banned from posting on the app again.";
     
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Flag as Inappropriate?" message:message delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];

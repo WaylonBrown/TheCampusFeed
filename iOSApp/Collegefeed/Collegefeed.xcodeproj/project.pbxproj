@@ -381,6 +381,7 @@
 		53AB57B7194AAFB3001D1B7B /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				53129431196517A000CF13DB /* Toasts */,
 				53FA791219381A4F00EF246E /* ChildCellDelegate.h */,
 				5308D2BB193552C600D70C1A /* Shared.h */,
 				53CF339F194E7A7A008BB733 /* Shared.m */,
@@ -430,7 +431,6 @@
 			isa = PBXGroup;
 			children = (
 				531EAB411988533500C1E1AA /* UserData.xcdatamodeld */,
-				53129431196517A000CF13DB /* Toasts */,
 				53AE73BC1927ED6600BE6B02 /* DataController.h */,
 				53AE73C61928354F00BE6B02 /* DataController.m */,
 				53F8789F19133F60002A578B /* AppDelegate.h */,

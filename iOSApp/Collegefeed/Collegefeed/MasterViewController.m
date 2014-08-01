@@ -140,10 +140,10 @@
 - (IBAction)changeFeed;
 {   // User wants to change the feed (all colleges, nearby college, or other)
 
-    FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_NEARBY_OTHER];
-    [controller setFullCollegeList:self.dataController.collegeList];
-    [controller setNearbyCollegeList:self.dataController.nearbyColleges];
-    [controller setFeedDelegate:self];
+    FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_NEARBY_OTHER WithDataController:self.dataController WithFeedDelegate:self];
+//    [controller setFullCollegeList:self.dataController.collegeList];
+//    [controller setNearbyCollegeList:self.dataController.nearbyColleges];
+//    [controller setFeedDelegate:self];
     [self.navigationController presentViewController:controller animated:YES completion:nil];
 }
 - (void)showCreationDialogForCollege:(College *) college
@@ -170,9 +170,9 @@
     }
     else
     {   // Multiple colleges are nearby
-        FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ONLY_NEARBY_COLLEGES];
-        [controller setNearbyCollegeList:self.dataController.nearbyColleges];
-        [controller setPostingDelegate:self];
+        FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ONLY_NEARBY_COLLEGES WithDataController:self.dataController WithPostingDelegate:self];
+//        [controller setNearbyCollegeList:self.dataController.nearbyColleges];
+//        [controller setPostingDelegate:self];
         [self.navigationController presentViewController:controller animated:YES completion:nil];
     }
 }
@@ -293,9 +293,9 @@
 }
 - (void)showDialogForAllColleges
 {
-    FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_COLLEGES_WITH_SEARCH];
-    [controller setFullCollegeList:self.dataController.collegeList];
-    [controller setFeedDelegate:self];
+    FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_COLLEGES_WITH_SEARCH WithDataController:self.dataController WithFeedDelegate:self];
+//    [controller setFullCollegeList:self.dataController.collegeList];
+//    [controller setFeedDelegate:self];
     [self.navigationController presentViewController:controller animated:YES completion:nil];
 }
 

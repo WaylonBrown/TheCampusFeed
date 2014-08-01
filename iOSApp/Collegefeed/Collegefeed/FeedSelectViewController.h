@@ -12,6 +12,8 @@
 #define TABLE_CELL_HEIGHT 44
 
 @class College;
+@class DataController;
+
 @protocol FeedSelectionProtocol <NSObject>
 
 - (void)submitSelectionForFeedWithCollegeOrNil:(College *)college;
@@ -41,6 +43,7 @@ typedef NS_ENUM(NSInteger, FeedSelectorType)
 
 @property (strong, nonatomic) id<FeedSelectionProtocol> feedDelegate;
 @property (strong, nonatomic) id<CollegeForPostingSelectionProtocol> postingDelegate;
+@property (strong, nonatomic) DataController *dataController;
 @property (nonatomic, strong) NSMutableArray *searchResult;
 @property (nonatomic, strong) UISearchDisplayController *searchDisplay;
 
@@ -55,7 +58,10 @@ typedef NS_ENUM(NSInteger, FeedSelectorType)
 
 @property (nonatomic) FeedSelectorType type;
 
-- (id)initWithType:(FeedSelectorType)type;
+- (id)initWithType:(FeedSelectorType)type WithDataController:(DataController *)controller WithFeedDelegate:(id<FeedSelectionProtocol>) delegate;
+
+- (id)initWithType:(FeedSelectorType)type WithDataController:(DataController *)controller WithPostingDelegate:(id<CollegeForPostingSelectionProtocol>) delegate;
+
 
 - (IBAction)dismiss;
 - (void)fixHeights:(int)numNearbyColleges;

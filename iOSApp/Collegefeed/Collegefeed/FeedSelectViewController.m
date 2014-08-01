@@ -10,10 +10,11 @@
 #import "Shared.h"
 #import "College.h"
 #import "SimpleTableCell.h"
+#import "DataController.h"
 
 @implementation FeedSelectViewController
 
-- (id)initWithType:(FeedSelectorType)type
+- (id)initWithType:(FeedSelectorType)type WithDataController:(DataController *)controller WithFeedDelegate:(id<FeedSelectionProtocol>) delegate
 {
     self = [super init];
     if (self)
@@ -21,6 +22,26 @@
         [self setType:type];
         [self setModalPresentationStyle:UIModalPresentationCustom];
         [self setTransitioningDelegate:self];
+        [self setDataController:controller];
+        [self setNearbyCollegeList:self.dataController.nearbyColleges];
+        [self setFullCollegeList:self.dataController.collegeList];
+        [self setFeedDelegate:delegate];
+    }
+    return self;
+    
+}
+- (id)initWithType:(FeedSelectorType)type WithDataController:(DataController *)controller WithPostingDelegate:(id<CollegeForPostingSelectionProtocol>) delegate
+{
+    self = [super init];
+    if (self)
+    {
+        [self setType:type];
+        [self setModalPresentationStyle:UIModalPresentationCustom];
+        [self setTransitioningDelegate:self];
+        [self setDataController:controller];
+        [self setNearbyCollegeList:self.dataController.nearbyColleges];
+        [self setFullCollegeList:self.dataController.collegeList];
+        [self setPostingDelegate:delegate];
     }
     return self;
 }
@@ -344,30 +365,9 @@
     {
         case ALL_NEARBY_OTHER:
         {   // Initial prompt given to user to select which feed to view
-//            if (section == 0)
-//            {
-//                return nil;
-////                college = nil;
-//            }
-            /*else*/if (section == 1 && numNearbyColleges > row)
+            if (section == 1 && numNearbyColleges > row)
             {
-//                college =
-                return self.nearbyCollegeList[row];
-                
-                //****
-//                [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:college];
-            }
-            else // if (section == 2 || (section == 1 && numNearbyColleges is too small))
-            {
-                // Show all colleges to let user choose one they are not close to
-                
-                
-//                //****
-//                FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_COLLEGES_WITH_SEARCH];
-//                [controller setFullCollegeList:self.fullCollegeList];
-//                [controller setFeedDelegate:self.feedDelegate];
-//                [self dismiss];
-//                [self.navigationController presentViewController:controller animated:YES completion:nil];
+                return [self.nearbyCollegeList objectAtIndex:row];
             }
             break;
         }
@@ -385,10 +385,7 @@
         }
         case ONLY_NEARBY_COLLEGES:
         {   // When user is selecting which of nearby colleges to post to
-            
-//            college =
-            return self.nearbyCollegeList[row];
-//            [self.postingDelegate submitSelectionForPostWithCollege:college];
+            return [self.nearbyCollegeList objectAtIndex:row];
             break;
         }
         default: break;
@@ -404,13 +401,6 @@
 {
     [tableView setFrame:self.tableView.frame];
     [self.alertView addSubview:tableView];
-//    float x = self.tableView.frame.origin.x + self.alertView.;
-//    float y = self.tableView.window.frame.origin.y + self.titleLabel.frame.size.height;
-//    float width = self.tableView.frame.size.width;
-//    float height = self.tableView.frame.size.height;
-//    
-//    CGRect newFrame = CGRectMake(x, y, width, height);
-//    tableView.frame = newFrame;
 }
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
