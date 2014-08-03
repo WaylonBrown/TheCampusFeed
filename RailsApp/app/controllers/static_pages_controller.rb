@@ -14,4 +14,10 @@ class StaticPagesController < ApplicationController
 
   def webapp
   end
+  def webapp_college
+  end
+  def webapp_tag
+  end
+
+
 end

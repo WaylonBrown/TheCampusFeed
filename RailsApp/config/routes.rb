@@ -1,7 +1,6 @@
 CollegeFeed::Application.routes.draw do
 
 
-
   get '/partials/:partialName' => 'partials#byName'
 
 =begin
@@ -141,6 +140,10 @@ CollegeFeed::Application.routes.draw do
     end
 =end
     root to: 'static_pages#webapp'
+    get '/college/:id' => 'static_pages#webapp_college'
+    get '/tag/:text' => 'static_pages#webapp_tag'
+
+
     get '/admin' => 'static_pages#admin'
     get '/landing' => 'static_pages#landing'
     get '/mobile' => 'static_pages#index'

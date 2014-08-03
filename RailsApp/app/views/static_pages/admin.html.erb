@@ -22,12 +22,11 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="dropdown active">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="<%= admin_path %>">Control Panel</a></li>
-            <li><a href="<%= stats_path %>">Stat Panel</a></li>
-          </ul>
+        <li class="active">
+          <a href="#"><%= fa_icon 'file-text' %> Posts</a>
+        </li>
+        <li>
+          <a href="#"><%= fa_icon 'university' %> Colleges</a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -35,10 +34,8 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= fa_icon 'user' %>
             Admin<b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="#">My Posts</a></li>
-            <li><a href="#">My Comments</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Log Out</a></li>
+            <li><a href="<%= admin_path %>"><%= fa_icon 'gears' %> Control Panel</a></li>
+            <li><a href="<%= stats_path %>"><%= fa_icon 'dollar' %> Stat Panel</a></li>
           </ul>
         </li>
       </ul>
