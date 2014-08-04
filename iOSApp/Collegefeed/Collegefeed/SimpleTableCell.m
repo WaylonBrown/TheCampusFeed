@@ -24,7 +24,7 @@
     
     // Set font styles
     [self.messageLabel setTintColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
-    [self.countLabel    setFont:CF_FONT_MEDIUM(12)];
+    [self.activityIndicator setHidesWhenStopped:YES];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -49,12 +49,10 @@
     if (tag != nil)
     {
         [self.messageLabel setText:tag.name];
-        [self.countLabel setText:[NSString stringWithFormat:@"(%ld)", tag.score]];
     }
     else
     {
         [self.messageLabel setText:@""];
-        [self.countLabel setText:@""];
     }
 }
 - (void)assignCollege:(College *)college withRankNumber:(long)rankNo
@@ -66,13 +64,18 @@
     if (college != nil)
     {
         [self.messageLabel setText:[NSString stringWithFormat:@"#%ld) %@", rankNo, college.name]];
-        [self.countLabel setText:@""];
     }
     else
     {
         [self.messageLabel setText:@""];
-        [self.countLabel setText:@""];
     }
 }
-
+- (void)showLoadingIndicator
+{
+    [self.activityIndicator startAnimating];
+}
+- (void)hideLoadingIndicator
+{
+    [self.activityIndicator stopAnimating];
+}
 @end

@@ -919,9 +919,9 @@
         [self setLon:newLocation.coordinate.longitude];
         [self.locationManager stopUpdatingLocation];
         
-        [self findNearbyColleges];
-        [self.appDelegate foundLocation];
-        [self setFoundLocation:YES];
+//        [self findNearbyColleges];
+//        [self.appDelegate foundLocation];
+//        [self setFoundLocation:YES];
     }
     else
     {

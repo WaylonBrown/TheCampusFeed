@@ -203,6 +203,7 @@
     bool showLoadingIndicator = !self.dataController.foundLocation;
     bool noCollegesNearby = self.dataController.foundLocation && ![self.dataController isNearCollege];
     bool collegesNearby = [self.dataController isNearCollege];
+    [cell hideLoadingIndicator];
     
     NSString *cellLabel = @"";
     if (self.type == ALL_NEARBY_OTHER)
@@ -213,6 +214,7 @@
         }
         else if (showLoadingIndicator && indexPath.section == 1)
         {
+            [cell showLoadingIndicator];
             // TODO: DRAW LOADING INDICATOR ON THIS CELL
             cellLabel = @"Loading...";
         }

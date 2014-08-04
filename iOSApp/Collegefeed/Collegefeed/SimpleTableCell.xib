@@ -17,18 +17,24 @@
                         <rect key="frame" x="9" y="5" width="302" height="46"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="message" lineBreakMode="wordWrap" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="282" translatesAutoresizingMaskIntoConstraints="NO" id="o85-Cc-6e6">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." lineBreakMode="wordWrap" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="282" translatesAutoresizingMaskIntoConstraints="NO" id="o85-Cc-6e6">
                                 <rect key="frame" x="10" y="5" width="282" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" placeholderIntrinsicWidth="20" placeholderIntrinsicHeight="20" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="JE2-9v-ihy">
+                                <rect key="frame" x="262" y="13" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="o85-Cc-6e6" firstAttribute="leading" secondItem="VUB-wS-DO1" secondAttribute="leading" constant="10" id="JCK-FO-5gA"/>
                             <constraint firstAttribute="bottom" secondItem="o85-Cc-6e6" secondAttribute="bottom" constant="5" id="SWP-ge-49E"/>
+                            <constraint firstAttribute="trailing" secondItem="JE2-9v-ihy" secondAttribute="trailing" constant="20" id="U13-gv-8cW"/>
                             <constraint firstItem="o85-Cc-6e6" firstAttribute="top" secondItem="VUB-wS-DO1" secondAttribute="top" constant="5" id="ec6-79-J9C"/>
+                            <constraint firstAttribute="centerY" secondItem="JE2-9v-ihy" secondAttribute="centerY" id="k1h-B5-9G6"/>
                             <constraint firstAttribute="trailing" secondItem="o85-Cc-6e6" secondAttribute="trailing" constant="10" id="txO-b0-0tm"/>
                         </constraints>
                     </view>
@@ -42,6 +48,7 @@
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
+                <outlet property="activityIndicator" destination="JE2-9v-ihy" id="nHZ-K4-jx6"/>
                 <outlet property="enclosingView" destination="VUB-wS-DO1" id="la2-ZW-YZ2"/>
                 <outlet property="messageLabel" destination="o85-Cc-6e6" id="QOq-LS-v1Q"/>
             </connections>

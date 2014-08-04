@@ -14,11 +14,12 @@
 @interface SimpleTableCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
-@property (weak, nonatomic) IBOutlet UILabel *countLabel;
 @property (weak, nonatomic) IBOutlet UIView *enclosingView;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 - (void)assignTag:(Tag *)tag;
 - (void)assignCollege:(College *)college withRankNumber:(long)rankNo;
 - (void)assignSimpleText:(NSString *)text;
-
+- (void)showLoadingIndicator;
+- (void)hideLoadingIndicator;
 @end
