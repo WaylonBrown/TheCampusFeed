@@ -106,7 +106,7 @@
         
         [self.commentList insertObject:networkComment atIndex:0];
         [self.userComments insertObject:networkComment atIndex:0];
-        [self saveUserComments];
+        [self saveComment:networkComment];
         return YES;
     }
     @catch (NSException *exception)
@@ -174,7 +174,7 @@
         [self.topPostsAllColleges insertObject:networkPost atIndex:0];
         [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
         [self.userPosts insertObject:networkPost atIndex:0];
-        [self saveUserPosts];
+        [self savePost:networkPost];
         return YES;
     }
     @catch (NSException *exception)
@@ -334,12 +334,6 @@
     
     [fetchRequest setEntity:entity];
     
-//    NSArray *myObjectsToDelete = [context executeFetchRequest:fetchRequest error:nil];
-//    for (NSManagedObject *oldCollege in myObjectsToDelete)
-//    {
-//        [context deleteObject:oldCollege];
-//    }
-    
     for (College *collegeModel in self.collegeList)
     {
         NSManagedObject *college = [NSEntityDescription insertNewObjectForEntityForName:COLLEGE_ENTITY
@@ -455,23 +449,18 @@
     College *college = [self getCollegeById:collegeId];
     return [self.nearbyColleges containsObject:college];
 }
-- (void)saveUserPosts
+- (void)savePost:(Post *)post
 {
-    if (self.userPosts.count > 0)
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSError *error;
+    NSManagedObject *mgdPost = [NSEntityDescription insertNewObjectForEntityForName:POST_ENTITY
+                                                                inManagedObjectContext:context];
+    [mgdPost setValue:[NSNumber numberWithLong:post.postID] forKeyPath:KEY_POST_ID];
+    
+    if (![_managedObjectContext save:&error])
     {
-        NSManagedObjectContext *context = [self managedObjectContext];
-        NSError *error;
-        for (Post *postModel in self.userPosts)
-        {
-            NSManagedObject *post = [NSEntityDescription insertNewObjectForEntityForName:POST_ENTITY
-                                                                  inManagedObjectContext:context];
-            [post setValue:[NSNumber numberWithLong:postModel.postID] forKeyPath:KEY_POST_ID];
-        }
-        if (![_managedObjectContext save:&error])
-        {
-            NSLog(@"Failed to save user's posts: %@",
-                  [error localizedDescription]);
-        }
+        NSLog(@"Failed to save user post: %@",
+              [error localizedDescription]);
     }
 }
 - (void)retrieveUserPosts
@@ -494,23 +483,18 @@
     }
     [self fetchUserPostsWithIdArray:postIds];
 }
-- (void)saveUserComments
+- (void)saveComment:(Comment *)comment
 {
-    if (self.userComments.count > 0)
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSError *error;
+    NSManagedObject *mgdComment = [NSEntityDescription insertNewObjectForEntityForName:COMMENT_ENTITY
+                                                             inManagedObjectContext:context];
+    [mgdComment setValue:[NSNumber numberWithLong:comment.commentID] forKeyPath:KEY_COMMENT_ID];
+
+    if (![_managedObjectContext save:&error])
     {
-        NSManagedObjectContext *context = [self managedObjectContext];
-        NSError *error;
-        for (Comment *commentModel in self.userComments)
-        {
-            NSManagedObject *comment = [NSEntityDescription insertNewObjectForEntityForName:COMMENT_ENTITY
-                                                                  inManagedObjectContext:context];
-            [comment setValue:[NSNumber numberWithLong:commentModel.commentID] forKeyPath:KEY_COMMENT_ID];
-        }
-        if (![_managedObjectContext save:&error])
-        {
-            NSLog(@"Failed to save user's comments: %@",
-                  [error localizedDescription]);
-        }
+        NSLog(@"Failed to save user comment: %@",
+              [error localizedDescription]);
     }
 }
 - (void)retrieveUserComments
@@ -546,7 +530,7 @@
     if ([vote getType] == POST) [mgdVote setValue:VALUE_POST forKeyPath:KEY_TYPE];
     else if ([vote getType] == COMMENT) [mgdVote setValue:VALUE_COMMENT forKeyPath:KEY_TYPE];
     
-    if (![_managedObjectContext save:&error])
+    if (![context save:&error])
     {
         NSLog(@"Failed to save user's vote: %@",
               [error localizedDescription]);
@@ -562,15 +546,15 @@
                                    entityForName:VOTE_ENTITY inManagedObjectContext:context];
     
     [fetchRequest setEntity:entity];
-    NSArray *fetchedVotes = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    NSArray *fetchedVotes = [context executeFetchRequest:fetchRequest error:&error];
     for (NSManagedObject *mgdVote in fetchedVotes)
     {
         if ([[mgdVote valueForKey:KEY_VOTE_ID] longValue] == vote.voteID)
         {
             [context deleteObject:mgdVote];
-            if (![_managedObjectContext save:&error])
+            if (![context save:&error])
             {
-                NSLog(@"Failed to save user's vote: %@",
+                NSLog(@"Failed to delete user's vote: %@",
                       [error localizedDescription]);
             }
             return;
@@ -586,7 +570,7 @@
     NSEntityDescription *entity = [NSEntityDescription
                                    entityForName:VOTE_ENTITY inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    NSArray *fetchedVotes = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    NSArray *fetchedVotes = [context executeFetchRequest:fetchRequest error:&error];
     for (NSManagedObject *vote in fetchedVotes)
     {
         long voteId = [[vote valueForKey:KEY_VOTE_ID] longValue];
@@ -613,11 +597,6 @@
             [self.userCommentVotes addObject:voteModel];
         }
     }
-}
-- (void)saveAllUserData
-{
-    [self saveUserPosts];
-    [self saveUserComments];
 }
 - (void)retrieveUserData
 {

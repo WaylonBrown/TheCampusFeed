@@ -146,9 +146,6 @@
 - (BOOL)isNearCollege;
 - (BOOL)isNearCollegeWithId:(long)collegeId;
 
-- (void)saveUserPosts;
-- (void)saveUserComments;
-- (void)saveUserVotes;
 - (void)saveAllUserData;
 - (void)retrieveUserData;
 - (long)getUserPostScore;
