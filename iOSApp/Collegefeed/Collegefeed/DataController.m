@@ -292,7 +292,7 @@
                 [self.userCommentVotes addObject:vote];
             }
         }
-        [self saveUserVotes];
+        [self saveVote:vote];
         return YES;
     }
     @catch (NSException *exception)
@@ -316,8 +316,7 @@
             [self.userCommentVotes removeObject:vote];
         }
     }
-    
-    [self saveUserVotes];
+    [self deleteVote:vote];
     return success;
 }
 
@@ -364,6 +363,8 @@
 }
 - (College *)getCollegeById:(long)Id
 {
+    if (Id == 0) return nil;
+    
     for (College *college in self.collegeList)
     {
         if (college.collegeID == Id)
@@ -532,49 +533,49 @@
     }
     [self fetchUserCommentsWithIdArray:commentIds];
 }
-- (void)saveUserPostVotes
+- (void)saveVote:(Vote *)vote
 {
     NSManagedObjectContext *context = [self managedObjectContext];
     NSError *error;
-    for (Vote *voteModel in self.userPostVotes)
-    {
-        NSManagedObject *vote = [NSEntityDescription insertNewObjectForEntityForName:VOTE_ENTITY
-                                                              inManagedObjectContext:context];
-        [vote setValue:[NSNumber numberWithLong:voteModel.parentID] forKeyPath:KEY_PARENT_ID];
-        [vote setValue:[NSNumber numberWithLong:voteModel.voteID] forKeyPath:KEY_VOTE_ID];
-        [vote setValue:VALUE_POST forKeyPath:KEY_TYPE];
-        [vote setValue:[NSNumber numberWithBool:voteModel.upvote] forKeyPath:KEY_UPVOTE];
-    }
+    NSManagedObject *mgdVote = [NSEntityDescription insertNewObjectForEntityForName:VOTE_ENTITY
+                                                          inManagedObjectContext:context];
+    [mgdVote setValue:[NSNumber numberWithLong:vote.parentID] forKeyPath:KEY_PARENT_ID];
+    [mgdVote setValue:[NSNumber numberWithLong:vote.voteID] forKeyPath:KEY_VOTE_ID];
+    [mgdVote setValue:[NSNumber numberWithBool:vote.upvote] forKeyPath:KEY_UPVOTE];
+    
+    if ([vote getType] == POST) [mgdVote setValue:VALUE_POST forKeyPath:KEY_TYPE];
+    else if ([vote getType] == COMMENT) [mgdVote setValue:VALUE_COMMENT forKeyPath:KEY_TYPE];
+    
     if (![_managedObjectContext save:&error])
     {
-        NSLog(@"Failed to save user's post votes: %@",
+        NSLog(@"Failed to save user's vote: %@",
               [error localizedDescription]);
     }
 }
-- (void)saveUserCommentVotes
+- (void)deleteVote:(Vote *)vote
 {
     NSManagedObjectContext *context = [self managedObjectContext];
-
     NSError *error;
-    for (Vote *voteModel in self.userCommentVotes)
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:VOTE_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedVotes = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    for (NSManagedObject *mgdVote in fetchedVotes)
     {
-        NSManagedObject *vote = [NSEntityDescription insertNewObjectForEntityForName:VOTE_ENTITY
-                                                              inManagedObjectContext:context];
-        [vote setValue:[NSNumber numberWithLong:voteModel.parentID] forKeyPath:KEY_PARENT_ID];
-        [vote setValue:[NSNumber numberWithLong:voteModel.voteID] forKeyPath:KEY_VOTE_ID];
-        [vote setValue:VALUE_COMMENT forKeyPath:KEY_TYPE];
-        [vote setValue:[NSNumber numberWithBool:voteModel.upvote] forKeyPath:KEY_UPVOTE];
+        if ([[mgdVote valueForKey:KEY_VOTE_ID] longValue] == vote.voteID)
+        {
+            [context deleteObject:mgdVote];
+            if (![_managedObjectContext save:&error])
+            {
+                NSLog(@"Failed to save user's vote: %@",
+                      [error localizedDescription]);
+            }
+            return;
+        }
     }
-    if (![_managedObjectContext save:&error])
-    {
-        NSLog(@"Failed to save user's comment votes: %@",
-              [error localizedDescription]);
-    }
-}
-- (void)saveUserVotes
-{
-    [self saveUserPostVotes];
-    [self saveUserCommentVotes];
 }
 - (void)retrieveUserVotes
 {
@@ -617,7 +618,6 @@
 {
     [self saveUserPosts];
     [self saveUserComments];
-    [self saveUserVotes];
 }
 - (void)retrieveUserData
 {
