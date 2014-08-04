@@ -126,6 +126,13 @@
                    API_URL, API_VERSION, pageNum, PAGINATION_NUM]];
     return [self GET:url];
 }
++ (NSData *)GETCollegeListVersion
+{
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/colleges/listVersion",
+                   API_URL, API_VERSION]];
+    return [self GET:url];
+}
 
 #pragma mark - Comments
 

@@ -33,6 +33,7 @@
 #define KEY_COMMENT_TIME        @"lastCommentTime"
 #define KEY_POST_TIME           @"lastPostTime"
 #define KEY_IS_BANNED           @"isBanned"
+#define KEY_COLLEGE_LIST_VERSION    @"listVersion"
 
 #define POST_ENTITY             @"Post"
 #define KEY_POST_ID             @"postId"
@@ -121,6 +122,7 @@
 @property (strong, nonatomic) Post      *postInFocus;
 @property (nonatomic) BOOL              showingAllColleges;
 @property (nonatomic) BOOL              showingSingleCollege;
+@property (nonatomic) long              collegeListVersion;
 
 // Lazy Loading Counters
 @property (nonatomic) long topPostsPage;
@@ -146,7 +148,6 @@
 - (BOOL)isNearCollege;
 - (BOOL)isNearCollegeWithId:(long)collegeId;
 
-- (void)saveAllUserData;
 - (void)retrieveUserData;
 - (long)getUserPostScore;
 - (long)getUserCommentScore;
@@ -161,6 +162,7 @@
 // Colleges
 - (void)getNetworkCollegeList;
 - (void)getTrendingCollegeList;
+- (BOOL)needsNewCollegeList;
 
 // Comments
 - (BOOL)createCommentWithMessage:(NSString *)message

@@ -44,8 +44,15 @@
         [self setRecentPostsPage:0];
         [self setTagPostsPage:0];
         [self setTrendingCollegesPage:0];
-        
-        [self getHardCodedCollegeList];
+
+        if ([self needsNewCollegeList])
+        {
+            [self getNetworkCollegeList];
+        }
+        else
+        {
+            [self getHardCodedCollegeList];
+        }
         
         // Populate the initial arrays
         [self retrieveUserData];
@@ -76,12 +83,50 @@
     NSData *data = [Networker GETAllColleges];
     [self parseData:data asClass:[College class] intoList:self.collegeList];
     [self writeCollegestoCoreData];
+    
+    long version = [self getNetworkCollegeListVersion];
+    [self updateCollegeListVersion:version];
 }
 - (void)getTrendingCollegeList
 {
     self.trendingColleges = [[NSMutableArray alloc] init];
     NSData *data = [Networker GETTrendingCollegesAtPageNum:self.trendingCollegesPage++];
     [self parseData:data asClass:[College class] intoList:self.trendingColleges];
+}
+- (long)getNetworkCollegeListVersion
+{
+    NSData *data = [Networker GETCollegeListVersion];
+    NSArray *jsonArray = (NSArray*)[NSJSONSerialization JSONObjectWithData:data
+                                                                   options:0
+                                                                     error:nil];
+        
+    NSNumber *versionNumber = [jsonArray valueForKey:@"version"];
+    return [versionNumber longValue];
+}
+- (BOOL)needsNewCollegeList
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:PERMISSION_ENTITY
+                                              inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedPermissions.count > 1)
+    {
+        NSLog(@"Too many permissions");
+    }
+    NSManagedObject *permission = [fetchedPermissions firstObject];
+    long newVersion = [self getNetworkCollegeListVersion];
+
+    if (permission == nil)
+    {
+        return YES;
+    }
+    
+    long currVersion = [[permission valueForKeyPath:KEY_COLLEGE_LIST_VERSION] longValue];
+    
+    return (currVersion < newVersion);
 }
 
 #pragma mark - Networker Access - Comments
@@ -334,6 +379,14 @@
     
     [fetchRequest setEntity:entity];
     
+    // Erase all old colleges from core data
+    NSArray *myObjectsToDelete = [context executeFetchRequest:fetchRequest error:nil];
+    for (NSManagedObject *oldCollege in myObjectsToDelete)
+    {
+        [context deleteObject:oldCollege];
+    }
+    
+    // Write new list of colleges to core data
     for (College *collegeModel in self.collegeList)
     {
         NSManagedObject *college = [NSEntityDescription insertNewObjectForEntityForName:COLLEGE_ENTITY
@@ -775,6 +828,33 @@
     
     return YES;
 }
+- (void)updateCollegeListVersion:(long)listVersion
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedPermissions.count > 1)
+    {
+        NSLog(@"Too many permissions");
+    }
+    NSManagedObject *permission = [fetchedPermissions firstObject];
+    
+    if (permission == nil)
+    {
+        permission = [NSEntityDescription insertNewObjectForEntityForName:PERMISSION_ENTITY
+                                                   inManagedObjectContext:context];
+    }
+    [permission setValue:[NSNumber numberWithLong:listVersion] forKeyPath:KEY_COLLEGE_LIST_VERSION];
+    if (![_managedObjectContext save:&error])
+    {
+        NSLog(@"Failed to save college list version: %@",
+              [error localizedDescription]);
+    }
+}
 - (void)updateLastPostTime:(NSDate *)postTime
 {
     NSError *error;
@@ -801,8 +881,6 @@
         NSLog(@"Failed to save user's post time: %@",
               [error localizedDescription]);
     }
-
-    
 }
 - (void)updateLastCommentTime:(NSDate *)commentTime
 {
