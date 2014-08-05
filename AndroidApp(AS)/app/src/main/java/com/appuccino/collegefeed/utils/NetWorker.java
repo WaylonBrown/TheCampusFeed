@@ -416,8 +416,10 @@ public class NetWorker {
 
     public static class GetFullCollegeListTask extends AsyncTask<PostSelector, Void, ArrayList<College> >
     {
-        public GetFullCollegeListTask()
-        {
+        String checkSumVersion;
+
+        public GetFullCollegeListTask(String s){
+            checkSumVersion = s;
         }
 
         @Override
@@ -458,7 +460,7 @@ public class NetWorker {
         @Override
         protected void onPostExecute(ArrayList<College> result) {
             MainActivity.collegeList = result;
-            PrefManager.putLastCollegeListUpdate(Calendar.getInstance());
+            PrefManager.putCollegeListCheckSum(checkSumVersion);
             Log.i("cfeed","COLLEGE_LIST Updated main college list.");
         }
     }
@@ -901,54 +903,95 @@ public class NetWorker {
         }
     }
 
-     public static class MakeFlagTask extends AsyncTask<Integer, Void, Boolean>{
+    public static class MakeFlagTask extends AsyncTask<Integer, Void, Boolean>{
 
-         Context c;
-         int postID;
+        Context c;
+        int postID;
 
-         public MakeFlagTask(Context c){
-             this.c = c;
-         }
-
-
-         @Override
-         protected void onPreExecute() {
-             CommentsActivity.addActionBarLoadingIndicatorAndRemoveFlag();
-             super.onPreExecute();
-         }
+        public MakeFlagTask(Context c){
+            this.c = c;
+        }
 
 
-         public Boolean doInBackground(Integer... postID){
-             this.postID = postID[0];
-             try{
-                 HttpGet request = new HttpGet(REQUEST_URL + "posts/" + postID[0] + "/flags");
-                 //request.setEntity(new ByteArrayEntity(String.valueOf(postID).getBytes("UTF8")));
-                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                 String response = client.execute(request, responseHandler);
+        @Override
+        protected void onPreExecute() {
+            CommentsActivity.addActionBarLoadingIndicatorAndRemoveFlag();
+            super.onPreExecute();
+        }
 
-                 Log.d("cfeed", LOG_TAG + "Make flag server response: " + response);
-                 return true;
-             } catch (ClientProtocolException e) {
-                 e.printStackTrace();
-                 return false;
-             } catch (IOException e) {
-                 e.printStackTrace();
-                 return false;
-             }
-         }
 
-         public void onPostExecute(Boolean result){
-             Log.d("http", LOG_TAG + "success: " + result);
-             if(result){
-                 MainActivity.flagList.add(postID);
-                 PrefManager.putFlagList(MainActivity.flagList);
-                 CommentsActivity.removeFlagButtonAndLoadingIndicator();
-                 Toast.makeText(c, "Post has been flagged, thank you :)", Toast.LENGTH_LONG).show();
-             }else{
-                 Toast.makeText(c, "Failed to flag post, please try again later.", Toast.LENGTH_LONG).show();
-                 CommentsActivity.removeActionBarLoadingIndicatorAndAddFlag();
-             }
-             super.onPostExecute(result);
-         }
-     }
+        public Boolean doInBackground(Integer... postID){
+            this.postID = postID[0];
+            try{
+                HttpGet request = new HttpGet(REQUEST_URL + "posts/" + postID[0] + "/flags");
+                //request.setEntity(new ByteArrayEntity(String.valueOf(postID).getBytes("UTF8")));
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                String response = client.execute(request, responseHandler);
+
+                Log.d("cfeed", LOG_TAG + "Make flag server response: " + response);
+                return true;
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+                return false;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        public void onPostExecute(Boolean result){
+            Log.d("http", LOG_TAG + "success: " + result);
+            if(result){
+                MainActivity.flagList.add(postID);
+                PrefManager.putFlagList(MainActivity.flagList);
+                CommentsActivity.removeFlagButtonAndLoadingIndicator();
+                Toast.makeText(c, "Post has been flagged, thank you :)", Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(c, "Failed to flag post, please try again later.", Toast.LENGTH_LONG).show();
+                CommentsActivity.removeActionBarLoadingIndicatorAndAddFlag();
+            }
+            super.onPostExecute(result);
+        }
+    }
+
+    public static class CollegeListCheckSumTask extends AsyncTask<Integer, Void, Boolean>{
+
+        String response;
+
+        public Boolean doInBackground(Integer... postID){
+            try{
+                HttpGet request = new HttpGet(REQUEST_URL + "colleges/listVersion");
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                response = client.execute(request, responseHandler);
+
+                Log.d("cfeed", LOG_TAG + "Checksum server response: " + response);
+                return true;
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+                return false;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        public void onPostExecute(Boolean result){
+            Log.d("http", LOG_TAG + "success: " + result);
+            if(result){
+                String version = null;
+                try {
+                    version = JSONParser.checkSumFromJSON(response);
+                    if(version.equals(MainActivity.collegeListCheckSum)){
+                        Log.i("cfeed", "CHECKSUM: same");
+                    } else {
+                        Log.i("cfeed", "CHECKSUM: different, updating college list...");
+                        MainActivity.updateCollegeList(version);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            super.onPostExecute(result);
+        }
+    }
  }

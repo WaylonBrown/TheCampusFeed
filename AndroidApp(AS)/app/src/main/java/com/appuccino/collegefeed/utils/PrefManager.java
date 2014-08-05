@@ -22,7 +22,7 @@ public class PrefManager {
     public static final String MY_POSTS_LIST = "my_votes_list";
     public static final String MY_COMMENTS_LIST = "my_comments_list";
 	public static final String LAST_FEED = "last_feed";
-    public static final String LAST_COLLEGE_UPDATE = "last_college_update";
+    public static final String COLLEGE_LIST_CHECK_SUM = "college_list_check_sum";
     public static final String APP_RUN_COUNT = "app_run_count";
     public static final String FIRST_DIALOG_DISPLAYED = "first_displayed";
     public static final String SECOND_DIALOG_DISPLAYED = "second_displayed";
@@ -135,47 +135,28 @@ public class PrefManager {
 		prefs.edit().putString(FLAG_LIST, storage).apply();
 	}
 	
-	public static List<Integer> getFlagList(){
-		List<Integer> returnList = new ArrayList<Integer>();
-		String retrieval = prefs.getString(FLAG_LIST, "");
-		if(retrieval != null && !retrieval.isEmpty()){
-			String[] split = retrieval.split(";");
-			for(String id : split){
-				try{
-					returnList.add(Integer.valueOf(id));
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-			}
-		}
-		return returnList;
-	}
-
-    public static Calendar getLastCollegeListUpdate() {
-        Calendar returnCal = Calendar.getInstance();
-        String lastUpdateString = prefs.getString(LAST_COLLEGE_UPDATE, "");
-        if(lastUpdateString.isEmpty()){
-            return null;
-        } else {
-            //MM,DD,YYYY
-            String[] splitString = lastUpdateString.split(",");
-            returnCal.set(Calendar.WEEK_OF_MONTH, Integer.valueOf(splitString[0]));
-            returnCal.set(Calendar.MONTH, Integer.valueOf(splitString[1]));
-            returnCal.set(Calendar.DAY_OF_MONTH, Integer.valueOf(splitString[2]));
-            returnCal.set(Calendar.YEAR, Integer.valueOf(splitString[3]));
-            return returnCal;
+	public static List<Integer> getFlagList() {
+        List<Integer> returnList = new ArrayList<Integer>();
+        String retrieval = prefs.getString(FLAG_LIST, "");
+        if (retrieval != null && !retrieval.isEmpty()) {
+            String[] split = retrieval.split(";");
+            for (String id : split) {
+                try {
+                    returnList.add(Integer.valueOf(id));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
+        return returnList;
     }
 
-    public static void putLastCollegeListUpdate(Calendar c){
-        String storage = String.valueOf(c.get(Calendar.WEEK_OF_MONTH)) +
-                "," +
-                String.valueOf(c.get(Calendar.MONTH)) +
-                "," +
-                String.valueOf(c.get(Calendar.DAY_OF_MONTH)) +
-                "," +
-                String.valueOf(c.get(Calendar.YEAR));
-        prefs.edit().putString(LAST_COLLEGE_UPDATE, storage).apply();
+    public static String getCollegeListCheckSum(){
+        return prefs.getString(COLLEGE_LIST_CHECK_SUM, "1");
+    }
+
+    public static void putCollegeListCheckSum(String s){
+        prefs.edit().putString(COLLEGE_LIST_CHECK_SUM, s).commit();
     }
 
     public static ArrayList<Integer> getMyPostsList(){

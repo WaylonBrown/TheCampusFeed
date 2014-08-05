@@ -78,14 +78,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public static final int LOCATION_TIMEOUT_SECONDS = 10;
 	public static final int MIN_POST_LENGTH = 10;
 	public static final int MIN_COMMENT_LENGTH = 5;
-    public static final int COLLEGE_LIST_UPDATE_IN_WEEKS = 2;
     public static final int TIME_BETWEEN_POSTS = 5;     //in minutes
     public static final int TIME_BETWEEN_COMMENTS = 1;  //in minutes
 	
 	boolean locationFound = false;
 	public static LocationManager mgr;
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
-    public static Calendar lastCollegeListUpdate;
+    public static String collegeListCheckSum;
     public static Calendar lastPostTime;
     public static Calendar lastCommentTime;
 	public static ArrayList<Integer> permissions = new ArrayList<Integer>();	//length of 0 or null = no perms, otherwise the college ID is the perm IDs
@@ -103,11 +102,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         PrefManager.setup(this);
 		setupApp();
 
-        lastCollegeListUpdate = PrefManager.getLastCollegeListUpdate();
+        collegeListCheckSum = PrefManager.getCollegeListCheckSum();
         lastPostTime = PrefManager.getLastPostTime();
         lastCommentTime = PrefManager.getLastCommentTime();
 
-        getNewCollegeListIfNeeded();
+        checkCollegeListCheckSum();
 		getLocation();
         PopupManager.run(this);
 		Log.i("cfeed", "APPSETUP: onCreate");
@@ -180,28 +179,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         PrefManager.putLastPostTime(lastPostTime);
     }
 
-    private void getNewCollegeListIfNeeded(){
+    private void checkCollegeListCheckSum(){
         setupCollegeList();
-        Calendar now = Calendar.getInstance();
-        if(lastCollegeListUpdate == null){
-            Log.i("cfeed","COLLEGE_LIST no saved college retrieval time, setting update time to now");
-            PrefManager.putLastCollegeListUpdate(now);
-        } else {
-            Log.i("cfeed","COLLEGE_LIST there is a saved college retrieval time, checking....");
-            Calendar lastUpdate = (Calendar)lastCollegeListUpdate.clone();
-            lastUpdate.add(Calendar.WEEK_OF_YEAR , COLLEGE_LIST_UPDATE_IN_WEEKS);
-            Log.i("cfeed","COLLEGE_LIST Now: Month: " + now.get(Calendar.MONTH) + " Day: " + now.get(Calendar.DAY_OF_MONTH) +
-                " Hour: " + now.get(Calendar.HOUR_OF_DAY) + " Minute: " + now.get(Calendar.MINUTE) + " Second: " + now.get(Calendar.SECOND));
-            Log.i("cfeed","COLLEGE_LIST Last update: Month: " + lastUpdate.get(Calendar.MONTH) + " Day: " + lastUpdate.get(Calendar.DAY_OF_MONTH) +
-                    " Hour: " + lastUpdate.get(Calendar.HOUR_OF_DAY) + " Minute: " + lastUpdate.get(Calendar.MINUTE) + " Second: " + lastUpdate.get(Calendar.SECOND));
-            //if last update was 2 or more weeks ago
-            if(now.after(lastUpdate)){
-                Log.i("cfeed","COLLEGE_LIST list is old, getting new one from server");
-                new NetWorker.GetFullCollegeListTask().execute(new NetWorker.PostSelector());
-            } else {
-                Log.i("cfeed","COLLEGE_LIST list isn't outdated");
-            }
-        }
+        new NetWorker.CollegeListCheckSumTask().execute();
+    }
+
+    public static void updateCollegeList(String checkSumVersion){
+        new NetWorker.GetFullCollegeListTask(checkSumVersion).execute(new NetWorker.PostSelector());
     }
 
 	private void setupCollegeList() {
