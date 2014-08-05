@@ -33,7 +33,9 @@ class TagsController < ApplicationController
   # POST /api/v1/tags
   # POST /api/v1/tags.json
   def create
-    @tag = Tag.new(tag_params)
+    tp = tag_params
+    tp.text.downcase!
+    @tag = Tag.new(tp)
 
     respond_to do |format|
       if @tag.save

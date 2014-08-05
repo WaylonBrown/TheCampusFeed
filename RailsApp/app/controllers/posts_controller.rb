@@ -29,7 +29,7 @@ class PostsController < ApplicationController
   end
 
   def byTag
-    @tag = Tag.find_by(text: params[:tagText])
+    @tag = Tag.find_by(text: params[:tagText].downcase)
 
     if @tag
       #Paginate by 25
