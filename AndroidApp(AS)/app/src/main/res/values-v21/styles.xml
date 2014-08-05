@@ -7,7 +7,7 @@
     <style name="AppBaseTheme" parent="@android:style/Theme.Material.Light">
         <item name="android:colorPrimary">@color/blue</item>
         <item name="android:colorPrimaryDark">@color/darkblue</item>
-        <item name="android:colorAccent">@color/white</item>
+        <item name="android:colorAccent">@color/blue</item>
     </style>
 
     <!-- Application theme. -->

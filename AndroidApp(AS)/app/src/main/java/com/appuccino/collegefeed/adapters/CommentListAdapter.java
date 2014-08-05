@@ -86,31 +86,36 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         setMessageAndColorizeTags(thisComment.getMessage(), commentHolder);
         
         //arrow click listeners
+        final CommentHolder finalPostHolder = commentHolder;
+        final View finalRow = row;
         commentHolder.arrowUp.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
+                int currentVote = MainActivity.getVoteByCommentId(thisComment.getID());
+
 				//if already upvoted, un-upvote
-				if(thisComment.getVote() == -1)
+				if(currentVote == -1)
 				{
 					thisComment.setVote(1);
 					thisComment.score += 2;
+                    updateRowViews(finalRow, finalPostHolder, 1, thisComment);
                     new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
                     new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), true));
 				}
-				else if(thisComment.getVote() == 0)
+				else if(currentVote == 0)
 				{
 					thisComment.setVote(1);
 					thisComment.score++;
+                    updateRowViews(finalRow, finalPostHolder, 1, thisComment);
                     new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), true));
 				}
 				else 
 				{
 					thisComment.setVote(0);
 					thisComment.score--;
+                    updateRowViews(finalRow, finalPostHolder, 1, thisComment);
                     new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
 				}
-
-				CommentsActivity.updateList();
 			}        	
         });
         commentHolder.arrowDown.setOnClickListener(new OnClickListener(){
@@ -121,23 +126,28 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 				//post is null if this comment list is received from the MyCommentsFragment and not a comments list to a post
 				if(post != null && MainActivity.hasPermissions(post.getCollegeID()))
 				{
+                    int currentVote = MainActivity.getVoteByCommentId(thisComment.getID());
+
 					//if already downvoted, un-downvote
 					if(thisComment.getVote() == -1)
 					{
 						thisComment.setVote(0);
 						thisComment.score++;
+                        updateRowViews(finalRow, finalPostHolder, 1, thisComment);
                         new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
 					}
 					else if(thisComment.getVote() == 0)
 					{
 						thisComment.setVote(-1);
 						thisComment.score--;
+                        updateRowViews(finalRow, finalPostHolder, 1, thisComment);
                         new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), false));
 					}
 					else 
 					{
 						thisComment.setVote(-1);
 						thisComment.score -= 2;
+                        updateRowViews(finalRow, finalPostHolder, 1, thisComment);
                         new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
                         new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), false));
 					}
@@ -160,12 +170,14 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         thisComment.setVote(MainActivity.getVoteByCommentId(thisComment.getID()));
         int vote = thisComment.getVote();
 
-        setArrowDrawable(commentHolder, vote);
+        updateRowViews(finalRow, commentHolder, vote, thisComment);
 
         return row;
     }
 
-    private void setArrowDrawable(CommentHolder commentHolder, int vote) {
+    private void updateRowViews(View row, CommentHolder commentHolder, int vote, Comment comment) {
+        int score = post.score;
+
         if(vote == -1)
         {
             commentHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdownred));
@@ -181,6 +193,10 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
             commentHolder.arrowUp.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowup));
             commentHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdown));
         }
+
+        commentHolder.scoreText.setText(String.valueOf(score));
+
+        row.invalidate();
     }
 
     private void setTime(Comment thisComment, TextView timeText) throws ParseException {

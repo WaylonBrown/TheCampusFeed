@@ -15,8 +15,6 @@ import android.widget.Toast;
 
 import com.appuccino.collegefeed.MainActivity;
 import com.appuccino.collegefeed.R;
-import com.appuccino.collegefeed.fragments.NewPostFragment;
-import com.appuccino.collegefeed.fragments.TopPostFragment;
 import com.appuccino.collegefeed.objects.Post;
 import com.appuccino.collegefeed.objects.Vote;
 import com.appuccino.collegefeed.utils.FontManager;
@@ -117,41 +115,36 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         
         //arrow click listeners
         final PostHolder finalPostHolder = postHolder;
+        final View finalRow = row;
         postHolder.arrowUp.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
+                int currentVote = MainActivity.getVoteByPostId(thisPost.getID());
+
 				//if already upvoted, un-upvote
-				if(thisPost.getVote() == -1)
+				if(currentVote == -1)
 				{
 					thisPost.setVote(1);
 					thisPost.score += 2;
-                    setArrowDrawable(finalPostHolder, 1);
+                    updateRowViews(finalRow, finalPostHolder, 1, thisPost);
                     new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
                     new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), true));
 				}
-				else if(thisPost.getVote() == 0)
+				else if(currentVote == 0)
 				{
 					thisPost.setVote(1);
 					thisPost.score++;
-                    setArrowDrawable(finalPostHolder, 1);
+                    updateRowViews(finalRow, finalPostHolder, 1, thisPost);
                     new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), true));
 				}
 				else 
 				{
 					thisPost.setVote(0);
 					thisPost.score--;
-                    setArrowDrawable(finalPostHolder, 0);
+                    updateRowViews(finalRow, finalPostHolder, 0, thisPost);
                     new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
                 }
-				
-				switch(whichList){
-				case 0:
-					TopPostFragment.updateList();
-					break;
-				default:
-                    NewPostFragment.updateList();
-				}
 			}
         });
         postHolder.arrowDown.setOnClickListener(new OnClickListener(){
@@ -161,35 +154,30 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 			{
 				if(MainActivity.hasPermissions(thisPost.getCollegeID()))
 				{
+                    int currentVote = MainActivity.getVoteByPostId(thisPost.getID());
+
 					//if already downvoted, un-downvote
-					if(thisPost.getVote() == -1)
+					if(currentVote == -1)
 					{
 						thisPost.setVote(0);
 						thisPost.score++;
-                        setArrowDrawable(finalPostHolder, 0);
+                        updateRowViews(finalRow, finalPostHolder, 0, thisPost);
                         new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
                     }
-					else if(thisPost.getVote() == 0)
+					else if(currentVote == 0)
 					{
 						thisPost.setVote(-1);
 						thisPost.score--;
-                        setArrowDrawable(finalPostHolder, -1);
+                        updateRowViews(finalRow, finalPostHolder, -1, thisPost);
                         new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), false));
                     }
 					else 
 					{
 						thisPost.setVote(-1);
 						thisPost.score -= 2;
-                        setArrowDrawable(finalPostHolder, -1);
+                        updateRowViews(finalRow, finalPostHolder, -1, thisPost);
                         new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
                         new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), false));
-                    }
-                    switch(whichList) {
-                        case 0:
-                            TopPostFragment.updateList();
-                            break;
-                        default:
-                            NewPostFragment.updateList();
                     }
 				}
 				else
@@ -202,12 +190,14 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         thisPost.setVote(MainActivity.getVoteByPostId(thisPost.getID()));
         int vote = thisPost.getVote();
 
-        setArrowDrawable(postHolder, vote);
+        updateRowViews(finalRow, postHolder, vote, thisPost);
 
         return row;
     }
 
-    private void setArrowDrawable(PostHolder postHolder, int vote) {
+    private void updateRowViews(View row, PostHolder postHolder, int vote, Post post) {
+        int score = post.score;
+
         if(vote == -1)
         {
             postHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdownred));
@@ -223,6 +213,10 @@ public class PostListAdapter extends ArrayAdapter<Post>{
             postHolder.arrowUp.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowup));
             postHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdown));
         }
+
+        postHolder.scoreText.setText(String.valueOf(score));
+
+        row.invalidate();
     }
 
     private void setTime(Post thisPost, TextView timeText) throws ParseException {

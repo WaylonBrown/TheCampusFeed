@@ -33,7 +33,6 @@ import com.appuccino.collegefeed.utils.FontManager;
 import com.appuccino.collegefeed.utils.NetWorker;
 import com.appuccino.collegefeed.utils.NetWorker.GetCommentsTask;
 import com.appuccino.collegefeed.utils.NetWorker.PostSelector;
-import com.appuccino.collegefeed.utils.PrefManager;
 import com.appuccino.collegefeed.utils.TimeManager;
 
 import java.text.ParseException;
@@ -151,6 +150,7 @@ public class CommentsActivity extends Activity{
 						post.setVote(1);
 						post.score += 2;
 						scoreText.setText(String.valueOf(post.score));
+                        updateArrows(arrowUp, arrowDown, 1);
                         new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
                         new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), true));
 					}
@@ -159,6 +159,7 @@ public class CommentsActivity extends Activity{
 						post.setVote(1);
 						post.score++;
 						scoreText.setText(String.valueOf(post.score));
+                        updateArrows(arrowUp, arrowDown, 1);
                         new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), true));
 					}
 					else 
@@ -166,13 +167,13 @@ public class CommentsActivity extends Activity{
 						post.setVote(0);
 						post.score--;
 						scoreText.setText(String.valueOf(post.score));
+                        updateArrows(arrowUp, arrowDown, 0);
                         new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
 					}
 					TopPostFragment.updateList();
 					NewPostFragment.updateList();
 					TagListActivity.updateList();
-					updateArrows(arrowUp, arrowDown);
-				}        	
+				}
 	        });
 	        arrowDown.setOnClickListener(new OnClickListener(){
 
@@ -187,6 +188,7 @@ public class CommentsActivity extends Activity{
 							post.setVote(0);
 							post.score++;
 							scoreText.setText(String.valueOf(post.score));
+                            updateArrows(arrowUp, arrowDown, 0);
                             new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
 						}
 						else if(post.getVote() == 0)
@@ -194,20 +196,21 @@ public class CommentsActivity extends Activity{
 							post.setVote(-1);
 							post.score--;
 							scoreText.setText(String.valueOf(post.score));
+                            updateArrows(arrowUp, arrowDown, -1);
                             new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), false));
 						}
 						else 
 						{
 							post.setVote(-1);
 							post.score -= 2;
+                            scoreText.setText(String.valueOf(post.score));
+                            updateArrows(arrowUp, arrowDown, -1);
                             new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
                             new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), false));
-							scoreText.setText(String.valueOf(post.score));
 						}
 						TopPostFragment.updateList();
 						NewPostFragment.updateList();
 						TagListActivity.updateList();
-						updateArrows(arrowUp, arrowDown);
 					}
 					else
 					{
@@ -264,7 +267,8 @@ public class CommentsActivity extends Activity{
                 }
             });
 
-	        updateArrows(arrowUp, arrowDown);
+            post.setVote(MainActivity.getVoteByPostId(post.getID()));
+	        updateArrows(arrowUp, arrowDown, post.getVote());
 		}
 
         backButton.setOnClickListener(new OnClickListener() {
@@ -456,11 +460,8 @@ public class CommentsActivity extends Activity{
     	timeText.setText(timeOutputText);
 	}
 
-	protected void updateArrows(ImageView arrowUp, ImageView arrowDown) 
+	protected void updateArrows(ImageView arrowUp, ImageView arrowDown, int vote)
 	{
-        Log.i("cfeed","Updating arrows with post ID of" + post.getID());
-        post.setVote(MainActivity.getVoteByPostId(post.getID()));
-		int vote = post.getVote();
         if(vote == -1)
         {
         	arrowDown.setImageDrawable(getResources().getDrawable(R.drawable.arrowdownred));

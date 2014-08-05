@@ -823,14 +823,20 @@ public class NetWorker {
         public Boolean doInBackground(Vote... votes){
             try{
                 vote = votes[0];
-                HttpDelete request = new HttpDelete(REQUEST_URL + "votes/" + vote.id);
-                //request.setEntity(new ByteArrayEntity(
-                //  votes[0].toString().getBytes("UTF8")));
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                String response = client.execute(request, responseHandler);
+                if(vote != null){
+                    HttpDelete request = new HttpDelete(REQUEST_URL + "votes/" + vote.id);
+                    //request.setEntity(new ByteArrayEntity(
+                    //  votes[0].toString().getBytes("UTF8")));
+                    ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                    String response = client.execute(request, responseHandler);
 
-                Log.d("cfeed", LOG_TAG + "Make vote server response: " + response);
-                return true;
+                    Log.d("cfeed", LOG_TAG + "Make vote delete server response: " + response);
+                    return true;
+                } else {
+                    Log.e("cfeed", "ERROR DELETING VOTE, IT WAS NULL");
+                    return false;
+                }
+
             } catch (ClientProtocolException e) {
                 e.printStackTrace();
                 return false;
@@ -862,14 +868,19 @@ public class NetWorker {
         public Boolean doInBackground(Vote... votes){
             try{
                 vote = votes[0];
-                HttpDelete request = new HttpDelete(REQUEST_URL + "votes/" + vote.id);
-                //request.setEntity(new ByteArrayEntity(
-                //  votes[0].toString().getBytes("UTF8")));
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                String response = client.execute(request, responseHandler);
+                if(vote != null){
+                    HttpDelete request = new HttpDelete(REQUEST_URL + "votes/" + vote.id);
+                    //request.setEntity(new ByteArrayEntity(
+                    //  votes[0].toString().getBytes("UTF8")));
+                    ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                    String response = client.execute(request, responseHandler);
 
-                Log.d("cfeed", LOG_TAG + "Make vote server response: " + response);
-                return true;
+                    Log.d("cfeed", LOG_TAG + "Make vote server response: " + response);
+                    return true;
+                } else {
+                    Log.e("cfeed", "ERROR DELETING VOTE, IT WAS NULL");
+                    return false;
+                }
             } catch (ClientProtocolException e) {
                 e.printStackTrace();
                 return false;
