@@ -225,12 +225,12 @@ public class CommentsActivity extends Activity{
 				{					
 					if(MainActivity.hasPermissions(post.getCollegeID()) || hasPermissions)
 					{
-                        if(haventCommentedIn3Minutes()){
+                        if(haventCommentedInXMinutes()){
                             LayoutInflater inflater = getLayoutInflater();
                             View commentDialogLayout = inflater.inflate(R.layout.dialog_comment, null);
                             new NewCommentDialog(CommentsActivity.this, commentDialogLayout, post);
                         } else {
-                            Toast.makeText(CommentsActivity.this, "Sorry, you can only comment once every 3 minutes.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(CommentsActivity.this, "Sorry, you can only comment once every minute.", Toast.LENGTH_LONG).show();
                         }
 					}
 				}        	
@@ -281,7 +281,7 @@ public class CommentsActivity extends Activity{
         setActionBarDividerVisibility();
 	}
 
-    private boolean haventCommentedIn3Minutes(){
+    private boolean haventCommentedInXMinutes(){
         Calendar now = Calendar.getInstance();
         now.add(Calendar.MINUTE, -MainActivity.TIME_BETWEEN_COMMENTS);
         if(MainActivity.lastCommentTime != null && now.before(MainActivity.lastCommentTime)){

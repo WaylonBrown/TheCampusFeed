@@ -623,18 +623,18 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	{
 		if(permissions != null)
 		{
-            if(haventPostedIn5Minutes()){
+            if(haventPostedInXMinutes()){
                 LayoutInflater inflater = getLayoutInflater();
                 View postDialogLayout = inflater.inflate(R.layout.dialog_post, null);
                 new NewPostDialog(this, postDialogLayout);
             } else {
-                Toast.makeText(this, "Sorry, you can only post once every 5 minutes.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Sorry, you can only post once every " + MainActivity.TIME_BETWEEN_POSTS + " minutes.", Toast.LENGTH_LONG).show();
             }
 
 		}
 	}
 
-    private boolean haventPostedIn5Minutes(){
+    private boolean haventPostedInXMinutes(){
         Calendar now = Calendar.getInstance();
         now.add(Calendar.MINUTE, -TIME_BETWEEN_POSTS);
         if(lastPostTime != null && now.before(lastPostTime)){
