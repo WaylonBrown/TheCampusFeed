@@ -25,17 +25,13 @@ angular.module("cfeed").controller "WebappCtrl", [
     $scope.tags.trendingTags = $rootScope.Tag.trending({page: 1, per_page: 10})
     $scope.colleges.trendingColleges = $rootScope.College.trending({page: 1, per_page: 10})
 
-    CommentList = $resource('/api/v1/colleges/:college_id/posts/:post_id/comments/:comment_id',
-      {comment_id: '@id'}, {
-      });
-
 
     $scope.selectPost = (post) ->
       if(post == $scope.options.post_selected)
         $scope.options.post_selected.active = false
         $scope.options.post_selected = null;
       else
-        comments = CommentList.query({college_id: post.college_id, post_id: post.id}, ->
+        comments = Comment.query({college_id: post.college_id, post_id: post.id}, ->
           if(null != $scope.options.post_selected)
             $scope.options.post_selected.active = false
           post.active = true
@@ -44,7 +40,6 @@ angular.module("cfeed").controller "WebappCtrl", [
         )
 
     $scope.atBottom = () ->
-      console.log("at bottom")
       newPosts = $rootScope.Post.recent({page: $scope.posts.currentPage, per_page: 25}, ->
         $scope.posts.currentPage += 1
         $scope.posts.recentPosts = $scope.posts.recentPosts.concat(newPosts)
