@@ -50,6 +50,9 @@ import com.appuccino.collegefeed.utils.PopupManager;
 import com.appuccino.collegefeed.utils.PrefManager;
 import com.astuetz.PagerSlidingTabStrip;
 
+import net.simonvt.menudrawer.MenuDrawer;
+import net.simonvt.menudrawer.Position;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -64,6 +67,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	//views and widgets
 	static ViewPager viewPager;
 	PagerSlidingTabStrip tabs;
+    private MenuDrawer menuDrawer;
 	PagerAdapter pagerAdapter;
 	ActionBar actionBar;
 	ImageView newPostButton;
@@ -100,6 +104,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         PrefManager.setup(this);
+        setupMenuDrawer();
 		setupApp();
 
         collegeListCheckSum = PrefManager.getCollegeListCheckSum();
@@ -111,8 +116,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         PopupManager.run(this);
 		Log.i("cfeed", "APPSETUP: onCreate");
 	}
-	
-	//this is called when orientation changes
+
+    //this is called when orientation changes
 	@Override
 	public void onConfigurationChanged(Configuration newConfig)
 	{
@@ -126,8 +131,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	    }
 	}
 
+    private void setupMenuDrawer() {
+        menuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.BEHIND, Position.LEFT, MenuDrawer.MENU_DRAG_CONTENT);
+        menuDrawer.setContentView(R.layout.activity_main);
+        menuDrawer.setMenuView(R.layout.menu_drawer);
+    }
+
 	private void setupApp(){
-		setContentView(R.layout.activity_main);
+		//setContentView(R.layout.activity_main);
 		tabs = (PagerSlidingTabStrip)findViewById(R.id.tabs);
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		tabs.setIndicatorColor(getResources().getColor(R.color.tabunderlineblue));

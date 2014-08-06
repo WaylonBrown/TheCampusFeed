@@ -24,6 +24,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'net.simonvt.menudrawer:menudrawer:3.0.6'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
 
