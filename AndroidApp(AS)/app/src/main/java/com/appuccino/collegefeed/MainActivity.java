@@ -23,8 +23,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -52,7 +50,6 @@ import com.appuccino.collegefeed.utils.PrefManager;
 import com.astuetz.PagerSlidingTabStrip;
 
 import net.simonvt.menudrawer.MenuDrawer;
-import net.simonvt.menudrawer.Position;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -133,17 +130,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	}
 
     private void setupMenuDrawer() {
-        menuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.BEHIND, Position.LEFT, MenuDrawer.MENU_DRAG_CONTENT);
+        menuDrawer = MenuDrawer.attach(this);
         menuDrawer.setContentView(R.layout.activity_main);
         menuDrawer.setMenuView(R.layout.menu_drawer);
 
         TextView topPosts = (TextView)findViewById(R.id.topPostsMenuText);
-        TextView newPosts = (TextView)findViewById(R.id.topPostsMenuText);
-        TextView tags = (TextView)findViewById(R.id.topPostsMenuText);
-        TextView colleges = (TextView)findViewById(R.id.topPostsMenuText);
-        TextView myPosts = (TextView)findViewById(R.id.topPostsMenuText);
-        TextView myComments = (TextView)findViewById(R.id.topPostsMenuText);
-        TextView help = (TextView)findViewById(R.id.topPostsMenuText);
+        TextView newPosts = (TextView)findViewById(R.id.newPostsMenuText);
+        TextView tags = (TextView)findViewById(R.id.tagsMenuText);
+        TextView colleges = (TextView)findViewById(R.id.collegesMenuText);
+        TextView myPosts = (TextView)findViewById(R.id.myPostsMenuText);
+        TextView myComments = (TextView)findViewById(R.id.myCommentsMenuText);
+        TextView help = (TextView)findViewById(R.id.helpMenuText);
 
         topPosts.setTypeface(FontManager.light);
         newPosts.setTypeface(FontManager.light);
@@ -341,6 +338,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         chooseFeedDialog();
         //this one is called second as it has to be on top
         new GettingStartedDialog(this, "Getting Started");
+        menuDrawer.openMenu();
     }
 	
 	private void showPermissionsToast() 
@@ -681,27 +679,38 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         return false;
     }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		// Inflate the menu; this adds items to the action bar if it is present.
+//		getMenuInflater().inflate(R.menu.main, menu);
+//		return true;
+//	}
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.myContent:
-                launchMyContentActivity();
-                return true;
-            case R.id.menu_help:
-                new GettingStartedDialog(this, "Help");
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle item selection
+//        switch (item.getItemId()) {
+//            case R.id.myContent:
+//                launchMyContentActivity();
+//                return true;
+//            case R.id.menu_help:
+//                new GettingStartedDialog(this, "Help");
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                menuDrawer.toggleMenu();
+//                return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     private void launchMyContentActivity() {
         Intent intent = new Intent(this, MyContentActivity.class);
