@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appuccino.collegefeed.dialogs.ChooseFeedDialog;
@@ -135,6 +136,22 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         menuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.BEHIND, Position.LEFT, MenuDrawer.MENU_DRAG_CONTENT);
         menuDrawer.setContentView(R.layout.activity_main);
         menuDrawer.setMenuView(R.layout.menu_drawer);
+
+        TextView topPosts = (TextView)findViewById(R.id.topPostsMenuText);
+        TextView newPosts = (TextView)findViewById(R.id.topPostsMenuText);
+        TextView tags = (TextView)findViewById(R.id.topPostsMenuText);
+        TextView colleges = (TextView)findViewById(R.id.topPostsMenuText);
+        TextView myPosts = (TextView)findViewById(R.id.topPostsMenuText);
+        TextView myComments = (TextView)findViewById(R.id.topPostsMenuText);
+        TextView help = (TextView)findViewById(R.id.topPostsMenuText);
+
+        topPosts.setTypeface(FontManager.light);
+        newPosts.setTypeface(FontManager.light);
+        tags.setTypeface(FontManager.light);
+        colleges.setTypeface(FontManager.light);
+        myPosts.setTypeface(FontManager.light);
+        myComments.setTypeface(FontManager.light);
+        help.setTypeface(FontManager.light);
     }
 
 	private void setupApp(){
@@ -544,7 +561,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					chooseFeedDialog.populateNearYouList(true);
 				}
 			}
-		}		
+		}
 	}
 	
     public void goToTopPostsAndScrollToTop() {
@@ -690,6 +707,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         Intent intent = new Intent(this, MyContentActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(menuDrawer != null){
+            final int drawerState = menuDrawer.getDrawerState();
+            if (drawerState == MenuDrawer.STATE_OPEN || drawerState == MenuDrawer.STATE_OPENING) {
+                menuDrawer.closeMenu();
+                return;
+            }
+        }
+
+        super.onBackPressed();
     }
 
     @Override
