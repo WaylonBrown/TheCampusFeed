@@ -126,7 +126,7 @@
     
     long currVersion = [[permission valueForKeyPath:KEY_COLLEGE_LIST_VERSION] longValue];
     
-    return (currVersion < newVersion);
+    return (currVersion == newVersion);
 }
 
 #pragma mark - Networker Access - Comments
