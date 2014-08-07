@@ -12,6 +12,6 @@ class Tag < ActiveRecord::Base
     order("posts_count DESC").
     limit(lim) }
 
-  validates_format_of :text, :with => /\A[^!\$%\^&+\.,]*\z/, :on => :create
+  validates_format_of :text, :with => /\A[^!\$%\^&+\.,#]*\z/, :on => :create
 
 end
