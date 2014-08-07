@@ -1,102 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/darkgray"
-    android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/fill"
+    android:background="@color/darkgray">
 
-    <TextView
-        android:id="@+id/topPostsMenuText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center_vertical"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:background="@color/blue"
-        android:text="Top Posts"/>
+    <ScrollView
+        style="@style/fill">
 
-    <TextView
-        android:id="@+id/newPostsMenuText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:gravity="center_vertical"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:text="New Posts"/>
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/darkgray"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tagsMenuText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:gravity="center_vertical"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:text="Trending Tags"/>
+            <TextView
+                android:id="@+id/topPostsMenuText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:background="@drawable/postbuttonclick"
+                android:text="Top Posts"
+                android:clickable="true"/>
 
-    <TextView
-        android:id="@+id/collegesMenuText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center_vertical"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:text="Most Active Colleges"/>
+            <TextView
+                android:id="@+id/newPostsMenuText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:background="@drawable/postbuttonclick"
+                android:text="New Posts"
+                android:clickable="true"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="12dp"
-        android:background="@color/white"/>
+            <TextView
+                android:id="@+id/tagsMenuText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:background="@drawable/postbuttonclick"
+                android:text="Trending Tags"
+                android:clickable="true"/>
 
-    <TextView
-        android:id="@+id/myPostsMenuText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center_vertical"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:text="My Posts"/>
+            <TextView
+                android:id="@+id/collegesMenuText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:background="@drawable/postbuttonclick"
+                android:text="Most Active Colleges"
+                android:clickable="true"/>
 
-    <TextView
-        android:id="@+id/myCommentsMenuText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:gravity="center_vertical"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:text="My Comments"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="12dp"
+                android:background="@color/white"/>
 
-    <TextView
-        android:id="@+id/helpMenuText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:gravity="center_vertical"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:text="Help"/>
+            <TextView
+                android:id="@+id/myPostsMenuText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:background="@drawable/postbuttonclick"
+                android:text="My Posts"
+                android:clickable="true"/>
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/myCommentsMenuText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:background="@drawable/postbuttonclick"
+                android:text="My Comments"
+                android:clickable="true"/>
+
+            <TextView
+                android:id="@+id/helpMenuText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:background="@drawable/postbuttonclick"
+                android:text="Help"
+                android:clickable="true"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

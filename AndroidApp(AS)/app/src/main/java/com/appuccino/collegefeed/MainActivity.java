@@ -82,7 +82,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public static final int MIN_COMMENT_LENGTH = 5;
     public static final int TIME_BETWEEN_POSTS = 5;     //in minutes
     public static final int TIME_BETWEEN_COMMENTS = 1;  //in minutes
-	
+
+    private int selectedMenuItem = 0;
 	boolean locationFound = false;
 	public static LocationManager mgr;
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
@@ -97,12 +98,20 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public static List<Integer> flagList = new ArrayList<Integer>();
     public static List<Integer> myPostsList = new ArrayList<Integer>();
     public static List<Integer> myCommentsList = new ArrayList<Integer>();
+
+    //menu drawer items
+    private TextView menuTopPosts;
+    private TextView menuNewPosts;
+    private TextView menuTags;
+    private TextView menuColleges;
+    private TextView menuMyPosts;
+    private TextView menuMyComments;
+    private TextView menuHelp;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         PrefManager.setup(this);
-        setupMenuDrawer();
 		setupApp();
 
         collegeListCheckSum = PrefManager.getCollegeListCheckSum();
@@ -113,6 +122,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		getLocation();
         PopupManager.run(this);
 		Log.i("cfeed", "APPSETUP: onCreate");
+
+        setupMenuDrawerViews();
 	}
 
     //this is called when orientation changes
@@ -129,29 +140,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	    }
 	}
 
-    private void setupMenuDrawer() {
+	private void setupApp(){
         menuDrawer = MenuDrawer.attach(this);
         menuDrawer.setContentView(R.layout.activity_main);
         menuDrawer.setMenuView(R.layout.menu_drawer);
 
-        TextView topPosts = (TextView)findViewById(R.id.topPostsMenuText);
-        TextView newPosts = (TextView)findViewById(R.id.newPostsMenuText);
-        TextView tags = (TextView)findViewById(R.id.tagsMenuText);
-        TextView colleges = (TextView)findViewById(R.id.collegesMenuText);
-        TextView myPosts = (TextView)findViewById(R.id.myPostsMenuText);
-        TextView myComments = (TextView)findViewById(R.id.myCommentsMenuText);
-        TextView help = (TextView)findViewById(R.id.helpMenuText);
-
-        topPosts.setTypeface(FontManager.light);
-        newPosts.setTypeface(FontManager.light);
-        tags.setTypeface(FontManager.light);
-        colleges.setTypeface(FontManager.light);
-        myPosts.setTypeface(FontManager.light);
-        myComments.setTypeface(FontManager.light);
-        help.setTypeface(FontManager.light);
-    }
-
-	private void setupApp(){
 		//setContentView(R.layout.activity_main);
 		tabs = (PagerSlidingTabStrip)findViewById(R.id.tabs);
 		viewPager = (ViewPager) findViewById(R.id.pager);
@@ -177,8 +170,81 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		
 		setupAdapter();
 	}
-	
-	private void setupAdapter() {
+
+    private void setupMenuDrawerViews() {
+        menuTopPosts = (TextView)findViewById(R.id.topPostsMenuText);
+        menuNewPosts = (TextView)findViewById(R.id.newPostsMenuText);
+        menuTags = (TextView)findViewById(R.id.tagsMenuText);
+        menuColleges = (TextView)findViewById(R.id.collegesMenuText);
+        menuMyPosts = (TextView)findViewById(R.id.myPostsMenuText);
+        menuMyComments = (TextView)findViewById(R.id.myCommentsMenuText);
+        menuHelp = (TextView)findViewById(R.id.helpMenuText);
+
+        menuTopPosts.setTypeface(FontManager.light);
+        menuNewPosts.setTypeface(FontManager.light);
+        menuTags.setTypeface(FontManager.light);
+        menuColleges.setTypeface(FontManager.light);
+        menuMyPosts.setTypeface(FontManager.light);
+        menuMyComments.setTypeface(FontManager.light);
+        menuHelp.setTypeface(FontManager.light);
+
+        OnClickListener menuClick = new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view == menuTopPosts){
+                    selectedMenuItem = 0;
+                } else if(view == menuNewPosts){
+                    selectedMenuItem = 1;
+                } else if(view == menuTags){
+                    selectedMenuItem = 2;
+                } else if(view == menuColleges){
+                    selectedMenuItem = 3;
+                } else if(view == menuMyPosts){
+                    selectedMenuItem = 4;
+                } else if(view == menuMyComments){
+                    selectedMenuItem = 5;
+                } else if(view == menuHelp){
+                    selectedMenuItem = 6;
+                }
+
+                menuItemSelected();
+            }
+        };
+
+        menuTopPosts.setOnClickListener(menuClick);
+        menuNewPosts.setOnClickListener(menuClick);
+        menuTags.setOnClickListener(menuClick);
+        menuColleges.setOnClickListener(menuClick);
+        menuMyPosts.setOnClickListener(menuClick);
+        menuMyComments.setOnClickListener(menuClick);
+        menuHelp.setOnClickListener(menuClick);
+
+        menuItemSelected();
+    }
+
+    private void menuItemSelected() {
+        menuTopPosts.setBackgroundResource(R.drawable.postbuttonclick);
+        menuNewPosts.setBackgroundResource(R.drawable.postbuttonclick);
+        menuTags.setBackgroundResource(R.drawable.postbuttonclick);
+        menuColleges.setBackgroundResource(R.drawable.postbuttonclick);
+        menuMyPosts.setBackgroundResource(R.drawable.postbuttonclick);
+        menuMyComments.setBackgroundResource(R.drawable.postbuttonclick);
+        menuHelp.setBackgroundResource(R.drawable.postbuttonclick);
+
+        switch (selectedMenuItem){
+            case 0:
+                menuTopPosts.setBackgroundColor(getResources().getColor(R.color.blue));
+                //load fragment here
+                break;
+            case 1:
+                menuNewPosts.setBackgroundColor(getResources().getColor(R.color.blue));
+                break;
+        }
+
+        menuDrawer.closeMenu();
+    }
+
+    private void setupAdapter() {
 		// Create the adapter that will return a fragment for each of the
 		// sections of the app.
 		pagerAdapter = new PagerAdapter(this, getSupportFragmentManager());
