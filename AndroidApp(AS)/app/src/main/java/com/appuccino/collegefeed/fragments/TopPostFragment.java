@@ -45,8 +45,6 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 public class TopPostFragment extends Fragment implements OnRefreshListener
 {
 	static MainActivity mainActivity;
-	public static final String ARG_TAB_NUMBER = "section_number";
-	public static final String ARG_SPINNER_NUMBER = "tab_number";
 	public static List<Post> postList;
 	static PostListAdapter listAdapter;
 	static QuickReturnListView list;

@@ -1,7 +1,7 @@
 package com.appuccino.collegefeed;
 
 import android.app.ActionBar;
-import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
@@ -16,11 +16,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +44,6 @@ import com.appuccino.collegefeed.utils.ListComparator;
 import com.appuccino.collegefeed.utils.NetWorker;
 import com.appuccino.collegefeed.utils.PopupManager;
 import com.appuccino.collegefeed.utils.PrefManager;
-import com.astuetz.PagerSlidingTabStrip;
 
 import net.simonvt.menudrawer.MenuDrawer;
 
@@ -56,15 +52,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends FragmentActivity implements ActionBar.TabListener, LocationListener 
+public class MainActivity extends FragmentActivity implements LocationListener
 {
-	//views and widgets
-	static ViewPager viewPager;
-	PagerSlidingTabStrip tabs;
     private MenuDrawer menuDrawer;
 	PagerAdapter pagerAdapter;
 	ActionBar actionBar;
@@ -144,11 +136,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         menuDrawer = MenuDrawer.attach(this);
         menuDrawer.setContentView(R.layout.activity_main);
         menuDrawer.setMenuView(R.layout.menu_drawer);
-
-		//setContentView(R.layout.activity_main);
-		tabs = (PagerSlidingTabStrip)findViewById(R.id.tabs);
-		viewPager = (ViewPager) findViewById(R.id.pager);
-		tabs.setIndicatorColor(getResources().getColor(R.color.tabunderlineblue));
 		
 		FontManager.setup(this);
 		setupActionbar();
@@ -167,8 +154,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				newPostClicked();
 			}
 		});
-		
-		setupAdapter();
 	}
 
     private void setupMenuDrawerViews() {
@@ -231,37 +216,49 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         menuMyComments.setBackgroundResource(R.drawable.postbuttonclick);
         menuHelp.setBackgroundResource(R.drawable.postbuttonclick);
 
+        android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
         switch (selectedMenuItem){
             case 0:
                 menuTopPosts.setBackgroundColor(getResources().getColor(R.color.blue));
-                //load fragment here
+                ft.replace(R.id.fragmentContainer, new TopPostFragment(this)).commit();
                 break;
             case 1:
                 menuNewPosts.setBackgroundColor(getResources().getColor(R.color.blue));
+                ft.replace(R.id.fragmentContainer, new NewPostFragment(this)).commit();
+                break;
+            case 2:
+                menuTags.setBackgroundColor(getResources().getColor(R.color.blue));
+                ft.replace(R.id.fragmentContainer, new TagFragment(this)).commit();
+                break;
+            case 3:
+                menuColleges.setBackgroundColor(getResources().getColor(R.color.blue));
+                ft.replace(R.id.fragmentContainer, new MostActiveCollegesFragment(this)).commit();
+                break;
+            case 4:
+                menuMyPosts.setBackgroundColor(getResources().getColor(R.color.blue));
+                ft.replace(R.id.fragmentContainer, new NewPostFragment(this)).commit();
+                break;
+            case 5:
+                menuMyComments.setBackgroundColor(getResources().getColor(R.color.blue));
+                ft.replace(R.id.fragmentContainer, new NewPostFragment(this)).commit();
+                break;
+            default:
+                menuHelp.setBackgroundColor(getResources().getColor(R.color.blue));
+                ft.replace(R.id.fragmentContainer, new NewPostFragment(this)).commit();
                 break;
         }
 
         menuDrawer.closeMenu();
     }
 
-    private void setupAdapter() {
-		// Create the adapter that will return a fragment for each of the
-		// sections of the app.
-		pagerAdapter = new PagerAdapter(this, getSupportFragmentManager());
-	
-		// Set up the ViewPager with the sections adapter.
-		viewPager.setAdapter(pagerAdapter);
-		viewPager.setOffscreenPageLimit(10);
-		tabs.setViewPager(viewPager);
-	}
-
-    public static void addNewPostToListAndMyContent(Post post){
+    public static void addNewPostToListAndMyContent(Post post, Context c){
         //instantly add to new posts
         if(currentFeedCollegeID == ALL_COLLEGES || currentFeedCollegeID == post.getCollegeID()){
             NewPostFragment.postList.add(0, post);
             myPostsList.add(post.getID());
             NewPostFragment.updateList();
-            MainActivity.goToNewPostsAndScrollToTop();
+            MainActivity.goToNewPostsAndScrollToTop(c);
 
             Log.i("cfeed","New My Posts list is of size " + myPostsList.size());
         }
@@ -628,18 +625,20 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		}
 	}
 	
-    public void goToTopPostsAndScrollToTop() {
-        if(viewPager != null){
-            viewPager.setCurrentItem(0);
-            TopPostFragment.scrollToTop();
-        }
+    public void goToTopPostsAndScrollToTop(Context c) {
+//        if(viewPager != null){
+//            viewPager.setCurrentItem(0);
+//            TopPostFragment.scrollToTop();
+//        }
+        Toast.makeText(c, "Implement goToTopPostsAndScrollToTop", Toast.LENGTH_LONG).show();
     }
 
-	public static void goToNewPostsAndScrollToTop() {
-		if(viewPager != null){
-			viewPager.setCurrentItem(1);
-			NewPostFragment.scrollToTop();
-		}
+	public static void goToNewPostsAndScrollToTop(Context c) {
+//		if(viewPager != null){
+//			viewPager.setCurrentItem(1);
+//			NewPostFragment.scrollToTop();
+//		}
+        Toast.makeText(c, "Implement goToNewPostsAndScrollToTop", Toast.LENGTH_LONG).show();
 	}
 
 	/**
@@ -796,84 +795,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         super.onBackPressed();
     }
-
-    @Override
-	public void onTabSelected(ActionBar.Tab tab,
-			FragmentTransaction fragmentTransaction) {
-		// When the given tab is selected, switch to the corresponding page in
-		// the ViewPager.
-		viewPager.setCurrentItem(tab.getPosition());
-	}
-
-	@Override
-	public void onTabUnselected(ActionBar.Tab tab,
-			FragmentTransaction fragmentTransaction) {
-	}
-
-	@Override
-	public void onTabReselected(ActionBar.Tab tab,
-			FragmentTransaction fragmentTransaction) {
-	}
-	
-	public class PagerAdapter extends FragmentStatePagerAdapter {
-		MainActivity mainActivity;
-		
-		public PagerAdapter(MainActivity m, FragmentManager fm) {
-			super(fm);
-			mainActivity = m;
-		}
-		
-		@Override
-		public Fragment getItem(int position) {
-			// getItem is called to instantiate the fragment for the given page.
-			// Return a SectionFragment (defined as a static inner class
-			// below) with the page number as its lone argument.
-			Bundle args = new Bundle();
-			args.putInt(TopPostFragment.ARG_TAB_NUMBER, position);
-			
-			Fragment fragment = null;
-			switch(position)
-			{
-			case 0:	//top posts
-				fragment = new TopPostFragment(mainActivity);
-				break;
-			case 1:	//new posts
-				fragment = new NewPostFragment(mainActivity);
-				break;
-			case 2:	//trending tags
-				fragment = new TagFragment(mainActivity);
-				break;
-			case 3:	//most active colleges
-				fragment = new MostActiveCollegesFragment(mainActivity);
-				break;
-			}
-			
-			if(fragment != null)
-				fragment.setArguments(args);
-			return fragment;
-		}
-
-		@Override
-		public int getCount() {
-			return 4;
-		}
-
-		@Override
-		public CharSequence getPageTitle(int position) {
-			Locale l = Locale.getDefault();
-			switch (position) {
-			case 0:
-				return getString(R.string.section1).toUpperCase(l);
-			case 1:
-				return getString(R.string.section2).toUpperCase(l);
-			case 2:
-				return getString(R.string.section3).toUpperCase(l);
-			case 3:
-				return getString(R.string.section4).toUpperCase(l);
-			}
-			return null;
-		}
-	}
 	
 	@Override
 	public void onLocationChanged(Location loc) {

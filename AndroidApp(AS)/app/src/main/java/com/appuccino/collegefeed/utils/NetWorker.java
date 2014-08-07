@@ -653,7 +653,7 @@ public class NetWorker {
                  }
                  MainActivity.postVoteList.add(new Vote(-1, responsePost.getID(), true));
                  PrefManager.putPostVoteList(MainActivity.postVoteList);
-                 MainActivity.addNewPostToListAndMyContent(responsePost);
+                 MainActivity.addNewPostToListAndMyContent(responsePost, c);
              } catch (IOException e) {
                  Log.i("cfeed","ERROR: post not added");
                  e.printStackTrace();
