@@ -126,9 +126,9 @@
     NSString *message = @"You need to have the Facebook app installed to share on Facebook.";
     [self addToQueue:message];
 }
-- (void)toastPostingTooSoon
+- (void)toastPostingTooSoon:(NSNumber *)minutesRemaining
 {
-    NSString *message = @"Sorry, you can only post once every 5 minutes";
+    NSString *message = [NSString stringWithFormat:@"Sorry, you can only post once every 5 minutes. Try again in %d minutes", [minutesRemaining intValue]];
     [self addToQueue:message];
 }
 - (void)toastCommentingTooSoon

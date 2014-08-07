@@ -195,7 +195,7 @@
                 withCollegeId:(long)collegeId
                 withUserToken:(NSString *)userToken
 {
-    if (![self isAbleToPost])
+    if (![self isAbleToPost:nil])
     {
         return NO;
     }
@@ -775,7 +775,7 @@
 {   // Helper method for milesAway
     return value * PI_VALUE / 180;
 }
-- (BOOL)isAbleToPost
+- (BOOL)isAbleToPost:(NSNumber *)minutesRemaining
 {
     NSError *error;
     NSManagedObjectContext *context = [self managedObjectContext];
@@ -793,12 +793,14 @@
     if (lastPost != nil)
     {
         NSTimeInterval diff = [lastPost timeIntervalSinceNow];
+        minutesRemaining = [NSNumber numberWithInt:(abs(diff) / 60)];
         float minSeconds = MINIMUM_POSTING_INTERVAL_MINUTES * 60;
         if (abs(diff) < minSeconds)
         {
             return NO;
         }
     }
+    minutesRemaining = [NSNumber numberWithInt:0];
     return YES;
 }
 - (BOOL)isAbleToComment

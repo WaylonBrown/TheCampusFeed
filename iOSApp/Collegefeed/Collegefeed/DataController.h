@@ -151,7 +151,7 @@
 - (void)retrieveUserData;
 - (long)getUserPostScore;
 - (long)getUserCommentScore;
-- (BOOL)isAbleToPost;
+- (BOOL)isAbleToPost:(NSNumber *)minutesRemaining;
 - (BOOL)isAbleToComment;
 
 - (NSURL *)applicationDocumentsDirectory;

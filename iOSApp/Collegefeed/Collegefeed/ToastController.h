@@ -38,7 +38,7 @@
 - (void)toastLocationNotFoundOnTimeout;
 - (void)toastTwitterUnavailable;
 - (void)toastFacebookUnavailable;
-- (void)toastPostingTooSoon;
+- (void)toastPostingTooSoon:(NSNumber *)minutesRemaining;
 - (void)toastCommentingTooSoon;
 
 // Navigation Notification

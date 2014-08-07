@@ -250,7 +250,8 @@
                                withCollegeId:(long)collegeId
                                withUserToken:(NSString *)userToken
 {
-    if ([self.dataController isAbleToPost])
+    NSNumber *minutesUntilCanPost = [NSNumber new];
+    if ([self.dataController isAbleToPost:minutesUntilCanPost])
     {
         [self.dataController createPostWithMessage:message
                                      withCollegeId:collegeId
@@ -259,13 +260,13 @@
     }
     else
     {
-        [self.toastController toastPostingTooSoon];
+        [self.toastController toastPostingTooSoon:minutesUntilCanPost];
     }
 }
-- (void)postingTooFrequently
-{
-    [self.toastController toastPostingTooSoon];
-}
+//- (void)postingTooFrequently
+//{
+//    [self.toastController toastPostingTooSoon];
+//}
 - (void)commentingTooFrequently
 {
     [self.toastController toastCommentingTooSoon];
