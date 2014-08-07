@@ -151,6 +151,21 @@
       ]
     },
     {
+      "name": "Versioner",
+      "examples": [
+        {
+          "description": "Android: get the minimum allowed application version",
+          "link": "versioner/android_get_the_minimum_allowed_application_version.json",
+          "groups": "all"
+        },
+        {
+          "description": "iOS: get the minimum allowed application version",
+          "link": "versioner/ios_get_the_minimum_allowed_application_version.json",
+          "groups": "all"
+        }
+      ]
+    },
+    {
       "name": "Votes",
       "examples": [
         {
