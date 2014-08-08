@@ -1,6 +1,6 @@
 angular.module("cfeed").controller "WebappCtrl", [
-  "$scope", "$http", "$interval", "$resource", "$rootScope"
-  ($scope, $http, $interval, $resource, $rootScope) ->
+  "$scope", "$http", "$resource", "$rootScope"
+  ($scope, $http, $resource, $rootScope) ->
     $scope.tags = {}
     $scope.colleges = {}
     $scope.options = {}
@@ -15,6 +15,7 @@ angular.module("cfeed").controller "WebappCtrl", [
     })
     $rootScope.Post = $resource('/api/v1/colleges/:collegeId/posts/:postId', {postId: '@id'},{
       recent: {method: 'GET', url: '/api/v1/posts/recent', isArray: true}
+      byTag: {method: 'GET', url: '/api/v1/posts/byTag/:tag', isArray: true}
     })
     $rootScope.Comment = $resource('/api/v1/colleges/:collegeId/posts/:postId/comments/:commentId', {commentId: '@id'},{
     })
