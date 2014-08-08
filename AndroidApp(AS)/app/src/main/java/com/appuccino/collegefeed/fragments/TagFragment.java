@@ -93,9 +93,14 @@ public class TagFragment extends Fragment
 			list.addHeaderView(headerFooter, null, false);
 		}
 		
-		if(tagList == null && mainActivity != null)
+		if(mainActivity != null)
 		{
-			changeFeed(PrefManager.getInt(PrefManager.LAST_FEED, 0));
+            if(MainActivity.currentFeedCollegeID == 0){
+                changeFeed(PrefManager.getInt(PrefManager.LAST_FEED, 0));
+            } else {
+                changeFeed(MainActivity.currentFeedCollegeID);
+            }
+
 		}
 		listAdapter = new TagListAdapter(getActivity(), R.layout.list_row_tag, tagList);
 		if(list != null)

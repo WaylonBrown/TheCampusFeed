@@ -114,10 +114,16 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		}
 		
 		addLazyFooterView();
+        changeFeed(MainActivity.currentFeedCollegeID);
 		
-		if(postList == null && mainActivity != null)
+		if(mainActivity != null)
 		{
-			changeFeed(PrefManager.getInt(PrefManager.LAST_FEED, 0));
+            if(MainActivity.currentFeedCollegeID == 0){
+                changeFeed(PrefManager.getInt(PrefManager.LAST_FEED, 0));
+            } else {
+                changeFeed(MainActivity.currentFeedCollegeID);
+            }
+
 		}
 		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 1, currentFeedID);
 		if(list != null)

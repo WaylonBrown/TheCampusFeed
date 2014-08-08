@@ -117,7 +117,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		
 		addLazyFooterView();
 		
-		if(postList == null && mainActivity != null)
+		if(mainActivity != null)
 		{
             if(MainActivity.currentFeedCollegeID == 0){
                 int lastViewedFeed = PrefManager.getInt(PrefManager.LAST_FEED, -1);
