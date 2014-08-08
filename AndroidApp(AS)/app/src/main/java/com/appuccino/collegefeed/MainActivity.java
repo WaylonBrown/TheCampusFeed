@@ -427,12 +427,14 @@ public class MainActivity extends FragmentActivity implements LocationListener
 		}
 			
 		PrefManager.putInt(PrefManager.LAST_FEED, id);
-		TopPostFragment.changeFeed(id);
-		NewPostFragment.changeFeed(id);
-		TagFragment.changeFeed(id);
 
-        TopPostFragment.scrollToTop();
-        NewPostFragment.scrollToTop();
+        if(topPostFrag != null){
+            TopPostFragment.changeFeed(id);
+        } else if(newPostFrag != null) {
+            NewPostFragment.changeFeed(id);
+        } else if(tagFrag != null) {
+            TagFragment.changeFeed(id);
+        }
 	}
 
     public void showFirstTimeMessages(){

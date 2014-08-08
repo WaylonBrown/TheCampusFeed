@@ -119,13 +119,17 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		
 		if(postList == null && mainActivity != null)
 		{
-            int lastViewedFeed = PrefManager.getInt(PrefManager.LAST_FEED, -1);
-            if(lastViewedFeed == -1){
-                mainActivity.showFirstTimeMessages();
-                lastViewedFeed = 0;
-                PrefManager.putInt(PrefManager.LAST_FEED, 0);
+            if(MainActivity.currentFeedCollegeID == 0){
+                int lastViewedFeed = PrefManager.getInt(PrefManager.LAST_FEED, -1);
+                if(lastViewedFeed == -1){
+                    mainActivity.showFirstTimeMessages();
+                    lastViewedFeed = 0;
+                    PrefManager.putInt(PrefManager.LAST_FEED, 0);
+                }
+                changeFeed(lastViewedFeed);
+            } else {
+                changeFeed(MainActivity.currentFeedCollegeID);
             }
-			changeFeed(lastViewedFeed);
 		}
 		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 0, currentFeedID);
 		if(list != null)
