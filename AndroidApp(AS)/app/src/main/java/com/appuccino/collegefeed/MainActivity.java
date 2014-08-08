@@ -99,6 +99,12 @@ public class MainActivity extends FragmentActivity implements LocationListener
     private TextView menuMyPosts;
     private TextView menuMyComments;
     private TextView menuHelp;
+
+    //Fragments
+    TopPostFragment topPostFrag;
+    NewPostFragment newPostFrag;
+    TagFragment tagFrag;
+    MostActiveCollegesFragment collegeFrag;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +136,8 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	    } else {
 	    	newPostButton.setVisibility(View.VISIBLE);
 	    }
+
+        setupMenuDrawerViews();
 	}
 
 	private void setupApp(){
@@ -221,27 +229,38 @@ public class MainActivity extends FragmentActivity implements LocationListener
         switch (selectedMenuItem){
             case 0:
                 menuTopPosts.setBackgroundColor(getResources().getColor(R.color.blue));
-                ft.replace(R.id.fragmentContainer, new TopPostFragment(this)).commit();
+                topPostFrag = new TopPostFragment(this);
+                ft.replace(R.id.fragmentContainer, topPostFrag).commit();
+                makeFragsNull(0);
                 break;
             case 1:
                 menuNewPosts.setBackgroundColor(getResources().getColor(R.color.blue));
-                ft.replace(R.id.fragmentContainer, new NewPostFragment(this)).commit();
+                newPostFrag = new NewPostFragment(this);
+                ft.replace(R.id.fragmentContainer, newPostFrag).commit();
+                makeFragsNull(1);
                 break;
             case 2:
                 menuTags.setBackgroundColor(getResources().getColor(R.color.blue));
-                ft.replace(R.id.fragmentContainer, new TagFragment(this)).commit();
+                tagFrag = new TagFragment(this);
+                ft.replace(R.id.fragmentContainer, tagFrag).commit();
+                makeFragsNull(2);
                 break;
             case 3:
                 menuColleges.setBackgroundColor(getResources().getColor(R.color.blue));
-                ft.replace(R.id.fragmentContainer, new MostActiveCollegesFragment(this)).commit();
+                collegeFrag = new MostActiveCollegesFragment(this);
+                ft.replace(R.id.fragmentContainer, collegeFrag).commit();
+                makeFragsNull(3);
                 break;
             case 4:
+                //TODO: finish these
                 menuMyPosts.setBackgroundColor(getResources().getColor(R.color.blue));
                 ft.replace(R.id.fragmentContainer, new NewPostFragment(this)).commit();
+                makeFragsNull(4);
                 break;
             case 5:
                 menuMyComments.setBackgroundColor(getResources().getColor(R.color.blue));
                 ft.replace(R.id.fragmentContainer, new NewPostFragment(this)).commit();
+                makeFragsNull(5);
                 break;
             default:
                 menuHelp.setBackgroundColor(getResources().getColor(R.color.blue));
@@ -250,6 +269,25 @@ public class MainActivity extends FragmentActivity implements LocationListener
         }
 
         menuDrawer.closeMenu();
+    }
+
+    /**
+     * Null each fragment except the one given in the parameter
+     */
+    private void makeFragsNull(int i) {
+        //TODO: finish
+        if(i != 0){
+            topPostFrag = null;
+        }
+        if(i != 1){
+            newPostFrag = null;
+        }
+        if(i != 2){
+            tagFrag = null;
+        }
+        if(i != 3){
+            collegeFrag = null;
+        }
     }
 
     public static void addNewPostToListAndMyContent(Post post, Context c){
