@@ -128,16 +128,17 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	@Override
 	public void onConfigurationChanged(Configuration newConfig)
 	{
-	    super.onConfigurationChanged(newConfig);
-	    Log.i("cfeed","APPSETUP: orientation change");
-	    setupApp();
-	    if(permissions == null || permissions.size() == 0){
-	    	newPostButton.setVisibility(View.GONE);
-	    } else {
-	    	newPostButton.setVisibility(View.VISIBLE);
-	    }
+        Log.i("cfeed","APPSETUP: orientation change");
+        setupApp();
+        if(permissions == null || permissions.size() == 0){
+            newPostButton.setVisibility(View.GONE);
+        } else {
+            newPostButton.setVisibility(View.VISIBLE);
+        }
 
         setupMenuDrawerViews();
+	    super.onConfigurationChanged(newConfig);
+
 	}
 
 	private void setupApp(){
@@ -263,8 +264,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
                 makeFragsNull(5);
                 break;
             default:
-                menuHelp.setBackgroundColor(getResources().getColor(R.color.blue));
-                ft.replace(R.id.fragmentContainer, new NewPostFragment(this)).commit();
+                new GettingStartedDialog(this, "Help"); 
                 break;
         }
 
