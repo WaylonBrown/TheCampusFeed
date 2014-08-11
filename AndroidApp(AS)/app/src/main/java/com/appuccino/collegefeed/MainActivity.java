@@ -76,6 +76,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
     public static final int TIME_BETWEEN_COMMENTS = 1;  //in minutes
 
     private int selectedMenuItem = 0;
+    private int previouslySelectedMenuItem = 0;
 	boolean locationFound = false;
 	public static LocationManager mgr;
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
@@ -185,6 +186,8 @@ public class MainActivity extends FragmentActivity implements LocationListener
         OnClickListener menuClick = new OnClickListener() {
             @Override
             public void onClick(View view) {
+                previouslySelectedMenuItem = selectedMenuItem;
+
                 if(view == menuTopPosts){
                     selectedMenuItem = 0;
                 } else if(view == menuNewPosts){
@@ -217,57 +220,63 @@ public class MainActivity extends FragmentActivity implements LocationListener
     }
 
     private void menuItemSelected() {
-        menuTopPosts.setBackgroundResource(R.drawable.postbuttonclick);
-        menuNewPosts.setBackgroundResource(R.drawable.postbuttonclick);
-        menuTags.setBackgroundResource(R.drawable.postbuttonclick);
-        menuColleges.setBackgroundResource(R.drawable.postbuttonclick);
-        menuMyPosts.setBackgroundResource(R.drawable.postbuttonclick);
-        menuMyComments.setBackgroundResource(R.drawable.postbuttonclick);
-        menuHelp.setBackgroundResource(R.drawable.postbuttonclick);
+        //selected Help
+        if(selectedMenuItem == 6) {
+            new GettingStartedDialog(this, "Help");
+            selectedMenuItem = previouslySelectedMenuItem;
+        } else {
+            menuTopPosts.setBackgroundResource(R.drawable.postbuttonclick);
+            menuNewPosts.setBackgroundResource(R.drawable.postbuttonclick);
+            menuTags.setBackgroundResource(R.drawable.postbuttonclick);
+            menuColleges.setBackgroundResource(R.drawable.postbuttonclick);
+            menuMyPosts.setBackgroundResource(R.drawable.postbuttonclick);
+            menuMyComments.setBackgroundResource(R.drawable.postbuttonclick);
+            menuHelp.setBackgroundResource(R.drawable.postbuttonclick);
 
-        android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
-        switch (selectedMenuItem){
-            case 0:
-                menuTopPosts.setBackgroundColor(getResources().getColor(R.color.blue));
-                topPostFrag = new TopPostFragment(this);
-                ft.replace(R.id.fragmentContainer, topPostFrag).commit();
-                makeFragsNull(0);
-                break;
-            case 1:
-                menuNewPosts.setBackgroundColor(getResources().getColor(R.color.blue));
-                newPostFrag = new NewPostFragment(this);
-                ft.replace(R.id.fragmentContainer, newPostFrag).commit();
-                makeFragsNull(1);
-                break;
-            case 2:
-                menuTags.setBackgroundColor(getResources().getColor(R.color.blue));
-                tagFrag = new TagFragment(this);
-                ft.replace(R.id.fragmentContainer, tagFrag).commit();
-                makeFragsNull(2);
-                break;
-            case 3:
-                menuColleges.setBackgroundColor(getResources().getColor(R.color.blue));
-                collegeFrag = new MostActiveCollegesFragment(this);
-                ft.replace(R.id.fragmentContainer, collegeFrag).commit();
-                makeFragsNull(3);
-                break;
-            case 4:
-                //TODO: finish these
-                menuMyPosts.setBackgroundColor(getResources().getColor(R.color.blue));
-                ft.replace(R.id.fragmentContainer, new NewPostFragment(this)).commit();
-                makeFragsNull(4);
-                break;
-            case 5:
-                menuMyComments.setBackgroundColor(getResources().getColor(R.color.blue));
-                ft.replace(R.id.fragmentContainer, new NewPostFragment(this)).commit();
-                makeFragsNull(5);
-                break;
-            default:
-                new GettingStartedDialog(this, "Help"); 
-                break;
+            switch (selectedMenuItem){
+                case 0:
+                    menuTopPosts.setBackgroundColor(getResources().getColor(R.color.blue));
+                    topPostFrag = new TopPostFragment(this);
+                    ft.replace(R.id.fragmentContainer, topPostFrag).commit();
+                    makeFragsNull(0);
+                    break;
+                case 1:
+                    menuNewPosts.setBackgroundColor(getResources().getColor(R.color.blue));
+                    newPostFrag = new NewPostFragment(this);
+                    ft.replace(R.id.fragmentContainer, newPostFrag).commit();
+                    makeFragsNull(1);
+                    break;
+                case 2:
+                    menuTags.setBackgroundColor(getResources().getColor(R.color.blue));
+                    tagFrag = new TagFragment(this);
+                    ft.replace(R.id.fragmentContainer, tagFrag).commit();
+                    makeFragsNull(2);
+                    break;
+                case 3:
+                    menuColleges.setBackgroundColor(getResources().getColor(R.color.blue));
+                    collegeFrag = new MostActiveCollegesFragment(this);
+                    ft.replace(R.id.fragmentContainer, collegeFrag).commit();
+                    makeFragsNull(3);
+                    break;
+                case 4:
+                    //TODO: finish these
+                    menuMyPosts.setBackgroundColor(getResources().getColor(R.color.blue));
+                    ft.replace(R.id.fragmentContainer, new NewPostFragment(this)).commit();
+                    makeFragsNull(4);
+                    break;
+                case 5:
+                    menuMyComments.setBackgroundColor(getResources().getColor(R.color.blue));
+                    ft.replace(R.id.fragmentContainer, new NewPostFragment(this)).commit();
+                    makeFragsNull(5);
+                    break;
+                default:
+
+                    break;
+            }
         }
-
+        
         menuDrawer.closeMenu();
     }
 
