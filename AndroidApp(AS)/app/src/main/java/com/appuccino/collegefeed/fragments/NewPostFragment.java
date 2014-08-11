@@ -441,6 +441,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 	}
 
 	public static void changeFeed(int id) {
+        Log.i("cfeed","Changing to college ID of " + id);
 		endOfListReached = false;
         //go back to first page
         currentPageNumber = 1;

@@ -1,0 +1,52 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pullToRefresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightgray">
+
+    <LinearLayout
+        style="@style/fill"
+        android:orientation="vertical">
+
+        <com.appuccino.collegefeed.extra.QuickReturnListView
+            android:id="@+id/fragmentListView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="6dp"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none"
+            android:background="@color/lightgray"
+            android:visibility="visible"/>
+
+        <View
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="@color/darkgray"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"/>
+
+        <TextView
+            android:id="@+id/score"
+            style="@style/block"
+            android:text="Post Score: 0"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:gravity="center_horizontal"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/loadingSpinner"
+        android:layout_gravity="center"
+        style="@style/wrap"
+        android:visibility="gone"/>
+
+
+
+</FrameLayout>

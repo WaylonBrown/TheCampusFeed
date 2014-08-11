@@ -32,6 +32,7 @@ import com.appuccino.collegefeed.dialogs.GettingStartedDialog;
 import com.appuccino.collegefeed.dialogs.NewPostDialog;
 import com.appuccino.collegefeed.extra.AllCollegeJSONString;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
+import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
@@ -72,10 +73,11 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	public static final int LOCATION_TIMEOUT_SECONDS = 10;
 	public static final int MIN_POST_LENGTH = 10;
 	public static final int MIN_COMMENT_LENGTH = 5;
-    public static final int TIME_BETWEEN_POSTS = 5;     //in minutes
+    //TODO: make sure these values are correct
+    public static final int TIME_BETWEEN_POSTS = 0;     //in minutes
     public static final int TIME_BETWEEN_COMMENTS = 1;  //in minutes
 
-    private int selectedMenuItem = 0;
+    private static int selectedMenuItem = 0;
     private int previouslySelectedMenuItem = 0;
 	boolean locationFound = false;
 	public static LocationManager mgr;
@@ -263,7 +265,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
                 case 4:
                     //TODO: finish these
                     menuMyPosts.setBackgroundColor(getResources().getColor(R.color.blue));
-                    ft.replace(R.id.fragmentContainer, new NewPostFragment(this)).commit();
+                    ft.replace(R.id.fragmentContainer, new MyPostsFragment(this)).commit();
                     makeFragsNull(4);
                     break;
                 case 5:
@@ -276,7 +278,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
                     break;
             }
         }
-        
+
         menuDrawer.closeMenu();
     }
 
@@ -299,16 +301,20 @@ public class MainActivity extends FragmentActivity implements LocationListener
         }
     }
 
-    public static void addNewPostToListAndMyContent(Post post, Context c){
+    public void addNewPostToListAndMyContent(Post post, Context c){
         //instantly add to new posts
         if(currentFeedCollegeID == ALL_COLLEGES || currentFeedCollegeID == post.getCollegeID()){
-            NewPostFragment.postList.add(0, post);
+            if(newPostFrag != null){
+                newPostFrag.postList.add(0, post);
+                newPostFrag.updateList();
+            }
+
             myPostsList.add(post.getID());
-            NewPostFragment.updateList();
-            MainActivity.goToNewPostsAndScrollToTop(c);
+
 
             Log.i("cfeed","New My Posts list is of size " + myPostsList.size());
         }
+        goToNewPostsAndScrollToTop(c, post.getCollegeID());
         PrefManager.putMyPostsList(myPostsList);
         lastPostTime = Calendar.getInstance();
         PrefManager.putLastPostTime(lastPostTime);
@@ -682,11 +688,16 @@ public class MainActivity extends FragmentActivity implements LocationListener
         Toast.makeText(c, "Implement goToTopPostsAndScrollToTop", Toast.LENGTH_LONG).show();
     }
 
-	public static void goToNewPostsAndScrollToTop(Context c) {
-//		if(viewPager != null){
-//			viewPager.setCurrentItem(1);
-//			NewPostFragment.scrollToTop();
-//		}
+	public void goToNewPostsAndScrollToTop(Context c, int feedID) {
+        //if on another feed, switch to correct feed before going to New Posts
+        if(currentFeedCollegeID != MainActivity.ALL_COLLEGES && currentFeedCollegeID != feedID){
+            currentFeedCollegeID = feedID;
+        }
+        selectedMenuItem = 1;
+        menuItemSelected();
+        if(newPostFrag != null){
+            newPostFrag.changeFeed(currentFeedCollegeID);
+        }
         Toast.makeText(c, "Implement goToNewPostsAndScrollToTop", Toast.LENGTH_LONG).show();
 	}
 
@@ -750,7 +761,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
             if(haventPostedInXMinutes()){
                 LayoutInflater inflater = getLayoutInflater();
                 View postDialogLayout = inflater.inflate(R.layout.dialog_post, null);
-                new NewPostDialog(this, postDialogLayout);
+                new NewPostDialog(this, this, postDialogLayout);
             } else {
                 Toast.makeText(this, "Sorry, you can only post once every " + MainActivity.TIME_BETWEEN_POSTS + " minutes.", Toast.LENGTH_LONG).show();
             }

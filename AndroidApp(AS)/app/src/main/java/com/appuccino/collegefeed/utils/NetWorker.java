@@ -606,9 +606,11 @@ public class NetWorker {
          Context c;
          String response = null;
          int postCollegeID;
+         MainActivity main;
 
-         public MakePostTask(Context context) {
+         public MakePostTask(Context context, MainActivity main) {
              c = context;
+             this.main = main;
          }
 
          @Override
@@ -653,7 +655,7 @@ public class NetWorker {
                  }
                  MainActivity.postVoteList.add(new Vote(-1, responsePost.getID(), true));
                  PrefManager.putPostVoteList(MainActivity.postVoteList);
-                 MainActivity.addNewPostToListAndMyContent(responsePost, c);
+                 main.addNewPostToListAndMyContent(responsePost, c);
              } catch (IOException e) {
                  Log.i("cfeed","ERROR: post not added");
                  e.printStackTrace();

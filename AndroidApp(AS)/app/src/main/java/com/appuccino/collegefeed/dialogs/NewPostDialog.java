@@ -28,10 +28,12 @@ public class NewPostDialog extends AlertDialog.Builder{
 	
 	Context context;
 	private int selectedCollegeID = -1;
+    MainActivity main;
 	
-	public NewPostDialog(final Context context, View layout) {
+	public NewPostDialog(final Context context, MainActivity main, View layout) {
 		super(context);
 		this.context = context;
+        this.main = main;
 		setCancelable(true);
 		setView(layout).setPositiveButton("Post", new DialogInterface.OnClickListener()
         {
@@ -100,7 +102,7 @@ public class NewPostDialog extends AlertDialog.Builder{
                     String phoneNumber = tMgr.getLine1Number();
 
     				Post newPost = new Post(thisString, selectedCollegeID, phoneNumber);
-        			new MakePostTask(context).execute(newPost);
+        			new MakePostTask(context, main).execute(newPost);
         			dialog.dismiss();
     			}
     			else
