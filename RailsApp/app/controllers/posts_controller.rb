@@ -29,12 +29,14 @@ class PostsController < ApplicationController
   end
 
   def byTag
-    @tag = Tag.find_by(text: params[:tagText].downcase)
+    @all_tags = Tag.where("lower(text) = ?", params[:tagText].downcase)
+    p @all_tags
+    @tag = @all_tags[0]
 
     if @tag
       #Paginate by 25
       if @college
-        @tags = @tag.posts.where("college_id = #{@college.id}")
+        @tags = @tag.posts.where("college_id = ?", @college.id)
       else
         @tags = @tag.posts
       end

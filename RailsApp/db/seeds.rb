@@ -133,7 +133,8 @@ Comment.destroy_all
 
 cid = College.first.id
 (1..50).each {|e|
-  curPost = Post.create({college_id: cid, text: "This is ##{e}, a #test post!"})
+  testString = rand(1..10) > 5 ? "Test" : "test"
+  curPost = Post.create({college_id: cid, text: "This is ##{e}, a ##{testString} post!"})
   (1..10).each {|f|
     Comment.create({post_id: curPost.id, text: "Hi this is a comment."})
   }
