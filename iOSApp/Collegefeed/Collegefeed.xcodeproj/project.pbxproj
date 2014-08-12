@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5306D9701999E78200637FAE /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5306D96F1999E78200637FAE /* Shared.swift */; };
 		5312942E196504CD00CF13DB /* ToastController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5312942D196504CD00CF13DB /* ToastController.m */; };
 		531EAADE19860E6200C1E1AA /* thecampusfeedlogosmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAADD19860E6200C1E1AA /* thecampusfeedlogosmall.png */; };
 		531EAAE719881E6600C1E1AA /* fb_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAAE519881E6600C1E1AA /* fb_logo.png */; };
@@ -130,6 +131,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5306D96E1999E78100637FAE /* Collegefeed-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Collegefeed-Bridging-Header.h"; sourceTree = "<group>"; };
+		5306D96F1999E78200637FAE /* Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
 		5308D2BB193552C600D70C1A /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
 		5312942C196504CD00CF13DB /* ToastController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastController.h; sourceTree = "<group>"; };
 		5312942D196504CD00CF13DB /* ToastController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToastController.m; sourceTree = "<group>"; };
@@ -387,6 +390,8 @@
 				53CF339F194E7A7A008BB733 /* Shared.m */,
 				533475871922B88300E84CC8 /* TTTAttributedLabel.h */,
 				533475881922B88300E84CC8 /* TTTAttributedLabel.m */,
+				5306D96F1999E78200637FAE /* Shared.swift */,
+				5306D96E1999E78100637FAE /* Collegefeed-Bridging-Header.h */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -756,6 +761,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5306D9701999E78200637FAE /* Shared.swift in Sources */,
 				5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */,
 				5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */,
 				5347EE9D197DC7CC001B2214 /* UserPostsViewController.m in Sources */,
@@ -908,17 +914,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Collegefeed/Collegefeed-Prefix.pch";
 				INFOPLIST_FILE = "Collegefeed/Collegefeed-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
 				);
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Collegefeed/Collegefeed-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = "/Users/PatrickSheehan/Documents/working/Collegefeed/iOSApp/Collegefeed/Collegefeed/Models/Models /Users/PatrickSheehan/Documents/working/Collegefeed/iOSApp/Collegefeed/Collegefeed/Networker/Networker";
 				WRAPPER_EXTENSION = app;
 			};
@@ -930,17 +940,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Collegefeed/Collegefeed-Prefix.pch";
 				INFOPLIST_FILE = "Collegefeed/Collegefeed-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
 				);
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Collegefeed/Collegefeed-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = "/Users/PatrickSheehan/Documents/working/Collegefeed/iOSApp/Collegefeed/Collegefeed/Models/Models /Users/PatrickSheehan/Documents/working/Collegefeed/iOSApp/Collegefeed/Collegefeed/Networker/Networker";
 				WRAPPER_EXTENSION = app;
 			};
