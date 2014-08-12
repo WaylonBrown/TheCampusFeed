@@ -90,7 +90,7 @@ resource "Posts" do
   end
 
   get '/api/v1/colleges/2015/posts/byTag/test' do
-    example 'Get all posts using tag #test from college ID 2016' do
+    example 'Get all posts using tag #test from college ID 2015' do
       do_request
       JSON.parse(response_body).length.should == 3
       status.should == 200

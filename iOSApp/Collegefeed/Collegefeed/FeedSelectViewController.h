@@ -53,8 +53,8 @@ typedef NS_ENUM(NSInteger, FeedSelectorType)
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (weak, nonatomic) NSArray *fullCollegeList;
-@property (weak, nonatomic) NSArray *nearbyCollegeList;
+//@property (weak, nonatomic) NSArray *fullCollegeList;
+//@property (weak, nonatomic) NSArray *nearbyCollegeList;
 
 @property (nonatomic) FeedSelectorType type;
 
@@ -65,5 +65,6 @@ typedef NS_ENUM(NSInteger, FeedSelectorType)
 
 - (IBAction)dismiss;
 - (void)fixHeights;
+- (void)foundLocation;
 
 @end
