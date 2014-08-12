@@ -179,10 +179,10 @@
                 withCollegeId:(long)collegeId
                 withUserToken:(NSString *)userToken;
 
-- (void)fetchTopPosts;
+- (BOOL)fetchTopPosts;
 - (void)fetchTopPostsInCollege;
 
-- (void)fetchNewPosts;
+- (BOOL)fetchNewPosts;
 - (void)fetchNewPostsInCollege;
 
 - (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage;

@@ -105,8 +105,8 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
-    
-    return self.list.count;
+    int num = self.list.count;
+    return num;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
@@ -215,16 +215,16 @@
     switch (self.viewType)
     {
         case RECENT_VIEW:
-            [self.dataController fetchNewPosts];
-            [self refresh];
+            success = [self.dataController fetchNewPosts];
+            [self.tableView reloadData];
             break;
         case TOP_VIEW:
-            [self.dataController fetchTopPosts];
-            [self refresh];
+            success = [self.dataController fetchTopPosts];
+            [self.tableView reloadData];
             break;
         case TAG_VIEW:
             success = [self.dataController fetchMorePostsWithTagMessage:self.tagMessage];
-            [self refresh];
+            [self.tableView reloadData];
         default:
             break;
     }

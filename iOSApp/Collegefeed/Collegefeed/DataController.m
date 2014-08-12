@@ -228,10 +228,11 @@
     }
     return NO;
 }
-- (void)fetchTopPosts
+- (BOOL)fetchTopPosts
 {
-    NSData* data = [Networker GETTrendingPostsAtPageNum:self.topPostsPage++];
-    [self parseData:data asClass:[Post class] intoList:self.topPostsAllColleges];
+    self.topPostsPage++;
+    NSData* data = [Networker GETTrendingPostsAtPageNum:self.topPostsPage];
+    return [self parseData:data asClass:[Post class] intoList:self.topPostsAllColleges];
 }
 - (void)fetchTopPostsInCollege
 {
@@ -240,10 +241,11 @@
     NSData* data = [Networker GETTrendingPostsWithCollegeId:collegeId];
     [self parseData:data asClass:[Post class] intoList:self.topPostsInCollege];
 }
-- (void)fetchNewPosts
+- (BOOL)fetchNewPosts
 {
-    NSData* data = [Networker GETRecentPostsAtPageNum:self.recentPostsPage++];
-    [self parseData:data asClass:[Post class] intoList:self.recentPostsAllColleges];
+    self.recentPostsPage++;
+    NSData* data = [Networker GETRecentPostsAtPageNum:self.recentPostsPage];
+    return [self parseData:data asClass:[Post class] intoList:self.recentPostsAllColleges];
 }
 - (void)fetchNewPostsInCollege
 {
@@ -926,10 +928,10 @@
 //            NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 1.0 ];
 //            [NSThread sleepUntilDate:future];
         
-            [self findNearbyColleges];
-            [self.appDelegate foundLocation];
-            [self setFoundLocation:YES];
-        
+        [self findNearbyColleges];
+        [self.appDelegate foundLocation];
+        [self setFoundLocation:YES];
+//    });
     }
     else
     {

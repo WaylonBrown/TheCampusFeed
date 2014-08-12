@@ -99,9 +99,9 @@
 }
 + (BOOL)withMessageIsValid:(NSString*)tagMessage
 {
-    if ([tagMessage characterAtIndex:0] != '#'
-        || tagMessage.length < MIN_TAG_LENGTH
-        || tagMessage.length > MAX_TAG_LENGTH)
+    if (tagMessage.length < MIN_TAG_LENGTH
+        || tagMessage.length > MAX_TAG_LENGTH
+        || [tagMessage characterAtIndex:0] != '#')
     {
         return false;
     }
