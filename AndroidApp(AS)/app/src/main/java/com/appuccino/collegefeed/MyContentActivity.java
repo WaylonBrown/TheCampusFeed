@@ -28,8 +28,8 @@
 //import java.util.List;
 //
 ///**
-// * Created by Waylon on 7/6/2014.
-// */
+//* Created by Waylon on 7/6/2014.
+//*/
 //public class MyContentActivity extends Activity{
 //
 //    private static MyContentActivity thisActivity;

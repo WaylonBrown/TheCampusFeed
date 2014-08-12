@@ -31,6 +31,7 @@ import com.appuccino.collegefeed.dialogs.GettingStartedDialog;
 import com.appuccino.collegefeed.dialogs.NewPostDialog;
 import com.appuccino.collegefeed.extra.AllCollegeJSONString;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
+import com.appuccino.collegefeed.fragments.MyCommentsFragment;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
@@ -269,7 +270,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
                     break;
                 case 5:
                     menuMyComments.setBackgroundColor(getResources().getColor(R.color.blue));
-                    ft.replace(R.id.fragmentContainer, new NewPostFragment(this)).commit();
+                    ft.replace(R.id.fragmentContainer, new MyCommentsFragment(this)).commit();
                     makeFragsNull(5);
                     break;
                 default:
@@ -698,7 +699,6 @@ public class MainActivity extends FragmentActivity implements LocationListener
         if(newPostFrag != null){
             newPostFrag.changeFeed(currentFeedCollegeID);
         }
-        Toast.makeText(c, "Implement goToNewPostsAndScrollToTop", Toast.LENGTH_LONG).show();
 	}
 
 	/**
