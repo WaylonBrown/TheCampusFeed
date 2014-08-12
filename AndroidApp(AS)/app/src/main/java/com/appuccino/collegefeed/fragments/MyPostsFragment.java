@@ -76,7 +76,7 @@ public class MyPostsFragment extends Fragment
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int position, long arg3)
             {
-                postClicked(postList.get(position), position);
+                postClicked(postList.get(position - 1), position - 1);
             }
         });
 
@@ -85,12 +85,12 @@ public class MyPostsFragment extends Fragment
         return rootView;
     }
 
-    private static void pullListFromServer()
+    private void pullListFromServer()
     {
         postList = new ArrayList<Post>();
         ConnectivityManager cm = (ConnectivityManager)mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
         if(cm.getActiveNetworkInfo() != null) {
-            new NetWorker.GetManyPostsTask(MainActivity.myPostsList, 0).execute(new NetWorker.PostSelector());
+            new NetWorker.GetManyPostsTask(MainActivity.myPostsList, this).execute(new NetWorker.PostSelector());
         } else {
             Toast.makeText(mainActivity, "You have no internet connection.", Toast.LENGTH_LONG).show();
             makeLoadingIndicator(false);

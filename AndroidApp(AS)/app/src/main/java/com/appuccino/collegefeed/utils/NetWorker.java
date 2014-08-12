@@ -7,9 +7,9 @@ import android.widget.Toast;
 
 import com.appuccino.collegefeed.CommentsActivity;
 import com.appuccino.collegefeed.MainActivity;
-import com.appuccino.collegefeed.MyContentActivity;
 import com.appuccino.collegefeed.TagListActivity;
 import com.appuccino.collegefeed.fragments.MostActiveCollegesFragment;
+import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TagFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
@@ -469,17 +469,26 @@ public class NetWorker {
     {
         private List<Integer> postIDList;
         private int whichList;  //0 = MyPosts, 1 = MyComments'Parents
+        private MyPostsFragment frag1;
 
-        public GetManyPostsTask(List<Integer> postIDList, int whichList)
+        public GetManyPostsTask(List<Integer> postIDList, MyPostsFragment frag)
         {
             this.postIDList = postIDList;
-            this.whichList = whichList;
+            whichList = 0;
+            frag1 = frag;
         }
+
+//        public GetManyPostsTask(List<Integer> postIDList, MyPostsFragment frag)
+//        {
+//            this.postIDList = postIDList;
+//            whichList = 0;
+//            frag1 = frag;
+//        }
 
         @Override
         protected void onPreExecute() {
-            if(whichList == 0){
-                MyContentActivity.makeTopLoadingIndicator(true);
+            if(whichList == 0 && frag1 != null){
+                frag1.makeLoadingIndicator(true);
             }
             super.onPreExecute();
         }
@@ -528,78 +537,78 @@ public class NetWorker {
 
         @Override
         protected void onPostExecute(ArrayList<Post> result) {
-            if(whichList == 0){
-                MyContentActivity.updatePostList(result);
-                MyContentActivity.makeTopLoadingIndicator(false);
+            if(whichList == 0 && frag1 != null){
+                frag1.updateList(result);
+                frag1.makeLoadingIndicator(false);
             }
             else{
-                MyContentActivity.updateCommentParentList(result);
+                //MyContentActivity.updateCommentParentList(result);
             }
             super.onPostExecute(result);
         }
     }
 
-    public static class GetMyCommentsTask extends AsyncTask<PostSelector, Void, ArrayList<Comment> >
-    {
-        public GetMyCommentsTask()
-        {
-        }
-
-        @Override
-        protected void onPreExecute() {
-            MyContentActivity.makeBottomLoadingIndicator(true);
-            super.onPreExecute();
-        }
-
-        @Override
-        protected ArrayList<Comment> doInBackground(PostSelector... arg0) {
-            String arrayQuery = "";
-            if(MainActivity.myCommentsList == null || MainActivity.myCommentsList.size() == 0){
-                return new ArrayList<Comment>();
-            } else {
-                for(int n : MainActivity.myCommentsList){
-                    arrayQuery += ("many_ids[]=" + n + "&");
-                }
-                //remove final &
-                if(arrayQuery.length() > 0){
-                    arrayQuery = arrayQuery.substring(0, arrayQuery.length()-1);
-                }
-                HttpGet request = new HttpGet(REQUEST_URL + "comments/many?" + arrayQuery);
-                return getCommentsFromURLRequest(request);
-            }
-
-        }
-
-        private ArrayList<Comment> getCommentsFromURLRequest(HttpGet request) {
-            ArrayList<Comment> ret = new ArrayList<Comment>();
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
-            String response = null;
-            try {
-                response = client.execute(request, responseHandler);
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            if(response != null)
-                Log.d("cfeed", LOG_TAG + response);
-
-            try {
-                ret = JSONParser.commentListFromJSON(response);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return ret;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Comment> result) {
-            MyContentActivity.updateCommentList(result);
-            MyContentActivity.makeBottomLoadingIndicator(false);
-            super.onPostExecute(result);
-        }
-    }
+//    public static class GetMyCommentsTask extends AsyncTask<PostSelector, Void, ArrayList<Comment> >
+//    {
+//        public GetMyCommentsTask()
+//        {
+//        }
+//
+//        @Override
+//        protected void onPreExecute() {
+//            MyContentActivity.makeBottomLoadingIndicator(true);
+//            super.onPreExecute();
+//        }
+//
+//        @Override
+//        protected ArrayList<Comment> doInBackground(PostSelector... arg0) {
+//            String arrayQuery = "";
+//            if(MainActivity.myCommentsList == null || MainActivity.myCommentsList.size() == 0){
+//                return new ArrayList<Comment>();
+//            } else {
+//                for(int n : MainActivity.myCommentsList){
+//                    arrayQuery += ("many_ids[]=" + n + "&");
+//                }
+//                //remove final &
+//                if(arrayQuery.length() > 0){
+//                    arrayQuery = arrayQuery.substring(0, arrayQuery.length()-1);
+//                }
+//                HttpGet request = new HttpGet(REQUEST_URL + "comments/many?" + arrayQuery);
+//                return getCommentsFromURLRequest(request);
+//            }
+//
+//        }
+//
+//        private ArrayList<Comment> getCommentsFromURLRequest(HttpGet request) {
+//            ArrayList<Comment> ret = new ArrayList<Comment>();
+//            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+//            String response = null;
+//            try {
+//                response = client.execute(request, responseHandler);
+//            } catch (ClientProtocolException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            if(response != null)
+//                Log.d("cfeed", LOG_TAG + response);
+//
+//            try {
+//                ret = JSONParser.commentListFromJSON(response);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return ret;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(ArrayList<Comment> result) {
+//            MyContentActivity.updateCommentList(result);
+//            MyContentActivity.makeBottomLoadingIndicator(false);
+//            super.onPostExecute(result);
+//        }
+//    }
 
      public static class MakePostTask extends AsyncTask<Post, Void, Boolean>{
 

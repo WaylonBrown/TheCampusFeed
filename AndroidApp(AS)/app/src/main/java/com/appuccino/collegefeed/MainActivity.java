@@ -2,7 +2,6 @@ package com.appuccino.collegefeed;
 
 import android.app.ActionBar;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -309,11 +308,12 @@ public class MainActivity extends FragmentActivity implements LocationListener
                 newPostFrag.updateList();
             }
 
-            myPostsList.add(post.getID());
+
 
 
             Log.i("cfeed","New My Posts list is of size " + myPostsList.size());
         }
+        myPostsList.add(post.getID());
         goToNewPostsAndScrollToTop(c, post.getCollegeID());
         PrefManager.putMyPostsList(myPostsList);
         lastPostTime = Calendar.getInstance();
@@ -836,12 +836,6 @@ public class MainActivity extends FragmentActivity implements LocationListener
 //
 //        return super.onOptionsItemSelected(item);
 //    }
-
-    private void launchMyContentActivity() {
-        Intent intent = new Intent(this, MyContentActivity.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-    }
 
     @Override
     public void onBackPressed() {
