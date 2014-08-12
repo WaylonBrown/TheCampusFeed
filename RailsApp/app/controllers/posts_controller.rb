@@ -30,17 +30,18 @@ class PostsController < ApplicationController
 
   def byTag
     @all_tags = Tag.where("lower(text) = ?", params[:tagText].downcase)
-    p @all_tags
-    @tag = @all_tags[0]
 
-    if @tag
-      #Paginate by 25
-      if @college
-        @tags = @tag.posts.where("college_id = ?", @college.id)
-      else
-        @tags = @tag.posts
-      end
-      render json: @tags.order('created_at desc').page(params[:page]).per(params[:per_page])
+    @tag_ids = []
+    @all_tags.each{ |tag|
+      @tag_ids << tag.id
+    }
+    @posts_with_tags = Post.joins(:tags).where(tags: {id: @tag_ids})
+    if @college
+      @posts_with_tags = @posts_with_tags.where(posts: {college_id: @college.id})
+    end
+
+    if @posts_with_tags.any?
+      render json: @posts_with_tags.order('created_at desc').page(params[:page]).per(params[:per_page])
     else
       render json: {:tag => ["does not exist."]}, status: 400
     end
