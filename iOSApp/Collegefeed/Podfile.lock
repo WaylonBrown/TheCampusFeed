@@ -1,13 +1,10 @@
 PODS:
-  - AWPagedArray (0.2.0)
   - ECSlidingViewController (2.0.2)
 
 DEPENDENCIES:
-  - AWPagedArray (~> 0.1)
   - ECSlidingViewController (~> 2.0.2)
 
 SPEC CHECKSUMS:
-  AWPagedArray: 2c02ef1c4be38174c40b8160492e4283352dc5b0
   ECSlidingViewController: 6c11fadb10d720c2d48bc577962332bdd4264c9f
 
 COCOAPODS: 0.33.1

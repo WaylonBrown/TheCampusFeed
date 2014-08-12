@@ -272,10 +272,6 @@
         [self.toastController toastPostingTooSoon:minutesUntilCanPost];
     }
 }
-//- (void)postingTooFrequently
-//{
-//    [self.toastController toastPostingTooSoon];
-//}
 - (void)commentingTooFrequently
 {
     [self.toastController toastCommentingTooSoon];
@@ -318,7 +314,15 @@
     CGFloat scrollOffset = scrollView.contentOffset.y;
     CGFloat scrollDiff = scrollOffset - self.previousScrollViewYOffset;
     CGFloat scrollHeight = scrollView.frame.size.height;
+//    CGFloat scrollSizeHeight = scrollView.contentSize.height;
+    
+//    self.previousScrollSizeHeight = scrollSizeHeight;
+    self.previousScrollViewYOffset = scrollOffset;
 
+//    if (scrollSizeHeight != self.previousScrollSizeHeight)
+//    {
+//        self.isLoadingPosts = false;
+//    }
     if (scrollOffset < 5)
     {   // keep bar showing if at top of scrollView
         frame.origin.y = scrollHeight - 50;
@@ -332,9 +336,8 @@
         frame.origin.y -= 4;
     }
     
+
     [self.feedToolbar setFrame:frame];
-    
-    self.previousScrollViewYOffset = scrollOffset;
 }
 
 @end

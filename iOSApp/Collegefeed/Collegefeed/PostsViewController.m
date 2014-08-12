@@ -150,7 +150,11 @@
     NSString *text = [((Post *)[self.list objectAtIndex:[indexPath row]]) getMessage];
     return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)];
 }
-
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    
+}
 #pragma mark - Navigation
 
 - (void)switchToAllColleges

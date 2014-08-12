@@ -35,6 +35,8 @@
 @property (strong, nonatomic) NSMutableArray *list;
 
 @property (nonatomic) float previousScrollViewYOffset;
+//@property (nonatomic) float previousScrollSizeHeight;
+@property (nonatomic) BOOL isLoadingPosts;
 
 // Initialization
 - (id)initWithDataController:(DataController *)controller;

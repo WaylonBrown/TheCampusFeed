@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-Collegefeed-AWPagedArray.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-Collegefeed-ECSlidingViewController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +17,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>434C7718F3D74741BA9CB988</key>
+		<key>7EB4A2AFCD454AACAC3028B1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7095EB7AA9D64BF9A357765A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C7DCD059B32D4CC3B413BD1A</key>
+		<key>C3BFF1BB0E134BEEA719B24C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
