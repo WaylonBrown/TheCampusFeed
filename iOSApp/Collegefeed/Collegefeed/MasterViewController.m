@@ -116,6 +116,15 @@
         [self placeLoadingIndicator];
         [self.toastController toastLocationFoundNotNearCollege];
     }
+    
+    UIViewController *presented = [self presentedViewController];
+    if (presented)
+    {
+        if ([presented class] == [FeedSelectViewController class])
+        {
+            [((FeedSelectViewController *)presented) foundLocation];
+        }
+    }
 }
 - (void)didNotFindLocation
 {   // Called when the user's location cannot be determined. Stop and remove activity indicator

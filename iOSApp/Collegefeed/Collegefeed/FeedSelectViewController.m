@@ -23,8 +23,6 @@
         [self setModalPresentationStyle:UIModalPresentationCustom];
         [self setTransitioningDelegate:self];
         [self setDataController:controller];
-        [self setNearbyCollegeList:self.dataController.nearbyColleges];
-        [self setFullCollegeList:self.dataController.collegeList];
         [self setFeedDelegate:delegate];
     }
     return self;
@@ -39,8 +37,6 @@
         [self setModalPresentationStyle:UIModalPresentationCustom];
         [self setTransitioningDelegate:self];
         [self setDataController:controller];
-        [self setNearbyCollegeList:self.dataController.nearbyColleges];
-        [self setFullCollegeList:self.dataController.collegeList];
         [self setPostingDelegate:delegate];
     }
     return self;
@@ -59,7 +55,7 @@
     
     if (self.type == ALL_COLLEGES_WITH_SEARCH)
     {
-        self.searchResult = [NSMutableArray arrayWithCapacity:[self.fullCollegeList count]];
+        self.searchResult = [NSMutableArray arrayWithCapacity:[self.dataController.collegeList count]];
         
         // Search bar
         UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, 44)];
@@ -153,21 +149,19 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    int numNearby = self.nearbyCollegeList.count;
+    int numNearby = self.dataController.nearbyColleges.count;
     bool isNearColleges = numNearby > 0;
     
-    bool collegesNearby = [self.dataController isNearCollege];
-
     switch (self.type)
     {
         case ALL_NEARBY_OTHER:
-            if (isNearColleges && section == 1)
-            {
-                return numNearby;
-            }
-            else
+            if (!isNearColleges)
             {
                 return 1;
+            }
+            else if (section == 1)
+            {
+                return numNearby;
             }
             break;
         case ALL_COLLEGES_WITH_SEARCH:
@@ -177,7 +171,7 @@
             }
             else
             {
-                return self.fullCollegeList.count;
+                return self.dataController.collegeList.count;
             }
             break;
         case ONLY_NEARBY_COLLEGES:
@@ -215,7 +209,6 @@
         else if (showLoadingIndicator && indexPath.section == 1)
         {
             [cell showLoadingIndicator];
-            // TODO: DRAW LOADING INDICATOR ON THIS CELL
             cellLabel = @"Loading...";
         }
         else if (indexPath.section == 2 || (noCollegesNearby && indexPath.section == 1))
@@ -408,6 +401,11 @@
         }];
     }
 }
+- (void)foundLocation
+{
+    [self.tableView reloadData];
+    [self fixHeights];
+}
 
 #pragma mark - Private Helpers
 
@@ -416,7 +414,7 @@
     // Call the appropriate delegate's method to alert about the
     // college selection and in what context
     
-    NSInteger numNearbyColleges = self.nearbyCollegeList.count;
+    NSInteger numNearbyColleges = self.dataController.nearbyColleges.count;
     NSInteger row = indexPath.row;
     NSInteger section = indexPath.section;
     
@@ -426,7 +424,7 @@
         {   // Initial prompt given to user to select which feed to view
             if (section == 1 && numNearbyColleges > row)
             {
-                return [self.nearbyCollegeList objectAtIndex:row];
+                return [self.dataController.nearbyColleges objectAtIndex:row];
             }
             break;
         }
@@ -438,13 +436,13 @@
             }
             else
             {
-                return [self.fullCollegeList objectAtIndex:row];
+                return [self.dataController.collegeList objectAtIndex:row];
             }
             break;
         }
         case ONLY_NEARBY_COLLEGES:
         {   // When user is selecting which of nearby colleges to post to
-            return [self.nearbyCollegeList objectAtIndex:row];
+            return [self.dataController.nearbyColleges objectAtIndex:row];
             break;
         }
         default: break;
@@ -467,7 +465,7 @@
     [self.searchResult removeAllObjects];
     NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchText];
     
-    self.searchResult = [NSMutableArray arrayWithArray: [self.fullCollegeList filteredArrayUsingPredicate:resultPredicate]];
+    self.searchResult = [NSMutableArray arrayWithArray: [self.dataController.collegeList filteredArrayUsingPredicate:resultPredicate]];
 }
 
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString

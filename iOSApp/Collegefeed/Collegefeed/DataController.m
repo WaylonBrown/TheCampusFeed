@@ -921,9 +921,15 @@
         [self setLon:newLocation.coordinate.longitude];
         [self.locationManager stopUpdatingLocation];
         
-//        [self findNearbyColleges];
-//        [self.appDelegate foundLocation];
-//        [self setFoundLocation:YES];
+// Simulate extra time to find location to show 'loading' in feedselectviewcontroller
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+//            NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 1.0 ];
+//            [NSThread sleepUntilDate:future];
+        
+            [self findNearbyColleges];
+            [self.appDelegate foundLocation];
+            [self setFoundLocation:YES];
+        
     }
     else
     {
