@@ -712,7 +712,8 @@
                 long postID = [post getID];
                 long collegeID = [post getCollegeID];
                 College *college = [self getCollegeById:collegeID];
-                [post setCollegeName:college.name];
+                [post setCollege:college];
+//                [post setCollegeName:college.name];
                 object = post;
                 for (Vote *vote in self.userPostVotes)
                 {

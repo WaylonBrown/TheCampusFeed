@@ -121,9 +121,12 @@
         self.hasReachedEndOfList = ![self loadMorePosts];
     }
     
-    static NSString *CellIdentifier = @"TableCell";
+    //TODO: Assign unique identifiers even though they all need the TableCell shit
     
-    TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    static NSString *CellIdentifier = @"TableCell";
+    NSString *uniqueIdentifier = [NSString stringWithFormat:@"%lu", (unsigned long)rowNum];
+    TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:uniqueIdentifier];
     
     if (cell == nil)
     {
@@ -132,16 +135,12 @@
         cell = [nib objectAtIndex:0];
     }
     [cell setDelegate: self];
-
+    
     // get the post and display in this cell
     Post *post = [self.list objectAtIndex:indexPath.row];
-    
-    long collegeId = [post getCollegeID];
-    College *college = [self.dataController getCollegeById:collegeId];
-    [post setCollegeName:college.name];
-    BOOL nearCollege = [self.dataController.nearbyColleges containsObject:college];
+    BOOL isNearCollege = [self.dataController.nearbyColleges containsObject:post.college];
     float cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
-    [cell assignWith:post IsNearCollege:nearCollege WithCellHeight:cellHeight];
+    [cell assignWith:post IsNearCollege:isNearCollege WithCellHeight:cellHeight];
     
     return cell;
 }

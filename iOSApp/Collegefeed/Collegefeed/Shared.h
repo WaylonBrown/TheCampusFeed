@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class College;
+
 @interface Shared : NSObject
 
 // Constant lengths
@@ -50,6 +52,7 @@
 #define logoImage @"thecampusfeedlogosmall.png"
 #define logoTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:logoImage]]
 
++ (void)addCollegeNearby:(College *)college;
 + (UIColor*)getCustomUIColor:(int)hexValue;
 + (float)getSmallCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font;
 + (float)getLargeCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font;

@@ -109,6 +109,7 @@
     if ([self.dataController isNearCollege])
     {
         [self placeCreatePost];
+        [self.tableView reloadData];
 //        [self.toastController toastNearbyColleges:self.dataController.nearbyColleges];
     }
     else

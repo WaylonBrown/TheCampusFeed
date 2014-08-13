@@ -10,6 +10,7 @@
 
 #import "CFModelProtocol.h"
 #import "PostAndCommentProtocol.h"
+@class College;
 
 @interface Post : NSObject<CFModelProtocol, PostAndCommentProtocol>
 
@@ -21,10 +22,11 @@
 @property (nonatomic) long score;
 @property (nonatomic) long commentCount;
 @property (nonatomic, strong) Vote *vote;
+@property (nonatomic, strong) College *college;
 
 @property (nonatomic, strong) NSString *userToken;
 @property (nonatomic, strong) NSString *message;
-@property (nonatomic, strong) NSString *collegeName;
+//@property (nonatomic, strong) NSString *collegeName;
 @property (nonatomic, strong) NSDate *date;
 
 @property (nonatomic, strong) NSDate *createdAt;

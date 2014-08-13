@@ -8,6 +8,7 @@
 
 #import "Post.h"
 #import "Comment.h"
+#import "College.h"
 #import "Vote.h"
 
 @implementation Post
@@ -126,7 +127,7 @@
 }
 - (NSString *)getCollegeName
 {
-    return self.collegeName;
+    return self.college.name;
 }
 - (long)getCollegeID
 {

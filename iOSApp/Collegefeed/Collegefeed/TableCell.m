@@ -55,7 +55,6 @@
 - (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby WithCellHeight:(float)height;
 {
     [self assign:post WithCellHeight:height];
-    
     [self.gpsIconImageView setHidden:(!isNearby)];
     [self setNeedsDisplay];
 }
