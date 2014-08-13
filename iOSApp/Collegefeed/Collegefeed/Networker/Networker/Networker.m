@@ -35,7 +35,7 @@
     {
         return GETReply;
     }
-    
+    NSLog(@"%@", stringReply);
     return nil;
 }
 + (NSData *)POST:(NSData *)data toUrl:(NSURL *)url
@@ -65,7 +65,7 @@
     {
         return POSTReply;
     }
-    
+    NSLog(@"%@", stringReply);
     return nil;
 }
 + (BOOL)DELETE:(NSData *)data toUrl:(NSURL *)url
@@ -95,7 +95,7 @@
     {
         return YES;
     }
-    
+    NSLog(@"%@", stringReply);
     return NO;
 }
 

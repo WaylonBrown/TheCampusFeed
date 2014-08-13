@@ -109,7 +109,7 @@
     if ([self.dataController isNearCollege])
     {
         [self placeCreatePost];
-        [self.toastController toastNearbyColleges:self.dataController.nearbyColleges];
+//        [self.toastController toastNearbyColleges:self.dataController.nearbyColleges];
     }
     else
     {
@@ -309,22 +309,15 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (!self.isScrolling) return;
     
     CGRect frame = self.feedToolbar.frame;
     CGFloat size = frame.size.height;
     CGFloat scrollOffset = scrollView.contentOffset.y;
     CGFloat scrollDiff = scrollOffset - self.previousScrollViewYOffset;
     CGFloat scrollHeight = scrollView.frame.size.height;
-//    CGFloat scrollSizeHeight = scrollView.contentSize.height;
     
-//    self.previousScrollSizeHeight = scrollSizeHeight;
     self.previousScrollViewYOffset = scrollOffset;
 
-//    if (scrollSizeHeight != self.previousScrollSizeHeight)
-//    {
-//        self.isLoadingPosts = false;
-//    }
     if (scrollOffset < 5)
     {   // keep bar showing if at top of scrollView
         frame.origin.y = scrollHeight - 50;

@@ -86,13 +86,12 @@
 }
 - (void)fixHeights
 {
-    int numNearbyColleges = self.dataController.nearbyColleges.count;
+    NSUInteger numNearbyColleges = self.dataController.nearbyColleges.count;
     
     int collegeSection = 0;
     float tableViewHeight = 0;
     
     bool showLoadingIndicator = !self.dataController.foundLocation;
-    bool noCollegesNearby = self.dataController.foundLocation && ![self.dataController isNearCollege];
     bool collegesNearby = [self.dataController isNearCollege];
 
 
@@ -149,7 +148,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    int numNearby = self.dataController.nearbyColleges.count;
+    NSUInteger numNearby = self.dataController.nearbyColleges.count;
     bool isNearColleges = numNearby > 0;
     
     switch (self.type)
@@ -248,9 +247,7 @@
         {   // Initial prompt given to user to select which feed to view
             
             bool showLoadingIndicator = !self.dataController.foundLocation;
-            bool noCollegesNearby = self.dataController.foundLocation && ![self.dataController isNearCollege];
-            bool collegesNearby = [self.dataController isNearCollege];
-
+            
             if (showLoadingIndicator && indexPath.section == 1)
             {
                 return;
@@ -294,7 +291,6 @@
     const int headerWidth = tableView.frame.size.width;
 
     bool showLoadingIndicator = !self.dataController.foundLocation;
-    bool noCollegesNearby = self.dataController.foundLocation && ![self.dataController isNearCollege];
     bool collegesNearby = [self.dataController isNearCollege];
     
     if (section == 0)
@@ -330,11 +326,11 @@
     
     return headerView;
 }
-- (float)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return (section == 0) ? 0 : TABLE_HEADER_HEIGHT;
+    return (section == 0) ? 0.0 : TABLE_HEADER_HEIGHT;
 }
-- (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.type == ALL_NEARBY_OTHER
         && (indexPath.section == 0 || indexPath.section == 2))

@@ -29,18 +29,19 @@
     self.enclosingView.layer.shadowRadius = 2;
     self.enclosingView.layer.shadowOpacity = 0.5;
     
+//    self.clipsToBounds = YES;
+    
     // Set font styles
     [self.messageLabel      setFont:CF_FONT_LIGHT(16)];
     [self.commentCountLabel setFont:CF_FONT_MEDIUM(12)];
     [self.ageLabel          setFont:CF_FONT_MEDIUM(12)];
     [self.scoreLabel        setFont:CF_FONT_BOLD(12)];
     [self.collegeLabel      setFont:CF_FONT_ITALIC(14)];
-
+    
 }
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

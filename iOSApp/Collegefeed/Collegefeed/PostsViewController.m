@@ -105,14 +105,15 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
-    int num = self.list.count;
+    NSUInteger num = self.list.count;
     return num;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
     // this specifies the prototype (PostTableCell) and assigns the labels
-    int rowNum = indexPath.row;
-    int listcount = self.list.count;
+    NSUInteger rowNum = indexPath.row;
+    NSUInteger listcount = self.list.count;
+    
     if (!self.hasReachedEndOfList
         && (rowNum + 5) % 25 == 0
         && listcount < rowNum + 10)
@@ -123,7 +124,6 @@
     static NSString *CellIdentifier = @"TableCell";
     
     TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
     
     if (cell == nil)
     {
@@ -142,7 +142,7 @@
     BOOL nearCollege = [self.dataController.nearbyColleges containsObject:college];
     float cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
     [cell assignWith:post IsNearCollege:nearCollege WithCellHeight:cellHeight];
-
+    
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -150,11 +150,7 @@
     NSString *text = [((Post *)[self.list objectAtIndex:[indexPath row]]) getMessage];
     return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)];
 }
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    
-}
+
 #pragma mark - Navigation
 
 - (void)switchToAllColleges
@@ -220,9 +216,11 @@
     {
         case TOP_VIEW:
         {
-            NSInteger oldCount = self.dataController.topPostsAllColleges.count;
+//            NSInteger oldCount = self.dataController.topPostsAllColleges.count;
+            NSInteger oldCount = self.list.count;
             success = [self.dataController fetchTopPosts];
-            NSInteger newCount = self.dataController.topPostsAllColleges.count;
+//            NSInteger newCount = self.dataController.topPostsAllColleges.count;
+            NSInteger newCount = self.list.count;
             
             NSMutableArray* insertingRows = [NSMutableArray array];
             
@@ -232,7 +230,7 @@
                 [insertingRows addObject:newIndexPath];
             }
             [self.tableView beginUpdates];
-            [self.tableView insertRowsAtIndexPaths:insertingRows withRowAnimation:UITableViewRowAnimationAutomatic];;
+            [self.tableView insertRowsAtIndexPaths:insertingRows withRowAnimation:UITableViewRowAnimationNone];
             [self.tableView endUpdates];
             
             
