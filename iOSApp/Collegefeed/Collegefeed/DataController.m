@@ -13,6 +13,7 @@
 #import "Tag.h"
 #import "Vote.h"
 #import "Networker.h"
+#import "Collegefeed-Swift.h"
 
 @implementation DataController
 

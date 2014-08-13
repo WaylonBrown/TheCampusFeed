@@ -218,17 +218,37 @@
     
     switch (self.viewType)
     {
+        case TOP_VIEW:
+        {
+            NSInteger oldCount = self.dataController.topPostsAllColleges.count;
+            success = [self.dataController fetchTopPosts];
+            NSInteger newCount = self.dataController.topPostsAllColleges.count;
+            
+            NSMutableArray* insertingRows = [NSMutableArray array];
+            
+            for (NSInteger i = oldCount; i < newCount; i++)
+            {
+                NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
+                [insertingRows addObject:newIndexPath];
+            }
+            [self.tableView beginUpdates];
+            [self.tableView insertRowsAtIndexPaths:insertingRows withRowAnimation:UITableViewRowAnimationAutomatic];;
+            [self.tableView endUpdates];
+            
+            
+//            [self refresh];
+//            [self.tableView reloadData];
+            break;
+        }
         case RECENT_VIEW:
             success = [self.dataController fetchNewPosts];
-            [self.tableView reloadData];
-            break;
-        case TOP_VIEW:
-            success = [self.dataController fetchTopPosts];
-            [self.tableView reloadData];
+            [self refresh];
+//            [self.tableView reloadData];
             break;
         case TAG_VIEW:
             success = [self.dataController fetchMorePostsWithTagMessage:self.tagMessage];
-            [self.tableView reloadData];
+            [self refresh];
+//            [self.tableView reloadData];
         default:
             break;
     }

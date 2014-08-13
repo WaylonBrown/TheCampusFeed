@@ -16,8 +16,6 @@
 @class Post;
 @class Vote;
 
-//"lat":30.229844,"lon":-97.75763,
-//"lat":30.28473,"lon":-97.737277,
 #define MILES_FOR_PERMISSION                15
 #define PI_VALUE                            3.14159
 #define EARTH_RADIUS_MILES                  3959

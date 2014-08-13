@@ -309,6 +309,8 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    if (!self.isScrolling) return;
+    
     CGRect frame = self.feedToolbar.frame;
     CGFloat size = frame.size.height;
     CGFloat scrollOffset = scrollView.contentOffset.y;

@@ -68,11 +68,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Collegefeed/MasterViewController.m"
-            timestampString = "429511896.872926"
+            timestampString = "429646414.195264"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "356"
-            endingLineNumber = "356">
+            startingLineNumber = "358"
+            endingLineNumber = "358">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
