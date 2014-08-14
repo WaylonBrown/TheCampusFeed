@@ -1,23 +1,23 @@
 development:
-  adapter: postgresql
+  adapter: mysql2
   encoding: utf8
   database: cf_development
   pool: 5
-  username: james
+  username: root
   password: F4flkgj43LWB#$LW#E$GFsrdknmfgn#$
 
 test: &TEST
-  adapter: postgresql
+  adapter: mysql2
   encoding: utf8
   database: cf_test
   pool: 5
-  username: james
+  username: root
   password: F4flkgj43LWB#$LW#E$GFsrdknmfgn#$
 
 production:
-  adapter: postgresql
+  adapter: mysql2
   encoding: utf8
   database: cf_production
   pool: 5
-  username: james
+  username: root
   password: F4flkgj43LWB#$LW#E$GFsrdknmfgn#$
