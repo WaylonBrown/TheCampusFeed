@@ -367,6 +367,7 @@ public class TagFragment extends Fragment
             listAdapter.clear();
         }
 		pullListFromServer();
+        scrollToTop();
 	}
 
 	public static void updateList() {
@@ -385,4 +386,10 @@ public class TagFragment extends Fragment
             progressSpinner.setVisibility(View.GONE);
         }
 	}
+
+    public static void scrollToTop() {
+        if(list != null){
+            list.setSelectionAfterHeaderView();
+        }
+    }
 }

@@ -462,6 +462,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
             postList.clear();
         }
 		pullListFromServer(true);
+        scrollToTop();
 	}
 	
 	public static void scrollToTop() {
