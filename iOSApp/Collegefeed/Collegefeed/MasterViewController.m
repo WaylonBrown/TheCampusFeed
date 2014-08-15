@@ -182,8 +182,6 @@
 }
 - (void)refresh
 {   // refresh the current view
-    [self.tableView setContentOffset:CGPointZero animated:YES];
-
     if (self.dataController.collegeList == nil || self.dataController.collegeList.count == 0)
     {
         [self.toastController toastErrorFetchingCollegeList];
@@ -196,6 +194,8 @@
     [self.currentFeedLabel setText:feedName];
     [self.tableView reloadData];
     [self.refreshControl endRefreshing];
+    
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
 }
 
 #pragma mark - Toasts

@@ -91,6 +91,10 @@
     if (indexPath.row == self.list.count)
     {
         NSLog(@"Touched last row");
+        
+        // Once this fails, the end of the network list has been reached
+        self.hasReachedEndOfList = ![self loadMorePosts];
+        
         return;
     }
     
@@ -134,7 +138,7 @@
             
         }
 
-//        [cell assignSimpleText:@"Load More"];
+        [cell assignSimpleText:@"Load More"];
         [cell showLoadingIndicator];
         return cell;
     }
@@ -174,16 +178,15 @@
     {
         Post *post = [self.list objectAtIndex:row];
         text = [post getMessage];
-        return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)];
     }
-    
-    return [Shared getSmallCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(18)];
+    return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)];
 }
 
 #pragma mark - Navigation
 
 - (void)switchToAllColleges
 {
+    self.hasReachedEndOfList = NO;
     switch (self.viewType)
     {
         case TOP_VIEW:
@@ -201,6 +204,7 @@
 }
 - (void)switchToSpecificCollege
 {
+    self.hasReachedEndOfList = NO;
     switch (self.viewType)
     {
         case TOP_VIEW:
@@ -262,7 +266,7 @@
             
             
 //            [self refresh];
-//            [self.tableView reloadData];
+            [self.tableView reloadData];
             break;
         }
         case RECENT_VIEW:
