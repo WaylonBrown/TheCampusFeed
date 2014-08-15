@@ -121,9 +121,6 @@
         self.hasReachedEndOfList = ![self loadMorePosts];
     }
     
-    //TODO: Assign unique identifiers even though they all need the TableCell shit
-    
-    
     static NSString *CellIdentifier = @"TableCell";
     NSString *uniqueIdentifier = [NSString stringWithFormat:@"%lu", (unsigned long)rowNum];
     TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:uniqueIdentifier];
@@ -133,6 +130,7 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier
                                                      owner:self options:nil];
         cell = [nib objectAtIndex:0];
+
     }
     [cell setDelegate: self];
     
@@ -141,7 +139,6 @@
     BOOL isNearCollege = [self.dataController.nearbyColleges containsObject:post.college];
     float cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
     [cell assignWith:post IsNearCollege:isNearCollege WithCellHeight:cellHeight];
-    
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -149,7 +146,7 @@
     NSString *text = [((Post *)[self.list objectAtIndex:[indexPath row]]) getMessage];
     return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)];
 }
-
+ 
 #pragma mark - Navigation
 
 - (void)switchToAllColleges
@@ -215,10 +212,8 @@
     {
         case TOP_VIEW:
         {
-//            NSInteger oldCount = self.dataController.topPostsAllColleges.count;
             NSInteger oldCount = self.list.count;
             success = [self.dataController fetchTopPosts];
-//            NSInteger newCount = self.dataController.topPostsAllColleges.count;
             NSInteger newCount = self.list.count;
             
             NSMutableArray* insertingRows = [NSMutableArray array];
@@ -229,7 +224,7 @@
                 [insertingRows addObject:newIndexPath];
             }
             [self.tableView beginUpdates];
-            [self.tableView insertRowsAtIndexPaths:insertingRows withRowAnimation:UITableViewRowAnimationNone];
+            [self.tableView insertRowsAtIndexPaths:insertingRows withRowAnimation:UITableViewRowAnimationTop];
             [self.tableView endUpdates];
             
             
@@ -263,6 +258,11 @@
         [self switchToSpecificCollege];
     }
     [super refresh];
+}
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *message = [((TableCell *)cell).object getMessage];
+//    NSLog(@"%@", message);
 }
 
 #pragma mark - CreationViewProtocol Delegate Methods

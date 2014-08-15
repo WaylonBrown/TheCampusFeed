@@ -13,7 +13,7 @@
 #import "Tag.h"
 #import "Vote.h"
 #import "Networker.h"
-#import "Collegefeed-Swift.h"
+//#import "Collegefeed-Swift.h"
 
 @implementation DataController
 
@@ -214,6 +214,8 @@
         {
             [networkPost setCollegeID:collegeId];
         }
+        College *college = [self getCollegeById:collegeId];
+        [networkPost setCollege:college];
         NSDate *postTime = [networkPost getCreatedAt];
         [self updateLastPostTime:postTime];
         

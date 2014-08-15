@@ -22,7 +22,6 @@
 - (void)awakeFromNib
 {
     // Initialization code
-    
     self.enclosingView.layer.masksToBounds = NO;
     self.enclosingView.layer.cornerRadius = 2;
     self.enclosingView.layer.shadowOffset = CGSizeMake(0, 1);
@@ -76,15 +75,15 @@
     [self.commentCountLabel setText:[self getCommentLabelString]];
     [self.ageLabel          setText:[self getAgeAsString:[obj getCreatedAt]]];
     
-    if ([obj getType] == COMMENT)
-    {
-        [self.dividerView removeFromSuperview];
-        [self.collegeLabel removeFromSuperview];
-    }
-    else
+    if ([obj getType] == POST)
     {
         [self.scoreLabel        setText:[NSString stringWithFormat:@"%lu", [obj getScore]]];
         [self.collegeLabel      setText:[obj getCollegeName]];
+    }
+    else
+    {
+        [self.dividerView removeFromSuperview];
+        [self.collegeLabel removeFromSuperview];
     }
     
     // Parse message for Tags

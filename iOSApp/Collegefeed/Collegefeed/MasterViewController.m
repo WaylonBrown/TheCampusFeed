@@ -310,6 +310,11 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+//    CGRect tableFrame = self.tableView.frame;
+//    CGFloat tableYYY = tableFrame.origin.y;
+//    CGFloat tableHeight = tableFrame.size.height;
+    
+//    NSLog(@"Y = %f\nHeight = %f\n\n", tableYYY, tableHeight);
     
     CGRect frame = self.feedToolbar.frame;
     CGFloat size = frame.size.height;
