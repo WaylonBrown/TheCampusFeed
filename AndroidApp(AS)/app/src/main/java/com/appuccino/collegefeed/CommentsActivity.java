@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
 import com.appuccino.collegefeed.dialogs.FlagDialog;
 import com.appuccino.collegefeed.dialogs.NewCommentDialog;
+import com.appuccino.collegefeed.fragments.MyCommentsFragment;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
@@ -91,8 +92,7 @@ public class CommentsActivity extends Activity{
                 post = MyPostsFragment.postList.get(postIndex);
                 break;
             case 3:
-                //TODO:
-                //post = MyContentActivity.commentParentList.get(postIndex);
+                post = MyCommentsFragment.parentPostList.get(postIndex);
                 break;
             default:
                 post = TagListActivity.postList.get(postIndex);
