@@ -91,6 +91,7 @@ public class MyCommentsFragment extends Fragment
     private void pullListFromServer()
     {
         commentList = new ArrayList<Comment>();
+        parentPostList = new ArrayList<Post>();
         ConnectivityManager cm = (ConnectivityManager)mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
         if(cm.getActiveNetworkInfo() != null) {
             new NetWorker.GetMyCommentsTask(this).execute(new NetWorker.PostSelector());
@@ -98,6 +99,11 @@ public class MyCommentsFragment extends Fragment
             Toast.makeText(mainActivity, "You have no internet connection.", Toast.LENGTH_LONG).show();
             makeLoadingIndicator(false);
         }
+    }
+
+    public static void updateCommentParentList(ArrayList<Post> result) {
+        parentPostList = new ArrayList<Post>();
+        parentPostList.addAll(result);
     }
 
     private void commentClicked(Comment comment) {
@@ -113,8 +119,7 @@ public class MyCommentsFragment extends Fragment
         intent.putExtra("SECTION_NUMBER", 3);
 
         startActivity(intent);
-        //TODO:
-        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private static Post getParentPostOfComment(Comment c){
@@ -153,6 +158,15 @@ public class MyCommentsFragment extends Fragment
             listAdapter.notifyDataSetChanged();
             updateUserScore();
         }
+
+        //fetch comments parent IDs
+        if(result != null && result.size() > 0){
+            List<Integer> commentParentIDs = new ArrayList<Integer>();
+            for(Comment c : commentList){
+                commentParentIDs.add(c.getPostID());
+            }
+            new NetWorker.GetManyPostsTask(commentParentIDs).execute(new NetWorker.PostSelector());
+        }
     }
 
     private static void updateUserScore() {
@@ -178,12 +192,6 @@ public class MyCommentsFragment extends Fragment
                 list.setVisibility(View.VISIBLE);
                 loadingSpinner.setVisibility(View.INVISIBLE);
             }
-        }
-    }
-
-    public static void scrollToTop() {
-        if(list != null){
-            list.setSelectionAfterHeaderView();
         }
     }
 }

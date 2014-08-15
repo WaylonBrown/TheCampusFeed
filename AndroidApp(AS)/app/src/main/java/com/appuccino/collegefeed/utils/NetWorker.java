@@ -469,27 +469,24 @@ public class NetWorker {
     public static class GetManyPostsTask extends AsyncTask<PostSelector, Void, ArrayList<Post> >
     {
         private List<Integer> postIDList;
-        private int whichList;  //0 = MyPosts, 1 = MyComments'Parents
-        private MyPostsFragment frag1;
+        private MyPostsFragment frag;
 
         public GetManyPostsTask(List<Integer> postIDList, MyPostsFragment frag)
         {
             this.postIDList = postIDList;
-            whichList = 0;
-            frag1 = frag;
+            frag = frag;
         }
 
-//        public GetManyPostsTask(List<Integer> postIDList, MyPostsFragment frag)
-//        {
-//            this.postIDList = postIDList;
-//            whichList = 0;
-//            frag1 = frag;
-//        }
+        public GetManyPostsTask(List<Integer> postIDList)
+        {
+            this.postIDList = postIDList;
+            frag = null;
+        }
 
         @Override
         protected void onPreExecute() {
-            if(whichList == 0 && frag1 != null){
-                frag1.makeLoadingIndicator(true);
+            if(frag != null){
+                frag.makeLoadingIndicator(true);
             }
             super.onPreExecute();
         }
@@ -538,12 +535,12 @@ public class NetWorker {
 
         @Override
         protected void onPostExecute(ArrayList<Post> result) {
-            if(whichList == 0 && frag1 != null){
-                frag1.updateList(result);
-                frag1.makeLoadingIndicator(false);
+            if(frag != null){
+                frag.updateList(result);
+                frag.makeLoadingIndicator(false);
             }
             else{
-                //MyContentActivity.updateCommentParentList(result);
+                MyCommentsFragment.updateCommentParentList(result);
             }
             super.onPostExecute(result);
         }
