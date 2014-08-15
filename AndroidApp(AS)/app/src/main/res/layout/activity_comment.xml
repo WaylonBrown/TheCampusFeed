@@ -101,6 +101,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:text="Comments"
+        android:textColor="@color/darkgray"
         android:textSize="16sp"/>
     
     <!-- holds listview and loading text -->

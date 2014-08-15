@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
 import com.appuccino.collegefeed.dialogs.FlagDialog;
 import com.appuccino.collegefeed.dialogs.NewCommentDialog;
+import com.appuccino.collegefeed.extra.CustomTextView;
 import com.appuccino.collegefeed.fragments.MyCommentsFragment;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
@@ -55,7 +56,7 @@ public class CommentsActivity extends Activity{
     static ImageView twitterButton;
     static View divider;
 	static ProgressBar actionBarLoadingIcon;
-	static TextView commentsText;
+	static CustomTextView commentsText;
 	final int minCommentLength = 3;
 	ListView list;
 	public static List<Comment> commentList;
@@ -73,7 +74,7 @@ public class CommentsActivity extends Activity{
 		final TextView scoreText = (TextView)findViewById(R.id.scoreText);
 		TextView messageText = (TextView)findViewById(R.id.messageText);
 		TextView timeText = (TextView)findViewById(R.id.timeText);
-		commentsText = (TextView)findViewById(R.id.commentsText);
+		commentsText = (CustomTextView)findViewById(R.id.commentsText);
 		
 		int collegeID = getIntent().getIntExtra("COLLEGE_ID", 0);
         int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);

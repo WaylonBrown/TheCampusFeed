@@ -474,7 +474,7 @@ public class NetWorker {
         public GetManyPostsTask(List<Integer> postIDList, MyPostsFragment frag)
         {
             this.postIDList = postIDList;
-            frag = frag;
+            this.frag = frag;
         }
 
         public GetManyPostsTask(List<Integer> postIDList)
