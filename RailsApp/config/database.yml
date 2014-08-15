@@ -3,7 +3,8 @@ development:
   encoding: utf8
   database: cf_development
   pool: 5
-  username: root
+  host: bb01e06aa298a9c72d3027604ca50021a0c2d79e.rackspaceclouddb.com
+  username: james
   password: F4flkgj43LWB#$LW#E$GFsrdknmfgn#$
 
 test: &TEST
