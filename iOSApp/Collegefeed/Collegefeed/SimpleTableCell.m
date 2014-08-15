@@ -1,5 +1,5 @@
 //
-//  TagCell.m
+//  SimpleTableCell.m
 //  Collegefeed
 //
 //  Created by Patrick Sheehan on 6/11/14.

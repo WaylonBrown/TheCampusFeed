@@ -17,6 +17,7 @@
 #import "SimpleTableCell.h"
 #import "ToastController.h"
 #import "Comment.h"
+#import "LoadingCell.h"
 
 @implementation PostsViewController
 
@@ -127,28 +128,20 @@
     
     if (rowNum == listcount)
     {
-        static NSString *LoadingCell = @"SimpleTableCell";
-        SimpleTableCell *cell = (SimpleTableCell *)[tableView dequeueReusableCellWithIdentifier:LoadingCell];
+        static NSString *LoadingCellIdentifier = @"LoadingCell";
+        LoadingCell *cell = (LoadingCell *)[tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier];
         
         if (cell == nil)
         {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:LoadingCell
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:LoadingCellIdentifier
                                                          owner:self options:nil];
             cell = [nib objectAtIndex:0];
             
         }
 
-        [cell assignSimpleText:@"Load More"];
         [cell showLoadingIndicator];
         return cell;
     }
-    
-//    if (!self.hasReachedEndOfList
-//        && (rowNum + 5) % 25 == 0
-//        && listcount < rowNum + 10)
-//    {
-//        self.hasReachedEndOfList = ![self loadMorePosts];
-//    }
     
     static NSString *CellIdentifier = @"TableCell";
     TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -178,8 +171,9 @@
     {
         Post *post = [self.list objectAtIndex:row];
         text = [post getMessage];
+        return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)];
     }
-    return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)];
+    return [Shared getSmallCellHeightEstimateWithText:@"" WithFont:nil];
 }
 
 #pragma mark - Navigation

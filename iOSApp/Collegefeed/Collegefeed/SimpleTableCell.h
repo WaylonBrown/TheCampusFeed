@@ -1,5 +1,5 @@
 //
-//  TagCell.h
+//  SimpleTableCell.h
 //  Collegefeed
 //
 //  Created by Patrick Sheehan on 6/11/14.
