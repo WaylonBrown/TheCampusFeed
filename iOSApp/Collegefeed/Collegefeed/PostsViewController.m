@@ -14,6 +14,7 @@
 #import "CommentViewController.h"
 #import "Shared.h"
 #import "College.h"
+#import "SimpleTableCell.h"
 #import "ToastController.h"
 #import "Comment.h"
 
@@ -87,6 +88,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Comment View for the selected post
 
+    if (indexPath.row == self.list.count)
+    {
+        NSLog(@"Touched last row");
+        return;
+    }
+    
     if (self.viewType == USER_COMMENTS)
     {
         Comment *selectedComment = (Comment *)[self.list objectAtIndex:indexPath.row];
@@ -106,7 +113,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
     NSUInteger num = self.list.count;
-    return num;
+    return num + 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
@@ -114,16 +121,33 @@
     NSUInteger rowNum = indexPath.row;
     NSUInteger listcount = self.list.count;
     
-    if (!self.hasReachedEndOfList
-        && (rowNum + 5) % 25 == 0
-        && listcount < rowNum + 10)
+    if (rowNum == listcount)
     {
-        self.hasReachedEndOfList = ![self loadMorePosts];
+        static NSString *LoadingCell = @"SimpleTableCell";
+        SimpleTableCell *cell = (SimpleTableCell *)[tableView dequeueReusableCellWithIdentifier:LoadingCell];
+        
+        if (cell == nil)
+        {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:LoadingCell
+                                                         owner:self options:nil];
+            cell = [nib objectAtIndex:0];
+            
+        }
+
+//        [cell assignSimpleText:@"Load More"];
+        [cell showLoadingIndicator];
+        return cell;
     }
     
+//    if (!self.hasReachedEndOfList
+//        && (rowNum + 5) % 25 == 0
+//        && listcount < rowNum + 10)
+//    {
+//        self.hasReachedEndOfList = ![self loadMorePosts];
+//    }
+    
     static NSString *CellIdentifier = @"TableCell";
-    NSString *uniqueIdentifier = [NSString stringWithFormat:@"%lu", (unsigned long)rowNum];
-    TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:uniqueIdentifier];
+    TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil)
     {
@@ -143,10 +167,19 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *text = [((Post *)[self.list objectAtIndex:[indexPath row]]) getMessage];
-    return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)];
+    NSUInteger row = indexPath.row;
+    NSString *text = @"";
+    
+    if (row < [self.list count])
+    {
+        Post *post = [self.list objectAtIndex:row];
+        text = [post getMessage];
+        return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)];
+    }
+    
+    return [Shared getSmallCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(18)];
 }
- 
+
 #pragma mark - Navigation
 
 - (void)switchToAllColleges
@@ -261,7 +294,7 @@
 }
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *message = [((TableCell *)cell).object getMessage];
+//    NSString *message = [((TableCell *)cell).object getMessage];
 //    NSLog(@"%@", message);
 }
 

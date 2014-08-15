@@ -149,7 +149,6 @@
 
 - (IBAction)changeFeed;
 {   // User wants to change the feed (all colleges, nearby college, or other)
-
     FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_NEARBY_OTHER WithDataController:self.dataController WithFeedDelegate:self];
     [self.navigationController presentViewController:controller animated:YES completion:nil];
 }
@@ -183,6 +182,8 @@
 }
 - (void)refresh
 {   // refresh the current view
+    [self.tableView setContentOffset:CGPointZero animated:YES];
+
     if (self.dataController.collegeList == nil || self.dataController.collegeList.count == 0)
     {
         [self.toastController toastErrorFetchingCollegeList];
