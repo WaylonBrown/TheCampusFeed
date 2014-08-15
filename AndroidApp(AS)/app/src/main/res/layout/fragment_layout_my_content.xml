@@ -1,5 +1,6 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/pullToRefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,14 +31,15 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"/>
 
-        <TextView
+        <com.appuccino.collegefeed.extra.CustomTextView
             android:id="@+id/score"
             style="@style/block"
             android:text="Post Score: 0"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
             android:gravity="center_horizontal"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            app:typeface="light"/>
 
     </LinearLayout>
 

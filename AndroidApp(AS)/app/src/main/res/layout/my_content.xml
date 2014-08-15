@@ -5,7 +5,7 @@
     style="@style/fill"
     android:background="@color/lightgray">
 
-    <TextView
+    <com.appuccino.collegefeed.extra.CustomTextView
         android:id="@+id/myPostsTextView"
         style="@style/block"
         android:text="My Posts"
@@ -40,7 +40,7 @@
 
     </FrameLayout>
 
-    <TextView
+    <com.appuccino.collegefeed.extra.CustomTextView
         android:id="@+id/myCommentsTextView"
         style="@style/block"
         android:text="My Comments"
@@ -82,7 +82,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"/>
 
-    <TextView
+    <com.appuccino.collegefeed.extra.CustomTextView
         android:id="@+id/postScore"
         style="@style/block"
         android:text="Post Score: 0"
@@ -91,7 +91,7 @@
         android:gravity="center_horizontal"
         android:textSize="16sp"/>
 
-    <TextView
+    <com.appuccino.collegefeed.extra.CustomTextView
         android:id="@+id/commentScore"
         style="@style/block"
         android:paddingBottom="6dp"

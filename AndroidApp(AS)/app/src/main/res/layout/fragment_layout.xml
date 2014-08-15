@@ -25,7 +25,7 @@
         style="@style/wrap"
         android:visibility="gone"/>
 
-    <TextView
+    <com.appuccino.collegefeed.extra.CustomTextView
         android:id="@+id/pullDownText"
         style="@style/fill"
         android:gravity="center"
@@ -48,7 +48,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent">
             
-            <TextView
+            <com.appuccino.collegefeed.extra.CustomTextView
 	            android:id="@+id/showingFeedText"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
 	            android:textColor="@color/white"
 	            />
             
-            <TextView
+            <com.appuccino.collegefeed.extra.CustomTextView
 	            android:id="@+id/collegeNameBottomText"
 	            android:gravity="center_vertical"
 	            android:layout_width="match_parent"
@@ -81,7 +81,7 @@
             android:layout_marginBottom="8dp"
             android:background="@color/white"/>
         
-        <TextView
+        <com.appuccino.collegefeed.extra.CustomTextView
             android:id="@+id/chooseText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

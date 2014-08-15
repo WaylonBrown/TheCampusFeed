@@ -32,7 +32,7 @@
 		        android:layout_gravity="center_horizontal"
 		        />
 	        
-	        <TextView
+	        <com.appuccino.collegefeed.extra.CustomTextView
 	            android:id="@+id/scoreText"
 	            android:layout_width = "wrap_content"
 	            android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
 	        android:orientation="vertical"
 	        >
 			        
-		    <TextView 
+		    <com.appuccino.collegefeed.extra.CustomTextView
 		        android:id="@+id/messageText"
 		        android:text="Post not found"
 		        android:textSize="20sp"
@@ -73,7 +73,7 @@
 		        android:layout_marginRight="8dp"
 		        android:minHeight="65dp"/>
 			        
-	        <TextView 
+	        <com.appuccino.collegefeed.extra.CustomTextView
 	            android:id="@+id/timeText"
 	            android:text=":("
 	            android:textSize="15sp"
@@ -93,7 +93,7 @@
 	
 	</LinearLayout>
     
-    <TextView
+    <com.appuccino.collegefeed.extra.CustomTextView
         android:id="@+id/commentsText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

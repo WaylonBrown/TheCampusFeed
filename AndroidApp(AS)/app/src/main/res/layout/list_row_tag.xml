@@ -8,7 +8,7 @@
 	android:layout_marginRight="8dp"
 	android:background="@drawable/card">
 	
-    <TextView 
+    <com.appuccino.collegefeed.extra.CustomTextView
         android:id="@+id/tagText"
         android:text="#notfound"
         android:textSize="30sp"
