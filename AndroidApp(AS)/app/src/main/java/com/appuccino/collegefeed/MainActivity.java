@@ -64,6 +64,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	ImageView newPostButton;
 	ProgressBar permissionsProgress;
 	ChooseFeedDialog chooseFeedDialog;
+    NewPostDialog newPostDialog;
 	
 	//final values
 	public static final int ALL_COLLEGES = 0;	//used for permissions
@@ -759,9 +760,11 @@ public class MainActivity extends FragmentActivity implements LocationListener
 		if(permissions != null)
 		{
             if(haventPostedInXMinutes()){
-                LayoutInflater inflater = getLayoutInflater();
-                View postDialogLayout = inflater.inflate(R.layout.dialog_post, null);
-                new NewPostDialog(this, this, postDialogLayout);
+                if(newPostDialog == null || !newPostDialog.isShowing()){
+                    LayoutInflater inflater = getLayoutInflater();
+                    View postDialogLayout = inflater.inflate(R.layout.dialog_post, null);
+                    newPostDialog = new NewPostDialog(this, this, postDialogLayout);
+                }
             } else {
                 Toast.makeText(this, "Sorry, you can only post once every " + MainActivity.TIME_BETWEEN_POSTS + " minutes.", Toast.LENGTH_LONG).show();
             }
