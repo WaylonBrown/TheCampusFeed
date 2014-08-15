@@ -238,6 +238,10 @@
         }
     }
 }
+- (void)create
+{
+    [self loadMorePosts];
+}
 
 #pragma mark - Actions
 
@@ -251,7 +255,11 @@
         {
             NSInteger oldCount = self.list.count;
             success = [self.dataController fetchTopPosts];
+
+            // Option 1
             NSInteger newCount = self.list.count;
+            
+            if (oldCount == newCount) return NO;
             
             NSMutableArray* insertingRows = [NSMutableArray array];
             
@@ -263,10 +271,14 @@
             [self.tableView beginUpdates];
             [self.tableView insertRowsAtIndexPaths:insertingRows withRowAnimation:UITableViewRowAnimationTop];
             [self.tableView endUpdates];
-            
-            
-//            [self refresh];
             [self.tableView reloadData];
+            
+            
+            // Option 2
+//            [self refresh];
+
+            // Option 3
+//            [self.tableView reloadData];
             break;
         }
         case RECENT_VIEW:

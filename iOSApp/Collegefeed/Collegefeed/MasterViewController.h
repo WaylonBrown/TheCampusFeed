@@ -32,6 +32,8 @@
 @property (weak, nonatomic) IBOutlet UIButton           *feedButton;
 @property (strong, nonatomic) IBOutlet UIView *toolbarSeparator;
 
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *toolBarSpaceFromBottom;
+
 @property (strong, nonatomic) NSMutableArray *list;
 
 @property (nonatomic) float previousScrollViewYOffset;

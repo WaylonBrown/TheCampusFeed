@@ -196,6 +196,8 @@
     [self.refreshControl endRefreshing];
     
     [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+    self.toolBarSpaceFromBottom.constant = 50;
+    [self.feedToolbar updateConstraintsIfNeeded];
 }
 
 #pragma mark - Toasts
@@ -311,11 +313,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-//    CGRect tableFrame = self.tableView.frame;
-//    CGFloat tableYYY = tableFrame.origin.y;
-//    CGFloat tableHeight = tableFrame.size.height;
-    
-//    NSLog(@"Y = %f\nHeight = %f\n\n", tableYYY, tableHeight);
+    scrollView.bounces = (scrollView.contentOffset.y < 50);
     
     CGRect frame = self.feedToolbar.frame;
     CGFloat size = frame.size.height;
@@ -327,19 +325,17 @@
 
     if (scrollOffset < 5)
     {   // keep bar showing if at top of scrollView
-        frame.origin.y = scrollHeight - 50;
+        self.toolBarSpaceFromBottom.constant = 50;
     }
     else if (scrollDiff > 0 && (frame.origin.y < scrollHeight))
     {   // flick up / scroll down / hide bar
-        frame.origin.y += 4;
+        self.toolBarSpaceFromBottom.constant -= 4;
     }
     else if (scrollDiff < 0 && (frame.origin.y + size > scrollHeight))
     {   // flick down / scroll up / show bar
-        frame.origin.y -= 4;
+        self.toolBarSpaceFromBottom.constant += 4;
     }
-    
-
-    [self.feedToolbar setFrame:frame];
+    [self.feedToolbar updateConstraintsIfNeeded];
 }
 
 @end

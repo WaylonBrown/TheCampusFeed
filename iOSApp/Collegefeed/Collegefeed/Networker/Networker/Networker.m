@@ -14,7 +14,6 @@
 
 + (NSData *)GET:(NSURL *)url
 {   // Gets the data from the provided URL
-    NSLog(@"URL: %@", url);
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     
@@ -35,13 +34,12 @@
     {
         return GETReply;
     }
+    NSLog(@"URL: %@", url);
     NSLog(@"%@", stringReply);
     return nil;
 }
 + (NSData *)POST:(NSData *)data toUrl:(NSURL *)url
 {
-    NSLog(@"URL: %@", url);
-    
     // Build request
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     NSString *length = [NSString stringWithFormat:@"%lu", (unsigned long)[data length]];
@@ -65,13 +63,12 @@
     {
         return POSTReply;
     }
+    NSLog(@"URL: %@", url);
     NSLog(@"%@", stringReply);
     return nil;
 }
 + (BOOL)DELETE:(NSData *)data toUrl:(NSURL *)url
 {
-    NSLog(@"URL: %@", url);
-    
     // Build request
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     NSString *length = [NSString stringWithFormat:@"%lu", (unsigned long)[data length]];
@@ -95,6 +92,8 @@
     {
         return YES;
     }
+    
+    NSLog(@"URL: %@", url);
     NSLog(@"%@", stringReply);
     return NO;
 }

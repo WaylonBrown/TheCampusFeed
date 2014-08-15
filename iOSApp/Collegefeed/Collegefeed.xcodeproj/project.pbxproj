@@ -60,6 +60,8 @@
 		53CF33A0194E7A7A008BB733 /* Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CF339F194E7A7A008BB733 /* Shared.m */; };
 		53D51E391949625300A8BA81 /* SimpleTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D51E371949625300A8BA81 /* SimpleTableCell.m */; };
 		53D51E3A1949625300A8BA81 /* SimpleTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D51E381949625300A8BA81 /* SimpleTableCell.xib */; };
+		53D6E986199DA4F500FD9061 /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D6E985199DA4F500FD9061 /* LoadingCell.m */; };
+		53D6E988199DA51500FD9061 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D6E987199DA51500FD9061 /* LoadingCell.xib */; };
 		53F8789119133F60002A578B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789019133F60002A578B /* Foundation.framework */; };
 		53F8789319133F60002A578B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789219133F60002A578B /* CoreGraphics.framework */; };
 		53F8789519133F60002A578B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789419133F60002A578B /* UIKit.framework */; };
@@ -202,6 +204,9 @@
 		53D51E361949625300A8BA81 /* SimpleTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleTableCell.h; path = Collegefeed/SimpleTableCell.h; sourceTree = "<group>"; };
 		53D51E371949625300A8BA81 /* SimpleTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleTableCell.m; path = Collegefeed/SimpleTableCell.m; sourceTree = "<group>"; };
 		53D51E381949625300A8BA81 /* SimpleTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SimpleTableCell.xib; path = Collegefeed/SimpleTableCell.xib; sourceTree = "<group>"; };
+		53D6E984199DA4F500FD9061 /* LoadingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadingCell.h; path = Collegefeed/LoadingCell.h; sourceTree = "<group>"; };
+		53D6E985199DA4F500FD9061 /* LoadingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadingCell.m; path = Collegefeed/LoadingCell.m; sourceTree = "<group>"; };
+		53D6E987199DA51500FD9061 /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoadingCell.xib; path = Collegefeed/LoadingCell.xib; sourceTree = "<group>"; };
 		53F8788D19133F60002A578B /* Collegefeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collegefeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53F8789019133F60002A578B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		53F8789219133F60002A578B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -275,6 +280,9 @@
 				53D51E361949625300A8BA81 /* SimpleTableCell.h */,
 				53D51E371949625300A8BA81 /* SimpleTableCell.m */,
 				53D51E381949625300A8BA81 /* SimpleTableCell.xib */,
+				53D6E984199DA4F500FD9061 /* LoadingCell.h */,
+				53D6E985199DA4F500FD9061 /* LoadingCell.m */,
+				53D6E987199DA51500FD9061 /* LoadingCell.xib */,
 			);
 			name = "Custom Cells";
 			path = ..;
@@ -683,6 +691,7 @@
 				53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */,
 				531EAAEF1988300C00C1E1AA /* icon_light_small.png in Resources */,
 				531EAAF01988300C00C1E1AA /* icon.png in Resources */,
+				53D6E988199DA51500FD9061 /* LoadingCell.xib in Resources */,
 				53AB57C5194ABD11001D1B7B /* Omnes-Semibold.ttf in Resources */,
 				53C44EA719669FB400367E33 /* flag.png in Resources */,
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,
@@ -777,6 +786,7 @@
 				5350557719514587009C1911 /* CreatePostCommentViewController.m in Sources */,
 				533475A41923344100E84CC8 /* TableCell.m in Sources */,
 				53963DE71916E5F50084E646 /* PostsViewController.m in Sources */,
+				53D6E986199DA4F500FD9061 /* LoadingCell.m in Sources */,
 				53F8789D19133F60002A578B /* main.m in Sources */,
 				53D51E391949625300A8BA81 /* SimpleTableCell.m in Sources */,
 				5312942E196504CD00CF13DB /* ToastController.m in Sources */,
