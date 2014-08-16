@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
+import android.graphics.LightingColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Criteria;
 import android.location.Location;
@@ -160,6 +161,8 @@ public class MainActivity extends FragmentActivity implements LocationListener
         myCommentsList = PrefManager.getMyCommentsList();
 
 		permissionsProgress = (ProgressBar)findViewById(R.id.permissionsLoadingIcon);
+        //set progressbar as white
+        permissionsProgress.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(getResources().getColor(R.color.white), getResources().getColor(R.color.white)));
 		newPostButton = (ImageView)findViewById(R.id.newPostButton);
 		newPostButton.setOnClickListener(new OnClickListener(){
 			@Override
