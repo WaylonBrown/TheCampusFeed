@@ -379,9 +379,9 @@ public class MainActivity extends FragmentActivity implements LocationListener
 		actionBar.setDisplayShowCustomEnabled(true);
 		actionBar.setDisplayUseLogoEnabled(false);
 		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
-		actionBar.setIcon(R.drawable.logofake);
+		//actionBar.setIcon(R.drawable.logofake);
         actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        //actionBar.setDisplayHomeAsUpEnabled(false);
 	}
 
     public static int getVoteByPostId(int postID){
