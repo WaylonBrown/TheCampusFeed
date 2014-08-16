@@ -17,7 +17,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +59,6 @@ import java.util.TimerTask;
 public class MainActivity extends FragmentActivity implements LocationListener
 {
     private MenuDrawer menuDrawer;
-	PagerAdapter pagerAdapter;
 	ActionBar actionBar;
 	ImageView newPostButton;
 	ProgressBar permissionsProgress;
@@ -170,6 +168,16 @@ public class MainActivity extends FragmentActivity implements LocationListener
 				newPostClicked();
 			}
 		});
+
+        ImageView mainLogo = (ImageView)findViewById(R.id.mainLogo);
+        mainLogo.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(menuDrawer != null) {
+                    menuDrawer.toggleMenu();
+                }
+            }
+        });
 	}
 
     private void setupMenuDrawerViews() {

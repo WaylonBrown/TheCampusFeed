@@ -18,6 +18,7 @@
             android:textSize="22sp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
+            android:textColor="@color/darkgray"
             />
         
     </LinearLayout>

@@ -8,11 +8,14 @@
     >
     
 	<ImageView
+        android:id="@+id/mainLogo"
 	    android:layout_width="180dp"
-	    android:layout_height="39dp"
-	    android:layout_marginTop="1dp"
-        android:layout_marginLeft="@dimen/action_bar_logo_left_margin"
+	    android:layout_height="49dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
 	    android:src="@drawable/thecampusfeedlogosmall"
+        android:clickable="true"
+        android:background="@drawable/postbuttonclick"
         />
 
 	<LinearLayout

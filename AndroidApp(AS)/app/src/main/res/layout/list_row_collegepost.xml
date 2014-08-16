@@ -156,6 +156,7 @@
 	        android:layout_marginBottom="6dp"
 	        android:singleLine="true"
 	        android:visibility="gone"
+            android:textColor="@color/darkgray"
 	        />
 	    
 	    <ImageView
