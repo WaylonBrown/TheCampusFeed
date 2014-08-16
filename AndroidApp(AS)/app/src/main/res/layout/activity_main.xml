@@ -9,5 +9,15 @@
 	    style="@style/fill"
 	    android:background="@color/lightgray"/>
 
+    <RelativeLayout
+        android:id="@+id/overlay"
+        style="@style/fill"
+        android:background="@color/alphablack"
+        android:visibility="gone">
+
+
+
+    </RelativeLayout>
+
 </RelativeLayout>
 

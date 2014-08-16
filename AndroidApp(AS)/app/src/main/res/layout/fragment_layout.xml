@@ -31,7 +31,8 @@
         android:gravity="center"
         android:text="@string/emptyListString"
         android:textSize="20sp"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:textColor="@color/darkgray"/>
     
     <LinearLayout
         android:id="@+id/footer"

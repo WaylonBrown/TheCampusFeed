@@ -327,7 +327,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
             Log.i("cfeed","New My Posts list is of size " + myPostsList.size());
         }
         myPostsList.add(post.getID());
-        goToNewPostsAndScrollToTop(c, post.getCollegeID());
+        goToNewPostsAndScrollToTop(post.getCollegeID());
         PrefManager.putMyPostsList(myPostsList);
         lastPostTime = Calendar.getInstance();
         PrefManager.putLastPostTime(lastPostTime);
@@ -693,15 +693,12 @@ public class MainActivity extends FragmentActivity implements LocationListener
 		}
 	}
 	
-    public void goToTopPostsAndScrollToTop(Context c) {
-//        if(viewPager != null){
-//            viewPager.setCurrentItem(0);
-//            TopPostFragment.scrollToTop();
-//        }
-        Toast.makeText(c, "Implement goToTopPostsAndScrollToTop", Toast.LENGTH_LONG).show();
+    public void goToTopPostsAndScrollToTop() {
+        selectedMenuItem = 0;
+        menuItemSelected();
     }
 
-	public void goToNewPostsAndScrollToTop(Context c, int feedID) {
+	public void goToNewPostsAndScrollToTop(int feedID) {
         //if on another feed, switch to correct feed before going to New Posts
         if(currentFeedCollegeID != MainActivity.ALL_COLLEGES && currentFeedCollegeID != feedID){
             currentFeedCollegeID = feedID;
