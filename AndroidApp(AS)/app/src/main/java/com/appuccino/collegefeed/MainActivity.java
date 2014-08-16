@@ -670,16 +670,21 @@ public class MainActivity extends FragmentActivity implements LocationListener
                 if(chooseFeedDialog != null && chooseFeedDialog.isShowing()){
                     chooseFeedDialog.populateNearYouList(true);
                 }
-
-				Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
+                //only show toast if it isn't the very first time running app
+                if(PrefManager.getInt(PrefManager.APP_RUN_COUNT, 0) > 1) {
+                    Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
+                }
 			}
 			else	//near a college
 			{
 				CommentsActivity.setNewPermissionsIfAvailable();
 				if(permissions.size() == 1)
 				{
-					Toast.makeText(this, "You're near " + getCollegeByID(permissions.get(0)).getName(), Toast.LENGTH_LONG).show();
-					Toast.makeText(this, "You can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
+                    //only show toast if it isn't the very first time running app
+                    if(PrefManager.getInt(PrefManager.APP_RUN_COUNT, 0) > 1){
+                        Toast.makeText(this, "You're near " + getCollegeByID(permissions.get(0)).getName(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "You can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
+                    }
 				}
 				else
 				{
@@ -690,8 +695,11 @@ public class MainActivity extends FragmentActivity implements LocationListener
 					}
 					//remove last "and"
 					toastMessage = toastMessage.substring(0, toastMessage.length() - 5);
-					Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
-					Toast.makeText(this, "You can upvote, downvote, post, and comment on those colleges' posts", Toast.LENGTH_LONG).show();
+                    //only show toast if it isn't the very first time running app
+                    if(PrefManager.getInt(PrefManager.APP_RUN_COUNT, 0) > 1) {
+                        Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "You can upvote, downvote, post, and comment on those colleges' posts", Toast.LENGTH_LONG).show();
+                    }
 				}
 				
 				if(currentFeedCollegeID == ALL_COLLEGES){
