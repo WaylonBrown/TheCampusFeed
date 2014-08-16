@@ -47,7 +47,7 @@ public class CustomTextView extends TextView {
                 }
                 setTypeface(tf);
                 //sets default color for if textColor isn't already defined in xml
-                setTextColor(getResources().getColor(R.color.darkgray));
+                //setTextColor(getResources().getColor(R.color.darkgray));
             }
             a.recycle();
         }

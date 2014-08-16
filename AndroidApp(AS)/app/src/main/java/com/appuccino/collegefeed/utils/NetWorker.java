@@ -766,8 +766,7 @@ public class NetWorker {
 
         public void onPostExecute(Boolean result){
             if(!result){
-                //TODO: remove this
-                Toast.makeText(c, "Vote didnt work", Toast.LENGTH_LONG).show();
+                Log.e("cfeed","Vote didnt work");
             }
 
             Vote returnedVote = null;
@@ -812,8 +811,7 @@ public class NetWorker {
 
         public void onPostExecute(Boolean result){
             if(!result){
-                //TODO: remove this
-                Toast.makeText(c, "Vote didnt work", Toast.LENGTH_LONG).show();
+                Log.e("cfeed","Vote didnt work");
             }
 
             Vote returnedVote = null;
@@ -862,8 +860,7 @@ public class NetWorker {
 
         public void onPostExecute(Boolean result){
             if(!result){
-                //TODO: remove this
-                Toast.makeText(c, "Vote delete didnt work", Toast.LENGTH_LONG).show();
+                Log.e("cfeed", "Vote delete didn't work.");
             }
 
             MainActivity.removePostVoteByPostID(vote.postID);
@@ -906,8 +903,7 @@ public class NetWorker {
 
         public void onPostExecute(Boolean result){
             if(!result){
-                //TODO: remove this
-                Toast.makeText(c, "Vote delete didnt work", Toast.LENGTH_LONG).show();
+                Log.e("cfeed", "Vote delete didn't work.");
             }
 
             MainActivity.removeCommentVoteByCommentID(vote.commentID);

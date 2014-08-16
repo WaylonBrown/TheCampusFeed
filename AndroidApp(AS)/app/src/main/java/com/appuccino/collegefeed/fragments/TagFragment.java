@@ -356,7 +356,7 @@ public class TagFragment extends Fragment
 				collegeNameBottom.setText(currentCollege.getName());
 			else if(id == MainActivity.ALL_COLLEGES)
 				collegeNameBottom.setText(mainActivity.getResources().getString(R.string.allColleges));
-			//TODO: load college list here
+			//TODO: IGNORE load college list here
 			else
 				collegeNameBottom.setText("");
 		}
