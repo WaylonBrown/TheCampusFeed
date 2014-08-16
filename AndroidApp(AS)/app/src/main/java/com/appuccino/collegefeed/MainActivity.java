@@ -79,7 +79,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
 
     private static int selectedMenuItem = 0;
     private int previouslySelectedMenuItem = 0;
-	boolean locationFound = false;
+	public static boolean locationFound = false;
 	public static LocationManager mgr;
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
     public static String collegeListCheckSum;
@@ -132,14 +132,14 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	public void onConfigurationChanged(Configuration newConfig)
 	{
         Log.i("cfeed","APPSETUP: orientation change");
-        setupApp();
-        if(permissions == null || permissions.size() == 0){
-            newPostButton.setVisibility(View.GONE);
-        } else {
-            newPostButton.setVisibility(View.VISIBLE);
-        }
+        //setupApp();
+//        if(permissions == null || permissions.size() == 0){
+//            newPostButton.setVisibility(View.GONE);
+//        } else {
+//            newPostButton.setVisibility(View.VISIBLE);
+//        }
 
-        setupMenuDrawerViews();
+        //setupMenuDrawerViews();
 	    super.onConfigurationChanged(newConfig);
 
 	}
@@ -320,10 +320,6 @@ public class MainActivity extends FragmentActivity implements LocationListener
                 newPostFrag.postList.add(0, post);
                 newPostFrag.updateList();
             }
-
-
-
-
             Log.i("cfeed","New My Posts list is of size " + myPostsList.size());
         }
         myPostsList.add(post.getID());
@@ -566,8 +562,12 @@ public class MainActivity extends FragmentActivity implements LocationListener
 									@Override
 									public void run() {
 										Toast.makeText(that, "Couldn't find location. You can upvote, but nothing else.", Toast.LENGTH_LONG).show();
+                                        locationFound = true;
 										permissionsProgress.setVisibility(View.GONE);
 										newPostButton.setVisibility(View.GONE);
+                                        if(chooseFeedDialog != null && chooseFeedDialog.isShowing()){
+                                            chooseFeedDialog.populateNearYouList(true);
+                                        }
 									}
 									
 								});
@@ -659,6 +659,10 @@ public class MainActivity extends FragmentActivity implements LocationListener
 					permissionsProgress.setVisibility(View.GONE);
 					newPostButton.setVisibility(View.INVISIBLE);
 				}
+                if(chooseFeedDialog != null && chooseFeedDialog.isShowing()){
+                    chooseFeedDialog.populateNearYouList(true);
+                }
+
 				Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
 			}
 			else	//near a college

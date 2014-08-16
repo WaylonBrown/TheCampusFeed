@@ -9,6 +9,7 @@
         <item name="android:colorPrimary">@color/blue</item>
         <item name="android:colorPrimaryDark">@color/darkblue</item>
         <item name="android:colorAccent">@color/blue</item>
+    <!-- <style name="AppBaseTheme" parent="android:Theme.Holo.Light"> -->
     </style>
 
     <!-- Application theme. -->

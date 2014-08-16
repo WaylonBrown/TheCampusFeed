@@ -2,12 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 'android-L'
+    //compileSdkVersion 16
     buildToolsVersion "20.0.0"
 
     defaultConfig {
         applicationId "com.appuccino.collegefeed"
         minSdkVersion 14
         targetSdkVersion 'L'
+        //targetSdkVersion 16
         versionCode 1
         versionName "1.0"
     }
