@@ -473,7 +473,6 @@ public class MainActivity extends FragmentActivity implements LocationListener
         chooseFeedDialog();
         //this one is called second as it has to be on top
         new GettingStartedDialog(this, "Getting Started");
-        menuDrawer.openMenu();
     }
 	
 	private void showPermissionsToast() 
