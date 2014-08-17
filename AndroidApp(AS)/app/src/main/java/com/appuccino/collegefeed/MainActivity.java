@@ -19,10 +19,13 @@ import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -470,9 +473,33 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	}
 
     public void showFirstTimeMessages(){
-        chooseFeedDialog();
         //this one is called second as it has to be on top
-        new GettingStartedDialog(this, "Getting Started");
+        //new GettingStartedDialog(this, "Getting Started");
+        final FrameLayout fragContainer = (FrameLayout)findViewById(R.id.fragmentContainer);
+        fragContainer.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return true;
+            }
+        });
+
+        final RelativeLayout overlay = (RelativeLayout)findViewById(R.id.getting_started_overlay);
+        overlay.setVisibility(View.VISIBLE);
+        ImageView button = (ImageView)findViewById(R.id.ok_button);
+        button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                overlay.setVisibility(View.GONE);
+                chooseFeedDialog();
+
+                fragContainer.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        return false;
+                    }
+                });
+            }
+        });
     }
 	
 	private void showPermissionsToast() 

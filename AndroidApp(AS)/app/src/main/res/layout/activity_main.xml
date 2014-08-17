@@ -10,11 +10,41 @@
 	    android:background="@color/lightgray"/>
 
     <RelativeLayout
-        android:id="@+id/overlay"
+        android:id="@+id/getting_started_overlay"
         style="@style/fill"
         android:background="@color/alphablack"
         android:visibility="gone">
 
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="230dp"
+            android:src="@drawable/first_small"/>
+
+        <ImageView
+            android:id="@+id/ok_button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ok_button_small"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:clickable="true"/>
+
+        <ImageView
+            android:id="@+id/bottom_blue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bottom_blue_small"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="-17dp"/>
+
+        <ImageView
+            android:layout_width="270dp"
+            android:layout_height="130dp"
+            android:src="@drawable/second_small"
+            android:layout_above="@id/bottom_blue"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="-17dp"/>
 
 
     </RelativeLayout>
