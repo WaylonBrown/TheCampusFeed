@@ -19,10 +19,8 @@ import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -473,15 +471,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	}
 
     public void showFirstTimeMessages(){
-        //this one is called second as it has to be on top
-        //new GettingStartedDialog(this, "Getting Started");
-        final FrameLayout fragContainer = (FrameLayout)findViewById(R.id.fragmentContainer);
-        fragContainer.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                return true;
-            }
-        });
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         final RelativeLayout overlay = (RelativeLayout)findViewById(R.id.getting_started_overlay);
         overlay.setVisibility(View.VISIBLE);
@@ -491,13 +481,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
             public void onClick(View view) {
                 overlay.setVisibility(View.GONE);
                 chooseFeedDialog();
-
-                fragContainer.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View view, MotionEvent motionEvent) {
-                        return false;
-                    }
-                });
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
             }
         });
     }
