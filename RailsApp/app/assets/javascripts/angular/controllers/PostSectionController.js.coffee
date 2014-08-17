@@ -57,6 +57,7 @@ angular.module("cfeed").controller "PostSectionController", [
         $http.post("api/v1/colleges/" + newPost.college_id + "/posts",
           post:
             text: newPost.text
+          user_token: newPost.user_token
         ).then ((res) ->
           $scope.updateTotalAndPopulate()
           return
