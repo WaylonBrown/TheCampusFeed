@@ -9,10 +9,10 @@ class Tag < ActiveRecord::Base
     end
 
     select("tags.id, tags.text, count(posts.id) AS posts_count, count(comments.id) AS comments_count").
-    joins(:posts).
-    joins(:comments).
+    includes(:posts, :comments).
     where(cid).
     group("tags.id").
+    having("count(posts.id) > 0").
     order("posts_count DESC").
     limit(lim) }
 
