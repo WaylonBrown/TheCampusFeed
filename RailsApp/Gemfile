@@ -55,7 +55,7 @@ gem 'font-awesome-rails'
 gem 'chunky_png'
 
 gem 'sidekiq'
-
+gem 'statistics2'
 
 
 gem 'rails_12factor'
