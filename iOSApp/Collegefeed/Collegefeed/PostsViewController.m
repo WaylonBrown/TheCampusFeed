@@ -128,6 +128,37 @@
     
     if (rowNum == listcount)
     {
+        if (!self.hasReachedEndOfList)
+        {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{ // DISPATCH_QUEUE_PRIORITY_BACKGROUND
+                NSInteger oldCount = listcount;
+                self.hasReachedEndOfList = ![self loadMorePosts];
+                NSInteger newCount = self.list.count;
+                
+                if (oldCount != newCount)
+                {
+                
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        
+                        NSMutableArray* newRows = [NSMutableArray array];
+
+                        for (NSInteger i = oldCount; i < newCount; i++)
+                        {
+                            NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
+                            [newRows addObject:newIndexPath];
+                        }
+                        [self.tableView beginUpdates];
+                        [self.tableView insertRowsAtIndexPaths:newRows withRowAnimation:UITableViewRowAnimationTop];
+                        [self.tableView endUpdates];
+                        [self.tableView reloadData];
+                    
+                    });
+                }
+            });
+        }
+        
+        
         static NSString *LoadingCellIdentifier = @"LoadingCell";
         LoadingCell *cell = (LoadingCell *)[tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier];
         
@@ -138,8 +169,8 @@
             cell = [nib objectAtIndex:0];
             
         }
-
-        [cell showLoadingIndicator];
+        [cell hideLoadingIndicator];
+//        [cell showLoadingIndicator];
         return cell;
     }
     
@@ -232,61 +263,28 @@
         }
     }
 }
-- (void)create
-{
-    [self loadMorePosts];
-}
 
 #pragma mark - Actions
 
 - (BOOL)loadMorePosts
 {
     BOOL success = false;
-    
+
     switch (self.viewType)
     {
         case TOP_VIEW:
-        {
-            NSInteger oldCount = self.list.count;
             success = [self.dataController fetchTopPosts];
-
-            // Option 1
-            NSInteger newCount = self.list.count;
-            
-            if (oldCount == newCount) return NO;
-            
-            NSMutableArray* insertingRows = [NSMutableArray array];
-            
-            for (NSInteger i = oldCount; i < newCount; i++)
-            {
-                NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
-                [insertingRows addObject:newIndexPath];
-            }
-            [self.tableView beginUpdates];
-            [self.tableView insertRowsAtIndexPaths:insertingRows withRowAnimation:UITableViewRowAnimationTop];
-            [self.tableView endUpdates];
-            [self.tableView reloadData];
-            
-            
-            // Option 2
-//            [self refresh];
-
-            // Option 3
-//            [self.tableView reloadData];
             break;
-        }
         case RECENT_VIEW:
             success = [self.dataController fetchNewPosts];
-            [self refresh];
-//            [self.tableView reloadData];
             break;
         case TAG_VIEW:
             success = [self.dataController fetchMorePostsWithTagMessage:self.tagMessage];
-            [self refresh];
-//            [self.tableView reloadData];
+            break;
         default:
             break;
     }
+    
     return success;
 }
 
@@ -301,11 +299,6 @@
         [self switchToSpecificCollege];
     }
     [super refresh];
-}
-- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    NSString *message = [((TableCell *)cell).object getMessage];
-//    NSLog(@"%@", message);
 }
 
 #pragma mark - CreationViewProtocol Delegate Methods
