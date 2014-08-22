@@ -33,7 +33,7 @@
 		        android:clickable="true"
 		        />
 	        
-	        <TextView
+	        <com.appuccino.collegefeed.extra.CustomTextView
 	            android:id="@+id/scoreText"
 	            android:layout_width = "wrap_content"
 	            android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
 	        android:orientation="vertical"
 	        >
 			        
-		    <TextView 
+		    <com.appuccino.collegefeed.extra.CustomTextView
 		        android:id="@+id/messageText"
 		        android:text="This is me testing "
 		        android:textSize="20sp"
@@ -82,7 +82,7 @@
 		        android:paddingTop="8dp"
 		        android:orientation="horizontal">
 		        
-		        <TextView 
+		        <com.appuccino.collegefeed.extra.CustomTextView
 		            android:id="@+id/commentText"
 		            android:text="0 comments"
 		            android:textSize="15sp"
@@ -95,7 +95,7 @@
 		            android:gravity="left|bottom"
 		            android:layout_marginRight="8dp"/>
 		        
-		        <TextView 
+		        <com.appuccino.collegefeed.extra.CustomTextView
 		            android:id="@+id/timeText"
 		            android:text="14 hours ago"
 		            android:textSize="15sp"
@@ -145,7 +145,7 @@
 	        android:visibility="gone"
 	        />
 	    
-	    <TextView
+	    <com.appuccino.collegefeed.extra.CustomTextView
 	        android:id="@+id/collegeNameText"
 	        android:layout_width="0dp"
 	        android:layout_height="wrap_content"
@@ -156,6 +156,7 @@
 	        android:layout_marginBottom="6dp"
 	        android:singleLine="true"
 	        android:visibility="gone"
+            android:textColor="@color/darkgray"
 	        />
 	    
 	    <ImageView

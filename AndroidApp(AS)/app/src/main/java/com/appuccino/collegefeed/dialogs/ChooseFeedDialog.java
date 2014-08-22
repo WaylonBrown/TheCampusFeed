@@ -29,7 +29,6 @@ import java.util.List;
 public class ChooseFeedDialog extends AlertDialog.Builder{
 	
 	MainActivity main;
-	ArrayList<College> otherColleges;
 	ArrayList<College> nearYouListArray;
 	AlertDialog dialog;
 	ListView nearYouListView;
@@ -58,7 +57,7 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
     	otherTitle.setTypeface(FontManager.light);
     	otherCollegesText.setTypeface(FontManager.light);
     	
-    	populateNearYouList(false);
+    	populateNearYouList(MainActivity.locationFound);
     	setupClickListeners(searchColleges, allColleges);
 	}
 	

@@ -30,7 +30,7 @@ class Post < ActiveRecord::Base
     @words.each do |w|
       if w.length > 0 && w[0] == "#" then
         @text = w[1..-1]
-        @existing = Tag.find_by text: @text
+        @existing = Tag.find_by casedText: @text
         if @existing.nil?
           @tag = tags.create({text: @text})
         elsif !tags.include? @existing

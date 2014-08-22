@@ -12,7 +12,7 @@
             android:background="@color/darkgray"
             android:orientation="vertical">
 
-            <TextView
+            <com.appuccino.collegefeed.extra.CustomTextView
                 android:id="@+id/topPostsMenuText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
                 android:text="Top Posts"
                 android:clickable="true"/>
 
-            <TextView
+            <com.appuccino.collegefeed.extra.CustomTextView
                 android:id="@+id/newPostsMenuText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
                 android:text="New Posts"
                 android:clickable="true"/>
 
-            <TextView
+            <com.appuccino.collegefeed.extra.CustomTextView
                 android:id="@+id/tagsMenuText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                 android:text="Trending Tags"
                 android:clickable="true"/>
 
-            <TextView
+            <com.appuccino.collegefeed.extra.CustomTextView
                 android:id="@+id/collegesMenuText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                 android:layout_marginLeft="12dp"
                 android:background="@color/white"/>
 
-            <TextView
+            <com.appuccino.collegefeed.extra.CustomTextView
                 android:id="@+id/myPostsMenuText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
                 android:text="My Posts"
                 android:clickable="true"/>
 
-            <TextView
+            <com.appuccino.collegefeed.extra.CustomTextView
                 android:id="@+id/myCommentsMenuText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
                 android:text="My Comments"
                 android:clickable="true"/>
 
-            <TextView
+            <com.appuccino.collegefeed.extra.CustomTextView
                 android:id="@+id/helpMenuText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

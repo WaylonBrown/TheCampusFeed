@@ -42,5 +42,7 @@ public class GettingStartedDialog extends AlertDialog.Builder{
 		messageText.setTypeface(FontManager.light);
     	yesButton.setTypeface(FontManager.light);
     	noButton.setTypeface(FontManager.light);
+
+        messageText.setTextColor(context.getResources().getColor(R.color.darkgray));
 	}
 }

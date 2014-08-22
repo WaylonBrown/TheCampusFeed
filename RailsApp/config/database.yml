@@ -1,9 +1,10 @@
-development:
+production:
   adapter: mysql2
   encoding: utf8
-  database: cf_development
+  database: cf_production
   pool: 5
-  username: root
+  host: bb01e06aa298a9c72d3027604ca50021a0c2d79e.rackspaceclouddb.com
+  username: james
   password: F4flkgj43LWB#$LW#E$GFsrdknmfgn#$
 
 test: &TEST
@@ -14,10 +15,10 @@ test: &TEST
   username: root
   password: F4flkgj43LWB#$LW#E$GFsrdknmfgn#$
 
-production:
+development:
   adapter: mysql2
   encoding: utf8
-  database: cf_production
+  database: cf_development
   pool: 5
   username: root
   password: F4flkgj43LWB#$LW#E$GFsrdknmfgn#$

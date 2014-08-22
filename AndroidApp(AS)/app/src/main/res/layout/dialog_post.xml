@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
     
-    <TextView
+    <com.appuccino.collegefeed.extra.CustomTextView
         android:id="@+id/newPostTitle"
         android:text="New Post"
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:gravity="center_horizontal"
         />
     
-    <TextView
+    <com.appuccino.collegefeed.extra.CustomTextView
         android:id="@+id/collegeText"
         android:text="Posting to Texas A&amp;M University"
         android:textSize="15sp"
@@ -32,11 +32,12 @@
         android:layout_height="wrap_content"
         android:singleLine="false"
         android:layout_marginBottom="0dp"
-        android:textSize="22sp"		android:inputType="textMultiLine"
+        android:textSize="22sp"
+		android:inputType="textMultiLine"
 		android:maxLength="140"
         /> 
     
-    <TextView
+    <com.appuccino.collegefeed.extra.CustomTextView
         android:id="@+id/newPostTagsText"
         android:text="Tags: "
         android:layout_width="match_parent"

@@ -29,6 +29,7 @@ public class NewPostDialog extends AlertDialog.Builder{
 	Context context;
 	private int selectedCollegeID = -1;
     MainActivity main;
+    AlertDialog dialog;
 	
 	public NewPostDialog(final Context context, MainActivity main, View layout) {
 		super(context);
@@ -85,7 +86,7 @@ public class NewPostDialog extends AlertDialog.Builder{
 	}
 
 	private void createDialog(View layout) {
-		final AlertDialog dialog = create();
+		dialog = create();
 		dialog.show();
 		
 		final EditText postMessage = (EditText)layout.findViewById(R.id.newPostMessage);
@@ -184,6 +185,13 @@ public class NewPostDialog extends AlertDialog.Builder{
     	
     	setupCollege(college);
 	}
+
+    public boolean isShowing(){
+        if(dialog == null)
+            return false;
+        else
+            return dialog.isShowing();
+    }
 
 	private void setupCollege(TextView college) {
 		String collegeString = "Posting to ";

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
+import android.graphics.LightingColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ import android.widget.Toast;
 import com.appuccino.collegefeed.adapters.CommentListAdapter;
 import com.appuccino.collegefeed.dialogs.FlagDialog;
 import com.appuccino.collegefeed.dialogs.NewCommentDialog;
+import com.appuccino.collegefeed.extra.CustomTextView;
+import com.appuccino.collegefeed.fragments.MyCommentsFragment;
 import com.appuccino.collegefeed.fragments.MyPostsFragment;
 import com.appuccino.collegefeed.fragments.NewPostFragment;
 import com.appuccino.collegefeed.fragments.TopPostFragment;
@@ -54,7 +57,7 @@ public class CommentsActivity extends Activity{
     static ImageView twitterButton;
     static View divider;
 	static ProgressBar actionBarLoadingIcon;
-	static TextView commentsText;
+	static CustomTextView commentsText;
 	final int minCommentLength = 3;
 	ListView list;
 	public static List<Comment> commentList;
@@ -72,7 +75,7 @@ public class CommentsActivity extends Activity{
 		final TextView scoreText = (TextView)findViewById(R.id.scoreText);
 		TextView messageText = (TextView)findViewById(R.id.messageText);
 		TextView timeText = (TextView)findViewById(R.id.timeText);
-		commentsText = (TextView)findViewById(R.id.commentsText);
+		commentsText = (CustomTextView)findViewById(R.id.commentsText);
 		
 		int collegeID = getIntent().getIntExtra("COLLEGE_ID", 0);
         int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);
@@ -91,8 +94,7 @@ public class CommentsActivity extends Activity{
                 post = MyPostsFragment.postList.get(postIndex);
                 break;
             case 3:
-                //TODO:
-                //post = MyContentActivity.commentParentList.get(postIndex);
+                post = MyCommentsFragment.parentPostList.get(postIndex);
                 break;
             default:
                 post = TagListActivity.postList.get(postIndex);
@@ -309,6 +311,8 @@ public class CommentsActivity extends Activity{
         facebookButton = (ImageView)findViewById(R.id.facebookButton);
         twitterButton = (ImageView)findViewById(R.id.twitterButton);
         actionBarLoadingIcon = (ProgressBar)findViewById(R.id.commentActionbarLoadingIcon);
+        //set progressbar as white
+        actionBarLoadingIcon.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(getResources().getColor(R.color.white), getResources().getColor(R.color.white)));
         divider = (View)findViewById(R.id.actionBarDivider);
         list = (ListView)findViewById(R.id.commentsList);
         loadingSpinner = (ProgressBar)findViewById(R.id.commentsLoading);

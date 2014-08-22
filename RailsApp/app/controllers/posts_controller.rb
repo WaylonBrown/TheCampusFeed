@@ -35,6 +35,7 @@ class PostsController < ApplicationController
     @all_tags.each{ |tag|
       @tag_ids << tag.id
     }
+
     @posts_with_tags = Post.joins(:tags).where(tags: {id: @tag_ids})
     if @college
       @posts_with_tags = @posts_with_tags.where(posts: {college_id: @college.id})
@@ -165,7 +166,7 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:text, :score, :lat, :lon, :college_id)
+      params.require(:post).permit(:text, :score, :lat, :lon, :college_id, :user_token)
     end
     def require_college
       params.require(:college_id)

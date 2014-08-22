@@ -50,7 +50,7 @@ public class Post extends AbstractPostComment{
 		}
 		else
 		{
-			//TODO: make call to get updated college list here
+			//TODO: IGNORE make call to get updated college list here
 			collegeName = "";
 		}
         //webURL = "www.thecampusfeed.com/posttest/" + id;
@@ -75,7 +75,7 @@ public class Post extends AbstractPostComment{
 		}
 		else
 		{
-			//TODO: make call to get updated college list here
+			//TODO: IGNORE make call to get updated college list here
 			collegeName = "";
 		}
         //webURL = "www.thecampusfeed.com/posttest/" + id;

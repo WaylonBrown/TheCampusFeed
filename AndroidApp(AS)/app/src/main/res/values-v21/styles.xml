@@ -1,13 +1,15 @@
+<!--suppress ALL -->
 <resources>
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    <style name="AppBaseTheme" parent="@android:style/Theme.Material.Light">
+    <!-- <style name="AppBaseTheme" parent="@android:style/Theme.Material.Light">
         <item name="android:colorPrimary">@color/blue</item>
         <item name="android:colorPrimaryDark">@color/darkblue</item>
-        <item name="android:colorAccent">@color/blue</item>
+        <item name="android:colorAccent">@color/blue</item> -->
+    <style name="AppBaseTheme" parent="android:Theme.Holo.Light">
     </style>
 
     <!-- Application theme. -->

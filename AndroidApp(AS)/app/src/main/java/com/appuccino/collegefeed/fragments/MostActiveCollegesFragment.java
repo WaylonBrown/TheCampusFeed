@@ -89,7 +89,7 @@ public class MostActiveCollegesFragment extends Fragment
 
 	public static void collegeClicked(College thisCollege) 
 	{
-        mainActivity.goToTopPostsAndScrollToTop(mainActivity);
+        mainActivity.goToTopPostsAndScrollToTop();
         mainActivity.changeFeed(thisCollege.getID());
 	}
 

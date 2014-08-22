@@ -3,6 +3,7 @@ package com.appuccino.collegefeed.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.LightingColorFilter;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -89,6 +90,8 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 				container, false);
 		list = (QuickReturnListView)rootView.findViewById(R.id.fragmentListView);
 		loadingSpinner = (ProgressBar)rootView.findViewById(R.id.loadingSpinner);
+        //set progressbar as blue
+        loadingSpinner.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(getResources().getColor(R.color.alphablue), getResources().getColor(R.color.alphablue)));
 		scrollAwayBottomView = (LinearLayout)rootView.findViewById(R.id.footer);
         pullDownText = (TextView)rootView.findViewById(R.id.pullDownText);
 
@@ -465,7 +468,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 				collegeNameBottom.setText(currentCollege.getName());
 			else if(id == MainActivity.ALL_COLLEGES)
 				collegeNameBottom.setText(mainActivity.getResources().getString(R.string.allColleges));
-			//TODO: load college list here
+			//TODO: IGNORE load college list here
 			else
 				collegeNameBottom.setText("");
 		}
@@ -473,6 +476,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
             postList.clear();
         }
 		pullListFromServer(true);
+        scrollToTop();
 	}
 
 	public static void scrollToTop() {

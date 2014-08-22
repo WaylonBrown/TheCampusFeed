@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
+import android.graphics.LightingColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Criteria;
 import android.location.Location;
@@ -16,13 +17,13 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,11 +60,11 @@ import java.util.TimerTask;
 public class MainActivity extends FragmentActivity implements LocationListener
 {
     private MenuDrawer menuDrawer;
-	PagerAdapter pagerAdapter;
 	ActionBar actionBar;
 	ImageView newPostButton;
 	ProgressBar permissionsProgress;
 	ChooseFeedDialog chooseFeedDialog;
+    NewPostDialog newPostDialog;
 	
 	//final values
 	public static final int ALL_COLLEGES = 0;	//used for permissions
@@ -74,12 +75,12 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	public static final int MIN_POST_LENGTH = 10;
 	public static final int MIN_COMMENT_LENGTH = 5;
     //TODO: make sure these values are correct
-    public static final int TIME_BETWEEN_POSTS = 0;     //in minutes
+    public static final int TIME_BETWEEN_POSTS = 5;     //in minutes
     public static final int TIME_BETWEEN_COMMENTS = 1;  //in minutes
 
     private static int selectedMenuItem = 0;
     private int previouslySelectedMenuItem = 0;
-	boolean locationFound = false;
+	public static boolean locationFound = false;
 	public static LocationManager mgr;
 	public static int currentFeedCollegeID;	//0 if viewing all colleges
     public static String collegeListCheckSum;
@@ -108,6 +109,8 @@ public class MainActivity extends FragmentActivity implements LocationListener
     NewPostFragment newPostFrag;
     TagFragment tagFrag;
     MostActiveCollegesFragment collegeFrag;
+    MyPostsFragment myPostsFrag;
+    MyCommentsFragment myCommentsFrag;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -132,14 +135,14 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	public void onConfigurationChanged(Configuration newConfig)
 	{
         Log.i("cfeed","APPSETUP: orientation change");
-        setupApp();
-        if(permissions == null || permissions.size() == 0){
-            newPostButton.setVisibility(View.GONE);
-        } else {
-            newPostButton.setVisibility(View.VISIBLE);
-        }
+        //setupApp();
+//        if(permissions == null || permissions.size() == 0){
+//            newPostButton.setVisibility(View.GONE);
+//        } else {
+//            newPostButton.setVisibility(View.VISIBLE);
+//        }
 
-        setupMenuDrawerViews();
+        //setupMenuDrawerViews();
 	    super.onConfigurationChanged(newConfig);
 
 	}
@@ -159,6 +162,8 @@ public class MainActivity extends FragmentActivity implements LocationListener
         myCommentsList = PrefManager.getMyCommentsList();
 
 		permissionsProgress = (ProgressBar)findViewById(R.id.permissionsLoadingIcon);
+        //set progressbar as white
+        permissionsProgress.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(getResources().getColor(R.color.white), getResources().getColor(R.color.white)));
 		newPostButton = (ImageView)findViewById(R.id.newPostButton);
 		newPostButton.setOnClickListener(new OnClickListener(){
 			@Override
@@ -166,6 +171,16 @@ public class MainActivity extends FragmentActivity implements LocationListener
 				newPostClicked();
 			}
 		});
+
+        ImageView mainLogo = (ImageView)findViewById(R.id.mainLogo);
+        mainLogo.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(menuDrawer != null) {
+                    menuDrawer.toggleMenu();
+                }
+            }
+        });
 	}
 
     private void setupMenuDrawerViews() {
@@ -263,14 +278,15 @@ public class MainActivity extends FragmentActivity implements LocationListener
                     makeFragsNull(3);
                     break;
                 case 4:
-                    //TODO: finish these
                     menuMyPosts.setBackgroundColor(getResources().getColor(R.color.blue));
-                    ft.replace(R.id.fragmentContainer, new MyPostsFragment(this)).commit();
+                    myPostsFrag = new MyPostsFragment(this);
+                    ft.replace(R.id.fragmentContainer, myPostsFrag).commit();
                     makeFragsNull(4);
                     break;
                 case 5:
                     menuMyComments.setBackgroundColor(getResources().getColor(R.color.blue));
-                    ft.replace(R.id.fragmentContainer, new MyCommentsFragment(this)).commit();
+                    myCommentsFrag = new MyCommentsFragment(this);
+                    ft.replace(R.id.fragmentContainer, myCommentsFrag).commit();
                     makeFragsNull(5);
                     break;
                 default:
@@ -286,7 +302,6 @@ public class MainActivity extends FragmentActivity implements LocationListener
      * Null each fragment except the one given in the parameter
      */
     private void makeFragsNull(int i) {
-        //TODO: finish
         if(i != 0){
             topPostFrag = null;
         }
@@ -299,6 +314,12 @@ public class MainActivity extends FragmentActivity implements LocationListener
         if(i != 3){
             collegeFrag = null;
         }
+        if(i != 4){
+            myPostsFrag = null;
+        }
+        if(i != 5){
+            myCommentsFrag = null;
+        }
     }
 
     public void addNewPostToListAndMyContent(Post post, Context c){
@@ -308,14 +329,10 @@ public class MainActivity extends FragmentActivity implements LocationListener
                 newPostFrag.postList.add(0, post);
                 newPostFrag.updateList();
             }
-
-
-
-
             Log.i("cfeed","New My Posts list is of size " + myPostsList.size());
         }
         myPostsList.add(post.getID());
-        goToNewPostsAndScrollToTop(c, post.getCollegeID());
+        goToNewPostsAndScrollToTop(post.getCollegeID());
         PrefManager.putMyPostsList(myPostsList);
         lastPostTime = Calendar.getInstance();
         PrefManager.putLastPostTime(lastPostTime);
@@ -367,9 +384,9 @@ public class MainActivity extends FragmentActivity implements LocationListener
 		actionBar.setDisplayShowCustomEnabled(true);
 		actionBar.setDisplayUseLogoEnabled(false);
 		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
-		actionBar.setIcon(R.drawable.logofake);
+		//actionBar.setIcon(R.drawable.logofake);
         actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        //actionBar.setDisplayHomeAsUpEnabled(false);
 	}
 
     public static int getVoteByPostId(int postID){
@@ -454,10 +471,19 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	}
 
     public void showFirstTimeMessages(){
-        chooseFeedDialog();
-        //this one is called second as it has to be on top
-        new GettingStartedDialog(this, "Getting Started");
-        menuDrawer.openMenu();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        final RelativeLayout overlay = (RelativeLayout)findViewById(R.id.getting_started_overlay);
+        overlay.setVisibility(View.VISIBLE);
+        ImageView button = (ImageView)findViewById(R.id.ok_button);
+        button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                overlay.setVisibility(View.GONE);
+                chooseFeedDialog();
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+            }
+        });
     }
 	
 	private void showPermissionsToast() 
@@ -554,8 +580,12 @@ public class MainActivity extends FragmentActivity implements LocationListener
 									@Override
 									public void run() {
 										Toast.makeText(that, "Couldn't find location. You can upvote, but nothing else.", Toast.LENGTH_LONG).show();
+                                        locationFound = true;
 										permissionsProgress.setVisibility(View.GONE);
 										newPostButton.setVisibility(View.GONE);
+                                        if(chooseFeedDialog != null && chooseFeedDialog.isShowing()){
+                                            chooseFeedDialog.populateNearYouList(true);
+                                        }
 									}
 									
 								});
@@ -647,15 +677,24 @@ public class MainActivity extends FragmentActivity implements LocationListener
 					permissionsProgress.setVisibility(View.GONE);
 					newPostButton.setVisibility(View.INVISIBLE);
 				}
-				Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
+                if(chooseFeedDialog != null && chooseFeedDialog.isShowing()){
+                    chooseFeedDialog.populateNearYouList(true);
+                }
+                //only show toast if it isn't the very first time running app
+                if(PrefManager.getInt(PrefManager.APP_RUN_COUNT, 0) > 1) {
+                    Toast.makeText(this, "You aren't near a college, you can upvote but nothing else", Toast.LENGTH_LONG).show();
+                }
 			}
 			else	//near a college
 			{
 				CommentsActivity.setNewPermissionsIfAvailable();
 				if(permissions.size() == 1)
 				{
-					Toast.makeText(this, "You're near " + getCollegeByID(permissions.get(0)).getName(), Toast.LENGTH_LONG).show();
-					Toast.makeText(this, "You can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
+                    //only show toast if it isn't the very first time running app
+                    if(PrefManager.getInt(PrefManager.APP_RUN_COUNT, 0) > 1){
+                        Toast.makeText(this, "You're near " + getCollegeByID(permissions.get(0)).getName(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "You can upvote, downvote, post, and comment on that college's posts", Toast.LENGTH_LONG).show();
+                    }
 				}
 				else
 				{
@@ -666,8 +705,11 @@ public class MainActivity extends FragmentActivity implements LocationListener
 					}
 					//remove last "and"
 					toastMessage = toastMessage.substring(0, toastMessage.length() - 5);
-					Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
-					Toast.makeText(this, "You can upvote, downvote, post, and comment on those colleges' posts", Toast.LENGTH_LONG).show();
+                    //only show toast if it isn't the very first time running app
+                    if(PrefManager.getInt(PrefManager.APP_RUN_COUNT, 0) > 1) {
+                        Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "You can upvote, downvote, post, and comment on those colleges' posts", Toast.LENGTH_LONG).show();
+                    }
 				}
 				
 				if(currentFeedCollegeID == ALL_COLLEGES){
@@ -681,15 +723,12 @@ public class MainActivity extends FragmentActivity implements LocationListener
 		}
 	}
 	
-    public void goToTopPostsAndScrollToTop(Context c) {
-//        if(viewPager != null){
-//            viewPager.setCurrentItem(0);
-//            TopPostFragment.scrollToTop();
-//        }
-        Toast.makeText(c, "Implement goToTopPostsAndScrollToTop", Toast.LENGTH_LONG).show();
+    public void goToTopPostsAndScrollToTop() {
+        selectedMenuItem = 0;
+        menuItemSelected();
     }
 
-	public void goToNewPostsAndScrollToTop(Context c, int feedID) {
+	public void goToNewPostsAndScrollToTop(int feedID) {
         //if on another feed, switch to correct feed before going to New Posts
         if(currentFeedCollegeID != MainActivity.ALL_COLLEGES && currentFeedCollegeID != feedID){
             currentFeedCollegeID = feedID;
@@ -759,9 +798,11 @@ public class MainActivity extends FragmentActivity implements LocationListener
 		if(permissions != null)
 		{
             if(haventPostedInXMinutes()){
-                LayoutInflater inflater = getLayoutInflater();
-                View postDialogLayout = inflater.inflate(R.layout.dialog_post, null);
-                new NewPostDialog(this, this, postDialogLayout);
+                if(newPostDialog == null || !newPostDialog.isShowing()){
+                    LayoutInflater inflater = getLayoutInflater();
+                    View postDialogLayout = inflater.inflate(R.layout.dialog_post, null);
+                    newPostDialog = new NewPostDialog(this, this, postDialogLayout);
+                }
             } else {
                 Toast.makeText(this, "Sorry, you can only post once every " + MainActivity.TIME_BETWEEN_POSTS + " minutes.", Toast.LENGTH_LONG).show();
             }

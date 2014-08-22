@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
     
-    <TextView
+    <com.appuccino.collegefeed.extra.CustomTextView
         android:id="@+id/newCommentTitle"
         android:text="New Comment"
         android:layout_width="match_parent"
@@ -21,11 +21,12 @@
         android:layout_height="wrap_content"
         android:singleLine="false"
         android:layout_marginBottom="0dp"
-        android:textSize="22sp"		android:inputType="textMultiLine"
+        android:textSize="22sp"
+		android:inputType="textMultiLine"
 		android:maxLength="140"
         /> 
     
-    <TextView
+    <com.appuccino.collegefeed.extra.CustomTextView
         android:id="@+id/newCommentTagsText"
         android:text="Tags: "
         android:layout_width="match_parent"

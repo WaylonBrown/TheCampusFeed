@@ -106,7 +106,7 @@ public class MyPostsFragment extends Fragment
         intent.putExtra("SECTION_NUMBER", 2);
 
         startActivity(intent);
-        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     public static void updateList(ArrayList<Post> result)

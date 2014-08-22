@@ -176,7 +176,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
     }
 
     private void updateRowViews(View row, CommentHolder commentHolder, int vote, Comment comment) {
-        int score = post.score;
+        int score = comment.score;
 
         if(vote == -1)
         {
