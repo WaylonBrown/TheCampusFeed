@@ -9,6 +9,7 @@
 #import "MenuViewController.h"
 #import "UIViewController+ECSlidingViewController.h"
 #import "SimpleTableCell.h"
+#import "Shared.h"
 
 @interface MenuViewController ()
 
@@ -29,6 +30,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    self.tableView.backgroundColor = [UIColor darkGrayColor];
 }
 
 #pragma mark - Properties
@@ -36,19 +39,33 @@
 - (NSArray *)menuItems
 {
     return @[@"Top Posts",
-           @"New Posts",
-           @"Trending Tags",
-           @"Most Active Colleges",
-           @"My Posts",
-           @"My Comments"];
+             @"New Posts",
+             @"Trending Tags",
+             @"Most Active Colleges",
+             @"My Posts",
+             @"My Comments",
+             @"Help"];
 }
 
 
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.menuItems.count;
+    if (section == 0)
+    {
+        return 4;
+    }
+    else if (section == 1)
+    {
+        return 3;
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -62,9 +79,18 @@
         [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
     }
     
-    NSString *menuItem = self.menuItems[indexPath.row];
+    NSUInteger index = (indexPath.section * 4) + indexPath.row;
+    
+    NSString *menuItem = self.menuItems[index];
     
     cell.textLabel.text = menuItem;
+    cell.backgroundColor = [UIColor darkGrayColor];
+    cell.textLabel.textColor = [UIColor whiteColor];
+
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = [Shared getCustomUIColor:CF_LIGHTBLUE];
+    cell.selectedBackgroundView = view;
+    
     
     return cell;
 }
@@ -73,7 +99,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UINavigationController *navController = self.navControllers[indexPath.row];
+    NSUInteger index = (indexPath.section * 4) + indexPath.row;
+    
+    if (index == 6)
+    {
+        // TODO: the help screen
+        return;
+    }
+    
+    UINavigationController *navController = self.navControllers[index];
+    
     if (navController == nil || [navController class] != [UINavigationController class])
     {
         [self.slidingViewController resetTopViewAnimated:YES];

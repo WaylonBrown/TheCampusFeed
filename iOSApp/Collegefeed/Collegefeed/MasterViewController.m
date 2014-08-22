@@ -110,7 +110,7 @@
     {
         [self placeCreatePost];
         [self.tableView reloadData];
-//        [self.toastController toastNearbyColleges:self.dataController.nearbyColleges];
+        [self.toastController toastNearbyColleges:self.dataController.nearbyColleges];
     }
     else
     {

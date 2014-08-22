@@ -99,7 +99,6 @@
 }
 + (BOOL)withMessageIsValid:(NSString*)tagMessage
 {
-    
     NSRegularExpressionOptions regexOptions = NSRegularExpressionCaseInsensitive;
     NSString *pattern = @"#[A-Za-z0-9_]*";
     
@@ -113,9 +112,7 @@
         return false;
     }
     
-    if (tagMessage.length < MIN_TAG_LENGTH
-        || tagMessage.length > MAX_TAG_LENGTH
-        )
+    if (tagMessage.length < MIN_TAG_LENGTH || tagMessage.length > MAX_TAG_LENGTH)
     {
         return false;
     }

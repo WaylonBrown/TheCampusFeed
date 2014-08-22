@@ -102,9 +102,11 @@
     menuViewController.view.layer.borderColor     = [UIColor colorWithWhite:0.8 alpha:1.0].CGColor;
     menuViewController.edgesForExtendedLayout     = UIRectEdgeTop | UIRectEdgeBottom | UIRectEdgeLeft;
     
+    UINavigationController *menuNavController = [[UINavigationController alloc] initWithRootViewController:menuViewController];
+    
     self.slidingViewController = [ECSlidingViewController slidingWithTopViewController:topPostsNavController];
     [topPostsNavController.view addGestureRecognizer:self.slidingViewController.panGesture];
-    self.slidingViewController.underLeftViewController  = menuViewController;
+    self.slidingViewController.underLeftViewController  = menuNavController;
     
     self.slidingViewController.anchorRightRevealAmount = 225.0;
     // *************************************** //
