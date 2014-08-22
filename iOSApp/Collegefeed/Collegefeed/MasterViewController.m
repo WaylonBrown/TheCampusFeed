@@ -191,11 +191,11 @@
     {
         feedName = @"All Colleges";
     }
+    
     [self.currentFeedLabel setText:feedName];
     [self.tableView reloadData];
     [self.refreshControl endRefreshing];
     
-    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     self.toolBarSpaceFromBottom.constant = 50;
     [self.feedToolbar updateConstraintsIfNeeded];
 }
@@ -294,7 +294,9 @@
     {
         [self.currentFeedLabel setText:college.name];
     }
+
     [self refresh];
+    self.tableView.contentOffset = CGPointMake(0, 0 - self.tableView.contentInset.top);
 }
 - (void)showDialogForAllColleges
 {
@@ -335,6 +337,8 @@
     {   // flick down / scroll up / show bar
         self.toolBarSpaceFromBottom.constant += 4;
     }
+    
+    self.toolBarSpaceFromBottom.constant = MIN(self.toolBarSpaceFromBottom.constant, 50);
     [self.feedToolbar updateConstraintsIfNeeded];
 }
 

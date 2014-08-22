@@ -53,9 +53,6 @@ typedef NS_ENUM(NSInteger, FeedSelectorType)
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-//@property (weak, nonatomic) NSArray *fullCollegeList;
-//@property (weak, nonatomic) NSArray *nearbyCollegeList;
-
 @property (nonatomic) FeedSelectorType type;
 
 - (id)initWithType:(FeedSelectorType)type WithDataController:(DataController *)controller WithFeedDelegate:(id<FeedSelectionProtocol>) delegate;

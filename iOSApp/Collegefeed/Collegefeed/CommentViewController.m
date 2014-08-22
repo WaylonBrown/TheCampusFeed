@@ -89,7 +89,6 @@
 {   // called when the comment view is initially loaded
   
     [super loadView];
-    
 }
 
 #pragma mark - Table view methods

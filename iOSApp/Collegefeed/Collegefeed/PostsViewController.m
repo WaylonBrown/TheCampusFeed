@@ -89,13 +89,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Comment View for the selected post
 
-    if (indexPath.row == self.list.count)
+    if (indexPath.row >= self.list.count)
     {
-        NSLog(@"Touched last row");
-        
-        // Once this fails, the end of the network list has been reached
-        self.hasReachedEndOfList = ![self loadMorePosts];
-        
         return;
     }
     
@@ -136,9 +131,9 @@
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:LoadingCellIdentifier
                                                          owner:self options:nil];
             cell = [nib objectAtIndex:0];
-            
         }
-
+        [cell showLoadingIndicator];
+        
         if (!self.hasReachedEndOfList)
         {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
@@ -153,9 +148,6 @@
             });
         }
         
-        
-//               [cell hideLoadingIndicator];
-        [cell showLoadingIndicator];
         return cell;
     }
     
@@ -283,6 +275,7 @@
             NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
             [newRows addObject:newIndexPath];
         }
+        
         [self.tableView beginUpdates];
         [self.tableView insertRowsAtIndexPaths:newRows withRowAnimation:UITableViewRowAnimationTop];
         [self.tableView endUpdates];
