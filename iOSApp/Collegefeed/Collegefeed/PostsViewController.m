@@ -128,37 +128,6 @@
     
     if (rowNum == listcount)
     {
-        if (!self.hasReachedEndOfList)
-        {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{ // DISPATCH_QUEUE_PRIORITY_BACKGROUND
-                NSInteger oldCount = listcount;
-                self.hasReachedEndOfList = ![self loadMorePosts];
-                NSInteger newCount = self.list.count;
-                
-                if (oldCount != newCount)
-                {
-                
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        
-                        
-                        NSMutableArray* newRows = [NSMutableArray array];
-
-                        for (NSInteger i = oldCount; i < newCount; i++)
-                        {
-                            NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
-                            [newRows addObject:newIndexPath];
-                        }
-                        [self.tableView beginUpdates];
-                        [self.tableView insertRowsAtIndexPaths:newRows withRowAnimation:UITableViewRowAnimationTop];
-                        [self.tableView endUpdates];
-                        [self.tableView reloadData];
-                    
-                    });
-                }
-            });
-        }
-        
-        
         static NSString *LoadingCellIdentifier = @"LoadingCell";
         LoadingCell *cell = (LoadingCell *)[tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier];
         
@@ -169,8 +138,24 @@
             cell = [nib objectAtIndex:0];
             
         }
-        [cell hideLoadingIndicator];
-//        [cell showLoadingIndicator];
+
+        if (!self.hasReachedEndOfList)
+        {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                NSInteger oldCount = listcount;
+                self.hasReachedEndOfList = ![self loadMorePosts];
+                NSInteger newCount = self.list.count;
+                
+                if (oldCount != newCount)
+                {
+                    [self addNewRows:oldCount through:newCount];
+                }
+            });
+        }
+        
+        
+//               [cell hideLoadingIndicator];
+        [cell showLoadingIndicator];
         return cell;
     }
     
@@ -286,6 +271,24 @@
     }
     
     return success;
+}
+- (void)addNewRows:(NSInteger)oldCount through:(NSInteger)newCount
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        NSMutableArray* newRows = [NSMutableArray array];
+        
+        for (NSInteger i = oldCount; i < newCount; i++)
+        {
+            NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
+            [newRows addObject:newIndexPath];
+        }
+        [self.tableView beginUpdates];
+        [self.tableView insertRowsAtIndexPaths:newRows withRowAnimation:UITableViewRowAnimationTop];
+        [self.tableView endUpdates];
+        [self.tableView reloadData];
+        
+    });
 }
 
 - (void)refresh
