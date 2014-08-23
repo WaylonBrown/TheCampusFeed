@@ -61,10 +61,9 @@
         [self.mySearchBar setPlaceholder:@"Type a college's name"];
         [self.mySearchBar setKeyboardType:UIKeyboardTypeAlphabet];
         [self.mySearchBar setDelegate:self];
-
-//        self.tableView.tableHeaderView = self.mySearchBar;
         
         self.searchDisplay = [[UISearchDisplayController alloc] initWithSearchBar:self.mySearchBar contentsController:self];
+        
         self.searchDisplay.searchResultsTableView.frame = self.tableView.frame;
         self.searchDisplay.delegate = self;
         self.searchDisplay.searchResultsDataSource = self;
@@ -460,8 +459,10 @@
 
 -(void)searchDisplayController:(UISearchDisplayController *)controller didShowSearchResultsTableView:(UITableView *)tableView
 {
-    [tableView setFrame:self.tableView.frame];
-    [self.alertView addSubview:tableView];
+    CGRect frame = self.tableView.frame;
+    frame.origin.x += self.alertView.frame.origin.x;
+    frame.origin.y -= 18;
+    [tableView setFrame:frame];
 }
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
@@ -482,6 +483,10 @@
 {
     self.dialogVerticalAlignment.constant = 0;
     [self.view setNeedsUpdateConstraints];
+}
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+
 }
 
 @end
