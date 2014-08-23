@@ -46,8 +46,10 @@ typedef NS_ENUM(NSInteger, FeedSelectorType)
 @property (strong, nonatomic) DataController *dataController;
 @property (nonatomic, strong) NSMutableArray *searchResult;
 @property (nonatomic, strong) UISearchDisplayController *searchDisplay;
+@property (strong, nonatomic) IBOutlet UISearchBar *mySearchBar;
 
 @property (weak,nonatomic) IBOutlet NSLayoutConstraint *tableHeightConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *dialogVerticalAlignment;
 
 @property (weak, nonatomic) IBOutlet UIView *alertView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;

@@ -7,6 +7,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FeedSelectViewController">
             <connections>
                 <outlet property="alertView" destination="llI-Ec-hur" id="NLf-tT-nQj"/>
+                <outlet property="dialogVerticalAlignment" destination="Koh-5O-X2L" id="sFE-Tj-lSp"/>
+                <outlet property="mySearchBar" destination="81F-yl-02v" id="92D-aV-UdB"/>
                 <outlet property="tableHeightConstraint" destination="Kn1-rs-kdC" id="tJr-xE-TTz"/>
                 <outlet property="tableView" destination="5P2-ay-ia0" id="QE2-N8-PGn"/>
                 <outlet property="titleLabel" destination="SyC-9r-LzP" id="RZ9-AD-aSl"/>
@@ -64,14 +66,23 @@
                         <constraint firstAttribute="width" constant="280" id="z4w-kI-mhZ"/>
                     </constraints>
                 </view>
+                <searchBar hidden="YES" contentMode="redraw" searchBarStyle="prominent" translatesAutoresizingMaskIntoConstraints="NO" id="81F-yl-02v">
+                    <rect key="frame" x="15" y="29" width="290" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <color key="barTintColor" red="0.87450987099999999" green="0.87450987099999999" blue="0.87450987099999999" alpha="1" colorSpace="deviceRGB"/>
+                    <textInputTraits key="textInputTraits"/>
+                </searchBar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="81F-yl-02v" firstAttribute="trailing" secondItem="llI-Ec-hur" secondAttribute="trailing" constant="5" id="2Xv-K2-sK1"/>
                 <constraint firstAttribute="centerX" secondItem="llI-Ec-hur" secondAttribute="centerX" id="2gl-ry-VMr"/>
                 <constraint firstItem="5nr-Vv-dnb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3LK-wa-PMv"/>
                 <constraint firstAttribute="trailing" secondItem="5nr-Vv-dnb" secondAttribute="trailing" id="7Ln-n3-wca"/>
                 <constraint firstAttribute="bottom" secondItem="5nr-Vv-dnb" secondAttribute="bottom" id="850-cR-J5o"/>
                 <constraint firstAttribute="centerY" secondItem="llI-Ec-hur" secondAttribute="centerY" id="Koh-5O-X2L"/>
+                <constraint firstItem="81F-yl-02v" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="29" id="fWa-zc-iup"/>
+                <constraint firstItem="81F-yl-02v" firstAttribute="leading" secondItem="llI-Ec-hur" secondAttribute="leading" constant="-5" id="h4g-hO-0AN"/>
                 <constraint firstItem="5nr-Vv-dnb" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="xvi-zQ-qAu"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

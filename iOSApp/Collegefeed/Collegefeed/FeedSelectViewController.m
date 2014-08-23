@@ -52,19 +52,19 @@
     [self.tableView setDelegate:self];
     // Set fonts
     [self.titleLabel setFont:CF_FONT_LIGHT(30)];
+    [self.mySearchBar setHidden:YES];
     
     if (self.type == ALL_COLLEGES_WITH_SEARCH)
     {
         self.searchResult = [NSMutableArray arrayWithCapacity:[self.dataController.collegeList count]];
-        
-        // Search bar
-        UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, 44)];
-        self.tableView.tableHeaderView = searchBar;
+        [self.mySearchBar setHidden:NO];
+        [self.mySearchBar setPlaceholder:@"Type a college's name"];
+        [self.mySearchBar setKeyboardType:UIKeyboardTypeAlphabet];
+        [self.mySearchBar setDelegate:self];
 
-        [searchBar setKeyboardType:UIKeyboardTypeAlphabet];
-        [searchBar setDelegate:self];
-        self.searchDisplay = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
+//        self.tableView.tableHeaderView = self.mySearchBar;
         
+        self.searchDisplay = [[UISearchDisplayController alloc] initWithSearchBar:self.mySearchBar contentsController:self];
         self.searchDisplay.searchResultsTableView.frame = self.tableView.frame;
         self.searchDisplay.delegate = self;
         self.searchDisplay.searchResultsDataSource = self;
@@ -131,10 +131,8 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-
     bool showLoadingIndicator = !self.dataController.foundLocation;
     bool collegesNearby = [self.dataController isNearCollege];
-    
     
     switch (self.type)
     {
@@ -450,6 +448,16 @@
 
 #pragma mark - Search Bar
 
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    // Adjust views when search starts
+    float windowHeight = self.view.frame.size.height;
+    float dialogHeight = self.alertView.frame.size.height;
+    
+    self.dialogVerticalAlignment.constant = (windowHeight / 2) - (dialogHeight / 2) - 55;
+    [self.view setNeedsUpdateConstraints];
+}
+
 -(void)searchDisplayController:(UISearchDisplayController *)controller didShowSearchResultsTableView:(UITableView *)tableView
 {
     [tableView setFrame:self.tableView.frame];
@@ -469,6 +477,11 @@
     [self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
     
     return YES;
+}
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    self.dialogVerticalAlignment.constant = 0;
+    [self.view setNeedsUpdateConstraints];
 }
 
 @end
