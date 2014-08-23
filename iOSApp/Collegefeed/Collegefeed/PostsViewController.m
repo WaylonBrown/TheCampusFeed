@@ -133,10 +133,10 @@
                                                          owner:self options:nil];
             cell = [nib objectAtIndex:0];
         }
-        [cell showLoadingIndicator];
         
         if (!self.hasReachedEndOfList)
         {
+            [cell showLoadingIndicator];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 NSInteger oldCount = listcount;
                 self.hasReachedEndOfList = ![self loadMorePosts];
@@ -145,6 +145,10 @@
                 if (oldCount != newCount)
                 {
                     [self addNewRows:oldCount through:newCount];
+                }
+                else
+                {
+                    [cell hideLoadingIndicator];
                 }
             });
         }
@@ -163,6 +167,13 @@
 
     }
     [cell setDelegate: self];
+    if (self.viewType == USER_COMMENTS)
+    {
+        Comment *comment = [self.list objectAtIndex:indexPath.row];
+        float cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
+        [cell assign:comment WithCellHeight:cellHeight];
+        return cell;
+    }
     
     // get the post and display in this cell
     Post *post = [self.list objectAtIndex:indexPath.row];
