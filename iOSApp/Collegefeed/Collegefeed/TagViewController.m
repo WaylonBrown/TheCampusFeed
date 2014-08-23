@@ -14,6 +14,7 @@
 #import "Shared.h"
 #import "SimpleTableCell.h"
 #import "ToastController.h"
+#import "LoadingCell.h"
 
 @implementation TagViewController
 
@@ -53,6 +54,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Post view of all posts with the selected tag
+    
+    if (indexPath.row >= self.list.count)
+    {
+        return;
+    }
+    
     self.selectedTag = nil;
     if (tableView == self.searchDisplay.searchResultsTableView)
     {
@@ -95,7 +102,7 @@
     }
     else
     {
-        return self.list.count;
+        return self.list.count + 1;
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -117,6 +124,36 @@
     }
     else
     {
+        if (indexPath.row == self.list.count)
+        {
+            static NSString *LoadingCellIdentifier = @"LoadingCell";
+            LoadingCell *cell = (LoadingCell *)[tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier];
+            
+            if (cell == nil)
+            {
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:LoadingCellIdentifier
+                                                             owner:self options:nil];
+                cell = [nib objectAtIndex:0];
+            }
+            [cell showLoadingIndicator];
+            
+            if (!self.hasReachedEndOfList)
+            {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                    NSInteger oldCount = self.list.count;
+                    self.hasReachedEndOfList = ![self loadMoreTags];
+                    NSInteger newCount = self.list.count;
+                    
+                    if (oldCount != newCount)
+                    {
+                        [self addNewRows:oldCount through:newCount];
+                    }
+                });
+            }
+            
+            return cell;
+        }
+        
         // get the tag and display in this cell
         Tag *tagAtIndex = (Tag *)[self.list objectAtIndex:indexPath.row];
         [cell assignTag:tagAtIndex];
@@ -146,18 +183,45 @@
         [self.toastController toastInvalidTagSearch];
     }
 }
+
 #pragma mark - Actions
+
+- (BOOL)loadMoreTags
+{
+    BOOL success = [self.dataController fetchTags];
+    return success;
+}
+- (void)addNewRows:(NSInteger)oldCount through:(NSInteger)newCount
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        NSMutableArray* newRows = [NSMutableArray array];
+        
+        for (NSInteger i = oldCount; i < newCount; i++)
+        {
+            NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
+            [newRows addObject:newIndexPath];
+        }
+        
+        [self.tableView beginUpdates];
+        [self.tableView insertRowsAtIndexPaths:newRows withRowAnimation:UITableViewRowAnimationTop];
+        [self.tableView endUpdates];
+        [self.tableView reloadData];
+        
+    });
+}
+
 
 - (void)refresh
 {   // refresh this tag view
     if (self.dataController.showingAllColleges)
     {
-        [self.dataController fetchAllTags];
+        [self.dataController fetchTags];
         [self switchToAllColleges];
     }
     else if (self.dataController.showingSingleCollege)
     {
-        [self.dataController fetchAllTagsWithCollegeId:self.dataController.collegeInFocus.collegeID];
+        [self.dataController fetchTagsWithCollegeId:self.dataController.collegeInFocus.collegeID];
         [self switchToSpecificCollege];
     }
     [super refresh];

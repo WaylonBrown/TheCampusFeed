@@ -33,6 +33,7 @@
         self.recentPostsAllColleges = [[NSMutableArray alloc] init];
         self.collegeList            = [[NSMutableArray alloc] init];
         self.allTags                = [[NSMutableArray alloc] init];
+        self.allTagsInCollege       = [[NSMutableArray alloc] init];
         self.trendingColleges       = [[NSMutableArray alloc] init];
         self.userPosts              = [[NSMutableArray alloc] init];
         self.userComments           = [[NSMutableArray alloc] init];
@@ -44,6 +45,7 @@
         [self setRecentPostsPage:0];
         [self setTagPostsPage:0];
         [self setTrendingCollegesPage:0];
+        [self setTagPage:0];
 
         if ([self needsNewCollegeList])
         {
@@ -60,7 +62,7 @@
         [self fetchTopPosts];
         [self fetchNewPosts];
         [self getTrendingCollegeList];
-        [self fetchAllTags];
+        [self fetchTags];
         
         // Get the user's location
         [self setLocationManager:[[CLLocationManager alloc] init]];
@@ -90,7 +92,8 @@
 - (void)getTrendingCollegeList
 {
     self.trendingColleges = [[NSMutableArray alloc] init];
-    NSData *data = [Networker GETTrendingCollegesAtPageNum:self.trendingCollegesPage++];
+    NSData *data = [Networker GETTrendingColleges];
+//    NSData *data = [Networker GETTrendingCollegesAtPageNum:self.trendingCollegesPage++];
     [self parseData:data asClass:[College class] intoList:self.trendingColleges];
 }
 - (long)getNetworkCollegeListVersion
@@ -232,8 +235,7 @@
 }
 - (BOOL)fetchTopPosts
 {
-    self.topPostsPage++;
-    NSData* data = [Networker GETTrendingPostsAtPageNum:self.topPostsPage];
+    NSData* data = [Networker GETTrendingPostsAtPageNum:self.topPostsPage++];
     return [self parseData:data asClass:[Post class] intoList:self.topPostsAllColleges];
 }
 - (void)fetchTopPostsInCollege
@@ -245,8 +247,7 @@
 }
 - (BOOL)fetchNewPosts
 {
-    self.recentPostsPage++;
-    NSData* data = [Networker GETRecentPostsAtPageNum:self.recentPostsPage];
+    NSData* data = [Networker GETRecentPostsAtPageNum:self.recentPostsPage++];
     return [self parseData:data asClass:[Post class] intoList:self.recentPostsAllColleges];
 }
 - (void)fetchNewPostsInCollege
@@ -272,8 +273,7 @@
 }
 - (BOOL)fetchMorePostsWithTagMessage:(NSString*)tagMessage
 {
-    self.tagPostsPage++;
-    NSData* data = [Networker GETAllPostsWithTag:tagMessage atPageNum:self.tagPostsPage];
+    NSData* data = [Networker GETAllPostsWithTag:tagMessage atPageNum:self.tagPostsPage++];
     return [self parseData:data asClass:[Post class] intoList:self.allPostsWithTag];
 }
 - (void)fetchUserPostsWithIdArray:(NSArray *)postIds
@@ -293,17 +293,17 @@
 
 #pragma mark - Networker Access - Tags
 
-- (void)fetchAllTags
+- (BOOL)fetchTags
 {   // fetch tags trending across all colleges
-    self.allTags = [[NSMutableArray alloc] init];
-    NSData *data = [Networker GETTagsTrending];
-    [self parseData:data asClass:[Tag class] intoList:self.allTags];
+    NSData *data = [Networker GETTagsTrendingAtPageNum:self.tagPage++];
+    return [self parseData:data asClass:[Tag class] intoList:self.allTags];
 }
-- (void)fetchAllTagsWithCollegeId:(long)collegeId
+- (BOOL)fetchTagsWithCollegeId:(long)collegeId
 {   // fetch tags trending in a particular college
+    self.tagPage++;
     self.allTagsInCollege = [[NSMutableArray alloc] init];
-    NSData *data = [Networker GETTagsWithCollegeId:collegeId];
-    [self parseData:data asClass:[Tag class] intoList:self.allTagsInCollege];
+    NSData *data = [Networker GETTagsWithCollegeId:collegeId AtPageNum:self.tagPage++];
+    return [self parseData:data asClass:[Tag class] intoList:self.allTagsInCollege];
 }
 
 #pragma mark - Networker Access - Votes

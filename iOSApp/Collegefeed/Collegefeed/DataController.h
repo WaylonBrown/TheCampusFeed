@@ -123,6 +123,7 @@
 @property (nonatomic) long              collegeListVersion;
 
 // Lazy Loading Counters
+@property (nonatomic) long tagPage;
 @property (nonatomic) long topPostsPage;
 @property (nonatomic) long recentPostsPage;
 @property (nonatomic) long tagPostsPage;
@@ -191,8 +192,8 @@
 - (Post *)fetchPostWithId:(long)postId;
 
 // Tags
-- (void)fetchAllTags;
-- (void)fetchAllTagsWithCollegeId:(long)collegeId;
+- (BOOL)fetchTags;
+- (BOOL)fetchTagsWithCollegeId:(long)collegeId;
 
 // Votes
 - (BOOL)createVote:(Vote *)vote;

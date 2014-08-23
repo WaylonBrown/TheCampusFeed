@@ -18,6 +18,7 @@
 // Colleges
 + (NSData *)GETAllColleges;
 + (NSData *)GETCollegeWithId:(long)collegeId;
++ (NSData *)GETTrendingColleges;
 + (NSData *)GETTrendingCollegesAtPageNum:(long)pageNum;
 + (NSData *)GETCollegeListVersion;
 
@@ -51,8 +52,8 @@
 + (NSData *)POSTFlagPost:(long)postId;
 
 // Tags
-+ (NSData *)GETTagsTrending;
-+ (NSData *)GETTagsWithCollegeId:(long)collegeId;
++ (NSData *)GETTagsTrendingAtPageNum:(long)pageNum;
++ (NSData *)GETTagsWithCollegeId:(long)collegeId AtPageNum:(long)pageNum;
 
 // Votes
 + (NSData *)POSTVoteData:(NSData *)data WithPostId:(long)postId;

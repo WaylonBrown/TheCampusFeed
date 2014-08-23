@@ -118,6 +118,13 @@
     
     return [self GET:url];
 }
++ (NSData *)GETTrendingColleges
+{
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/colleges/trending?page=%d&per_page=%d",
+                   API_URL, API_VERSION, 0, 40]];
+    return [self GET:url];
+}
 + (NSData *)GETTrendingCollegesAtPageNum:(long)pageNum
 {
     NSURL *url = [[NSURL alloc] initWithString:
@@ -300,18 +307,18 @@
 
 #pragma mark - Tags
 
-+ (NSData *)GETTagsTrending
++ (NSData *)GETTagsTrendingAtPageNum:(long)pageNum
 {
     NSURL *url = [[NSURL alloc] initWithString:
-                  [NSString stringWithFormat:@"%@/%@/tags/trending",
-                   API_URL, API_VERSION]];
+                  [NSString stringWithFormat:@"%@/%@/tags/trending?page=%ld&per_page=%d",
+                   API_URL, API_VERSION, pageNum, PAGINATION_NUM]];
     return [self GET:url];
 }
-+ (NSData *)GETTagsWithCollegeId:(long)collegeId
++ (NSData *)GETTagsWithCollegeId:(long)collegeId AtPageNum:(long)pageNum
 {
     NSURL *url = [[NSURL alloc] initWithString:
-                  [NSString stringWithFormat:@"%@/%@/colleges/%ld/tags/trending",
-                   API_URL, API_VERSION, collegeId]];
+                  [NSString stringWithFormat:@"%@/%@/colleges/%ld/tags/trending?page=%ld&per_page=%d",
+                   API_URL, API_VERSION, collegeId, pageNum, PAGINATION_NUM]];
     return [self GET:url];
 }
 
