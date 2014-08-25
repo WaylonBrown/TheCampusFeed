@@ -9,9 +9,11 @@
                 <outlet property="alertView" destination="gj6-SA-745" id="AcX-QT-1DJ"/>
                 <outlet property="createButton" destination="gDU-GL-keo" id="NRz-6S-jZB"/>
                 <outlet property="dialogVerticalPosition" destination="StA-cJ-MLs" id="sjp-1W-lZG"/>
+                <outlet property="messageTextView" destination="IWc-2Q-15k" id="zNN-jf-Zpl"/>
+                <outlet property="messageTextViewHeight" destination="RRw-su-YDM" id="KLR-LD-VKW"/>
                 <outlet property="subtitleLabel" destination="SFZ-hG-FDM" id="Vqf-6P-Cmy"/>
-                <outlet property="textView" destination="IWc-2Q-15k" id="lHO-vh-VyF"/>
-                <outlet property="textViewHeight" destination="RRw-su-YDM" id="Rj3-Xc-gat"/>
+                <outlet property="tagTextView" destination="AVU-9b-sN0" id="re6-Ue-GcL"/>
+                <outlet property="tagTextViewHeight" destination="pO9-gj-FDx" id="Equ-PJ-nSX"/>
                 <outlet property="titleLabel" destination="QD5-9l-3Ds" id="N1F-TX-JKh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -81,9 +83,19 @@
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IWc-2Q-15k">
                             <rect key="frame" x="10" y="78" width="260" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="RRw-su-YDM"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AVU-9b-sN0">
+                            <rect key="frame" x="10" y="111" width="260" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" id="pO9-gj-FDx"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -92,11 +104,13 @@
                     <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="IWc-2Q-15k" secondAttribute="trailing" constant="10" id="1pM-TH-y7h"/>
+                        <constraint firstItem="IWc-2Q-15k" firstAttribute="leading" secondItem="AVU-9b-sN0" secondAttribute="leading" id="1tR-9w-BZy"/>
                         <constraint firstItem="IWc-2Q-15k" firstAttribute="leading" secondItem="gj6-SA-745" secondAttribute="leading" constant="10" id="3qn-zp-Ip6"/>
                         <constraint firstItem="gDU-GL-keo" firstAttribute="top" secondItem="skO-Gl-Bu0" secondAttribute="bottom" constant="3" id="91S-YO-b22"/>
                         <constraint firstItem="QD5-9l-3Ds" firstAttribute="leading" secondItem="gj6-SA-745" secondAttribute="leading" constant="20" id="9dS-Op-o8a"/>
                         <constraint firstItem="QD5-9l-3Ds" firstAttribute="top" secondItem="gj6-SA-745" secondAttribute="top" constant="13" id="AHF-fJ-N3h"/>
                         <constraint firstAttribute="bottom" secondItem="gDU-GL-keo" secondAttribute="bottom" id="CeB-l3-I2f"/>
+                        <constraint firstItem="skO-Gl-Bu0" firstAttribute="top" secondItem="AVU-9b-sN0" secondAttribute="bottom" constant="4" id="EWg-wx-7Dt"/>
                         <constraint firstAttribute="trailing" secondItem="SFZ-hG-FDM" secondAttribute="trailing" constant="10" id="Gxy-D1-pg3"/>
                         <constraint firstAttribute="trailing" secondItem="gDU-GL-keo" secondAttribute="trailing" id="LAa-7r-h2K"/>
                         <constraint firstItem="SFZ-hG-FDM" firstAttribute="leading" secondItem="gj6-SA-745" secondAttribute="leading" constant="10" id="MXK-to-PFX"/>
@@ -105,8 +119,9 @@
                         <constraint firstAttribute="width" constant="280" id="ZTH-zM-5Xs"/>
                         <constraint firstItem="SFZ-hG-FDM" firstAttribute="top" secondItem="QD5-9l-3Ds" secondAttribute="bottom" constant="3" id="gOh-bp-y7q"/>
                         <constraint firstAttribute="trailing" secondItem="QD5-9l-3Ds" secondAttribute="trailing" constant="20" id="h5Y-dm-irX"/>
-                        <constraint firstItem="skO-Gl-Bu0" firstAttribute="top" secondItem="IWc-2Q-15k" secondAttribute="bottom" constant="7" id="seh-Zc-5Nj"/>
                         <constraint firstAttribute="trailing" secondItem="skO-Gl-Bu0" secondAttribute="trailing" constant="3" id="tgi-gs-33r"/>
+                        <constraint firstItem="AVU-9b-sN0" firstAttribute="top" secondItem="IWc-2Q-15k" secondAttribute="bottom" constant="3" id="w2m-Hm-jGq"/>
+                        <constraint firstItem="IWc-2Q-15k" firstAttribute="width" secondItem="AVU-9b-sN0" secondAttribute="width" id="wue-Eh-l6t"/>
                         <constraint firstItem="gDU-GL-keo" firstAttribute="leading" secondItem="gj6-SA-745" secondAttribute="leading" id="ziI-Ls-Jaz"/>
                     </constraints>
                 </view>

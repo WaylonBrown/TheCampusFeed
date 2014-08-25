@@ -24,24 +24,26 @@
 @interface CreatePostCommentViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate,
     UITextViewDelegate>
 
-@property (nonatomic) CGRect previousRect;
+@property (nonatomic) CGRect previousMessageRect;
+@property (nonatomic) CGRect previousTagRect;
 
 @property (strong, nonatomic) id<CreationViewProtocol> delegate;
 
 @property (weak, nonatomic) IBOutlet UIView *alertView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
-@property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIButton *createButton;
-@property (strong, nonatomic) IBOutlet UITextView *textView;
+@property (strong, nonatomic) IBOutlet UITextView *messageTextView;
+@property (strong, nonatomic) IBOutlet UITextView *tagTextView;
 
 @property (strong, nonatomic) ToastController *toastController;
 
 @property (strong, nonatomic) College *collegeForPost;
 @property (nonatomic) ModelType modelType;
 
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *textViewHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *messageTextViewHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *dialogVerticalPosition;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *tagTextViewHeight;
 
 - (id)initWithType:(ModelType)type
        withCollege:(College *)college;

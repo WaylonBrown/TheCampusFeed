@@ -252,7 +252,6 @@
                                   withRange:range];
         }
     }
-
 }
 - (void)updateVoteButtons
 {   // assign appropriate arrow colors (based on user's vote)
