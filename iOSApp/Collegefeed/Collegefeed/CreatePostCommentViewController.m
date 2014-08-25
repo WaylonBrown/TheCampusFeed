@@ -125,7 +125,12 @@
         if (currentRect.origin.y > self.previousMessageRect.origin.y)
         {
             self.messageTextViewHeight.constant += 17;
-            self.dialogVerticalPosition.constant -= 7;
+            self.dialogVerticalPosition.constant -= 12;
+        }
+        else if (currentRect.origin.y < self.previousMessageRect.origin.y)
+        {
+            self.messageTextViewHeight.constant -= 17;
+            self.dialogVerticalPosition.constant += 12;
         }
         
         self.previousMessageRect = currentRect;
@@ -145,10 +150,15 @@
                 numTags++;
             }
         }
-        if (numTags)
+        if (numTags > 0)
         {
             [self.tagTextView setText:filteredMessage];
             [self textViewDidChange:self.tagTextView];
+        }
+        else
+        {
+            [self.tagTextView setText:@""];
+            self.tagTextViewHeight.constant = 0;
         }
     }
     else if (textView == self.tagTextView)
@@ -163,7 +173,12 @@
         else if (currentRect.origin.y > self.previousTagRect.origin.y)
         {
             self.tagTextViewHeight.constant += 17;
-            self.dialogVerticalPosition.constant -= 10;
+            self.dialogVerticalPosition.constant -= 12;
+        }
+        else if (currentRect.origin.y < self.previousTagRect.origin.y)
+        {
+            self.tagTextViewHeight.constant -= 17;
+            self.dialogVerticalPosition.constant += 12;
         }
         
         self.previousTagRect = currentRect;
