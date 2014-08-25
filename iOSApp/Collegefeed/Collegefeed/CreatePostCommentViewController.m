@@ -11,6 +11,7 @@
 #import "College.h"
 #import "ToastController.h"
 #import "UIView+Toast.h"
+#import "Tag.h"
 
 @implementation CreatePostCommentViewController
 
@@ -32,10 +33,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.textView setDelegate:self];
-    UITextPosition* pos = self.textView.endOfDocument;
-    self.previousRect = [self.textView caretRectForPosition:pos];
-
+    [self.messageTextView setDelegate:self];
+    [self.tagTextView setDelegate:self];
+    UITextPosition* pos = self.messageTextView.endOfDocument;
+    self.previousMessageRect = [self.messageTextView caretRectForPosition:pos];
+    self.previousTagRect = CGRectZero;
+    
     self.alertView.layer.borderWidth = 2;
     self.alertView.layer.cornerRadius = 5;
     [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
@@ -57,6 +60,8 @@
     [self.titleLabel setFont:CF_FONT_LIGHT(30)];
     [self.subtitleLabel setFont:CF_FONT_ITALIC(14)];
     [self.createButton.titleLabel setFont:CF_FONT_LIGHT(16)];
+    
+    [self.messageTextView becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,7 +72,7 @@
 
 - (IBAction)submit:(id)sender
 {
-    NSString *message = self.textView.text;
+    NSString *message = self.messageTextView.text;
     message = [message stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
     if (message.length > MIN_POST_LENGTH
@@ -112,19 +117,86 @@
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    UITextPosition* pos = self.textView.endOfDocument;
-    CGRect currentRect = [self.textView caretRectForPosition:pos];
+    UITextPosition* pos = textView.endOfDocument;
+    CGRect currentRect = [textView caretRectForPosition:pos];
     
-    if (currentRect.origin.y > self.previousRect.origin.y)
+    if (textView == self.messageTextView)
     {
-        self.textViewHeight.constant += 17;
-        self.dialogVerticalPosition.constant -= 7;
-        [self.view setNeedsUpdateConstraints];
+        if (currentRect.origin.y > self.previousMessageRect.origin.y)
+        {
+            self.messageTextViewHeight.constant += 17;
+            self.dialogVerticalPosition.constant -= 12;
+        }
+        else if (currentRect.origin.y < self.previousMessageRect.origin.y)
+        {
+            self.messageTextViewHeight.constant -= 17;
+            self.dialogVerticalPosition.constant += 12;
+        }
+        
+        self.previousMessageRect = currentRect;
+        
+        // Check for tags
+        NSString *message = self.messageTextView.text;
+        NSString *filteredMessage = @"Tags:";
+        
+        int numTags = 0;
+        
+        NSArray *words = [message componentsSeparatedByString:@" "];
+        for (NSString *word in words)
+        {
+            if ([Tag withMessageIsValid:word])
+            {
+                filteredMessage = [NSString stringWithFormat:@"%@ %@", filteredMessage, word];
+                numTags++;
+            }
+        }
+        if (numTags > 0)
+        {
+            [self.tagTextView setText:filteredMessage];
+            [self textViewDidChange:self.tagTextView];
+        }
+        else
+        {
+            [self.tagTextView setText:@""];
+            self.tagTextViewHeight.constant = 0;
+        }
     }
-    self.previousRect = currentRect;
+    else if (textView == self.tagTextView)
+    {
+        NSString *tagsString = self.tagTextView.text;
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:tagsString];
+
+        if (self.tagTextViewHeight.constant == 0)
+        {
+            self.tagTextViewHeight.constant += 30;
+        }
+        else if (currentRect.origin.y > self.previousTagRect.origin.y)
+        {
+            self.tagTextViewHeight.constant += 17;
+            self.dialogVerticalPosition.constant -= 12;
+        }
+        else if (currentRect.origin.y < self.previousTagRect.origin.y)
+        {
+            self.tagTextViewHeight.constant -= 17;
+            self.dialogVerticalPosition.constant += 12;
+        }
+        
+        self.previousTagRect = currentRect;
+
+        NSRange range = NSMakeRange(6, tagsString.length - 6);
+        [string addAttribute:NSForegroundColorAttributeName value:[Shared getCustomUIColor:CF_LIGHTBLUE] range:range];
+        [self.tagTextView setAttributedText:string];
+        [self.tagTextView setFont:[UIFont systemFontOfSize:14]];
+
+    }
+    
+    [self.view setNeedsUpdateConstraints];
+
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    if (textView != self.messageTextView) return YES;
+
     return textView.text.length + (text.length - range.length) <= 140;
 }
 
