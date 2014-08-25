@@ -60,7 +60,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         	commentHolder.commentsText = (TextView)row.findViewById(R.id.commentText);
         	commentHolder.arrowUp = (ImageView)row.findViewById(R.id.arrowUp);
         	commentHolder.arrowDown = (ImageView)row.findViewById(R.id.arrowDown);
-        	commentHolder.bottomPadding = (View)row.findViewById(R.id.bottomPadding);
+        	commentHolder.bottomPadding = row.findViewById(R.id.bottomPadding);
             
             commentHolder.scoreText.setTypeface(FontManager.bold);
             commentHolder.messageText.setTypeface(FontManager.light);
@@ -113,7 +113,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 				{
 					thisComment.setVote(0);
 					thisComment.score--;
-                    updateRowViews(finalRow, finalPostHolder, 1, thisComment);
+                    updateRowViews(finalRow, finalPostHolder, 0, thisComment);
                     new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
 				}
 			}        	
@@ -133,21 +133,21 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 					{
 						thisComment.setVote(0);
 						thisComment.score++;
-                        updateRowViews(finalRow, finalPostHolder, 1, thisComment);
+                        updateRowViews(finalRow, finalPostHolder, 0, thisComment);
                         new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
 					}
 					else if(thisComment.getVote() == 0)
 					{
 						thisComment.setVote(-1);
 						thisComment.score--;
-                        updateRowViews(finalRow, finalPostHolder, 1, thisComment);
+                        updateRowViews(finalRow, finalPostHolder, -1, thisComment);
                         new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), false));
 					}
 					else 
 					{
 						thisComment.setVote(-1);
 						thisComment.score -= 2;
-                        updateRowViews(finalRow, finalPostHolder, 1, thisComment);
+                        updateRowViews(finalRow, finalPostHolder, -1, thisComment);
                         new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
                         new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), false));
 					}

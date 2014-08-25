@@ -63,9 +63,9 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         	postHolder.arrowDown = (ImageView)row.findViewById(R.id.arrowDown);
         	postHolder.collegeName = (TextView)row.findViewById(R.id.collegeNameText);
         	postHolder.gpsImage = (ImageView)row.findViewById(R.id.gpsImage);
-        	postHolder.gpsImageGap = (View)row.findViewById(R.id.gpsImageGapFiller);
-        	postHolder.bottomDivider = (View)row.findViewById(R.id.bottomDivider);
-        	postHolder.bottomPadding = (View)row.findViewById(R.id.bottomPadding);
+        	postHolder.gpsImageGap = row.findViewById(R.id.gpsImageGapFiller);
+        	postHolder.bottomDivider = row.findViewById(R.id.bottomDivider);
+        	postHolder.bottomPadding = row.findViewById(R.id.bottomPadding);
         	postHolder.bottomLayout = (LinearLayout)row.findViewById(R.id.bottomLayout);
             
             postHolder.scoreText.setTypeface(FontManager.bold);
