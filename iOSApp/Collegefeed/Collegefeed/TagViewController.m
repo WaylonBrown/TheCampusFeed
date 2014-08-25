@@ -176,7 +176,6 @@
         PostsViewController *postsView = [[PostsViewController alloc] initAsType:TAG_VIEW withDataController:self.dataController];
         [postsView setTagMessage:tag];
         [self.navigationController pushViewController:postsView animated:YES];
-        
     }
     else
     {

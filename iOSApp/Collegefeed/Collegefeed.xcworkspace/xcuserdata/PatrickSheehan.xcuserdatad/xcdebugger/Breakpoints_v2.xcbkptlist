@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Collegefeed/CreatePostCommentViewController.m"
-            timestampString = "428604424.85324"
+            timestampString = "430692156.28028"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "-receivedNotification:"
             landmarkType = "5">
          </BreakpointContent>

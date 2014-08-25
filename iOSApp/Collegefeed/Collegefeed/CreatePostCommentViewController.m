@@ -32,6 +32,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.textView setDelegate:self];
+    UITextPosition* pos = self.textView.endOfDocument;
+    self.previousRect = [self.textView caretRectForPosition:pos];
 
     self.alertView.layer.borderWidth = 2;
     self.alertView.layer.cornerRadius = 5;
@@ -64,14 +67,12 @@
 
 - (IBAction)submit:(id)sender
 {
-    NSString *message = self.textField.text;
+    NSString *message = self.textView.text;
     message = [message stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
     if (message.length > MIN_POST_LENGTH
         && message.length < MAX_POST_LENGTH)
     {
-        // TODO: call delegate to make toast if too frequent
-
         [self.delegate submitPostCommentCreationWithMessage:message
                                               withCollegeId:self.collegeForPost.collegeID
                                               withUserToken:@"EMPTY_TOKEN"];
@@ -107,13 +108,32 @@
                 position:@"top"];
 }
 
+#pragma mark - TextView
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    UITextPosition* pos = self.textView.endOfDocument;
+    CGRect currentRect = [self.textView caretRectForPosition:pos];
+    
+    if (currentRect.origin.y > self.previousRect.origin.y)
+    {
+        self.textViewHeight.constant += 17;
+        self.dialogVerticalPosition.constant -= 7;
+        [self.view setNeedsUpdateConstraints];
+    }
+    self.previousRect = currentRect;
+}
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    return textView.text.length + (text.length - range.length) <= 140;
+}
+
 #pragma mark - Transitioning Protocol Methods
 
--(id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController: (UIViewController *)presenting sourceController: (UIViewController *)source
+-(id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
 {
     return self;
 }
-
 -(id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
 {
     return self;
@@ -155,4 +175,5 @@
         }];
     }
 }
+
 @end
