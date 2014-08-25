@@ -717,7 +717,8 @@ public class NetWorker {
                  try {
                      responseComment = JSONParser.commentFromJSON(response);
                      int id = responseComment.getID();
-                     MainActivity.commentVoteList.add(new Vote(-1, responseComment.getID(), true));
+                     Log.i("cfeed","ID: " + id);
+                     MainActivity.commentVoteList.add(new Vote(-1, responseComment.getPostID(), responseComment.getID(), true));
                      PrefManager.putCommentVoteList(MainActivity.commentVoteList);
                      MainActivity.myCommentsList.add(id);
                      PrefManager.putMyCommentsList(MainActivity.myCommentsList);

@@ -3,7 +3,6 @@ package com.appuccino.collegefeed.dialogs;
 import android.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -144,7 +143,6 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
             nearYouListView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                 @Override
                 public void onLayoutChange(View view, int i, int i2, int i3, int i4, int i5, int i6, int i7, int i8) {
-                    Log.i("cfeed","List height: " + nearYouListView.getHeight());
                     if(nearYouListView.getHeight() > 800)
                     {
                         nearYouListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 800));
