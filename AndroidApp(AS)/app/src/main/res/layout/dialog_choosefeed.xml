@@ -71,7 +71,7 @@
         android:id="@+id/nearYouDialogList"
         style="@style/block"
         android:divider="@android:color/transparent"
-        android:dividerHeight="6dp"
+        android:dividerHeight="4dp"
         android:listSelector="@android:color/transparent">
     </ListView>
     

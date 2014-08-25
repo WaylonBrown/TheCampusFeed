@@ -91,30 +91,6 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
                     {
                         nearYouListArray.add(MainActivity.getCollegeByID(id));
                     }
-                    for(int id : MainActivity.permissions)
-                    {
-                        nearYouListArray.add(MainActivity.getCollegeByID(id));
-                    }
-                    for(int id : MainActivity.permissions)
-                    {
-                        nearYouListArray.add(MainActivity.getCollegeByID(id));
-                    }
-                    for(int id : MainActivity.permissions)
-                    {
-                        nearYouListArray.add(MainActivity.getCollegeByID(id));
-                    }
-                    for(int id : MainActivity.permissions)
-                    {
-                        nearYouListArray.add(MainActivity.getCollegeByID(id));
-                    }
-                    for(int id : MainActivity.permissions)
-                    {
-                        nearYouListArray.add(MainActivity.getCollegeByID(id));
-                    }
-                    for(int id : MainActivity.permissions)
-                    {
-                        nearYouListArray.add(MainActivity.getCollegeByID(id));
-                    }
 				}
 				else
 				{
