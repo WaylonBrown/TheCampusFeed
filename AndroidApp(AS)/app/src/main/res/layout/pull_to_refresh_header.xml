@@ -10,7 +10,7 @@
         android:layout_height="48dp"
         android:background="@color/lightlightgray">
 
-        <com.appuccino.collegefeed.extra.CustomTextView
+        <com.appuccino.thecampusfeed.extra.CustomTextView
             android:id="@id/ptr_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

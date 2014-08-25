@@ -10,7 +10,7 @@
 	    android:background="@color/lightgray"
 	    android:orientation="vertical">
 	    
-	    <com.appuccino.collegefeed.extra.CustomTextView
+	    <com.appuccino.thecampusfeed.extra.CustomTextView
 		    android:id="@+id/topTagText"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
 		    android:singleLine="true"
 		    android:textSize="18sp"/>
 
-        <com.appuccino.collegefeed.extra.CustomTextView
+        <com.appuccino.thecampusfeed.extra.CustomTextView
             android:id="@+id/tagFeedName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

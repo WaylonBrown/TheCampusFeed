@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
     
-    <com.appuccino.collegefeed.extra.CustomTextView
+    <com.appuccino.thecampusfeed.extra.CustomTextView
         android:id="@+id/newPostTitle"
         android:text="New Post"
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:gravity="center_horizontal"
         />
     
-    <com.appuccino.collegefeed.extra.CustomTextView
+    <com.appuccino.thecampusfeed.extra.CustomTextView
         android:id="@+id/collegeText"
         android:text="Posting to Texas A&amp;M University"
         android:textSize="15sp"
@@ -26,7 +26,7 @@
         />
     
     <!-- custom so that it cant do a carriage return -->
-    <com.appuccino.collegefeed.extra.MyEditText
+    <com.appuccino.thecampusfeed.extra.MyEditText
         android:id="@+id/newPostMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
 		android:maxLength="140"
         /> 
     
-    <com.appuccino.collegefeed.extra.CustomTextView
+    <com.appuccino.thecampusfeed.extra.CustomTextView
         android:id="@+id/newPostTagsText"
         android:text="Tags: "
         android:layout_width="match_parent"

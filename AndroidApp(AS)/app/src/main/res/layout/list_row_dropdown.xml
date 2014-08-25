@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-	<com.appuccino.collegefeed.extra.CustomTextView
+	<com.appuccino.thecampusfeed.extra.CustomTextView
 	    android:id="@+id/dropDownText"
 	    style="@style/block"
 	    android:textSize="20sp"

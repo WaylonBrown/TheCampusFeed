@@ -10,7 +10,7 @@
         android:layout_marginRight="8dp"
         >
         
-        <com.appuccino.collegefeed.extra.CustomTextView
+        <com.appuccino.thecampusfeed.extra.CustomTextView
             android:id="@+id/collegeText"
             style="@style/block"
             android:gravity="center"

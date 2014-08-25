@@ -10,7 +10,7 @@
         style="@style/fill"
         android:orientation="vertical">
 
-        <com.appuccino.collegefeed.extra.QuickReturnListView
+        <com.appuccino.thecampusfeed.extra.QuickReturnListView
             android:id="@+id/fragmentListView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -31,7 +31,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"/>
 
-        <com.appuccino.collegefeed.extra.CustomTextView
+        <com.appuccino.thecampusfeed.extra.CustomTextView
             android:id="@+id/score"
             style="@style/block"
             android:text="Post Score: 0"

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
     
-    <com.appuccino.collegefeed.extra.CustomTextView
+    <com.appuccino.thecampusfeed.extra.CustomTextView
         android:id="@+id/chooseFeedDialogTitle"
         android:text="@string/chooseFeedDialogTitle"
         style="@style/block"
@@ -29,7 +29,7 @@
         android:layout_marginRight="8dp"
         >
         
-        <com.appuccino.collegefeed.extra.CustomTextView
+        <com.appuccino.thecampusfeed.extra.CustomTextView
             android:id="@+id/allCollegesText"
             style="@style/block"
             android:gravity="center"
@@ -49,7 +49,7 @@
         android:layout_marginBottom="4dp"
         android:gravity="center">
         
-        <com.appuccino.collegefeed.extra.CustomTextView
+        <com.appuccino.thecampusfeed.extra.CustomTextView
 	        android:id="@+id/nearYouTitle"
 	        android:text="@string/nearYou"
 	        style="@style/wrap"
@@ -75,7 +75,7 @@
         android:listSelector="@android:color/transparent">
     </ListView>
     
-    <com.appuccino.collegefeed.extra.CustomTextView
+    <com.appuccino.thecampusfeed.extra.CustomTextView
         android:id="@+id/otherTitle"
         android:text="@string/other"
         style="@style/block"
@@ -96,7 +96,7 @@
         android:clickable="true"
         >
         
-        <com.appuccino.collegefeed.extra.CustomTextView
+        <com.appuccino.thecampusfeed.extra.CustomTextView
             android:id="@+id/otherCollegesButtonText"
             style="@style/block"
             android:gravity="center"
