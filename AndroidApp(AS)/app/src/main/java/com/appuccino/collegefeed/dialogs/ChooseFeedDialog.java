@@ -3,6 +3,7 @@ package com.appuccino.collegefeed.dialogs;
 import android.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,10 +88,34 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 			{
 				if(MainActivity.permissions.size() > 0)
 				{
-					for(int id : MainActivity.permissions)
-					{
-						nearYouListArray.add(MainActivity.getCollegeByID(id));
-					}
+                    for(int id : MainActivity.permissions)
+                    {
+                        nearYouListArray.add(MainActivity.getCollegeByID(id));
+                    }
+                    for(int id : MainActivity.permissions)
+                    {
+                        nearYouListArray.add(MainActivity.getCollegeByID(id));
+                    }
+                    for(int id : MainActivity.permissions)
+                    {
+                        nearYouListArray.add(MainActivity.getCollegeByID(id));
+                    }
+                    for(int id : MainActivity.permissions)
+                    {
+                        nearYouListArray.add(MainActivity.getCollegeByID(id));
+                    }
+                    for(int id : MainActivity.permissions)
+                    {
+                        nearYouListArray.add(MainActivity.getCollegeByID(id));
+                    }
+                    for(int id : MainActivity.permissions)
+                    {
+                        nearYouListArray.add(MainActivity.getCollegeByID(id));
+                    }
+                    for(int id : MainActivity.permissions)
+                    {
+                        nearYouListArray.add(MainActivity.getCollegeByID(id));
+                    }
 				}
 				else
 				{
@@ -114,6 +139,20 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 			
 			DialogCollegeListAdapter adapter = new DialogCollegeListAdapter(main, R.layout.list_row_choosefeed_college, nearYouListArray, enableListClicking);
 			nearYouListView.setAdapter(adapter);
+
+            //don't let Near You list push bottom buttons off screen, so set a max height
+            nearYouListView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                @Override
+                public void onLayoutChange(View view, int i, int i2, int i3, int i4, int i5, int i6, int i7, int i8) {
+                    Log.i("cfeed","List height: " + nearYouListView.getHeight());
+                    if(nearYouListView.getHeight() > 800)
+                    {
+                        nearYouListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 800));
+                    }
+                }
+            });
+
+
 			
 			nearYouListView.setOnItemClickListener(new OnItemClickListener(){
 				@Override

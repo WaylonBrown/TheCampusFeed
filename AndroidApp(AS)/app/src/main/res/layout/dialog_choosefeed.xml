@@ -70,10 +70,9 @@
     <ListView
         android:id="@+id/nearYouDialogList"
         style="@style/block"
-        android:layout_width="match_parent"
         android:divider="@android:color/transparent"
         android:dividerHeight="6dp"
-        android:listSelector="@android:color/transparent" >
+        android:listSelector="@android:color/transparent">
     </ListView>
     
     <com.appuccino.collegefeed.extra.CustomTextView
