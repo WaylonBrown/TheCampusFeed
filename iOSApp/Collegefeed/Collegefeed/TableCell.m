@@ -28,8 +28,6 @@
     self.enclosingView.layer.shadowRadius = 2;
     self.enclosingView.layer.shadowOpacity = 0.5;
     
-//    self.clipsToBounds = YES;
-    
     // Set font styles
     [self.messageLabel      setFont:CF_FONT_LIGHT(16)];
     [self.commentCountLabel setFont:CF_FONT_MEDIUM(12)];
@@ -63,8 +61,7 @@
     
     if (obj == nil)
     {
-        [NSException raise:@"Error assigning properties to table cell"
-                    format:@"Cell does not have a valid Votable reference"];
+        NSLog(@"Error assigning properties to table cell");
         return;
     }
 
@@ -91,6 +88,7 @@
 
     // assign arrow colors according to user's vote
     [self updateVoteButtons];
+    
     
     // Shadow Rendering
     CGRect rect = self.contentView.bounds;
@@ -256,34 +254,58 @@
 - (void)updateVoteButtons
 {   // assign appropriate arrow colors (based on user's vote)
     Vote* vote = [self.object getVote];
-    UIImage *regularUp      = [UIImage imageNamed:@"arrowup.png"];
-    UIImage *regularDown    = [UIImage imageNamed:@"arrowdown.png"];
-    UIImage *selectedUp     = [UIImage imageNamed:@"arrowupblue.png"];
-    UIImage *selectedDown   = [UIImage imageNamed:@"arrowdownred.png"];
 
     if (vote == nil)
     {
-        [self.upVoteButton setImage:regularUp
-                           forState:UIControlStateNormal];
-        [self.downVoteButton setImage:regularDown
-                             forState:UIControlStateNormal];
+        [self.upVoteButton setSelected:NO];
+        [self.downVoteButton setSelected:NO];
     }
     else if (vote.upvote == NO)
     {
-        [self.upVoteButton setImage:regularUp
-                           forState:UIControlStateNormal];
-        [self.downVoteButton setImage:selectedDown
-                             forState:UIControlStateNormal];
+        [self.upVoteButton setSelected:NO];
+        [self.downVoteButton setSelected:YES];
     }
     else if (vote.upvote == YES)
     {
-        [self.upVoteButton setImage:selectedUp
-                           forState:UIControlStateNormal];
-        [self.downVoteButton setImage:regularDown
-                             forState:UIControlStateNormal];
+        [self.upVoteButton setSelected:YES];
+        [self.downVoteButton setSelected:NO];
     }
     
     [self.scoreLabel setText:[NSString stringWithFormat:@"%ld", [self.object getScore]]];
 }
+
+// Old way of assigning; probably slower but not sure yet
+//- (void)updateVoteButtons
+//{   // assign appropriate arrow colors (based on user's vote)
+//    Vote* vote = [self.object getVote];
+//    UIImage *regularUp      = [UIImage imageNamed:@"arrowup.png"];
+//    UIImage *regularDown    = [UIImage imageNamed:@"arrowdown.png"];
+//    UIImage *selectedUp     = [UIImage imageNamed:@"arrowupblue.png"];
+//    UIImage *selectedDown   = [UIImage imageNamed:@"arrowdownred.png"];
+//    
+//    if (vote == nil)
+//    {
+//        [self.upVoteButton setImage:regularUp
+//                           forState:UIControlStateNormal];
+//        [self.downVoteButton setImage:regularDown
+//                             forState:UIControlStateNormal];
+//    }
+//    else if (vote.upvote == NO)
+//    {
+//        [self.upVoteButton setImage:regularUp
+//                           forState:UIControlStateNormal];
+//        [self.downVoteButton setImage:selectedDown
+//                             forState:UIControlStateNormal];
+//    }
+//    else if (vote.upvote == YES)
+//    {
+//        [self.upVoteButton setImage:selectedUp
+//                           forState:UIControlStateNormal];
+//        [self.downVoteButton setImage:regularDown
+//                             forState:UIControlStateNormal];
+//    }
+//    
+//    [self.scoreLabel setText:[NSString stringWithFormat:@"%ld", [self.object getScore]]];
+//}
 
 @end
