@@ -10,6 +10,7 @@
 #import "UIViewController+ECSlidingViewController.h"
 #import "SimpleTableCell.h"
 #import "Shared.h"
+#import "IIViewDeckController.h"
 
 @interface MenuViewController ()
 
@@ -111,16 +112,14 @@
     
     if (navController == nil || [navController class] != [UINavigationController class])
     {
-        [self.slidingViewController resetTopViewAnimated:YES];
-        return;
+        NSLog(@"Error in MenuViewController menu selection");
     }
     else
     {
-        [self.slidingViewController setTopViewController:navController];
-        [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
+        [self.viewDeckController setCenterController:navController];
     }
     
-    [self.slidingViewController resetTopViewAnimated:YES];
+    [self.viewDeckController closeLeftView];
 }
 
 @end

@@ -18,10 +18,12 @@
 #import "Networker.h"
 #import "ECSlidingViewController.h"
 #import "MenuViewController.h"
+#import "IIViewDeckController.h"
 
 @interface AppDelegate ()
 
 @property (nonatomic, strong) ECSlidingViewController *slidingViewController;
+@property (nonatomic, strong) IIViewDeckController *deckController;
 
 @end
 
@@ -39,7 +41,7 @@
     [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
-    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(anchorRight)];
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(openLeftMenu)];
 
     
     // *** Top Posts - PostsViewController *** //
@@ -104,15 +106,17 @@
     
     UINavigationController *menuNavController = [[UINavigationController alloc] initWithRootViewController:menuViewController];
     
-    self.slidingViewController = [ECSlidingViewController slidingWithTopViewController:topPostsNavController];
-    [topPostsNavController.view addGestureRecognizer:self.slidingViewController.panGesture];
-    self.slidingViewController.underLeftViewController  = menuNavController;
+    self.deckController = [[IIViewDeckController alloc] initWithCenterViewController:topPostsNavController leftViewController:menuNavController];
+    self.deckController.openSlideAnimationDuration = 0.25f;
+    self.deckController.closeSlideAnimationDuration = 0.25f;
+    self.deckController.leftSize = 100.0f;
+    self.deckController.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
+
     
-    self.slidingViewController.anchorRightRevealAmount = 225.0;
     // *************************************** //
 
-    self.window.rootViewController = self.slidingViewController;
-    
+    self.window.rootViewController = self.deckController;
+
     [self.window makeKeyAndVisible];
 
     return YES;
@@ -151,11 +155,10 @@
 //    [self.recentPostsController didNotFindLocation];
 //    [self.tagController didNotFindLocation];
 }
-- (void)anchorRight
+- (void)openLeftMenu
 {
-    [self.slidingViewController anchorTopViewToRightAnimated:YES];
+    [self.deckController openLeftView];
 }
-
 
 
 @end
