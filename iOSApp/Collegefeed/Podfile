@@ -4,8 +4,6 @@ platform :ios, '7.0'
 
 target "Collegefeed" do
 
-pod 'ECSlidingViewController', '~> 2.0.2'
-
 end
 
 target "CollegefeedTests" do

@@ -33,6 +33,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
+
     [self.messageTextView setDelegate:self];
     [self.tagTextView setDelegate:self];
     UITextPosition* pos = self.messageTextView.endOfDocument;
@@ -61,6 +65,9 @@
     [self.subtitleLabel setFont:CF_FONT_ITALIC(14)];
     [self.createButton.titleLabel setFont:CF_FONT_LIGHT(16)];
     
+    [self.messageTextView setDelegate:self];
+    [self.tagTextView setDelegate:self];
+    
     [self.messageTextView becomeFirstResponder];
 }
 
@@ -69,6 +76,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Actions
 
 - (IBAction)submit:(id)sender
 {
@@ -113,27 +122,100 @@
                 position:@"top"];
 }
 
+#pragma mark - View Adjustments
+
+- (void)fixDialogPositionAndUpdateConstraints
+{
+    float dialogHeight = self.alertView.frame.size.height;
+    float visibleHeight = self.view.frame.size.height - self.keyboardHeight;
+    
+    float blankSpace = visibleHeight - dialogHeight;
+    float newConstant = blankSpace / 2;
+    float oldConstant = self.dialogVerticalPosition.constant;
+    
+    if (oldConstant != newConstant && newConstant >= 20)
+    {
+        self.dialogVerticalPosition.constant = newConstant;
+    }
+    
+    [self.view setNeedsUpdateConstraints];
+    
+}
+- (void)updateTagTextView
+{
+    UITextPosition* pos = self.tagTextView.endOfDocument;
+    CGRect currentRect = [self.tagTextView caretRectForPosition:pos];
+    
+    NSString *tagsString = self.tagTextView.text;
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:tagsString];
+    
+    if (self.tagTextViewHeight.constant == 0)
+    {
+        self.tagTextViewHeight.constant = 30;
+    }
+    else if (currentRect.origin.y > self.previousTagRect.origin.y)
+    {
+        self.tagTextViewHeight.constant += TEXT_VIEW_LINE_HEIGHT;
+    }
+    else if (currentRect.origin.y < self.previousTagRect.origin.y)
+    {
+        self.tagTextViewHeight.constant -= TEXT_VIEW_LINE_HEIGHT;
+    }
+    
+    self.previousTagRect = currentRect;
+    
+    NSRange range = NSMakeRange(6, tagsString.length - 6);
+    [string addAttribute:NSForegroundColorAttributeName value:[Shared getCustomUIColor:CF_LIGHTBLUE] range:range];
+    [self.tagTextView setAttributedText:string];
+    [self.tagTextView setFont:[UIFont systemFontOfSize:14]];
+}
+
+#pragma mark - Keyboard
+
+- (void)keyboardWasShown:(NSNotification *)notification
+{
+    // Get the size of the keyboard.
+    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    // Given size may not account for screen rotation
+    self.keyboardHeight = MIN(keyboardSize.height,keyboardSize.width);
+    self.keyboardWidth = MAX(keyboardSize.height,keyboardSize.width);
+    
+    [self fixDialogPositionAndUpdateConstraints];
+}
+- (void)keyboardWasHidden:(NSNotification *)notification
+{
+    // Get the size of the keyboard.
+    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    // Given size may not account for screen rotation
+    self.keyboardHeight = 0;
+    self.keyboardWidth = 0;
+    
+    [self fixDialogPositionAndUpdateConstraints];
+}
+
 #pragma mark - TextView
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    UITextPosition* pos = textView.endOfDocument;
-    CGRect currentRect = [textView caretRectForPosition:pos];
-    
     if (textView == self.messageTextView)
     {
+        UITextPosition* pos = textView.endOfDocument;
+        CGRect currentRect = [textView caretRectForPosition:pos];
         if (currentRect.origin.y > self.previousMessageRect.origin.y)
         {
-            self.messageTextViewHeight.constant += 17;
-            self.dialogVerticalPosition.constant -= 12;
+            self.messageTextViewHeight.constant += TEXT_VIEW_LINE_HEIGHT;
         }
         else if (currentRect.origin.y < self.previousMessageRect.origin.y)
         {
-            self.messageTextViewHeight.constant -= 17;
-            self.dialogVerticalPosition.constant += 12;
+            self.messageTextViewHeight.constant -= TEXT_VIEW_LINE_HEIGHT;
         }
         
         self.previousMessageRect = currentRect;
+        
+        [self fixDialogPositionAndUpdateConstraints];
+
         
         // Check for tags
         NSString *message = self.messageTextView.text;
@@ -153,48 +235,59 @@
         if (numTags > 0)
         {
             [self.tagTextView setText:filteredMessage];
-            [self textViewDidChange:self.tagTextView];
+            [self updateTagTextView];
+            [self fixDialogPositionAndUpdateConstraints];
+
+//            [self textViewDidChange:self.tagTextView];
         }
         else
         {
             [self.tagTextView setText:@""];
             self.tagTextViewHeight.constant = 0;
         }
-    }
-    else if (textView == self.tagTextView)
-    {
-        NSString *tagsString = self.tagTextView.text;
-        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:tagsString];
-
-        if (self.tagTextViewHeight.constant == 0)
-        {
-            self.tagTextViewHeight.constant += 30;
-        }
-        else if (currentRect.origin.y > self.previousTagRect.origin.y)
-        {
-            self.tagTextViewHeight.constant += 17;
-            self.dialogVerticalPosition.constant -= 12;
-        }
-        else if (currentRect.origin.y < self.previousTagRect.origin.y)
-        {
-            self.tagTextViewHeight.constant -= 17;
-            self.dialogVerticalPosition.constant += 12;
-        }
         
-        self.previousTagRect = currentRect;
-
-        NSRange range = NSMakeRange(6, tagsString.length - 6);
-        [string addAttribute:NSForegroundColorAttributeName value:[Shared getCustomUIColor:CF_LIGHTBLUE] range:range];
-        [self.tagTextView setAttributedText:string];
-        [self.tagTextView setFont:[UIFont systemFontOfSize:14]];
-
     }
     
-    [self.view setNeedsUpdateConstraints];
+//    else if (textView == self.tagTextView)
+//    {
+//        NSString *tagsString = self.tagTextView.text;
+//        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:tagsString];
+//
+//        if (self.tagTextViewHeight.constant == 0)
+//        {
+//            self.tagTextViewHeight.constant += 30;
+//        }
+//        else if (currentRect.origin.y > self.previousTagRect.origin.y)
+//        {
+//            self.tagTextViewHeight.constant += 17;
+//            self.dialogVerticalPosition.constant -= 12;
+//        }
+//        else if (currentRect.origin.y < self.previousTagRect.origin.y)
+//        {
+//            self.tagTextViewHeight.constant -= 17;
+//            self.dialogVerticalPosition.constant += 12;
+//        }
+//        
+//        self.previousTagRect = currentRect;
+//
+//        NSRange range = NSMakeRange(6, tagsString.length - 6);
+//        [string addAttribute:NSForegroundColorAttributeName value:[Shared getCustomUIColor:CF_LIGHTBLUE] range:range];
+//        [self.tagTextView setAttributedText:string];
+//        [self.tagTextView setFont:[UIFont systemFontOfSize:14]];
+//
+//    }
 
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    if ([text isEqualToString:@"\n"]) {
+        // Be sure to test for equality using the "isEqualToString" message
+        [textView resignFirstResponder];
+        [self fixDialogPositionAndUpdateConstraints];
+        // Return FALSE so that the final '\n' character doesn't get added
+        return FALSE;
+    }
+    
     if (textView != self.messageTextView) return YES;
 
     return textView.text.length + (text.length - range.length) <= 140;

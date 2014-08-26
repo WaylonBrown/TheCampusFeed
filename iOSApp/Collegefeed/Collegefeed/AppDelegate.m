@@ -16,13 +16,11 @@
 #import "Shared.h"
 #import "College.h"
 #import "Networker.h"
-#import "ECSlidingViewController.h"
 #import "MenuViewController.h"
 #import "IIViewDeckController.h"
 
 @interface AppDelegate ()
 
-@property (nonatomic, strong) ECSlidingViewController *slidingViewController;
 @property (nonatomic, strong) IIViewDeckController *deckController;
 
 @end

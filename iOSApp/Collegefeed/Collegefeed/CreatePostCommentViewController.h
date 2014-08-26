@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "CFModelProtocol.h"
 
+#define TEXT_VIEW_LINE_HEIGHT 17
+
 @class College;
 @class ToastController;
 
@@ -26,6 +28,8 @@
 
 @property (nonatomic) CGRect previousMessageRect;
 @property (nonatomic) CGRect previousTagRect;
+@property (nonatomic) CGFloat keyboardHeight;
+@property (nonatomic) CGFloat keyboardWidth;
 
 @property (strong, nonatomic) id<CreationViewProtocol> delegate;
 

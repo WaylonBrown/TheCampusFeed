@@ -7,7 +7,6 @@
 //
 
 #import "MenuViewController.h"
-#import "UIViewController+ECSlidingViewController.h"
 #import "SimpleTableCell.h"
 #import "Shared.h"
 #import "IIViewDeckController.h"
