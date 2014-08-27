@@ -37,7 +37,7 @@ import java.util.List;
 
 public class NetWorker {
 
-     public final static String SERVER_URL = "http://cfeed.herokuapp.com/api/";
+     public final static String SERVER_URL = "http://www.secretcamp.us/api/";
      public final static String API_VERSION = "v1/";
      public final static String REQUEST_URL = SERVER_URL + API_VERSION;
      public final static String LOG_TAG = "NETWORK: ";
@@ -161,7 +161,8 @@ public class NetWorker {
              if(whichFrag == 0 && frag1 != null)		//top posts
              {
                  if(result != null && result.size() != 0){
-                     TopPostFragment.postList.addAll(result);
+                     //TopPostFragment.postList.addAll(result);
+                     TopPostFragment.listAdapter.addAll(result);
                  }else{
                      TopPostFragment.endOfListReached = true;
                  }
@@ -180,8 +181,7 @@ public class NetWorker {
              else if (frag2 != null)	//new posts
              {
                  if(result != null && result.size() != 0){
-                     NewPostFragment.postList.addAll(result);
-                     //NewPostFragment.postList = new ArrayList<Post>(result);
+                     NewPostFragment.listAdapter.addAll(result);
                  }else{
                      NewPostFragment.endOfListReached = true;
                  }

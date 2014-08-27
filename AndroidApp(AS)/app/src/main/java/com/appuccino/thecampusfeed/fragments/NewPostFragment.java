@@ -48,7 +48,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 	public static final String ARG_TAB_NUMBER = "section_number";
 	public static final String ARG_SPINNER_NUMBER = "tab_number";
 	public static List<Post> postList;
-	static PostListAdapter listAdapter;
+	public static PostListAdapter listAdapter;
 	static QuickReturnListView list;
 	private static int currentFeedID;
 	//library objects
@@ -74,10 +74,6 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 	private static int mMinRawY = 0;
 	private static TranslateAnimation anim;
 	static TextView collegeNameBottom;
-
-	public NewPostFragment()
-	{
-	}
 	
 	public NewPostFragment(MainActivity m) 
 	{
@@ -386,25 +382,25 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		{
 			listAdapter.setCollegeFeedID(currentFeedID);
             //listAdapter.notifyDataSetChanged();
-            UpdateListThread update = new UpdateListThread();
-            update.run();
+//            UpdateListThread update = new UpdateListThread();
+//            update.run();
             setupFooterListView();
 		}
 	}
-    /**
-     * Notify the list adapter of new items on a separate thread
-     */
-    private class UpdateListThread extends Thread {
-        @Override
-        public void run() {
-            mainActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    listAdapter.notifyDataSetChanged();
-                }
-            });
-        }
-    }
+//    /**
+//     * Notify the list adapter of new items on a separate thread
+//     */
+//    private class UpdateListThread extends Thread {
+//        @Override
+//        public void run() {
+//            mainActivity.runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    listAdapter.notifyDataSetChanged();
+//                }
+//            });
+//        }
+//    }
 
 
 	public static void makeLoadingIndicator(boolean makeLoading) 

@@ -47,7 +47,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 {
 	static MainActivity mainActivity;
 	public static List<Post> postList;
-	static PostListAdapter listAdapter;
+	public static PostListAdapter listAdapter;
 	static QuickReturnListView list;
 	private static int currentFeedID;
 	//library objects
@@ -73,10 +73,6 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	private static int mMinRawY = 0;
 	private static TranslateAnimation anim;
 	static TextView collegeNameBottom;
-
-	public TopPostFragment()
-	{
-	}
 	
 	public TopPostFragment(MainActivity m) 
 	{
@@ -97,7 +93,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 
         pullDownText.setTypeface(FontManager.light);
 		setupBottomViewUI();
-					
+
 		// Now give the find the PullToRefreshLayout and set it up
         pullToRefresh = (PullToRefreshLayout) rootView.findViewById(R.id.pullToRefresh);
         ActionBarPullToRefresh.from(getActivity())
@@ -401,26 +397,26 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		{
 			listAdapter.setCollegeFeedID(currentFeedID);
 			//listAdapter.notifyDataSetChanged();
-            UpdateListThread update = new UpdateListThread();
-            update.run();
+//            UpdateListThread update = new UpdateListThread();
+//            update.run();
             setupFooterListView();
 		}
 	}
 
-    /**
-     * Notify the list adapter of new items on a separate thread
-     */
-    private class UpdateListThread extends Thread {
-        @Override
-        public void run() {
-            mainActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    listAdapter.notifyDataSetChanged();
-                }
-            });
-        }
-    }
+//    /**
+//     * Notify the list adapter of new items on a separate thread
+//     */
+//    private class UpdateListThread extends Thread {
+//        @Override
+//        public void run() {
+//            mainActivity.runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    //listAdapter.notifyDataSetChanged();
+//                }
+//            });
+//        }
+//    }
 
 	public static void makeLoadingIndicator(boolean makeLoading) 
 	{
