@@ -185,9 +185,6 @@
 }
 - (void)keyboardWasHidden:(NSNotification *)notification
 {
-    // Get the size of the keyboard.
-    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    
     // Given size may not account for screen rotation
     self.keyboardHeight = 0;
     self.keyboardWidth = 0;
@@ -237,46 +234,13 @@
             [self.tagTextView setText:filteredMessage];
             [self updateTagTextView];
             [self fixDialogPositionAndUpdateConstraints];
-
-//            [self textViewDidChange:self.tagTextView];
         }
         else
         {
             [self.tagTextView setText:@""];
             self.tagTextViewHeight.constant = 0;
         }
-        
     }
-    
-//    else if (textView == self.tagTextView)
-//    {
-//        NSString *tagsString = self.tagTextView.text;
-//        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:tagsString];
-//
-//        if (self.tagTextViewHeight.constant == 0)
-//        {
-//            self.tagTextViewHeight.constant += 30;
-//        }
-//        else if (currentRect.origin.y > self.previousTagRect.origin.y)
-//        {
-//            self.tagTextViewHeight.constant += 17;
-//            self.dialogVerticalPosition.constant -= 12;
-//        }
-//        else if (currentRect.origin.y < self.previousTagRect.origin.y)
-//        {
-//            self.tagTextViewHeight.constant -= 17;
-//            self.dialogVerticalPosition.constant += 12;
-//        }
-//        
-//        self.previousTagRect = currentRect;
-//
-//        NSRange range = NSMakeRange(6, tagsString.length - 6);
-//        [string addAttribute:NSForegroundColorAttributeName value:[Shared getCustomUIColor:CF_LIGHTBLUE] range:range];
-//        [self.tagTextView setAttributedText:string];
-//        [self.tagTextView setFont:[UIFont systemFontOfSize:14]];
-//
-//    }
-
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {

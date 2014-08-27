@@ -65,6 +65,7 @@
 		53DE347719AD00AE004CB5A0 /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53DE347619AD00AE004CB5A0 /* IIViewDeckController.m */; };
 		53DE347F19AD01FF004CB5A0 /* IISideController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53DE347C19AD01FF004CB5A0 /* IISideController.m */; };
 		53DE348019AD01FF004CB5A0 /* IIWrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53DE347E19AD01FF004CB5A0 /* IIWrapController.m */; };
+		53DE348419AD517C004CB5A0 /* card_without_9patch.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DE348319AD517C004CB5A0 /* card_without_9patch.png */; };
 		53F8789119133F60002A578B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789019133F60002A578B /* Foundation.framework */; };
 		53F8789319133F60002A578B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789219133F60002A578B /* CoreGraphics.framework */; };
 		53F8789519133F60002A578B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789419133F60002A578B /* UIKit.framework */; };
@@ -216,6 +217,7 @@
 		53DE347C19AD01FF004CB5A0 /* IISideController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IISideController.m; sourceTree = "<group>"; };
 		53DE347D19AD01FF004CB5A0 /* IIWrapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IIWrapController.h; sourceTree = "<group>"; };
 		53DE347E19AD01FF004CB5A0 /* IIWrapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IIWrapController.m; sourceTree = "<group>"; };
+		53DE348319AD517C004CB5A0 /* card_without_9patch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card_without_9patch.png; sourceTree = "<group>"; };
 		53F8788D19133F60002A578B /* Collegefeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collegefeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53F8789019133F60002A578B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		53F8789219133F60002A578B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -381,6 +383,7 @@
 		5390A9131914B76800ACD082 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				53DE348319AD517C004CB5A0 /* card_without_9patch.png */,
 				531EAAED1988300C00C1E1AA /* icon_light_small.png */,
 				531EAAEE1988300C00C1E1AA /* icon.png */,
 				531EAAE519881E6600C1E1AA /* fb_logo.png */,
@@ -724,6 +727,7 @@
 				53AB57BC194AAFF8001D1B7B /* mplus-2c-bold.ttf in Resources */,
 				5390A9201914B76800ACD082 /* arrowupblue.png in Resources */,
 				53FF2D06195BCE430040E872 /* UserPosts.txt in Resources */,
+				53DE348419AD517C004CB5A0 /* card_without_9patch.png in Resources */,
 				531EAAE819881E6600C1E1AA /* twitter_logo.png in Resources */,
 				533FCA4D193EDE3B00754C07 /* aggieland.gpx in Resources */,
 				53FF2D0C195BCE850040E872 /* UserVotes.txt in Resources */,

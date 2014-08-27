@@ -144,6 +144,10 @@
 {   // User should not directly modify a TableCell
     return NO;
 }
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 5)];
+}
 
 #pragma mark - Actions
 

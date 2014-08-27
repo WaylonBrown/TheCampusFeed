@@ -16,11 +16,10 @@
 - (void)awakeFromNib
 {
     // Initialization code
-    self.enclosingView.layer.masksToBounds = NO;
-    self.enclosingView.layer.cornerRadius = 2;
-    self.enclosingView.layer.shadowOffset = CGSizeMake(0, 1);
-    self.enclosingView.layer.shadowRadius = 2;
-    self.enclosingView.layer.shadowOpacity = 0.5;
+    UIImage *image = [UIImage imageNamed:@"card_without_9patch.png"];
+    UIImage *stretchableBackground = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15,15,15,15) resizingMode:UIImageResizingModeStretch];
+    self.imageView.image = stretchableBackground;
+    
     
     // Set font styles
     [self.messageLabel setTintColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];

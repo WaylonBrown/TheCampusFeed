@@ -14,8 +14,9 @@
 @interface SimpleTableCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
-@property (weak, nonatomic) IBOutlet UIView *enclosingView;
+//@property (weak, nonatomic) IBOutlet UIView *enclosingView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) IBOutlet UIImageView *imageView;
 
 - (void)assignTag:(Tag *)tag;
 - (void)assignCollege:(College *)college withRankNumber:(long)rankNo;
