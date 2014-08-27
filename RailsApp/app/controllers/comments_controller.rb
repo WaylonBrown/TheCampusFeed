@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = @post.comments.page(params[:page]).per(params[:per_page])
+    @comments = @post.comments.order('score desc, created_at desc').page(params[:page]).per(params[:per_page])
     render json: @comments
   end
 

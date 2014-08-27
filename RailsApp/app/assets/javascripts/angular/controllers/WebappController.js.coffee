@@ -15,6 +15,7 @@ angular.module("cfeed").controller "WebappCtrl", [
     })
     $rootScope.Post = $resource('/api/v1/colleges/:collegeId/posts/:postId', {postId: '@id'},{
       recent: {method: 'GET', url: '/api/v1/posts/recent', isArray: true}
+      trending: {method: 'GET', url: '/api/v1/posts/trending', isArray: true}
       byTag: {method: 'GET', url: '/api/v1/posts/byTag/:tag', isArray: true}
     })
     $rootScope.Comment = $resource('/api/v1/colleges/:collegeId/posts/:postId/comments/:commentId', {commentId: '@id'},{
@@ -41,7 +42,7 @@ angular.module("cfeed").controller "WebappCtrl", [
         )
 
     $scope.atBottom = () ->
-      newPosts = $rootScope.Post.recent({page: $scope.posts.currentPage, per_page: 25}, ->
+      newPosts = $rootScope.Post.trending({page: $scope.posts.currentPage, per_page: 25}, ->
         $scope.posts.currentPage += 1
         $scope.posts.recentPosts = $scope.posts.recentPosts.concat(newPosts)
       )
