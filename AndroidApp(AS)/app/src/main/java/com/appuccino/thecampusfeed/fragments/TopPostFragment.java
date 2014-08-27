@@ -462,6 +462,9 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		currentPageNumber = 1;
 		//reset list
 		postList.clear();
+        if(listAdapter != null){
+            listAdapter.idList.clear();
+        }
 		replaceFooterBecauseNewLazyList();
 		pullListFromServer(true);
 	}
@@ -485,6 +488,9 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		}
         if(postList != null){
             postList.clear();
+        }
+        if(listAdapter != null){
+            listAdapter.idList.clear();
         }
 		pullListFromServer(true);
         scrollToTop();

@@ -162,7 +162,10 @@ public class NetWorker {
              {
                  if(result != null && result.size() != 0){
                      //TopPostFragment.postList.addAll(result);
-                     TopPostFragment.listAdapter.addAll(result);
+                     for(Post p : result){
+                         TopPostFragment.listAdapter.addIfNotAdded(p);
+                     }
+                     //TopPostFragment.listAdapter.addAll(result);
                  }else{
                      TopPostFragment.endOfListReached = true;
                  }
@@ -193,6 +196,7 @@ public class NetWorker {
              }
          }
      }
+    
 
      public static class GetCommentsTask extends AsyncTask<PostSelector, Void, ArrayList<Comment>>
      {

@@ -23,6 +23,7 @@ import com.appuccino.thecampusfeed.utils.NetWorker.MakePostVoteTask;
 import com.appuccino.thecampusfeed.utils.TimeManager;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 	Context context; 
     int layoutResourceId;    
     List<Post> postList = null;
+    public List<Integer> idList = new ArrayList<Integer>();
     int whichList = 0;	//0 = toppostfrag, 1 = newpostfrag, 2 = mypostfrag
     int currentFeedID;
     
@@ -41,6 +43,13 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         postList = list;
         this.whichList = whichList;
         this.currentFeedID = currentFeedID;
+    }
+
+    public void addIfNotAdded(Post p){
+        if(!idList.contains(p.getID())){
+            add(p);
+            idList.add(p.getID());
+        }
     }
     
     @Override
