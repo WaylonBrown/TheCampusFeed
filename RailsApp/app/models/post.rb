@@ -13,7 +13,7 @@ class Post < ActiveRecord::Base
 
   validates :text, length: {minimum: 10, maximum: 140}
 
-  after_save :make_tags
+  after_create :make_tags
 
   def comment_count
     comments.count
