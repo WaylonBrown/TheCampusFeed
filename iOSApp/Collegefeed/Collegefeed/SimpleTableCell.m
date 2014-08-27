@@ -17,7 +17,8 @@
 {
     // Initialization code
     UIImage *image = [UIImage imageNamed:@"card_without_9patch.png"];
-    UIImage *stretchableBackground = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15,15,15,15) resizingMode:UIImageResizingModeStretch];
+//    top = 1, left = 3, bottom = 6, right = 4
+    UIImage *stretchableBackground = [image resizableImageWithCapInsets:UIEdgeInsetsMake(3, 5, 8, 6)resizingMode:UIImageResizingModeStretch];
     self.imageView.image = stretchableBackground;
     
     

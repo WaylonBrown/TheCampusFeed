@@ -22,11 +22,10 @@
 - (void)awakeFromNib
 {
     // Initialization code
-    self.enclosingView.layer.masksToBounds = NO;
-    self.enclosingView.layer.cornerRadius = 2;
-    self.enclosingView.layer.shadowOffset = CGSizeMake(0, 1);
-    self.enclosingView.layer.shadowRadius = 2;
-    self.enclosingView.layer.shadowOpacity = 0.5;
+    
+    UIImage *image = [UIImage imageNamed:@"card_without_9patch.png"];
+    UIImage *stretchableBackground = [image resizableImageWithCapInsets:UIEdgeInsetsMake(3, 5, 8, 6) resizingMode:UIImageResizingModeStretch];
+    self.backgroundImageView.image = stretchableBackground;
     
     // Set font styles
     [self.messageLabel      setFont:CF_FONT_LIGHT(16)];
@@ -88,13 +87,6 @@
 
     // assign arrow colors according to user's vote
     [self updateVoteButtons];
-    
-    
-    // Shadow Rendering
-    CGRect rect = self.contentView.bounds;
-    rect.size.height = height;
-    UIBezierPath *path = [UIBezierPath bezierPathWithRect:rect];
-    self.contentView.layer.shadowPath = path.CGPath;
 }
 
 #pragma mark - Actions

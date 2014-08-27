@@ -32,7 +32,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *collegeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *upVoteButton;
 @property (weak, nonatomic) IBOutlet UIButton *downVoteButton;
-@property (weak, nonatomic) IBOutlet UIView *enclosingView;
+//@property (weak, nonatomic) IBOutlet UIView *enclosingView;
 @property (weak, nonatomic) IBOutlet UIImageView *gpsIconImageView;
 @property (strong, nonatomic) IBOutlet UIView *dividerView;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
