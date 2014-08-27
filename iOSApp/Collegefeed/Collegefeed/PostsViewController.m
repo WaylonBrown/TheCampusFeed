@@ -170,16 +170,16 @@
     if (self.viewType == USER_COMMENTS)
     {
         Comment *comment = [self.list objectAtIndex:indexPath.row];
-        float cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
-        [cell assign:comment WithCellHeight:cellHeight];
+        float messageHeight = [Shared getLargeCellMessageHeight:comment.message WithFont:CF_FONT_LIGHT(16)];
+        [cell assign:comment WithMessageHeight:messageHeight];
         return cell;
     }
     
     // get the post and display in this cell
     Post *post = [self.list objectAtIndex:indexPath.row];
     BOOL isNearCollege = [self.dataController.nearbyColleges containsObject:post.college];
-    float cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
-    [cell assignWith:post IsNearCollege:isNearCollege WithCellHeight:cellHeight];
+    float messageHeight = [Shared getLargeCellMessageHeight:post.message WithFont:CF_FONT_LIGHT(16)];
+    [cell assignWith:post IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

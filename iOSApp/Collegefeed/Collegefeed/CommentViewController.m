@@ -126,7 +126,7 @@
         [cell.dividerView removeFromSuperview];
         [cell.collegeLabel removeFromSuperview];
         [cell.commentCountLabel removeFromSuperview];
-        [cell assign:self.originalPost WithCellHeight:height];
+        [cell assign:self.originalPost WithMessageHeight:height];
 
         return cell;
     }
@@ -134,7 +134,7 @@
     {   // CommentView table; get the comment to be displayed in this cell
         Comment *commentAtIndex = (Comment*)[self.dataController.commentList objectAtIndex:indexPath.row];
         [commentAtIndex setCollegeID:self.originalPost.collegeID];
-        [cell assign:commentAtIndex WithCellHeight:height];
+        [cell assign:commentAtIndex WithMessageHeight:height];
         return cell;
     }
     

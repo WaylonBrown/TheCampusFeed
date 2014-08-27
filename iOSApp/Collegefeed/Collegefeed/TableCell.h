@@ -32,7 +32,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *collegeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *upVoteButton;
 @property (weak, nonatomic) IBOutlet UIButton *downVoteButton;
-//@property (weak, nonatomic) IBOutlet UIView *enclosingView;
 @property (weak, nonatomic) IBOutlet UIImageView *gpsIconImageView;
 @property (strong, nonatomic) IBOutlet UIView *dividerView;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
@@ -40,8 +39,8 @@
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *postMessageHeight;
 
-- (void)assign:(NSObject<PostAndCommentProtocol> *)obj WithCellHeight:(float)height;
-- (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby WithCellHeight:(float)height;
+- (void)assign:(NSObject<PostAndCommentProtocol> *)obj WithMessageHeight:(float)height;
+- (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
 
 - (IBAction) upVotePressed:(id)sender;
 - (IBAction) downVotePresed:(id)sender;

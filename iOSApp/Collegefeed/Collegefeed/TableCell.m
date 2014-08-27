@@ -48,14 +48,14 @@
 
 #pragma mark - Data Population
 
-- (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby WithCellHeight:(float)height;
+- (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
 {
-    [self assign:post WithCellHeight:height];
+    [self assign:post WithMessageHeight:height];
     [self.gpsIconImageView setHidden:(!isNearby)];
     [self setNeedsDisplay];
 }
 
-- (void)assign:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj WithCellHeight:(float)height;
+- (void)assign:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj WithMessageHeight:(float)height;
 {   // configure view of the cell according to obj's properties
     
     if (obj == nil)
@@ -63,6 +63,8 @@
         NSLog(@"Error assigning properties to table cell");
         return;
     }
+    
+    self.postMessageHeight.constant = height;
 
     [self setObject:obj];
     

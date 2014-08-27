@@ -17,7 +17,7 @@
 #define MIN_POST_LENGTH      10
 
 // Custom colors
-#define CF_LIGHTBLUE   0x33B5E5 // 51, 181, 229
+#define CF_LIGHTBLUE   0x33B5E5
 #define CF_BLUE        0x0099CC
 #define CF_LIGHTGRAY   0xE6E6E6
 #define CF_GRAY        0x7C7C7C
@@ -26,8 +26,8 @@
 
 // Cell height prediction values
 #define LARGE_CELL_LABEL_WIDTH        252.0f
-#define LARGE_CELL_TOP_TO_LABEL       7.0f
-#define LARGE_CELL_LABEL_TO_BOTTOM    59.0f
+#define LARGE_CELL_TOP_TO_LABEL       6.0f
+#define LARGE_CELL_LABEL_TO_BOTTOM    61.0f
 #define LARGE_CELL_MIN_LABEL_HEIGHT   53.0f
 
 #define SMALL_CELL_LABEL_WIDTH        282.0f
@@ -56,6 +56,9 @@
 + (UIColor*)getCustomUIColor:(int)hexValue;
 + (float)getSmallCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font;
 + (float)getLargeCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font;
+
++ (float)getSmallCellMessageHeight:(NSString *)text WithFont:(UIFont *)font;
++ (float)getLargeCellMessageHeight:(NSString *)text WithFont:(UIFont *)font;
 
 
 @end
