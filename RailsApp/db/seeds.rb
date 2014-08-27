@@ -115,7 +115,6 @@ def importFromWrongFile
     if x.has_key? "tags" and x["tags"].has_key? "name" and ((x["tags"].has_key? "building" and x["tags"]["building"] == "no") or !x["tags"].has_key? "building")
       @i = @i + 1
       puts x["tags"]["name"]
-      #puts "asdf"
     end
   }
 end

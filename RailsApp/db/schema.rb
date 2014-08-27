@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140818191155) do
+ActiveRecord::Schema.define(version: 20140827223508) do
 
   create_table "colleges", force: true do |t|
     t.string   "name"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20140818191155) do
     t.datetime "updated_at"
     t.string   "post_id"
     t.boolean  "hidden"
+    t.integer  "vote_delta"
   end
 
   add_index "comments", ["post_id"], name: "index_comments_on_post_id", using: :btree
@@ -61,6 +62,7 @@ ActiveRecord::Schema.define(version: 20140818191155) do
     t.integer  "lat"
     t.integer  "lon"
     t.boolean  "hidden"
+    t.integer  "vote_delta"
   end
 
   add_index "posts", ["college_id"], name: "index_posts_on_college_id", using: :btree
