@@ -100,6 +100,10 @@
     {
         return [self.searchResult count];
     }
+    else if (self.hasReachedEndOfList)
+    {
+        return self.list.count;
+    }
     else
     {
         return self.list.count + 1;

@@ -35,6 +35,10 @@
 @property (weak, nonatomic) IBOutlet UIView *enclosingView;
 @property (weak, nonatomic) IBOutlet UIImageView *gpsIconImageView;
 @property (strong, nonatomic) IBOutlet UIView *dividerView;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
+
+
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *postMessageHeight;
 
 - (void)assign:(NSObject<PostAndCommentProtocol> *)obj WithCellHeight:(float)height;
 - (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby WithCellHeight:(float)height;
