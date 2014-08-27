@@ -176,7 +176,8 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		
 	}
 
-	public static void setupFooterListView() {
+    //for slide away footer
+    public static void setupFooterListView() {
 		if(willListScroll()){
 			list.getViewTreeObserver().addOnGlobalLayoutListener(
 				new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -383,12 +384,9 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 	{	
 		if(listAdapter != null)
 		{
-			Log.i("cfeed","TEST new post size: " + postList.size());
 			listAdapter.setCollegeFeedID(currentFeedID);
-			listAdapter.clear();
-			listAdapter.addAll(postList);
-			Log.i("cfeed","TEST last post size: " + listAdapter.getCount());
 			listAdapter.notifyDataSetChanged();
+            setupFooterListView();
 		}
 	}
 

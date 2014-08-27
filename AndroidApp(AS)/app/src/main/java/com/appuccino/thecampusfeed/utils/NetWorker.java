@@ -56,10 +56,6 @@ public class NetWorker {
          boolean wasPullToRefresh;
          final int POSTS_PER_PAGE = 20;
 
-         public GetPostsTask()
-         {
-         }
-
          public GetPostsTask(int whichFrag, int feedID, int pageNumber, boolean wasPullToRefresh)
          {
              this.whichFrag = whichFrag;
@@ -145,10 +141,7 @@ public class NetWorker {
              if(whichFrag == 0)		//top posts
              {
                  if(result != null && result.size() != 0){
-                     //I have zero idea why this first line is needed, but without it the listadapter doesn't load the new list
-                     TopPostFragment.postList = new ArrayList<Post>(TopPostFragment.postList);
                      TopPostFragment.postList.addAll(result);
-                     //NewPostFragment.postList = new ArrayList<Post>(result);
                  }else{
                      TopPostFragment.endOfListReached = true;
                  }
@@ -160,15 +153,13 @@ public class NetWorker {
                  */
                  TopPostFragment.updateList();
                  TopPostFragment.makeLoadingIndicator(false);
-                 TopPostFragment.setupFooterListView();
                  TopPostFragment.currentPageNumber++;
                  TopPostFragment.removeFooterSpinner();
+                 Log.i("cfeed","Finish");
              }
              else	//new posts
              {
                  if(result != null && result.size() != 0){
-                     //I have zero idea why this first line is needed, but without it the listadapter doesn't load the new list
-                     NewPostFragment.postList = new ArrayList<Post>(NewPostFragment.postList);
                      NewPostFragment.postList.addAll(result);
                      //NewPostFragment.postList = new ArrayList<Post>(result);
                  }else{
@@ -177,7 +168,6 @@ public class NetWorker {
 
                  NewPostFragment.updateList();
                  NewPostFragment.makeLoadingIndicator(false);
-                 NewPostFragment.setupFooterListView();
                  NewPostFragment.currentPageNumber++;
                  NewPostFragment.removeFooterSpinner();
              }
