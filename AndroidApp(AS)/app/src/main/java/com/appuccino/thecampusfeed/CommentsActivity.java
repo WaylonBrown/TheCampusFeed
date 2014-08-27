@@ -174,9 +174,13 @@ public class CommentsActivity extends Activity{
                         updateArrows(arrowUp, arrowDown, 0);
                         new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
 					}
-					TopPostFragment.updateList();
-					NewPostFragment.updateList();
-					TagListActivity.updateList();
+                    if(MainActivity.topPostFrag != null){
+                        MainActivity.topPostFrag.updateList();
+                    }
+                    if(MainActivity.newPostFrag != null){
+                        MainActivity.newPostFrag.updateList();
+                    }
+                    TagListActivity.updateList();
 				}
 	        });
 	        arrowDown.setOnClickListener(new OnClickListener(){
@@ -212,9 +216,13 @@ public class CommentsActivity extends Activity{
                             new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
                             new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), false));
 						}
-						TopPostFragment.updateList();
-						NewPostFragment.updateList();
-						TagListActivity.updateList();
+                        if(MainActivity.topPostFrag != null){
+                            MainActivity.topPostFrag.updateList();
+                        }
+                        if(MainActivity.newPostFrag != null){
+                            MainActivity.newPostFrag.updateList();
+                        }
+                        TagListActivity.updateList();
 					}
 					else
 					{

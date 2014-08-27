@@ -177,7 +177,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 	}
 
     //for slide away footer
-    public static void setupFooterListView() {
+    public void setupFooterListView() {
 		if(willListScroll()){
 			list.getViewTreeObserver().addOnGlobalLayoutListener(
 				new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -254,7 +254,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		}
 	}
 
-	protected static void loadMorePosts() {
+	protected void loadMorePosts() {
         isLoadingMorePosts = true;
 		if(lazyLoadingFooterSpinner != null){
 			lazyLoadingFooterSpinner.setVisibility(View.VISIBLE);
@@ -338,14 +338,14 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		return true; 
 	}
 
-	private static void pullListFromServer(boolean wasPullToRefresh) 
+	private void pullListFromServer(boolean wasPullToRefresh)
 	{
 		if(postList == null){
 			postList = new ArrayList<Post>();
 		}
 		ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);		
 		if(cm.getActiveNetworkInfo() != null)
-			new GetPostsTask(1, currentFeedID, currentPageNumber, wasPullToRefresh).execute(new PostSelector());
+			new GetPostsTask(this, 1, currentFeedID, currentPageNumber, wasPullToRefresh).execute(new PostSelector());
 		else{
 			Toast.makeText(mainActivity, "You have no internet connection. Pull down to refresh and try again.", Toast.LENGTH_LONG).show();
 			removeFooterSpinner();
@@ -380,15 +380,32 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		return null;
 	}
 
-	public static void updateList() 
+	public void updateList()
 	{	
 		if(listAdapter != null)
 		{
 			listAdapter.setCollegeFeedID(currentFeedID);
-			listAdapter.notifyDataSetChanged();
+            //listAdapter.notifyDataSetChanged();
+            UpdateListThread update = new UpdateListThread();
+            update.run();
             setupFooterListView();
 		}
 	}
+    /**
+     * Notify the list adapter of new items on a separate thread
+     */
+    private class UpdateListThread extends Thread {
+        @Override
+        public void run() {
+            mainActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    listAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+    }
+
 
 	public static void makeLoadingIndicator(boolean makeLoading) 
 	{
@@ -438,7 +455,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		pullListFromServer(true);
 	}
 
-	public static void changeFeed(int id) {
+	public void changeFeed(int id) {
         Log.i("cfeed","Changing to college ID of " + id);
 		endOfListReached = false;
         //go back to first page

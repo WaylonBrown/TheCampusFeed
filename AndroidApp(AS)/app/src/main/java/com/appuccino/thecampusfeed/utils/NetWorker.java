@@ -55,9 +55,29 @@ public class NetWorker {
          int pageNumber;
          boolean wasPullToRefresh;
          final int POSTS_PER_PAGE = 20;
+         TopPostFragment frag1;
+         NewPostFragment frag2;
 
          public GetPostsTask(int whichFrag, int feedID, int pageNumber, boolean wasPullToRefresh)
          {
+             this.whichFrag = whichFrag;
+             this.feedID = feedID;
+             this.pageNumber = pageNumber;
+             this.wasPullToRefresh = wasPullToRefresh;
+         }
+
+         public GetPostsTask(TopPostFragment frag, int whichFrag, int feedID, int pageNumber, boolean wasPullToRefresh)
+         {
+             this.frag1 = frag;
+             this.whichFrag = whichFrag;
+             this.feedID = feedID;
+             this.pageNumber = pageNumber;
+             this.wasPullToRefresh = wasPullToRefresh;
+         }
+
+         public GetPostsTask(NewPostFragment frag, int whichFrag, int feedID, int pageNumber, boolean wasPullToRefresh)
+         {
+             this.frag2 = frag;
              this.whichFrag = whichFrag;
              this.feedID = feedID;
              this.pageNumber = pageNumber;
@@ -138,7 +158,7 @@ public class NetWorker {
 
          @Override
          protected void onPostExecute(ArrayList<Post> result) {
-             if(whichFrag == 0)		//top posts
+             if(whichFrag == 0 && frag1 != null)		//top posts
              {
                  if(result != null && result.size() != 0){
                      TopPostFragment.postList.addAll(result);
@@ -151,13 +171,13 @@ public class NetWorker {
                  TopPostFragment.endOfListReached = true;
                  TopPostFragment.postList = new ArrayList<Post>();
                  */
-                 TopPostFragment.updateList();
+                 frag1.updateList();
                  TopPostFragment.makeLoadingIndicator(false);
                  TopPostFragment.currentPageNumber++;
                  TopPostFragment.removeFooterSpinner();
                  Log.i("cfeed","Finish");
              }
-             else	//new posts
+             else if (frag2 != null)	//new posts
              {
                  if(result != null && result.size() != 0){
                      NewPostFragment.postList.addAll(result);
@@ -166,7 +186,7 @@ public class NetWorker {
                      NewPostFragment.endOfListReached = true;
                  }
 
-                 NewPostFragment.updateList();
+                 frag2.updateList();
                  NewPostFragment.makeLoadingIndicator(false);
                  NewPostFragment.currentPageNumber++;
                  NewPostFragment.removeFooterSpinner();

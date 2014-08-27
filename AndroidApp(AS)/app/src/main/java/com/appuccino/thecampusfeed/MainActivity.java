@@ -105,8 +105,8 @@ public class MainActivity extends FragmentActivity implements LocationListener
     private TextView menuHelp;
 
     //Fragments
-    TopPostFragment topPostFrag;
-    NewPostFragment newPostFrag;
+    static TopPostFragment topPostFrag;
+    static NewPostFragment newPostFrag;
     TagFragment tagFrag;
     MostActiveCollegesFragment collegeFrag;
     MyPostsFragment myPostsFrag;
@@ -462,9 +462,9 @@ public class MainActivity extends FragmentActivity implements LocationListener
 		PrefManager.putInt(PrefManager.LAST_FEED, id);
 
         if(topPostFrag != null){
-            TopPostFragment.changeFeed(id);
+            topPostFrag.changeFeed(id);
         } else if(newPostFrag != null) {
-            NewPostFragment.changeFeed(id);
+            newPostFrag.changeFeed(id);
         } else if(tagFrag != null) {
             TagFragment.changeFeed(id);
         }
@@ -780,8 +780,11 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	private void updateListsForGPS() 
 	{
 		if(currentFeedCollegeID == ALL_COLLEGES){
-			TopPostFragment.updateList();
-			NewPostFragment.updateList();
+            if(topPostFrag != null){
+                topPostFrag.updateList();
+            } else if (newPostFrag != null){
+                newPostFrag.updateList();
+            }
 		}
 	}
 	
