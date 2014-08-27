@@ -135,7 +135,7 @@ cid = College.first.id
 
 Post.create({college_id: cid, text: "this #isnt just your #Avg test"})
 Post.create({college_id: cid, text: "This makes me fill in the #letteRstothegameofthenameOfthis"})
-(1..50).each {|e|
+(1..1000).each {|e|
   testString = rand(1..10) > 5 ? "Test" : "test"
   curPost = Post.create({college_id: cid, text: "This is ##{e}, a ##{testString} post!"})
   (1..10).each {|f|

@@ -92,7 +92,7 @@ class PostsController < ApplicationController
       @posts = Post.all
     end
     
-    render json: @posts.where('hidden IS NOT TRUE').order('score desc').page(params[:page]).per(params[:per_page])
+    render json: @posts.where('hidden IS NOT TRUE').order('score desc, created_at desc').page(params[:page]).per(params[:per_page])
   end
 
   # GET /posts/1
