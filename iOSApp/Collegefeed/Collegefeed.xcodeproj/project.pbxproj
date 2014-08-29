@@ -81,7 +81,6 @@
 		53FF2D06195BCE430040E872 /* UserPosts.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D05195BCE430040E872 /* UserPosts.txt */; };
 		53FF2D0A195BCE7D0040E872 /* UserComments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D09195BCE7D0040E872 /* UserComments.txt */; };
 		53FF2D0C195BCE850040E872 /* UserVotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D0B195BCE850040E872 /* UserVotes.txt */; };
-		71BE5D8E66D048B0A34447BC /* libPods-Collegefeed.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C0F4C92259A409D9670D8DA /* libPods-Collegefeed.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -238,8 +237,6 @@
 		53FF2D05195BCE430040E872 /* UserPosts.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserPosts.txt; sourceTree = "<group>"; };
 		53FF2D09195BCE7D0040E872 /* UserComments.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserComments.txt; sourceTree = "<group>"; };
 		53FF2D0B195BCE850040E872 /* UserVotes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserVotes.txt; sourceTree = "<group>"; };
-		6C0F4C92259A409D9670D8DA /* libPods-Collegefeed.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Collegefeed.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8C8DC49E4448409EA9BF63D4 /* Pods-Collegefeed.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Collegefeed.xcconfig"; path = "Pods/Pods-Collegefeed.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,7 +251,6 @@
 				53F8789319133F60002A578B /* CoreGraphics.framework in Frameworks */,
 				53F8789519133F60002A578B /* UIKit.framework in Frameworks */,
 				53F8789119133F60002A578B /* Foundation.framework in Frameworks */,
-				71BE5D8E66D048B0A34447BC /* libPods-Collegefeed.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,7 +514,6 @@
 				53F878BB19133F60002A578B /* CollegefeedTests */,
 				53F8788F19133F60002A578B /* Frameworks */,
 				53F8788E19133F60002A578B /* Products */,
-				8C8DC49E4448409EA9BF63D4 /* Pods-Collegefeed.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -540,7 +535,6 @@
 				53F8789219133F60002A578B /* CoreGraphics.framework */,
 				53F8789419133F60002A578B /* UIKit.framework */,
 				53F878B519133F60002A578B /* XCTest.framework */,
-				6C0F4C92259A409D9670D8DA /* libPods-Collegefeed.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -598,11 +592,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 53F878C519133F60002A578B /* Build configuration list for PBXNativeTarget "Collegefeed" */;
 			buildPhases = (
-				73051738B88C4952BA0B62E7 /* Check Pods Manifest.lock */,
 				53F8788919133F60002A578B /* Sources */,
 				53F8788A19133F60002A578B /* Frameworks */,
 				53F8788B19133F60002A578B /* Resources */,
-				B54EC36E2E984131A831B2CB /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -758,39 +750,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		73051738B88C4952BA0B62E7 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		B54EC36E2E984131A831B2CB /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-Collegefeed-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		53F8788919133F60002A578B /* Sources */ = {
@@ -952,7 +911,6 @@
 		};
 		53F878C619133F60002A578B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8C8DC49E4448409EA9BF63D4 /* Pods-Collegefeed.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -978,7 +936,6 @@
 		};
 		53F878C719133F60002A578B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8C8DC49E4448409EA9BF63D4 /* Pods-Collegefeed.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
