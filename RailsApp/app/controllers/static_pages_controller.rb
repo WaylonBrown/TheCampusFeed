@@ -1,5 +1,7 @@
 class StaticPagesController < ApplicationController
 
+  after_action :allow_iframe, only: :landing
+
   def index
   end
 

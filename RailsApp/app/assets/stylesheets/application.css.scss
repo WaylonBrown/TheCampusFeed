@@ -41,7 +41,7 @@ div.panel-collapse input {
 @media (min-width: 320px) and (max-width: 767px) {
   .section#title {
     font-size: 30pt;
-    height: 70px;
+    height: 100%;
     padding-top: 20px;
   }
 }
@@ -50,7 +50,7 @@ div.panel-collapse input {
 @media (min-width: 768px) and (max-width: 991px) {
   .section#title {
     font-size: 50pt;
-    height: 100px;
+    height: 100%;
     padding-top: 20px;
   }
 }
