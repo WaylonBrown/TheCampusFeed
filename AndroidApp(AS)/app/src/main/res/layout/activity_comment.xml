@@ -39,7 +39,7 @@
 	            android:text="0"
 	            android:textColor="@color/darkgray"
 	            android:layout_gravity="center_horizontal"
-	            android:textSize="16dp"
+	            android:textSize="15dp"
 	            />
 	        
 	        <ImageView
