@@ -201,7 +201,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 						int visibleItemCount, int totalItemCount) {
 
 					handleScrollAwayBottomViewOnScroll();
-					if (list.getLastVisiblePosition() == list.getAdapter().getCount() -3 &&
+					if (list.getLastVisiblePosition() >= list.getAdapter().getCount() -3 &&
 							!endOfListReached && !isLoadingMorePosts)
 					{
 						loadMorePosts();
