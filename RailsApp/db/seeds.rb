@@ -120,12 +120,15 @@ def importFromWrongFile
 end
 
 College.destroy_all
+=begin
 if Rails.env.production?
   importFromFile
 else
-  importFromFile 10
+  importFromFile
 end
+=end
 
+  importFromFile
 
 Post.destroy_all
 Comment.destroy_all
@@ -133,8 +136,21 @@ Comment.destroy_all
 
 cid = College.first.id
 
-Post.create({college_id: cid, text: "this #isnt just your #Avg test"})
-Post.create({college_id: cid, text: "This makes me fill in the #letteRstothegameofthenameOfthis"})
+vote_these = []
+
+vote_these << Post.create({college_id: cid, text: "this #isnt just your #Avg test"})
+vote_these << Post.create({college_id: cid, text: "This makes me fill in the #letteRstothegameofthenameOfthis"})
+vote_these << Post.create({college_id: cid, text: "this #isnt just your #Avg test"})
+(1..500).each {|e|
+  vote_these[-1].comments.create({post_id: curPost.id, text: "Hi this is a comment."}
+}
+
+vote_these.each { |post|
+  (1..100).each {
+    post.votes.create({upvote: Random.rand(5) > 1 })
+  }
+}
+
 (1..1000).each {|e|
   testString = rand(1..10) > 5 ? "Test" : "test"
   curPost = Post.create({college_id: cid, text: "This is ##{e}, a ##{testString} post!"})
