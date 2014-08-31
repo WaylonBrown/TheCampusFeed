@@ -238,7 +238,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		
 	}
 
-	protected static void replaceFooterBecauseEndOfList() {
+	public static void replaceFooterBecauseEndOfList() {
         isLoadingMorePosts = false;
 		if(list.getFooterViewsCount() > 0 && lazyFooterView != null){
 			list.removeFooterView(lazyFooterView);

@@ -191,7 +191,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 						int visibleItemCount, int totalItemCount) {
 
 					handleScrollAwayBottomViewOnScroll();
-					if (list.getLastVisiblePosition() == list.getAdapter().getCount() -3 &&
+					if (list.getLastVisiblePosition() >= list.getAdapter().getCount() -3 &&
 							!endOfListReached && !isLoadingMorePosts)
 					{
 						loadMorePosts();
@@ -228,7 +228,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		
 	}
 
-	protected static void replaceFooterBecauseEndOfList() {
+	public static void replaceFooterBecauseEndOfList() {
         isLoadingMorePosts = false;
 		if(list.getFooterViewsCount() > 0 && lazyFooterView != null){
 			list.removeFooterView(lazyFooterView);
@@ -447,6 +447,9 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		currentPageNumber = 1;
 		//reset list
 		postList.clear();
+        if(listAdapter != null){
+            listAdapter.idList.clear();
+        }
 		replaceFooterBecauseNewLazyList();
 		pullListFromServer(true);
 	}
@@ -471,6 +474,9 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		}
         if(postList != null){
             postList.clear();
+        }
+        if(listAdapter != null){
+            listAdapter.idList.clear();
         }
 		pullListFromServer(true);
         scrollToTop();
