@@ -16,7 +16,7 @@ class PostsController < ApplicationController
   end
 
   def search
-    posts = Post.search_by_text(params[:searchText]).order('created_at desc').page(params[:page]).per(params[:per_page])
+    posts = Post.search_by_text(params[:searchText]).order('id asc').page(params[:page]).per(params[:per_page])
     render json: posts
   end
 
@@ -42,7 +42,7 @@ class PostsController < ApplicationController
     end
 
     if @posts_with_tags.any?
-      render json: @posts_with_tags.order('created_at desc').page(params[:page]).per(params[:per_page])
+      render json: @posts_with_tags.order('id asc').page(params[:page]).per(params[:per_page])
     else
       render json: {:tag => ["does not exist."]}, status: 400
     end
@@ -82,7 +82,7 @@ class PostsController < ApplicationController
       @posts = Post.all
     end
     
-    render json: @posts.where('hidden IS NOT TRUE').order('created_at desc').page(params[:page]).per(params[:per_page])
+    render json: @posts.where('hidden IS NOT TRUE').order('id asc').page(params[:page]).per(params[:per_page])
   end
 
   def trending
@@ -92,7 +92,7 @@ class PostsController < ApplicationController
       @posts = Post.all
     end
     
-    render json: @posts.where('hidden IS NOT TRUE').order('score desc, created_at desc').page(params[:page]).per(params[:per_page])
+    render json: @posts.where('hidden IS NOT TRUE').order('score desc, id asc').page(params[:page]).per(params[:per_page])
   end
 
   # GET /posts/1
