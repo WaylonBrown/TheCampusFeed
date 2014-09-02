@@ -39,7 +39,7 @@
 	            android:layout_height="wrap_content"
 	            android:text="0"
 	            android:textColor="@color/darkgray"
-	            android:textSize="15dp"
+	            android:textSize="16dp"
                 android:singleLine="true"
 	            android:layout_gravity="center_horizontal"
 	            />

@@ -22,6 +22,7 @@ public class Post extends AbstractPostComment{
 	public Post(String m, int c, String p)
 	{
 		score = 1;
+        deltaScore = 1;
 		message = m;
 		time = TimeManager.now();
 		collegeID = c;
@@ -37,6 +38,7 @@ public class Post extends AbstractPostComment{
 	public Post(int id, String message, int score, int collegeID, String time)
 	{
 		this.score = score;
+        deltaScore = 1;
 		this.message = message;
 		this.time = time;
 		this.id = id;
@@ -58,9 +60,10 @@ public class Post extends AbstractPostComment{
         appURL = "thecampusfeed://posts/" + id;
 	}
 	
-	public Post(int id, String message, int score, int collegeID, String time, int commentCount)
+	public Post(int id, String message, int score, int deltaScore, int collegeID, String time, int commentCount)
 	{
 		this.score = score;
+        this.deltaScore = deltaScore;
 		this.message = message;
 		this.time = time;
 		this.id = id;

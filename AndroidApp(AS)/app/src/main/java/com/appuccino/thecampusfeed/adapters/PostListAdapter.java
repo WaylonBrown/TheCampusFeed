@@ -90,7 +90,11 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         	postHolder = (PostHolder)row.getTag();
         
         final Post thisPost = postList.get(position);
-        postHolder.scoreText.setText(String.valueOf(thisPost.getScore()));
+        postHolder.scoreText.setText(String.valueOf(thisPost.getDeltaScore()));
+        if(postHolder.scoreText.getText().toString().length() > 3){
+            postHolder.scoreText.setTextSize(14f);
+        }
+
         if(postHolder.collegeName != null)
         	postHolder.collegeName.setText(thisPost.getCollegeName());
         if(postHolder.gpsImage != null){
@@ -136,6 +140,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 				{
 					thisPost.setVote(1);
 					thisPost.score += 2;
+                    thisPost.deltaScore += 2;
                     updateRowViews(finalRow, finalPostHolder, 1, thisPost);
                     new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
                     new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), true));
@@ -144,6 +149,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 				{
 					thisPost.setVote(1);
 					thisPost.score++;
+                    thisPost.deltaScore++;
                     updateRowViews(finalRow, finalPostHolder, 1, thisPost);
                     new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), true));
 				}
@@ -151,6 +157,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 				{
 					thisPost.setVote(0);
 					thisPost.score--;
+                    thisPost.deltaScore--;
                     updateRowViews(finalRow, finalPostHolder, 0, thisPost);
                     new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
                 }
@@ -169,7 +176,8 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 					if(currentVote == -1)
 					{
 						thisPost.setVote(0);
-						thisPost.score++;
+                        thisPost.score++;
+                        thisPost.deltaScore++;
                         updateRowViews(finalRow, finalPostHolder, 0, thisPost);
                         new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
                     }
@@ -177,6 +185,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 					{
 						thisPost.setVote(-1);
 						thisPost.score--;
+                        thisPost.deltaScore--;
                         updateRowViews(finalRow, finalPostHolder, -1, thisPost);
                         new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), false));
                     }
@@ -184,6 +193,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 					{
 						thisPost.setVote(-1);
 						thisPost.score -= 2;
+                        thisPost.deltaScore -= 2;
                         updateRowViews(finalRow, finalPostHolder, -1, thisPost);
                         new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
                         new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), false));
@@ -205,7 +215,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
     }
 
     private void updateRowViews(View row, PostHolder postHolder, int vote, Post post) {
-        int score = post.score;
+        int score = post.getDeltaScore();
 
         if(vote == -1)
         {
