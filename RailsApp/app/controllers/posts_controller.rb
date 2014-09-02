@@ -116,6 +116,7 @@ class PostsController < ApplicationController
     params.require(:user_token)
 
     @post = @college.posts.build(post_params)
+    @post.vote_delta = 1
 
     respond_to do |format|
       if @post.save
