@@ -1,6 +1,5 @@
 package com.appuccino.thecampusfeed.fragments;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.LightingColorFilter;
@@ -13,10 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
@@ -184,57 +181,57 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	//for slide away footer
     public void setupFooterListView() {
         Log.i("cfeed","list scrollable1: " + willListScroll());
-		if(willListScroll()){
-			list.getViewTreeObserver().addOnGlobalLayoutListener(
-				new ViewTreeObserver.OnGlobalLayoutListener() {
-					@Override
-					public void onGlobalLayout() {
-						mQuickReturnHeight = scrollAwayBottomView.getHeight();
-						list.computeScrollY();
-					}
-			});
-			
-			list.setOnScrollListener(new OnScrollListener() {
-				@SuppressLint("NewApi")
-				@Override
-				public void onScroll(AbsListView view, int firstVisibleItem,
-						int visibleItemCount, int totalItemCount) {
-
-					handleScrollAwayBottomViewOnScroll();
-					if (list.getLastVisiblePosition() >= list.getAdapter().getCount() -3 &&
-							!endOfListReached && !isLoadingMorePosts)
-					{
-						loadMorePosts();
-					}else if (endOfListReached){
-						replaceFooterBecauseEndOfList();
-					}
-				}
-
-				@Override
-				public void onScrollStateChanged(AbsListView view, int scrollState) {
-				}
-			});
-		}else{				//don't let bottom part move if the list isn't scrollable
-			list.getViewTreeObserver().addOnGlobalLayoutListener(
-				new ViewTreeObserver.OnGlobalLayoutListener() {
-					@Override
-					public void onGlobalLayout() {
-						//do nothing
-					}
-			});
-			
-			list.setOnScrollListener(new OnScrollListener() {
-				@SuppressLint("NewApi")
-				@Override
-				public void onScroll(AbsListView view, int firstVisibleItem,
-						int visibleItemCount, int totalItemCount) {
-					//do nothing
-				}
-				@Override
-				public void onScrollStateChanged(AbsListView view, int scrollState) {
-				}
-			});
-		}
+//		if(willListScroll()){
+//			list.getViewTreeObserver().addOnGlobalLayoutListener(
+//				new ViewTreeObserver.OnGlobalLayoutListener() {
+//					@Override
+//					public void onGlobalLayout() {
+//						mQuickReturnHeight = scrollAwayBottomView.getHeight();
+//						list.computeScrollY();
+//					}
+//			});
+//
+//			list.setOnScrollListener(new OnScrollListener() {
+//				@SuppressLint("NewApi")
+//				@Override
+//				public void onScroll(AbsListView view, int firstVisibleItem,
+//						int visibleItemCount, int totalItemCount) {
+//
+//					handleScrollAwayBottomViewOnScroll();
+//					if (list.getLastVisiblePosition() >= list.getAdapter().getCount() -3 &&
+//							!endOfListReached && !isLoadingMorePosts)
+//					{
+//						loadMorePosts();
+//					}else if (endOfListReached){
+//						replaceFooterBecauseEndOfList();
+//					}
+//				}
+//
+//				@Override
+//				public void onScrollStateChanged(AbsListView view, int scrollState) {
+//				}
+//			});
+//		}else{				//don't let bottom part move if the list isn't scrollable
+//			list.getViewTreeObserver().addOnGlobalLayoutListener(
+//				new ViewTreeObserver.OnGlobalLayoutListener() {
+//					@Override
+//					public void onGlobalLayout() {
+//						//do nothing
+//					}
+//			});
+//
+//			list.setOnScrollListener(new OnScrollListener() {
+//				@SuppressLint("NewApi")
+//				@Override
+//				public void onScroll(AbsListView view, int firstVisibleItem,
+//						int visibleItemCount, int totalItemCount) {
+//					//do nothing
+//				}
+//				@Override
+//				public void onScrollStateChanged(AbsListView view, int scrollState) {
+//				}
+//			});
+//		}
 		
 	}
 
