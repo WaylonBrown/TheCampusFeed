@@ -142,11 +142,11 @@ vote_these << Post.create({college_id: cid, text: "this #isnt just your #Avg tes
 vote_these << Post.create({college_id: cid, text: "This makes me fill in the #letteRstothegameofthenameOfthis"})
 vote_these << Post.create({college_id: cid, text: "this #isnt just your #Avg test"})
 (1..500).each {|e|
-  vote_these[-1].comments.create({post_id: curPost.id, text: "Hi this is a comment."}
+  vote_these[-1].comments.create({post_id: curPost.id, text: "Hi this is a comment."})
 }
 
 vote_these.each { |post|
-  (1..100).each {
+  (1..100).each { |i|
     post.votes.create({upvote: Random.rand(5) > 1 })
   }
 }
