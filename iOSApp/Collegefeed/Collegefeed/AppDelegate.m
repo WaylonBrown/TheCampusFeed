@@ -39,26 +39,30 @@
     [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
-    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(openLeftMenu)];
+    
+    UIImage *image = [UIImage imageNamed:logoImageWithButton];
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(openLeftMenu)];
+
+//    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(openLeftMenu)];
 
     
     // *** Top Posts - PostsViewController *** //
     self.topPostsController = [[PostsViewController alloc] initAsType:TOP_VIEW
                                                    withDataController:self.dataController];
-    self.topPostsController.navigationItem.leftBarButtonItem = menuButton;
+//    self.topPostsController.navigationItem.leftBarButtonItem = menuButton;
     // *************************************** //
 
 
     // *** New Posts - PostsViewController *** //
     self.recentPostsController = [[PostsViewController alloc] initAsType:RECENT_VIEW
                                                       withDataController:self.dataController];
-    self.recentPostsController.navigationItem.leftBarButtonItem = menuButton;
+//    self.recentPostsController.navigationItem.leftBarButtonItem = menuButton;
     // *************************************** //
     
     
     // *** Trending Tags - TagViewController *** //
     self.tagController = [[TagViewController alloc] initWithDataController:self.dataController];
-    self.tagController.navigationItem.leftBarButtonItem = menuButton;
+//    self.tagController.navigationItem.leftBarButtonItem = menuButton;
     // *************************************** //
     
     // *** Trending Colleges - TrendingCollegesViewController *** //
@@ -102,9 +106,16 @@
     self.deckController.closeSlideAnimationDuration = 0.25f;
     self.deckController.leftSize = 100.0f;
     self.deckController.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
-    self.deckController.navigationItem.leftBarButtonItem = menuButton;
     
-    [self.deckController.navigationItem setTitleView:logoTitleView];
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -16;// it was -6 in iOS 6
+    [self.deckController.navigationItem setLeftBarButtonItems:[NSArray arrayWithObjects:negativeSpacer, menuButton/*this will be the button which u actually need*/, nil] animated:NO];
+    
+    
+//    self.deckController.navigationItem.leftBarButtonItem = menuButton;
+    
     UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:self.deckController];
     [controller.navigationBar setTranslucent:NO];
     
@@ -152,7 +163,14 @@
 }
 - (void)openLeftMenu
 {
-    [self.deckController openLeftView];
+    if ([self.deckController isSideOpen:IIViewDeckLeftSide])
+    {
+        [self.deckController closeLeftView];
+    }
+    else
+    {
+        [self.deckController openLeftView];
+    }
 }
 
 

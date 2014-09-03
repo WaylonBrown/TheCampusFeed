@@ -49,6 +49,7 @@
 #define WEBSITE_LINK    @"http://cfeed.herokuapp.com"
 
 // Title view for navigation bar
+#define logoImageWithButton @"thecampusfeedlogosmallwithmenubutton"
 #define logoImage @"thecampusfeedlogosmall.png"
 #define logoTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:logoImage]]
 

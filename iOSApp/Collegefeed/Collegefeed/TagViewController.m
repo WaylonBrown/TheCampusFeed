@@ -23,7 +23,7 @@
     [super loadView];
     
     // Place logo at the top of the navigation bar
-    [self.navigationItem setTitleView:logoTitleView];
+//    [self.navigationItem setTitleView:logoTitleView];
 }
 
 - (void)viewDidLoad
@@ -79,7 +79,13 @@
                                                            withDataController:self.dataController];
     [controller setTagMessage:self.selectedTag.name];
     
+    UIBarButtonItem *backButton =
+            [[UIBarButtonItem alloc] initWithTitle:@""
+                                             style:UIBarButtonItemStyleBordered
+                                            target:nil
+                                            action:nil];
     
+    [[self navigationItem] setBackBarButtonItem:backButton];
     [self.navigationController pushViewController:controller
                                          animated:YES];
 }

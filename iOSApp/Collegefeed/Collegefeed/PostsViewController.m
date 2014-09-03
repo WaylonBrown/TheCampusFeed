@@ -36,19 +36,19 @@
         switch (type)
         {
             case TOP_VIEW:
-                [self setList:controller.topPostsAllColleges];
+                [self setList:self.dataController.topPostsAllColleges];
                 break;
             case RECENT_VIEW:
-                [self setList:controller.recentPostsAllColleges];
+                [self setList:self.dataController.recentPostsAllColleges];
                 break;
             case USER_POSTS:
-                [self setList:controller.userPosts];
+                [self setList:self.dataController.userPosts];
                 break;
             case USER_COMMENTS:
-                [self setList:controller.userComments];
+                [self setList:self.dataController.userComments];
                 break;
             case TAG_VIEW:
-                [self setList:controller.allPostsWithTag];
+                [self setList:self.dataController.allPostsWithTag];
                 break;
             default:
                 break;
@@ -61,7 +61,6 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
-    [super viewWillAppear:animated];
     if (self.viewType == TAG_VIEW)
     {
         if (self.tagMessage == nil)
@@ -73,6 +72,7 @@
             [self.dataController fetchPostsWithTagMessage:self.tagMessage];
         }
     }
+    [super viewWillAppear:animated];
 }
 - (void)viewDidLoad
 {
@@ -112,6 +112,15 @@
     }
     
     [self.commentViewController setOriginalPost:self.selectedPost];
+    
+    
+    UIBarButtonItem *backButton =
+    [[UIBarButtonItem alloc] initWithTitle:@""
+                                     style:UIBarButtonItemStyleBordered
+                                    target:nil
+                                    action:nil];
+    
+    [[self navigationItem] setBackBarButtonItem:backButton];
     
     [self.navigationController pushViewController:self.commentViewController
                                          animated:YES];

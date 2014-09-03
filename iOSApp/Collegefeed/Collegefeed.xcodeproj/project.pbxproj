@@ -34,6 +34,7 @@
 		5350558F1953C75C009C1911 /* gps.png in Resources */ = {isa = PBXBuildFile; fileRef = 5350558E1953C75C009C1911 /* gps.png */; };
 		5352B5A2195F5C3100FEB2BF /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 5352B5A1195F5C3100FEB2BF /* UIView+Toast.m */; };
 		5358CE74196E5DF800FF4E45 /* libModels.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5358CE6F196E5D7F00FF4E45 /* libModels.a */; };
+		538BF13719B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 538BF13619B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png */; };
 		5390A91D1914B76800ACD082 /* arrowdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9141914B76800ACD082 /* arrowdown.png */; };
 		5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9151914B76800ACD082 /* arrowdownred.png */; };
 		5390A91F1914B76800ACD082 /* arrowup.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9161914B76800ACD082 /* arrowup.png */; };
@@ -176,6 +177,7 @@
 		5352B5A0195F5C3100FEB2BF /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
 		5352B5A1195F5C3100FEB2BF /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		5358CE69196E5D7F00FF4E45 /* Models.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Models.xcodeproj; path = Collegefeed/Models/Models.xcodeproj; sourceTree = "<group>"; };
+		538BF13619B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thecampusfeedlogosmallwithmenubutton.png; sourceTree = "<group>"; };
 		5390A9141914B76800ACD082 /* arrowdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdown.png; sourceTree = "<group>"; };
 		5390A9151914B76800ACD082 /* arrowdownred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdownred.png; sourceTree = "<group>"; };
 		5390A9161914B76800ACD082 /* arrowup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowup.png; sourceTree = "<group>"; };
@@ -379,6 +381,7 @@
 		5390A9131914B76800ACD082 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				538BF13619B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png */,
 				53DE348319AD517C004CB5A0 /* card_without_9patch.png */,
 				531EAAED1988300C00C1E1AA /* icon_light_small.png */,
 				531EAAEE1988300C00C1E1AA /* icon.png */,
@@ -705,6 +708,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */,
+				538BF13719B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png in Resources */,
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */,
 				531EAAEF1988300C00C1E1AA /* icon_light_small.png in Resources */,
