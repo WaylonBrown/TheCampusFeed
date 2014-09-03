@@ -71,7 +71,11 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	private static int mMinRawY = 0;
 	private static TranslateAnimation anim;
 	static TextView collegeNameBottom;
-	
+
+    public TopPostFragment(){
+        mainActivity = MainActivity.activity;
+    }
+
 	public TopPostFragment(MainActivity m) 
 	{
 		mainActivity = m;
@@ -247,7 +251,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		if(list.getFooterViewsCount() == 0){		//so there's no duplicate
 			//for card UI
 			footerSpace = new View(mainActivity);
-			footerSpace.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
+			footerSpace.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 62));
 			list.addFooterView(footerSpace, null, false);
 		}
 	}

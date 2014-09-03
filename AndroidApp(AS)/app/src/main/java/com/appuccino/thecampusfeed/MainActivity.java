@@ -59,6 +59,8 @@ import java.util.TimerTask;
 
 public class MainActivity extends FragmentActivity implements LocationListener
 {
+    public static MainActivity activity;
+
     private MenuDrawer menuDrawer;
 	ActionBar actionBar;
 	ImageView newPostButton;

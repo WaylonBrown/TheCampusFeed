@@ -65,7 +65,8 @@ public class TagFragment extends Fragment
 
 	public TagFragment()
 	{
-	}
+        mainActivity = MainActivity.activity;
+    }
 	
 	public TagFragment(MainActivity m) 
 	{
@@ -86,10 +87,12 @@ public class TagFragment extends Fragment
 		if(list.getHeaderViewsCount() == 0)
 		{
 			//for card UI
-			View headerFooter = new View(getActivity());
-			headerFooter.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
-			list.addFooterView(headerFooter, null, false);
-			list.addHeaderView(headerFooter, null, false);
+            View header = new View(getActivity());
+            View footer = new View(getActivity());
+            footer.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 62));
+            header.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
+			list.addFooterView(footer, null, false);
+			list.addHeaderView(header, null, false);
 		}
 		
 		if(mainActivity != null)
