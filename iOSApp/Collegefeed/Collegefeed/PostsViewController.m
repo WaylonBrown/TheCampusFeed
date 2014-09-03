@@ -64,8 +64,9 @@
     [super viewWillAppear:animated];
     if (self.viewType == TAG_VIEW && self.tagMessage == nil)
     {
-        NSException *e = [NSException exceptionWithName:@"NoTagFoundException" reason:@"No Tag message provided for a PostsView filtered by Tag" userInfo:nil];
-        [e raise];
+        NSLog(@"No Tag message provided for a PostsView filtered by Tag");
+//        NSException *e = [NSException exceptionWithName:@"NoTagFoundException" reason:@"No Tag message provided for a PostsView filtered by Tag" userInfo:nil];
+//        [e raise];
     }
 }
 - (void)viewDidLoad

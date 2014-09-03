@@ -51,7 +51,7 @@
 #define MESSAGE_HEIGHT_CUSHION 10
     
     float height = SMALL_CELL_MIN_LABEL_HEIGHT;
-    if (![text isEqualToString:@""])
+    if (text != nil && ![text isEqualToString:@""])
     {
         NSStringDrawingContext *ctx = [NSStringDrawingContext new];
         NSAttributedString *aString = [[NSAttributedString alloc] initWithString:text];
@@ -77,7 +77,7 @@
 #define MESSAGE_HEIGHT_CUSHION 10
     
     float height = LARGE_CELL_MIN_LABEL_HEIGHT;
-    if (![text isEqualToString:@""])
+    if (text != nil && ![text isEqualToString:@""])
     {
 
         NSStringDrawingContext *ctx = [NSStringDrawingContext new];

@@ -50,9 +50,8 @@
 
 - (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
 {
-    [self assign:post WithMessageHeight:height];
     [self.gpsIconImageView setHidden:(!isNearby)];
-    [self setNeedsDisplay];
+    [self assign:post WithMessageHeight:height];
 }
 
 - (void)assign:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj WithMessageHeight:(float)height;
@@ -75,13 +74,12 @@
     
     if ([obj getType] == POST)
     {
-        [self.scoreLabel        setText:[NSString stringWithFormat:@"%lu", [obj getScore]]];
         [self.collegeLabel      setText:[obj getCollegeName]];
     }
     else
     {
-        [self.dividerView removeFromSuperview];
-        [self.collegeLabel removeFromSuperview];
+//        [self.dividerView removeFromSuperview];
+//        [self.collegeLabel removeFromSuperview];
     }
     
     // Parse message for Tags
@@ -89,6 +87,8 @@
 
     // assign arrow colors according to user's vote
     [self updateVoteButtons];
+    
+    [self setNeedsDisplay];
 }
 
 #pragma mark - Actions
@@ -179,7 +179,7 @@
 }
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
 {
-    NSString  *tagMessage = [url absoluteString];
+    NSString *tagMessage = [url absoluteString];
     [self.delegate didSelectTag:tagMessage];
 }
 

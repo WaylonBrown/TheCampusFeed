@@ -7,9 +7,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CommentViewController">
             <connections>
                 <outlet property="commentTableView" destination="e2t-m9-f0M" id="RZt-3K-R7C"/>
+                <outlet property="commentToolBarSpaceFromBottom" destination="ZVX-IL-eo0" id="3TM-WX-Pc1"/>
                 <outlet property="currentFeedLabel" destination="SXB-AF-c0g" id="r7O-QH-CUk"/>
                 <outlet property="feedButton" destination="1L3-iO-Uw7" id="xLt-VP-iqI"/>
-                <outlet property="feedToolbar" destination="onw-bZ-Ayo" id="guM-k8-k3E"/>
+                <outlet property="feedToolbar" destination="onw-bZ-Ayo" id="zq0-vJ-qy4"/>
                 <outlet property="postTableHeightConstraint" destination="k6u-bc-0sI" id="vkm-zJ-sKi"/>
                 <outlet property="postTableView" destination="aEV-VT-52H" id="LWc-EL-ok2"/>
                 <outlet property="showingLabel" destination="q0Q-LO-cjs" id="udx-dq-wdK"/>
@@ -46,7 +47,7 @@
                         <outlet property="delegate" destination="-1" id="71e-9R-dh8"/>
                     </connections>
                 </tableView>
-                <view opaque="NO" alpha="0.87" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="onw-bZ-Ayo" userLabel="Feed Label">
+                <view opaque="NO" alpha="0.87" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="onw-bZ-Ayo" userLabel="Feed Label">
                     <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
@@ -101,7 +102,7 @@
                 <constraint firstItem="onw-bZ-Ayo" firstAttribute="leading" secondItem="cKt-4a-JCZ" secondAttribute="leading" id="5FO-m3-3w3"/>
                 <constraint firstAttribute="trailing" secondItem="aEV-VT-52H" secondAttribute="trailing" id="GIW-2t-Cpm"/>
                 <constraint firstItem="aEV-VT-52H" firstAttribute="leading" secondItem="cKt-4a-JCZ" secondAttribute="leading" id="Gua-aS-4vw"/>
-                <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="onw-bZ-Ayo" secondAttribute="bottom" constant="49" id="ZVX-IL-eo0"/>
+                <constraint firstAttribute="bottom" secondItem="onw-bZ-Ayo" secondAttribute="top" constant="50" id="ZVX-IL-eo0"/>
                 <constraint firstItem="aEV-VT-52H" firstAttribute="top" secondItem="cKt-4a-JCZ" secondAttribute="top" id="hqj-fA-DVC"/>
                 <constraint firstItem="e2t-m9-f0M" firstAttribute="top" secondItem="aEV-VT-52H" secondAttribute="bottom" id="nea-ap-qJS"/>
                 <constraint firstAttribute="trailing" secondItem="e2t-m9-f0M" secondAttribute="trailing" id="nxD-wF-aYj"/>

@@ -17,7 +17,7 @@
 #define MIN_POST_LENGTH      10
 
 // Custom colors
-#define CF_LIGHTBLUE   0x33B5E5
+#define CF_LIGHTBLUE   0x33B5E5 // 51, 181, 229
 #define CF_BLUE        0x0099CC
 #define CF_LIGHTGRAY   0xE6E6E6
 #define CF_GRAY        0x7C7C7C
