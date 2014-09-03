@@ -3,7 +3,6 @@ package com.appuccino.thecampusfeed.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.LightingColorFilter;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -89,7 +88,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		list = (QuickReturnListView)rootView.findViewById(R.id.fragmentListView);
 		loadingSpinner = (ProgressBar)rootView.findViewById(R.id.loadingSpinner);
         //set progressbar as blue
-        loadingSpinner.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(getResources().getColor(R.color.alphablue), getResources().getColor(R.color.alphablue)));
+        //loadingSpinner.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(getResources().getColor(R.color.alphablue), getResources().getColor(R.color.alphablue)));
 		scrollAwayBottomView = (LinearLayout)rootView.findViewById(R.id.footer);
         pullDownText = (TextView)rootView.findViewById(R.id.pullDownText);
 

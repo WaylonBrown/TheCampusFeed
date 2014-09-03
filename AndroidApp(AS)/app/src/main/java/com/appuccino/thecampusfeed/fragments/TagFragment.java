@@ -130,7 +130,6 @@ public class TagFragment extends Fragment
     public void onResume(){
         super.onResume();
         setupFooterListView();
-        makeLoadingIndicator(false);
     }
 
 	private void setupBottomViewUI() {
@@ -383,8 +382,10 @@ public class TagFragment extends Fragment
 
 	public static void makeLoadingIndicator(boolean b) {
         if(b){
+            list.setVisibility(View.INVISIBLE);
             progressSpinner.setVisibility(View.VISIBLE);
         }else{
+            list.setVisibility(View.VISIBLE);
             progressSpinner.setVisibility(View.GONE);
         }
 	}

@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
-import android.graphics.LightingColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -329,7 +328,7 @@ public class CommentsActivity extends Activity{
         twitterButton = (ImageView)findViewById(R.id.twitterButton);
         actionBarLoadingIcon = (ProgressBar)findViewById(R.id.commentActionbarLoadingIcon);
         //set progressbar as white
-        actionBarLoadingIcon.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(getResources().getColor(R.color.white), getResources().getColor(R.color.white)));
+        //actionBarLoadingIcon.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(getResources().getColor(R.color.white), getResources().getColor(R.color.white)));
         divider = (View)findViewById(R.id.actionBarDivider);
         list = (ListView)findViewById(R.id.commentsList);
         loadingSpinner = (ProgressBar)findViewById(R.id.commentsLoading);
