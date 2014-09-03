@@ -44,6 +44,7 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 		
 		nearYouListView = (ListView)layout.findViewById(R.id.nearYouDialogList);
 		TextView chooseTitleText = (TextView)layout.findViewById(R.id.chooseFeedDialogTitle);
+        TextView allCollegesTitle = (TextView)layout.findViewById(R.id.allCollegesTitle);
     	TextView allCollegesText = (TextView)layout.findViewById(R.id.allCollegesText);
     	TextView nearYouTitle = (TextView)layout.findViewById(R.id.nearYouTitle);
     	TextView otherTitle = (TextView)layout.findViewById(R.id.otherTitle);
@@ -52,6 +53,7 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
     	LinearLayout allColleges = (LinearLayout)layout.findViewById(R.id.allCollegesButton);
     	
     	chooseTitleText.setTypeface(FontManager.light);
+        allCollegesTitle.setTypeface(FontManager.light);
     	allCollegesText.setTypeface(FontManager.light);
     	nearYouTitle.setTypeface(FontManager.light);
     	otherTitle.setTypeface(FontManager.light);

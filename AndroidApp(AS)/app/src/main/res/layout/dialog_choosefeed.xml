@@ -20,6 +20,17 @@
         android:layout_marginBottom="6dp"
         android:gravity="center_horizontal"
         />
+
+    <com.appuccino.thecampusfeed.extra.CustomTextView
+        android:id="@+id/allCollegesTitle"
+        android:text="@string/allCollegesTitle"
+        style="@style/block"
+        android:textSize="16sp"
+        android:textColor="@color/darkgray"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="center_horizontal"
+        />
     
     <LinearLayout
         android:id="@+id/allCollegesButton"
@@ -33,7 +44,7 @@
             android:id="@+id/allCollegesText"
             style="@style/block"
             android:gravity="center"
-            android:text="@string/allColleges"
+            android:text="@string/megaFeed"
             android:textSize="22sp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"

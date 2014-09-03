@@ -15,7 +15,9 @@
     <string name="twitterMessage">Want to see our pick of the top post on TheCampusFeed per day? Be sure to follow us on Twitter at @The_Campus_Feed!</string>
     <string name="webDialogMessage">Want to check out posts while you\'re on your computer? Be sure to check out www.TheCampusFeed.com!\n\n(placeholder image)</string>
     <string name="chooseFeedDialogTitle">Choose a Feed</string>
+    <string name="allCollegesTitle">Combines All Colleges into 1 Feed</string>
     <string name="allColleges">All Colleges</string>
+    <string name="megaFeed">Mega-Feed</string>
     <string name="searchColleges">Choose a College</string>
     <string name="nearYou">Near You</string>
     <string name="other">Other Colleges</string>
