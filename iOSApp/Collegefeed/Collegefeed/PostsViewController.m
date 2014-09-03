@@ -62,11 +62,16 @@
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
     [super viewWillAppear:animated];
-    if (self.viewType == TAG_VIEW && self.tagMessage == nil)
+    if (self.viewType == TAG_VIEW)
     {
-        NSLog(@"No Tag message provided for a PostsView filtered by Tag");
-//        NSException *e = [NSException exceptionWithName:@"NoTagFoundException" reason:@"No Tag message provided for a PostsView filtered by Tag" userInfo:nil];
-//        [e raise];
+        if (self.tagMessage == nil)
+        {
+            NSLog(@"No Tag message provided for a PostsView filtered by Tag");
+        }
+        else
+        {
+            [self.dataController fetchPostsWithTagMessage:self.tagMessage];
+        }
     }
 }
 - (void)viewDidLoad
@@ -82,7 +87,7 @@
     [super loadView];
     
     // Place logo at the top of the navigation bar
-    [self.navigationItem setTitleView:logoTitleView];
+//    [self.navigationItem setTitleView:logoTitleView];
 }
 
 #pragma mark - Table View Override Functions

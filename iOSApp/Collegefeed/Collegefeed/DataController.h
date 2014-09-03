@@ -184,7 +184,7 @@
 - (BOOL)fetchNewPosts;
 - (void)fetchNewPostsInCollege;
 
-- (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage;
+- (void)fetchPostsWithTagMessage:(NSString*)tagMessage;
 - (void)fetchAllPostsInCollegeWithTagMessage:(NSString*)tagMessage;
 - (BOOL)fetchMorePostsWithTagMessage:(NSString*)tagMessage;
 

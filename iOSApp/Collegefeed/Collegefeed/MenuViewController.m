@@ -26,6 +26,15 @@
     }
     return self;
 }
+- (id)initWithViewControllers:(NSArray *)viewControllers
+{
+    self = [super init];
+    if (self != nil)
+    {
+        self.viewControllers = viewControllers;
+    }
+    return self;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -107,15 +116,15 @@
         return;
     }
     
-    UINavigationController *navController = self.navControllers[index];
+    UIViewController *viewController = self.viewControllers[index];
     
-    if (navController == nil || [navController class] != [UINavigationController class])
+    if (viewController == nil)
     {
         NSLog(@"Error in MenuViewController menu selection");
     }
     else
     {
-        [self.viewDeckController setCenterController:navController];
+        [self.viewDeckController setCenterController:viewController];
     }
     
     [self.viewDeckController closeLeftView];

@@ -176,7 +176,7 @@
     NSString *tag  = searchBar.text;
     if ([Tag withMessageIsValid:tag])
     {
-        [self.dataController fetchAllPostsWithTagMessage:tag];
+        [self.dataController fetchPostsWithTagMessage:tag];
         PostsViewController *postsView = [[PostsViewController alloc] initAsType:TAG_VIEW withDataController:self.dataController];
         [postsView setTagMessage:tag];
         [self.navigationController pushViewController:postsView animated:YES];

@@ -66,8 +66,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedNotification:) name:@"Toast" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self.toastController selector:@selector(toastHidden) name:@"ToastHidden" object:nil];
     
-    [self.navigationController.navigationBar setTranslucent:YES];
-    [self.navigationController.navigationBar setAlpha:0.9f];
+    [self.navigationController.navigationBar setTranslucent:NO];
     [self refresh];
     
 }
@@ -253,7 +252,7 @@
     }
     else
     {
-        [self.dataController fetchAllPostsWithTagMessage:tagMessage];
+        [self.dataController fetchPostsWithTagMessage:tagMessage];
     }
     
     
