@@ -79,11 +79,7 @@
     else
     {
         self.dividerHeight.constant = 0;
-        self.collegeLabelHeight.constant = 0;
-//        [self.commentCountLabel removeFromSuperview];
-//        [self.dividerView removeFromSuperview];
-//        [self.collegeLabel removeFromSuperview];
-        
+        self.collegeLabelHeight.constant = 0;        
     }
     
     // Parse message for Tags

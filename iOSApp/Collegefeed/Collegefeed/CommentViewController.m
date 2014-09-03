@@ -122,9 +122,8 @@
     
     if (tableView == self.postTableView)
     {   // PostView table; get the original post to display in this table
-//        [cell.dividerView removeFromSuperview];
-//        [cell.collegeLabel removeFromSuperview];
-//        [cell.commentCountLabel removeFromSuperview];
+        cell.dividerHeight.constant = 0;
+        cell.collegeLabelHeight.constant = 0;
         
         float messageHeight = [Shared getLargeCellMessageHeight:self.originalPost.message WithFont:CF_FONT_LIGHT(16)];
         [cell assign:self.originalPost WithMessageHeight:messageHeight];
