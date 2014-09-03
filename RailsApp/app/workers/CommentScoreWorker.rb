@@ -14,15 +14,13 @@ class CommentScoreWorker
     (phat + z*z/(2*n) - z * Math.sqrt((phat*(1-phat)+z*z/(4*n))/n))/(1+z*z/n)
   end
 
-  def perform
-    Comment.all.each{ |comment|
-      upvotes = comment.votes.where({upvote: true}).count
-      allvotes = comment.votes.count
-      downvotes = allvotes - upvotes
+  def perform(comment_id)
+    comment = Comment.find(comment_id)
+    upvotes = comment.votes.where({upvote: true}).count
+    allvotes = comment.votes.count
+    downvotes = allvotes - upvotes
 
-      comment.score = ci_lower_bound(upvotes, allvotes, @@confidence_interval) * 1000000
-      comment.vote_delta = upvotes - downvotes
-      comment.save
-    }
+    comment.score = ci_lower_bound(upvotes, allvotes, @@confidence_interval) * 1000000
+    comment.save
   end
 end

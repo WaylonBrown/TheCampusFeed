@@ -82,7 +82,7 @@ class PostsController < ApplicationController
       @posts = Post.all
     end
     
-    render json: @posts.where('hidden IS NOT TRUE').order('id asc').page(params[:page]).per(params[:per_page])
+    render json: @posts.where('hidden IS NOT TRUE').order('id desc').page(params[:page]).per(params[:per_page])
   end
 
   def trending
@@ -114,12 +114,10 @@ class PostsController < ApplicationController
   def create
 
     params.require(:user_token)
-
     @post = @college.posts.build(post_params)
 
     respond_to do |format|
       if @post.save
-        @post.votes.create({upvote: true})
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render action: 'show', status: :created, location: @post }
       else

@@ -38,7 +38,7 @@ div.panel-collapse input {
 }
 
 /* Extra Small devices (mobiles, 320px and up) */
-@media (min-width: 320px) and (max-width: 767px) {
+/*@media (min-width: 320px) and (max-width: 767px) {
   .section#title {
     font-size: 30pt;
     height: 100%;
@@ -46,7 +46,6 @@ div.panel-collapse input {
   }
 }
 
-/* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) and (max-width: 991px) {
   .section#title {
     font-size: 50pt;
@@ -55,24 +54,20 @@ div.panel-collapse input {
   }
 }
 
-/* Medium devices (desktops, 992px and up) */
 @media (min-width: 992px) and (max-width: 1199px) {
   .section#title {
-    font-size: 60pt;
     height: 100%;
     padding-top: 20%;
     background-attachment: fixed;
   }
 }
 
-/* Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) and (max-width: 1920px) {
   .section#title {
-    font-size: 80pt;
     height: 100%;
     padding-top: 20%;
   }
-}
+}*/
 
 @font-face {
   font-family: 'Lato';
@@ -97,7 +92,6 @@ div.panel-collapse input {
 
 body {
   font-family: Lato !important;
-  font-weight: 300 !important;
   background-image: url('/images/textured_paper.png');
 }
 

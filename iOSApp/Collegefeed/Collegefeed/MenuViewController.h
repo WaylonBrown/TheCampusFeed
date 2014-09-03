@@ -15,4 +15,9 @@
 
 - (id)initWithNavControllers:(NSArray *)navControllers;
 
+
+@property (strong, nonatomic) NSArray *viewControllers;
+
+- (id)initWithViewControllers:(NSArray *)viewControllers;
+
 @end

@@ -139,16 +139,16 @@
 }
 - (void)validate
 {
-    if (self.message.length < MIN_POST_LENGTH)
-    {
-        NSException *e = [NSException exceptionWithName:@"PostLengthException" reason:@"Post is too short" userInfo:nil];
-        [e raise];
-    }
-    if (self.message.length > MAX_POST_LENGTH)
-    {
-        NSException *e = [NSException exceptionWithName:@"PostLengthException" reason:@"Post is too long" userInfo:nil];
-        [e raise];
-    }
+//    if (self.message.length < MIN_POST_LENGTH)
+//    {
+//        NSException *e = [NSException exceptionWithName:@"PostLengthException" reason:@"Post is too short" userInfo:nil];
+//        [e raise];
+//    }
+//    if (self.message.length > MAX_POST_LENGTH)
+//    {
+//        NSException *e = [NSException exceptionWithName:@"PostLengthException" reason:@"Post is too long" userInfo:nil];
+//        [e raise];
+//    }
 }
 - (ModelType)getType
 {

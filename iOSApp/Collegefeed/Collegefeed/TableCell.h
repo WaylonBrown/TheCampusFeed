@@ -38,6 +38,8 @@
 
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *postMessageHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *dividerHeight;
 
 - (void)assign:(NSObject<PostAndCommentProtocol> *)obj WithMessageHeight:(float)height;
 - (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;

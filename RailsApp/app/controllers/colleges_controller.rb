@@ -5,7 +5,7 @@ class CollegesController < ApplicationController
   before_action :set_college, only: [:show, :edit, :update, :destroy, :within, :image]
 
   def listVersion 
-    render json: {version: 1}
+    render json: {version: 2}
   end
 
   def search

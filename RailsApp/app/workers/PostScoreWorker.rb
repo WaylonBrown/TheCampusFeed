@@ -21,15 +21,15 @@ class PostScoreWorker
       return order + sign * seconds
   end
 
-  def perform
-    Post.all.each{ |post|
-      upvotes = post.votes.where({upvote: true}).count
-      allvotes = post.votes.count
-      downvotes = allvotes - upvotes
+  def perform(post_id)
 
-      post.score = hot(upvotes, allvotes, post.created_at)
-      post.vote_delta = upvotes - downvotes
-      post.save
-    }
+    post = Post.find(post_id)
+    upvotes = post.votes.where({upvote: true}).count
+    allvotes = post.votes.count
+    downvotes = allvotes - upvotes
+
+    post.score = hot(upvotes, allvotes, post.created_at)
+    post.save
+
   end
 end

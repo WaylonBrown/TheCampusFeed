@@ -28,15 +28,22 @@
         [self setShowingAllColleges:YES];
         [self setShowingSingleCollege:NO];
         
-        // Initialize arrays for the initial arrays needed
+        // Initialize arrays for the arrays needed
+        self.collegeList            = [[NSMutableArray alloc] init];
+        self.nearbyColleges         = [[NSMutableArray alloc] init];
+        self.trendingColleges       = [[NSMutableArray alloc] init];
+        
+        self.commentList            = [[NSMutableArray alloc] init];
+        self.userComments           = [[NSMutableArray alloc] init];
+
         self.topPostsAllColleges    = [[NSMutableArray alloc] init];
         self.recentPostsAllColleges = [[NSMutableArray alloc] init];
-        self.collegeList            = [[NSMutableArray alloc] init];
+        self.userPosts              = [[NSMutableArray alloc] init];
+        self.allPostsWithTag        = [[NSMutableArray alloc] init];
+        
         self.allTags                = [[NSMutableArray alloc] init];
         self.allTagsInCollege       = [[NSMutableArray alloc] init];
-        self.trendingColleges       = [[NSMutableArray alloc] init];
-        self.userPosts              = [[NSMutableArray alloc] init];
-        self.userComments           = [[NSMutableArray alloc] init];
+        
         self.userPostVotes          = [[NSMutableArray alloc] init];
         self.userCommentVotes       = [[NSMutableArray alloc] init];
 
@@ -257,7 +264,7 @@
     NSData* data = [Networker GETRecentPostsWithCollegeId:collegeId];
     [self parseData:data asClass:[Post class] intoList:self.recentPostsInCollege];
 }
-- (void)fetchAllPostsWithTagMessage:(NSString*)tagMessage
+- (void)fetchPostsWithTagMessage:(NSString*)tagMessage
 {
     [self setTagPostsPage:0];
     [self setAllPostsWithTag:[[NSMutableArray alloc] init]];
