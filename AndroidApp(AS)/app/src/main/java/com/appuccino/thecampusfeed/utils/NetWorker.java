@@ -206,10 +206,6 @@ public class NetWorker {
          int postID = 0;
          CommentsActivity activity;
 
-         public GetCommentsTask()
-         {
-         }
-
          public GetCommentsTask(CommentsActivity activity, int postID)
          {
              this.postID = postID;

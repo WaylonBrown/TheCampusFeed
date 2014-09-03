@@ -1,5 +1,6 @@
 package com.appuccino.thecampusfeed.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.LightingColorFilter;
@@ -178,10 +179,13 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		
 	}
 
+    /**
+     * Un-comment the commented code in here for the scroll away bottom view
+     */
 	//for slide away footer
     public void setupFooterListView() {
         Log.i("cfeed","list scrollable1: " + willListScroll());
-//		if(willListScroll()){
+		if(willListScroll()){
 //			list.getViewTreeObserver().addOnGlobalLayoutListener(
 //				new ViewTreeObserver.OnGlobalLayoutListener() {
 //					@Override
@@ -191,27 +195,27 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 //					}
 //			});
 //
-//			list.setOnScrollListener(new OnScrollListener() {
-//				@SuppressLint("NewApi")
-//				@Override
-//				public void onScroll(AbsListView view, int firstVisibleItem,
-//						int visibleItemCount, int totalItemCount) {
-//
-//					handleScrollAwayBottomViewOnScroll();
-//					if (list.getLastVisiblePosition() >= list.getAdapter().getCount() -3 &&
-//							!endOfListReached && !isLoadingMorePosts)
-//					{
-//						loadMorePosts();
-//					}else if (endOfListReached){
-//						replaceFooterBecauseEndOfList();
-//					}
-//				}
-//
-//				@Override
-//				public void onScrollStateChanged(AbsListView view, int scrollState) {
-//				}
-//			});
-//		}else{				//don't let bottom part move if the list isn't scrollable
+			list.setOnScrollListener(new AbsListView.OnScrollListener() {
+				@SuppressLint("NewApi")
+				@Override
+				public void onScroll(AbsListView view, int firstVisibleItem,
+						int visibleItemCount, int totalItemCount) {
+
+					//handleScrollAwayBottomViewOnScroll();
+					if (list.getLastVisiblePosition() >= list.getAdapter().getCount() -3 &&
+							!endOfListReached && !isLoadingMorePosts)
+					{
+						loadMorePosts();
+					}else if (endOfListReached){
+						replaceFooterBecauseEndOfList();
+					}
+				}
+
+				@Override
+				public void onScrollStateChanged(AbsListView view, int scrollState) {
+				}
+			});
+		}else{				//don't let bottom part move if the list isn't scrollable
 //			list.getViewTreeObserver().addOnGlobalLayoutListener(
 //				new ViewTreeObserver.OnGlobalLayoutListener() {
 //					@Override
@@ -220,18 +224,18 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 //					}
 //			});
 //
-//			list.setOnScrollListener(new OnScrollListener() {
-//				@SuppressLint("NewApi")
-//				@Override
-//				public void onScroll(AbsListView view, int firstVisibleItem,
-//						int visibleItemCount, int totalItemCount) {
-//					//do nothing
-//				}
-//				@Override
-//				public void onScrollStateChanged(AbsListView view, int scrollState) {
-//				}
-//			});
-//		}
+			list.setOnScrollListener(new AbsListView.OnScrollListener() {
+				@SuppressLint("NewApi")
+				@Override
+				public void onScroll(AbsListView view, int firstVisibleItem,
+						int visibleItemCount, int totalItemCount) {
+					//do nothing
+				}
+				@Override
+				public void onScrollStateChanged(AbsListView view, int scrollState) {
+				}
+			});
+		}
 		
 	}
 

@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
@@ -152,14 +151,14 @@ public class TagFragment extends Fragment
 	public static void setupFooterListView() {
         Log.i("cfeed","list scrollable2: " + willListScroll());
 		if(willListScroll()){
-			list.getViewTreeObserver().addOnGlobalLayoutListener(
-				new ViewTreeObserver.OnGlobalLayoutListener() {
-					@Override
-					public void onGlobalLayout() {
-						mQuickReturnHeight = footer.getHeight();
-						list.computeScrollY();
-					}
-			});
+//			list.getViewTreeObserver().addOnGlobalLayoutListener(
+//				new ViewTreeObserver.OnGlobalLayoutListener() {
+//					@Override
+//					public void onGlobalLayout() {
+//						mQuickReturnHeight = footer.getHeight();
+//						list.computeScrollY();
+//					}
+//			});
 			
 			list.setOnScrollListener(new OnScrollListener() {
 				@SuppressLint("NewApi")
@@ -233,13 +232,13 @@ public class TagFragment extends Fragment
 				}
 			});
 		}else{			//don't let bottom part move if the list isn't scrollable
-			list.getViewTreeObserver().addOnGlobalLayoutListener(
-				new ViewTreeObserver.OnGlobalLayoutListener() {
-					@Override
-					public void onGlobalLayout() {
-						//do nothing
-					}
-			});
+//			list.getViewTreeObserver().addOnGlobalLayoutListener(
+//				new ViewTreeObserver.OnGlobalLayoutListener() {
+//					@Override
+//					public void onGlobalLayout() {
+//						//do nothing
+//					}
+//			});
 			
 			list.setOnScrollListener(new OnScrollListener() {
 				@SuppressLint("NewApi")

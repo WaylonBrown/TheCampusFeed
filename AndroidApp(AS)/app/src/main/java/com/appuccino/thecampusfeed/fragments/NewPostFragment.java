@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -175,14 +174,14 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
     //for slide away footer
     public void setupFooterListView() {
 		if(willListScroll()){
-			list.getViewTreeObserver().addOnGlobalLayoutListener(
-				new ViewTreeObserver.OnGlobalLayoutListener() {
-					@Override
-					public void onGlobalLayout() {
-						mQuickReturnHeight = scrollAwayBottomView.getHeight();
-						list.computeScrollY();
-					}
-			});
+//			list.getViewTreeObserver().addOnGlobalLayoutListener(
+//				new ViewTreeObserver.OnGlobalLayoutListener() {
+//					@Override
+//					public void onGlobalLayout() {
+//						mQuickReturnHeight = scrollAwayBottomView.getHeight();
+//						list.computeScrollY();
+//					}
+//			});
 			
 			list.setOnScrollListener(new OnScrollListener() {
 				@SuppressLint("NewApi")
@@ -205,13 +204,13 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 				}
 			});
 		}else{				//don't let bottom part move if the list isn't scrollable
-			list.getViewTreeObserver().addOnGlobalLayoutListener(
-				new ViewTreeObserver.OnGlobalLayoutListener() {
-					@Override
-					public void onGlobalLayout() {
-						//do nothing
-					}
-			});
+//			list.getViewTreeObserver().addOnGlobalLayoutListener(
+//				new ViewTreeObserver.OnGlobalLayoutListener() {
+//					@Override
+//					public void onGlobalLayout() {
+//						//do nothing
+//					}
+//			});
 			
 			list.setOnScrollListener(new OnScrollListener() {
 				@SuppressLint("NewApi")
