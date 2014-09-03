@@ -78,8 +78,12 @@
     }
     else
     {
+        self.dividerHeight.constant = 0;
+        self.collegeLabelHeight.constant = 0;
+//        [self.commentCountLabel removeFromSuperview];
 //        [self.dividerView removeFromSuperview];
 //        [self.collegeLabel removeFromSuperview];
+        
     }
     
     // Parse message for Tags

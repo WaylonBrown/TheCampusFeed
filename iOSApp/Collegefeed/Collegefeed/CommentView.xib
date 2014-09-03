@@ -47,7 +47,7 @@
                         <outlet property="delegate" destination="-1" id="71e-9R-dh8"/>
                     </connections>
                 </tableView>
-                <view opaque="NO" alpha="0.87" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="onw-bZ-Ayo" userLabel="Feed Label">
+                <view opaque="NO" alpha="0.87" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="onw-bZ-Ayo" userLabel="Feed Toolbar">
                     <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>

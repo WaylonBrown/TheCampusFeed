@@ -118,15 +118,16 @@
     }
     
     [cell setDelegate: self];
-
-    float height = [self tableView:tableView heightForRowAtIndexPath:indexPath];
+    [cell.commentCountLabel setHidden:YES];
     
     if (tableView == self.postTableView)
     {   // PostView table; get the original post to display in this table
 //        [cell.dividerView removeFromSuperview];
 //        [cell.collegeLabel removeFromSuperview];
 //        [cell.commentCountLabel removeFromSuperview];
-        [cell assign:self.originalPost WithMessageHeight:height];
+        
+        float messageHeight = [Shared getLargeCellMessageHeight:self.originalPost.message WithFont:CF_FONT_LIGHT(16)];
+        [cell assign:self.originalPost WithMessageHeight:messageHeight];
 
         return cell;
     }
@@ -134,7 +135,8 @@
     {   // CommentView table; get the comment to be displayed in this cell
         Comment *commentAtIndex = (Comment*)[self.dataController.commentList objectAtIndex:indexPath.row];
         [commentAtIndex setCollegeID:self.originalPost.collegeID];
-        [cell assign:commentAtIndex WithMessageHeight:height];
+        float messageHeight = [Shared getLargeCellMessageHeight:commentAtIndex.message WithFont:CF_FONT_LIGHT(16)];
+        [cell assign:commentAtIndex WithMessageHeight:messageHeight];
         return cell;
     }
     
@@ -157,7 +159,7 @@
     else if (tableView == self.commentTableView)
     {
         text = [(Comment *)[self.list objectAtIndex:[indexPath row]] getMessage];
-        offset = -20;
+        offset = -24;
     }
 
     return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)] + offset;
