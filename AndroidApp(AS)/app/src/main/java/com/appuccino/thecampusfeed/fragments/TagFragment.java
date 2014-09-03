@@ -89,7 +89,7 @@ public class TagFragment extends Fragment
 			//for card UI
             View header = new View(getActivity());
             View footer = new View(getActivity());
-            footer.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 62));
+            footer.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 310));
             header.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
 			list.addFooterView(footer, null, false);
 			list.addHeaderView(header, null, false);

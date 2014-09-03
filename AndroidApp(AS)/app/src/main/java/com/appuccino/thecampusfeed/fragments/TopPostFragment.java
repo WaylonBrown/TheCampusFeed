@@ -244,14 +244,18 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	}
 
 	public static void replaceFooterBecauseEndOfList() {
+        Log.i("cfeed","end");
         isLoadingMorePosts = false;
-		if(list.getFooterViewsCount() > 0 && lazyFooterView != null){
-			list.removeFooterView(lazyFooterView);
-		}
+        if(list.getFooterViewsCount() > 0 && lazyFooterView != null){
+            list.removeFooterView(lazyFooterView);
+        }
+        if(list.getFooterViewsCount() > 0 && footerSpace != null){
+            list.removeFooterView(footerSpace);
+        }
 		if(list.getFooterViewsCount() == 0){		//so there's no duplicate
 			//for card UI
 			footerSpace = new View(mainActivity);
-			footerSpace.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 62));
+			footerSpace.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 160));
 			list.addFooterView(footerSpace, null, false);
 		}
 	}
