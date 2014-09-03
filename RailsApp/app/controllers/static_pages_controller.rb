@@ -1,5 +1,7 @@
 class StaticPagesController < ApplicationController
 
+  after_action :allow_iframe, only: :landing
+
   def index
   end
 
@@ -19,5 +21,10 @@ class StaticPagesController < ApplicationController
   def webapp_tag
   end
 
+private
+
+  def allow_iframe
+    response.headers.except! 'X-Frame-Options'
+  end
 
 end

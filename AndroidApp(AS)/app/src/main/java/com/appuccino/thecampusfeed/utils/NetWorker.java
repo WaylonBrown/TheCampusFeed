@@ -168,6 +168,7 @@ public class NetWorker {
                      //TopPostFragment.listAdapter.addAll(result);
                  }else{
                      TopPostFragment.endOfListReached = true;
+                     TopPostFragment.replaceFooterBecauseEndOfList();
                  }
 
                  //use these 2 test lines if you want to show the "pull down to load posts" test
@@ -179,14 +180,16 @@ public class NetWorker {
                  TopPostFragment.makeLoadingIndicator(false);
                  TopPostFragment.currentPageNumber++;
                  TopPostFragment.removeFooterSpinner();
-                 Log.i("cfeed","Finish");
              }
              else if (frag2 != null)	//new posts
              {
                  if(result != null && result.size() != 0){
-                     NewPostFragment.listAdapter.addAll(result);
+                     for(Post p : result){
+                         NewPostFragment.listAdapter.addIfNotAdded(p);
+                     }
                  }else{
                      NewPostFragment.endOfListReached = true;
+                     NewPostFragment.replaceFooterBecauseEndOfList();
                  }
 
                  frag2.updateList();
@@ -202,10 +205,6 @@ public class NetWorker {
      {
          int postID = 0;
          CommentsActivity activity;
-
-         public GetCommentsTask()
-         {
-         }
 
          public GetCommentsTask(CommentsActivity activity, int postID)
          {

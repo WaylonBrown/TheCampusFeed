@@ -41,8 +41,8 @@ public class MyCommentsFragment extends Fragment
     static ProgressBar loadingSpinner;
     View rootView;
 
-    public MyCommentsFragment()
-    {
+    public MyCommentsFragment(){
+        mainActivity = MainActivity.activity;
     }
 
     public MyCommentsFragment(MainActivity m)

@@ -38,8 +38,8 @@ public class MyPostsFragment extends Fragment
     static ProgressBar loadingSpinner;
     View rootView;
 
-    public MyPostsFragment()
-    {
+    public MyPostsFragment(){
+        mainActivity = MainActivity.activity;
     }
 
     public MyPostsFragment(MainActivity m)

@@ -27,9 +27,9 @@ public class MostActiveCollegesFragment extends Fragment
     private static ProgressBar progressSpinner;
     static FragmentCollegeListAdapter adapter;
 
-	public MostActiveCollegesFragment()
-	{
-	}
+    public MostActiveCollegesFragment(){
+        mainActivity = MainActivity.activity;
+    }
 	
 	public MostActiveCollegesFragment(MainActivity m) 
 	{

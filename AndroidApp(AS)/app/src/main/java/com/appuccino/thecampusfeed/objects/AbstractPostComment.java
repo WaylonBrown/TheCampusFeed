@@ -1,10 +1,10 @@
 package com.appuccino.thecampusfeed.objects;
 
+import android.util.JsonWriter;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-
-import android.util.JsonWriter;
 
 public class AbstractPostComment {
 	public int score = 0;
@@ -13,6 +13,7 @@ public class AbstractPostComment {
 	int id = 0;
 	int vote = 0;		//-1 = downvote, 0 = nothing, 1 = upvote
 	int collegeID = 0;
+    public int deltaScore = 0;
 	
 	public void setVote(int vote)
 	{
@@ -23,6 +24,10 @@ public class AbstractPostComment {
 	{
 		return score;
 	}
+
+    public int getDeltaScore(){
+        return deltaScore;
+    }
 	
 	public String getMessage()
 	{

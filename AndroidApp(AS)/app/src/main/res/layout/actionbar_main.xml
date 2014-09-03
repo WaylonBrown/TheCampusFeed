@@ -13,6 +13,7 @@
 	    android:layout_height="59dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
+        android:paddingRight="5dp"
 	    android:src="@drawable/thecampusfeedlogosmallwithmenubutton"
         android:clickable="true"
         android:background="@drawable/postbuttonclick"

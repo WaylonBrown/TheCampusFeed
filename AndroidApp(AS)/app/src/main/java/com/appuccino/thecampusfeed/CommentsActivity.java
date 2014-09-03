@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
-import android.graphics.LightingColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -122,7 +121,10 @@ public class CommentsActivity extends Activity{
 		commentsText.setTypeface(FontManager.light);
 		if(post != null)
 		{
-			scoreText.setText(String.valueOf(post.getScore()));
+			scoreText.setText(String.valueOf(post.getDeltaScore()));
+            if(scoreText.getText().toString().length() > 3){
+                scoreText.setTextSize(14f);
+            }
 			try {
 				setTime(post.getTime(), timeText);
 			} catch (ParseException e) {
@@ -153,7 +155,8 @@ public class CommentsActivity extends Activity{
 					{
 						post.setVote(1);
 						post.score += 2;
-						scoreText.setText(String.valueOf(post.score));
+                        post.deltaScore += 2;
+						scoreText.setText(String.valueOf(post.getDeltaScore()));
                         updateArrows(arrowUp, arrowDown, 1);
                         new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
                         new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), true));
@@ -162,7 +165,8 @@ public class CommentsActivity extends Activity{
 					{
 						post.setVote(1);
 						post.score++;
-						scoreText.setText(String.valueOf(post.score));
+                        post.deltaScore++;
+						scoreText.setText(String.valueOf(post.getDeltaScore()));
                         updateArrows(arrowUp, arrowDown, 1);
                         new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), true));
 					}
@@ -170,7 +174,8 @@ public class CommentsActivity extends Activity{
 					{
 						post.setVote(0);
 						post.score--;
-						scoreText.setText(String.valueOf(post.score));
+                        post.deltaScore--;
+						scoreText.setText(String.valueOf(post.getDeltaScore()));
                         updateArrows(arrowUp, arrowDown, 0);
                         new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
 					}
@@ -195,7 +200,8 @@ public class CommentsActivity extends Activity{
 						{
 							post.setVote(0);
 							post.score++;
-							scoreText.setText(String.valueOf(post.score));
+                            post.deltaScore++;
+							scoreText.setText(String.valueOf(post.getDeltaScore()));
                             updateArrows(arrowUp, arrowDown, 0);
                             new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
 						}
@@ -203,7 +209,8 @@ public class CommentsActivity extends Activity{
 						{
 							post.setVote(-1);
 							post.score--;
-							scoreText.setText(String.valueOf(post.score));
+                            post.deltaScore--;
+							scoreText.setText(String.valueOf(post.getDeltaScore()));
                             updateArrows(arrowUp, arrowDown, -1);
                             new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), false));
 						}
@@ -211,7 +218,8 @@ public class CommentsActivity extends Activity{
 						{
 							post.setVote(-1);
 							post.score -= 2;
-                            scoreText.setText(String.valueOf(post.score));
+                            post.deltaScore -= 2;
+                            scoreText.setText(String.valueOf(post.getDeltaScore()));
                             updateArrows(arrowUp, arrowDown, -1);
                             new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
                             new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), false));
@@ -320,7 +328,7 @@ public class CommentsActivity extends Activity{
         twitterButton = (ImageView)findViewById(R.id.twitterButton);
         actionBarLoadingIcon = (ProgressBar)findViewById(R.id.commentActionbarLoadingIcon);
         //set progressbar as white
-        actionBarLoadingIcon.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(getResources().getColor(R.color.white), getResources().getColor(R.color.white)));
+        //actionBarLoadingIcon.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(getResources().getColor(R.color.white), getResources().getColor(R.color.white)));
         divider = (View)findViewById(R.id.actionBarDivider);
         list = (ListView)findViewById(R.id.commentsList);
         loadingSpinner = (ProgressBar)findViewById(R.id.commentsLoading);

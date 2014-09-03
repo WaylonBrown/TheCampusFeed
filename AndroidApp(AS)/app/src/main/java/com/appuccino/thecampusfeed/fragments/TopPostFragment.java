@@ -3,7 +3,6 @@ package com.appuccino.thecampusfeed.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.LightingColorFilter;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,10 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
@@ -73,7 +70,11 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	private static int mMinRawY = 0;
 	private static TranslateAnimation anim;
 	static TextView collegeNameBottom;
-	
+
+    public TopPostFragment(){
+        mainActivity = MainActivity.activity;
+    }
+
 	public TopPostFragment(MainActivity m) 
 	{
 		mainActivity = m;
@@ -87,7 +88,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		list = (QuickReturnListView)rootView.findViewById(R.id.fragmentListView);
 		loadingSpinner = (ProgressBar)rootView.findViewById(R.id.loadingSpinner);
         //set progressbar as blue
-        loadingSpinner.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(getResources().getColor(R.color.alphablue), getResources().getColor(R.color.alphablue)));
+        //loadingSpinner.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(getResources().getColor(R.color.alphablue), getResources().getColor(R.color.alphablue)));
 		scrollAwayBottomView = (LinearLayout)rootView.findViewById(R.id.footer);
         pullDownText = (TextView)rootView.findViewById(R.id.pullDownText);
 
@@ -181,27 +182,30 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		
 	}
 
+    /**
+     * Un-comment the commented code in here for the scroll away bottom view
+     */
 	//for slide away footer
     public void setupFooterListView() {
         Log.i("cfeed","list scrollable1: " + willListScroll());
 		if(willListScroll()){
-			list.getViewTreeObserver().addOnGlobalLayoutListener(
-				new ViewTreeObserver.OnGlobalLayoutListener() {
-					@Override
-					public void onGlobalLayout() {
-						mQuickReturnHeight = scrollAwayBottomView.getHeight();
-						list.computeScrollY();
-					}
-			});
-			
-			list.setOnScrollListener(new OnScrollListener() {
+//			list.getViewTreeObserver().addOnGlobalLayoutListener(
+//				new ViewTreeObserver.OnGlobalLayoutListener() {
+//					@Override
+//					public void onGlobalLayout() {
+//						mQuickReturnHeight = scrollAwayBottomView.getHeight();
+//						list.computeScrollY();
+//					}
+//			});
+//
+			list.setOnScrollListener(new AbsListView.OnScrollListener() {
 				@SuppressLint("NewApi")
 				@Override
 				public void onScroll(AbsListView view, int firstVisibleItem,
 						int visibleItemCount, int totalItemCount) {
 
-					handleScrollAwayBottomViewOnScroll();
-					if (list.getLastVisiblePosition() == list.getAdapter().getCount() -3 &&
+					//handleScrollAwayBottomViewOnScroll();
+					if (list.getLastVisiblePosition() >= list.getAdapter().getCount() -3 &&
 							!endOfListReached && !isLoadingMorePosts)
 					{
 						loadMorePosts();
@@ -215,15 +219,15 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 				}
 			});
 		}else{				//don't let bottom part move if the list isn't scrollable
-			list.getViewTreeObserver().addOnGlobalLayoutListener(
-				new ViewTreeObserver.OnGlobalLayoutListener() {
-					@Override
-					public void onGlobalLayout() {
-						//do nothing
-					}
-			});
-			
-			list.setOnScrollListener(new OnScrollListener() {
+//			list.getViewTreeObserver().addOnGlobalLayoutListener(
+//				new ViewTreeObserver.OnGlobalLayoutListener() {
+//					@Override
+//					public void onGlobalLayout() {
+//						//do nothing
+//					}
+//			});
+//
+			list.setOnScrollListener(new AbsListView.OnScrollListener() {
 				@SuppressLint("NewApi")
 				@Override
 				public void onScroll(AbsListView view, int firstVisibleItem,
@@ -238,15 +242,19 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		
 	}
 
-	protected static void replaceFooterBecauseEndOfList() {
+	public static void replaceFooterBecauseEndOfList() {
+        Log.i("cfeed","end");
         isLoadingMorePosts = false;
-		if(list.getFooterViewsCount() > 0 && lazyFooterView != null){
-			list.removeFooterView(lazyFooterView);
-		}
+        if(list.getFooterViewsCount() > 0 && lazyFooterView != null){
+            list.removeFooterView(lazyFooterView);
+        }
+        if(list.getFooterViewsCount() > 0 && footerSpace != null){
+            list.removeFooterView(footerSpace);
+        }
 		if(list.getFooterViewsCount() == 0){		//so there's no duplicate
 			//for card UI
 			footerSpace = new View(mainActivity);
-			footerSpace.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
+			footerSpace.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 160));
 			list.addFooterView(footerSpace, null, false);
 		}
 	}

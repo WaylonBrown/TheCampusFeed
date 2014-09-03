@@ -9,32 +9,16 @@
 <body ng-app="cfeed">
 <div class="container-fluid" ng-controller="LandingCtrl">
   <div class="row">
-    <div class="section col-md-9" id="title" randombgpos
-         ng-class="{'col-md-9': options.post_selected.active == null, 'col-md-6': options.post_selected.active != null}">
+    <div class="section col-md-12" id="title" randombgpos
+         ng-class="{'col-md-12': options.post_selected.active == null, 'col-md-6': options.post_selected.active != null}">
       <div class="center">
-        <%= fa_icon 'mortar-board' %>
-        <span>College</span><span class="light">feed</span>
+        <%= image_tag "icon.png", height: 150 %> <br/>
+        <%= image_tag "logo.png", height: 150 %>
+        <progressbar class="progress-striped active" value="95" type="info" width="300">95% Complete</progressbar>
+        <span>Launching soon on iOS, Android, and the web.</span><br/>
+        <span>Follow us on twitter for updates: @The_Campus_Feed</span><br/>
       </div>
     </div>
-
-    <div class="section col-md-3" id="cards">
-      <div class="card card-mini slide pointer" ng-repeat="post in recentPosts" ng-click="selectPost(post)" ng-class="{active: post.active}">
-        <h3>{{post.text}}</h3>
-        <hr/>
-        <span class="pull-left"><i collegenamefromid cid="{{post.college_id}}"></i></span>
-        <span class="pull-right">{{post.comment_count}} Comments</span>
-
-        <div class="clearfix"></div>
-      </div>
-    </div>
-
-    <div class="section col-md-3" id="comments"
-         ng-class="{'col-md-0': options.post_selected.active == null, 'col-md-3': options.post_selected.active != null}">
-      <div ng-repeat="comment in options.post_selected.comments" class="card card-comment">
-        <h4>{{comment.text}}</h4>
-      </div>
-    </div>
-  </div>
 </div>
 
 </body>

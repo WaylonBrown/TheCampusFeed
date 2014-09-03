@@ -14,7 +14,7 @@ class Post < ActiveRecord::Base
   validates :text, length: {minimum: 10, maximum: 140}
 
   after_create :make_tags
-
+=begin
   def comment_count
     comments.count
   end
@@ -24,7 +24,7 @@ class Post < ActiveRecord::Base
     h[:comment_count] = comment_count
     h
   end
-
+=end
   def make_tags
     @words = text.split(/[\r\n\t ]+/)
     @words.each do |w|

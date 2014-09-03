@@ -8,7 +8,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
-import android.graphics.LightingColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Criteria;
 import android.location.Location;
@@ -59,6 +58,8 @@ import java.util.TimerTask;
 
 public class MainActivity extends FragmentActivity implements LocationListener
 {
+    public static MainActivity activity;
+
     private MenuDrawer menuDrawer;
 	ActionBar actionBar;
 	ImageView newPostButton;
@@ -163,7 +164,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
 
 		permissionsProgress = (ProgressBar)findViewById(R.id.permissionsLoadingIcon);
         //set progressbar as white
-        permissionsProgress.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(getResources().getColor(R.color.white), getResources().getColor(R.color.white)));
+        //permissionsProgress.getIndeterminateDrawable().setColorFilter(new LightingColorFilter(getResources().getColor(R.color.white), getResources().getColor(R.color.white)));
 		newPostButton = (ImageView)findViewById(R.id.newPostButton);
 		newPostButton.setOnClickListener(new OnClickListener(){
 			@Override
@@ -255,42 +256,51 @@ public class MainActivity extends FragmentActivity implements LocationListener
             switch (selectedMenuItem){
                 case 0:
                     menuTopPosts.setBackgroundColor(getResources().getColor(R.color.blue));
-                    topPostFrag = new TopPostFragment(this);
-                    ft.replace(R.id.fragmentContainer, topPostFrag).commit();
-                    makeFragsNull(0);
+                    if(topPostFrag == null){    //so that nothing happens except close the menu if nothing is showing
+                        topPostFrag = new TopPostFragment(this);
+                        ft.replace(R.id.fragmentContainer, topPostFrag).commit();
+                        makeFragsNull(0);
+                    }
                     break;
                 case 1:
                     menuNewPosts.setBackgroundColor(getResources().getColor(R.color.blue));
-                    newPostFrag = new NewPostFragment(this);
-                    ft.replace(R.id.fragmentContainer, newPostFrag).commit();
-                    makeFragsNull(1);
+                    if(newPostFrag == null){
+                        newPostFrag = new NewPostFragment(this);
+                        ft.replace(R.id.fragmentContainer, newPostFrag).commit();
+                        makeFragsNull(1);
+                    }
                     break;
                 case 2:
                     menuTags.setBackgroundColor(getResources().getColor(R.color.blue));
-                    tagFrag = new TagFragment(this);
-                    ft.replace(R.id.fragmentContainer, tagFrag).commit();
-                    makeFragsNull(2);
+                    if(tagFrag == null){
+                        tagFrag = new TagFragment(this);
+                        ft.replace(R.id.fragmentContainer, tagFrag).commit();
+                        makeFragsNull(2);
+                    }
                     break;
                 case 3:
                     menuColleges.setBackgroundColor(getResources().getColor(R.color.blue));
-                    collegeFrag = new MostActiveCollegesFragment(this);
-                    ft.replace(R.id.fragmentContainer, collegeFrag).commit();
-                    makeFragsNull(3);
+                    if(collegeFrag == null){
+                        collegeFrag = new MostActiveCollegesFragment(this);
+                        ft.replace(R.id.fragmentContainer, collegeFrag).commit();
+                        makeFragsNull(3);
+                    }
                     break;
                 case 4:
                     menuMyPosts.setBackgroundColor(getResources().getColor(R.color.blue));
-                    myPostsFrag = new MyPostsFragment(this);
-                    ft.replace(R.id.fragmentContainer, myPostsFrag).commit();
-                    makeFragsNull(4);
+                    if(myPostsFrag == null){
+                        myPostsFrag = new MyPostsFragment(this);
+                        ft.replace(R.id.fragmentContainer, myPostsFrag).commit();
+                        makeFragsNull(4);
+                    }
                     break;
                 case 5:
                     menuMyComments.setBackgroundColor(getResources().getColor(R.color.blue));
-                    myCommentsFrag = new MyCommentsFragment(this);
-                    ft.replace(R.id.fragmentContainer, myCommentsFrag).commit();
-                    makeFragsNull(5);
-                    break;
-                default:
-
+                    if(myCommentsFrag == null){
+                        myCommentsFrag = new MyCommentsFragment(this);
+                        ft.replace(R.id.fragmentContainer, myCommentsFrag).commit();
+                        makeFragsNull(5);
+                    }
                     break;
             }
         }

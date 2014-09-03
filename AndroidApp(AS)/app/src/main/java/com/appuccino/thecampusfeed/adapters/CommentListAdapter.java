@@ -72,7 +72,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         	commentHolder = (CommentHolder)row.getTag();
         
         final Comment thisComment = commentList.get(position);
-        commentHolder.scoreText.setText(String.valueOf(thisComment.getScore()));
+        commentHolder.scoreText.setText(String.valueOf(thisComment.getDeltaScore()));
         commentHolder.messageText.setText(thisComment.getMessage());
         commentHolder.commentsText.setVisibility(View.GONE);
         commentHolder.bottomPadding.setVisibility(View.VISIBLE);
@@ -98,6 +98,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 				{
 					thisComment.setVote(1);
 					thisComment.score += 2;
+                    thisComment.deltaScore += 2;
                     updateRowViews(finalRow, finalPostHolder, 1, thisComment);
                     new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
                     new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), true));
@@ -106,6 +107,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 				{
 					thisComment.setVote(1);
 					thisComment.score++;
+                    thisComment.deltaScore++;
                     updateRowViews(finalRow, finalPostHolder, 1, thisComment);
                     new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), true));
 				}
@@ -113,6 +115,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 				{
 					thisComment.setVote(0);
 					thisComment.score--;
+                    thisComment.deltaScore--;
                     updateRowViews(finalRow, finalPostHolder, 0, thisComment);
                     new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
 				}
@@ -133,6 +136,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 					{
 						thisComment.setVote(0);
 						thisComment.score++;
+                        thisComment.deltaScore++;
                         updateRowViews(finalRow, finalPostHolder, 0, thisComment);
                         new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
 					}
@@ -140,6 +144,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 					{
 						thisComment.setVote(-1);
 						thisComment.score--;
+                        thisComment.deltaScore--;
                         updateRowViews(finalRow, finalPostHolder, -1, thisComment);
                         new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), false));
 					}
@@ -147,6 +152,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 					{
 						thisComment.setVote(-1);
 						thisComment.score -= 2;
+                        thisComment.deltaScore -= 2;
                         updateRowViews(finalRow, finalPostHolder, -1, thisComment);
                         new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
                         new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), false));
@@ -176,7 +182,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
     }
 
     private void updateRowViews(View row, CommentHolder commentHolder, int vote, Comment comment) {
-        int score = comment.score;
+        int score = comment.getDeltaScore();
 
         Log.i("cfeed","Row is setting to " + vote);
         if(vote == -1)

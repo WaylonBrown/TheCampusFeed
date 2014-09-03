@@ -3,7 +3,7 @@ production:
   encoding: utf8
   database: cf_production
   pool: 5
-  host: bb01e06aa298a9c72d3027604ca50021a0c2d79e.rackspaceclouddb.com
+  host: 10.183.248.28
   username: james
   password: F4flkgj43LWB#$LW#E$GFsrdknmfgn#$
 

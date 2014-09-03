@@ -9,7 +9,7 @@
         android:id="@+id/lazyFooterSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="4dp"
+        android:paddingBottom="58dp"
         android:visibility="invisible" />
 
 </LinearLayout>

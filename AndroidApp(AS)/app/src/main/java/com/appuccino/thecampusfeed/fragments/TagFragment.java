@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
@@ -66,7 +65,8 @@ public class TagFragment extends Fragment
 
 	public TagFragment()
 	{
-	}
+        mainActivity = MainActivity.activity;
+    }
 	
 	public TagFragment(MainActivity m) 
 	{
@@ -87,10 +87,12 @@ public class TagFragment extends Fragment
 		if(list.getHeaderViewsCount() == 0)
 		{
 			//for card UI
-			View headerFooter = new View(getActivity());
-			headerFooter.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
-			list.addFooterView(headerFooter, null, false);
-			list.addHeaderView(headerFooter, null, false);
+            View header = new View(getActivity());
+            View footer = new View(getActivity());
+            footer.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 310));
+            header.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
+			list.addFooterView(footer, null, false);
+			list.addHeaderView(header, null, false);
 		}
 		
 		if(mainActivity != null)
@@ -128,7 +130,6 @@ public class TagFragment extends Fragment
     public void onResume(){
         super.onResume();
         setupFooterListView();
-        makeLoadingIndicator(false);
     }
 
 	private void setupBottomViewUI() {
@@ -152,14 +153,14 @@ public class TagFragment extends Fragment
 	public static void setupFooterListView() {
         Log.i("cfeed","list scrollable2: " + willListScroll());
 		if(willListScroll()){
-			list.getViewTreeObserver().addOnGlobalLayoutListener(
-				new ViewTreeObserver.OnGlobalLayoutListener() {
-					@Override
-					public void onGlobalLayout() {
-						mQuickReturnHeight = footer.getHeight();
-						list.computeScrollY();
-					}
-			});
+//			list.getViewTreeObserver().addOnGlobalLayoutListener(
+//				new ViewTreeObserver.OnGlobalLayoutListener() {
+//					@Override
+//					public void onGlobalLayout() {
+//						mQuickReturnHeight = footer.getHeight();
+//						list.computeScrollY();
+//					}
+//			});
 			
 			list.setOnScrollListener(new OnScrollListener() {
 				@SuppressLint("NewApi")
@@ -233,13 +234,13 @@ public class TagFragment extends Fragment
 				}
 			});
 		}else{			//don't let bottom part move if the list isn't scrollable
-			list.getViewTreeObserver().addOnGlobalLayoutListener(
-				new ViewTreeObserver.OnGlobalLayoutListener() {
-					@Override
-					public void onGlobalLayout() {
-						//do nothing
-					}
-			});
+//			list.getViewTreeObserver().addOnGlobalLayoutListener(
+//				new ViewTreeObserver.OnGlobalLayoutListener() {
+//					@Override
+//					public void onGlobalLayout() {
+//						//do nothing
+//					}
+//			});
 			
 			list.setOnScrollListener(new OnScrollListener() {
 				@SuppressLint("NewApi")
@@ -381,8 +382,10 @@ public class TagFragment extends Fragment
 
 	public static void makeLoadingIndicator(boolean b) {
         if(b){
+            list.setVisibility(View.INVISIBLE);
             progressSpinner.setVisibility(View.VISIBLE);
         }else{
+            list.setVisibility(View.VISIBLE);
             progressSpinner.setVisibility(View.GONE);
         }
 	}

@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -74,7 +73,11 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 	private static int mMinRawY = 0;
 	private static TranslateAnimation anim;
 	static TextView collegeNameBottom;
-	
+
+    public NewPostFragment(){
+        mainActivity = MainActivity.activity;
+    }
+
 	public NewPostFragment(MainActivity m) 
 	{
 		mainActivity = m;
@@ -175,14 +178,14 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
     //for slide away footer
     public void setupFooterListView() {
 		if(willListScroll()){
-			list.getViewTreeObserver().addOnGlobalLayoutListener(
-				new ViewTreeObserver.OnGlobalLayoutListener() {
-					@Override
-					public void onGlobalLayout() {
-						mQuickReturnHeight = scrollAwayBottomView.getHeight();
-						list.computeScrollY();
-					}
-			});
+//			list.getViewTreeObserver().addOnGlobalLayoutListener(
+//				new ViewTreeObserver.OnGlobalLayoutListener() {
+//					@Override
+//					public void onGlobalLayout() {
+//						mQuickReturnHeight = scrollAwayBottomView.getHeight();
+//						list.computeScrollY();
+//					}
+//			});
 			
 			list.setOnScrollListener(new OnScrollListener() {
 				@SuppressLint("NewApi")
@@ -191,7 +194,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 						int visibleItemCount, int totalItemCount) {
 
 					handleScrollAwayBottomViewOnScroll();
-					if (list.getLastVisiblePosition() == list.getAdapter().getCount() -3 &&
+					if (list.getLastVisiblePosition() >= list.getAdapter().getCount() -3 &&
 							!endOfListReached && !isLoadingMorePosts)
 					{
 						loadMorePosts();
@@ -205,13 +208,13 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 				}
 			});
 		}else{				//don't let bottom part move if the list isn't scrollable
-			list.getViewTreeObserver().addOnGlobalLayoutListener(
-				new ViewTreeObserver.OnGlobalLayoutListener() {
-					@Override
-					public void onGlobalLayout() {
-						//do nothing
-					}
-			});
+//			list.getViewTreeObserver().addOnGlobalLayoutListener(
+//				new ViewTreeObserver.OnGlobalLayoutListener() {
+//					@Override
+//					public void onGlobalLayout() {
+//						//do nothing
+//					}
+//			});
 			
 			list.setOnScrollListener(new OnScrollListener() {
 				@SuppressLint("NewApi")
@@ -228,18 +231,22 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		
 	}
 
-	protected static void replaceFooterBecauseEndOfList() {
+    public static void replaceFooterBecauseEndOfList() {
+        Log.i("cfeed","end");
         isLoadingMorePosts = false;
-		if(list.getFooterViewsCount() > 0 && lazyFooterView != null){
-			list.removeFooterView(lazyFooterView);
-		}
-		if(list.getFooterViewsCount() == 0){		//so there's no duplicate
-			//for card UI
-			footerSpace = new View(mainActivity);
-			footerSpace.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
-			list.addFooterView(footerSpace, null, false);
-		}
-	}
+        if(list.getFooterViewsCount() > 0 && lazyFooterView != null){
+            list.removeFooterView(lazyFooterView);
+        }
+        if(list.getFooterViewsCount() > 0 && footerSpace != null){
+            list.removeFooterView(footerSpace);
+        }
+        if(list.getFooterViewsCount() == 0){		//so there's no duplicate
+            //for card UI
+            footerSpace = new View(mainActivity);
+            footerSpace.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 160));
+            list.addFooterView(footerSpace, null, false);
+        }
+    }
 	
 	protected static void replaceFooterBecauseNewLazyList() {
 		if(list.getFooterViewsCount() > 0 && footerSpace != null){
@@ -447,6 +454,9 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		currentPageNumber = 1;
 		//reset list
 		postList.clear();
+        if(listAdapter != null){
+            listAdapter.idList.clear();
+        }
 		replaceFooterBecauseNewLazyList();
 		pullListFromServer(true);
 	}
@@ -471,6 +481,9 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		}
         if(postList != null){
             postList.clear();
+        }
+        if(listAdapter != null){
+            listAdapter.idList.clear();
         }
 		pullListFromServer(true);
         scrollToTop();
