@@ -56,11 +56,9 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     @comment = @post.comments.build(comment_params)
-    @comment.vote_delta = 1
 
     respond_to do |format|
       if @comment.save
-        @comment.votes.create({upvote: true})
         format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
         format.json { render action: 'show', status: :created, location: @comment }
       else

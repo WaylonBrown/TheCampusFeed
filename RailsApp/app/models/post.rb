@@ -13,18 +13,20 @@ class Post < ActiveRecord::Base
 
   validates :text, length: {minimum: 10, maximum: 140}
 
-  after_create :make_tags
-=begin
-  def comment_count
-    comments.count
+  after_initialize :init
+  
+  def init
+    self.vote_delta ||= 0
+    self.comment_count ||= 0
   end
 
-  def as_json(options = { })
-    h = super(options)
-    h[:comment_count] = comment_count
-    h
+
+  after_create :make_vote, :make_tags
+
+  def make_vote
+    self.votes.create({upvote: true})
   end
-=end
+
   def make_tags
     @words = text.split(/[\r\n\t ]+/)
     @words.each do |w|
@@ -39,5 +41,4 @@ class Post < ActiveRecord::Base
       end
     end
   end
-
 end

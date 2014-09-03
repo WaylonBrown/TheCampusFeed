@@ -114,14 +114,10 @@ class PostsController < ApplicationController
   def create
 
     params.require(:user_token)
-
     @post = @college.posts.build(post_params)
-    @post.vote_delta = 1
-    @post.comment_count = 0
 
     respond_to do |format|
       if @post.save
-        @post.votes.create({upvote: true})
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render action: 'show', status: :created, location: @post }
       else

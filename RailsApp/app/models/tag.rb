@@ -8,13 +8,13 @@ class Tag < ActiveRecord::Base
       cid["posts"] = {college_id: college.id}
     end
 
-    select("tags.id, tags.text, count(posts.id) AS posts_count, count(comments.id) AS comments_count").
+    select("tags.id, tags.text, tags.casedText, count(posts.id) AS posts_count, count(comments.id) AS comments_count").
     includes(:posts, :comments).
-    where(cid).
-    group("tags.id").
+    where(cid).#{id: 
+    group("tags.text").
     having("count(posts.id) > 0").
     order("posts_count DESC").
-    limit(lim) }
+    limit(lim).references(:comments) }
 
   validates_presence_of :casedText
   validates_format_of :text, :with => /\A[^!\$%\^&+\.,#]*\z/, :on => :create

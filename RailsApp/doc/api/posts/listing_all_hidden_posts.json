@@ -22,8 +22,8 @@
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "[{\"id\":7,\"text\":\"its a #test post 2.0\",\"score\":null,\"created_at\":\"2014-08-07T14:58:30.326Z\",\"updated_at\":\"2014-08-07T14:58:30.326Z\",\"college_id\":2016,\"lat\":null,\"lon\":null,\"hidden\":true,\"comment_count\":0}]",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"6663001cdfcbb918d933353c6a2b5c33\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"7582ff6d-9ba9-45b1-bf14-7ed61890537e","X-Runtime":"0.010636","Content-Length":"205"},
+      "response_body": "[{\"id\":7,\"text\":\"its a #test post 2.0\",\"score\":null,\"created_at\":\"2014-09-03T19:39:17.000Z\",\"updated_at\":\"2014-09-03T19:39:17.000Z\",\"college_id\":2016,\"lat\":null,\"lon\":null,\"hidden\":true,\"vote_delta\":0,\"comment_count\":0}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"90790f08fd59037d1b0ff8856c2f276e\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"d38650de-5053-47c2-b2e3-d5a516b5e91c","X-Runtime":"0.002279","Content-Length":"220"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

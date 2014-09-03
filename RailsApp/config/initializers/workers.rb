@@ -3,14 +3,20 @@ require 'PostScoreWorker'
 
 Thread.new do
   while true
-    PostScoreWorker.perform_async
-    sleep 30
+    Post.all.each{ |post|
+      PostScoreWorker.perform_async post.id
+      sleep 1
+    }
+    sleep 10
   end
 end
 
 Thread.new do
   while true
-    CommentScoreWorker.perform_async
-    sleep 20
+    Comment.all.each{ |comment|
+      CommentScoreWorker.perform_async comment.id
+      sleep 1
+    }
+    sleep 10
   end
 end

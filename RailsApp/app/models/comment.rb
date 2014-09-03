@@ -3,7 +3,26 @@ class Comment < ActiveRecord::Base
   pg_search_scope :search_by_text, :against => :text
 
 
-  after_save :make_tags
+  belongs_to :post
+  has_many :votes, as: :votable
+  has_many :flags, as: :flaggable
+  has_and_belongs_to_many :tags
+
+  belongs_to :user, inverse_of: :comments
+
+  validates :text, length: {minimum: 3, maximum: 140}
+  
+  after_initialize :init
+
+  def init
+    self.vote_delta ||= 0
+  end
+
+  after_create :make_vote, :make_tags, :increase_comment_count
+
+  def make_vote
+    self.votes.create({upvote: true})
+  end
 
   def make_tags
     @words = text.split(/[\r\n\t ]+/)
@@ -20,13 +39,20 @@ class Comment < ActiveRecord::Base
     end
   end
 
+  def increase_comment_count
+    if post
+      post.comment_count += 1
+      post.save
+    end
+  end
 
-  belongs_to :post
-  has_many :votes, as: :votable
-  has_many :flags, as: :flaggable
-  has_and_belongs_to_many :tags
+  after_destroy :decrease_comment_count
 
-  belongs_to :user, inverse_of: :comments
+  def decrease_comment_count
+    if post
+      post.comment_count -= 1
+      post.save
+    end
+  end
 
-  validates :text, length: {minimum: 3, maximum: 140}
 end
