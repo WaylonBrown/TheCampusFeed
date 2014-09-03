@@ -82,7 +82,7 @@ class PostsController < ApplicationController
       @posts = Post.all
     end
     
-    render json: @posts.where('hidden IS NOT TRUE').order('id asc').page(params[:page]).per(params[:per_page])
+    render json: @posts.where('hidden IS NOT TRUE').order('id desc').page(params[:page]).per(params[:per_page])
   end
 
   def trending
@@ -117,6 +117,7 @@ class PostsController < ApplicationController
 
     @post = @college.posts.build(post_params)
     @post.vote_delta = 1
+    @post.comment_count = 0
 
     respond_to do |format|
       if @post.save
