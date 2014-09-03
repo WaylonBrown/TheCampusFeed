@@ -119,6 +119,20 @@
                 android:text="Help"
                 android:clickable="true"/>
 
+            <com.appuccino.thecampusfeed.extra.CustomTextView
+                android:id="@+id/feedbackMenuText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:background="@drawable/postbuttonclick"
+                android:text="Suggest Feedback"
+                android:clickable="true"/>
+
         </LinearLayout>
 
     </ScrollView>

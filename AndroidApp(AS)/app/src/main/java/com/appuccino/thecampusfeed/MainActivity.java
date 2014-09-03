@@ -2,6 +2,7 @@ package com.appuccino.thecampusfeed;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -13,6 +14,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
@@ -104,6 +106,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
     private TextView menuMyPosts;
     private TextView menuMyComments;
     private TextView menuHelp;
+    private TextView menuFeedback;
 
     //Fragments
     static TopPostFragment topPostFrag;
@@ -192,6 +195,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
         menuMyPosts = (TextView)findViewById(R.id.myPostsMenuText);
         menuMyComments = (TextView)findViewById(R.id.myCommentsMenuText);
         menuHelp = (TextView)findViewById(R.id.helpMenuText);
+        menuFeedback = (TextView)findViewById(R.id.feedbackMenuText);
 
         menuTopPosts.setTypeface(FontManager.light);
         menuNewPosts.setTypeface(FontManager.light);
@@ -200,6 +204,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
         menuMyPosts.setTypeface(FontManager.light);
         menuMyComments.setTypeface(FontManager.light);
         menuHelp.setTypeface(FontManager.light);
+        menuFeedback.setTypeface(FontManager.light);
 
         OnClickListener menuClick = new OnClickListener() {
             @Override
@@ -220,6 +225,8 @@ public class MainActivity extends FragmentActivity implements LocationListener
                     selectedMenuItem = 5;
                 } else if(view == menuHelp){
                     selectedMenuItem = 6;
+                } else if(view == menuFeedback){
+                    selectedMenuItem = 7;
                 }
 
                 menuItemSelected();
@@ -233,6 +240,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
         menuMyPosts.setOnClickListener(menuClick);
         menuMyComments.setOnClickListener(menuClick);
         menuHelp.setOnClickListener(menuClick);
+        menuFeedback.setOnClickListener(menuClick);
 
         menuItemSelected();
     }
@@ -241,6 +249,9 @@ public class MainActivity extends FragmentActivity implements LocationListener
         //selected Help
         if(selectedMenuItem == 6) {
             new GettingStartedDialog(this, "Help");
+            selectedMenuItem = previouslySelectedMenuItem;
+        } else if(selectedMenuItem == 7) {
+            emailForFeedback();
             selectedMenuItem = previouslySelectedMenuItem;
         } else {
             menuTopPosts.setBackgroundResource(R.drawable.postbuttonclick);
@@ -306,6 +317,18 @@ public class MainActivity extends FragmentActivity implements LocationListener
         }
 
         menuDrawer.closeMenu();
+    }
+
+    private void emailForFeedback() {
+        Intent send = new Intent(Intent.ACTION_SENDTO);
+        String uriText = "mailto:" + Uri.encode("feedback@thecampusfeed.com") +
+                "?subject=" + Uri.encode("Android App Feedback") +
+                "&body=" + Uri.encode("Please enter your feedback here:\n" +
+                "\n");
+        Uri uri = Uri.parse(uriText);
+
+        send.setData(uri);
+        startActivity(Intent.createChooser(send, "Suggest Feedback"));
     }
 
     /**
