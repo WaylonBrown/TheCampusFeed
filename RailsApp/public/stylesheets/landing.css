@@ -6,7 +6,24 @@ html,body, div.container-fluid, div.row{
 body{
     font-family: 'Lato', sans-serif;
     font-weight: 400;
-    background-color: black;
+    background: white;
+    background: #1e5799; /* Old browsers */
+
+    background: -moz-linear-gradient(-45deg,  #1e5799 48%, #1e5799 75%, #1e5799 75%, #0b87e0 100%); /* FF3.6+ */
+
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(48%,#1e5799), color-stop(75%,#1e5799), color-stop(75%,#1e5799), color-stop(100%,#0b87e0)); /* Chrome,Safari4+ */
+
+    background: -webkit-linear-gradient(-45deg,  #1e5799 48%,#1e5799 75%,#1e5799 75%,#0b87e0 100%); /* Chrome10+,Safari5.1+ */
+
+    background: -o-linear-gradient(-45deg,  #1e5799 48%,#1e5799 75%,#1e5799 75%,#0b87e0 100%); /* Opera 11.10+ */
+
+    background: -ms-linear-gradient(-45deg,  #1e5799 48%,#1e5799 75%,#1e5799 75%,#0b87e0 100%); /* IE10+ */
+
+    background: linear-gradient(135deg,  #1e5799 48%,#1e5799 75%,#1e5799 75%,#0b87e0 100%); /* W3C */
+
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#0b87e0',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+
 }
 
 div.section {
@@ -21,30 +38,34 @@ span.light{
     font-weight: 100;
 }
 
-div.center{
+div#title::before{
+    z-index: -1;
+    background-image: url('/images/congruent_pentagon.png');
+    opacity: .08;
     margin: 0 auto;
-    padding: 0 20px;
-    text-align: center;
-    color: #ddd;
+    content: " ";
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
 }
 
 div#title{
-    -webkit-box-shadow: 0px 12px 39px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 12px 39px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 12px 39px 0px rgba(0,0,0,0.75);
-    z-index: 1;
-    background-image: url('/images/congruent_pentagon.png');
-    opacity: 0.4;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+    color: #FFF;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
-div#title::after{
+/*div#title::after{
   position: absolute;
   content: "";
   top: 0; left: 0; bottom: 0; right: 0;
   background-color: black;
   opacity: .7;
   z-index: -1;
-}
+}*/
 
 div.center div.progress{
   width: 700px;
@@ -100,37 +121,4 @@ hr{
 .col-md-0{
     width: 0;
     margin-left: 0;
-}
-
-.row > div {
-    /*-webkit-transition: width 0.3s ease, margin 0.3s ease;
-    -moz-transition: width 0.3s ease, margin 0.3s ease;
-    -o-transition: width 0.3s ease, margin 0.3s ease;
-    transition: width 0.3s ease, margin 0.3s ease;*/
-}
-
-.slide.ng-enter{
-    -webkit-transition:0.3s ease-out all;
-    transition:0.3s ease-out all;
-}
-
-.slide.ng-leave{
-    -webkit-transition:0.5s ease-out all;
-    transition:0.5s ease-out all;
-}
-
-.slide.ng-enter { margin-left: 50px; opacity: 0; }        /* starting animations for enter */
-.slide.ng-enter-active { margin-left:30px; opacity: 1; } /* terminal animations for enter */
-.slide.ng-leave { position:relative; left: 0px; opacity: 1; max-height: 300px; overflow:hidden;}        /* starting animations for leave */
-.slide.ng-leave-active { left: 150px; opacity: 0; max-height: 0px; padding: 0; margin: 0 30px;} /* terminal animations for leave */
-
-.slide.ng-enter-stagger {
-    /* this will have a 100ms delay between each successive leave animation */
-    -webkit-transition-delay: 0.175s;
-    transition-delay: 0.175s;
-
-    /* in case the stagger doesn't work then these two values
-     must be set to 0 to avoid an accidental CSS inheritance */
-    -webkit-transition-duration: 0s;
-    transition-duration: 0s;
 }
