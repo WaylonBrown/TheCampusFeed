@@ -173,7 +173,7 @@ public class MyCommentsFragment extends Fragment
         if(score != null && commentList != null){
             int scoreCount = 0;
             for(Comment c : commentList){
-                scoreCount += c.getScore();
+                scoreCount += c.getDeltaScore();
             }
             score.setText("Comment Score: " + scoreCount);
         }

@@ -128,7 +128,7 @@ public class MyPostsFragment extends Fragment
         if(score != null && postList != null && postList.size() != 0){
             int scoreCount = 0;
             for(Post p : postList){
-                scoreCount += p.getScore();
+                scoreCount += p.getDeltaScore();
             }
             score.setText("Post Score: " + scoreCount);
         }
