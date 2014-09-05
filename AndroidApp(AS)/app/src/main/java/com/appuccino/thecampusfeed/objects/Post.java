@@ -56,7 +56,7 @@ public class Post extends AbstractPostComment{
 			collegeName = "";
 		}
         //webURL = "www.thecampusfeed.com/posttest/" + id;
-        webURL = "http://cfeed.herokuapp.com/webapp";
+        webURL = "http://thecampusfeed.com/post/" + id;
         appURL = "thecampusfeed://posts/" + id;
 	}
 	
@@ -82,7 +82,7 @@ public class Post extends AbstractPostComment{
 			collegeName = "";
 		}
         //webURL = "www.thecampusfeed.com/posttest/" + id;
-        webURL = "http://cfeed.herokuapp.com/webapp";
+        webURL = "http://thecampusfeed.com/post/" + id;
         appURL = "thecampusfeed://posts/" + id;
 	}
 
