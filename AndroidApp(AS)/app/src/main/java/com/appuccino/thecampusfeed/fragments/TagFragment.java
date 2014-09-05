@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -42,18 +41,22 @@ import java.util.ArrayList;
 public class TagFragment extends Fragment
 {
 	static MainActivity mainActivity;
-	public static final String ARG_SECTION_NUMBER = "section_number";
 	public static final int MIN_TAGSEARCH_LENGTH = 4;
 	public static ArrayList<Tag> tagList;
 	static QuickReturnListView list;
 	View rootView;
 	private static int currentFeedID;
     private static ProgressBar progressSpinner;
-    private static TagListAdapter listAdapter;
-	
+    public static TagListAdapter listAdapter;
+    public static boolean endOfListReached = false;
+    private static boolean isLoadingMorePosts = false;
+    static View lazyFooterView;
+    static View footerSpace;
+    private static ProgressBar lazyLoadingFooterSpinner;
+    public static int currentPageNumber = 1;
+
 	//values for footer
 	static LinearLayout footer;
-	private static int mQuickReturnHeight;
 	private static final int STATE_ONSCREEN = 0;
 	private static final int STATE_OFFSCREEN = 1;
 	private static final int STATE_RETURNING = 2;
@@ -150,98 +153,29 @@ public class TagFragment extends Fragment
 		});
 	}
 	
-	public static void setupFooterListView() {
+	public void setupFooterListView() {
         Log.i("cfeed","list scrollable2: " + willListScroll());
 		if(willListScroll()){
-//			list.getViewTreeObserver().addOnGlobalLayoutListener(
-//				new ViewTreeObserver.OnGlobalLayoutListener() {
-//					@Override
-//					public void onGlobalLayout() {
-//						mQuickReturnHeight = footer.getHeight();
-//						list.computeScrollY();
-//					}
-//			});
 			
 			list.setOnScrollListener(new OnScrollListener() {
 				@SuppressLint("NewApi")
 				@Override
 				public void onScroll(AbsListView view, int firstVisibleItem,
 						int visibleItemCount, int totalItemCount) {
-
-					mScrollY = 0;
-					int translationY = 0;
-
-					if (list.scrollYIsComputed()) {
-						mScrollY = list.getComputedScrollY();
-					}
-
-					int rawY = mScrollY;
-
-					switch (mState) {
-					case STATE_OFFSCREEN:
-						if (rawY >= mMinRawY) {
-							mMinRawY = rawY;
-						} else {
-							mState = STATE_RETURNING;
-						}
-						translationY = rawY;
-						break;
-
-					case STATE_ONSCREEN:
-						if (rawY > mQuickReturnHeight) {
-							mState = STATE_OFFSCREEN;
-							mMinRawY = rawY;
-						}
-						translationY = rawY;
-						break;
-
-					case STATE_RETURNING:
-
-						translationY = (rawY - mMinRawY) + mQuickReturnHeight;
-
-						if (translationY < 0) {
-							translationY = 0;
-							mMinRawY = rawY + mQuickReturnHeight;
-						}
-
-						if (rawY == 0) {
-							mState = STATE_ONSCREEN;
-							translationY = 0;
-						}
-
-						if (translationY > mQuickReturnHeight) {
-							mState = STATE_OFFSCREEN;
-							mMinRawY = rawY;
-						}
-						break;
-					}
-
-					/** this can be used if the build is below honeycomb **/
-					if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
-						anim = new TranslateAnimation(0, 0, translationY,
-								translationY);
-						anim.setFillAfter(true);
-						anim.setDuration(0);
-						footer.startAnimation(anim);
-					} else {
-						footer.setTranslationY(translationY);
-					}
-
+                    if (list.getLastVisiblePosition() >= list.getAdapter().getCount() -3 &&
+                            !endOfListReached && !isLoadingMorePosts)
+                    {
+                        loadMorePosts();
+                    }else if (endOfListReached){
+                        replaceFooterBecauseEndOfList();
+                    }
 				}
 
 				@Override
 				public void onScrollStateChanged(AbsListView view, int scrollState) {
 				}
 			});
-		}else{			//don't let bottom part move if the list isn't scrollable
-//			list.getViewTreeObserver().addOnGlobalLayoutListener(
-//				new ViewTreeObserver.OnGlobalLayoutListener() {
-//					@Override
-//					public void onGlobalLayout() {
-//						//do nothing
-//					}
-//			});
-			
+		}else{
 			list.setOnScrollListener(new OnScrollListener() {
 				@SuppressLint("NewApi")
 				@Override
@@ -256,9 +190,58 @@ public class TagFragment extends Fragment
 			});
 		}
 	}
-	
-	private static boolean willListScroll() {
-		if(tagList == null || list.getLastVisiblePosition() + 1 >= tagList.size() || tagList.size() == 0) {
+
+    public static void replaceFooterBecauseEndOfList() {
+        Log.i("cfeed","end");
+        isLoadingMorePosts = false;
+        if(list.getFooterViewsCount() > 0 && lazyFooterView != null){
+            list.removeFooterView(lazyFooterView);
+        }
+        if(list.getFooterViewsCount() > 0 && footerSpace != null){
+            list.removeFooterView(footerSpace);
+        }
+        if(list.getFooterViewsCount() == 0){		//so there's no duplicate
+            //for card UI
+            footerSpace = new View(mainActivity);
+            footerSpace.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 160));
+            list.addFooterView(footerSpace, null, false);
+        }
+    }
+
+    protected static void replaceFooterBecauseNewLazyList() {
+        if(list.getFooterViewsCount() > 0 && footerSpace != null){
+            list.removeFooterView(footerSpace);
+        }
+        if(list.getFooterViewsCount() == 0){		//so there's no duplicate
+            addLazyFooterView();
+        }
+    }
+
+    private static void addLazyFooterView() {
+        if(list.getFooterViewsCount() == 0){
+            lazyFooterView =  ((LayoutInflater)mainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.list_lazy_loading_footer, null, false);
+            list.addFooterView(lazyFooterView);
+            lazyLoadingFooterSpinner = (ProgressBar)lazyFooterView.findViewById(R.id.lazyFooterSpinner);
+        }
+    }
+
+    protected void loadMorePosts() {
+        isLoadingMorePosts = true;
+        if(lazyLoadingFooterSpinner != null){
+            lazyLoadingFooterSpinner.setVisibility(View.VISIBLE);
+        }
+        pullListFromServer();
+    }
+
+    public static void removeFooterSpinner() {
+        isLoadingMorePosts = false;
+        if(lazyLoadingFooterSpinner != null){
+            lazyLoadingFooterSpinner.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private static boolean willListScroll() {
+		if(tagList == null || list.getLastVisiblePosition() + 1 == tagList.size() || tagList.size() == 0) {
 			return false;
 		}
 		return true; 
@@ -341,13 +324,15 @@ public class TagFragment extends Fragment
         }
 		ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
 		if(cm.getActiveNetworkInfo() != null){
-			new GetTagFragmentTask(currentFeedID).execute(new PostSelector());
+			new GetTagFragmentTask(currentFeedID, currentPageNumber).execute(new PostSelector());
 		} else {
             makeLoadingIndicator(false);
         }
 	}
 	
 	public static void changeFeed(int id) {
+        endOfListReached = false;
+        currentPageNumber = 1;
 		currentFeedID = id;
 		College currentCollege = MainActivity.getCollegeByID(id);
 		if(collegeNameBottom != null)
@@ -380,13 +365,20 @@ public class TagFragment extends Fragment
 		}
 	}
 
-	public static void makeLoadingIndicator(boolean b) {
-        if(b){
-            list.setVisibility(View.INVISIBLE);
-            progressSpinner.setVisibility(View.VISIBLE);
-        }else{
-            list.setVisibility(View.VISIBLE);
-            progressSpinner.setVisibility(View.GONE);
+	public static void makeLoadingIndicator(boolean makeLoading) {
+        if(progressSpinner != null){
+            if(makeLoading)
+            {
+                isLoadingMorePosts = true;
+                list.setVisibility(View.INVISIBLE);
+                progressSpinner.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                isLoadingMorePosts = false;
+                list.setVisibility(View.VISIBLE);
+                progressSpinner.setVisibility(View.INVISIBLE);
+            }
         }
 	}
 

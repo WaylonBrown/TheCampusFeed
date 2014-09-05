@@ -161,11 +161,9 @@ public class NetWorker {
              if(whichFrag == 0 && frag1 != null)		//top posts
              {
                  if(result != null && result.size() != 0){
-                     //TopPostFragment.postList.addAll(result);
                      for(Post p : result){
                          TopPostFragment.listAdapter.addIfNotAdded(p);
                      }
-                     //TopPostFragment.listAdapter.addAll(result);
                  }else{
                      TopPostFragment.endOfListReached = true;
                      TopPostFragment.replaceFooterBecauseEndOfList();
@@ -254,14 +252,17 @@ public class NetWorker {
      public static class GetTagFragmentTask extends AsyncTask<PostSelector, Void, ArrayList<Tag> >
      {
          int feedID = 0;
+         int pageNumber;
+         final int POSTS_PER_PAGE = 20;
 
          public GetTagFragmentTask()
          {
          }
 
-         public GetTagFragmentTask(int feedID)
+         public GetTagFragmentTask(int feedID, int p)
          {
              this.feedID = feedID;
+             pageNumber = p;
          }
 
          @Override
@@ -272,11 +273,12 @@ public class NetWorker {
 
          @Override
          protected ArrayList<Tag> doInBackground(PostSelector... arg0) {
+             String paginationString = "?page=" + pageNumber + "&per_page=" + POSTS_PER_PAGE;
              HttpGet request = null;
              if(feedID == MainActivity.ALL_COLLEGES)
-                 request = new HttpGet(REQUEST_URL + "tags/trending");
+                 request = new HttpGet(REQUEST_URL + "tags/trending" + paginationString);
              else
-                 request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/tags/trending");
+                 request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/tags/trending" + paginationString);
 
              return getTagsFromURLRequest(request);
          }
@@ -306,10 +308,17 @@ public class NetWorker {
 
          @Override
          protected void onPostExecute(ArrayList<Tag> result) {
-             TagFragment.tagList = new ArrayList<Tag>(result);
+             if(result != null && result.size() != 0){
+                 TagFragment.listAdapter.addAll(result);
+             } else {
+                 TagFragment.endOfListReached = true;
+                 TagFragment.replaceFooterBecauseEndOfList();
+             }
+
              TagFragment.updateList();
              TagFragment.makeLoadingIndicator(false);
-             TagFragment.setupFooterListView();
+             TagFragment.currentPageNumber++;
+             TagFragment.removeFooterSpinner();
          }
      }
 
