@@ -57,6 +57,8 @@ gem 'chunky_png'
 gem 'sidekiq'
 gem 'statistics2'
 
+gem 'asset_sync'
+
 
 gem 'rails_12factor'
 

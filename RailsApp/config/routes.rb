@@ -145,6 +145,7 @@ CollegeFeed::Application.routes.draw do
     root to: 'static_pages#webapp'
     get '/college/:id' => 'static_pages#webapp_college'
     get '/tag/:text' => 'static_pages#webapp_tag'
+    get '/post/:id' => 'posts#show'
 
 
     get '/admin' => 'static_pages#admin'
