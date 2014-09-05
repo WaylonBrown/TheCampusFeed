@@ -12,7 +12,6 @@ import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.ImageView;
@@ -70,115 +69,141 @@ public class CommentsActivity extends Activity{
 		setContentView(R.layout.activity_comment);
 		setupActionBar();
 		getViews();
+        //if coming here from a URL click
+        if(getIntent().getBooleanExtra("FROM_URL", false)){
+            loadPostFromURLClick();
+        } else {
+            loadPost(false);
+        }
+	}
 
-		final TextView scoreText = (TextView)findViewById(R.id.scoreText);
-		TextView messageText = (TextView)findViewById(R.id.messageText);
-		TextView timeText = (TextView)findViewById(R.id.timeText);
-		commentsText = (CustomTextView)findViewById(R.id.commentsText);
-		
-		int collegeID = getIntent().getIntExtra("COLLEGE_ID", 0);
+    private void loadPostFromURLClick() {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(cm.getActiveNetworkInfo() != null) {
+            int postID = getIntent().getIntExtra("POST_ID", -1);
+            new NetWorker.GetManyPostsTask(postID, this).execute(new NetWorker.PostSelector());
+        } else {
+            Toast.makeText(this, "You have no internet connection.", Toast.LENGTH_LONG).show();
+            makeLoadingIndicator(false);
+        }
+    }
+
+    public void postLoadedFromURL(Post p){
+        post = p;
+        loadPost(true);
+    }
+
+    private void loadPost(boolean fromURLClick) {
+        final TextView scoreText = (TextView)findViewById(R.id.scoreText);
+        TextView messageText = (TextView)findViewById(R.id.messageText);
+        TextView timeText = (TextView)findViewById(R.id.timeText);
+        commentsText = (CustomTextView)findViewById(R.id.commentsText);
+
+        int collegeID = getIntent().getIntExtra("COLLEGE_ID", 0);
         int sectionNumber = getIntent().getIntExtra("SECTION_NUMBER", 0);
         int postIndex = getIntent().getIntExtra("POST_INDEX", 0);
 
         Log.i("cfeed", "Section number: " + sectionNumber + " (Optional)Post Index: " + postIndex);
 
-        switch(sectionNumber){
-            case 0:
-                post = TopPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1));
-                break;
-            case 1:
-                post = NewPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1));
-                break;
-            case 2:
-                post = MyPostsFragment.postList.get(postIndex);
-                break;
-            case 3:
-                post = MyCommentsFragment.parentPostList.get(postIndex);
-                break;
-            default:
-                post = TagListActivity.postList.get(postIndex);
+        if(!fromURLClick){
+            switch(sectionNumber){
+                case 0:
+                    post = TopPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1));
+                    break;
+                case 1:
+                    post = NewPostFragment.getPostByID(getIntent().getIntExtra("POST_ID", -1));
+                    break;
+                case 2:
+                    post = MyPostsFragment.postList.get(postIndex);
+                    break;
+                case 3:
+                    post = MyCommentsFragment.parentPostList.get(postIndex);
+                    break;
+                default:
+                    post = TagListActivity.postList.get(postIndex);
+            }
         }
-		
-		Log.i("cfeed", "Post: " + post + " list: " + MainActivity.flagList + " post id: "
-                + getIntent().getIntExtra("POST_ID", -1));
-		if(MainActivity.hasPermissions(collegeID) && post != null){
-			newCommentButton.setVisibility(View.VISIBLE);
 
-			if(!MainActivity.flagList.contains(post.getID())){	//dont show flag button if already flagged
-				flagButton.setVisibility(View.VISIBLE);
-			}
-		}else{
-			newCommentButton.setVisibility(View.GONE);
-			flagButton.setVisibility(View.GONE);
-		}
-		
-		Log.i("cfeed", "Clicked from section number " + sectionNumber);
-		
+        Log.i("cfeed", "Post: " + post + " list: " + MainActivity.flagList + " post id: "
+                + getIntent().getIntExtra("POST_ID", -1));
+        if(MainActivity.hasPermissions(collegeID) && post != null){
+            newCommentButton.setVisibility(View.VISIBLE);
+
+            if(!MainActivity.flagList.contains(post.getID())){	//dont show flag button if already flagged
+                flagButton.setVisibility(View.VISIBLE);
+            }
+        }else{
+            newCommentButton.setVisibility(View.GONE);
+            flagButton.setVisibility(View.GONE);
+        }
+
+        Log.i("cfeed", "Clicked from section number " + sectionNumber);
+
         //set fonts		
-		scoreText.setTypeface(FontManager.bold);
-		messageText.setTypeface(FontManager.light);
-		timeText.setTypeface(FontManager.medium);
-		commentsText.setTypeface(FontManager.light);
-		if(post != null)
-		{
-			scoreText.setText(String.valueOf(post.getDeltaScore()));
+        scoreText.setTypeface(FontManager.bold);
+        messageText.setTypeface(FontManager.light);
+        timeText.setTypeface(FontManager.medium);
+        commentsText.setTypeface(FontManager.light);
+        if(post != null)
+        {
+            scoreText.setText(String.valueOf(post.getDeltaScore()));
             if(scoreText.getText().toString().length() > 3){
                 scoreText.setTextSize(14f);
             }
-			try {
-				setTime(post.getTime(), timeText);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			
-			pullListFromServer();
-			listAdapter = new CommentListAdapter(this, R.layout.list_row_collegepost, commentList, post);
-			if(list != null && commentList != null)
-				list.setAdapter(listAdapter);	
-			else
-				Log.e("cfeed", "TopPostFragment list adapter wasn't set.");
-			
-			//change text if no comments from post
-			if(commentList.size() == 0)
-				commentsText.setText("No Comments");
-			
-			setMessageAndColorizeTags(post.getMessage(), messageText);
-			final ImageView arrowUp = (ImageView)findViewById(R.id.arrowUp);
-			final ImageView arrowDown = (ImageView)findViewById(R.id.arrowDown);
-	        //arrow click listeners
-	        arrowUp.setOnClickListener(new OnClickListener(){
+            try {
+                setTime(post.getTime(), timeText);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-				@Override
-				public void onClick(View v) {
-					//if already upvoted, un-upvote
-					if(post.getVote() == -1)
-					{
-						post.setVote(1);
-						post.score += 2;
+            pullListFromServer();
+            listAdapter = new CommentListAdapter(this, R.layout.list_row_collegepost, commentList, post);
+            if(list != null && commentList != null)
+                list.setAdapter(listAdapter);
+            else
+                Log.e("cfeed", "TopPostFragment list adapter wasn't set.");
+
+            //change text if no comments from post
+            if(commentList.size() == 0)
+                commentsText.setText("No Comments");
+
+            setMessageAndColorizeTags(post.getMessage(), messageText);
+            final ImageView arrowUp = (ImageView)findViewById(R.id.arrowUp);
+            final ImageView arrowDown = (ImageView)findViewById(R.id.arrowDown);
+            //arrow click listeners
+            arrowUp.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    //if already upvoted, un-upvote
+                    if(post.getVote() == -1)
+                    {
+                        post.setVote(1);
+                        post.score += 2;
                         post.deltaScore += 2;
-						scoreText.setText(String.valueOf(post.getDeltaScore()));
+                        scoreText.setText(String.valueOf(post.getDeltaScore()));
                         updateArrows(arrowUp, arrowDown, 1);
                         new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
                         new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), true));
-					}
-					else if(post.getVote() == 0)
-					{
-						post.setVote(1);
-						post.score++;
+                    }
+                    else if(post.getVote() == 0)
+                    {
+                        post.setVote(1);
+                        post.score++;
                         post.deltaScore++;
-						scoreText.setText(String.valueOf(post.getDeltaScore()));
+                        scoreText.setText(String.valueOf(post.getDeltaScore()));
                         updateArrows(arrowUp, arrowDown, 1);
                         new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), true));
-					}
-					else 
-					{
-						post.setVote(0);
-						post.score--;
+                    }
+                    else
+                    {
+                        post.setVote(0);
+                        post.score--;
                         post.deltaScore--;
-						scoreText.setText(String.valueOf(post.getDeltaScore()));
+                        scoreText.setText(String.valueOf(post.getDeltaScore()));
                         updateArrows(arrowUp, arrowDown, 0);
                         new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
-					}
+                    }
                     if(MainActivity.topPostFrag != null){
                         MainActivity.topPostFrag.updateList();
                     }
@@ -186,44 +211,44 @@ public class CommentsActivity extends Activity{
                         MainActivity.newPostFrag.updateList();
                     }
                     TagListActivity.updateList();
-				}
-	        });
-	        arrowDown.setOnClickListener(new OnClickListener(){
+                }
+            });
+            arrowDown.setOnClickListener(new View.OnClickListener(){
 
-				@Override
-				public void onClick(View v) 
-				{					
-					if(MainActivity.hasPermissions(post.getCollegeID()))
-					{
-						//if already downvoted, un-downvote
-						if(post.getVote() == -1)
-						{
-							post.setVote(0);
-							post.score++;
+                @Override
+                public void onClick(View v)
+                {
+                    if(MainActivity.hasPermissions(post.getCollegeID()))
+                    {
+                        //if already downvoted, un-downvote
+                        if(post.getVote() == -1)
+                        {
+                            post.setVote(0);
+                            post.score++;
                             post.deltaScore++;
-							scoreText.setText(String.valueOf(post.getDeltaScore()));
+                            scoreText.setText(String.valueOf(post.getDeltaScore()));
                             updateArrows(arrowUp, arrowDown, 0);
                             new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
-						}
-						else if(post.getVote() == 0)
-						{
-							post.setVote(-1);
-							post.score--;
+                        }
+                        else if(post.getVote() == 0)
+                        {
+                            post.setVote(-1);
+                            post.score--;
                             post.deltaScore--;
-							scoreText.setText(String.valueOf(post.getDeltaScore()));
+                            scoreText.setText(String.valueOf(post.getDeltaScore()));
                             updateArrows(arrowUp, arrowDown, -1);
                             new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), false));
-						}
-						else 
-						{
-							post.setVote(-1);
-							post.score -= 2;
+                        }
+                        else
+                        {
+                            post.setVote(-1);
+                            post.score -= 2;
                             post.deltaScore -= 2;
                             scoreText.setText(String.valueOf(post.getDeltaScore()));
                             updateArrows(arrowUp, arrowDown, -1);
                             new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
                             new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), false));
-						}
+                        }
                         if(MainActivity.topPostFrag != null){
                             MainActivity.topPostFrag.updateList();
                         }
@@ -231,20 +256,20 @@ public class CommentsActivity extends Activity{
                             MainActivity.newPostFrag.updateList();
                         }
                         TagListActivity.updateList();
-					}
-					else
-					{
-						Toast.makeText(getApplicationContext(), "You need to be near the college to downvote", Toast.LENGTH_LONG).show();
-					}
-				}        	
-	        });
-	        
-	        newCommentButton.setOnClickListener(new OnClickListener(){
-				@Override
-				public void onClick(View v) 
-				{					
-					if(MainActivity.hasPermissions(post.getCollegeID()) || hasPermissions)
-					{
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "You need to be near the college to downvote", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+            newCommentButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v)
+                {
+                    if(MainActivity.hasPermissions(post.getCollegeID()) || hasPermissions)
+                    {
                         if(haventCommentedInXMinutes()){
                             LayoutInflater inflater = getLayoutInflater();
                             View commentDialogLayout = inflater.inflate(R.layout.dialog_comment, null);
@@ -252,35 +277,35 @@ public class CommentsActivity extends Activity{
                         } else {
                             Toast.makeText(CommentsActivity.this, "Sorry, you can only comment once every minute.", Toast.LENGTH_LONG).show();
                         }
-					}
-				}        	
-	        });
-	        
-	        flagButton.setOnClickListener(new OnClickListener(){
-				@Override
-				public void onClick(View v) 
-				{					
-					if(MainActivity.hasPermissions(post.getCollegeID()) || hasPermissions){
-						new FlagDialog(CommentsActivity.this, post);
-					}
-				}        	
-	        });
+                    }
+                }
+            });
 
-            shareButton.setOnClickListener(new OnClickListener() {
+            flagButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v)
+                {
+                    if(MainActivity.hasPermissions(post.getCollegeID()) || hasPermissions){
+                        new FlagDialog(CommentsActivity.this, post);
+                    }
+                }
+            });
+
+            shareButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     shareClicked();
                 }
             });
 
-            facebookButton.setOnClickListener(new OnClickListener() {
+            facebookButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     initShareIntent("com.facebook.katana");
                 }
             });
 
-            twitterButton.setOnClickListener(new OnClickListener() {
+            twitterButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     initShareIntent("com.twitter.android");
@@ -288,10 +313,10 @@ public class CommentsActivity extends Activity{
             });
 
             post.setVote(MainActivity.getVoteByPostId(post.getID()));
-	        updateArrows(arrowUp, arrowDown, post.getVote());
-		}
+            updateArrows(arrowUp, arrowDown, post.getVote());
+        }
 
-        backButton.setOnClickListener(new OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
@@ -299,7 +324,7 @@ public class CommentsActivity extends Activity{
         });
 
         setActionBarDividerVisibility();
-	}
+    }
 
     private boolean haventCommentedInXMinutes(){
         Calendar now = Calendar.getInstance();

@@ -7,12 +7,12 @@ import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class SplashActivity extends Activity{
-	
+
+    public static final String URL_POST_ID = "url_post_id";
 	private int SPLASH_MILLISECONDS = 500;
     private int openedPostID = -1;  //use if app opened from link
 	
@@ -25,10 +25,10 @@ public class SplashActivity extends Activity{
 
         if (Intent.ACTION_VIEW.equals(action)) {
             Log.i("cfeed","Intent data: " + intent.getDataString());
-            final List<String> segments = intent.getData().getPathSegments();
-            if (segments.size() > 1) {
+            String[] dataList = intent.getDataString().split("/");
+            if (dataList.length > 1) {
                 try{
-                    openedPostID = Integer.valueOf(segments.get(1));
+                    openedPostID = Integer.valueOf(dataList[dataList.length-1]);
                     Log.i("cfeed","OPENED FROM LINK: id of " + openedPostID);
                 } catch (Exception e){
                     e.printStackTrace();
@@ -65,6 +65,7 @@ public class SplashActivity extends Activity{
 	
 	private void goToMainActivity(){
 		Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(URL_POST_ID, openedPostID);
 		startActivity(intent);
 		overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);	
 		finish();

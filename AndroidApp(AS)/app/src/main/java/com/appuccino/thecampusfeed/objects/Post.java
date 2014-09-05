@@ -17,9 +17,8 @@ public class Post extends AbstractPostComment{
     private int commentCount = 0;
     private String webURL;
     private String appURL;
-    private String phoneNumber;
 	
-	public Post(String m, int c, String p)
+	public Post(String m, int c)
 	{
 		score = 1;
         deltaScore = 1;
@@ -32,7 +31,6 @@ public class Post extends AbstractPostComment{
 		}
         webURL = "";
         appURL = "";
-        phoneNumber = p;
 	}
 	
 	public Post(int id, String message, int score, int collegeID, String time)
@@ -119,10 +117,6 @@ public class Post extends AbstractPostComment{
         return appURL;
     }
 
-    public String getPhoneNumber(){
-        return phoneNumber;
-    }
-
     @Override
     public ByteArrayOutputStream toJSONString() throws IOException {
         ByteArrayOutputStream ret = new ByteArrayOutputStream();
@@ -131,7 +125,7 @@ public class Post extends AbstractPostComment{
         writer.setIndent("  ");
         writer.beginObject();
         writer.name("text"); writer.value(message);
-        writer.name("user_token"); writer.value(phoneNumber);
+        writer.name("user_token"); writer.value(0);
         writer.endObject();
         writer.close();
 

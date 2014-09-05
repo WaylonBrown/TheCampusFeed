@@ -492,6 +492,9 @@ public class NetWorker {
     {
         private List<Integer> postIDList;
         private MyPostsFragment frag;
+        //only if loading a post from URL click
+        private int urlPostID = -1;
+        private CommentsActivity commentsActivity;
 
         public GetManyPostsTask(List<Integer> postIDList, MyPostsFragment frag)
         {
@@ -505,10 +508,19 @@ public class NetWorker {
             frag = null;
         }
 
+        //from clicking post from URL click
+        public GetManyPostsTask(int id, CommentsActivity commentsActivity){
+            postIDList = null;
+            urlPostID = id;
+            this.commentsActivity = commentsActivity;
+        }
+
         @Override
         protected void onPreExecute() {
             if(frag != null){
                 frag.makeLoadingIndicator(true);
+            }else if(commentsActivity != null && urlPostID >= 0){
+                commentsActivity.makeLoadingIndicator(true);
             }
             super.onPreExecute();
         }
@@ -516,18 +528,28 @@ public class NetWorker {
         @Override
         protected ArrayList<Post> doInBackground(PostSelector... arg0) {
             String arrayQuery = "";
-            if(postIDList == null || postIDList.size() == 0){
+            if(urlPostID == -1 && (postIDList == null || postIDList.size() == 0)){
                 return new ArrayList<Post>();
             } else {
-                for(int n : postIDList){
-                    arrayQuery += ("many_ids[]=" + n + "&");
+                Log.i("cfeed","1");
+                //post URL click
+                if(urlPostID != -1){
+                    Log.i("cfeed","2");
+                    arrayQuery = "many_ids[]=" + urlPostID;
+                    HttpGet request = new HttpGet(REQUEST_URL + "posts/many?" + arrayQuery);
+                    return getPostsFromURLRequest(request);
+                } else {    //myPostsFragment load
+                    Log.i("cfeed","3");
+                    for(int n : postIDList){
+                        arrayQuery += ("many_ids[]=" + n + "&");
+                    }
+                    //remove final &
+                    if(arrayQuery.length() > 0){
+                        arrayQuery = arrayQuery.substring(0, arrayQuery.length()-1);
+                    }
+                    HttpGet request = new HttpGet(REQUEST_URL + "posts/many?" + arrayQuery);
+                    return getPostsFromURLRequest(request);
                 }
-                //remove final &
-                if(arrayQuery.length() > 0){
-                    arrayQuery = arrayQuery.substring(0, arrayQuery.length()-1);
-                }
-                HttpGet request = new HttpGet(REQUEST_URL + "posts/many?" + arrayQuery);
-                return getPostsFromURLRequest(request);
             }
 
         }
@@ -557,12 +579,13 @@ public class NetWorker {
 
         @Override
         protected void onPostExecute(ArrayList<Post> result) {
-            if(frag != null){
+            if(frag != null && urlPostID == -1){
                 frag.updateList(result);
                 frag.makeLoadingIndicator(false);
-            }
-            else{
+            } else if (urlPostID == -1){
                 MyCommentsFragment.updateCommentParentList(result);
+            } else if (result != null && result.size() > 0){
+                commentsActivity.postLoadedFromURL(result.get(0));
             }
             super.onPostExecute(result);
         }

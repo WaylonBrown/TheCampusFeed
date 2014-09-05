@@ -134,6 +134,30 @@ public class MainActivity extends FragmentActivity implements LocationListener
         setupMenuDrawerViews();
 	}
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //open post if app opened from clicking URL, open that post
+        Intent i = getIntent();
+        int urlPostID = i.getIntExtra(SplashActivity.URL_POST_ID, -1);
+        if(urlPostID >= 0){
+            openPostFromURLClick(urlPostID);
+        }
+    }
+
+    private void openPostFromURLClick(int urlPostID) {
+        getIntent().putExtra(SplashActivity.URL_POST_ID, -1);
+        Intent intent = new Intent(this, CommentsActivity.class);
+        intent.putExtra("POST_ID", urlPostID);
+        intent.putExtra("FROM_URL", true);
+        //intent.putExtra("COLLEGE_ID", post.getCollegeID());
+        intent.putExtra("SECTION_NUMBER", 0);
+
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
     //this is called when orientation changes
 	@Override
 	public void onConfigurationChanged(Configuration newConfig)

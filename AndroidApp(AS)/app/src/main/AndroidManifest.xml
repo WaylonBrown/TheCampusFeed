@@ -43,6 +43,12 @@
                 <category android:name="android.intent.category.BROWSABLE"></category>
                 <data android:host="thecampusfeed.com" android:scheme="http"></data>
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"></action>
+                <category android:name="android.intent.category.DEFAULT"></category>
+                <category android:name="android.intent.category.BROWSABLE"></category>
+                <data android:scheme="thecampusfeed"></data>
+            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
