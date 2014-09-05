@@ -38,8 +38,6 @@ CollegeFeed::Application.configure do
   config.assets.version = '1.0'
 
 
-  config.a
-
 
 
   # Specifies the header that your server uses for sending files.
