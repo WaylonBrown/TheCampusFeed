@@ -1,0 +1,142 @@
+html,body, div.container-fluid, div.row{
+    height:100%;
+}
+
+
+body.landing{
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    background: white;
+    background: #1e5799; /* Old browsers */
+
+    background: -moz-linear-gradient(-45deg,  #1e5799 48%, #1e5799 75%, #1e5799 75%, #0b87e0 100%); /* FF3.6+ */
+
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(48%,#1e5799), color-stop(75%,#1e5799), color-stop(75%,#1e5799), color-stop(100%,#0b87e0)); /* Chrome,Safari4+ */
+
+    background: -webkit-linear-gradient(-45deg,  #1e5799 48%,#1e5799 75%,#1e5799 75%,#0b87e0 100%); /* Chrome10+,Safari5.1+ */
+
+    background: -o-linear-gradient(-45deg,  #1e5799 48%,#1e5799 75%,#1e5799 75%,#0b87e0 100%); /* Opera 11.10+ */
+
+    background: -ms-linear-gradient(-45deg,  #1e5799 48%,#1e5799 75%,#1e5799 75%,#0b87e0 100%); /* IE10+ */
+
+    background: linear-gradient(135deg,  #1e5799 48%,#1e5799 75%,#1e5799 75%,#0b87e0 100%); /* W3C */
+
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#0b87e0',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+  div.section {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      vertical-align: baseline;
+      height:100%;
+  }
+
+  span.light{
+      font-weight: 100;
+  }
+
+  div#title::before{
+      z-index: -1;
+      background-image: url('/images/congruent_pentagon.png');
+      opacity: .08;
+      margin: 0 auto;
+      content: " ";
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+  }
+
+  div#title{
+      margin: 0 auto;
+      padding: 0 20px;
+      text-align: center;
+      color: #FFF;
+  }
+  div.center{
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+  }
+
+  /*div#title::after{
+    position: absolute;
+    content: "";
+    top: 0; left: 0; bottom: 0; right: 0;
+    background-color: black;
+    opacity: .7;
+    z-index: -1;
+  }*/
+
+  div.center div.progress{
+    width: 700px;
+    margin: 0 auto;
+  }
+  div.center span{
+    font-size: 18px;
+  }
+
+  div#cards{
+      overflow:hidden;
+  }
+
+  div#comments{
+      overflow:scroll;
+  }
+
+  div#comments{
+      background-color: rgba(255,255,255,0.25);
+  }
+
+  .card-mini{
+      margin: 20px 30px;
+      padding: 6px 8px;
+      -webkit-box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
+      -moz-box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
+      box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
+      margin-bottom: 20px;
+  }
+  .card-mini.active{
+      margin-right: 0;
+  }
+
+  .card-mini h3{
+      margin: 0;
+  }
+
+  .card-comment{
+      margin: 0;
+  }
+
+
+
+  .pointer{
+      cursor: pointer;
+  }
+
+  hr{
+      margin: 4px 2px;
+      border-top: 1px solid #CDCDCD;
+  }
+
+  .col-md-0{
+      width: 0;
+      margin-left: 0;
+  }
+
+  div#description{
+    font-size: 30px;
+    padding: 30px;
+    line-height: 45px;
+  }
+
+  a, a:visited{
+    text-decoration: none;
+    color: #DDD;
+    border-bottom: 1px white dotted;
+  }
+  a:hover{
+    text-decoration: none;
+    border-bottom: 1px white solid;
+  }
+
+}
+

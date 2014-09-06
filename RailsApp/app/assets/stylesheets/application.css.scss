@@ -21,7 +21,6 @@
 }
 
 /* Change Colors */
-
 /* Change Animations */
 
 .collapsing {
@@ -73,26 +72,26 @@ div.panel-collapse input {
   font-family: 'Lato';
   font-style: normal;
   font-weight: 100;
-  src: local('Lato Skeleton'), local('Lato-Skeleton'), url('fonts/Lato100.woff') format('woff');
+  src: local('Lato Skeleton'), local('Lato-Skeleton'), url('/assets/Lato100.woff') format('woff');
 }
 
 @font-face {
   font-family: 'Lato';
   font-style: normal;
   font-weight: 300;
-  src: local('Lato Light'), local('Lato-Light'), url('fonts/Lato300.woff') format('woff');
+  src: local('Lato Light'), local('Lato-Light'), url('/assets/Lato300.woff') format('woff');
 }
 
 @font-face {
   font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
-  src: local('Lato Regular'), local('Lato-Regular'), url('fonts/Lato400.woff') format('woff');
+  src: local('Lato Regular'), local('Lato-Regular'), url('/assets/Lato400.woff') format('woff');
 }
 
 body {
   font-family: Lato !important;
-  background-image: url('/images/textured_paper.png');
+  background-image: url('/assets/textured_paper.png');
 }
 
 nav#default {
@@ -140,7 +139,7 @@ nav#default {
   }
   .absoluteFull {
     opacity: .4;
-    background-image: url('/images/congruent_pentagon.png');
+    background-image: url('/assets/congruent_pentagon.png');
     z-index: 1;
   }
 
