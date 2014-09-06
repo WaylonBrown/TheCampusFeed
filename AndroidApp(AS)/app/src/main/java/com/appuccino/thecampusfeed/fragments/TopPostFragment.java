@@ -57,8 +57,9 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	static View lazyFooterView;
 	static View footerSpace;
     static TextView pullDownText;
-	
-	//values for footer
+    static TextView chooseText;
+
+    //values for footer
 	static LinearLayout scrollAwayBottomView;
 	private static int mQuickReturnHeight;
 	private static final int STATE_ONSCREEN = 0;
@@ -162,10 +163,28 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 		}
 	}
 
+    public static void disableChooseFeedButton(){
+        if(chooseText != null){
+            chooseText.setOnClickListener(null);
+        }
+    }
+
+    public static void reenableChooseFeedButton(){
+        if(chooseText != null){
+            chooseText.setOnClickListener(new OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    mainActivity.chooseFeedDialog();
+                }
+            });
+        }
+    }
+
 	private void setupBottomViewUI() {
 		collegeNameBottom = (TextView)rootView.findViewById(R.id.collegeNameBottomText);
 		TextView showingText = (TextView)rootView.findViewById(R.id.showingFeedText);
-		TextView chooseText = (TextView)rootView.findViewById(R.id.chooseText);
+		chooseText = (TextView)rootView.findViewById(R.id.chooseText);
 		
 		collegeNameBottom.setTypeface(FontManager.light);
 		showingText.setTypeface(FontManager.medium);

@@ -14,7 +14,8 @@ import java.util.List;
  * This is used so that you don't have to set up the preference manager more than once throughout the app
  */
 public class PrefManager {
-	
+	private static String defaultCheckSumString = "1";
+
 	public static SharedPreferences prefs;
 	public static final String POST_VOTE_LIST = "post_vote_list";
 	public static final String COMMENT_VOTE_LIST = "comment_vote_list";
@@ -152,7 +153,7 @@ public class PrefManager {
     }
 
     public static String getCollegeListCheckSum(){
-        return prefs.getString(COLLEGE_LIST_CHECK_SUM, "1");
+        return prefs.getString(COLLEGE_LIST_CHECK_SUM, defaultCheckSumString);
     }
 
     public static void putCollegeListCheckSum(String s){

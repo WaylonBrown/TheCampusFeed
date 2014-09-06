@@ -1,7 +1,5 @@
 package com.appuccino.thecampusfeed.adapters;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,9 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.appuccino.thecampusfeed.MainActivity;
 import com.appuccino.thecampusfeed.R;
 import com.appuccino.thecampusfeed.objects.College;
 import com.appuccino.thecampusfeed.utils.FontManager;
+
+import java.util.List;
 
 public class DialogCollegeListAdapter extends ArrayAdapter<College>{
 
@@ -55,7 +56,22 @@ public class DialogCollegeListAdapter extends ArrayAdapter<College>{
         	collegeHolder = (CollegeHolder)row.getTag();
         
         final College thisCollege = collegeList.get(position);
-        collegeHolder.text.setText(thisCollege.getName());
+        if(thisCollege != null){
+            collegeHolder.text.setText(thisCollege.getName());
+        } else {
+            if(MainActivity.permissions != null)
+            {
+                if(MainActivity.permissions.size() > 0)
+                {
+                    for(int id : MainActivity.permissions)
+                    {
+                        collegeList.add(MainActivity.getCollegeByID(id));
+                    }
+                }
+
+            }
+        }
+
         return row;
     }
         

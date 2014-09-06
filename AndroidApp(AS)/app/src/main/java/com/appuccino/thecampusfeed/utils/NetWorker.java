@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.appuccino.thecampusfeed.CommentsActivity;
 import com.appuccino.thecampusfeed.MainActivity;
 import com.appuccino.thecampusfeed.TagListActivity;
+import com.appuccino.thecampusfeed.dialogs.ChooseFeedDialog;
 import com.appuccino.thecampusfeed.fragments.MostActiveCollegesFragment;
 import com.appuccino.thecampusfeed.fragments.MyCommentsFragment;
 import com.appuccino.thecampusfeed.fragments.MyPostsFragment;
@@ -440,9 +441,11 @@ public class NetWorker {
     public static class GetFullCollegeListTask extends AsyncTask<PostSelector, Void, ArrayList<College> >
     {
         String checkSumVersion;
+        MainActivity main;
 
-        public GetFullCollegeListTask(String s){
+        public GetFullCollegeListTask(String s, MainActivity main){
             checkSumVersion = s;
+            this.main = main;
         }
 
         @Override
@@ -485,6 +488,8 @@ public class NetWorker {
             MainActivity.collegeList = result;
             PrefManager.putCollegeListCheckSum(checkSumVersion);
             Log.i("cfeed","COLLEGE_LIST Updated main college list.");
+            if(ChooseFeedDialog.isVisible)
+                ChooseFeedDialog.recalculateNearYouList(main);
         }
     }
 
@@ -531,15 +536,12 @@ public class NetWorker {
             if(urlPostID == -1 && (postIDList == null || postIDList.size() == 0)){
                 return new ArrayList<Post>();
             } else {
-                Log.i("cfeed","1");
                 //post URL click
                 if(urlPostID != -1){
-                    Log.i("cfeed","2");
                     arrayQuery = "many_ids[]=" + urlPostID;
                     HttpGet request = new HttpGet(REQUEST_URL + "posts/many?" + arrayQuery);
                     return getPostsFromURLRequest(request);
                 } else {    //myPostsFragment load
-                    Log.i("cfeed","3");
                     for(int n : postIDList){
                         arrayQuery += ("many_ids[]=" + n + "&");
                     }

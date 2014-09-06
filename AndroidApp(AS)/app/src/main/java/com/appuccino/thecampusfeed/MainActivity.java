@@ -120,6 +120,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         PrefManager.setup(this);
+        activity = this;
 		setupApp();
 
         collegeListCheckSum = PrefManager.getCollegeListCheckSum();
@@ -401,7 +402,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
     }
 
     public static void updateCollegeList(String checkSumVersion){
-        new NetWorker.GetFullCollegeListTask(checkSumVersion).execute(new NetWorker.PostSelector());
+        new NetWorker.GetFullCollegeListTask(checkSumVersion, MainActivity.activity).execute(new NetWorker.PostSelector());
     }
 
 	private void setupCollegeList() {
@@ -537,7 +538,10 @@ public class MainActivity extends FragmentActivity implements LocationListener
             @Override
             public void onClick(View view) {
                 overlay.setVisibility(View.GONE);
-                chooseFeedDialog();
+                if(collegeList != null){
+                    chooseFeedDialog();
+                    TopPostFragment.reenableChooseFeedButton();
+                }
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
             }
         });
@@ -545,15 +549,20 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	
 	private void showPermissionsToast() 
 	{
-		String collegeName = getCollegeByID(currentFeedCollegeID).getName();
-		if(hasPermissions(currentFeedCollegeID))
-		{
-			Toast.makeText(this, "Since you are near " + collegeName + ", you can upvote, downvote, post, and comment", Toast.LENGTH_LONG).show();
-		}
-		else
-		{
-			Toast.makeText(this, "Since you aren't near " + collegeName + ", you can only upvote", Toast.LENGTH_LONG).show();
-		}
+        try{
+            String collegeName = getCollegeByID(currentFeedCollegeID).getName();
+            if(hasPermissions(currentFeedCollegeID))
+            {
+                Toast.makeText(this, "Since you are near " + collegeName + ", you can upvote, downvote, post, and comment", Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                Toast.makeText(this, "Since you aren't near " + collegeName + ", you can only upvote", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
 	}
 
 	/**
@@ -846,6 +855,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	}
 	
 	public void chooseFeedDialog() {
+        Log.i("cfeed","test");
 		LayoutInflater inflater = getLayoutInflater();
 		View layout = inflater.inflate(R.layout.dialog_choosefeed, null);
         if(chooseFeedDialog == null || !chooseFeedDialog.isShowing()){

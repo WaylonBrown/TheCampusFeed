@@ -28,13 +28,16 @@ import java.util.List;
 
 public class ChooseFeedDialog extends AlertDialog.Builder{
 	
-	MainActivity main;
-	ArrayList<College> nearYouListArray;
+	static MainActivity main;
+	static ArrayList<College> nearYouListArray;
 	AlertDialog dialog;
 	ListView nearYouListView;
-	
-	public ChooseFeedDialog(MainActivity main, View layout) {
+    static DialogCollegeListAdapter adapter;
+    public static boolean isVisible = false;
+
+    public ChooseFeedDialog(MainActivity main, View layout) {
 		super(main);
+        isVisible = true;
 		this.main = main;
 		setCancelable(true);
 		setView(layout);
@@ -82,6 +85,7 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 
 	public void populateNearYouList(boolean locationFound) {
 		if(nearYouListView != null){
+            nearYouListView.requestLayout();
 			nearYouListArray = new ArrayList<College>();
 			boolean enableListClicking = true;	//false if no colleges so that the item can't be clicked
 			
@@ -114,7 +118,7 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
 				enableListClicking = false;
 			}
 			
-			DialogCollegeListAdapter adapter = new DialogCollegeListAdapter(main, R.layout.list_row_choosefeed_college, nearYouListArray, enableListClicking);
+			adapter = new DialogCollegeListAdapter(main, R.layout.list_row_choosefeed_college, nearYouListArray, enableListClicking);
 			nearYouListView.setAdapter(adapter);
 
             //don't let Near You list push bottom buttons off screen, so set a max height
@@ -128,18 +132,38 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
                 }
             });
 
-
-			
-			nearYouListView.setOnItemClickListener(new OnItemClickListener(){
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
-					dialog.dismiss();
-					main.changeFeed(nearYouListArray.get(position).getID());
-				}
-			});
+			nearYouListView.setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id) {
+                    dialog.dismiss();
+                    main.changeFeed(nearYouListArray.get(position).getID());
+                }
+            });
 		}
 	}
+
+    public static void recalculateNearYouList(MainActivity main){
+        nearYouListArray = new ArrayList<College>();
+        boolean enableListClicking = true;	//false if no colleges so that the item can't be clicked
+
+        if(MainActivity.permissions != null)
+        {
+            if(MainActivity.permissions.size() > 0)
+            {
+                for(int id : MainActivity.permissions)
+                {
+                    nearYouListArray.add(MainActivity.getCollegeByID(id));
+                }
+            }
+        }
+        if(adapter != null){
+            adapter.notifyDataSetChanged();
+        } else {
+            adapter = new DialogCollegeListAdapter(main, R.layout.list_row_choosefeed_college, new ArrayList<College>(), enableListClicking);
+            adapter.notifyDataSetChanged();
+        }
+    }
 
 	public class SearchCollegesDialog extends AlertDialog.Builder{
 		
