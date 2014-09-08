@@ -57,6 +57,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends FragmentActivity implements LocationListener
 {
@@ -899,53 +901,30 @@ public class MainActivity extends FragmentActivity implements LocationListener
 		return -1;
 	}
 
-    public static boolean containsSymbols(String text) {
-        if(text.contains("!") ||
-                text.contains("$") ||
-                text.contains("%") ||
-                text.contains("^") ||
-                text.contains("&") ||
-                text.contains("*") ||
-                text.contains("+") ||
-                text.contains(".") ||
-                text.contains(",") ||
-                text.contains("#")){
-            return true;
+    public static String[] parseTagsWithRegex(String message) {
+        List<String> returnList = new ArrayList<String>();
+        Matcher m = Pattern.compile("#[A-Za-z0-9_]{3,139}").matcher(message);
+        while (m.find()){
+            returnList.add(m.group());
         }
-        return false;
+
+        return returnList.toArray(new String[returnList.size()]);
     }
 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.main, menu);
-//		return true;
-//	}
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle item selection
-//        switch (item.getItemId()) {
-//            case R.id.myContent:
-//                launchMyContentActivity();
-//                return true;
-//            case R.id.menu_help:
-//                new GettingStartedDialog(this, "Help");
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
+//    public static boolean containsSymbols(String text) {
+//        if(text.contains("!") ||
+//                text.contains("$") ||
+//                text.contains("%") ||
+//                text.contains("^") ||
+//                text.contains("&") ||
+//                text.contains("*") ||
+//                text.contains("+") ||
+//                text.contains(".") ||
+//                text.contains(",") ||
+//                text.contains("#")){
+//            return true;
 //        }
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                menuDrawer.toggleMenu();
-//                return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
+//        return false;
 //    }
 
     @Override

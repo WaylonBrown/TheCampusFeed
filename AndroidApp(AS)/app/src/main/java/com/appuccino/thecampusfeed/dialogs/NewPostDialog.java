@@ -22,8 +22,6 @@ import com.appuccino.thecampusfeed.utils.NetWorker.MakePostTask;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class NewPostDialog extends AlertDialog.Builder{
 	
@@ -149,7 +147,7 @@ public class NewPostDialog extends AlertDialog.Builder{
                 String message = postMessage.getText().toString();
                 String currentTags = "Tags: <font color='#33B5E5'>";
 
-                String[] tagArray = parseTagsWithRegex(message);
+                String[] tagArray = MainActivity.parseTagsWithRegex(message);
                 if(tagArray.length > 0)
                 {
                     for(int i = 0; i < tagArray.length; i++)
@@ -179,16 +177,6 @@ public class NewPostDialog extends AlertDialog.Builder{
         });
 
         setupCollege(college);
-    }
-
-    private String[] parseTagsWithRegex(String message) {
-        List<String> returnList = new ArrayList<String>();
-        Matcher m = Pattern.compile("#[A-Za-z0-9_]{3,139}").matcher(message);
-        while (m.find()){
-            returnList.add(m.group());
-        }
-
-        return returnList.toArray(new String[returnList.size()]);
     }
 
     public boolean isShowing(){

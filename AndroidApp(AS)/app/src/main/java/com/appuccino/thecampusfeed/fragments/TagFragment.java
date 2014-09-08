@@ -284,16 +284,20 @@ public class TagFragment extends Fragment
 			public void onClick(View v) 
     		{		
     			String text = searchTagEditText.getText().toString().trim();
+                String[] tagListFromRegex = MainActivity.parseTagsWithRegex(text);
+                String tag = "";
+                if(tagListFromRegex.length > 0){
+                    tag = tagListFromRegex[0];
+                }
     			if(text.length() < MIN_TAGSEARCH_LENGTH)
     				Toast.makeText(mainActivity, "Must be at least " + MIN_TAGSEARCH_LENGTH + " characters long.", Toast.LENGTH_LONG).show();
     			else if(!text.substring(0, 1).equals("#"))
     				Toast.makeText(mainActivity, "Must start with #", Toast.LENGTH_LONG).show();
-    			else if(MainActivity.containsSymbols(text.substring(1, text.length()))){
+    			else if(tag.isEmpty()){
     				Toast.makeText(mainActivity, "A search for a tag cannot include the symbols !, $, %, ^, &, *, +, ',', ., or another #", Toast.LENGTH_LONG).show();
-    			}
-    			else{
+    			} else {
     				Intent intent = new Intent(mainActivity, TagListActivity.class);
-    				intent.putExtra("TAG_ID", searchTagEditText.getText().toString());
+    				intent.putExtra("TAG_ID", tag);
     				
     				mainActivity.startActivity(intent);
     				mainActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

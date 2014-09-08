@@ -101,41 +101,38 @@ public class NewCommentDialog extends AlertDialog.Builder{
 					int after) {
 			}
 
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-				String message = messageEditText.getText().toString();
-				String currentTags = "Tags: <font color='#33B5E5'>";
-				
-				String[] wordArray = message.split(" ");
-				if(wordArray.length > 0)
-				{
-					for(int i = 0; i < wordArray.length; i++)
-					{
-						//prevent indexoutofboundsexception
-						if(wordArray[i].length() > 0)
-						{
-							if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1 && !MainActivity.containsSymbols(wordArray[i].substring(1, wordArray[i].length())))
-							{
-								currentTags += wordArray[i] + " ";
-							}
-						}
-					}
-				}
-				
-				currentTags += "</font>";
-				//if there aren't any tags and view is shown, remove view
-				if(currentTags.equals("Tags: <font color='#33B5E5'></font>") && tagsText.isShown())
-				{
-					tagsText.setVisibility(View.GONE);
-				}					
-				else if(!currentTags.equals("Tags: <font color='#33B5E5'></font>") && !tagsText.isShown())
-				{
-					tagsText.setVisibility(View.VISIBLE);
-				}
-					
-				tagsText.setText(Html.fromHtml((currentTags)));
-			}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                String message = messageEditText.getText().toString();
+                String currentTags = "Tags: <font color='#33B5E5'>";
+
+                String[] tagArray = MainActivity.parseTagsWithRegex(message);
+                if(tagArray.length > 0)
+                {
+                    for(int i = 0; i < tagArray.length; i++)
+                    {
+                        //prevent indexoutofboundsexception
+                        if(tagArray[i].length() > 0)
+                        {
+                            currentTags += tagArray[i] + " ";
+                        }
+                    }
+                }
+
+                currentTags += "</font>";
+                //if there aren't any tags and view is shown, remove view
+                if(currentTags.equals("Tags: <font color='#33B5E5'></font>") && tagsText.isShown())
+                {
+                    tagsText.setVisibility(View.GONE);
+                }
+                else if(!currentTags.equals("Tags: <font color='#33B5E5'></font>") && !tagsText.isShown())
+                {
+                    tagsText.setVisibility(View.VISIBLE);
+                }
+
+                tagsText.setText(Html.fromHtml((currentTags)));
+            }
     		
     	});
 	}

@@ -285,32 +285,45 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
     	
     	timeText.setText(timeOutputText);
 	}
-    
-    private void setMessageAndColorizeTags(String msg, CommentHolder commentHolder) 
+
+    void setMessageAndColorizeTags(String msg, CommentHolder commentHolder)
     {
-    	String tagColor = "#33B5E5";
-    	String message = msg;
-    	
-    	String[] wordArray = message.split(" ");
-    	//check for tags, colorize them
-    	for(int i = 0; i < wordArray.length; i++)
-    	{
-    		if(wordArray[i].length() > 0 && wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1 && !MainActivity.containsSymbols(wordArray[i].substring(1, wordArray[i].length())))
-    		{
-    			wordArray[i] = "<font color='" + tagColor + "'>" + wordArray[i] + "</font>";
-    		}
-    	}
-    	
-    	message = "";
-    	//combine back to string
-    	for(int i = 0; i < wordArray.length; i++)
-    	{
-    		message += wordArray[i] + " ";
-    	}
-    	
-    	commentHolder.messageText.setText(Html.fromHtml(message));
-		
-	}
+        String tagColor = "#33B5E5";
+        String message = msg;
+
+        String[] tagArray = MainActivity.parseTagsWithRegex(message);
+        for(int i = 0; i < tagArray.length; i++){
+            int foundIndex = message.indexOf(tagArray[i]);
+            int messageCharLength = message.length();
+            //if tag from tagArray is in the message
+            if(foundIndex != -1){
+                //add HTML coloring to where the tag is
+                message = message.substring(0, foundIndex) + "<font color='" + tagColor + "'>" + message.substring(foundIndex, foundIndex + tagArray[i].length()) + "</font>" + message.substring(foundIndex + tagArray[i].length(), messageCharLength);
+            }
+        }
+
+//    	String[] wordArray = message.split(" ");
+//    	//check for tags, colorize them
+//    	for(int i = 0; i < wordArray.length; i++)
+//    	{
+//    		if(wordArray[i].length() > 0)	//in case empty, doesn't throw nullpointer
+//    		{
+//    			if(wordArray[i].substring(0, 1).equals("#") && wordArray[i].length() > 1 && !MainActivity.containsSymbols(wordArray[i].substring(1, wordArray[i].length())))
+//        		{
+//        			wordArray[i] = "<font color='" + tagColor + "'>" + wordArray[i] + "</font>";
+//        		}
+//    		}
+//    	}
+//
+//    	message = "";
+//    	//combine back to string
+//    	for(int i = 0; i < wordArray.length; i++)
+//    	{
+//    		message += wordArray[i] + " ";
+//    	}
+
+        commentHolder.messageText.setText(Html.fromHtml(message));
+    }
         
     static class CommentHolder
     {
