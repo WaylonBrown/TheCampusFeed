@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
@@ -55,16 +54,7 @@ public class TagFragment extends Fragment
     static View footerSpace;
     private static ProgressBar lazyLoadingFooterSpinner;
     public static int currentPageNumber = 1;
-
-	//values for footer
 	static LinearLayout footer;
-	private static final int STATE_ONSCREEN = 0;
-	private static final int STATE_OFFSCREEN = 1;
-	private static final int STATE_RETURNING = 2;
-	private static int mState = STATE_ONSCREEN;
-	private static int mScrollY;
-	private static int mMinRawY = 0;
-	private static TranslateAnimation anim;
 	static TextView collegeNameBottom;
 
 	public TagFragment()

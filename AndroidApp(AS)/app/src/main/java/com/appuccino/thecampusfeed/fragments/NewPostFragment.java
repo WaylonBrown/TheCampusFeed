@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
@@ -62,17 +60,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 	static View lazyFooterView;
 	static View footerSpace;
     static TextView pullDownText;
-
-	//values for footer
 	static LinearLayout scrollAwayBottomView;
-	private static int mQuickReturnHeight;
-	private static final int STATE_ONSCREEN = 0;
-	private static final int STATE_OFFSCREEN = 1;
-	private static final int STATE_RETURNING = 2;
-	private static int mState = STATE_ONSCREEN;
-	private static int mScrollY;
-	private static int mMinRawY = 0;
-	private static TranslateAnimation anim;
 	static TextView collegeNameBottom;
 
     public NewPostFragment(){
@@ -194,7 +182,6 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 				public void onScroll(AbsListView view, int firstVisibleItem,
 						int visibleItemCount, int totalItemCount) {
 
-					handleScrollAwayBottomViewOnScroll();
 					if (list.getLastVisiblePosition() >= list.getAdapter().getCount() -3 &&
 							!endOfListReached && !isLoadingMorePosts)
 					{
@@ -208,15 +195,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 				public void onScrollStateChanged(AbsListView view, int scrollState) {
 				}
 			});
-		}else{				//don't let bottom part move if the list isn't scrollable
-//			list.getViewTreeObserver().addOnGlobalLayoutListener(
-//				new ViewTreeObserver.OnGlobalLayoutListener() {
-//					@Override
-//					public void onGlobalLayout() {
-//						//do nothing
-//					}
-//			});
-			
+		}else{
 			list.setOnScrollListener(new OnScrollListener() {
 				@SuppressLint("NewApi")
 				@Override
@@ -272,68 +251,6 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		if(lazyLoadingFooterSpinner != null){
 			lazyLoadingFooterSpinner.setVisibility(View.INVISIBLE);
 		}
-	}
-
-	protected static void handleScrollAwayBottomViewOnScroll() {
-		mScrollY = 0;
-		int translationY = 0;
-
-		if (list.scrollYIsComputed()) {
-			mScrollY = list.getComputedScrollY();
-		}
-
-		int rawY = mScrollY;
-
-		switch (mState) {
-		case STATE_OFFSCREEN:
-			if (rawY >= mMinRawY) {
-				mMinRawY = rawY;
-			} else {
-				mState = STATE_RETURNING;
-			}
-			translationY = rawY;
-			break;
-
-		case STATE_ONSCREEN:
-			if (rawY > mQuickReturnHeight) {
-				mState = STATE_OFFSCREEN;
-				mMinRawY = rawY;
-			}
-			translationY = rawY;
-			break;
-
-		case STATE_RETURNING:
-
-			translationY = (rawY - mMinRawY) + mQuickReturnHeight;
-
-			if (translationY < 0) {
-				translationY = 0;
-				mMinRawY = rawY + mQuickReturnHeight;
-			}
-
-			if (rawY == 0) {
-				mState = STATE_ONSCREEN;
-				translationY = 0;
-			}
-
-			if (translationY > mQuickReturnHeight) {
-				mState = STATE_OFFSCREEN;
-				mMinRawY = rawY;
-			}
-			break;
-		}
-
-		/** this can be used if the build is below honeycomb **/
-		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
-			anim = new TranslateAnimation(0, 0, translationY,
-					translationY);
-			anim.setFillAfter(true);
-			anim.setDuration(0);
-			scrollAwayBottomView.startAnimation(anim);
-		} else {
-			scrollAwayBottomView.setTranslationY(translationY);
-		}
-
 	}
 
 	private static boolean willListScroll() {
