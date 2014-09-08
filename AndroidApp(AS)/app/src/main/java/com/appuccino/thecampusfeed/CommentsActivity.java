@@ -156,16 +156,13 @@ public class CommentsActivity extends Activity{
                 e.printStackTrace();
             }
 
+            commentsText.setText("Loading comments...");
             pullListFromServer();
             listAdapter = new CommentListAdapter(this, R.layout.list_row_collegepost, commentList, post);
             if(list != null && commentList != null)
                 list.setAdapter(listAdapter);
             else
                 Log.e("cfeed", "TopPostFragment list adapter wasn't set.");
-
-            //change text if no comments from post
-            if(commentList.size() == 0)
-                commentsText.setText("No Comments");
 
             setMessageAndColorizeTags(post.getMessage(), messageText);
             final ImageView arrowUp = (ImageView)findViewById(R.id.arrowUp);

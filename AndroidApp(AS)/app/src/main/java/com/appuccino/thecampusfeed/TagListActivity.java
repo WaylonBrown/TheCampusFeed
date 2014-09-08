@@ -113,14 +113,10 @@ public class TagListActivity extends Activity{
     }
 
     private void setTopTexts() {
+        topTagText.setText("Loading posts with #" + tagText + "...");
+
         topTagText.setTypeface(FontManager.light);
         tagFeedName.setTypeface(FontManager.light);
-
-        if(postList.size() > 0){
-            topTagText.setText("Posts with #" + tagText);
-        }else{
-            topTagText.setText("No posts with #" + tagText);
-        }
 
         College currentFeed = MainActivity.getCollegeByID(MainActivity.currentFeedCollegeID);
         if(tagFeedName != null && currentFeed != null){

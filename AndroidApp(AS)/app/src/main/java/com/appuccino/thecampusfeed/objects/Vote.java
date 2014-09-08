@@ -30,6 +30,10 @@ public class Vote
         this.upvote = upvote;
     }
 
+    public void setVoteID(int id){
+        this.id = id;
+    }
+
     //from savable format
     public Vote(String formatting){
         String[] split = formatting.split(",");

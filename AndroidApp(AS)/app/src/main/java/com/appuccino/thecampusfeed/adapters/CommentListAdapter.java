@@ -100,6 +100,9 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 					thisComment.score += 2;
                     thisComment.deltaScore += 2;
                     updateRowViews(finalRow, finalPostHolder, 1, thisComment);
+                    //TODO: do this line here for all voting. The goal is to immediately save the vote object, then on the server response set the vote ID.
+                    //otherwise, as it is right now, if you press upvote several times before the server response comes back itll cast the vote many times
+                    MainActivity.commentVoteList.add(new Vote(-1, thisComment.getPostID(), thisComment.getID(), true));
                     new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
                     new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), true));
 				}
@@ -109,6 +112,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 					thisComment.score++;
                     thisComment.deltaScore++;
                     updateRowViews(finalRow, finalPostHolder, 1, thisComment);
+                    MainActivity.commentVoteList.add(new Vote(-1, thisComment.getPostID(), thisComment.getID(), true));
                     new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), true));
 				}
 				else 
@@ -117,6 +121,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 					thisComment.score--;
                     thisComment.deltaScore--;
                     updateRowViews(finalRow, finalPostHolder, 0, thisComment);
+                    MainActivity.commentVoteList.add(new Vote(-1, thisComment.getPostID(), thisComment.getID(), true));
                     new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
 				}
 			}        	
