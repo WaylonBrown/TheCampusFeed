@@ -23,6 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:gravity="center_horizontal"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
         />
     
     <!-- custom so that it cant do a carriage return -->
