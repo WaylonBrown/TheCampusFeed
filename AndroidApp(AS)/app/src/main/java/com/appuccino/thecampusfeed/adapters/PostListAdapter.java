@@ -219,8 +219,8 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 
         if(vote == -1)
         {
-            postHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdownred));
             postHolder.arrowUp.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowup));
+            postHolder.arrowDown.setImageDrawable(context.getResources().getDrawable(R.drawable.arrowdownred));
         }
         else if (vote == 1)
         {

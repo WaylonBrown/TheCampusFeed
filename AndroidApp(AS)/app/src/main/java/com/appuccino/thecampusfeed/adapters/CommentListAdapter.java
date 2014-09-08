@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appuccino.thecampusfeed.CommentsActivity;
 import com.appuccino.thecampusfeed.MainActivity;
 import com.appuccino.thecampusfeed.R;
 import com.appuccino.thecampusfeed.objects.Comment;
@@ -91,6 +90,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         commentHolder.arrowUp.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
+                Log.i("cfeed","up click");
                 int currentVote = MainActivity.getVoteByCommentId(thisComment.getID());
 
 				//if already upvoted, un-upvote
@@ -125,7 +125,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 
 			@Override
 			public void onClick(View v) {
-				Log.i("cfeed","College id: " + thisComment.getCollegeID());
+                Log.i("cfeed","Down click");
 				//post is null if this comment list is received from the MyCommentsFragment and not a comments list to a post
 				if(post != null && MainActivity.hasPermissions(post.getCollegeID()))
 				{
@@ -157,7 +157,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
                         new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
                         new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), false));
 					}
-					CommentsActivity.updateList();
+					//CommentsActivity.updateList();
 				}
 				else
 				{
