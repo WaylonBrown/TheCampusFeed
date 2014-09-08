@@ -50,6 +50,7 @@ public class TagFragment extends Fragment
     public static TagListAdapter listAdapter;
     public static boolean endOfListReached = false;
     private static boolean isLoadingMorePosts = false;
+    private static boolean endOfListFooterReplaced = false;
     static View lazyFooterView;
     static View footerSpace;
     private static ProgressBar lazyLoadingFooterSpinner;
@@ -166,7 +167,7 @@ public class TagFragment extends Fragment
                             !endOfListReached && !isLoadingMorePosts)
                     {
                         loadMorePosts();
-                    }else if (endOfListReached){
+                    }else if (endOfListReached && !endOfListFooterReplaced){
                         replaceFooterBecauseEndOfList();
                     }
 				}
@@ -192,6 +193,7 @@ public class TagFragment extends Fragment
 	}
 
     public static void replaceFooterBecauseEndOfList() {
+        endOfListFooterReplaced = true;
         Log.i("cfeed","end");
         isLoadingMorePosts = false;
         if(list.getFooterViewsCount() > 0 && lazyFooterView != null){

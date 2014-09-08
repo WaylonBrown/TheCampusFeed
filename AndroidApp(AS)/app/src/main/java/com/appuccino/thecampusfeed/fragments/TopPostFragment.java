@@ -54,6 +54,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	public static int currentPageNumber = 1;
 	public static boolean endOfListReached = false;
     private static boolean isLoadingMorePosts = false;
+    private static boolean endOfListFooterReplaced = false;
 	static View lazyFooterView;
 	static View footerSpace;
     static TextView pullDownText;
@@ -218,7 +219,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 							!endOfListReached && !isLoadingMorePosts)
 					{
 						loadMorePosts();
-					}else if (endOfListReached){
+					}else if (endOfListReached && !endOfListFooterReplaced){
 						replaceFooterBecauseEndOfList();
 					}
 				}
@@ -244,6 +245,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	}
 
 	public static void replaceFooterBecauseEndOfList() {
+        endOfListFooterReplaced = true;
         Log.i("cfeed","end");
         isLoadingMorePosts = false;
         if(list.getFooterViewsCount() > 0 && lazyFooterView != null){
