@@ -35,7 +35,6 @@ import com.appuccino.thecampusfeed.utils.FontManager;
 import com.appuccino.thecampusfeed.utils.NetWorker;
 import com.appuccino.thecampusfeed.utils.NetWorker.GetCommentsTask;
 import com.appuccino.thecampusfeed.utils.NetWorker.PostSelector;
-import com.appuccino.thecampusfeed.utils.PrefManager;
 import com.appuccino.thecampusfeed.utils.TimeManager;
 
 import java.text.ParseException;
@@ -244,8 +243,6 @@ public class CommentsActivity extends Activity{
                             post.deltaScore -= 2;
                             scoreText.setText(String.valueOf(post.getDeltaScore()));
                             updateArrows(arrowUp, arrowDown, -1);
-                            MainActivity.postVoteList.add(new Vote(-1, post.getID(), false));
-                            PrefManager.putPostVoteList(MainActivity.postVoteList);
                             new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this, MainActivity.voteObjectFromPostID(post.getID()).id, post.getID()).execute(MainActivity.voteObjectFromPostID(post.getID()));
                             new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(-1, post.getID(), false));
                         }

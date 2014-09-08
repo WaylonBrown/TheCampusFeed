@@ -21,7 +21,6 @@ import com.appuccino.thecampusfeed.objects.Vote;
 import com.appuccino.thecampusfeed.utils.FontManager;
 import com.appuccino.thecampusfeed.utils.NetWorker.MakePostVoteDeleteTask;
 import com.appuccino.thecampusfeed.utils.NetWorker.MakePostVoteTask;
-import com.appuccino.thecampusfeed.utils.PrefManager;
 import com.appuccino.thecampusfeed.utils.TimeManager;
 
 import java.text.ParseException;
@@ -163,7 +162,6 @@ public class PostListAdapter extends ArrayAdapter<Post>{
                     updateRowViews(finalRow, finalPostHolder, 0, thisPost);
                     new MakePostVoteDeleteTask(context, MainActivity.voteObjectFromPostID(thisPost.getID()).id, thisPost.getID()).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
                 }
-                PrefManager.putPostVoteList(MainActivity.postVoteList);
 			}
         });
         postHolder.arrowDown.setOnClickListener(new OnClickListener(){
@@ -202,7 +200,6 @@ public class PostListAdapter extends ArrayAdapter<Post>{
                         new MakePostVoteDeleteTask(context, MainActivity.voteObjectFromPostID(thisPost.getID()).id, thisPost.getID()).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
                         new MakePostVoteTask(context).execute(new Vote(-1, thisPost.getID(), false));
                     }
-                    PrefManager.putPostVoteList(MainActivity.postVoteList);
 				}
 				else
 				{
