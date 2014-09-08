@@ -13,6 +13,7 @@ class TagsController < ApplicationController
   end
 
   def trending
+
     @tags = Tag.top(@college, params[:per_page])
   end
 
