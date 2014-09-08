@@ -44,7 +44,7 @@
         [self.dataController fetchCommentsWithPostId:postID];
 
         float postCellHeight = [self tableView:self.postTableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-        self.postTableHeightConstraint.constant = postCellHeight + self.navigationController.navigationBar.frame.size.height;
+        self.postTableHeightConstraint.constant = postCellHeight;
         [self.view setNeedsUpdateConstraints];
         
         [self.postTableView reloadData];
@@ -53,7 +53,6 @@
         UIImage *facebookImage = [UIImage imageNamed:@"fb_logo.png"];
         UIImage *twitterImage = [UIImage imageNamed:@"twitter_logo.png"];
         
-        // UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithImage:flagImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
         UIBarButtonItem *facebook = [[UIBarButtonItem alloc] initWithImage:facebookImage style:UIBarButtonItemStylePlain target:self action:@selector(shareOnFacebook)];
         UIBarButtonItem *twitter = [[UIBarButtonItem alloc] initWithImage:twitterImage style:UIBarButtonItemStylePlain target:self action:@selector(shareOnTwitter)];
 
@@ -149,7 +148,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *text = @"";
-    float offset = 0; // to omit extra height of college label
+    float offset = -24; // to omit extra height of college label
     
     if (tableView == self.postTableView)
     {
@@ -158,7 +157,6 @@
     else if (tableView == self.commentTableView)
     {
         text = [(Comment *)[self.list objectAtIndex:[indexPath row]] getMessage];
-        offset = -24;
     }
 
     return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)] + offset;
@@ -264,6 +262,7 @@
     [self.postTableView reloadData];
     [self.commentTableView reloadData];
 }
+
 #pragma mark - Helper Methods
 
 - (NSString *)getAgeOfCommentAsString:(NSDate *)commentDate
@@ -315,7 +314,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    scrollView.bounces = (scrollView.contentOffset.y < 50);
+//    scrollView.bounces = (scrollView.contentOffset.y < 50);
 
     CGRect frame = self.feedToolbar.frame;
     CGFloat size = frame.size.height;

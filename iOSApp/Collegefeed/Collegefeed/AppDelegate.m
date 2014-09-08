@@ -40,57 +40,43 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     
-    UIImage *image = [UIImage imageNamed:logoImageWithButton];
-    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(openLeftMenu)];
-
-//    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(openLeftMenu)];
-
+    UIBarButtonItem *menuButton         = [[UIBarButtonItem alloc]
+                                           initWithImage:[UIImage imageNamed:logoImageWithButton]
+                                           style:UIBarButtonItemStylePlain
+                                           target:self
+                                           action:@selector(openLeftMenu)];
     
-    // *** Top Posts - PostsViewController *** //
-    self.topPostsController = [[PostsViewController alloc] initAsType:TOP_VIEW
-                                                   withDataController:self.dataController];
-//    self.topPostsController.navigationItem.leftBarButtonItem = menuButton;
-    // *************************************** //
+    self.topPostsController             = [[PostsViewController alloc]
+                                           initAsType:TOP_VIEW
+                                           withDataController:self.dataController];
 
-
-    // *** New Posts - PostsViewController *** //
-    self.recentPostsController = [[PostsViewController alloc] initAsType:RECENT_VIEW
-                                                      withDataController:self.dataController];
-//    self.recentPostsController.navigationItem.leftBarButtonItem = menuButton;
-    // *************************************** //
+    self.recentPostsController          = [[PostsViewController alloc]
+                                           initAsType:RECENT_VIEW
+                                           withDataController:self.dataController];
     
+    self.tagController                  = [[TagViewController alloc]
+                                           initWithDataController:self.dataController];
     
-    // *** Trending Tags - TagViewController *** //
-    self.tagController = [[TagViewController alloc] initWithDataController:self.dataController];
-//    self.tagController.navigationItem.leftBarButtonItem = menuButton;
-    // *************************************** //
+    self.trendingCollegesController     = [[TrendingCollegesViewController alloc]
+                                           initWithDataController:self.dataController];
     
-    // *** Trending Colleges - TrendingCollegesViewController *** //
-    self.trendingCollegesController = [[TrendingCollegesViewController alloc] initWithDataController:self.dataController];
-    self.trendingCollegesController.navigationItem.leftBarButtonItem = menuButton;
-    // *************************************** //
+    self.userPostsController            = [[UserPostsViewController alloc]
+                                           initAsType:USER_POSTS
+                                           withDataController:self.dataController];
     
-    // *** User Posts - UserPostsViewController *** //
-    self.userPostsController = [[UserPostsViewController alloc] initAsType:USER_POSTS
-                                                        withDataController:self.dataController];
-    self.userPostsController.navigationItem.leftBarButtonItem = menuButton;
-    // *************************************** //
-
-    // *** User Comments - UserCommentsViewController *** //
-    self.userCommentsController = [[UserCommentsViewController alloc] initAsType:USER_COMMENTS
-                                                              withDataController:self.dataController];
-    self.userCommentsController.navigationItem.leftBarButtonItem = menuButton;
-    // *************************************** //
+    self.userCommentsController         = [[UserCommentsViewController alloc]
+                                           initAsType:USER_COMMENTS
+                                           withDataController:self.dataController];
 
     
-    NSArray *viewControllers = [NSArray arrayWithObjects:
-                                self.topPostsController,
-                                self.recentPostsController,
-                                self.tagController,
-                                self.trendingCollegesController,
-                                self.userPostsController,
-                                self.userCommentsController,
-                                nil];
+    NSArray *viewControllers            = [NSArray arrayWithObjects:
+                                           self.topPostsController,
+                                           self.recentPostsController,
+                                           self.tagController,
+                                           self.trendingCollegesController,
+                                           self.userPostsController,
+                                           self.userCommentsController,
+                                           nil];
 
     // *** Side Menu - MenuViewController *** //
     MenuViewController *menuViewController  = [[MenuViewController alloc] initWithViewControllers:viewControllers];
@@ -110,11 +96,9 @@
     UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
                                        initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
                                        target:nil action:nil];
-    negativeSpacer.width = -16;// it was -6 in iOS 6
-    [self.deckController.navigationItem setLeftBarButtonItems:[NSArray arrayWithObjects:negativeSpacer, menuButton/*this will be the button which u actually need*/, nil] animated:NO];
-    
-    
-//    self.deckController.navigationItem.leftBarButtonItem = menuButton;
+
+    negativeSpacer.width = -16;
+    self.deckController.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, menuButton, nil];
     
     UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:self.deckController];
     [controller.navigationBar setTranslucent:NO];
