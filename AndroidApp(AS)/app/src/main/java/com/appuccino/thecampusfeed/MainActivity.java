@@ -486,7 +486,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
 
     public static Vote voteObjectFromCommentID(int commentID){
         for(Vote v : commentVoteList){
-            if(v.postID == commentID){
+            if(v.commentID == commentID){
                 return v;
             }
         }
