@@ -511,6 +511,26 @@ public class MainActivity extends FragmentActivity implements LocationListener
         }
     }
 
+    public static void setCommentVoteID(int voteID, int commentID){
+        for(Vote v : commentVoteList){
+            if(v.commentID == commentID){
+                v.setVoteID(voteID);
+            }
+        }
+
+        PrefManager.putCommentVoteList(MainActivity.commentVoteList);
+    }
+
+    public static void setPostVoteID(int voteID, int postID){
+        for(Vote v : postVoteList){
+            if(v.postID == postID){
+                v.setVoteID(voteID);
+            }
+        }
+
+        PrefManager.putPostVoteList(MainActivity.postVoteList);
+    }
+
 	public void changeFeed(int id) {
 		Log.i("cfeed","Changing to feed with ID " + id);
 		currentFeedCollegeID = id;

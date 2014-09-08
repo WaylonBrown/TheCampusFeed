@@ -20,6 +20,7 @@ import com.appuccino.thecampusfeed.objects.Post;
 import com.appuccino.thecampusfeed.objects.Vote;
 import com.appuccino.thecampusfeed.utils.FontManager;
 import com.appuccino.thecampusfeed.utils.NetWorker;
+import com.appuccino.thecampusfeed.utils.PrefManager;
 import com.appuccino.thecampusfeed.utils.TimeManager;
 
 import java.text.ParseException;
@@ -100,9 +101,8 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 					thisComment.score += 2;
                     thisComment.deltaScore += 2;
                     updateRowViews(finalRow, finalPostHolder, 1, thisComment);
-                    //TODO: do this line here for all voting. The goal is to immediately save the vote object, then on the server response set the vote ID.
-                    //otherwise, as it is right now, if you press upvote several times before the server response comes back itll cast the vote many times
                     MainActivity.commentVoteList.add(new Vote(-1, thisComment.getPostID(), thisComment.getID(), true));
+                    PrefManager.putCommentVoteList(MainActivity.commentVoteList);
                     new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
                     new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), true));
 				}
@@ -113,6 +113,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
                     thisComment.deltaScore++;
                     updateRowViews(finalRow, finalPostHolder, 1, thisComment);
                     MainActivity.commentVoteList.add(new Vote(-1, thisComment.getPostID(), thisComment.getID(), true));
+                    PrefManager.putCommentVoteList(MainActivity.commentVoteList);
                     new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), true));
 				}
 				else 
@@ -121,7 +122,6 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 					thisComment.score--;
                     thisComment.deltaScore--;
                     updateRowViews(finalRow, finalPostHolder, 0, thisComment);
-                    MainActivity.commentVoteList.add(new Vote(-1, thisComment.getPostID(), thisComment.getID(), true));
                     new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
 				}
 			}        	
@@ -151,6 +151,8 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 						thisComment.score--;
                         thisComment.deltaScore--;
                         updateRowViews(finalRow, finalPostHolder, -1, thisComment);
+                        MainActivity.commentVoteList.add(new Vote(-1, thisComment.getPostID(), thisComment.getID(), false));
+                        PrefManager.putCommentVoteList(MainActivity.commentVoteList);
                         new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), false));
 					}
 					else 
@@ -159,6 +161,8 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 						thisComment.score -= 2;
                         thisComment.deltaScore -= 2;
                         updateRowViews(finalRow, finalPostHolder, -1, thisComment);
+                        MainActivity.commentVoteList.add(new Vote(-1, thisComment.getPostID(), thisComment.getID(), false));
+                        PrefManager.putCommentVoteList(MainActivity.commentVoteList);
                         new NetWorker.MakeCommentVoteDeleteTask(context).execute(MainActivity.voteObjectFromCommentID(thisComment.getID()));
                         new NetWorker.MakeCommentVoteTask(context, thisComment).execute(new Vote(0, post.getID(), thisComment.getID(), false));
 					}

@@ -820,7 +820,8 @@ public class NetWorker {
             Vote returnedVote = null;
             try {
                 returnedVote = JSONParser.postVoteFromJSON(response);
-                MainActivity.postVoteList.add(returnedVote);
+                MainActivity.setPostVoteID(returnedVote.id, returnedVote.postID);
+                //MainActivity.postVoteList.add(returnedVote);
                 PrefManager.putPostVoteList(MainActivity.postVoteList);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -865,7 +866,8 @@ public class NetWorker {
             Vote returnedVote = null;
             try {
                 returnedVote = JSONParser.commentVoteFromJSON(response, comment);
-                MainActivity.commentVoteList.add(returnedVote);
+                MainActivity.setCommentVoteID(returnedVote.id, returnedVote.commentID);
+                //MainActivity.commentVoteList.add(returnedVote);
                 PrefManager.putCommentVoteList(MainActivity.commentVoteList);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -885,8 +887,10 @@ public class NetWorker {
                 vote = votes[0];
                 if(vote != null){
                     HttpDelete request = new HttpDelete(REQUEST_URL + "votes/" + vote.id);
-                    //request.setEntity(new ByteArrayEntity(
-                    //  votes[0].toString().getBytes("UTF8")));
+                    //these two lines were in onPostExecute, but once we get the vote's ID for deletion we can immediately remove, whether it went though
+                    //or not
+                    MainActivity.removePostVoteByPostID(vote.postID);
+                    PrefManager.putPostVoteList(MainActivity.postVoteList);
                     ResponseHandler<String> responseHandler = new BasicResponseHandler();
                     String response = client.execute(request, responseHandler);
 
@@ -910,9 +914,6 @@ public class NetWorker {
             if(!result){
                 Log.e("cfeed", "Vote delete didn't work.");
             }
-
-            MainActivity.removePostVoteByPostID(vote.postID);
-            PrefManager.putPostVoteList(MainActivity.postVoteList);
         }
     }
 
@@ -929,8 +930,10 @@ public class NetWorker {
                 vote = votes[0];
                 if(vote != null){
                     HttpDelete request = new HttpDelete(REQUEST_URL + "votes/" + vote.id);
-                    //request.setEntity(new ByteArrayEntity(
-                    //  votes[0].toString().getBytes("UTF8")));
+                    //these two lines were in onPostExecute, but once we get the vote's ID for deletion we can immediately remove, whether it went though
+                    //or not
+                    MainActivity.removeCommentVoteByCommentID(vote.commentID);
+                    PrefManager.putCommentVoteList(MainActivity.commentVoteList);
                     ResponseHandler<String> responseHandler = new BasicResponseHandler();
                     String response = client.execute(request, responseHandler);
 
@@ -953,9 +956,6 @@ public class NetWorker {
             if(!result){
                 Log.e("cfeed", "Vote delete didn't work.");
             }
-
-            MainActivity.removeCommentVoteByCommentID(vote.commentID);
-            PrefManager.putCommentVoteList(MainActivity.commentVoteList);
         }
     }
 

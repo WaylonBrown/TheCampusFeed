@@ -20,6 +20,7 @@ import com.appuccino.thecampusfeed.objects.Vote;
 import com.appuccino.thecampusfeed.utils.FontManager;
 import com.appuccino.thecampusfeed.utils.NetWorker.MakePostVoteDeleteTask;
 import com.appuccino.thecampusfeed.utils.NetWorker.MakePostVoteTask;
+import com.appuccino.thecampusfeed.utils.PrefManager;
 import com.appuccino.thecampusfeed.utils.TimeManager;
 
 import java.text.ParseException;
@@ -142,6 +143,8 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 					thisPost.score += 2;
                     thisPost.deltaScore += 2;
                     updateRowViews(finalRow, finalPostHolder, 1, thisPost);
+                    MainActivity.postVoteList.add(new Vote(-1, thisPost.getID(), true));
+                    PrefManager.putPostVoteList(MainActivity.postVoteList);
                     new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
                     new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), true));
 				}
@@ -151,6 +154,8 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 					thisPost.score++;
                     thisPost.deltaScore++;
                     updateRowViews(finalRow, finalPostHolder, 1, thisPost);
+                    MainActivity.postVoteList.add(new Vote(-1, thisPost.getID(), true));
+                    PrefManager.putPostVoteList(MainActivity.postVoteList);
                     new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), true));
 				}
 				else 
@@ -187,6 +192,8 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 						thisPost.score--;
                         thisPost.deltaScore--;
                         updateRowViews(finalRow, finalPostHolder, -1, thisPost);
+                        MainActivity.postVoteList.add(new Vote(-1, thisPost.getID(), false));
+                        PrefManager.putPostVoteList(MainActivity.postVoteList);
                         new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), false));
                     }
 					else 
@@ -195,6 +202,8 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 						thisPost.score -= 2;
                         thisPost.deltaScore -= 2;
                         updateRowViews(finalRow, finalPostHolder, -1, thisPost);
+                        MainActivity.postVoteList.add(new Vote(-1, thisPost.getID(), false));
+                        PrefManager.putPostVoteList(MainActivity.postVoteList);
                         new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
                         new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), false));
                     }
