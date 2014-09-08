@@ -54,6 +54,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -494,18 +495,22 @@ public class MainActivity extends FragmentActivity implements LocationListener
     }
 
     public static void removePostVoteByPostID(int postID){
-        for(Vote v : postVoteList){
-            if(v.postID == postID){
-                postVoteList.remove(v);
+        //using iterator to get rid of concurrentmodificationexception
+        for(Iterator<Vote> it = postVoteList.iterator(); it.hasNext();){
+            Vote vote = it.next();
+            if(vote.postID == postID){
+                it.remove();
                 break;
             }
         }
     }
 
     public static void removeCommentVoteByCommentID(int commentID){
-        for(Vote v : commentVoteList){
-            if(v.commentID == commentID){
-                commentVoteList.remove(v);
+        //using iterator to get rid of concurrentmodificationexception
+        for(Iterator<Vote> it = commentVoteList.iterator(); it.hasNext();){
+            Vote vote = it.next();
+            if(vote.commentID == commentID){
+                it.remove();
                 break;
             }
         }

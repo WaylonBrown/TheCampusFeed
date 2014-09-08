@@ -3,6 +3,7 @@ package com.appuccino.thecampusfeed.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -135,7 +136,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 			@Override
 			public void onClick(View v) {
                 int currentVote = MainActivity.getVoteByPostId(thisPost.getID());
-
+                Log.i("cfeed","Clicked arrow when vote was " + currentVote + ", list size was " + MainActivity.postVoteList.size());
 				//if already upvoted, un-upvote
 				if(currentVote == -1)
 				{
@@ -143,10 +144,8 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 					thisPost.score += 2;
                     thisPost.deltaScore += 2;
                     updateRowViews(finalRow, finalPostHolder, 1, thisPost);
-                    MainActivity.postVoteList.add(new Vote(-1, thisPost.getID(), true));
-                    PrefManager.putPostVoteList(MainActivity.postVoteList);
-                    new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
-                    new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), true));
+                    new MakePostVoteDeleteTask(context, MainActivity.voteObjectFromPostID(thisPost.getID()).id, thisPost.getID()).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
+                    new MakePostVoteTask(context).execute(new Vote(-1, thisPost.getID(), true));
 				}
 				else if(currentVote == 0)
 				{
@@ -154,9 +153,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 					thisPost.score++;
                     thisPost.deltaScore++;
                     updateRowViews(finalRow, finalPostHolder, 1, thisPost);
-                    MainActivity.postVoteList.add(new Vote(-1, thisPost.getID(), true));
-                    PrefManager.putPostVoteList(MainActivity.postVoteList);
-                    new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), true));
+                    new MakePostVoteTask(context).execute(new Vote(-1, thisPost.getID(), true));
 				}
 				else 
 				{
@@ -164,8 +161,9 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 					thisPost.score--;
                     thisPost.deltaScore--;
                     updateRowViews(finalRow, finalPostHolder, 0, thisPost);
-                    new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
+                    new MakePostVoteDeleteTask(context, MainActivity.voteObjectFromPostID(thisPost.getID()).id, thisPost.getID()).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
                 }
+                PrefManager.putPostVoteList(MainActivity.postVoteList);
 			}
         });
         postHolder.arrowDown.setOnClickListener(new OnClickListener(){
@@ -176,6 +174,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 				if(MainActivity.hasPermissions(thisPost.getCollegeID()))
 				{
                     int currentVote = MainActivity.getVoteByPostId(thisPost.getID());
+                    Log.i("cfeed","Clicked arrow when vote was " + currentVote + ", list size was " + MainActivity.postVoteList.size());
 
 					//if already downvoted, un-downvote
 					if(currentVote == -1)
@@ -184,7 +183,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
                         thisPost.score++;
                         thisPost.deltaScore++;
                         updateRowViews(finalRow, finalPostHolder, 0, thisPost);
-                        new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
+                        new MakePostVoteDeleteTask(context, MainActivity.voteObjectFromPostID(thisPost.getID()).id, thisPost.getID()).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
                     }
 					else if(currentVote == 0)
 					{
@@ -192,9 +191,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 						thisPost.score--;
                         thisPost.deltaScore--;
                         updateRowViews(finalRow, finalPostHolder, -1, thisPost);
-                        MainActivity.postVoteList.add(new Vote(-1, thisPost.getID(), false));
-                        PrefManager.putPostVoteList(MainActivity.postVoteList);
-                        new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), false));
+                        new MakePostVoteTask(context).execute(new Vote(-1, thisPost.getID(), false));
                     }
 					else 
 					{
@@ -202,11 +199,10 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 						thisPost.score -= 2;
                         thisPost.deltaScore -= 2;
                         updateRowViews(finalRow, finalPostHolder, -1, thisPost);
-                        MainActivity.postVoteList.add(new Vote(-1, thisPost.getID(), false));
-                        PrefManager.putPostVoteList(MainActivity.postVoteList);
-                        new MakePostVoteDeleteTask(context).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
-                        new MakePostVoteTask(context).execute(new Vote(0, thisPost.getID(), false));
+                        new MakePostVoteDeleteTask(context, MainActivity.voteObjectFromPostID(thisPost.getID()).id, thisPost.getID()).execute(MainActivity.voteObjectFromPostID(thisPost.getID()));
+                        new MakePostVoteTask(context).execute(new Vote(-1, thisPost.getID(), false));
                     }
+                    PrefManager.putPostVoteList(MainActivity.postVoteList);
 				}
 				else
 				{

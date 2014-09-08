@@ -388,7 +388,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		if(listAdapter != null)
 		{
 			listAdapter.setCollegeFeedID(currentFeedID);
-            //listAdapter.notifyDataSetChanged();
+            listAdapter.notifyDataSetChanged();
 //            UpdateListThread update = new UpdateListThread();
 //            update.run();
             setupFooterListView();

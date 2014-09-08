@@ -8,6 +8,7 @@ import com.appuccino.thecampusfeed.objects.Vote;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 
 /*
@@ -67,9 +68,12 @@ public class PrefManager {
 	
 	public static void putPostVoteList(List<Vote> list){
 		String storage = "";
-		for(Vote vote : list){
-			storage += (vote.toSavableFormat() + ";");
-		}
+        //using iterator to get rid of concurrentmodificationexception
+        for(Iterator<Vote> it = list.iterator(); it.hasNext();){
+            Vote vote = it.next();
+            storage += (vote.toSavableFormat() + ";");
+        }
+
 		//remove final ;
 		if(storage.length() > 0){
 			storage = storage.substring(0, storage.length()-1);
@@ -96,9 +100,12 @@ public class PrefManager {
 	
 	public static void putCommentVoteList(List<Vote> list){
 		String storage = "";
-		for(Vote vote : list){
-			storage += (vote.toSavableFormat() + ";");
-		}
+        //using iterator to get rid of concurrentmodificationexception
+        for(Iterator<Vote> it = list.iterator(); it.hasNext();){
+            Vote vote = it.next();
+            storage += (vote.toSavableFormat() + ";");
+        }
+
 		//remove final ;
 		if(storage.length() > 0){
 			storage = storage.substring(0, storage.length()-1);

@@ -181,10 +181,8 @@ public class CommentsActivity extends Activity{
                         post.deltaScore += 2;
                         scoreText.setText(String.valueOf(post.getDeltaScore()));
                         updateArrows(arrowUp, arrowDown, 1);
-                        MainActivity.postVoteList.add(new Vote(-1, post.getID(), true));
-                        PrefManager.putPostVoteList(MainActivity.postVoteList);
-                        new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
-                        new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), true));
+                        new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this, MainActivity.voteObjectFromPostID(post.getID()).id, post.getID()).execute(MainActivity.voteObjectFromPostID(post.getID()));
+                        new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(-1, post.getID(), true));
                     }
                     else if(post.getVote() == 0)
                     {
@@ -193,9 +191,7 @@ public class CommentsActivity extends Activity{
                         post.deltaScore++;
                         scoreText.setText(String.valueOf(post.getDeltaScore()));
                         updateArrows(arrowUp, arrowDown, 1);
-                        MainActivity.postVoteList.add(new Vote(-1, post.getID(), true));
-                        PrefManager.putPostVoteList(MainActivity.postVoteList);
-                        new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), true));
+                        new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(-1, post.getID(), true));
                     }
                     else
                     {
@@ -204,7 +200,7 @@ public class CommentsActivity extends Activity{
                         post.deltaScore--;
                         scoreText.setText(String.valueOf(post.getDeltaScore()));
                         updateArrows(arrowUp, arrowDown, 0);
-                        new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
+                        new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this, MainActivity.voteObjectFromPostID(post.getID()).id, post.getID()).execute(MainActivity.voteObjectFromPostID(post.getID()));
                     }
                     if(MainActivity.topPostFrag != null){
                         MainActivity.topPostFrag.updateList();
@@ -230,7 +226,7 @@ public class CommentsActivity extends Activity{
                             post.deltaScore++;
                             scoreText.setText(String.valueOf(post.getDeltaScore()));
                             updateArrows(arrowUp, arrowDown, 0);
-                            new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
+                            new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this, MainActivity.voteObjectFromPostID(post.getID()).id, post.getID()).execute(MainActivity.voteObjectFromPostID(post.getID()));
                         }
                         else if(post.getVote() == 0)
                         {
@@ -239,9 +235,7 @@ public class CommentsActivity extends Activity{
                             post.deltaScore--;
                             scoreText.setText(String.valueOf(post.getDeltaScore()));
                             updateArrows(arrowUp, arrowDown, -1);
-                            MainActivity.postVoteList.add(new Vote(-1, post.getID(), false));
-                            PrefManager.putPostVoteList(MainActivity.postVoteList);
-                            new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), false));
+                            new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(-1, post.getID(), false));
                         }
                         else
                         {
@@ -252,8 +246,8 @@ public class CommentsActivity extends Activity{
                             updateArrows(arrowUp, arrowDown, -1);
                             MainActivity.postVoteList.add(new Vote(-1, post.getID(), false));
                             PrefManager.putPostVoteList(MainActivity.postVoteList);
-                            new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this).execute(MainActivity.voteObjectFromPostID(post.getID()));
-                            new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(0, post.getID(), false));
+                            new NetWorker.MakePostVoteDeleteTask(CommentsActivity.this, MainActivity.voteObjectFromPostID(post.getID()).id, post.getID()).execute(MainActivity.voteObjectFromPostID(post.getID()));
+                            new NetWorker.MakePostVoteTask(CommentsActivity.this).execute(new Vote(-1, post.getID(), false));
                         }
                         if(MainActivity.topPostFrag != null){
                             MainActivity.topPostFrag.updateList();

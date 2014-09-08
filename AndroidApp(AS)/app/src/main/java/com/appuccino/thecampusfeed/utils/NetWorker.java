@@ -793,8 +793,12 @@ public class NetWorker {
         public MakePostVoteTask(Context c){
             this.c = c;
         }
+
         public Boolean doInBackground(Vote... votes){
             try{
+                MainActivity.postVoteList.add(votes[0]);
+                PrefManager.putPostVoteList(MainActivity.postVoteList);
+
                 HttpPost request = new HttpPost(REQUEST_URL + "posts/" + votes[0].postID + "/votes");
                 request.setHeader("Content-Type", "application/json");
                 request.setEntity(new ByteArrayEntity(votes[0].toJSONString().toByteArray()));
@@ -821,7 +825,6 @@ public class NetWorker {
             try {
                 returnedVote = JSONParser.postVoteFromJSON(response);
                 MainActivity.setPostVoteID(returnedVote.id, returnedVote.postID);
-                //MainActivity.postVoteList.add(returnedVote);
                 PrefManager.putPostVoteList(MainActivity.postVoteList);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -841,6 +844,9 @@ public class NetWorker {
 
         public Boolean doInBackground(Vote... votes){
             try{
+                MainActivity.commentVoteList.add(votes[0]);
+                PrefManager.putCommentVoteList(MainActivity.commentVoteList);
+
                 HttpPost request = new HttpPost(REQUEST_URL + "posts/" + votes[0].postID + "/comments/" + votes[0].commentID + "/votes");
                 request.setHeader("Content-Type", "application/json");
                 request.setEntity(new ByteArrayEntity(votes[0].toJSONString().toByteArray()));
@@ -867,7 +873,6 @@ public class NetWorker {
             try {
                 returnedVote = JSONParser.commentVoteFromJSON(response, comment);
                 MainActivity.setCommentVoteID(returnedVote.id, returnedVote.commentID);
-                //MainActivity.commentVoteList.add(returnedVote);
                 PrefManager.putCommentVoteList(MainActivity.commentVoteList);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -878,19 +883,20 @@ public class NetWorker {
     public static class MakePostVoteDeleteTask extends AsyncTask<Vote, Void, Boolean>{
         Vote vote;
         Context c;
+        int voteID;
 
-        public MakePostVoteDeleteTask(Context c){
+        public MakePostVoteDeleteTask(Context c, int voteID, int postID){
             this.c = c;
+            this.voteID = voteID;
+            MainActivity.removePostVoteByPostID(postID);
+            PrefManager.putPostVoteList(MainActivity.postVoteList);
         }
+
         public Boolean doInBackground(Vote... votes){
             try{
                 vote = votes[0];
                 if(vote != null){
-                    HttpDelete request = new HttpDelete(REQUEST_URL + "votes/" + vote.id);
-                    //these two lines were in onPostExecute, but once we get the vote's ID for deletion we can immediately remove, whether it went though
-                    //or not
-                    MainActivity.removePostVoteByPostID(vote.postID);
-                    PrefManager.putPostVoteList(MainActivity.postVoteList);
+                    HttpDelete request = new HttpDelete(REQUEST_URL + "votes/" + voteID);
                     ResponseHandler<String> responseHandler = new BasicResponseHandler();
                     String response = client.execute(request, responseHandler);
 
@@ -920,9 +926,13 @@ public class NetWorker {
     public static class MakeCommentVoteDeleteTask extends AsyncTask<Vote, Void, Boolean>{
         Vote vote;
         Context c;
+        int voteID;
 
-        public MakeCommentVoteDeleteTask(Context c){
+        public MakeCommentVoteDeleteTask(Context c, int voteID, int commentID){
             this.c = c;
+            this.voteID = voteID;
+            MainActivity.removeCommentVoteByCommentID(commentID);
+            PrefManager.putCommentVoteList(MainActivity.commentVoteList);
         }
 
         public Boolean doInBackground(Vote... votes){
@@ -930,10 +940,6 @@ public class NetWorker {
                 vote = votes[0];
                 if(vote != null){
                     HttpDelete request = new HttpDelete(REQUEST_URL + "votes/" + vote.id);
-                    //these two lines were in onPostExecute, but once we get the vote's ID for deletion we can immediately remove, whether it went though
-                    //or not
-                    MainActivity.removeCommentVoteByCommentID(vote.commentID);
-                    PrefManager.putCommentVoteList(MainActivity.commentVoteList);
                     ResponseHandler<String> responseHandler = new BasicResponseHandler();
                     String response = client.execute(request, responseHandler);
 
