@@ -130,8 +130,12 @@ public class TagListActivity extends Activity{
 		ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);		
 		if(cm.getActiveNetworkInfo() != null)
 			new GetTagActivityTask(this, MainActivity.currentFeedCollegeID, tagText).execute(new PostSelector());
-		else
-			Toast.makeText(this, "You have no internet connection.", Toast.LENGTH_LONG).show();
+		else {
+            Toast.makeText(this, "You have no internet connection.", Toast.LENGTH_LONG).show();
+            if (tagText != null) {
+                topTagText.setText("No posts with #" + tagText);
+            }
+        }
 	}
 
 	@Override

@@ -422,8 +422,12 @@ public class CommentsActivity extends Activity{
 		ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);		
 		if(cm.getActiveNetworkInfo() != null)
 			new GetCommentsTask(this, post.getID()).execute(new PostSelector());
-		else
-			Toast.makeText(this, "You have no internet connection. Pull down to refresh and try again.", Toast.LENGTH_LONG).show();
+		else {
+            Toast.makeText(this, "You have no internet connection. Pull down to refresh and try again.", Toast.LENGTH_LONG).show();
+            if (commentsText != null) {
+                commentsText.setText("No comments, try again with internet enabled");
+            }
+        }
 		
 		
 		//if doesnt havefooter, add it
