@@ -313,20 +313,20 @@ public class TagFragment extends Fragment
     	});
 	}
 
-	private static void pullListFromServer() 
+	private void pullListFromServer()
 	{
         if(tagList == null){
             tagList = new ArrayList<Tag>();
         }
 		ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
 		if(cm.getActiveNetworkInfo() != null){
-			new GetTagFragmentTask(currentFeedID, currentPageNumber).execute(new PostSelector());
+			new GetTagFragmentTask(this, currentFeedID, currentPageNumber).execute(new PostSelector());
 		} else {
             makeLoadingIndicator(false);
         }
 	}
 	
-	public static void changeFeed(int id) {
+	public void changeFeed(int id) {
         endOfListReached = false;
         currentPageNumber = 1;
 		currentFeedID = id;
@@ -352,14 +352,15 @@ public class TagFragment extends Fragment
         scrollToTop();
 	}
 
-	public static void updateList() {
+	public void updateList() {
 		if(listAdapter != null)
 		{
-			listAdapter.clear();
-			listAdapter.addAll(tagList);
 			listAdapter.notifyDataSetChanged();
+            setupFooterListView();
 		}
 	}
+
+
 
 	public static void makeLoadingIndicator(boolean makeLoading) {
         if(progressSpinner != null){

@@ -1,7 +1,5 @@
 package com.appuccino.thecampusfeed.adapters;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,6 +13,8 @@ import com.appuccino.thecampusfeed.R;
 import com.appuccino.thecampusfeed.fragments.TagFragment;
 import com.appuccino.thecampusfeed.objects.Tag;
 import com.appuccino.thecampusfeed.utils.FontManager;
+
+import java.util.List;
 
 public class TagListAdapter extends ArrayAdapter<Tag>{
 

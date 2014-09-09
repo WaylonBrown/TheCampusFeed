@@ -551,7 +551,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
         } else if(newPostFrag != null) {
             newPostFrag.changeFeed(id);
         } else if(tagFrag != null) {
-            TagFragment.changeFeed(id);
+            tagFrag.changeFeed(id);
         }
 	}
 

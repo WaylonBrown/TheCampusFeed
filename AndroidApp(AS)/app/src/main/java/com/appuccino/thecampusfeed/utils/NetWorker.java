@@ -255,13 +255,15 @@ public class NetWorker {
          int feedID = 0;
          int pageNumber;
          final int POSTS_PER_PAGE = 20;
+         TagFragment frag;
 
          public GetTagFragmentTask()
          {
          }
 
-         public GetTagFragmentTask(int feedID, int p)
+         public GetTagFragmentTask(TagFragment frag, int feedID, int p)
          {
+             this.frag = frag;
              this.feedID = feedID;
              pageNumber = p;
          }
@@ -316,10 +318,10 @@ public class NetWorker {
                  TagFragment.replaceFooterBecauseEndOfList();
              }
 
-             TagFragment.updateList();
-             TagFragment.makeLoadingIndicator(false);
-             TagFragment.currentPageNumber++;
-             TagFragment.removeFooterSpinner();
+             frag.updateList();
+             frag.makeLoadingIndicator(false);
+             frag.currentPageNumber++;
+             frag.removeFooterSpinner();
          }
      }
 
