@@ -7,8 +7,8 @@ resource "Tags" do
   before do
     @c = College.create(:id => 2015, :name => "Test College");
 
-    @p = Post.create(:text => "Test post. #yolo #swag");
-    @p = Post.create(:college_id => 2015, :text => "Another test post. #yolo #making #money #bitch.");
+    @p = @c.posts.create(:text => "Test post. #yolo #swag");
+    @p = @c.posts.create(:college_id => 2015, :text => "Another test post. #yolo #making #money #bitch.");
 
   end
 
@@ -24,7 +24,23 @@ resource "Tags" do
 
   end
 
+  get "/api/v1/tags/trending?page=2&per_page=1" do
+
+    example "Get page 2 of the currently trending tags" do
+      do_request
+      status.should == 200 && response_body.length.should > 0
+    end
+
+  end
+
   get "/api/v1/colleges/2015/tags/trending" do
+    example "Get the currently trending tags for college ID 2015" do
+      do_request
+      status.should == 200
+    end
+  end
+
+  get "/api/v1/colleges/2015/tags/trending?page=2&per_page=1" do
     example "Get the currently trending tags for college ID 2015" do
       do_request
       status.should == 200

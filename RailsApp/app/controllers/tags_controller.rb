@@ -13,8 +13,19 @@ class TagsController < ApplicationController
   end
 
   def trending
+    @per_page = 25
+    @page = 0
 
-    @tags = Tag.top(@college, params[:per_page])
+    begin 
+      @per_page = Integer(params[:per_page])
+    rescue ArgumentError, TypeError
+    end
+    begin
+      @page = Integer(params[:page])
+    rescue ArgumentError, TypeError
+    end
+
+    @tags = Tag.top(@college, @per_page, @page)
   end
 
   # GET /api/v1/tags/1
