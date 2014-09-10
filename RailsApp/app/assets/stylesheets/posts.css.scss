@@ -5,7 +5,7 @@
 .card {
   position: relative;
   .card-background {
-    background-image: url('/images/congruent_pentagon_gray.png');
+    background-image: image-url('congruent_pentagon_gray.png');
     z-index: 1;
     background-size: 350px;
   }
@@ -14,7 +14,7 @@
     z-index: 100;
     float: left;
     .button-container {
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: rgba(0, 0, 0, 0.4);
       .button {
         height: 30px;
         width: 30px;

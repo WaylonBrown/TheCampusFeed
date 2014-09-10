@@ -37,8 +37,8 @@ body.landing{
 
   div#title::before{
       z-index: -1;
-      background-image: url('/images/congruent_pentagon.png');
-      opacity: .08;
+      background-image: image-url('congruent_pentagon.png');
+      opacity: .12;
       margin: 0 auto;
       content: " ";
       position: absolute;
