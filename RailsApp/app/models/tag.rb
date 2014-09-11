@@ -23,7 +23,7 @@ class Tag < ActiveRecord::Base
       @actual_offset = (page - 1) * @per_page
     end
 
-    ActiveRecord::Base.connection.execute("SELECT casedText, MAX(posts_count) FROM (
+    ActiveRecord::Base.connection.execute("SELECT casedText, MAX(posts_count + comments_count) FROM (
            SELECT tags.id, tags.text, tags.casedText, count(posts.id) AS posts_count, count(comments.id) AS comments_count 
            FROM `tags` 
            LEFT OUTER JOIN `posts_tags` ON `posts_tags`.`tag_id` = `tags`.`id` 

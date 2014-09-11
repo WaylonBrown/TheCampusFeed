@@ -142,7 +142,7 @@ vote_these << Post.create({college_id: cid, text: "this #isnt just your #Avg tes
 vote_these << Post.create({college_id: cid, text: "This makes me fill in the #letteRstothegameofthenameOfthis"})
 vote_these << Post.create({college_id: cid, text: "this #isnt just your #Avg test"})
 (1..500).each {|e|
-  vote_these[-1].comments.create({text: "Hi this is a comment."})
+  vote_these[-1].comments.create({text: "Hi this is a #interesting comment."})
 }
 
 vote_these.each { |post|
@@ -151,10 +151,24 @@ vote_these.each { |post|
   }
 }
 
+tags = []
+o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+(1..50).each {|i|
+  randLength = rand(40)
+  @randString = "#" + (0...randLength).map { o[rand(o.length)] }.join
+  tags << @randString
+  #@randString = (0..randLength).map { rand(2) > 0 ? @randString[rand(o.length)].to_upper : @randString[rand(o.length)].to_lower }.join
+  #tags << @randString
+}
+
 (1..1000).each {|e|
   testString = rand(1..10) > 5 ? "Test" : "test"
-  curPost = Post.create({college_id: cid, text: "This is ##{e}, a ##{testString} post!"})
+  curPost = Post.create({college_id: cid, text: "This is ##{e}, a ##{testString} post! #{tags[rand(tags.length)]}"})
   (1..10).each {|f|
-    Comment.create({post_id: curPost.id, text: "Hi this is a comment."})
+    addon = ""
+    if rand(20) > 15
+      addon = " " + tags[rand(tags.length)]
+    end
+    Comment.create({post_id: curPost.id, text: "Hi this is a comment.#{addon}"})
   }
 }
