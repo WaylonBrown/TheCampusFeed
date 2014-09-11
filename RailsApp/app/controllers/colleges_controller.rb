@@ -27,6 +27,7 @@ class CollegesController < ApplicationController
   end
 
   def trending
+    #@colleges.
     @colleges = College.all.page(params[:page]).per(params[:per_page])
     render json: @colleges
   end

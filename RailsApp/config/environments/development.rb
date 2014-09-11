@@ -26,4 +26,17 @@ CollegeFeed::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  # Disable Rails's static asset server (Apache or nginx will already do this).
+  config.serve_static_assets = true
+
+  # Compress JavaScripts and CSS.
+  config.assets.js_compressor = :uglifier
+  # config.assets.css_compressor = :sass
+
+  # Do not fallback to assets pipeline if a precompiled asset is missed.
+  config.assets.enabled = true
+  config.assets.compile = true
+  #config.assets.precompile =  ['*.js']
+
 end
