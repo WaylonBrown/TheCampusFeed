@@ -47,14 +47,14 @@
                             </connections>
                         </button>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Showing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q0Q-LO-cjs">
-                            <rect key="frame" x="5" y="4" width="45" height="14"/>
+                            <rect key="frame" x="5" y="4" width="49" height="15"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All Colleges" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SXB-AF-c0g">
-                            <rect key="frame" x="20" y="22" width="215" height="23"/>
+                            <rect key="frame" x="20" y="23" width="215" height="23"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -79,7 +79,7 @@
                         <constraint firstItem="sMK-hB-0KP" firstAttribute="top" secondItem="onw-bZ-Ayo" secondAttribute="top" constant="8" id="Ca8-HI-IBU"/>
                         <constraint firstItem="q0Q-LO-cjs" firstAttribute="top" secondItem="onw-bZ-Ayo" secondAttribute="top" constant="4" id="GZT-Ai-tbp"/>
                         <constraint firstAttribute="trailing" secondItem="1L3-iO-Uw7" secondAttribute="trailing" constant="5" id="cY1-f1-NO8"/>
-                        <constraint firstAttribute="bottom" secondItem="SXB-AF-c0g" secondAttribute="bottom" constant="5" id="esW-YQ-oHk"/>
+                        <constraint firstAttribute="bottom" secondItem="SXB-AF-c0g" secondAttribute="bottom" constant="4" id="esW-YQ-oHk"/>
                         <constraint firstItem="1L3-iO-Uw7" firstAttribute="leading" secondItem="sMK-hB-0KP" secondAttribute="trailing" constant="6" id="lQs-vH-xpa"/>
                         <constraint firstAttribute="height" constant="50" id="lpA-9f-KSv"/>
                         <constraint firstItem="SXB-AF-c0g" firstAttribute="leading" secondItem="onw-bZ-Ayo" secondAttribute="leading" constant="20" id="myn-lf-0vn"/>
@@ -96,8 +96,6 @@
                 <constraint firstItem="onw-bZ-Ayo" firstAttribute="leading" secondItem="cKt-4a-JCZ" secondAttribute="leading" id="VYU-mS-F2q"/>
                 <constraint firstAttribute="trailing" secondItem="aEV-VT-52H" secondAttribute="trailing" id="vdo-pn-HEn"/>
             </constraints>
-            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
     </objects>

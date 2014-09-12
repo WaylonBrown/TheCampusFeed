@@ -240,6 +240,13 @@
         {
             NSRange range = [self.messageLabel.text rangeOfString:word];
             
+            NSArray *keys = [[NSArray alloc] initWithObjects:(id)kCTForegroundColorAttributeName, (id)kCTUnderlineStyleAttributeName, nil];
+            NSArray *objects = [[NSArray alloc] initWithObjects:[Shared getCustomUIColor:CF_LIGHTBLUE],[NSNumber numberWithInt:kCTUnderlineStyleNone], nil];
+            NSDictionary *linkAttributes = [[NSDictionary alloc] initWithObjects:objects forKeys:keys];
+            
+            self.messageLabel.linkAttributes = linkAttributes;
+            
+            
             [self.messageLabel addLinkToURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", word]]
                                   withRange:range];
         }

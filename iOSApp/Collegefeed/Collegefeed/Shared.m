@@ -35,7 +35,7 @@
 
 + (float)getLargeCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font
 {
-#define CELL_HEIGHT_CUSHION 5
+#define CELL_HEIGHT_CUSHION 13
     
     CGFloat height = [self getLargeCellMessageHeight:text WithFont:font];
     float fullHeight = height + LARGE_CELL_TOP_TO_LABEL + LARGE_CELL_LABEL_TO_BOTTOM;

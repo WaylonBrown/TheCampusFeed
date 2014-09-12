@@ -57,9 +57,9 @@
 
     // Assign fonts
     [self.currentFeedLabel      setAdjustsFontSizeToFitWidth:YES];
-    [self.currentFeedLabel      setFont:CF_FONT_LIGHT(20)];
-    [self.showingLabel          setFont:CF_FONT_MEDIUM(11)];
-    [self.feedButton.titleLabel setFont:CF_FONT_LIGHT(15)];
+    [self.currentFeedLabel      setFont:CF_FONT_LIGHT(23)];
+    [self.showingLabel          setFont:CF_FONT_BOLD(12)];
+    [self.feedButton.titleLabel setFont:CF_FONT_LIGHT(17)];
 }
 - (void)viewDidLoad
 {
@@ -74,7 +74,7 @@
 {   // View is about to appear after being inactive
     [super viewWillAppear:animated];
     [self refresh];
-    
+
     // Show loading indicator until a nearby college is found,
     // then replace it with a create post button
      
