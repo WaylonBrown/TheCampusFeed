@@ -36,7 +36,7 @@
     [self.dataController setAppDelegate:self];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
+    [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:CF_BLUE]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     

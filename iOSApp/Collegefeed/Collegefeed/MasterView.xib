@@ -71,7 +71,7 @@
                             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.20000000000000001" green="0.70980392160000005" blue="0.8980392157" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.0" green="0.59999999999999998" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="1L3-iO-Uw7" firstAttribute="top" secondItem="onw-bZ-Ayo" secondAttribute="top" constant="10" id="4Or-vj-ilO"/>
                         <constraint firstItem="sMK-hB-0KP" firstAttribute="leading" secondItem="SXB-AF-c0g" secondAttribute="trailing" constant="13" id="4du-kh-Kaz"/>

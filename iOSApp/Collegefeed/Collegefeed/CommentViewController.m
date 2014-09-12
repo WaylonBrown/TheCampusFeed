@@ -310,36 +310,4 @@
     
 }
 
-#pragma mark - Vanishing Bottom Toolbar
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-//    scrollView.bounces = (scrollView.contentOffset.y < 50);
-
-    CGRect frame = self.feedToolbar.frame;
-    CGFloat size = frame.size.height;
-    CGFloat scrollOffset = scrollView.contentOffset.y;
-    CGFloat scrollDiff = scrollOffset - self.previousScrollViewYOffset;
-    CGFloat scrollHeight = scrollView.frame.size.height + self.postTableView.frame.size.height;
-    
-    self.previousScrollViewYOffset = scrollOffset;
-    
-    if (scrollOffset < 5)
-    {   // keep bar showing if at top of scrollView
-        self.commentToolBarSpaceFromBottom.constant = 50;
-    }
-    else if (scrollDiff > 0 && (frame.origin.y < scrollHeight))
-    {   // flick up / scroll down / hide bar
-        self.commentToolBarSpaceFromBottom.constant -= 4;
-    }
-    else if (scrollDiff < 0 && (frame.origin.y + size > scrollHeight))
-    {   // flick down / scroll up / show bar
-        self.commentToolBarSpaceFromBottom.constant += 4;
-    }
-    
-    self.toolBarSpaceFromBottom.constant = MIN(self.commentToolBarSpaceFromBottom.constant, 50);
-    [self.feedToolbar updateConstraintsIfNeeded];
-}
-
-
 @end

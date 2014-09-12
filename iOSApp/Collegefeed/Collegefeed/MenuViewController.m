@@ -97,7 +97,7 @@
     cell.textLabel.textColor = [UIColor whiteColor];
 
     UIView *view = [[UIView alloc] init];
-    view.backgroundColor = [Shared getCustomUIColor:CF_LIGHTBLUE];
+    view.backgroundColor = [Shared getCustomUIColor:CF_BLUE];
     cell.selectedBackgroundView = view;
     
     

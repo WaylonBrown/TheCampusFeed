@@ -165,7 +165,7 @@
     self.previousTagRect = currentRect;
     
     NSRange range = NSMakeRange(6, tagsString.length - 6);
-    [string addAttribute:NSForegroundColorAttributeName value:[Shared getCustomUIColor:CF_LIGHTBLUE] range:range];
+    [string addAttribute:NSForegroundColorAttributeName value:[Shared getCustomUIColor:CF_BLUE] range:range];
     [self.tagTextView setAttributedText:string];
     [self.tagTextView setFont:[UIFont systemFontOfSize:14]];
 }
