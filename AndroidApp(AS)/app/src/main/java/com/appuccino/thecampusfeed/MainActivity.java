@@ -81,7 +81,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	public static final int MIN_POST_LENGTH = 10;
 	public static final int MIN_COMMENT_LENGTH = 5;
     //TODO: make sure these values are correct
-    public static final int TIME_BETWEEN_POSTS = 5;     //in minutes
+    public static final int TIME_BETWEEN_POSTS = 0;     //in minutes
     public static final int TIME_BETWEEN_COMMENTS = 1;  //in minutes
 
     private static int selectedMenuItem = 0;
@@ -112,7 +112,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
     private TextView menuFeedback;
 
     //Fragments
-    static TopPostFragment topPostFrag;
+    public static TopPostFragment topPostFrag;
     static NewPostFragment newPostFrag;
     TagFragment tagFrag;
     MostActiveCollegesFragment collegeFrag;

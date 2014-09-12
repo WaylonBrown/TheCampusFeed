@@ -82,12 +82,11 @@ public class TagFragment extends Fragment
 		{
 			//for card UI
             View header = new View(getActivity());
-            View footer = new View(getActivity());
-            footer.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 310));
             header.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
-			list.addFooterView(footer, null, false);
 			list.addHeaderView(header, null, false);
 		}
+
+        addLazyFooterView();
 		
 		if(mainActivity != null)
 		{
@@ -195,7 +194,7 @@ public class TagFragment extends Fragment
         if(list.getFooterViewsCount() == 0){		//so there's no duplicate
             //for card UI
             footerSpace = new View(mainActivity);
-            footerSpace.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 160));
+            footerSpace.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 320));
             list.addFooterView(footerSpace, null, false);
         }
     }
@@ -211,7 +210,7 @@ public class TagFragment extends Fragment
 
     private static void addLazyFooterView() {
         if(list.getFooterViewsCount() == 0){
-            lazyFooterView =  ((LayoutInflater)mainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.list_lazy_loading_footer, null, false);
+            lazyFooterView =  ((LayoutInflater)mainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.list_lazy_loading_tag_footer, null, false);
             list.addFooterView(lazyFooterView);
             lazyLoadingFooterSpinner = (ProgressBar)lazyFooterView.findViewById(R.id.lazyFooterSpinner);
         }

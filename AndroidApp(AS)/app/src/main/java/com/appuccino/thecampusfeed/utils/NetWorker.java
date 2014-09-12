@@ -270,7 +270,8 @@ public class NetWorker {
 
          @Override
          protected void onPreExecute() {
-             TagFragment.makeLoadingIndicator(true);
+             //dont need, not pull to refresh
+             //TagFragment.makeLoadingIndicator(true);
              super.onPreExecute();
          }
 
@@ -492,6 +493,9 @@ public class NetWorker {
             Log.i("cfeed","COLLEGE_LIST Updated main college list.");
             if(ChooseFeedDialog.isVisible)
                 ChooseFeedDialog.recalculateNearYouList(main);
+            if(MainActivity.topPostFrag != null){
+                MainActivity.topPostFrag.updateList();
+            }
         }
     }
 
