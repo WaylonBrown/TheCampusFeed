@@ -29,13 +29,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSString *feedLabel = @"Trending Colleges";
-    [self.currentFeedLabel setText:feedLabel];
+    [self.feedToolbar setHidden:YES];
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
     [self.tableView reloadData];
-    [self.toolbarSeparator removeFromSuperview];
-    [self.feedButton removeFromSuperview];
 }
 
 - (void)didReceiveMemoryWarning
