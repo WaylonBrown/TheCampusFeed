@@ -39,7 +39,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
     self.tableView.backgroundColor = [UIColor darkGrayColor];
 }
 
@@ -53,7 +52,8 @@
              @"Most Active Colleges",
              @"My Posts",
              @"My Comments",
-             @"Help"];
+             @"Help",
+             @"Suggest Feedback"];
 }
 
 
@@ -72,7 +72,7 @@
     }
     else if (section == 1)
     {
-        return 3;
+        return 4;
     }
     return 0;
 }
@@ -94,20 +94,60 @@
     
     cell.textLabel.text = menuItem;
     cell.backgroundColor = [UIColor darkGrayColor];
+    [cell.textLabel setFont:CF_FONT_LIGHT(20)];
     cell.textLabel.textColor = [UIColor whiteColor];
 
     UIView *view = [[UIView alloc] init];
     view.backgroundColor = [Shared getCustomUIColor:CF_BLUE];
     cell.selectedBackgroundView = view;
     
+    if (indexPath.row == self.selectedIndex)
+    {
+        [cell setSelected:YES];
+    }
     
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    float windowHeight = self.view.frame.size.height;
+    float cellHeight = (windowHeight - 30.0) / 8.0f;
+    return cellHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0)
+    {
+        return 5;
+    }
+    else
+    {
+        return 20;
+    }
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 1)
+    {
+        UIView *dividerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        dividerView.backgroundColor = [UIColor darkGrayColor];
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, self.view.bounds.size.width, 1)];
+        lineView.backgroundColor = [UIColor whiteColor];
+        [dividerView addSubview:lineView];
+        return dividerView;
+    }
+    
+    return nil;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.selectedIndex = indexPath.row;
     NSUInteger index = (indexPath.section * 4) + indexPath.row;
     
     if (index == 6)

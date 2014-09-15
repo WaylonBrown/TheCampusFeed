@@ -17,6 +17,7 @@
 
 
 @property (strong, nonatomic) NSArray *viewControllers;
+@property NSInteger selectedIndex;
 
 - (id)initWithViewControllers:(NSArray *)viewControllers;
 
