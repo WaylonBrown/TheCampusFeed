@@ -84,6 +84,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
     public static final int TIME_BETWEEN_POSTS = 0;     //in minutes
     public static final int TIME_BETWEEN_COMMENTS = 1;  //in minutes
 
+    public Location userLocation;
     private static int selectedMenuItem = 0;
     private int previouslySelectedMenuItem = 0;
 	public static boolean locationFound = false;
@@ -113,7 +114,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
 
     //Fragments
     public static TopPostFragment topPostFrag;
-    static NewPostFragment newPostFrag;
+    public static NewPostFragment newPostFrag;
     TagFragment tagFrag;
     MostActiveCollegesFragment collegeFrag;
     MyPostsFragment myPostsFrag;
@@ -737,7 +738,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
 		return true;
 	}
 
-	private void determinePermissions(Location loc) 
+	public void determinePermissions(Location loc)
 	{
 		if(collegeList != null)
 		{
@@ -882,7 +883,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	}
 	
 	public void chooseFeedDialog() {
-        Log.i("cfeed","test");
+        Log.i("cfeed","Creating Choose Feed dialog from MainActivity");
 		LayoutInflater inflater = getLayoutInflater();
 		View layout = inflater.inflate(R.layout.dialog_choosefeed, null);
         if(chooseFeedDialog == null || !chooseFeedDialog.isShowing()){
@@ -967,6 +968,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	
 	@Override
 	public void onLocationChanged(Location loc) {
+        userLocation = loc;
 		locationFound = true;
 		determinePermissions(loc);
 		//mgr.removeUpdates(this);

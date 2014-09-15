@@ -22,6 +22,7 @@ import com.appuccino.thecampusfeed.adapters.AutoCompleteDropdownAdapter;
 import com.appuccino.thecampusfeed.adapters.DialogCollegeListAdapter;
 import com.appuccino.thecampusfeed.objects.College;
 import com.appuccino.thecampusfeed.utils.FontManager;
+import com.appuccino.thecampusfeed.utils.MyLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +118,8 @@ public class ChooseFeedDialog extends AlertDialog.Builder{
                 }
 				enableListClicking = false;
 			}
-			
+
+            MyLog.i("Starting choosefeed");
 			adapter = new DialogCollegeListAdapter(main, R.layout.list_row_choosefeed_college, nearYouListArray, enableListClicking);
 			nearYouListView.setAdapter(adapter);
 

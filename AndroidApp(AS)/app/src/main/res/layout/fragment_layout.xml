@@ -31,6 +31,8 @@
         android:gravity="center"
         android:text="@string/emptyListString"
         android:textSize="20sp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         android:visibility="gone"
         android:textColor="@color/darkgray"/>
     

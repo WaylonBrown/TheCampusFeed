@@ -490,11 +490,16 @@ public class NetWorker {
         protected void onPostExecute(ArrayList<College> result) {
             MainActivity.collegeList = result;
             PrefManager.putCollegeListCheckSum(checkSumVersion);
+            if(main.userLocation != null)
+                main.determinePermissions(main.userLocation);
             Log.i("cfeed","COLLEGE_LIST Updated main college list.");
-            if(ChooseFeedDialog.isVisible)
-                ChooseFeedDialog.recalculateNearYouList(main);
+            ChooseFeedDialog.recalculateNearYouList(main);
             if(MainActivity.topPostFrag != null){
+                MainActivity.topPostFrag.pullDownText.setText("An updated college list has been found, please reselect the feed you want to view by clicking Choose below");
                 MainActivity.topPostFrag.updateList();
+            } else if(MainActivity.topPostFrag != null){
+                MainActivity.newPostFrag.pullDownText.setText("An updated college list has been found, please reselect the feed you want to view by clicking Choose below");
+                MainActivity.newPostFrag.updateList();
             }
         }
     }

@@ -59,9 +59,9 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
     private static boolean endOfListFooterReplaced = false;
 	static View lazyFooterView;
 	static View footerSpace;
-    static TextView pullDownText;
+    public static TextView pullDownText;
 	static LinearLayout scrollAwayBottomView;
-	static TextView collegeNameBottom;
+	public static TextView collegeNameBottom;
 
     public NewPostFragment(){
         mainActivity = MainActivity.activity;
@@ -357,6 +357,10 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
                 if(pullDownText != null){
                     if(postList.size() == 0){
                         pullDownText.setVisibility(View.VISIBLE);
+                        //this happens if new list has been retrieved
+                        if(collegeNameBottom.getText() == ""){
+                            pullDownText.setText("An updated college list has been found, please reselect the feed you want to view by clicking Choose below");
+                        }
                     } else {
                         pullDownText.setVisibility(View.GONE);
                     }
@@ -394,7 +398,6 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 				collegeNameBottom.setText(currentCollege.getName());
 			else if(id == MainActivity.ALL_COLLEGES)
 				collegeNameBottom.setText(mainActivity.getResources().getString(R.string.allColleges));
-			//TODO: IGNORE load college list here
 			else
 				collegeNameBottom.setText("");
 		}
