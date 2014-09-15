@@ -279,11 +279,15 @@ public class NetWorker {
          protected ArrayList<Tag> doInBackground(PostSelector... arg0) {
              String paginationString = "?page=" + pageNumber + "&per_page=" + POSTS_PER_PAGE;
              HttpGet request = null;
+             String requestString = "";
              if(feedID == MainActivity.ALL_COLLEGES)
-                 request = new HttpGet(REQUEST_URL + "tags/trending" + paginationString);
+                 requestString = REQUEST_URL + "tags/trending" + paginationString;
              else
-                 request = new HttpGet(REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/tags/trending" + paginationString);
+                 requestString = REQUEST_URL + "colleges/" + String.valueOf(feedID) + "/tags/trending" + paginationString;
 
+             request = new HttpGet(requestString);
+             frag.currentPageNumber++;
+             MyLog.i("Getting tags from " + requestString);
              return getTagsFromURLRequest(request);
          }
 
@@ -321,7 +325,6 @@ public class NetWorker {
 
              frag.updateList();
              frag.makeLoadingIndicator(false);
-             frag.currentPageNumber++;
              frag.removeFooterSpinner();
          }
      }
@@ -497,7 +500,7 @@ public class NetWorker {
             if(MainActivity.topPostFrag != null){
                 MainActivity.topPostFrag.pullDownText.setText("An updated college list has been found, please reselect the feed you want to view by clicking Choose below");
                 MainActivity.topPostFrag.updateList();
-            } else if(MainActivity.topPostFrag != null){
+            } else if(MainActivity.newPostFrag != null){
                 MainActivity.newPostFrag.pullDownText.setText("An updated college list has been found, please reselect the feed you want to view by clicking Choose below");
                 MainActivity.newPostFrag.updateList();
             }
