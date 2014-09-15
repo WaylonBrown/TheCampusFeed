@@ -99,8 +99,8 @@
         case ALL_COLLEGES_WITH_SEARCH:
             return;
         case ALL_NEARBY_OTHER:
-            collegeSection = 1;
-            int numHeaders = (showLoadingIndicator || collegesNearby) ? 2 : 1;
+            collegeSection = 0;
+            int numHeaders = (showLoadingIndicator || collegesNearby) ? 3 : 2;
             tableViewHeight += (TABLE_HEADER_HEIGHT * numHeaders);
             tableViewHeight += (TABLE_CELL_HEIGHT * 2); // 'All' and 'Other' options
             break;
@@ -155,7 +155,7 @@
             {
                 return 1;
             }
-            else if (section == 1)
+            else if (section == 0)
             {
                 return numNearby;
             }
@@ -198,20 +198,20 @@
     NSString *cellLabel = @"";
     if (self.type == ALL_NEARBY_OTHER)
     {
-        if (indexPath.section == 0)
+        if (indexPath.section == 1)
         {
             cellLabel = @"All Colleges";
         }
-        else if (showLoadingIndicator && indexPath.section == 1)
+        else if (showLoadingIndicator && indexPath.section == 0)
         {
             [cell showLoadingIndicator];
             cellLabel = @"Loading...";
         }
-        else if (indexPath.section == 2 || (noCollegesNearby && indexPath.section == 1))
+        else if (indexPath.section == 2 || (noCollegesNearby && indexPath.section == 0))
         {
             cellLabel = @"Choose a College";
         }
-        else if (collegesNearby && indexPath.section == 1)
+        else if (collegesNearby && indexPath.section == 0)
         {
             College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
             if (college != nil)
@@ -245,7 +245,7 @@
             
             bool showLoadingIndicator = !self.dataController.foundLocation;
             
-            if (showLoadingIndicator && indexPath.section == 1)
+            if (showLoadingIndicator && indexPath.section == 0)
             {
                 return;
             }
@@ -290,15 +290,10 @@
     bool showLoadingIndicator = !self.dataController.foundLocation;
     bool collegesNearby = [self.dataController isNearCollege];
     
-    if (section == 0)
-    {
-        return [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerWidth, 1)];
-    }
-    
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
     UILabel *headerLabel;
     
-    if (section == 1 && (collegesNearby || showLoadingIndicator))
+    if (section == 0 && (collegesNearby || showLoadingIndicator))
     {   // section of colleges 'near you'
         
         headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
@@ -310,7 +305,12 @@
         [headerView addSubview:gpsIcon];
         
     }
-    else// if ((noCollegesNearby && section == 1) || (collegesNearby && section == 2))
+    else if ((!collegesNearby && section == 0) || (collegesNearby && section == 1))
+    {
+        headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
+        [headerLabel setText:@"Combines All Colleges into 1 Feed"];
+    }
+    else if ((!collegesNearby && section == 1) || (collegesNearby && section == 2))
     {   // section of all colleges
         headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
         [headerLabel setText:@"Other Colleges"];
@@ -325,12 +325,12 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return (section == 0) ? 0.0 : TABLE_HEADER_HEIGHT;
+    return TABLE_HEADER_HEIGHT;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.type == ALL_NEARBY_OTHER
-        && (indexPath.section == 0 || indexPath.section == 2))
+        && (indexPath.section == 1 || indexPath.section == 2))
     {
         return TABLE_CELL_HEIGHT;
     }
@@ -415,7 +415,7 @@
     {
         case ALL_NEARBY_OTHER:
         {   // Initial prompt given to user to select which feed to view
-            if (section == 1 && numNearbyColleges > row)
+            if (section == 0 && numNearbyColleges > row)
             {
                 return [self.dataController.nearbyColleges objectAtIndex:row];
             }

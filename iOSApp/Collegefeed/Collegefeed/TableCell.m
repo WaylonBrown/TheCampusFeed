@@ -39,6 +39,7 @@
 {
     [super layoutSubviews];
 }
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
@@ -81,7 +82,7 @@
         self.dividerHeight.constant = 0;
         self.collegeLabelHeight.constant = 0;        
     }
-    
+
     // Parse message for Tags
     [self findHashTags];
 

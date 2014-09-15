@@ -195,6 +195,7 @@
     BOOL isNearCollege = [self.dataController.nearbyColleges containsObject:post.college];
     float messageHeight = [Shared getLargeCellMessageHeight:post.message WithFont:CF_FONT_LIGHT(16)];
     [cell assignWith:post IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
+    
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

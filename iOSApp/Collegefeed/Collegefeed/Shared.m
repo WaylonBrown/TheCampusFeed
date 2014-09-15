@@ -25,12 +25,10 @@
 
 + (float)getSmallCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font
 {
-#define CELL_HEIGHT_CUSHION 5
-    
     CGFloat height = [self getSmallCellMessageHeight:text WithFont:font];
     float fullHeight = height + SMALL_CELL_TOP_TO_LABEL + SMALL_CELL_LABEL_TO_BOTTOM;
     
-    return fullHeight + CELL_HEIGHT_CUSHION;
+    return fullHeight;
 }
 
 + (float)getLargeCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font

@@ -169,7 +169,7 @@
         UILabel *commentHeader = [[UILabel alloc] initWithFrame:CGRectZero];
         [commentHeader setText:@"Comments"];
         [commentHeader setTextAlignment:NSTextAlignmentCenter];
-        [commentHeader setFont:[UIFont systemFontOfSize:12]];
+        [commentHeader setFont:CF_FONT_LIGHT(13)];
         [commentHeader setTintColor:[Shared getCustomUIColor:CF_DARKGRAY]];
         [commentHeader setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
         
