@@ -7,6 +7,7 @@
 //
 
 #import "UserPostsViewController.h"
+#import "Shared.h"
 
 @interface UserPostsViewController ()
 
@@ -18,12 +19,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    long points = [self.dataController getUserPostScore];
-    NSString *feedLabel = [NSString stringWithFormat:@"My Posts (%ld total points)", points];
-    [self.currentFeedLabel setText:feedLabel];
-    [self.tableView reloadData];
-    [self.toolbarSeparator removeFromSuperview];
-    [self.feedButton removeFromSuperview];
+    
+    [self.feedToolbar removeFromSuperview];
+    [self addScoreFooter];
 }
 
 - (void)didReceiveMemoryWarning
@@ -36,6 +34,14 @@
 {
     [self.tableView reloadData];
     [self.refreshControl endRefreshing];
+}
+
+- (void)addScoreFooter
+{
+    long points = [self.dataController getUserPostScore];
+    self.scoreLabel.text = [NSString stringWithFormat:@"Post Score: %ld", points];
+    [self.scoreLabel setFont:CF_FONT_LIGHT(20)];
+    self.scoreToolbar.hidden = NO;
 }
 
 @end

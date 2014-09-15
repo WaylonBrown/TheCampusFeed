@@ -25,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet UITableView        *tableView;
 @property (strong, nonatomic) UIActivityIndicatorView   *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIView             *feedToolbar;
+@property (strong, nonatomic) IBOutlet UIView           *scoreToolbar;
+@property (strong, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (strong, nonatomic) UIRefreshControl          *refreshControl;
 
 @property (weak, nonatomic) IBOutlet UILabel            *currentFeedLabel;
@@ -33,6 +35,7 @@
 @property (strong, nonatomic) IBOutlet UIView *toolbarSeparator;
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *toolBarSpaceFromBottom;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *tableViewSpaceFromBottom;
 
 @property (strong, nonatomic) NSMutableArray *list;
 
