@@ -175,8 +175,7 @@
 
 // Posts
 - (BOOL)createPostWithMessage:(NSString *)message
-                withCollegeId:(long)collegeId
-                withUserToken:(NSString *)userToken;
+                withCollegeId:(long)collegeId;
 
 - (BOOL)fetchTopPosts;
 - (void)fetchTopPostsInCollege;

@@ -203,7 +203,6 @@
 
 - (BOOL)createPostWithMessage:(NSString *)message
                 withCollegeId:(long)collegeId
-                withUserToken:(NSString *)userToken
 {
     if (![self isAbleToPost:nil])
     {
@@ -211,9 +210,11 @@
     }
     @try
     {
+        NSString *udid = [UIDevice currentDevice].identifierForVendor.UUIDString;
         Post *post = [[Post alloc] initWithMessage:message
                                      withCollegeId:collegeId
-                                     withUserToken:userToken];
+                                     withUserToken:udid];
+
         NSData *result = [Networker POSTPostData:[post toJSON] WithCollegeId:post.collegeID];
         NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
                                                                    options:0

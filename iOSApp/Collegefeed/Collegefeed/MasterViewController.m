@@ -57,7 +57,7 @@
 
     // Assign fonts
     [self.currentFeedLabel      setAdjustsFontSizeToFitWidth:YES];
-    [self.currentFeedLabel      setFont:CF_FONT_LIGHT(23)];
+    [self.currentFeedLabel      setFont:CF_FONT_LIGHT(22)];
     [self.showingLabel          setFont:CF_FONT_BOLD(12)];
     [self.feedButton.titleLabel setFont:CF_FONT_LIGHT(17)];
 }
@@ -270,8 +270,7 @@
     if ([self.dataController isAbleToPost:minutesUntilCanPost])
     {
         [self.dataController createPostWithMessage:message
-                                     withCollegeId:collegeId
-                                     withUserToken:userToken];
+                                     withCollegeId:collegeId];
         [self refresh];
     }
     else

@@ -28,7 +28,7 @@
     self.backgroundImageView.image = stretchableBackground;
     
     // Set font styles
-    [self.messageLabel      setFont:CF_FONT_LIGHT(16)];
+    [self.messageLabel      setFont:CF_FONT_LIGHT(17)];
     [self.commentCountLabel setFont:CF_FONT_MEDIUM(12)];
     [self.ageLabel          setFont:CF_FONT_MEDIUM(12)];
     [self.scoreLabel        setFont:CF_FONT_BOLD(12)];
