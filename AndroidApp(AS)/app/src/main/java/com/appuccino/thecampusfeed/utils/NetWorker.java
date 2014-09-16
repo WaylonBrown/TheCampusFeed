@@ -34,6 +34,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 public class NetWorker {
@@ -492,6 +493,7 @@ public class NetWorker {
         @Override
         protected void onPostExecute(ArrayList<College> result) {
             MainActivity.collegeList = result;
+            Collections.sort(MainActivity.collegeList, new ListComparator());
             PrefManager.putCollegeListCheckSum(checkSumVersion);
             if(main.userLocation != null)
                 main.determinePermissions(main.userLocation);
