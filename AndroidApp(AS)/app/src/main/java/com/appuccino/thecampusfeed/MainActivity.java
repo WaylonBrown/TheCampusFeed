@@ -44,6 +44,7 @@ import com.appuccino.thecampusfeed.objects.Vote;
 import com.appuccino.thecampusfeed.utils.FontManager;
 import com.appuccino.thecampusfeed.utils.JSONParser;
 import com.appuccino.thecampusfeed.utils.ListComparator;
+import com.appuccino.thecampusfeed.utils.MyLog;
 import com.appuccino.thecampusfeed.utils.NetWorker;
 import com.appuccino.thecampusfeed.utils.PopupManager;
 import com.appuccino.thecampusfeed.utils.PrefManager;
@@ -125,6 +126,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
 		super.onCreate(savedInstanceState);
         PrefManager.setup(this);
         activity = this;
+        checkForceRequiredUpdate();
 		setupApp();
 
         collegeListCheckSum = PrefManager.getCollegeListCheckSum();
@@ -138,6 +140,18 @@ public class MainActivity extends FragmentActivity implements LocationListener
 
         setupMenuDrawerViews();
 	}
+
+    private void checkForceRequiredUpdate() {
+        PackageInfo pInfo = null;
+        try {
+            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        String currentAppVersion = pInfo.versionName;
+        MyLog.i("Current app version: " + currentAppVersion);
+        new NetWorker.CheckForceRequiredUpdated(currentAppVersion, this).execute();
+    }
 
     @Override
     protected void onResume() {

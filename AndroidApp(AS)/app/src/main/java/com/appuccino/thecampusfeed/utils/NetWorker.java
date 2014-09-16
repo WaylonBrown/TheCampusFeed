@@ -9,6 +9,7 @@ import com.appuccino.thecampusfeed.CommentsActivity;
 import com.appuccino.thecampusfeed.MainActivity;
 import com.appuccino.thecampusfeed.TagListActivity;
 import com.appuccino.thecampusfeed.dialogs.ChooseFeedDialog;
+import com.appuccino.thecampusfeed.dialogs.ForceRequiredUpdateDialog;
 import com.appuccino.thecampusfeed.fragments.MostActiveCollegesFragment;
 import com.appuccino.thecampusfeed.fragments.MyCommentsFragment;
 import com.appuccino.thecampusfeed.fragments.MyPostsFragment;
@@ -1053,6 +1054,61 @@ public class NetWorker {
                     } else {
                         Log.i("cfeed", "CHECKSUM: different, updating college list...");
                         MainActivity.updateCollegeList(version);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            super.onPostExecute(result);
+        }
+    }
+
+    public static class CheckForceRequiredUpdated extends AsyncTask<Void, Void, Boolean>{
+
+        String response;
+        double currentVersion;
+        MainActivity activity;
+
+        public CheckForceRequiredUpdated(String currentVersion, MainActivity activity){
+            try{
+                this.currentVersion = Double.valueOf(currentVersion);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            this.activity = activity;
+        }
+
+        @Override
+        public Boolean doInBackground(Void... vd){
+            try{
+                HttpGet request = new HttpGet(REQUEST_URL + "minAndroidVersion");
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                response = client.execute(request, responseHandler);
+
+                Log.d("cfeed", LOG_TAG + "App version server response: " + response);
+                return true;
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+                return false;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        public void onPostExecute(Boolean result){
+            Log.d("http", LOG_TAG + "success: " + result);
+            if(result){
+                Double forceUpdateVersion = null;
+                try {
+                    String versionString = JSONParser.appVersionFromJSON(response);
+                    MyLog.i("Version string from server is " + versionString);
+                    forceUpdateVersion = Double.valueOf(versionString);
+                    if(forceUpdateVersion > currentVersion){
+                        MyLog.i("Forcing required update");
+                        new ForceRequiredUpdateDialog(activity);
+                    } else {
+                        MyLog.i("No force update required");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

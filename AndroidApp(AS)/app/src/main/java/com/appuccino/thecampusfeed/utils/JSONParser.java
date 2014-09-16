@@ -641,4 +641,30 @@ public class JSONParser {
 
         return ret;
     }
+
+    public static String appVersionFromJSON(String json) throws IOException{
+        String ret = null;
+        JsonReader reader = new JsonReader(new StringReader(""));
+        try {
+            reader = new JsonReader(new StringReader(json));
+
+            reader.beginObject();
+            while(reader.hasNext()) {
+                String name = reader.nextName(); //property name of next property.
+                if (name.equals("minVersion")) {
+                    //use in case null is passed in, which prim types can't take
+                    ret = reader.nextString();
+                } else {
+                    reader.skipValue();
+                }
+            }
+            reader.endObject();
+        }catch(Exception e){
+            e.printStackTrace();
+        } finally{
+            reader.close();
+        }
+
+        return ret;
+    }
 }
