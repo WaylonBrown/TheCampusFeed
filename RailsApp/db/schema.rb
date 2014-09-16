@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140902011755) do
+ActiveRecord::Schema.define(version: 20140916011200) do
 
   create_table "colleges", force: true do |t|
     t.string   "name"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20140902011755) do
     t.datetime "updated_at"
     t.integer  "size"
     t.string   "primary_color"
+    t.integer  "recent_post_count"
   end
 
   create_table "comments", force: true do |t|

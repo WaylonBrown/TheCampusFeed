@@ -21,4 +21,14 @@ unless File.basename($0) == "rake"
       }
     end
   end
+
+  Thread.new do
+    while true
+      sleep 10
+      College.all.each{ |college|
+        CollegeRecentPostNumberWorker.perform_async college.id
+        sleep 1
+      }
+    end
+  end
 end
