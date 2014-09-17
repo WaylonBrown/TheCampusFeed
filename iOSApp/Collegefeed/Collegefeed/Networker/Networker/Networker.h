@@ -16,6 +16,8 @@
 
 @interface Networker : NSObject
 
++ (NSData *)getIOSAppVersionFromServer;
+
 // Colleges
 + (NSData *)GETAllColleges;
 + (NSData *)GETCollegeWithId:(long)collegeId;

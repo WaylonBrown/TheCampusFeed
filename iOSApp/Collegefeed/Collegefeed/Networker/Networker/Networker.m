@@ -100,6 +100,15 @@
 
 #pragma mark - Specific API Requests
 
++ (NSData *)getIOSAppVersionFromServer
+{
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/miniOSVersion",
+                   API_URL, API_VERSION]];
+    return [self GET:url];
+}
+
+
 #pragma mark - Colleges
 
 + (NSData *)GETAllColleges

@@ -25,6 +25,8 @@
     self = [super init];
     if (self)
     {
+        [self checkAppVersionNumber];
+        
         [self setShowingAllColleges:YES];
         [self setShowingSingleCollege:NO];
         
@@ -82,6 +84,23 @@
         
     }
     return self;
+}
+
+- (void)checkAppVersionNumber
+{
+    float appVersion = [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] floatValue];
+    NSData *data = [Networker getIOSAppVersionFromServer];
+    NSArray *jsonArray = (NSArray*)[NSJSONSerialization JSONObjectWithData:data
+                                                                   options:0
+                                                                     error:nil];
+    
+    float serverVersion = [[jsonArray valueForKey:@"version"] floatValue];
+    
+    if (appVersion < serverVersion)
+    {
+        
+    }
+    
 }
 
 #pragma mark - Networker Access - Colleges

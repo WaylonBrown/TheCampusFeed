@@ -142,16 +142,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Collegefeed/DataController.m"
-            timestampString = "432614560.610323"
+            timestampString = "432617368.158945"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
-            landmarkName = "-needsNewCollegeList"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "-checkAppVersionNumber"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
