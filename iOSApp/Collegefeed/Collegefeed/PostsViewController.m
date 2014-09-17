@@ -215,10 +215,15 @@
 {
     if (self.viewType == TAG_VIEW && self.tagMessage != nil)
     {
+//        if (self.dataController.showingSingleCollege && self.dataController.collegeInFocus.name != nil)
+//        {
+//            return 60;
+//        }
+        
         return 50;
     }
     
-    return 0;
+    return 5;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -226,23 +231,25 @@
     if (self.viewType == TAG_VIEW && self.tagMessage != nil)
     {
         NSString *basicText = [NSString stringWithFormat:@"Posts with %@", self.tagMessage];
-
-        UILabel *header = [[UILabel alloc] initWithFrame:CGRectZero];
         
+        CGRect frame = CGRectMake(0, 0, tableView.frame.size.width, 50);
+        
+        UILabel *header = [[UILabel alloc] init];//WithFrame:CGRectMake(10, 0, tableView.frame.size.width - 20, 50)];
         if (self.dataController.showingSingleCollege && self.dataController.collegeInFocus.name != nil)
         {
-            NSString *collegeSubHeader = [NSString stringWithFormat:@"in the feed %@", self.dataController.collegeInFocus.name];
+            NSString *collegeSubHeader = [NSString stringWithFormat:@"in feed: %@", self.dataController.collegeInFocus.name];
             basicText = [NSString stringWithFormat:@"%@\n%@", basicText, collegeSubHeader];
             [header setNumberOfLines:2];
-            
+//            frame.size.height = 60;
         }
         
+        [header setFrame:frame];
         [header setText:basicText];
         [header setTextAlignment:NSTextAlignmentCenter];
-        [header setFont:CF_FONT_LIGHT(15)];
+        [header setFont:CF_FONT_LIGHT(16)];
         [header setTintColor:[Shared getCustomUIColor:CF_DARKGRAY]];
         [header setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
-        
+
         return header;
     }
     

@@ -99,25 +99,33 @@
 }
 + (BOOL)withMessageIsValid:(NSString*)tagMessage
 {
+    if (tagMessage.length < MIN_TAG_LENGTH
+        || tagMessage.length > MAX_TAG_LENGTH
+        || [tagMessage characterAtIndex:0] != '#'
+        || isnumber([tagMessage characterAtIndex:1]))
+    {
+        return false;
+    }
+    
     NSRegularExpressionOptions regexOptions = NSRegularExpressionCaseInsensitive;
-    NSString *pattern = @"#[A-Za-z0-9_]";
+    NSString *pattern = @"#[A-Za-z0-9_]*";
     
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:nil];
     
     NSRange textRange = NSMakeRange(0, tagMessage.length);
     NSRange matchRange = [regex rangeOfFirstMatchInString:tagMessage options:NSMatchingReportProgress range:textRange];
     
-    if (matchRange.location == NSNotFound)
+    if (matchRange.length == textRange.length)
     {
-        return false;
+        return true;
     }
     
-    if (tagMessage.length < MIN_TAG_LENGTH || tagMessage.length > MAX_TAG_LENGTH)
-    {
-        return false;
-    }
-
-    return true;
+    return false;
+    
+//    if (matchRange.location == NSNotFound)
+//    {
+//        return false;
+//    }
 }
 
 @end

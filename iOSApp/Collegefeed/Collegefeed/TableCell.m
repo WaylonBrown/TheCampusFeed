@@ -235,7 +235,10 @@
 - (void)findHashTags
 {   // parse cell's message label to assign links to hashtagged words
     [self.messageLabel setDelegate:self];
-    NSArray *words = [self.messageLabel.text componentsSeparatedByString:@" "];
+    NSMutableCharacterSet *acceptableSet = [NSCharacterSet characterSetWithCharactersInString:@"qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789#_"];
+    NSCharacterSet *unacceptableSet = [acceptableSet invertedSet];
+    NSArray *words = [self.messageLabel.text componentsSeparatedByCharactersInSet:unacceptableSet];
+    
     for (NSString *word in words)
     {
         if ([Tag withMessageIsValid:word])
