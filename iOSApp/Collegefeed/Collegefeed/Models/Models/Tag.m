@@ -100,7 +100,7 @@
 + (BOOL)withMessageIsValid:(NSString*)tagMessage
 {
     NSRegularExpressionOptions regexOptions = NSRegularExpressionCaseInsensitive;
-    NSString *pattern = @"#[A-Za-z0-9_]*";
+    NSString *pattern = @"#[A-Za-z0-9_]";
     
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:regexOptions error:nil];
     

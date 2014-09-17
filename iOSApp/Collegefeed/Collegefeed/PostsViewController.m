@@ -211,7 +211,43 @@
     }
     return [Shared getSmallCellHeightEstimateWithText:@"" WithFont:nil];
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (self.viewType == TAG_VIEW && self.tagMessage != nil)
+    {
+        return 50;
+    }
+    
+    return 0;
+}
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (self.viewType == TAG_VIEW && self.tagMessage != nil)
+    {
+        NSString *basicText = [NSString stringWithFormat:@"Posts with %@", self.tagMessage];
+
+        UILabel *header = [[UILabel alloc] initWithFrame:CGRectZero];
+        
+        if (self.dataController.showingSingleCollege && self.dataController.collegeInFocus.name != nil)
+        {
+            NSString *collegeSubHeader = [NSString stringWithFormat:@"in the feed %@", self.dataController.collegeInFocus.name];
+            basicText = [NSString stringWithFormat:@"%@\n%@", basicText, collegeSubHeader];
+            [header setNumberOfLines:2];
+            
+        }
+        
+        [header setText:basicText];
+        [header setTextAlignment:NSTextAlignmentCenter];
+        [header setFont:CF_FONT_LIGHT(15)];
+        [header setTintColor:[Shared getCustomUIColor:CF_DARKGRAY]];
+        [header setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
+        
+        return header;
+    }
+    
+    return nil;
+}
 #pragma mark - Navigation
 
 - (void)switchToAllColleges
