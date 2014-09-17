@@ -39,6 +39,8 @@
         [self setDataController:controller];
         self.activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         self.toastController = [[ToastController alloc] init];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedNotification:) name:@"Toast" object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self.toastController selector:@selector(toastHidden) name:@"ToastHidden" object:nil];
     }
     return self;
 }
@@ -63,8 +65,8 @@
 }
 - (void)viewDidLoad
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedNotification:) name:@"Toast" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self.toastController selector:@selector(toastHidden) name:@"ToastHidden" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedNotification:) name:@"Toast" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self.toastController selector:@selector(toastHidden) name:@"ToastHidden" object:nil];
     
     [self.navigationController.navigationBar setTranslucent:NO];
     [self refresh];

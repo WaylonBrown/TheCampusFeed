@@ -23,9 +23,13 @@
         [self toastNoLocationServices];
     }
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toastHidden) name:@"ToastHidden" object:nil];
     return self;
 }
-
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ToastHidden" object:nil];
+}
 - (void)addToQueue:(NSString *)message
 {
     [self.toastQueue addObject:message];
