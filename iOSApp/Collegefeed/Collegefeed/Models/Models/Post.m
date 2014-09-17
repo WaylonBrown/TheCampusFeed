@@ -61,7 +61,7 @@
     {
         NSString *postID    = (NSString*)[jsonObject valueForKey:@"id"];
         NSString *text      = (NSString*)[jsonObject valueForKey:@"text"];
-        NSString *score     = (NSString*)[jsonObject valueForKey:@"score"];
+        NSString *votedelta = (NSString*)[jsonObject valueForKey:@"vote_delta"];
         NSString *lat       = (NSString*)[jsonObject valueForKey:@"lat"];
         NSString *lon       = (NSString*)[jsonObject valueForKey:@"lon"];
         NSString *created   = (NSString*)[jsonObject valueForKey:@"created_at"];
@@ -69,7 +69,7 @@
         NSString *commCount = (NSString*)[jsonObject valueForKey:@"comment_count"];
         NSString *hidden    = (NSString*)[jsonObject valueForKey:@"hidden"];
         
-        if (score == (id)[NSNull null]) score = nil;
+        if (votedelta == (id)[NSNull null]) votedelta = nil;
         if (lat == (id)[NSNull null]) lat = nil;
         if (lon == (id)[NSNull null]) lon = nil;
         if (collegeID == (id)[NSNull null]) collegeID = nil;
@@ -80,13 +80,12 @@
         NSDate *createdDate = [dateFormatter dateFromString: created];
 
         [self setPostID:[postID integerValue]];
-        [self setScore:[score integerValue]];
+        [self setScore:[votedelta integerValue]];
         [self setMessage:text];
         [self setLat:[lat floatValue]];
         [self setLon:[lon floatValue]];
         [self setCreatedAt:createdDate];
         [self setCollegeID:[collegeID integerValue]];
-//        [self setHidden:]
         [self setCommentCount:[commCount integerValue]];
         [self validate];
         return self;
