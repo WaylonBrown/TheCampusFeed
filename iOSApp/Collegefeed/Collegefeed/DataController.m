@@ -100,7 +100,6 @@
 {
     self.trendingColleges = [[NSMutableArray alloc] init];
     NSData *data = [Networker GETTrendingColleges];
-//    NSData *data = [Networker GETTrendingCollegesAtPageNum:self.trendingCollegesPage++];
     [self parseData:data asClass:[College class] intoList:self.trendingColleges];
 }
 - (long)getNetworkCollegeListVersion
@@ -136,7 +135,7 @@
     
     long currVersion = [[permission valueForKeyPath:KEY_COLLEGE_LIST_VERSION] longValue];
     
-    return (currVersion == newVersion);
+    return (currVersion == newVersion) ? NO : YES;
 }
 
 #pragma mark - Networker Access - Comments

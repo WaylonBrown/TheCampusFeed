@@ -64,6 +64,8 @@
     [self.titleLabel setFont:CF_FONT_LIGHT(30)];
     [self.subtitleLabel setFont:CF_FONT_ITALIC(14)];
     [self.createButton.titleLabel setFont:CF_FONT_LIGHT(16)];
+    [self.messageTextView setFont:CF_FONT_LIGHT(16)];
+    [self.messageTextView setTintColor:[Shared getCustomUIColor:CF_DARKGRAY]];
     
     [self.messageTextView setDelegate:self];
     [self.tagTextView setDelegate:self];
@@ -167,7 +169,7 @@
     NSRange range = NSMakeRange(6, tagsString.length - 6);
     [string addAttribute:NSForegroundColorAttributeName value:[Shared getCustomUIColor:CF_BLUE] range:range];
     [self.tagTextView setAttributedText:string];
-    [self.tagTextView setFont:[UIFont systemFontOfSize:14]];
+    [self.tagTextView setFont:CF_FONT_LIGHT(16)];
 }
 
 #pragma mark - Keyboard

@@ -325,6 +325,11 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    if (self.type == ONLY_NEARBY_COLLEGES)
+    {
+        return 0;
+    }
+    
     return TABLE_HEADER_HEIGHT;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
