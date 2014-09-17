@@ -59,7 +59,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="collegeLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IBg-SD-dNX">
-                        <rect key="frame" x="8" y="100" width="303" height="22"/>
+                        <rect key="frame" x="38" y="100" width="244" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="3cp-65-bbC"/>
@@ -123,11 +123,10 @@
                     <constraint firstItem="f4j-iS-c22" firstAttribute="centerY" secondItem="IBg-SD-dNX" secondAttribute="centerY" id="7bN-fB-yJj"/>
                     <constraint firstItem="l2e-bF-BKO" firstAttribute="top" secondItem="Ixu-1G-g49" secondAttribute="top" id="ARI-jP-ZlK"/>
                     <constraint firstItem="IBg-SD-dNX" firstAttribute="top" secondItem="TnR-4q-mxj" secondAttribute="bottom" constant="1" id="Cts-4u-HHT"/>
-                    <constraint firstItem="TnR-4q-mxj" firstAttribute="leading" secondItem="IBg-SD-dNX" secondAttribute="leading" id="EBl-Pf-3tk"/>
                     <constraint firstItem="fUN-qQ-auA" firstAttribute="top" secondItem="907-dL-mOV" secondAttribute="bottom" constant="2" id="IWd-JE-gdT"/>
+                    <constraint firstItem="l2e-bF-BKO" firstAttribute="trailing" secondItem="IBg-SD-dNX" secondAttribute="trailing" constant="33" id="Id3-v2-wpJ"/>
                     <constraint firstItem="6BE-eZ-ndq" firstAttribute="top" secondItem="S3s-DU-l3y" secondAttribute="bottom" constant="8" id="IhS-hr-Okx"/>
-                    <constraint firstItem="TnR-4q-mxj" firstAttribute="trailing" secondItem="IBg-SD-dNX" secondAttribute="trailing" id="JDr-Ng-B55"/>
-                    <constraint firstItem="TnR-4q-mxj" firstAttribute="width" secondItem="IBg-SD-dNX" secondAttribute="width" id="LcB-kf-Pa4"/>
+                    <constraint firstAttribute="centerX" secondItem="IBg-SD-dNX" secondAttribute="centerX" id="Iiy-FR-p0d"/>
                     <constraint firstItem="l2e-bF-BKO" firstAttribute="trailing" secondItem="f4j-iS-c22" secondAttribute="trailing" constant="10" id="LuA-M0-175"/>
                     <constraint firstItem="907-dL-mOV" firstAttribute="leading" secondItem="l2e-bF-BKO" secondAttribute="leading" constant="11" id="MUg-WW-lZ4"/>
                     <constraint firstItem="BKu-Nu-Dmc" firstAttribute="top" secondItem="S3s-DU-l3y" secondAttribute="bottom" constant="8" id="OLl-Nr-1dx"/>
@@ -145,6 +144,7 @@
                     <constraint firstItem="IBg-SD-dNX" firstAttribute="bottom" secondItem="l2e-bF-BKO" secondAttribute="bottom" constant="-6" id="jWX-7k-q0K"/>
                     <constraint firstItem="BKu-Nu-Dmc" firstAttribute="width" secondItem="6BE-eZ-ndq" secondAttribute="width" id="uGk-XO-8u0"/>
                     <constraint firstItem="l2e-bF-BKO" firstAttribute="trailing" secondItem="S3s-DU-l3y" secondAttribute="trailing" constant="16" id="vfy-d9-Pop"/>
+                    <constraint firstItem="IBg-SD-dNX" firstAttribute="leading" secondItem="l2e-bF-BKO" secondAttribute="leading" constant="33" id="wri-36-V1T"/>
                     <constraint firstItem="l2e-bF-BKO" firstAttribute="trailing" secondItem="TnR-4q-mxj" secondAttribute="trailing" constant="4" id="xif-Rn-uwR"/>
                 </constraints>
             </tableViewCellContentView>

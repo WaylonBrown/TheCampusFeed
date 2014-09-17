@@ -39,6 +39,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.selectedIndex = 0;
+
     self.tableView.backgroundColor = [UIColor darkGrayColor];
 }
 
@@ -101,9 +103,9 @@
     view.backgroundColor = [Shared getCustomUIColor:CF_BLUE];
     cell.selectedBackgroundView = view;
     
-    if (indexPath.row == self.selectedIndex)
+    if (index == self.selectedIndex)
     {
-        [cell setSelected:YES];
+        [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     }
     
     return cell;
