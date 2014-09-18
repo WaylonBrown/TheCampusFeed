@@ -223,13 +223,13 @@ public class JSONParser {
                         reader.skipValue();
                     }
                 } else if (name.equals("vote_delta")) {
-                //use in case null is passed in, which prim types can't take
-                try {
-                    deltaScore = reader.nextInt();
-                } catch (Exception e) {
-                    reader.skipValue();
-                }
-            } else if (name.equals("college_id")) {
+                    //use in case null is passed in, which prim types can't take
+                    try {
+                        deltaScore = reader.nextInt();
+                    } catch (Exception e) {
+                        reader.skipValue();
+                    }
+                } else if (name.equals("college_id")) {
                     //use in case null is passed in, which prim types can't take
                     try {
                         collegeID = reader.nextInt();
@@ -372,7 +372,7 @@ public class JSONParser {
             int score = 0;
             int postID = -1;
             String time = null;
-            int commentCount = 0;
+            int voteDelta = 0;
 
             reader.beginObject();
             while(reader.hasNext()) {
@@ -393,7 +393,14 @@ public class JSONParser {
                     } catch (Exception e) {
                         reader.skipValue();
                     }
-                } else if (name.equals("post_id")) {
+                } else if (name.equals("vote_delta")) {
+                    //use in case null is passed in, which prim types can't take
+                    try {
+                        voteDelta = reader.nextInt();
+                    } catch (Exception e) {
+                        reader.skipValue();
+                    }
+                }else if (name.equals("post_id")) {
                     //use in case null is passed in, which prim types can't take
                     try {
                         postID = reader.nextInt();
@@ -402,19 +409,12 @@ public class JSONParser {
                     }
                 } else if (name.equals("created_at")) {
                     time = reader.nextString();
-                } else if (name.equals("comment_count")) {
-                    //use in case null is passed in, which prim types can't take
-                    try {
-                        commentCount = reader.nextInt();
-                    } catch (Exception e) {
-                        reader.skipValue();
-                    }
                 } else {
                     reader.skipValue();
                 }
             }
             reader.endObject();
-            ret = new Comment(text, id, postID, score, 0, time);
+            ret = new Comment(text, id, postID, score, voteDelta, 0, time);
             return ret;
         }catch(Exception e){
             e.printStackTrace();
@@ -446,6 +446,7 @@ public class JSONParser {
 				int score = 0;
 				int collegeID = -1;
 				String time = null;
+                int deltaScore = 0;
 				
 				reader.beginObject();
 				while(reader.hasNext()){
@@ -470,7 +471,14 @@ public class JSONParser {
 							reader.skipValue();
 							e.printStackTrace();
 						}
-					}
+					} else if (name.equals("vote_delta")) {
+                        //use in case null is passed in, which prim types can't take
+                        try {
+                            deltaScore = reader.nextInt();
+                        } catch (Exception e) {
+                            reader.skipValue();
+                        }
+                    }
 					else if(name.equals("college_id")){
 						//use in case null is passed in, which prim types can't take
 						try{
@@ -488,7 +496,7 @@ public class JSONParser {
 					}
 				}
 				reader.endObject();
-				ret.add(new Comment(message, id, postID, score, collegeID, time));
+				ret.add(new Comment(message, id, postID, score, deltaScore, collegeID, time));
 			}
 			reader.endArray();
 		}catch(Exception e){
@@ -520,6 +528,7 @@ public class JSONParser {
                 int score = 0;
                 int collegeID = -1;
                 String time = null;
+                int deltaScore = 0;
 
                 reader.beginObject();
                 while(reader.hasNext()){
@@ -543,6 +552,13 @@ public class JSONParser {
                         }catch(Exception e){
                             reader.skipValue();
                             e.printStackTrace();
+                        }
+                    } else if (name.equals("vote_delta")) {
+                        //use in case null is passed in, which prim types can't take
+                        try {
+                            deltaScore = reader.nextInt();
+                        } catch (Exception e) {
+                            reader.skipValue();
                         }
                     }
                     else if(name.equals("college_id")){
@@ -571,7 +587,7 @@ public class JSONParser {
                     }
                 }
                 reader.endObject();
-                ret.add(new Comment(message, id, postID, score, collegeID, time));
+                ret.add(new Comment(message, id, postID, score, deltaScore, collegeID, time));
             }
             reader.endArray();
         }catch(Exception e){

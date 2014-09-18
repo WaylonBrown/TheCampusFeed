@@ -60,7 +60,7 @@ public class NewCommentDialog extends AlertDialog.Builder{
     			String thisString = messageEditText.getText().toString().trim();
     			if(thisString.length() >= MainActivity.MIN_COMMENT_LENGTH)
     			{
-    				Comment newComment = new Comment(thisString, 0, parentPost.getID(), 1, parentPost.getCollegeID(), TimeManager.now());
+    				Comment newComment = new Comment(thisString, 0, parentPost.getID(), 1, 1, parentPost.getCollegeID(), TimeManager.now());
         			new MakeCommentTask(context).execute(newComment);
         			dialog.dismiss();
     			}

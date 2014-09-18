@@ -24,7 +24,7 @@ public class Comment extends AbstractPostComment{
         collegeID = 234234;
     }
 	
-	public Comment(String message, int id, int parentID, int score, int collegeID, String time)
+	public Comment(String message, int id, int parentID, int score, int deltaScore, int collegeID, String time)
 	{
 		this.message = message;
 		this.id = id;
@@ -32,6 +32,7 @@ public class Comment extends AbstractPostComment{
 		this.score = score;
 		this.collegeID = collegeID;
 		this.time = time;
+        this.deltaScore = deltaScore;
 	}
 	
 	public int getPostID()
