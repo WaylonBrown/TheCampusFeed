@@ -3,14 +3,12 @@
 
     <string name="app_name">TheCampusFeed</string>
     <string name="action_settings">Settings</string>
-    
     <string name="section1">Top Posts</string>
     <string name="section2">New Posts</string>
     <string name="section3">Trending Tags</string>
     <string name="section4">Most Active Colleges</string>
     <string name="section5">My Posts</string>
     <string name="section6">My Comments</string>
-
     <string name="sendTo">Share this Post via...</string>
     <string name="twitterMessage">Want to see our pick of the top post on TheCampusFeed per day? Be sure to follow us on Twitter at @The_Campus_Feed!</string>
     <string name="webDialogMessage">Want to check out posts while you\'re on your computer? Be sure to check out www.TheCampusFeed.com!\n\n(placeholder image)</string>
@@ -24,9 +22,9 @@
     <string name="flagMessage">Are you sure you wish to flag this post as inappropriate? 
         Posts with a certain amount of flags per views are automatically removed. 
         Do your part for TheCampusFeed community and flag any post that:\n\n
-        &#8226; Is offensive, bad-natured, or threatening\n
-        &#8226; Targets a specific person negatively to the point of bullying\n
-        &#8226; Has a phone number\n
+        • Is offensive, bad-natured, or threatening\n
+        • Targets a specific person negatively to the point of bullying\n
+        • Has a phone number\n
         \nUsers that have more than one post taken down get banned from posting on the app again.</string>
     <string name="gettingStartedMessage">TheCampusFeed is an anonymous message board. No logins, no accounts. Anyone
         can view any college\'s feed, as well as the All Colleges feed which is a mixture of all colleges\' posts put
@@ -35,5 +33,6 @@
         Think before you post! To view the rules, click the Flag icon for any post near you.</string>
     <string name="forceUpdateMessage">There is a new required app update.</string>
     <string name="emptyListString">Pull down to load posts</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

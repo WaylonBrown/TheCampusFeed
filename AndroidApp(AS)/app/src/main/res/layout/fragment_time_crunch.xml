@@ -1,0 +1,16 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.appuccino.thecampusfeed.fragments.TimeCrunchFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_margin="30dp"
+        android:background="@drawable/timecrunchbutton"
+        android:text="What is Time Crunch?"
+        android:textColor="@color/white"/>
+
+</FrameLayout>

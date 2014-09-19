@@ -37,6 +37,7 @@ import com.appuccino.thecampusfeed.fragments.MyCommentsFragment;
 import com.appuccino.thecampusfeed.fragments.MyPostsFragment;
 import com.appuccino.thecampusfeed.fragments.NewPostFragment;
 import com.appuccino.thecampusfeed.fragments.TagFragment;
+import com.appuccino.thecampusfeed.fragments.TimeCrunchFragment;
 import com.appuccino.thecampusfeed.fragments.TopPostFragment;
 import com.appuccino.thecampusfeed.objects.College;
 import com.appuccino.thecampusfeed.objects.Post;
@@ -110,6 +111,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
     private TextView menuColleges;
     private TextView menuMyPosts;
     private TextView menuMyComments;
+    private TextView menuTimeCrunch;
     private TextView menuHelp;
     private TextView menuFeedback;
 
@@ -120,6 +122,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
     MostActiveCollegesFragment collegeFrag;
     MyPostsFragment myPostsFrag;
     MyCommentsFragment myCommentsFrag;
+    TimeCrunchFragment timeCrunchFrag;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -237,6 +240,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
         menuColleges = (TextView)findViewById(R.id.collegesMenuText);
         menuMyPosts = (TextView)findViewById(R.id.myPostsMenuText);
         menuMyComments = (TextView)findViewById(R.id.myCommentsMenuText);
+        menuTimeCrunch = (TextView)findViewById(R.id.timeCrunchMenuText);
         menuHelp = (TextView)findViewById(R.id.helpMenuText);
         menuFeedback = (TextView)findViewById(R.id.feedbackMenuText);
 
@@ -246,6 +250,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
         menuColleges.setTypeface(FontManager.light);
         menuMyPosts.setTypeface(FontManager.light);
         menuMyComments.setTypeface(FontManager.light);
+        menuTimeCrunch.setTypeface(FontManager.light);
         menuHelp.setTypeface(FontManager.light);
         menuFeedback.setTypeface(FontManager.light);
 
@@ -266,10 +271,12 @@ public class MainActivity extends FragmentActivity implements LocationListener
                     selectedMenuItem = 4;
                 } else if(view == menuMyComments){
                     selectedMenuItem = 5;
-                } else if(view == menuHelp){
+                } else if(view == menuTimeCrunch){
                     selectedMenuItem = 6;
-                } else if(view == menuFeedback){
+                } else if(view == menuHelp){
                     selectedMenuItem = 7;
+                } else if(view == menuFeedback){
+                    selectedMenuItem = 8;
                 }
 
                 menuItemSelected();
@@ -282,6 +289,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
         menuColleges.setOnClickListener(menuClick);
         menuMyPosts.setOnClickListener(menuClick);
         menuMyComments.setOnClickListener(menuClick);
+        menuTimeCrunch.setOnClickListener(menuClick);
         menuHelp.setOnClickListener(menuClick);
         menuFeedback.setOnClickListener(menuClick);
 
@@ -290,10 +298,10 @@ public class MainActivity extends FragmentActivity implements LocationListener
 
     private void menuItemSelected() {
         //selected Help
-        if(selectedMenuItem == 6) {
+        if(selectedMenuItem == 7) {
             new GettingStartedDialog(this, "Help");
             selectedMenuItem = previouslySelectedMenuItem;
-        } else if(selectedMenuItem == 7) {
+        } else if(selectedMenuItem == 8) {
             emailForFeedback();
             selectedMenuItem = previouslySelectedMenuItem;
         } else {
@@ -303,6 +311,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
             menuColleges.setBackgroundResource(R.drawable.postbuttonclick);
             menuMyPosts.setBackgroundResource(R.drawable.postbuttonclick);
             menuMyComments.setBackgroundResource(R.drawable.postbuttonclick);
+            menuTimeCrunch.setBackgroundResource(R.drawable.postbuttonclick);
             menuHelp.setBackgroundResource(R.drawable.postbuttonclick);
 
             android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -356,6 +365,14 @@ public class MainActivity extends FragmentActivity implements LocationListener
                         makeFragsNull(5);
                     }
                     break;
+                case 6:
+                    menuTimeCrunch.setBackgroundColor(getResources().getColor(R.color.blue));
+                    if(timeCrunchFrag == null){
+                        timeCrunchFrag = new TimeCrunchFragment(this);
+                        ft.replace(R.id.fragmentContainer, timeCrunchFrag).commit();
+                        makeFragsNull(6);
+                    }
+                    break;
             }
         }
 
@@ -395,6 +412,9 @@ public class MainActivity extends FragmentActivity implements LocationListener
         }
         if(i != 5){
             myCommentsFrag = null;
+        }
+        if(i != 6){
+            timeCrunchFrag = null;
         }
     }
 

@@ -372,7 +372,7 @@ public class JSONParser {
             int score = 0;
             int postID = -1;
             String time = null;
-            int voteDelta = 0;
+            int voteDelta = 1;
 
             reader.beginObject();
             while(reader.hasNext()) {

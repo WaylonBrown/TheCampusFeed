@@ -106,6 +106,20 @@
                 android:clickable="true"/>
 
             <com.appuccino.thecampusfeed.extra.CustomTextView
+                android:id="@+id/timeCrunchMenuText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:background="@drawable/postbuttonclick"
+                android:text="Time Crunch"
+                android:clickable="true"/>
+
+            <com.appuccino.thecampusfeed.extra.CustomTextView
                 android:id="@+id/helpMenuText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
