@@ -782,9 +782,9 @@ public class MainActivity extends FragmentActivity implements LocationListener
 			{
 				if(newPostButton.isShown())
 				{
-					permissionsProgress.setVisibility(View.GONE);
 					newPostButton.setVisibility(View.INVISIBLE);
 				}
+                permissionsProgress.setVisibility(View.GONE);
                 if(chooseFeedDialog != null && chooseFeedDialog.isShowing()){
                     chooseFeedDialog.populateNearYouList(true);
                 }
