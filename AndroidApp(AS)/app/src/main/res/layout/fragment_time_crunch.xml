@@ -6,15 +6,29 @@
     android:orientation="vertical"
     tools:context="com.appuccino.thecampusfeed.fragments.TimeCrunchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- Button and text are separate -->
     <Button
         android:id="@+id/whatsTimeCrunch"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:layout_margin="30dp"
         android:background="@drawable/timecrunchbutton"
-        android:text="What is Time Crunch?"
+        android:text="v"
         android:textColor="@color/white"/>
+    <com.appuccino.thecampusfeed.extra.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:textColor="@color/white"
+        android:text="What is Time Crunch?"
+        android:layout_marginTop="-80dp"
+        android:layout_marginBottom="50dp"
+        android:textSize="24sp"
+        android:gravity="center"
+        app:typeface="light"
+        />
+
 
     <View
         android:layout_width="match_parent"
