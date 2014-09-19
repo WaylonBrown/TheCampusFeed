@@ -6,6 +6,7 @@
 
     <!-- TODO: Update blank fragment layout -->
     <Button
+        android:id="@+id/whatsTimeCrunch"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:layout_margin="30dp"

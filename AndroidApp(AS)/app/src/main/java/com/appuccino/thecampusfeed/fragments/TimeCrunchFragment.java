@@ -5,14 +5,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.appuccino.thecampusfeed.MainActivity;
 import com.appuccino.thecampusfeed.R;
+import com.appuccino.thecampusfeed.dialogs.WhatsTimeCrunchDialog;
 
 public class TimeCrunchFragment extends Fragment
 {
     static MainActivity mainActivity;
+
+    //views
     View rootView;
+    Button whatsTimeCrunchButton;
 
     public TimeCrunchFragment(){
         mainActivity = MainActivity.activity;
@@ -28,13 +33,23 @@ public class TimeCrunchFragment extends Fragment
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_time_crunch,
                 container, false);
-        //list = (QuickReturnListView)rootView.findViewById(R.id.fragmentListView);
+        whatsTimeCrunchButton = (Button)rootView.findViewById(R.id.whatsTimeCrunch);
 
-        //pullListFromServer();
+        setClickListeners();
 
         return rootView;
     }
 
+    private void setClickListeners() {
+        if(whatsTimeCrunchButton != null){
+            whatsTimeCrunchButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    new WhatsTimeCrunchDialog(mainActivity);
+                }
+            });
+        }
+    }
 
 
     public static void makeLoadingIndicator(boolean makeLoading)
