@@ -1,7 +1,9 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.appuccino.thecampusfeed.fragments.TimeCrunchFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -14,4 +16,45 @@
         android:text="What is Time Crunch?"
         android:textColor="@color/white"/>
 
-</FrameLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <!-- middle part -->
+    <com.appuccino.thecampusfeed.extra.CustomTextView
+        android:id="@+id/comingSoonText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:textColor="@color/darkgray"
+        android:text="Coming soon in the next update!"
+        android:textSize="24sp"
+        android:gravity="center"
+        app:typeface="light"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <View
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:background="@color/darkgray"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"/>
+
+    <com.appuccino.thecampusfeed.extra.CustomTextView
+        android:id="@+id/timeCrunchBottomText"
+        style="@style/block"
+        android:text="Time Crunch is off."
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
+        android:gravity="center_horizontal"
+        android:textSize="20sp"
+        app:typeface="light"/>
+
+</LinearLayout>
