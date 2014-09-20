@@ -102,7 +102,6 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		}
 		
 		addLazyFooterView();
-        changeFeed(MainActivity.currentFeedCollegeID);
 		
 		if(mainActivity != null)
 		{
