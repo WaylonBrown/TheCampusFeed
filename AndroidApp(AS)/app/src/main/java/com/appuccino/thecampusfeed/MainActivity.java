@@ -120,8 +120,8 @@ public class MainActivity extends FragmentActivity implements LocationListener
     public static NewPostFragment newPostFrag;
     TagFragment tagFrag;
     MostActiveCollegesFragment collegeFrag;
-    MyPostsFragment myPostsFrag;
-    MyCommentsFragment myCommentsFrag;
+    public static MyPostsFragment myPostsFrag;
+    public static MyCommentsFragment myCommentsFrag;
     TimeCrunchFragment timeCrunchFrag;
 	
 	@Override

@@ -181,6 +181,10 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
     }
 
     private void updateRowViews(View row, CommentHolder commentHolder, int vote, Comment comment) {
+        if(MainActivity.myCommentsFrag != null){
+            MainActivity.myCommentsFrag.updateListVotes();
+        }
+
         int score = comment.getDeltaScore();
 
         Log.i("cfeed","Row is setting to " + vote);

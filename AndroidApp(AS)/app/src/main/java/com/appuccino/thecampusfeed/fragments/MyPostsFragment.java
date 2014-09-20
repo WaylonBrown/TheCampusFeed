@@ -124,6 +124,15 @@ public class MyPostsFragment extends Fragment
         }
     }
 
+    public static void updateListVotes(){
+        if(listAdapter != null)
+        {
+            listAdapter.setCollegeFeedID(MainActivity.ALL_COLLEGES);
+            listAdapter.notifyDataSetChanged();
+            updateUserPostScore();
+        }
+    }
+
     private static void updateUserPostScore() {
         if(score != null && postList != null && postList.size() != 0){
             int scoreCount = 0;

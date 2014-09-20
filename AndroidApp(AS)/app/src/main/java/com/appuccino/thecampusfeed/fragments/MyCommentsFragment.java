@@ -169,6 +169,14 @@ public class MyCommentsFragment extends Fragment
         }
     }
 
+    public static void updateListVotes(){
+        if(listAdapter != null)
+        {
+            listAdapter.notifyDataSetChanged();
+            updateUserScore();
+        }
+    }
+
     private static void updateUserScore() {
         if(score != null && commentList != null){
             int scoreCount = 0;

@@ -207,6 +207,9 @@ public class CommentsActivity extends Activity{
                     if(MainActivity.newPostFrag != null){
                         MainActivity.newPostFrag.updateList();
                     }
+                    if(MainActivity.myPostsFrag != null){
+                        MainActivity.myPostsFrag.updateListVotes();
+                    }
                     TagListActivity.updateList();
                 }
             });
@@ -251,6 +254,9 @@ public class CommentsActivity extends Activity{
                         }
                         if(MainActivity.newPostFrag != null){
                             MainActivity.newPostFrag.updateList();
+                        }
+                        if(MainActivity.myPostsFrag != null){
+                            MainActivity.myPostsFrag.updateListVotes();
                         }
                         TagListActivity.updateList();
                     }
