@@ -10,6 +10,7 @@ import android.widget.Button;
 import com.appuccino.thecampusfeed.MainActivity;
 import com.appuccino.thecampusfeed.R;
 import com.appuccino.thecampusfeed.dialogs.WhatsTimeCrunchDialog;
+import com.appuccino.thecampusfeed.utils.FontManager;
 
 public class TimeCrunchFragment extends Fragment
 {
@@ -34,6 +35,7 @@ public class TimeCrunchFragment extends Fragment
         rootView = inflater.inflate(R.layout.fragment_time_crunch,
                 container, false);
         whatsTimeCrunchButton = (Button)rootView.findViewById(R.id.whatsTimeCrunch);
+        whatsTimeCrunchButton.setTypeface(FontManager.light);
 
         setClickListeners();
 
