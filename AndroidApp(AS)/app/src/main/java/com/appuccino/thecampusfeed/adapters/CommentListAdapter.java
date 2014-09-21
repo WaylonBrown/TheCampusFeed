@@ -32,6 +32,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
     int layoutResourceId;    
     List<Comment> commentList = null;
     private Post post;
+    private List<Post> parentPostList;
     
     public CommentListAdapter(Context context, int layoutResourceId, List<Comment> list, Post post) {
         super(context, layoutResourceId, list);
@@ -40,9 +41,13 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         commentList = list;
         this.post = post;
     }
+
+    public void setPostList(List<Post> list){
+        parentPostList = list;
+    }
     
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View row = convertView;	//this is listview_item_row
         CommentHolder commentHolder = null;
         
@@ -91,6 +96,10 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 			@Override
 			public void onClick(View v) {
                 Log.i("cfeed","up click");
+                if(post == null && parentPostList.size() >= position - 1){
+                    post = parentPostList.get(position);
+                }
+                
                 int currentVote = MainActivity.getVoteByCommentId(thisComment.getID());
 
 				//if already upvoted, un-upvote
@@ -166,8 +175,12 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
 						message += i + ", ";
 					}
 					Log.i("cfeed", message);
-					
-					Toast.makeText(context, "You need to be near the college to downvote", Toast.LENGTH_LONG).show();
+
+                    if(post == null){
+                        Toast.makeText(context, "View the post to downvote your comment", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, "You need to be near the college to downvote", Toast.LENGTH_LONG).show();
+                    }
 				}
 			}        	
         });

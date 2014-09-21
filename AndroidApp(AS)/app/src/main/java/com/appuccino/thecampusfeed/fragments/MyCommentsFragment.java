@@ -104,6 +104,9 @@ public class MyCommentsFragment extends Fragment
     public static void updateCommentParentList(ArrayList<Post> result) {
         parentPostList = new ArrayList<Post>();
         parentPostList.addAll(result);
+        if(listAdapter != null){
+            listAdapter.setPostList(parentPostList);
+        }
     }
 
     private void commentClicked(Comment comment) {
