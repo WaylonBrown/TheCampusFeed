@@ -41,8 +41,11 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *dividerHeight;
 
-- (void)assign:(NSObject<PostAndCommentProtocol> *)obj WithMessageHeight:(float)height;
-- (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
+//- (void)assign:(NSObject<PostAndCommentProtocol> *)obj WithMessageHeight:(float)height;
+
+- (void)assignWith:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
+
+//- (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
 
 - (IBAction) upVotePressed:(id)sender;
 - (IBAction) downVotePresed:(id)sender;

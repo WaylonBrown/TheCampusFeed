@@ -49,11 +49,17 @@
 
 #pragma mark - Data Population
 
-- (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
+- (void)assignWith:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
 {
+    self.userIsNearCollege = isNearby;
     [self.gpsIconImageView setHidden:(!isNearby)];
-    [self assign:post WithMessageHeight:height];
+    [self assign:obj WithMessageHeight:height];
 }
+//- (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
+//{
+//    [self.gpsIconImageView setHidden:(!isNearby)];
+//    [self assign:post WithMessageHeight:height];
+//}
 
 - (void)assign:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj WithMessageHeight:(float)height;
 {   // configure view of the cell according to obj's properties
@@ -108,15 +114,19 @@
     
     if (existingVote == nil)
     {   // User is submitting a normal upvote
-        if ([strongDelegate castVote:newVote])
-        {
+        
+//        if ([strongDelegate castVote:newVote])
+//        {
             [self.object setVote:newVote];
             [self.object incrementScore];
-        }
+//        }
+        
+        [self updateVoteButtons];
+        [strongDelegate castVote:newVote];
     }
     else
     {
-        [strongDelegate cancelVote:existingVote];
+//        [strongDelegate cancelVote:existingVote];
         
         if (existingVote.upvote == true)
         {   // User is undoing an existing upvote; cancel it
@@ -126,21 +136,33 @@
         else if (existingVote.upvote == false)
         {   // User is changing their downvote to an upvote;
             // cancel downvote and cast an upvote
-            if ([strongDelegate castVote:newVote])
-            {
+//            if ([strongDelegate castVote:newVote])
+//            {
                 [self.object setVote:newVote];
                 [self.object incrementScore];
                 [self.object incrementScore];
-            }
+//            }
         }
+        [self updateVoteButtons];
+        
+        [strongDelegate cancelVote:existingVote];
+        [strongDelegate castVote:newVote];
     }
     
-    [self updateVoteButtons];
+//    [self updateVoteButtons];
+//    
+//    
+//    [strongDelegate castVote:newVote];
 }
 - (IBAction)downVotePresed:(id)sender
 {   // User clicked downvote button
-
     id<ChildCellDelegate> strongDelegate = self.delegate;
+
+    if (!self.userIsNearCollege)
+    {
+        [strongDelegate displayCannotVote];
+        return;
+    }
     
     Vote *existingVote = [self.object getVote];
     Vote *newVote = [[Vote alloc] initWithParentID:[self.object getID]

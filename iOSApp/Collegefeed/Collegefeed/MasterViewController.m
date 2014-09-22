@@ -227,6 +227,10 @@
 
 #pragma mark - ChildCellDelegate Methods
 
+- (void)displayCannotVote
+{    // users cannot cast downvotes to a distant school
+    [self.toastController toastInvalidDownvote];
+}
 - (BOOL)castVote:(Vote *)vote
 {   // vote was cast in a table cell
     College *college = [self.dataController getCollegeById:vote.collegeId];
@@ -237,7 +241,7 @@
     }
 
     // users cannot cast downvotes to a distant school
-    [self.toastController toastInvalidDownvote];
+//    [self displayCannotVote];
     return NO;
 }
 - (BOOL)cancelVote:(Vote *)vote

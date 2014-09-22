@@ -125,7 +125,10 @@
         cell.collegeLabelHeight.constant = 0;
         
         float messageHeight = [Shared getLargeCellMessageHeight:self.originalPost.message WithFont:CF_FONT_LIGHT(16)];
-        [cell assign:self.originalPost WithMessageHeight:messageHeight];
+        
+        BOOL isNearCollege = [self.dataController.nearbyColleges containsObject:self.originalPost.college];
+        
+        [cell assignWith:self.originalPost IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
 
         return cell;
     }
@@ -134,7 +137,12 @@
         Comment *commentAtIndex = (Comment*)[self.dataController.commentList objectAtIndex:indexPath.row];
         [commentAtIndex setCollegeID:self.originalPost.collegeID];
         float messageHeight = [Shared getLargeCellMessageHeight:commentAtIndex.message WithFont:CF_FONT_LIGHT(16)];
-        [cell assign:commentAtIndex WithMessageHeight:messageHeight];
+        
+        BOOL isNearCollege = NO;//[self.dataController.nearbyColleges containsObject:nil];
+        
+        
+        [cell assignWith:commentAtIndex IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
+        
         return cell;
     }
     
