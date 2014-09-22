@@ -7,41 +7,35 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.appuccino.thecampusfeed.utils.FontManager;
+import com.appuccino.thecampusfeed.utils.PrefManager;
 
 public class ChangeTimeCrunchCollegeDialog extends AlertDialog.Builder{
 	Context context;
 	AlertDialog dialog;
 
-	public ChangeTimeCrunchCollegeDialog(final Context context, String title, String message, boolean multiButton) {
+	public ChangeTimeCrunchCollegeDialog(final Context context, final int collegeID) {
 		super(context);
 		this.context = context;
 		setCancelable(true);
 
-        if(multiButton){
-            setPositiveButton("Yes", new DialogInterface.OnClickListener()
+        setPositiveButton("Yes", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
             {
-                @Override
-                public void onClick(DialogInterface dialog, int which)
-                {
-                    //start time crunch
-                }
-            }).setNegativeButton("No", new DialogInterface.OnClickListener()
+                PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, collegeID);
+                PrefManager.putInt(PrefManager.TIME_CRUNCH_HOURS, 0);
+                PrefManager.putBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false);
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
             {
-                @Override
-                public void onClick(DialogInterface dialog, int which)
-                {
-                    //do nothing
-                }
-            });
-        } else {
-            setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    //do nothing
-                }
-            });
-        }
-		setTitle(title).setMessage(message);
+                //do nothing
+            }
+        }).setTitle("Change home college for Time Crunch?").setMessage("You posted to a college that isn't your Time Crunch college, meaning no hours were added to your Time Crunch. " +
+                "Want to switch your college to this one? All current Time Crunch hours will be wiped.");
 		
 		createDialog();
 	}

@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.appuccino.thecampusfeed.CommentsActivity;
 import com.appuccino.thecampusfeed.MainActivity;
 import com.appuccino.thecampusfeed.TagListActivity;
+import com.appuccino.thecampusfeed.dialogs.ChangeTimeCrunchCollegeDialog;
 import com.appuccino.thecampusfeed.dialogs.ChooseFeedDialog;
 import com.appuccino.thecampusfeed.dialogs.ForceRequiredUpdateDialog;
 import com.appuccino.thecampusfeed.fragments.MostActiveCollegesFragment;
@@ -714,26 +715,33 @@ public class NetWorker {
              if(!result)
                  Toast.makeText(c, "Failed to post, please try again later.", Toast.LENGTH_LONG).show();
              else{
-                 parseResponseIntoPostAndAdd(response);
+                 Post responsePost = parseResponseIntoPostAndAdd(response);
                  //if time crunch isn't active, add time to it
                  if(!PrefManager.getBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false)){
-                     addTimeCrunchTime();
+                     addTimeCrunchTime(responsePost);
                  }
 
              }
              super.onPostExecute(result);
          }
 
-         private void addTimeCrunchTime() {
-             Toast.makeText(c, MainActivity.TIME_CRUNCH_POST_TIME + " added to your Time Crunch", Toast.LENGTH_LONG).show();
+         private void addTimeCrunchTime(Post post) {
+             Toast.makeText(c, MainActivity.TIME_CRUNCH_POST_TIME + " hours added to your Time Crunch", Toast.LENGTH_LONG).show();
              //add time to the time crunch
              PrefManager.putInt(PrefManager.TIME_CRUNCH_HOURS, PrefManager.getInt(PrefManager.TIME_CRUNCH_HOURS, 0) + MainActivity.TIME_CRUNCH_POST_TIME);
+             //set home college if not set
+             if(PrefManager.getInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, -1) < 0){
+                 PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, post.getCollegeID());
+             } else if (PrefManager.getInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, -1) != post.getCollegeID()){       //if home college isn't the one posted to
+                 new ChangeTimeCrunchCollegeDialog(main, post.getCollegeID());
+             }
          }
 
-         private void parseResponseIntoPostAndAdd(String response) {
+         private Post parseResponseIntoPostAndAdd(String response) {
+             Post responsePost = null;
              try {
                  Log.i("cfeed","NETWORK: Successful post response, adding to list");
-                 Post responsePost = JSONParser.postFromJSON(response);
+                 responsePost = JSONParser.postFromJSON(response);
                  responsePost.setCollegeID(postCollegeID);
                  if(MainActivity.getCollegeByID(postCollegeID) != null){
                      responsePost.setCollegeName(MainActivity.getCollegeByID(postCollegeID).getName());
@@ -746,6 +754,7 @@ public class NetWorker {
                  e.printStackTrace();
              }
 
+             return responsePost;
          }
      }
 

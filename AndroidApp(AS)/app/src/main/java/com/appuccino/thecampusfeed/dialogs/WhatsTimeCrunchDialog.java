@@ -7,12 +7,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.appuccino.thecampusfeed.R;
-import com.appuccino.thecampusfeed.objects.Post;
 import com.appuccino.thecampusfeed.utils.FontManager;
 
 public class WhatsTimeCrunchDialog extends AlertDialog.Builder{
 	Context context;
-	Post post;
 	AlertDialog dialog;
 
 	public WhatsTimeCrunchDialog(final Context context) {

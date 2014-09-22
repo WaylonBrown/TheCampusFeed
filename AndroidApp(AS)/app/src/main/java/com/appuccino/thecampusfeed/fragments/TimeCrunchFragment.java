@@ -26,6 +26,7 @@ public class TimeCrunchFragment extends Fragment
     Button activateButton;
     CustomTextView timeText;
     CustomTextView collegeText;
+    CustomTextView bottomText;
     int timeCrunchHours;
     int collegeID;
     boolean currentlyActive = false;
@@ -48,6 +49,7 @@ public class TimeCrunchFragment extends Fragment
         activateButton = (Button)rootView.findViewById(R.id.activateButton);
         timeText = (CustomTextView)rootView.findViewById(R.id.timeCrunchTimeText);
         collegeText = (CustomTextView)rootView.findViewById(R.id.timeCrunchCollegeText);
+        bottomText = (CustomTextView)rootView.findViewById(R.id.timeCrunchBottomText);
 
         whatsTimeCrunchButton.setTypeface(FontManager.light);
         activateButton.setTypeface(FontManager.light);
@@ -63,7 +65,7 @@ public class TimeCrunchFragment extends Fragment
         collegeID = PrefManager.getInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, -1);
         currentlyActive = PrefManager.getBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false);
 
-        if(timeText != null && collegeText != null){
+        if(timeText != null && collegeText != null && bottomText != null){
             String timeTextString;
             if(timeCrunchHours != 1)
                 timeTextString = timeCrunchHours + " hrs";
@@ -79,6 +81,26 @@ public class TimeCrunchFragment extends Fragment
             if(homeCollege != null){
                 collegeText.setText(homeCollege.getName());
             }
+
+            String bottomTextString;
+            if(currentlyActive){
+                bottomTextString = "Time crunch is on.";
+            } else {
+                bottomTextString = "Time crunch is off.";
+            }
+            bottomText.setText(bottomTextString);
+        }
+    }
+
+    public void updateBottomText(boolean active){
+        if(bottomText != null){
+            String bottomTextString;
+            if(active){
+                bottomTextString = "Time crunch is on.";
+            } else {
+                bottomTextString = "Time crunch is off.";
+            }
+            bottomText.setText(bottomTextString);
         }
     }
 
@@ -92,14 +114,15 @@ public class TimeCrunchFragment extends Fragment
             });
         }
 
+        final TimeCrunchFragment that = this;
         if(activateButton != null){
             activateButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if(timeCrunchHours <= 0){
-                        new ActivateTimeCrunchDialog(mainActivity, "", "You need Time Crunch hours to do that!", false);
+                        new ActivateTimeCrunchDialog(mainActivity, that, collegeID, "", "You need Time Crunch hours to do that!", false);
                     } else {
-                        new ActivateTimeCrunchDialog(mainActivity, "Activate Time Crunch?", "Are you sure you want to start Time Crunch? This means that for the next " + timeCrunchHours +
+                        new ActivateTimeCrunchDialog(mainActivity, that, collegeID, "Activate Time Crunch?", "Are you sure you want to start Time Crunch? This means that for the next " + timeCrunchHours +
                             " hours the app will think you are at your University, meaning you are free to post, comment, and vote on posts as if you were there. There's no backing out, it will" +
                                 " remain like that until the Time Crunch hours are used!", true);
                     }

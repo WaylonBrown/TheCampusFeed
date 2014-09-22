@@ -83,7 +83,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	public static final int MIN_POST_LENGTH = 10;
 	public static final int MIN_COMMENT_LENGTH = 5;
     //TODO: make sure these values are correct
-    public static final int TIME_BETWEEN_POSTS = 10;     //in minutes
+    public static final int TIME_BETWEEN_POSTS = 0;     //in minutes
     public static final int TIME_BETWEEN_COMMENTS = 1;  //in minutes
     public static final int TIME_CRUNCH_POST_TIME = 15;
 
@@ -138,7 +138,12 @@ public class MainActivity extends FragmentActivity implements LocationListener
         lastCommentTime = PrefManager.getLastCommentTime();
 
         checkCollegeListCheckSum();
-		getLocation();
+        //if Time Crunch is active, set location to it, otherwise get location like normal
+        if(PrefManager.getBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false)){
+            setupTimeCrunchLocation();
+        } else {
+            getLocation();
+        }
         PopupManager.run(this);
 		Log.i("cfeed", "APPSETUP: onCreate");
 
@@ -730,6 +735,30 @@ public class MainActivity extends FragmentActivity implements LocationListener
 		}
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 	}
+
+    public void setupTimeCrunchLocation(){
+
+        permissionsProgress.setVisibility(View.GONE);
+        newPostButton.setVisibility(View.VISIBLE);
+        locationFound = true;
+        Toast.makeText(this, "Time Crunch is active, your location is set to your University", Toast.LENGTH_LONG).show();
+        userLocation = new Location("");
+        College homeCollege = getCollegeByID(PrefManager.getInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, 0));
+        if(homeCollege != null){
+            userLocation.setLatitude(homeCollege.getLatitude());
+            userLocation.setLongitude(homeCollege.getLongitude());
+            permissions.clear();
+            permissions.add(homeCollege.getID());
+
+            if(chooseFeedDialog != null && chooseFeedDialog.isShowing()){
+                chooseFeedDialog.populateNearYouList(true);
+            }
+        } else {
+            Toast.makeText(this, "Error retrieving Time Crunch college.", Toast.LENGTH_LONG).show();
+            newPostButton.setVisibility(View.GONE);
+            getLocation();
+        }
+    }
 
 	private boolean areThereMockApps() {
 		int count = 0;
