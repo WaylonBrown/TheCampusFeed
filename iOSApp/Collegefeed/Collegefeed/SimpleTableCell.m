@@ -56,7 +56,8 @@
     {
         [self.messageLabel setText:@""];
     }
-    [self setNeedsDisplay];
+    
+    [self setNeedsUpdateConstraints];
 
 }
 - (void)assignCollege:(College *)college withRankNumber:(long)rankNo withMessageHeight:(float)height
@@ -83,7 +84,8 @@
         [self.messageLabel setText:@""];
     }
     
-    [self setNeedsDisplay];
+    [self setNeedsUpdateConstraints];
+
 }
 - (void)showLoadingIndicator
 {

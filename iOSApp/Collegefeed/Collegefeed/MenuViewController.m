@@ -153,21 +153,24 @@
     self.selectedIndex = indexPath.row;
     NSUInteger index = (indexPath.section * 4) + indexPath.row;
     
-    if (index == 6)
-    {
-        
-        // TODO: this is temporary to be able to see tutorial screen
-        [self.viewDeckController closeLeftView];
-        
-        CGRect rect = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 50);
-        
-        TutorialViewController *controller = [[TutorialViewController alloc] init];
-        [controller.view setFrame:rect];
-        [self.viewDeckController.centerController addChildViewController:controller];
-        [self.viewDeckController.centerController.view addSubview:controller.view];
-        
-        return;
-    }
+//    if (index == 6)
+//    {
+//
+//
+//        [self.viewDeckController closeLeftView];
+//        
+//        // TODO: this is temporary to be able to see tutorial screen
+//        
+//        
+//        CGRect rect = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 50);
+//        
+//        TutorialViewController *controller = [[TutorialViewController alloc] init];
+//        [controller.view setFrame:rect];
+//        [self.viewDeckController.centerController addChildViewController:controller];
+//        [self.viewDeckController.centerController.view addSubview:controller.view];
+//        
+//        return;
+//    }
     
     UIViewController *viewController = self.viewControllers[index];
     

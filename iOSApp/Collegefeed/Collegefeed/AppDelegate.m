@@ -19,6 +19,7 @@
 #import "MenuViewController.h"
 #import "IIViewDeckController.h"
 #import "TutorialViewController.h"
+#import "HelpScreenViewController.h"
 
 @interface AppDelegate ()
 
@@ -71,6 +72,9 @@
 
     self.tutorialController             = [[TutorialViewController alloc] init];
     
+    self.helpController                 = [[HelpScreenViewController alloc] init];
+    [self.helpController setAsHelpScreen];
+    
     NSArray *viewControllers            = [NSArray arrayWithObjects:
                                            self.topPostsController,
                                            self.recentPostsController,
@@ -78,7 +82,8 @@
                                            self.trendingCollegesController,
                                            self.userPostsController,
                                            self.userCommentsController,
-                                           self.tutorialController,
+                                           self.helpController,
+//                                           self.tutorialController,
                                            nil];
 
     // *** Side Menu - MenuViewController *** //

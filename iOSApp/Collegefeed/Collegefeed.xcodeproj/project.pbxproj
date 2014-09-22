@@ -39,6 +39,8 @@
 		538BF13719B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 538BF13619B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png */; };
 		538E7C8419CFF34000AD5719 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538E7C8119CFF34000AD5719 /* TutorialViewController.m */; };
 		538E7C8519CFF34000AD5719 /* TutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 538E7C8219CFF34000AD5719 /* TutorialViewController.xib */; };
+		538E7C9219D030C000AD5719 /* HelpScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538E7C9019D030C000AD5719 /* HelpScreenViewController.m */; };
+		538E7C9319D030C000AD5719 /* HelpScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 538E7C9119D030C000AD5719 /* HelpScreenViewController.xib */; };
 		5390A91D1914B76800ACD082 /* arrowdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9141914B76800ACD082 /* arrowdown.png */; };
 		5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9151914B76800ACD082 /* arrowdownred.png */; };
 		5390A91F1914B76800ACD082 /* arrowup.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9161914B76800ACD082 /* arrowup.png */; };
@@ -187,6 +189,9 @@
 		538E7C8119CFF34000AD5719 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
 		538E7C8219CFF34000AD5719 /* TutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialViewController.xib; sourceTree = "<group>"; };
 		538E7C8319CFF34000AD5719 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
+		538E7C8F19D030C000AD5719 /* HelpScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpScreenViewController.h; sourceTree = "<group>"; };
+		538E7C9019D030C000AD5719 /* HelpScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpScreenViewController.m; sourceTree = "<group>"; };
+		538E7C9119D030C000AD5719 /* HelpScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpScreenViewController.xib; sourceTree = "<group>"; };
 		5390A9141914B76800ACD082 /* arrowdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdown.png; sourceTree = "<group>"; };
 		5390A9151914B76800ACD082 /* arrowdownred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdownred.png; sourceTree = "<group>"; };
 		5390A9161914B76800ACD082 /* arrowup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowup.png; sourceTree = "<group>"; };
@@ -397,6 +402,16 @@
 			name = "User Content";
 			sourceTree = "<group>";
 		};
+		538E7C9619D030C400AD5719 /* Help Screen */ = {
+			isa = PBXGroup;
+			children = (
+				538E7C8F19D030C000AD5719 /* HelpScreenViewController.h */,
+				538E7C9019D030C000AD5719 /* HelpScreenViewController.m */,
+				538E7C9119D030C000AD5719 /* HelpScreenViewController.xib */,
+			);
+			name = "Help Screen";
+			sourceTree = "<group>";
+		};
 		5390A9131914B76800ACD082 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -470,6 +485,7 @@
 				5350557B1951458B009C1911 /* Create Post/Comment */,
 				533475A019232A4A00E84CC8 /* Custom Cells */,
 				535055891953B07A009C1911 /* Tag View */,
+				538E7C9619D030C400AD5719 /* Help Screen */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -750,6 +766,7 @@
 				5311F86219C961250053D3CC /* first_small.png in Resources */,
 				53DE348419AD517C004CB5A0 /* card_without_9patch.png in Resources */,
 				531EAAE819881E6600C1E1AA /* twitter_logo.png in Resources */,
+				538E7C9319D030C000AD5719 /* HelpScreenViewController.xib in Resources */,
 				533FCA4D193EDE3B00754C07 /* aggieland.gpx in Resources */,
 				53FF2D0C195BCE850040E872 /* UserVotes.txt in Resources */,
 				533FCA4F193FCD8200754C07 /* austin.gpx in Resources */,
@@ -789,6 +806,7 @@
 				53DE348019AD01FF004CB5A0 /* IIWrapController.m in Sources */,
 				5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */,
 				5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */,
+				538E7C9219D030C000AD5719 /* HelpScreenViewController.m in Sources */,
 				5347EE9D197DC7CC001B2214 /* UserPostsViewController.m in Sources */,
 				538E7C8419CFF34000AD5719 /* TutorialViewController.m in Sources */,
 				53DE347719AD00AE004CB5A0 /* IIViewDeckController.m in Sources */,

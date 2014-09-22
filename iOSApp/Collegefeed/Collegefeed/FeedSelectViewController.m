@@ -216,8 +216,7 @@
             College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
             if (college != nil)
             {
-                cellLabel = college.name;
-                float labelHeight = [Shared getSmallCellMessageHeight:cellLabel WithFont:CF_FONT_LIGHT(18) withWidth:265];
+                float labelHeight = [Shared getSmallCellMessageHeight:college.name WithFont:CF_FONT_LIGHT(18) withWidth:265];
                 [cell assignCollege:college withRankNumber:-1 withMessageHeight:labelHeight];
                 return cell;
             }
@@ -229,8 +228,7 @@
         College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
         if (college != nil)
         {
-            cellLabel = college.name;
-            float labelHeight = [Shared getSmallCellMessageHeight:cellLabel WithFont:CF_FONT_LIGHT(18) withWidth:265];
+            float labelHeight = [Shared getSmallCellMessageHeight:college.name WithFont:CF_FONT_LIGHT(18) withWidth:265];
             [cell assignCollege:college withRankNumber:-1 withMessageHeight:labelHeight];
             return cell;
         }
