@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TutorialViewController">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="second_small.png" translatesAutoresizingMaskIntoConstraints="NO" id="tnF-HW-iaa">
+                    <rect key="frame" x="44" y="434" width="256" height="114"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="114" id="9LJ-dX-gap"/>
+                        <constraint firstAttribute="width" constant="256" id="ENS-hZ-SHH"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="first_small.png" translatesAutoresizingMaskIntoConstraints="NO" id="sT0-64-OpK">
+                    <rect key="frame" x="20" y="20" width="239" height="191"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="239" id="Bsh-XN-ghL"/>
+                        <constraint firstAttribute="height" constant="191" id="X5z-fR-QS0"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qhD-GG-oWW">
+                    <rect key="frame" x="195" y="33" width="105" height="57"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="57" id="Vgi-Ay-05f"/>
+                        <constraint firstAttribute="width" constant="105" id="s3y-xr-Z9D"/>
+                    </constraints>
+                    <state key="normal" image="ok_button_small.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="okPressed:" destination="-1" eventType="touchUpInside" id="6ue-XP-SO9"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="tnF-HW-iaa" secondAttribute="bottom" constant="20" id="5ik-at-RIO"/>
+                <constraint firstAttribute="trailing" secondItem="tnF-HW-iaa" secondAttribute="trailing" constant="20" id="9yL-Xy-sLH"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tnF-HW-iaa" secondAttribute="trailing" constant="20" id="GgF-o8-8jV"/>
+                <constraint firstAttribute="trailing" secondItem="qhD-GG-oWW" secondAttribute="trailing" constant="20" id="H6N-im-Uod"/>
+                <constraint firstItem="sT0-64-OpK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="LGw-8y-G3w"/>
+                <constraint firstItem="qhD-GG-oWW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="33" id="fWB-OL-PaL"/>
+                <constraint firstItem="sT0-64-OpK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="q5f-nV-R8m"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="tnF-HW-iaa" secondAttribute="bottom" constant="20" id="xE9-Ug-oyh"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="first_small.png" width="600" height="479"/>
+        <image name="ok_button_small.png" width="200" height="108"/>
+        <image name="second_small.png" width="600" height="268"/>
+    </resources>
+</document>

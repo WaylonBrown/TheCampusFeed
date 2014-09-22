@@ -15,6 +15,7 @@
 #import "MasterViewController.h"
 #import "CommentViewController.h"
 #import "PostsViewController.h"
+#import "TutorialViewController.h"
 
 // Minor views and dialogs
 #import "TableCell.h"

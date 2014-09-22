@@ -10,6 +10,8 @@
 #import "SimpleTableCell.h"
 #import "Shared.h"
 #import "IIViewDeckController.h"
+#import "TutorialViewController.h"
+#import "TutorialView.h"
 
 @interface MenuViewController ()
 
@@ -154,7 +156,17 @@
     
     if (index == 6)
     {
-        // TODO: the help screen
+        
+        // TODO: this is temporary to be able to see tutorial screen
+        [self.viewDeckController closeLeftView];
+        
+        CGRect rect = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 50);
+        
+        TutorialViewController *controller = [[TutorialViewController alloc] init];
+        [controller.view setFrame:rect];
+        [self.viewDeckController.centerController addChildViewController:controller];
+        [self.viewDeckController.centerController.view addSubview:controller.view];
+        
         return;
     }
     

@@ -18,6 +18,7 @@
 #import "Networker.h"
 #import "MenuViewController.h"
 #import "IIViewDeckController.h"
+#import "TutorialViewController.h"
 
 @interface AppDelegate ()
 
@@ -68,6 +69,7 @@
                                            initAsType:USER_COMMENTS
                                            withDataController:self.dataController];
 
+    self.tutorialController             = [[TutorialViewController alloc] init];
     
     NSArray *viewControllers            = [NSArray arrayWithObjects:
                                            self.topPostsController,
@@ -76,6 +78,7 @@
                                            self.trendingCollegesController,
                                            self.userPostsController,
                                            self.userCommentsController,
+                                           self.tutorialController,
                                            nil];
 
     // *** Side Menu - MenuViewController *** //

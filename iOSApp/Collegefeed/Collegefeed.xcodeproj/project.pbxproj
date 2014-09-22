@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5311F86019C961250053D3CC /* ok_button_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 5311F85D19C961250053D3CC /* ok_button_small.png */; };
+		5311F86119C961250053D3CC /* second_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 5311F85E19C961250053D3CC /* second_small.png */; };
+		5311F86219C961250053D3CC /* first_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 5311F85F19C961250053D3CC /* first_small.png */; };
 		5312942E196504CD00CF13DB /* ToastController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5312942D196504CD00CF13DB /* ToastController.m */; };
 		531EAADE19860E6200C1E1AA /* thecampusfeedlogosmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAADD19860E6200C1E1AA /* thecampusfeedlogosmall.png */; };
 		531EAAE719881E6600C1E1AA /* fb_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAAE519881E6600C1E1AA /* fb_logo.png */; };
@@ -34,6 +37,8 @@
 		5352B5A2195F5C3100FEB2BF /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 5352B5A1195F5C3100FEB2BF /* UIView+Toast.m */; };
 		5358CE74196E5DF800FF4E45 /* libModels.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5358CE6F196E5D7F00FF4E45 /* libModels.a */; };
 		538BF13719B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 538BF13619B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png */; };
+		538E7C8419CFF34000AD5719 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538E7C8119CFF34000AD5719 /* TutorialViewController.m */; };
+		538E7C8519CFF34000AD5719 /* TutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 538E7C8219CFF34000AD5719 /* TutorialViewController.xib */; };
 		5390A91D1914B76800ACD082 /* arrowdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9141914B76800ACD082 /* arrowdown.png */; };
 		5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9151914B76800ACD082 /* arrowdownred.png */; };
 		5390A91F1914B76800ACD082 /* arrowup.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9161914B76800ACD082 /* arrowup.png */; };
@@ -138,6 +143,9 @@
 /* Begin PBXFileReference section */
 		5306D96E1999E78100637FAE /* Collegefeed-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Collegefeed-Bridging-Header.h"; sourceTree = "<group>"; };
 		5308D2BB193552C600D70C1A /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
+		5311F85D19C961250053D3CC /* ok_button_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ok_button_small.png; sourceTree = "<group>"; };
+		5311F85E19C961250053D3CC /* second_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second_small.png; sourceTree = "<group>"; };
+		5311F85F19C961250053D3CC /* first_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first_small.png; sourceTree = "<group>"; };
 		5312942C196504CD00CF13DB /* ToastController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastController.h; sourceTree = "<group>"; };
 		5312942D196504CD00CF13DB /* ToastController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToastController.m; sourceTree = "<group>"; };
 		531EAADD19860E6200C1E1AA /* thecampusfeedlogosmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thecampusfeedlogosmall.png; sourceTree = "<group>"; };
@@ -176,6 +184,9 @@
 		5352B5A1195F5C3100FEB2BF /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		5358CE69196E5D7F00FF4E45 /* Models.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Models.xcodeproj; path = Collegefeed/Models/Models.xcodeproj; sourceTree = "<group>"; };
 		538BF13619B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thecampusfeedlogosmallwithmenubutton.png; sourceTree = "<group>"; };
+		538E7C8119CFF34000AD5719 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
+		538E7C8219CFF34000AD5719 /* TutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialViewController.xib; sourceTree = "<group>"; };
+		538E7C8319CFF34000AD5719 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
 		5390A9141914B76800ACD082 /* arrowdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdown.png; sourceTree = "<group>"; };
 		5390A9151914B76800ACD082 /* arrowdownred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdownred.png; sourceTree = "<group>"; };
 		5390A9161914B76800ACD082 /* arrowup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowup.png; sourceTree = "<group>"; };
@@ -267,6 +278,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5311F85C19C960A90053D3CC /* Tutorial View */ = {
+			isa = PBXGroup;
+			children = (
+				538E7C8119CFF34000AD5719 /* TutorialViewController.m */,
+				538E7C8219CFF34000AD5719 /* TutorialViewController.xib */,
+				538E7C8319CFF34000AD5719 /* TutorialViewController.h */,
+			);
+			name = "Tutorial View";
+			sourceTree = "<group>";
+		};
 		53129431196517A000CF13DB /* Toasts */ = {
 			isa = PBXGroup;
 			children = (
@@ -379,6 +400,9 @@
 		5390A9131914B76800ACD082 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				5311F85D19C961250053D3CC /* ok_button_small.png */,
+				5311F85E19C961250053D3CC /* second_small.png */,
+				5311F85F19C961250053D3CC /* first_small.png */,
 				538BF13619B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png */,
 				53DE348319AD517C004CB5A0 /* card_without_9patch.png */,
 				531EAAED1988300C00C1E1AA /* icon_light_small.png */,
@@ -436,6 +460,7 @@
 		53B090B5192DA13100E3D996 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5311F85C19C960A90053D3CC /* Tutorial View */,
 				5347EEAF197E9E9E001B2214 /* Menu Navigation View */,
 				53B1FE0119254EB900905E49 /* MasterView */,
 				5347EEA7197DD3C3001B2214 /* Trending Colleges */,
@@ -705,6 +730,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */,
+				5311F86119C961250053D3CC /* second_small.png in Resources */,
 				538BF13719B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png in Resources */,
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */,
@@ -715,11 +741,13 @@
 				53C44EA719669FB400367E33 /* flag.png in Resources */,
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,
 				53FF2D0A195BCE7D0040E872 /* UserComments.txt in Resources */,
+				538E7C8519CFF34000AD5719 /* TutorialViewController.xib in Resources */,
 				5350558019529FCA009C1911 /* FeedSelectViewController.xib in Resources */,
 				5347EEB6197E9EC7001B2214 /* MenuViewController.xib in Resources */,
 				53AB57BC194AAFF8001D1B7B /* mplus-2c-bold.ttf in Resources */,
 				5390A9201914B76800ACD082 /* arrowupblue.png in Resources */,
 				53FF2D06195BCE430040E872 /* UserPosts.txt in Resources */,
+				5311F86219C961250053D3CC /* first_small.png in Resources */,
 				53DE348419AD517C004CB5A0 /* card_without_9patch.png in Resources */,
 				531EAAE819881E6600C1E1AA /* twitter_logo.png in Resources */,
 				533FCA4D193EDE3B00754C07 /* aggieland.gpx in Resources */,
@@ -739,6 +767,7 @@
 				53F8789B19133F60002A578B /* InfoPlist.strings in Resources */,
 				531EAAE719881E6600C1E1AA /* fb_logo.png in Resources */,
 				533475A51923344100E84CC8 /* TableCell.xib in Resources */,
+				5311F86019C961250053D3CC /* ok_button_small.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -761,6 +790,7 @@
 				5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */,
 				5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */,
 				5347EE9D197DC7CC001B2214 /* UserPostsViewController.m in Sources */,
+				538E7C8419CFF34000AD5719 /* TutorialViewController.m in Sources */,
 				53DE347719AD00AE004CB5A0 /* IIViewDeckController.m in Sources */,
 				5350557F19529FCA009C1911 /* FeedSelectViewController.m in Sources */,
 				5347EEB5197E9EC7001B2214 /* MenuViewController.m in Sources */,

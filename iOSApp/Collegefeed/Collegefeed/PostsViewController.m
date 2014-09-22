@@ -215,11 +215,6 @@
 {
     if (self.viewType == TAG_VIEW && self.tagMessage != nil)
     {
-//        if (self.dataController.showingSingleCollege && self.dataController.collegeInFocus.name != nil)
-//        {
-//            return 60;
-//        }
-        
         return 50;
     }
     
@@ -234,13 +229,12 @@
         
         CGRect frame = CGRectMake(0, 0, tableView.frame.size.width, 50);
         
-        UILabel *header = [[UILabel alloc] init];//WithFrame:CGRectMake(10, 0, tableView.frame.size.width - 20, 50)];
+        UILabel *header = [[UILabel alloc] init];
         if (self.dataController.showingSingleCollege && self.dataController.collegeInFocus.name != nil)
         {
             NSString *collegeSubHeader = [NSString stringWithFormat:@"in feed: %@", self.dataController.collegeInFocus.name];
             basicText = [NSString stringWithFormat:@"%@\n%@", basicText, collegeSubHeader];
             [header setNumberOfLines:2];
-//            frame.size.height = 60;
         }
         
         [header setFrame:frame];

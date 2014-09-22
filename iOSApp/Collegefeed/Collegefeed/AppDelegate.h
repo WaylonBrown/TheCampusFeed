@@ -18,6 +18,7 @@
 @class UserPostsViewController;
 @class UserCommentsViewController;
 @class TrendingCollegesViewController;
+@class TutorialViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, LocationFinderDelegateProtocol>
 
@@ -33,6 +34,7 @@
 @property (strong, nonatomic) UserPostsViewController* userPostsController;
 @property (strong, nonatomic) UserCommentsViewController *userCommentsController;
 @property (strong, nonatomic) TrendingCollegesViewController*trendingCollegesController;
+@property (strong, nonatomic) TutorialViewController *tutorialController;
 
 
 

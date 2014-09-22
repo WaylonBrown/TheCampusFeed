@@ -276,7 +276,7 @@
         [self.upVoteButton setSelected:YES];
         [self.downVoteButton setSelected:NO];
     }
-    
+
     [self.scoreLabel setText:[NSString stringWithFormat:@"%ld", [self.object getScore]]];
 }
 
