@@ -11,15 +11,16 @@
         android:id="@+id/whatsTimeCrunch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
-        android:background="@drawable/timecrunchbutton"
+        android:background="@drawable/button_blue"
         android:text="What is Time Crunch?"
         android:textSize="24sp"
         android:textColor="@color/white"
         />
-
 
     <View
         android:layout_width="match_parent"
@@ -28,22 +29,50 @@
 
     <!-- middle part -->
     <com.appuccino.thecampusfeed.extra.CustomTextView
-        android:id="@+id/comingSoonText"
+        android:id="@+id/timeCrunchTimeText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:textColor="@color/darkgray"
-        android:text="Coming soon in the next update!"
-        android:textSize="24sp"
+        android:text="0 hrs"
+        android:textSize="60sp"
         android:gravity="center"
         app:typeface="light"
+        />
+
+    <com.appuccino.thecampusfeed.extra.CustomTextView
+        android:id="@+id/timeCrunchCollegeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:textColor="@color/darkgray"
+        android:text="(no posts have been made yet)"
+        android:textSize="20sp"
+        android:gravity="center"
+        app:typeface="italic"
         />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/activateButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:background="@drawable/button_green"
+        android:text="Activate Time Crunch"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        />
 
     <View
         android:layout_height="1dp"

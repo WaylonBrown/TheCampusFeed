@@ -99,7 +99,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
                 if(post == null && parentPostList.size() >= position - 1){
                     post = parentPostList.get(position);
                 }
-                
+
                 int currentVote = MainActivity.getVoteByCommentId(thisComment.getID());
 
 				//if already upvoted, un-upvote

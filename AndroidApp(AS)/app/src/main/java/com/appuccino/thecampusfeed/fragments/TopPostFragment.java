@@ -146,6 +146,10 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
     }
 	
 	private static void addLazyFooterView() {
+        if(mainActivity == null){
+            mainActivity = MainActivity.activity;
+        }
+
 		if(list.getFooterViewsCount() == 0){
 			lazyFooterView =  ((LayoutInflater)mainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.list_lazy_loading_footer, null, false);
 	        list.addFooterView(lazyFooterView);

@@ -30,6 +30,9 @@ public class PrefManager {
     public static final String SECOND_DIALOG_DISPLAYED = "second_displayed";
     public static final String LAST_POST_TIME = "last_post_time";
     public static final String LAST_COMMENT_TIME = "last_comment_time";
+    public static final String TIME_CRUNCH_HOURS = "time_crunch_hours";
+    public static final String TIME_CRUNCH_HOME_COLLEGE = "time_crunch_home_college";
+    public static final String TIME_CRUNCH_ACTIVATED = "time_crunch_activated";
 	
 	public static void setup(Context c) 
 	{

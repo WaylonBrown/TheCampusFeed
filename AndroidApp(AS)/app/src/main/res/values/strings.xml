@@ -11,7 +11,7 @@
     <string name="section6">My Comments</string>
     <string name="sendTo">Share this Post via...</string>
     <string name="twitterMessage">Want to see our pick of the top post on TheCampusFeed per day? Be sure to follow us on Twitter at @The_Campus_Feed!</string>
-    <string name="webDialogMessage">Want to check out posts while you\'re on your computer? Be sure to check out www.TheCampusFeed.com!\n\n(placeholder image)</string>
+    <string name="webDialogMessage">Want to check out posts while you\'re on your computer? Be sure to check out www.TheCampusFeed.com!</string>
     <string name="chooseFeedDialogTitle">Choose a Feed</string>
     <string name="allCollegesTitle">Combines All Colleges into 1 Feed</string>
     <string name="allColleges">All Colleges</string>
@@ -31,10 +31,10 @@
         together.\n\nIf you make a post that gets a certain amount of flags,
         it will be automatically removed. If you have multiple posts removed, you will be banned from posting to the app.
         Think before you post! To view the rules, click the Flag icon for any post near you.</string>
-    <string name="whatsTimeCrunch">Want to post to your University this Summer as if you\'re actually there,
+    <string name="whatsTimeCrunch">Want to post and comment on your University\'s feed this Summer as if you\'re actually there,
         but are instead visiting home? What about this Winter Break?\n\nFor every post you make to your University,
-        ____ hours get added to your Time Crunch. Once you activate Time Crunch, your current location at your
-        University is saved in the app for that long!\n\nNOTE: Once you use your Time Crunch, there\'s no stopping
+        15 hours get added to your Time Crunch. Once you activate Time Crunch, your current location at your
+        University is saved in the app for that long! You can get extra hours added by unlocking Achievements.\n\nNOTE: Once you use your Time Crunch, there\'s no stopping
         it and you can only use it when you\'re near the University, so use it before you head home!</string>
     <string name="forceUpdateMessage">There is a new required app update.</string>
     <string name="emptyListString">Pull down to load posts</string>

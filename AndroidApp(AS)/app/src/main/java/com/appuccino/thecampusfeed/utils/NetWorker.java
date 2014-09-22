@@ -715,8 +715,19 @@ public class NetWorker {
                  Toast.makeText(c, "Failed to post, please try again later.", Toast.LENGTH_LONG).show();
              else{
                  parseResponseIntoPostAndAdd(response);
+                 //if time crunch isn't active, add time to it
+                 if(!PrefManager.getBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false)){
+                     addTimeCrunchTime();
+                 }
+
              }
              super.onPostExecute(result);
+         }
+
+         private void addTimeCrunchTime() {
+             Toast.makeText(c, MainActivity.TIME_CRUNCH_POST_TIME + " added to your Time Crunch", Toast.LENGTH_LONG).show();
+             //add time to the time crunch
+             PrefManager.putInt(PrefManager.TIME_CRUNCH_HOURS, PrefManager.getInt(PrefManager.TIME_CRUNCH_HOURS, 0) + MainActivity.TIME_CRUNCH_POST_TIME);
          }
 
          private void parseResponseIntoPostAndAdd(String response) {

@@ -85,6 +85,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
     //TODO: make sure these values are correct
     public static final int TIME_BETWEEN_POSTS = 10;     //in minutes
     public static final int TIME_BETWEEN_COMMENTS = 1;  //in minutes
+    public static final int TIME_CRUNCH_POST_TIME = 15;
 
     public Location userLocation;
     private static int selectedMenuItem = 0;

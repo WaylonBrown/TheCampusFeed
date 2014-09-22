@@ -46,6 +46,21 @@ public class PopupManager {
                 }
             }
         }
+
+        //change this variable to +1 each time you want to show an update message to all users next
+        //time they get an update
+        int CURRENT_UPDATE_NUMBER = 0;
+        //for app update messages, we don't want to show it when user first downloads app
+        if(PrefManager.getBoolean("already_ran_before", false)){
+            if(PrefManager.getInt("last_update_number", 0) < CURRENT_UPDATE_NUMBER){
+                PrefManager.putInt("last_update_number", CURRENT_UPDATE_NUMBER);
+
+                showNewAppUpdateMessage();
+            }
+        } else {    //if user just installed the app, set the update number to the current one so it doesn't show a message for this update
+            PrefManager.putBoolean("already_ran_before", true);
+            PrefManager.putInt("last_update_number", CURRENT_UPDATE_NUMBER);
+        }
     }
 
     private static void displayFirstDialog() {
@@ -104,6 +119,10 @@ public class PopupManager {
         titleText.setTypeface(FontManager.light);
         messageText.setTypeface(FontManager.light);
         yesButton.setTypeface(FontManager.light);
+    }
+
+    //use this when you come out with a new update for a dialog to inform users of what's new
+    private static void showNewAppUpdateMessage() {
     }
 
     private static void goToTwitter(){
