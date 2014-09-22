@@ -217,6 +217,9 @@
             if (college != nil)
             {
                 cellLabel = college.name;
+                float labelHeight = [Shared getSmallCellMessageHeight:cellLabel WithFont:CF_FONT_LIGHT(18) withWidth:265];
+                [cell assignCollege:college withRankNumber:-1 withMessageHeight:labelHeight];
+                return cell;
             }
         }
     }
@@ -227,17 +230,18 @@
         if (college != nil)
         {
             cellLabel = college.name;
+            float labelHeight = [Shared getSmallCellMessageHeight:cellLabel WithFont:CF_FONT_LIGHT(18) withWidth:265];
+            [cell assignCollege:college withRankNumber:-1 withMessageHeight:labelHeight];
+            return cell;
         }
     }
-    [cell assignSimpleText:cellLabel];
     
+    [cell assignSimpleText:cellLabel];
     return cell;
     
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
-    
     switch (self.type)
     {
         case ALL_NEARBY_OTHER:
@@ -252,13 +256,14 @@
             if (indexPath.section == 2)
             {   // Show new dialog of: all colleges to let user choose one they are not close to
                 
-                [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+                [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
                     [self.feedDelegate showDialogForAllColleges];
                 }];
             }
             else
             {   // When user chooses all colleges (nil selection) or one of the nearby ones
-                [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+                [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
+                    College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
                     [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:college];
                 }];
             }
@@ -266,14 +271,16 @@
         }
         case ALL_COLLEGES_WITH_SEARCH:
         {   // When user wants to see all colleges and be able to search through them
-            [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+            [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
+                College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
                 [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:college];
             }];
             break;
         }
         case ONLY_NEARBY_COLLEGES:
         {   // When user is selecting which of nearby colleges to post to
-            [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+            [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
+                College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
                 [self.postingDelegate submitSelectionForPostWithCollege:college];
             }];
             break;
@@ -301,6 +308,7 @@
         
         UIImageView *gpsIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gps.png"]];
         [gpsIcon setFrame:CGRectMake((headerWidth / 2) + 35, 0, 20, 20)];
+        [gpsIcon setCenter:CGPointMake((headerWidth / 2) + 40, TABLE_HEADER_HEIGHT / 2)];
         
         [headerView addSubview:gpsIcon];
         
@@ -345,7 +353,7 @@
         if (college != nil)
         {
             NSString *text = college.name;
-            return [Shared getSmallCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(18)];
+            return [Shared getSmallCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(18) withWidth:265];
         }
     }
     

@@ -56,9 +56,11 @@
 + (void)addCollegeNearby:(College *)college;
 + (UIColor*)getCustomUIColor:(int)hexValue;
 + (float)getSmallCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font;
++ (float)getSmallCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font withWidth:(float)width;
 + (float)getLargeCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font;
 
 + (float)getSmallCellMessageHeight:(NSString *)text WithFont:(UIFont *)font;
++ (float)getSmallCellMessageHeight:(NSString *)text WithFont:(UIFont *)font withWidth:(float)width;
 + (float)getLargeCellMessageHeight:(NSString *)text WithFont:(UIFont *)font;
 
 

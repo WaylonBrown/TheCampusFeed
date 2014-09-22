@@ -24,4 +24,5 @@
 - (void)assignSimpleText:(NSString *)text;
 - (void)showLoadingIndicator;
 - (void)hideLoadingIndicator;
+
 @end

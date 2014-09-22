@@ -62,11 +62,21 @@
 - (void)assignCollege:(College *)college withRankNumber:(long)rankNo withMessageHeight:(float)height
 {
     self.labelHeight.constant = height;
-    [self.messageLabel setFont:CF_FONT_LIGHT(18)];    [self.messageLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    [self.messageLabel setFont:CF_FONT_LIGHT(18)];
+    [self.messageLabel setLineBreakMode:NSLineBreakByWordWrapping];
 
     if (college != nil)
     {
-        [self.messageLabel setText:[NSString stringWithFormat:@"%ld. %@", rankNo, college.name]];
+        if (rankNo > 0)
+        {
+            [self.messageLabel setText:[NSString stringWithFormat:@"%ld. %@", rankNo, college.name]];
+            [self.messageLabel setTextAlignment:NSTextAlignmentLeft];
+        }
+        else
+        {
+            [self.messageLabel setText:college.name];
+            [self.messageLabel setTextAlignment:NSTextAlignmentCenter];
+        }
     }
     else
     {

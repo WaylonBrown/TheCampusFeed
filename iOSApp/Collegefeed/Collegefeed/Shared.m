@@ -31,6 +31,14 @@
     return fullHeight + 1;
 }
 
++ (float)getSmallCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font withWidth:(float)width
+{
+    CGFloat height = [self getSmallCellMessageHeight:text WithFont:font];
+    float fullHeight = height + SMALL_CELL_TOP_TO_LABEL + SMALL_CELL_LABEL_TO_BOTTOM;
+    
+    return fullHeight + 1;
+}
+
 + (float)getLargeCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font
 {
 #define CELL_HEIGHT_CUSHION 13
@@ -54,6 +62,30 @@
         NSStringDrawingContext *ctx = [NSStringDrawingContext new];
         NSAttributedString *aString = [[NSAttributedString alloc] initWithString:text];
         UITextView *calculationView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, SMALL_CELL_LABEL_WIDTH, 2000.0f)];
+        [calculationView setAttributedText:aString];
+        
+        
+        CGRect textRect = [calculationView.text
+                           boundingRectWithSize:calculationView.frame.size
+                           options:NSStringDrawingUsesLineFragmentOrigin
+                           attributes:@{NSFontAttributeName:font}
+                           context:ctx];
+        
+        height = textRect.size.height + MESSAGE_HEIGHT_CUSHION;
+    }
+    
+    return MAX(height, SMALL_CELL_MIN_LABEL_HEIGHT);
+}+ (float)getSmallCellMessageHeight:(NSString *)text WithFont:(UIFont *)font  withWidth:(float)width
+{
+    
+#define MESSAGE_HEIGHT_CUSHION 17
+    
+    float height = SMALL_CELL_MIN_LABEL_HEIGHT;
+    if (text != nil && ![text isEqualToString:@""])
+    {
+        NSStringDrawingContext *ctx = [NSStringDrawingContext new];
+        NSAttributedString *aString = [[NSAttributedString alloc] initWithString:text];
+        UITextView *calculationView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, width, 2000.0f)];
         [calculationView setAttributedText:aString];
         
         
