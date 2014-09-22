@@ -242,11 +242,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Collegefeed/TableCell.m"
-            timestampString = "433067660.98306"
+            timestampString = "433068839.683739"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
             landmarkName = "-downVotePresed:"
             landmarkType = "5">
          </BreakpointContent>

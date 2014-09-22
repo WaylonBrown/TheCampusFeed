@@ -23,7 +23,6 @@
 {
     [super loadView];
     // Place logo at the top of the navigation bar
-//    [self.navigationItem setTitleView:logoTitleView];
 }
 - (void)viewDidLoad
 {
@@ -61,7 +60,11 @@
     
     // get the college and display in this cell
     College *collegeAtIndex = (College *)[self.list objectAtIndex:indexPath.row];
-    [cell assignCollege:collegeAtIndex withRankNumber:(indexPath.row + 1)];
+    
+    NSString *text = [collegeAtIndex name];
+    float height = [Shared getSmallCellMessageHeight:text WithFont:CF_FONT_LIGHT(18)];
+
+    [cell assignCollege:collegeAtIndex withRankNumber:(indexPath.row + 1) withMessageHeight:height];
     
     return cell;
 }

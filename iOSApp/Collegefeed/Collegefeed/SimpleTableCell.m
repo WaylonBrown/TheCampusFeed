@@ -42,6 +42,8 @@
 
 - (void)assignTag:(Tag *)tag
 {
+    self.labelHeight.constant = 45;
+
     [self.messageLabel setFont:CF_FONT_LIGHT(22)];
     [self.messageLabel setNumberOfLines:1];
     [self.messageLabel setLineBreakMode:NSLineBreakByTruncatingTail];
@@ -54,21 +56,24 @@
     {
         [self.messageLabel setText:@""];
     }
+    [self setNeedsDisplay];
+
 }
-- (void)assignCollege:(College *)college withRankNumber:(long)rankNo
+- (void)assignCollege:(College *)college withRankNumber:(long)rankNo withMessageHeight:(float)height
 {
-    [self.messageLabel setFont:CF_FONT_LIGHT(18)];
-    [self.messageLabel setNumberOfLines:6];
-    [self.messageLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    self.labelHeight.constant = height;
+    [self.messageLabel setFont:CF_FONT_LIGHT(18)];    [self.messageLabel setLineBreakMode:NSLineBreakByWordWrapping];
 
     if (college != nil)
     {
-        [self.messageLabel setText:[NSString stringWithFormat:@"#%ld) %@", rankNo, college.name]];
+        [self.messageLabel setText:[NSString stringWithFormat:@"%ld. %@", rankNo, college.name]];
     }
     else
     {
         [self.messageLabel setText:@""];
     }
+    
+    [self setNeedsDisplay];
 }
 - (void)showLoadingIndicator
 {

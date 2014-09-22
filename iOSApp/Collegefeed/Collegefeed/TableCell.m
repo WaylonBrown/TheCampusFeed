@@ -55,11 +55,6 @@
     [self.gpsIconImageView setHidden:(!isNearby)];
     [self assign:obj WithMessageHeight:height];
 }
-//- (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
-//{
-//    [self.gpsIconImageView setHidden:(!isNearby)];
-//    [self assign:post WithMessageHeight:height];
-//}
 
 - (void)assign:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj WithMessageHeight:(float)height;
 {   // configure view of the cell according to obj's properties
@@ -114,20 +109,14 @@
     
     if (existingVote == nil)
     {   // User is submitting a normal upvote
-        
-//        if ([strongDelegate castVote:newVote])
-//        {
-            [self.object setVote:newVote];
-            [self.object incrementScore];
-//        }
-        
+    
+        [self.object setVote:newVote];
+        [self.object incrementScore];
         [self updateVoteButtons];
         [strongDelegate castVote:newVote];
     }
     else
     {
-//        [strongDelegate cancelVote:existingVote];
-        
         if (existingVote.upvote == true)
         {   // User is undoing an existing upvote; cancel it
             [self.object setVote:nil];
@@ -136,23 +125,15 @@
         else if (existingVote.upvote == false)
         {   // User is changing their downvote to an upvote;
             // cancel downvote and cast an upvote
-//            if ([strongDelegate castVote:newVote])
-//            {
-                [self.object setVote:newVote];
-                [self.object incrementScore];
-                [self.object incrementScore];
-//            }
+            [self.object setVote:newVote];
+            [self.object incrementScore];
+            [self.object incrementScore];
         }
         [self updateVoteButtons];
         
         [strongDelegate cancelVote:existingVote];
         [strongDelegate castVote:newVote];
     }
-    
-//    [self updateVoteButtons];
-//    
-//    
-//    [strongDelegate castVote:newVote];
 }
 - (IBAction)downVotePresed:(id)sender
 {   // User clicked downvote button
@@ -301,39 +282,5 @@
 
     [self.scoreLabel setText:[NSString stringWithFormat:@"%ld", [self.object getScore]]];
 }
-
-// Old way of assigning; probably slower but not sure yet
-//- (void)updateVoteButtons
-//{   // assign appropriate arrow colors (based on user's vote)
-//    Vote* vote = [self.object getVote];
-//    UIImage *regularUp      = [UIImage imageNamed:@"arrowup.png"];
-//    UIImage *regularDown    = [UIImage imageNamed:@"arrowdown.png"];
-//    UIImage *selectedUp     = [UIImage imageNamed:@"arrowupblue.png"];
-//    UIImage *selectedDown   = [UIImage imageNamed:@"arrowdownred.png"];
-//    
-//    if (vote == nil)
-//    {
-//        [self.upVoteButton setImage:regularUp
-//                           forState:UIControlStateNormal];
-//        [self.downVoteButton setImage:regularDown
-//                             forState:UIControlStateNormal];
-//    }
-//    else if (vote.upvote == NO)
-//    {
-//        [self.upVoteButton setImage:regularUp
-//                           forState:UIControlStateNormal];
-//        [self.downVoteButton setImage:selectedDown
-//                             forState:UIControlStateNormal];
-//    }
-//    else if (vote.upvote == YES)
-//    {
-//        [self.upVoteButton setImage:selectedUp
-//                           forState:UIControlStateNormal];
-//        [self.downVoteButton setImage:regularDown
-//                             forState:UIControlStateNormal];
-//    }
-//    
-//    [self.scoreLabel setText:[NSString stringWithFormat:@"%ld", [self.object getScore]]];
-//}
 
 @end

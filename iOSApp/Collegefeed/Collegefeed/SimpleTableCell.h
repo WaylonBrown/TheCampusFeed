@@ -17,8 +17,10 @@
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *labelHeight;
+
 - (void)assignTag:(Tag *)tag;
-- (void)assignCollege:(College *)college withRankNumber:(long)rankNo;
+- (void)assignCollege:(College *)college withRankNumber:(long)rankNo withMessageHeight:(float)height;
 - (void)assignSimpleText:(NSString *)text;
 - (void)showLoadingIndicator;
 - (void)hideLoadingIndicator;

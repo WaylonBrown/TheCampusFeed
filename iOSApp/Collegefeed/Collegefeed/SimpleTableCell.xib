@@ -20,6 +20,9 @@
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." lineBreakMode="wordWrap" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="290" translatesAutoresizingMaskIntoConstraints="NO" id="7uO-pg-YcX">
                         <rect key="frame" x="15" y="1" width="290" height="36"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="36" id="oCq-NY-zgR"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                         <color key="textColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -35,17 +38,17 @@
                     <constraint firstAttribute="centerY" secondItem="Z4f-kk-Oeg" secondAttribute="centerY" id="9xg-qH-e0L"/>
                     <constraint firstItem="tXm-5T-2H1" firstAttribute="trailing" secondItem="Z4f-kk-Oeg" secondAttribute="trailing" constant="20" id="MOC-Ma-WeF"/>
                     <constraint firstAttribute="trailing" secondItem="tXm-5T-2H1" secondAttribute="trailing" constant="5" id="SfZ-zj-jB8"/>
-                    <constraint firstAttribute="bottom" secondItem="7uO-pg-YcX" secondAttribute="bottom" constant="6" id="bfK-HM-ZfX"/>
                     <constraint firstItem="7uO-pg-YcX" firstAttribute="top" secondItem="bGP-uD-UhT" secondAttribute="top" constant="1" id="daj-pP-2Tf"/>
                     <constraint firstItem="tXm-5T-2H1" firstAttribute="top" secondItem="bGP-uD-UhT" secondAttribute="top" id="dr4-ye-Ohq"/>
                     <constraint firstItem="7uO-pg-YcX" firstAttribute="leading" secondItem="tXm-5T-2H1" secondAttribute="leading" constant="10" id="qxH-mP-c9O"/>
-                    <constraint firstAttribute="bottom" secondItem="tXm-5T-2H1" secondAttribute="bottom" id="rDg-nP-NM3"/>
+                    <constraint firstItem="tXm-5T-2H1" firstAttribute="bottom" secondItem="7uO-pg-YcX" secondAttribute="bottom" constant="6" id="tBn-tl-Flh"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="activityIndicator" destination="Z4f-kk-Oeg" id="amU-U1-XZA"/>
                 <outlet property="imageView" destination="tXm-5T-2H1" id="EBq-Ql-3aq"/>
+                <outlet property="labelHeight" destination="oCq-NY-zgR" id="vdS-ya-lfU"/>
                 <outlet property="messageLabel" destination="7uO-pg-YcX" id="zbo-PM-vSz"/>
             </connections>
         </tableViewCell>

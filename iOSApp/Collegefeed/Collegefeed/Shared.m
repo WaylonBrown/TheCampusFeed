@@ -28,7 +28,7 @@
     CGFloat height = [self getSmallCellMessageHeight:text WithFont:font];
     float fullHeight = height + SMALL_CELL_TOP_TO_LABEL + SMALL_CELL_LABEL_TO_BOTTOM;
     
-    return fullHeight;
+    return fullHeight + 1;
 }
 
 + (float)getLargeCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font
@@ -46,7 +46,7 @@
 + (float)getSmallCellMessageHeight:(NSString *)text WithFont:(UIFont *)font
 {
     
-#define MESSAGE_HEIGHT_CUSHION 10
+#define MESSAGE_HEIGHT_CUSHION 17
     
     float height = SMALL_CELL_MIN_LABEL_HEIGHT;
     if (text != nil && ![text isEqualToString:@""])
