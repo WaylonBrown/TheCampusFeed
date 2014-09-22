@@ -10,6 +10,8 @@ import com.appuccino.thecampusfeed.fragments.TimeCrunchFragment;
 import com.appuccino.thecampusfeed.utils.FontManager;
 import com.appuccino.thecampusfeed.utils.PrefManager;
 
+import java.util.Calendar;
+
 public class ActivateTimeCrunchDialog extends AlertDialog.Builder{
 	MainActivity main;
 	AlertDialog dialog;
@@ -28,6 +30,7 @@ public class ActivateTimeCrunchDialog extends AlertDialog.Builder{
                     //start time crunch
                     PrefManager.putBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, true);
                     PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, collegeID);
+                    PrefManager.putTimeCrunchActivateTimestamp(Calendar.getInstance());
                     main.setupTimeCrunchLocation();
                     frag.updateActivationState(true);
                 }

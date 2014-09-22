@@ -24,10 +24,11 @@ public class DeactivateTimeCrunchDialog extends AlertDialog.Builder{
             @Override
             public void onClick(DialogInterface dialog, int which)
             {
-                //start time crunch
+                //stop time crunch
                 PrefManager.putBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false);
                 PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, -1);
                 PrefManager.putInt(PrefManager.TIME_CRUNCH_HOURS, 0);
+                PrefManager.putTimeCrunchActivateTimestamp(null);
                 main.getLocation();
                 frag.updateActivationState(false);
             }

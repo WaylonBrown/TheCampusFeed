@@ -33,6 +33,7 @@ public class PrefManager {
     public static final String TIME_CRUNCH_HOURS = "time_crunch_hours";
     public static final String TIME_CRUNCH_HOME_COLLEGE = "time_crunch_home_college";
     public static final String TIME_CRUNCH_ACTIVATED = "time_crunch_activated";
+    public static final String TIME_CRUNCH_ACTIVATE_TIME = "time_crunch_activate_time";
 	
 	public static void setup(Context c) 
 	{
@@ -298,5 +299,42 @@ public class PrefManager {
                 "," +
                 String.valueOf(c.get(Calendar.YEAR));
         prefs.edit().putString(LAST_COMMENT_TIME, storage).apply();
+    }
+
+    public static Calendar getTimeCrunchActivateTimestamp() {
+        Calendar returnCal = Calendar.getInstance();
+        String lastString = prefs.getString(TIME_CRUNCH_ACTIVATE_TIME, "");
+        if(lastString.isEmpty()){
+            return null;
+        } else {
+            //MM,DD,YYYY
+            String[] splitString = lastString.split(",");
+            returnCal.set(Calendar.SECOND, Integer.valueOf(splitString[0]));
+            returnCal.set(Calendar.MINUTE, Integer.valueOf(splitString[1]));
+            returnCal.set(Calendar.HOUR_OF_DAY, Integer.valueOf(splitString[2]));
+            returnCal.set(Calendar.MONTH, Integer.valueOf(splitString[3]));
+            returnCal.set(Calendar.DAY_OF_MONTH, Integer.valueOf(splitString[4]));
+            returnCal.set(Calendar.YEAR, Integer.valueOf(splitString[5]));
+            return returnCal;
+        }
+    }
+
+    public static void putTimeCrunchActivateTimestamp(Calendar c){
+        if(c != null){
+            String storage = String.valueOf(c.get(Calendar.SECOND)) +
+                    "," +
+                    String.valueOf(c.get(Calendar.MINUTE)) +
+                    "," +
+                    String.valueOf(c.get(Calendar.HOUR_OF_DAY)) +
+                    "," +
+                    String.valueOf(c.get(Calendar.MONTH)) +
+                    "," +
+                    String.valueOf(c.get(Calendar.DAY_OF_MONTH)) +
+                    "," +
+                    String.valueOf(c.get(Calendar.YEAR));
+            prefs.edit().putString(TIME_CRUNCH_ACTIVATE_TIME, storage).apply();
+        } else {
+            prefs.edit().putString(TIME_CRUNCH_ACTIVATE_TIME, "").apply();
+        }
     }
 }

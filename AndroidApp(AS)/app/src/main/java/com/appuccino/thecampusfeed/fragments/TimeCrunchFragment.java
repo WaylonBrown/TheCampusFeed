@@ -15,7 +15,10 @@ import com.appuccino.thecampusfeed.dialogs.WhatsTimeCrunchDialog;
 import com.appuccino.thecampusfeed.extra.CustomTextView;
 import com.appuccino.thecampusfeed.objects.College;
 import com.appuccino.thecampusfeed.utils.FontManager;
+import com.appuccino.thecampusfeed.utils.MyLog;
 import com.appuccino.thecampusfeed.utils.PrefManager;
+
+import java.util.Calendar;
 
 public class TimeCrunchFragment extends Fragment
 {
@@ -24,14 +27,17 @@ public class TimeCrunchFragment extends Fragment
     //views
     View rootView;
     Button whatsTimeCrunchButton;
-    Button activateButton;
-    Button deactivateButton;
-    CustomTextView timeText;
-    CustomTextView collegeText;
-    CustomTextView bottomText;
-    int timeCrunchHours;
+    static Button activateButton;
+    static Button deactivateButton;
+    static CustomTextView timeText;
+    static CustomTextView collegeText;
+    static CustomTextView bottomText;
+
+    //values
+    static int timeCrunchHours;
     int collegeID;
-    boolean currentlyActive = false;
+    static boolean currentlyActive = false;
+    static Calendar activateTime;
 
     public TimeCrunchFragment(){
         mainActivity = MainActivity.activity;
@@ -67,6 +73,7 @@ public class TimeCrunchFragment extends Fragment
     private void getTimeCrunchData() {
         timeCrunchHours = PrefManager.getInt(PrefManager.TIME_CRUNCH_HOURS, 0);
         collegeID = PrefManager.getInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, -1);
+        activateTime = PrefManager.getTimeCrunchActivateTimestamp();
         //use for testing
 //        timeCrunchHours = 100;
 //        collegeID = 645;
@@ -79,10 +86,18 @@ public class TimeCrunchFragment extends Fragment
             deactivateButton.setVisibility(View.GONE);
         }
 
+        checkTimeCrunchHoursLeft();
+
         if(timeText != null && collegeText != null && bottomText != null){
             String timeTextString;
             if(timeCrunchHours != 1)
-                timeTextString = timeCrunchHours + " hrs";
+            {
+                if(timeCrunchHours >= 0){
+                    timeTextString = timeCrunchHours + " hrs";
+                } else {
+                    timeTextString = 0 + " hrs";
+                }
+            }
             else
                 timeTextString = timeCrunchHours + " hr";
 
@@ -106,7 +121,29 @@ public class TimeCrunchFragment extends Fragment
         }
     }
 
-    public void updateActivationState(boolean active){
+    public static void checkTimeCrunchHoursLeft() {
+        activateTime = PrefManager.getTimeCrunchActivateTimestamp();
+        //update hours according to time stamp
+        if(currentlyActive && activateTime != null){
+            MyLog.i("Time crunch is active, calculating hours left");
+            Calendar now = Calendar.getInstance();
+            long difference = now.getTimeInMillis() - activateTime.getTimeInMillis();
+            //int hoursDifference = (int)Math.ceil(difference / (60*60*1000));
+            //use for testing: this uses seconds instead of hours
+            int hoursDifference = (int)Math.ceil(difference / (1000));
+            timeCrunchHours = timeCrunchHours - hoursDifference;
+            //time crunch is done
+            if(timeCrunchHours <= 0){
+                MyLog.i("Time crunch is now done");
+                PrefManager.putBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false);
+                PrefManager.putInt(PrefManager.TIME_CRUNCH_HOURS, 0);
+                PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, -1);
+                updateActivationState(false);
+            }
+        }
+    }
+
+    public static void updateActivationState(boolean active){
         if(bottomText != null){
             String bottomTextString;
             if(active){
@@ -132,6 +169,13 @@ public class TimeCrunchFragment extends Fragment
                 timeText.setText("0 hrs");
             } else {
                 timeText.setText(timeText.getText().toString() + " left");
+            }
+        }
+
+        if(collegeText != null){
+            College homeCollege = MainActivity.getCollegeByID(PrefManager.getInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, -1));
+            if(homeCollege != null){
+                collegeText.setText(homeCollege.getName());
             }
         }
     }

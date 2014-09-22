@@ -138,6 +138,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
         lastCommentTime = PrefManager.getLastCommentTime();
 
         checkCollegeListCheckSum();
+        TimeCrunchFragment.checkTimeCrunchHoursLeft();
         //if Time Crunch is active, set location to it, otherwise get location like normal
         if(PrefManager.getBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false)){
             setupTimeCrunchLocation();

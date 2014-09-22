@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.appuccino.thecampusfeed.fragments.TimeCrunchFragment;
 import com.appuccino.thecampusfeed.utils.FontManager;
 import com.appuccino.thecampusfeed.utils.PrefManager;
 
@@ -26,6 +27,7 @@ public class ChangeTimeCrunchCollegeDialog extends AlertDialog.Builder{
                 PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, collegeID);
                 PrefManager.putInt(PrefManager.TIME_CRUNCH_HOURS, 0);
                 PrefManager.putBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false);
+                TimeCrunchFragment.updateActivationState(false);
             }
         }).setNegativeButton("No", new DialogInterface.OnClickListener()
         {
