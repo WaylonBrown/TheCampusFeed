@@ -123,6 +123,7 @@ public class TimeCrunchFragment extends Fragment
 
     public static void checkTimeCrunchHoursLeft() {
         activateTime = PrefManager.getTimeCrunchActivateTimestamp();
+        currentlyActive = PrefManager.getBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false);
         //update hours according to time stamp
         if(currentlyActive && activateTime != null){
             MyLog.i("Time crunch is active, calculating hours left");
@@ -140,6 +141,8 @@ public class TimeCrunchFragment extends Fragment
                 PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, -1);
                 updateActivationState(false);
             }
+        } else {
+            MyLog.i("Time crunch is inactive, calculating hours left");
         }
     }
 

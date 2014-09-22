@@ -83,7 +83,7 @@
         android:layout_marginBottom="30dp"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
-        android:background="@drawable/button_green"
+        android:background="@drawable/button_red"
         android:text="Stop Time Crunch"
         android:textSize="24sp"
         android:textColor="@color/white"

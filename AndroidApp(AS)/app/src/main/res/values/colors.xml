@@ -8,6 +8,9 @@
 
     <color name="green">#36B75D</color>
     <color name="darkgreen">#2B924A</color>
+
+    <color name="red">#EE0000</color>
+    <color name="darkred">#BB0000</color>
     
     <color name="lightlightgray">#F5F5F5</color>
     <color name="bottomviewgray">#EAEAEA</color>
