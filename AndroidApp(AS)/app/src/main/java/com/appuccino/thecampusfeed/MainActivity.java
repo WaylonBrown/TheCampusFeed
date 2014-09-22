@@ -658,7 +658,8 @@ public class MainActivity extends FragmentActivity implements LocationListener
 		}
 	}
 	
-	private void getLocation(){
+	public void getLocation(){
+        MyLog.i("Getting location normally");
 		//lock to portrait until location is received so location retrieval isn't messed up
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		
@@ -741,10 +742,10 @@ public class MainActivity extends FragmentActivity implements LocationListener
         permissionsProgress.setVisibility(View.GONE);
         newPostButton.setVisibility(View.VISIBLE);
         locationFound = true;
-        Toast.makeText(this, "Time Crunch is active, your location is set to your University", Toast.LENGTH_LONG).show();
         userLocation = new Location("");
         College homeCollege = getCollegeByID(PrefManager.getInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, 0));
         if(homeCollege != null){
+            Toast.makeText(this, "Time Crunch is active, your location is set to " + homeCollege.getName(), Toast.LENGTH_LONG).show();
             userLocation.setLatitude(homeCollege.getLatitude());
             userLocation.setLongitude(homeCollege.getLongitude());
             permissions.clear();

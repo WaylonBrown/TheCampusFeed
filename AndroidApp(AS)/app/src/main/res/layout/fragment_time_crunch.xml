@@ -48,7 +48,7 @@
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:textColor="@color/darkgray"
-        android:text="(no posts have been made yet)"
+        android:text="Start posting to get time!"
         android:textSize="20sp"
         android:gravity="center"
         app:typeface="italic"
@@ -72,6 +72,22 @@
         android:text="Activate Time Crunch"
         android:textSize="24sp"
         android:textColor="@color/white"
+        />
+
+    <Button
+        android:id="@+id/deActivateButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:background="@drawable/button_green"
+        android:text="Stop Time Crunch"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:visibility="gone"
         />
 
     <View

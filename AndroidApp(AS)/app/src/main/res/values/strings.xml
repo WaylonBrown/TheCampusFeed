@@ -7,7 +7,7 @@
     <string name="section2">New Posts</string>
     <string name="section3">Trending Tags</string>
     <string name="section4">Most Active Colleges</string>
-    <string name="section5">My Posts</string>
+    <string name="section5">My Posts and Achievements</string>
     <string name="section6">My Comments</string>
     <string name="sendTo">Share this Post via...</string>
     <string name="twitterMessage">Want to see our pick of the top post on TheCampusFeed per day? Be sure to follow us on Twitter at @The_Campus_Feed!</string>
@@ -34,8 +34,8 @@
     <string name="whatsTimeCrunch">Want to post and comment on your University\'s feed this Summer as if you\'re actually there,
         but are instead visiting home? What about this Winter Break?\n\nFor every post you make to your University,
         15 hours get added to your Time Crunch. Once you activate Time Crunch, your current location at your
-        University is saved in the app for that long! You can get extra hours added by unlocking Achievements.\n\nNOTE: Once you
-        use your Time Crunch, there\'s no stopping it!</string>
+        University is saved in the app for that long! You can get extra hours added by unlocking Achievements.\n\nNOTE:
+        If you turn off Time Crunch once it is active, your hours will be reset to 0!</string>
     <string name="forceUpdateMessage">There is a new required app update.</string>
     <string name="emptyListString">Pull down to load posts</string>
 

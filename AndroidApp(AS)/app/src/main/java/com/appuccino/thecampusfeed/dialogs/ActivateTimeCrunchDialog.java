@@ -29,7 +29,7 @@ public class ActivateTimeCrunchDialog extends AlertDialog.Builder{
                     PrefManager.putBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, true);
                     PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, collegeID);
                     main.setupTimeCrunchLocation();
-                    frag.updateBottomText(true);
+                    frag.updateActivationState(true);
                 }
             }).setNegativeButton("No", new DialogInterface.OnClickListener()
             {
