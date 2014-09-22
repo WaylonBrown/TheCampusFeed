@@ -41,7 +41,6 @@
         self.activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         self.toastController = [[ToastController alloc] init];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedNotification:) name:@"Toast" object:nil];
-//        [[NSNotificationCenter defaultCenter] addObserver:self.toastController selector:@selector(toastHidden) name:@"ToastHidden" object:nil];
     }
     return self;
 }
@@ -59,16 +58,12 @@
     tableViewController.refreshControl = self.refreshControl;
 
     // Assign fonts
-    [self.currentFeedLabel      setAdjustsFontSizeToFitWidth:YES];
     [self.currentFeedLabel      setFont:CF_FONT_LIGHT(22)];
     [self.showingLabel          setFont:CF_FONT_BOLD(12)];
     [self.feedButton.titleLabel setFont:CF_FONT_LIGHT(17)];
 }
 - (void)viewDidLoad
 {
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedNotification:) name:@"Toast" object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self.toastController selector:@selector(toastHidden) name:@"ToastHidden" object:nil];
-    
     [self.navigationController.navigationBar setTranslucent:NO];
     [self refresh];
     

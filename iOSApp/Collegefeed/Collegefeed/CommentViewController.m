@@ -53,6 +53,11 @@
         UIImage *facebookImage = [UIImage imageNamed:@"fb_logo.png"];
         UIImage *twitterImage = [UIImage imageNamed:@"twitter_logo.png"];
         
+        UIView *dividerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, self.navigationController.navigationBar.frame.size.height - 16)];
+        [dividerView setBackgroundColor:[UIColor whiteColor]];
+        UIBarButtonItem *divider = [[UIBarButtonItem alloc] initWithCustomView:dividerView];
+        
+        
         UIBarButtonItem *facebook = [[UIBarButtonItem alloc] initWithImage:facebookImage style:UIBarButtonItemStylePlain target:self action:@selector(shareOnFacebook)];
         UIBarButtonItem *twitter = [[UIBarButtonItem alloc] initWithImage:twitterImage style:UIBarButtonItemStylePlain target:self action:@selector(shareOnTwitter)];
 
@@ -67,7 +72,7 @@
             UIImage *flagImage = [UIImage imageNamed:@"flag.png"];
               UIBarButtonItem *flag = [[UIBarButtonItem alloc] initWithImage:flagImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
             
-            self.navigationItem.rightBarButtonItems = @[create, flag, facebook, twitter];
+            self.navigationItem.rightBarButtonItems = @[create, flag, divider, facebook, twitter];
         }
         else
         {
@@ -81,6 +86,7 @@
 {   // called once the comment view has loaded
     [super viewDidLoad];
     
+    self.commentTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.postTableView reloadData];
     [self.commentTableView reloadData];
 }
@@ -129,7 +135,7 @@
         BOOL isNearCollege = [self.dataController.nearbyColleges containsObject:self.originalPost.college];
         
         [cell assignWith:self.originalPost IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
-
+        cell.gpsIconImageView.hidden = YES;
         return cell;
     }
     else if (tableView == self.commentTableView)
@@ -172,7 +178,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {   // return the header title for the 'Comments' section
     
-    if (tableView == self.commentTableView)
+    if (tableView == self.commentTableView && self.list.count > 0)
     {
         UILabel *commentHeader = [[UILabel alloc] initWithFrame:CGRectZero];
         [commentHeader setText:@"Comments"];
