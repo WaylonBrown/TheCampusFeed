@@ -46,6 +46,8 @@ CollegeFeed::Application.routes.draw do
       get '/posts/recent' => 'posts#recent'
       get '/posts/trending' => 'posts#trending'
       get '/posts/hidden' => 'posts#hidden'
+      get '/posts/flagged' => 'posts#flagged'
+      get '/posts/flagged/count' => 'posts#flagged_count'
       resources :posts do
         get '/comments/search/:searchText' => 'comments#search'
         get '/comments/search/:searchText/count' => 'comments#searchCount'

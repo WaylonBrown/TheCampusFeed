@@ -51,6 +51,16 @@ def sanitizeName(name)
     ret = $1 + "&" + $2
   end
 
+  if /(.* .) - (..*)/.match(ret)
+    if($2.start_with?("Main")){
+      ret = $1
+    } else {
+      ret = $1 + "-" + $2
+    }
+    ret = $1 + "&" + $2
+  end
+
+
   return ret
 end
 

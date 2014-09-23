@@ -4,6 +4,19 @@ class PostsController < ApplicationController
   before_action :require_college, only: [:create]
   before_action :set_college, only: [:index, :create, :byTag, :recent, :trending]
 
+  def flagged
+    @posts = Post.select("posts.id, posts.text, posts.vote_delta, posts.comment_count, count(flags.id) AS flags_count").
+      joins(:flags).
+      group("posts.id").
+      order("flags_count DESC").page(params[:page]).per(params[:per_page])
+    render json: @posts
+  end
+
+  def flagged_count
+    render json: Post.select("DISTINCT posts.id").
+      joins(:flags).count
+  end
+
   def many
     posts = []
     params[:many_ids].each{ |id|

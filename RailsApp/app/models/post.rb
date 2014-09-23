@@ -1,6 +1,4 @@
 class Post < ActiveRecord::Base
-  include PgSearch
-  pg_search_scope :search_by_text, :against => :text
 
   has_many :comments
   has_many :votes, as: :votable

@@ -13,6 +13,9 @@ angular.module("cfeed").controller "SectionController", [
       {
         template: "partials/adminComments"
       }
+      {
+        template: "partials/adminFlaggedPosts"
+      }
     ]
 
 ]
