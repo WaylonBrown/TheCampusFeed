@@ -5,7 +5,7 @@ production:
   pool: 5
   host: 10.183.248.28
   username: james
-  password: F4flkgj43LWB#$LW#E$GFsrdknmfgn#$
+  password: <%= ENV['DB_PASSWORD'] %>
 
 test: &TEST
   adapter: mysql2

@@ -1,5 +1,7 @@
 class StaticPagesController < ApplicationController
 
+  http_basic_authenticate_with :name => "admin", :password => ENV['ADMIN_PASSWORD'], only: :admin
+
   after_action :allow_iframe, only: :landing
 
   def index
