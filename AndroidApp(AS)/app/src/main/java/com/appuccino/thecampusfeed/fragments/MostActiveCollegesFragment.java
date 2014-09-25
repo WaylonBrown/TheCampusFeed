@@ -39,6 +39,9 @@ public class MostActiveCollegesFragment extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+        if(mainActivity == null){
+            mainActivity = MainActivity.activity;
+        }
 		View rootView = inflater.inflate(R.layout.fragment_layout,
 				container, false);
 		ListView fragList = (ListView)rootView.findViewById(R.id.fragmentListView);

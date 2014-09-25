@@ -70,6 +70,9 @@ public class TagFragment extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+        if(mainActivity == null){
+            mainActivity = MainActivity.activity;
+        }
 		rootView = inflater.inflate(R.layout.fragment_layout_tag,
 				container, false);
 		list = (QuickReturnListView)rootView.findViewById(R.id.fragmentListView);
