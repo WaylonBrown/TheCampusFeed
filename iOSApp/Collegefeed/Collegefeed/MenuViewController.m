@@ -44,6 +44,11 @@
 
     self.tableView.backgroundColor = [UIColor darkGrayColor];
 }
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+    [self.tableView reloadData];
+}
 
 #pragma mark - Properties
 
@@ -84,14 +89,13 @@
 {
     static NSString *CellIdentifier = @"MenuCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    NSUInteger index = (indexPath.section * 4) + indexPath.row;
     
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
     }
     
-    NSUInteger index = (indexPath.section * 4) + indexPath.row;
     
     NSString *menuItem = self.menuItems[index];
     
@@ -103,7 +107,7 @@
     UIView *view = [[UIView alloc] init];
     view.backgroundColor = [Shared getCustomUIColor:CF_BLUE];
     cell.selectedBackgroundView = view;
-    
+        
     if (index == self.selectedIndex)
     {
         [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
@@ -116,9 +120,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    float windowHeight = self.view.frame.size.height;
-    float cellHeight = (windowHeight - 30.0) / 8.0f;
-    return cellHeight;
+    return MENU_CELL_HEIGHT;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -150,40 +152,38 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.selectedIndex = indexPath.row;
+    
     NSUInteger index = (indexPath.section * 4) + indexPath.row;
-    
-//    if (index == 6)
-//    {
-//
-//
-//        [self.viewDeckController closeLeftView];
-//        
-//        // TODO: this is temporary to be able to see tutorial screen
-//        
-//        
-//        CGRect rect = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 50);
-//        
-//        TutorialViewController *controller = [[TutorialViewController alloc] init];
-//        [controller.view setFrame:rect];
-//        [self.viewDeckController.centerController addChildViewController:controller];
-//        [self.viewDeckController.centerController.view addSubview:controller.view];
-//        
-//        return;
-//    }
-    
     UIViewController *viewController = self.viewControllers[index];
-    
-    if (viewController == nil)
+    if (viewController != nil)
     {
-        NSLog(@"Error in MenuViewController menu selection");
+        [self.viewDeckController closeLeftView];
+        if (index == 6)
+        {   // 'Help' selection just displays dialog over currently selected view
+            [self.navigationController presentViewController:viewController animated:YES completion:nil];
+        }
+        else
+        {
+            self.selectedIndex = indexPath.row;
+            [self.viewDeckController setCenterController:viewController];
+        }
     }
     else
     {
-        [self.viewDeckController setCenterController:viewController];
+        NSLog(@"Error in MenuViewController menu selection, null viewController");
+
     }
+}
+
+- (void)showTutorial
+{
+    CGRect rect = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 50);
+
+    TutorialViewController *controller = [[TutorialViewController alloc] init];
+    [controller.view setFrame:rect];
+    [self.viewDeckController.centerController addChildViewController:controller];
+    [self.viewDeckController.centerController.view addSubview:controller.view];
     
-    [self.viewDeckController closeLeftView];
 }
 
 @end

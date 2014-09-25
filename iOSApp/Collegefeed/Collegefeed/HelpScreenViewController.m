@@ -32,8 +32,8 @@
         [self setModalPresentationStyle:UIModalPresentationCustom];
         [self setTransitioningDelegate:self];
         
-        [self.titleLabel setFont:CF_FONT_LIGHT(18)];
-        [self.contentLabel setFont:CF_FONT_LIGHT(12)];
+        [self.titleLabel setFont:CF_FONT_LIGHT(16)];
+        [self.contentLabel setFont:CF_FONT_LIGHT(10)];
     }
     return self;
 
@@ -72,6 +72,12 @@
 {
     self.titleString = @"Help";
     self.contentString = @"TheCampusFeed is an anonymous message board. No logins, no accounts. Anyone can view any college's feed, as well as the All Colleges feed which is a mixture of all colleges' posts put together.\n\nIf you make a post that gets a certain amount of flags, it will be automatically removed. If you have multiple posts removed, you will be banned from posting to the app. Think before you post! To view the rules, click the Flag icon for any post near you.";
+    [self fixHeights];
+}
+
+- (IBAction)dismiss:(id)sender
+{
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)fixHeights
 {
@@ -81,7 +87,6 @@
     NSAttributedString *aString = [[NSAttributedString alloc] initWithString:self.contentString];
     UITextView *calculationView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.contentLabel.frame.size.width, 2000.0f)];
     [calculationView setAttributedText:aString];
-    
     
     CGRect textRect = [calculationView.text
                        boundingRectWithSize:calculationView.frame.size
@@ -95,7 +100,10 @@
     self.labelHeight.constant = newLabelHeight;
     [self.view setNeedsUpdateConstraints];
 }
-
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self fixHeights];
+}
 
 #pragma mark - Transitioning Protocol Methods
 

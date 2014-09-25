@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" indicatorStyle="black" style="grouped" separatorStyle="singleLineEtched" rowHeight="60" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="zLg-4Z-7o0">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" indicatorStyle="black" style="grouped" separatorStyle="singleLineEtched" rowHeight="60" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="zLg-4Z-7o0">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -28,6 +28,12 @@
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="zLg-4Z-7o0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="FYs-1B-UWb"/>
+                <constraint firstAttribute="trailing" secondItem="zLg-4Z-7o0" secondAttribute="trailing" id="Rar-Yj-qPm"/>
+                <constraint firstAttribute="bottom" secondItem="zLg-4Z-7o0" secondAttribute="bottom" id="bQH-zh-BVi"/>
+                <constraint firstItem="zLg-4Z-7o0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="oi3-Dc-VGs"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

@@ -496,7 +496,6 @@
 				531EAB411988533500C1E1AA /* UserData.xcdatamodeld */,
 				53AE73BC1927ED6600BE6B02 /* DataController.h */,
 				53AE73C61928354F00BE6B02 /* DataController.m */,
-				53F8789F19133F60002A578B /* AppDelegate.h */,
 				53F878A019133F60002A578B /* AppDelegate.m */,
 				53AB57B7194AAFB3001D1B7B /* Other */,
 			);
@@ -517,6 +516,7 @@
 		53B1FE0119254EB900905E49 /* MasterView */ = {
 			isa = PBXGroup;
 			children = (
+				53F8789F19133F60002A578B /* AppDelegate.h */,
 				53B1FDFE19254E8F00905E49 /* MasterViewController.h */,
 				53B1FDFF19254E8F00905E49 /* MasterViewController.m */,
 				53B1FDFC19254E4700905E49 /* MasterView.xib */,

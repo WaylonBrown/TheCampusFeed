@@ -22,5 +22,6 @@
 - (void)setTitle:(NSString *)title;
 - (void)setContent:(NSString *)content;
 - (void)setAsHelpScreen;
+- (IBAction)dismiss:(id)sender;
 
 @end

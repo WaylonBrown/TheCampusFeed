@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define MENU_CELL_HEIGHT 60
+
 @interface MenuViewController : UIViewController<UITableViewDataSource>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
