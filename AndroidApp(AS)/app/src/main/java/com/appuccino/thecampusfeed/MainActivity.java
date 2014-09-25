@@ -105,6 +105,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
     public static List<Integer> flagList = new ArrayList<Integer>();
     public static List<Integer> myPostsList = new ArrayList<Integer>();
     public static List<Integer> myCommentsList = new ArrayList<Integer>();
+    public static List<Integer> achievementUnlockedList = new ArrayList<Integer>();
 
     //menu drawer items
     private TextView menuTopPosts;
@@ -218,6 +219,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
 		flagList = PrefManager.getFlagList();
         myPostsList = PrefManager.getMyPostsList();
         myCommentsList = PrefManager.getMyCommentsList();
+        achievementUnlockedList = PrefManager.getAchievementUnlockedList();
 
 		permissionsProgress = (ProgressBar)findViewById(R.id.permissionsLoadingIcon);
         //set progressbar as white

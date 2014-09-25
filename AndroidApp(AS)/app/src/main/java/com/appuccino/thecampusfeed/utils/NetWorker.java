@@ -727,8 +727,8 @@ public class NetWorker {
 
          //only add time crunch time if posting to your college, otherwise tell user it wasn't added and ask to change
          private void addTimeCrunchTime(Post post) {
-             //set home college if not set
-             if(PrefManager.getInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, -1) < 0){
+             //set home college if not set or if theres no hours
+             if(PrefManager.getInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, -1) < 0 || PrefManager.getInt(PrefManager.TIME_CRUNCH_HOURS, 0) == 0){
                  PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, post.getCollegeID());
              }
 
@@ -737,7 +737,7 @@ public class NetWorker {
                  Toast.makeText(c, MainActivity.TIME_CRUNCH_POST_TIME + " hours added to your Time Crunch", Toast.LENGTH_LONG).show();
                  //add time to the time crunch
                  PrefManager.putInt(PrefManager.TIME_CRUNCH_HOURS, PrefManager.getInt(PrefManager.TIME_CRUNCH_HOURS, 0) + MainActivity.TIME_CRUNCH_POST_TIME);
-             } else {   //if posting to a college that you don't have time crunch hours for
+             } else if (PrefManager.getInt(PrefManager.TIME_CRUNCH_HOURS, 0) > 0){   //if posting to a college that you don't have time crunch hours for, and there are time crunch hours
                  new ChangeTimeCrunchCollegeDialog(main, post.getCollegeID());
              }
          }

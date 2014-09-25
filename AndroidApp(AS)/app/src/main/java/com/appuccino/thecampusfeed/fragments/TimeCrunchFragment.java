@@ -110,7 +110,7 @@ public class TimeCrunchFragment extends Fragment
             timeText.setText(timeTextString);
 
             College homeCollege = MainActivity.getCollegeByID(collegeID);
-            if(homeCollege != null){
+            if(homeCollege != null && timeCrunchHours > 0){
                 collegeText.setText(homeCollege.getName());
             }
 

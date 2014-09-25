@@ -21,6 +21,7 @@ import com.appuccino.thecampusfeed.CommentsActivity;
 import com.appuccino.thecampusfeed.MainActivity;
 import com.appuccino.thecampusfeed.R;
 import com.appuccino.thecampusfeed.adapters.PostListAdapter;
+import com.appuccino.thecampusfeed.dialogs.AchievementsDialog;
 import com.appuccino.thecampusfeed.extra.QuickReturnListView;
 import com.appuccino.thecampusfeed.objects.Post;
 import com.appuccino.thecampusfeed.utils.NetWorker;
@@ -89,8 +90,7 @@ public class MyPostsFragment extends Fragment
         trophyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mainActivity, "press", Toast.LENGTH_LONG).show();
-                //new AchievementsDialog();
+                new AchievementsDialog(mainActivity);
             }
         });
 

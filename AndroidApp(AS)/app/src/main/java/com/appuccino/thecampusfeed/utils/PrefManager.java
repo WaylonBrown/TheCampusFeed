@@ -34,6 +34,7 @@ public class PrefManager {
     public static final String TIME_CRUNCH_HOME_COLLEGE = "time_crunch_home_college";
     public static final String TIME_CRUNCH_ACTIVATED = "time_crunch_activated";
     public static final String TIME_CRUNCH_ACTIVATE_TIME = "time_crunch_activate_time";
+    public static final String ACHIEVEMENT_LIST = "achievement_list";
 	
 	public static void setup(Context c) 
 	{
@@ -336,5 +337,37 @@ public class PrefManager {
         } else {
             prefs.edit().putString(TIME_CRUNCH_ACTIVATE_TIME, "").apply();
         }
+    }
+
+    public static void putAchievementUnlockedList(List<Integer> list){
+        String storage = "";
+        //using iterator to get rid of concurrentmodificationexception
+        for(Iterator<Integer> it = list.iterator(); it.hasNext();){
+            int achievement = it.next();
+            storage += (achievement + ";");
+        }
+
+        //remove final ;
+        if(storage.length() > 0){
+            storage = storage.substring(0, storage.length()-1);
+        }
+
+        prefs.edit().putString(ACHIEVEMENT_LIST, storage).apply();
+    }
+
+    public static List<Integer> getAchievementUnlockedList(){
+        List<Integer> returnList = new ArrayList<Integer>();
+        String retrieval = prefs.getString(ACHIEVEMENT_LIST, "");
+        if(retrieval != null && !retrieval.isEmpty()){
+            String[] split = retrieval.split(";");
+            for(String achString : split){
+                try{
+                    returnList.add(Integer.valueOf(achString));
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        return returnList;
     }
 }
