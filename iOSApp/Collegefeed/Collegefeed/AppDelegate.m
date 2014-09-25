@@ -20,6 +20,7 @@
 #import "IIViewDeckController.h"
 #import "TutorialViewController.h"
 #import "HelpScreenViewController.h"
+#import "TimeCrunchViewController.h"
 
 @interface AppDelegate ()
 
@@ -75,6 +76,8 @@
     self.helpController                 = [[HelpScreenViewController alloc] init];
     [self.helpController setAsHelpScreen];
     
+    self.timeCrunchController           = [[TimeCrunchViewController alloc] init];
+    
     NSArray *viewControllers            = [NSArray arrayWithObjects:
                                            self.topPostsController,
                                            self.recentPostsController,
@@ -82,6 +85,7 @@
                                            self.trendingCollegesController,
                                            self.userPostsController,
                                            self.userCommentsController,
+                                           self.timeCrunchController,
                                            self.helpController,
 //                                           self.tutorialController,
                                            nil];

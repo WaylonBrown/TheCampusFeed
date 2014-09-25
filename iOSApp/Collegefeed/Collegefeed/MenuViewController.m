@@ -60,6 +60,7 @@
              @"Most Active Colleges",
              @"My Posts",
              @"My Comments",
+             @"Time Crunch",
              @"Help",
              @"Suggest Feedback"];
 }
@@ -80,7 +81,7 @@
     }
     else if (section == 1)
     {
-        return 4;
+        return 5;
     }
     return 0;
 }
@@ -156,7 +157,7 @@
     NSUInteger index = (indexPath.section * 4) + indexPath.row;
     [self.viewDeckController closeLeftView];
 
-    if (index == 7)
+    if (index == FEEDBACK_INDEX)
     {   // 'Suggest feedback'
         [self openMail];
     }
@@ -165,7 +166,7 @@
         UIViewController *viewController = self.viewControllers[index];
 
         [self.viewDeckController closeLeftView];
-        if (index == 6)
+        if (index == HELP_INDEX)
         {   // 'Help' selection just displays dialog over currently selected view
             [self.navigationController presentViewController:viewController animated:YES completion:nil];
         }

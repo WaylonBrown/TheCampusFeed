@@ -42,6 +42,9 @@
 		538E7C9219D030C000AD5719 /* HelpScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538E7C9019D030C000AD5719 /* HelpScreenViewController.m */; };
 		538E7C9319D030C000AD5719 /* HelpScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 538E7C9119D030C000AD5719 /* HelpScreenViewController.xib */; };
 		538E7C9A19D4B33900AD5719 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538E7C9919D4B33900AD5719 /* MessageUI.framework */; };
+		538E7CA019D4B67400AD5719 /* TimeCrunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538E7C9E19D4B67400AD5719 /* TimeCrunchViewController.m */; };
+		538E7CA119D4B67400AD5719 /* TimeCrunchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 538E7C9F19D4B67400AD5719 /* TimeCrunchViewController.xib */; };
+		538E7CA419D4BC8700AD5719 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538E7CA319D4BC8700AD5719 /* QuartzCore.framework */; };
 		5390A91D1914B76800ACD082 /* arrowdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9141914B76800ACD082 /* arrowdown.png */; };
 		5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9151914B76800ACD082 /* arrowdownred.png */; };
 		5390A91F1914B76800ACD082 /* arrowup.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9161914B76800ACD082 /* arrowup.png */; };
@@ -194,6 +197,10 @@
 		538E7C9019D030C000AD5719 /* HelpScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpScreenViewController.m; sourceTree = "<group>"; };
 		538E7C9119D030C000AD5719 /* HelpScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpScreenViewController.xib; sourceTree = "<group>"; };
 		538E7C9919D4B33900AD5719 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		538E7C9D19D4B67400AD5719 /* TimeCrunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeCrunchViewController.h; sourceTree = "<group>"; };
+		538E7C9E19D4B67400AD5719 /* TimeCrunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeCrunchViewController.m; sourceTree = "<group>"; };
+		538E7C9F19D4B67400AD5719 /* TimeCrunchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeCrunchViewController.xib; sourceTree = "<group>"; };
+		538E7CA319D4BC8700AD5719 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5390A9141914B76800ACD082 /* arrowdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdown.png; sourceTree = "<group>"; };
 		5390A9151914B76800ACD082 /* arrowdownred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdownred.png; sourceTree = "<group>"; };
 		5390A9161914B76800ACD082 /* arrowup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowup.png; sourceTree = "<group>"; };
@@ -262,6 +269,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				538E7CA419D4BC8700AD5719 /* QuartzCore.framework in Frameworks */,
 				538E7C9A19D4B33900AD5719 /* MessageUI.framework in Frameworks */,
 				531EAAEC198828B800C1E1AA /* Social.framework in Frameworks */,
 				5358CE74196E5DF800FF4E45 /* libModels.a in Frameworks */,
@@ -415,6 +423,16 @@
 			name = "Help Screen";
 			sourceTree = "<group>";
 		};
+		538E7CA219D4B67800AD5719 /* Time Crunch */ = {
+			isa = PBXGroup;
+			children = (
+				538E7C9D19D4B67400AD5719 /* TimeCrunchViewController.h */,
+				538E7C9E19D4B67400AD5719 /* TimeCrunchViewController.m */,
+				538E7C9F19D4B67400AD5719 /* TimeCrunchViewController.xib */,
+			);
+			name = "Time Crunch";
+			sourceTree = "<group>";
+		};
 		5390A9131914B76800ACD082 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -478,6 +496,7 @@
 		53B090B5192DA13100E3D996 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				538E7CA219D4B67800AD5719 /* Time Crunch */,
 				5311F85C19C960A90053D3CC /* Tutorial View */,
 				5347EEAF197E9E9E001B2214 /* Menu Navigation View */,
 				53B1FE0119254EB900905E49 /* MasterView */,
@@ -499,6 +518,7 @@
 				531EAB411988533500C1E1AA /* UserData.xcdatamodeld */,
 				53AE73BC1927ED6600BE6B02 /* DataController.h */,
 				53AE73C61928354F00BE6B02 /* DataController.m */,
+				53F8789F19133F60002A578B /* AppDelegate.h */,
 				53F878A019133F60002A578B /* AppDelegate.m */,
 				53AB57B7194AAFB3001D1B7B /* Other */,
 			);
@@ -519,7 +539,6 @@
 		53B1FE0119254EB900905E49 /* MasterView */ = {
 			isa = PBXGroup;
 			children = (
-				53F8789F19133F60002A578B /* AppDelegate.h */,
 				53B1FDFE19254E8F00905E49 /* MasterViewController.h */,
 				53B1FDFF19254E8F00905E49 /* MasterViewController.m */,
 				53B1FDFC19254E4700905E49 /* MasterView.xib */,
@@ -573,6 +592,7 @@
 		53F8788F19133F60002A578B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				538E7CA319D4BC8700AD5719 /* QuartzCore.framework */,
 				538E7C9919D4B33900AD5719 /* MessageUI.framework */,
 				531EAAEB198828B800C1E1AA /* Social.framework */,
 				53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */,
@@ -754,6 +774,7 @@
 				538BF13719B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png in Resources */,
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */,
+				538E7CA119D4B67400AD5719 /* TimeCrunchViewController.xib in Resources */,
 				531EAAEF1988300C00C1E1AA /* icon_light_small.png in Resources */,
 				531EAAF01988300C00C1E1AA /* icon.png in Resources */,
 				53D6E988199DA51500FD9061 /* LoadingCell.xib in Resources */,
@@ -812,6 +833,7 @@
 				5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */,
 				538E7C9219D030C000AD5719 /* HelpScreenViewController.m in Sources */,
 				5347EE9D197DC7CC001B2214 /* UserPostsViewController.m in Sources */,
+				538E7CA019D4B67400AD5719 /* TimeCrunchViewController.m in Sources */,
 				538E7C8419CFF34000AD5719 /* TutorialViewController.m in Sources */,
 				53DE347719AD00AE004CB5A0 /* IIViewDeckController.m in Sources */,
 				5350557F19529FCA009C1911 /* FeedSelectViewController.m in Sources */,
