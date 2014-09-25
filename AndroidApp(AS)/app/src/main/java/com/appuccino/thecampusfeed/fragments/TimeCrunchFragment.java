@@ -53,7 +53,7 @@ public class TimeCrunchFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if(mainActivity == null){
-            mainActivity = MainActivity.activity;
+            mainActivity = (MainActivity)getActivity();
         }
         rootView = inflater.inflate(R.layout.fragment_time_crunch,
                 container, false);
