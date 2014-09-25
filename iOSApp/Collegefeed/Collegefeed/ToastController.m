@@ -185,10 +185,13 @@
     
         [self.toastQueue removeObjectAtIndex:0];
         
-        NSDictionary *dictionary = [NSDictionary dictionaryWithObject:message forKey:@"message"];
-        NSNotification *notification = [[NSNotification alloc] initWithName:@"Toast" object:self userInfo:dictionary];
         self.showingNotification = YES;
-        [[NSNotificationCenter defaultCenter] postNotification:notification];
+        
+        UIView *currentView = [[[[UIApplication sharedApplication] keyWindow] subviews] lastObject];
+        float x = currentView.frame.size.width / 2;
+        float y = currentView.frame.size.height - 95;
+        CGPoint point = CGPointMake(x, y);
+        [currentView makeToast:message duration:2.0 position:[NSValue valueWithCGPoint:point]];
     }
 }
 

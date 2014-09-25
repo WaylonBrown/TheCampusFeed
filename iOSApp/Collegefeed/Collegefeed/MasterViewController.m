@@ -40,7 +40,6 @@
         [self setDataController:controller];
         self.activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         self.toastController = [[ToastController alloc] init];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedNotification:) name:@"Toast" object:nil];
     }
     return self;
 }
@@ -199,25 +198,6 @@
     
     self.toolBarSpaceFromBottom.constant = 50;
     [self.feedToolbar updateConstraintsIfNeeded];
-}
-
-#pragma mark - Toasts
-
-- (void)receivedNotification:(NSNotification *) notification
-{
-    NSDictionary *dictionary = [notification userInfo];
-    NSString *toast = [dictionary objectForKey:@"message"];
-    [self toastMessage:toast];
-}
-- (void)toastMessage:(NSString *)message
-{
-    float x = self.view.frame.size.width / 2;
-    float y = self.view.frame.size.height - 95;
-    CGPoint point = CGPointMake(x, y);
-    
-    [self.view makeToast:message
-                duration:2.0
-                position:[NSValue valueWithCGPoint:point]];
 }
 
 #pragma mark - ChildCellDelegate Methods
