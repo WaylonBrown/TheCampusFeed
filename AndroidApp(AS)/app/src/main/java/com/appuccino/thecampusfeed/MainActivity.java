@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -85,7 +86,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
     //TODO: make sure these values are correct
     public static final int TIME_BETWEEN_POSTS = 0;     //in minutes
     public static final int TIME_BETWEEN_COMMENTS = 1;  //in minutes
-    public static final int TIME_CRUNCH_POST_TIME = 15;
+    public static final int TIME_CRUNCH_POST_TIME = 24;
 
     public Location userLocation;
     private static int selectedMenuItem = 0;
@@ -239,6 +240,18 @@ public class MainActivity extends FragmentActivity implements LocationListener
             }
         });
 	}
+
+    @Override
+    public boolean onKeyDown(int keycode, KeyEvent e) {
+        switch(keycode) {
+            case KeyEvent.KEYCODE_MENU:
+                if(menuDrawer != null)
+                    menuDrawer.toggleMenu();
+                return true;
+        }
+
+        return super.onKeyDown(keycode, e);
+    }
 
     private void setupMenuDrawerViews() {
         menuTopPosts = (TextView)findViewById(R.id.topPostsMenuText);

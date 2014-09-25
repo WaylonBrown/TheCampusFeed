@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.appuccino.thecampusfeed.MainActivity;
 import com.appuccino.thecampusfeed.R;
@@ -124,6 +125,8 @@ public class TimeCrunchFragment extends Fragment
     public static void checkTimeCrunchHoursLeft() {
         activateTime = PrefManager.getTimeCrunchActivateTimestamp();
         currentlyActive = PrefManager.getBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false);
+        timeCrunchHours = PrefManager.getInt(PrefManager.TIME_CRUNCH_HOURS, 0);
+
         //update hours according to time stamp
         if(currentlyActive && activateTime != null){
             MyLog.i("Time crunch is active, calculating hours left");
@@ -132,21 +135,28 @@ public class TimeCrunchFragment extends Fragment
             //int hoursDifference = (int)Math.ceil(difference / (60*60*1000));
             //use for testing: this uses seconds instead of hours
             int hoursDifference = (int)Math.ceil(difference / (1000));
+            MyLog.i("hoursDifference: " + hoursDifference);
             timeCrunchHours = timeCrunchHours - hoursDifference;
+            MyLog.i("timeCrunchHours: " + timeCrunchHours);
             //time crunch is done
             if(timeCrunchHours <= 0){
                 MyLog.i("Time crunch is now done");
                 PrefManager.putBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false);
                 PrefManager.putInt(PrefManager.TIME_CRUNCH_HOURS, 0);
                 PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, -1);
+                PrefManager.putTimeCrunchActivateTimestamp(null);
+                mainActivity.getLocation();
                 updateActivationState(false);
+                Toast.makeText(mainActivity, "Your Time Crunch time has expired, getting normal GPS location", Toast.LENGTH_LONG).show();
             }
         } else {
-            MyLog.i("Time crunch is inactive, calculating hours left");
+            MyLog.i("Time crunch is inactive");
         }
     }
 
     public static void updateActivationState(boolean active){
+        timeCrunchHours = PrefManager.getInt(PrefManager.TIME_CRUNCH_HOURS, 0);
+
         if(bottomText != null){
             String bottomTextString;
             if(active){
