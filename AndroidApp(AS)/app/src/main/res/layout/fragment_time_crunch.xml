@@ -6,7 +6,6 @@
     android:orientation="vertical"
     tools:context="com.appuccino.thecampusfeed.fragments.TimeCrunchFragment">
 
-    <!-- Button and its text are separate -->
     <Button
         android:id="@+id/whatsTimeCrunch"
         android:layout_width="match_parent"

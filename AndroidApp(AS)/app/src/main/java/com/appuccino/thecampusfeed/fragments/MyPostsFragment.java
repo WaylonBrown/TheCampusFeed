@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,11 +61,14 @@ public class MyPostsFragment extends Fragment
         //if doesnt have header and footer, add them
         if(list.getHeaderViewsCount() == 0)
         {
+            LayoutInflater headerInflater = mainActivity.getLayoutInflater();
+            LinearLayout header = (LinearLayout)headerInflater.inflate(R.layout.list_row_trophy_button, null);
+            list.addHeaderView(header);
+
             //for card UI
-            View headerSpace = new View(getActivity());
-            headerSpace.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
-            list.addHeaderView(headerSpace, null, false);
-            list.addFooterView(headerSpace, null, false);
+            View footerSpace = new View(getActivity());
+            footerSpace.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 8));
+            list.addFooterView(footerSpace, null, false);
         }
 
         listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 0, MainActivity.ALL_COLLEGES);
@@ -77,6 +82,15 @@ public class MyPostsFragment extends Fragment
                                     int position, long arg3)
             {
                 postClicked(postList.get(position - 1), position - 1);
+            }
+        });
+
+        ImageButton trophyButton = (ImageButton)rootView.findViewById(R.id.trophyButton);
+        trophyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mainActivity, "press", Toast.LENGTH_LONG).show();
+                //new AchievementsDialog();
             }
         });
 
