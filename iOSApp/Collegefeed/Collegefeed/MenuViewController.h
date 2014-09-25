@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 
 #define MENU_CELL_HEIGHT 60
 
-@interface MenuViewController : UIViewController<UITableViewDataSource>
+@interface MenuViewController : UIViewController<UITableViewDataSource, MFMailComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *navControllers;

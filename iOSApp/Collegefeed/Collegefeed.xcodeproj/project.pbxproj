@@ -41,6 +41,7 @@
 		538E7C8519CFF34000AD5719 /* TutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 538E7C8219CFF34000AD5719 /* TutorialViewController.xib */; };
 		538E7C9219D030C000AD5719 /* HelpScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538E7C9019D030C000AD5719 /* HelpScreenViewController.m */; };
 		538E7C9319D030C000AD5719 /* HelpScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 538E7C9119D030C000AD5719 /* HelpScreenViewController.xib */; };
+		538E7C9A19D4B33900AD5719 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538E7C9919D4B33900AD5719 /* MessageUI.framework */; };
 		5390A91D1914B76800ACD082 /* arrowdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9141914B76800ACD082 /* arrowdown.png */; };
 		5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9151914B76800ACD082 /* arrowdownred.png */; };
 		5390A91F1914B76800ACD082 /* arrowup.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9161914B76800ACD082 /* arrowup.png */; };
@@ -192,6 +193,7 @@
 		538E7C8F19D030C000AD5719 /* HelpScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpScreenViewController.h; sourceTree = "<group>"; };
 		538E7C9019D030C000AD5719 /* HelpScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpScreenViewController.m; sourceTree = "<group>"; };
 		538E7C9119D030C000AD5719 /* HelpScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpScreenViewController.xib; sourceTree = "<group>"; };
+		538E7C9919D4B33900AD5719 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		5390A9141914B76800ACD082 /* arrowdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdown.png; sourceTree = "<group>"; };
 		5390A9151914B76800ACD082 /* arrowdownred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdownred.png; sourceTree = "<group>"; };
 		5390A9161914B76800ACD082 /* arrowup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowup.png; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				538E7C9A19D4B33900AD5719 /* MessageUI.framework in Frameworks */,
 				531EAAEC198828B800C1E1AA /* Social.framework in Frameworks */,
 				5358CE74196E5DF800FF4E45 /* libModels.a in Frameworks */,
 				53CF330E194E53DB008BB733 /* libNetworker.a in Frameworks */,
@@ -570,6 +573,7 @@
 		53F8788F19133F60002A578B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				538E7C9919D4B33900AD5719 /* MessageUI.framework */,
 				531EAAEB198828B800C1E1AA /* Social.framework */,
 				53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */,
 				53F8789019133F60002A578B /* Foundation.framework */,
