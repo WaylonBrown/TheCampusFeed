@@ -89,6 +89,23 @@ public class AchievementsDialog extends AlertDialog.Builder{
                             message += "having 2000+ Time Crunch hours!";
                         }
                 }
+
+                dialogBuilder.setMessage(message);
+
+                AlertDialog dialog = dialogBuilder.create();
+                dialog.show();
+
+                TextView titleText = (TextView) dialog.findViewById(c.getResources().getIdentifier("alertTitle", "id", "android"));
+                TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+                Button yesButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                Button noButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+                titleText.setTypeface(FontManager.light);
+                messageText.setTypeface(FontManager.light);
+                yesButton.setTypeface(FontManager.light);
+                if(noButton != null){
+                    noButton.setTypeface(FontManager.light);
+                }
             }
         }
     }
