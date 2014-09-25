@@ -58,7 +58,7 @@ gem 'sidekiq'
 gem 'statistics2'
 
 gem 'asset_sync'
-
+gem 'thin'
 
 gem 'rails_12factor'
 
