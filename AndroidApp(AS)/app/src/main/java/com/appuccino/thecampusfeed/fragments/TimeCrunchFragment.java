@@ -87,7 +87,9 @@ public class TimeCrunchFragment extends Fragment
             deactivateButton.setVisibility(View.GONE);
         }
 
-        checkTimeCrunchHoursLeft();
+        if(mainActivity != null){
+            checkTimeCrunchHoursLeft(mainActivity);
+        }
 
         if(timeText != null && collegeText != null && bottomText != null){
             String timeTextString;
@@ -122,7 +124,8 @@ public class TimeCrunchFragment extends Fragment
         }
     }
 
-    public static void checkTimeCrunchHoursLeft() {
+    //passing in reference to the MainActivity since it is called statically before this fragment is created
+    public static void checkTimeCrunchHoursLeft(MainActivity main) {
         activateTime = PrefManager.getTimeCrunchActivateTimestamp();
         currentlyActive = PrefManager.getBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false);
         timeCrunchHours = PrefManager.getInt(PrefManager.TIME_CRUNCH_HOURS, 0);
@@ -145,9 +148,9 @@ public class TimeCrunchFragment extends Fragment
                 PrefManager.putInt(PrefManager.TIME_CRUNCH_HOURS, 0);
                 PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, -1);
                 PrefManager.putTimeCrunchActivateTimestamp(null);
-                mainActivity.getLocation();
+                main.getLocation();
                 updateActivationState(false);
-                Toast.makeText(mainActivity, "Your Time Crunch time has expired, getting normal GPS location", Toast.LENGTH_LONG).show();
+                Toast.makeText(main, "Your Time Crunch time has expired, getting normal GPS location", Toast.LENGTH_LONG).show();
             }
         } else {
             MyLog.i("Time crunch is inactive");
