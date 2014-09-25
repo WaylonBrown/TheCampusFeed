@@ -18,6 +18,8 @@
 #import "Shared.h"
 #import "ToastController.h"
 #import "Vote.h"
+#import "UIView+Toast.h"
+
 
 @implementation CommentViewController
 
@@ -125,14 +127,14 @@
     [cell setDelegate: self];
     [cell.commentCountLabel setHidden:YES];
     
+    BOOL isNearCollege = [self.dataController.nearbyColleges containsObject:self.originalPost.college];
+    
     if (tableView == self.postTableView)
     {   // PostView table; get the original post to display in this table
         cell.dividerHeight.constant = 0;
         cell.collegeLabelHeight.constant = 0;
         
         float messageHeight = [Shared getLargeCellMessageHeight:self.originalPost.message WithFont:CF_FONT_LIGHT(16)];
-        
-        BOOL isNearCollege = [self.dataController.nearbyColleges containsObject:self.originalPost.college];
         
         [cell assignWith:self.originalPost IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
         cell.gpsIconImageView.hidden = YES;
@@ -143,9 +145,6 @@
         Comment *commentAtIndex = (Comment*)[self.dataController.commentList objectAtIndex:indexPath.row];
         [commentAtIndex setCollegeID:self.originalPost.collegeID];
         float messageHeight = [Shared getLargeCellMessageHeight:commentAtIndex.message WithFont:CF_FONT_LIGHT(16)];
-        
-        BOOL isNearCollege = NO;//[self.dataController.nearbyColleges containsObject:nil];
-        
         
         [cell assignWith:commentAtIndex IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
         
