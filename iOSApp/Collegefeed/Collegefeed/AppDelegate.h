@@ -20,6 +20,7 @@
 @class TrendingCollegesViewController;
 @class TutorialViewController;
 @class HelpScreenViewController;
+@class TimeCrunchViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, LocationFinderDelegateProtocol>
 
@@ -37,6 +38,7 @@
 @property (strong, nonatomic) TrendingCollegesViewController*trendingCollegesController;
 @property (strong, nonatomic) TutorialViewController *tutorialController;
 @property (strong, nonatomic) HelpScreenViewController *helpController;
+@property (strong, nonatomic) TimeCrunchViewController *timeCrunchController;
 
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;

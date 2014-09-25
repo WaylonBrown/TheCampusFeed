@@ -44,6 +44,11 @@
 
     self.tableView.backgroundColor = [UIColor darkGrayColor];
 }
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+    [self.tableView reloadData];
+}
 
 #pragma mark - Properties
 
@@ -55,6 +60,7 @@
              @"Most Active Colleges",
              @"My Posts",
              @"My Comments",
+             @"Time Crunch",
              @"Help",
              @"Suggest Feedback"];
 }
@@ -75,7 +81,7 @@
     }
     else if (section == 1)
     {
-        return 4;
+        return 5;
     }
     return 0;
 }
@@ -84,14 +90,13 @@
 {
     static NSString *CellIdentifier = @"MenuCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    NSUInteger index = (indexPath.section * 4) + indexPath.row;
     
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
     }
     
-    NSUInteger index = (indexPath.section * 4) + indexPath.row;
     
     NSString *menuItem = self.menuItems[index];
     
@@ -103,7 +108,7 @@
     UIView *view = [[UIView alloc] init];
     view.backgroundColor = [Shared getCustomUIColor:CF_BLUE];
     cell.selectedBackgroundView = view;
-    
+        
     if (index == self.selectedIndex)
     {
         [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
@@ -116,9 +121,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    float windowHeight = self.view.frame.size.height;
-    float cellHeight = (windowHeight - 30.0) / 8.0f;
-    return cellHeight;
+    return MENU_CELL_HEIGHT;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -150,40 +153,99 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.selectedIndex = indexPath.row;
+    
     NSUInteger index = (indexPath.section * 4) + indexPath.row;
-    
-//    if (index == 6)
-//    {
-//
-//
-//        [self.viewDeckController closeLeftView];
-//        
-//        // TODO: this is temporary to be able to see tutorial screen
-//        
-//        
-//        CGRect rect = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 50);
-//        
-//        TutorialViewController *controller = [[TutorialViewController alloc] init];
-//        [controller.view setFrame:rect];
-//        [self.viewDeckController.centerController addChildViewController:controller];
-//        [self.viewDeckController.centerController.view addSubview:controller.view];
-//        
-//        return;
-//    }
-    
-    UIViewController *viewController = self.viewControllers[index];
-    
-    if (viewController == nil)
+    [self.viewDeckController closeLeftView];
+
+    if (index == FEEDBACK_INDEX)
+    {   // 'Suggest feedback'
+        [self openMail];
+    }
+    else if (index < self.viewControllers.count)
     {
-        NSLog(@"Error in MenuViewController menu selection");
+        UIViewController *viewController = self.viewControllers[index];
+
+        [self.viewDeckController closeLeftView];
+        if (index == HELP_INDEX)
+        {   // 'Help' selection just displays dialog over currently selected view
+            [self.navigationController presentViewController:viewController animated:YES completion:nil];
+        }
+        else
+        {
+            self.selectedIndex = indexPath.row;
+            [self.viewDeckController setCenterController:viewController];
+        }
     }
     else
     {
-        [self.viewDeckController setCenterController:viewController];
+        NSLog(@"Error in MenuViewController menu selection, null viewController");
+
+    }
+}
+
+- (void)openMail
+{
+    if ([MFMailComposeViewController canSendMail])
+    {
+        MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+        
+        mailer.mailComposeDelegate = self;
+        
+        [mailer setSubject:@"iOS App Feedback"];
+        
+        NSArray *toRecipients = [NSArray arrayWithObjects:@"feedback@thecampusfeed.com", nil];
+        [mailer setToRecipients:toRecipients];
+        
+        NSString *emailBody = @"Please enter your feedback here:";
+        [mailer setMessageBody:emailBody isHTML:NO];
+        
+        [self.navigationController presentViewController:mailer animated:YES completion:nil];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failure"
+                                                        message:@"Your device doesn't support the composer sheet"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles: nil];
+        [alert show];
     }
     
-    [self.viewDeckController closeLeftView];
+}
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Mail cancelled: you cancelled the operation and no email message was queued.");
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"Mail saved: you saved the email message in the drafts folder.");
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"Mail send: the email message is queued in the outbox. It is ready to send.");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Mail failed: the email message was not saved or queued, possibly due to an error.");
+            break;
+        default:
+            NSLog(@"Mail not sent.");
+            break;
+    }
+    
+    // Remove the mail view
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)showTutorial
+{
+    CGRect rect = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 50);
+
+    TutorialViewController *controller = [[TutorialViewController alloc] init];
+    [controller.view setFrame:rect];
+    [self.viewDeckController.centerController addChildViewController:controller];
+    [self.viewDeckController.centerController.view addSubview:controller.view];
+    
 }
 
 @end

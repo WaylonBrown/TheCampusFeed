@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 
-@interface MenuViewController : UIViewController<UITableViewDataSource>
+#define MENU_CELL_HEIGHT 60
+#define FEEDBACK_INDEX 8
+#define HELP_INDEX 7
+
+@interface MenuViewController : UIViewController<UITableViewDataSource, MFMailComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *navControllers;
