@@ -58,9 +58,9 @@
     tableViewController.refreshControl = self.refreshControl;
 
     // Assign fonts
-    [self.currentFeedLabel      setFont:CF_FONT_LIGHT(22)];
-    [self.showingLabel          setFont:CF_FONT_BOLD(12)];
-    [self.feedButton.titleLabel setFont:CF_FONT_LIGHT(17)];
+    [self.currentFeedLabel  setFont:CF_FONT_LIGHT(22)];
+    [self.showingLabel      setFont:CF_FONT_BOLD(12)];
+    [self.chooseLabel       setFont:CF_FONT_LIGHT(17)];
 }
 - (void)viewDidLoad
 {
