@@ -29,6 +29,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appuccino.thecampusfeed.dialogs.AchievementsDialog;
 import com.appuccino.thecampusfeed.dialogs.ChooseFeedDialog;
 import com.appuccino.thecampusfeed.dialogs.GettingStartedDialog;
 import com.appuccino.thecampusfeed.dialogs.NewPostDialog;
@@ -134,6 +135,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
         activity = this;
         checkForceRequiredUpdate();
 		setupApp();
+        AchievementsDialog.generateAchievementList();
 
         collegeListCheckSum = PrefManager.getCollegeListCheckSum();
         lastPostTime = PrefManager.getLastPostTime();

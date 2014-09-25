@@ -23,8 +23,10 @@ import com.appuccino.thecampusfeed.R;
 import com.appuccino.thecampusfeed.adapters.PostListAdapter;
 import com.appuccino.thecampusfeed.dialogs.AchievementsDialog;
 import com.appuccino.thecampusfeed.extra.QuickReturnListView;
+import com.appuccino.thecampusfeed.objects.Achievement;
 import com.appuccino.thecampusfeed.objects.Post;
 import com.appuccino.thecampusfeed.utils.NetWorker;
+import com.appuccino.thecampusfeed.utils.PrefManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,7 @@ public class MyPostsFragment extends Fragment
     static PostListAdapter listAdapter;
     static QuickReturnListView list;
     static TextView score;
+    private static int scoreCount;
 
     //library objects
     static ProgressBar loadingSpinner;
@@ -136,6 +139,54 @@ public class MyPostsFragment extends Fragment
             listAdapter.notifyDataSetChanged();
             updateUserPostScore();
         }
+
+        checkForAchievements();
+    }
+
+    private static void checkForAchievements() {
+        int highestPostScore = 0;
+        for(Post p : postList){
+            if (p.deltaScore > highestPostScore){
+                highestPostScore = p.deltaScore;
+            }
+        }
+
+        if(postList != null){
+            //go through full achievements list
+            for(Achievement ach : AchievementsDialog.achievementList){
+                if(ach.section == 1){   //quantities of posts
+                    if(postList.size() >= ach.numToAchieve){
+                        AchievementsDialog.unlockAchievement(mainActivity, ach.ID);
+                    }
+                } else if (ach.section == 2){   //total post score
+                    if(scoreCount >= ach.numToAchieve){
+                        AchievementsDialog.unlockAchievement(mainActivity, ach.ID);
+                    }
+                } else if (ach.section == 3){
+                    if(highestPostScore >= ach.numToAchieve){
+                        AchievementsDialog.unlockAchievement(mainActivity, ach.ID);
+                    }
+                } else if (ach.section == 4){
+                    //100 pts for a post in 3 words or less
+                    if(ach.ID == 32 && postExistsWith100PtsIn3Words()){
+                        AchievementsDialog.unlockAchievement(mainActivity, ach.ID);
+                    } else if (ach.ID == 33){   //2000+ timecrunch hours
+                        if(PrefManager.getInt(PrefManager.TIME_CRUNCH_HOURS, 0) >= 2000){
+                            AchievementsDialog.unlockAchievement(mainActivity, ach.ID);
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+    private static boolean postExistsWith100PtsIn3Words() {
+        for(Post p : postList){
+            if(p.deltaScore >= 100 && p.getMessage().split(" ").length <= 3)
+                return true;
+        }
+        return false;
     }
 
     public static void updateListVotes(){
@@ -149,7 +200,7 @@ public class MyPostsFragment extends Fragment
 
     private static void updateUserPostScore() {
         if(score != null && postList != null && postList.size() != 0){
-            int scoreCount = 0;
+            scoreCount = 0;
             for(Post p : postList){
                 scoreCount += p.getDeltaScore();
             }

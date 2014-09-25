@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.appuccino.thecampusfeed.MainActivity;
 import com.appuccino.thecampusfeed.objects.Achievement;
 import com.appuccino.thecampusfeed.utils.FontManager;
+import com.appuccino.thecampusfeed.utils.PrefManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +19,15 @@ public class AchievementsDialog extends AlertDialog.Builder{
 	Context context;
 	AlertDialog dialog;
 
+    public static List<Achievement> achievementList;
+
 	public AchievementsDialog(final Context context) {
 		super(context);
 		this.context = context;
 		setCancelable(true);
+
+        // if the View your Achievements achievement isn't unlocked, unlock it
+        unlockAchievement(context, 31);
 
         setPositiveButton("Got it", new DialogInterface.OnClickListener()
         {
@@ -39,8 +45,55 @@ public class AchievementsDialog extends AlertDialog.Builder{
 		createDialog();
 	}
 
+    public static void unlockAchievement(Context c, int id) {
+        if(!MainActivity.achievementUnlockedList.contains(id)){
+            Achievement achievement = null;
+            for(Achievement ach : AchievementsDialog.achievementList){
+                if(ach.ID == id){
+                    achievement = ach;
+                }
+            }
+
+            if(achievement != null){
+                MainActivity.achievementUnlockedList.add(id);
+                PrefManager.putAchievementUnlockedList(MainActivity.achievementUnlockedList);
+                PrefManager.putInt(PrefManager.TIME_CRUNCH_HOURS,
+                        PrefManager.getInt(PrefManager.TIME_CRUNCH_HOURS, 0) + achievement.reward);
+
+                //show Achievement Unlocked! dialog
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(c);
+                dialogBuilder.setPositiveButton("Great!", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //do nothing
+                    }
+                }).setTitle("Achievement Unlocked!");
+
+                String message = "You've earned " + achievement.reward + " hours for your Time Crunch by ";
+                switch(achievement.section){
+                    case 1:
+                        message += "making a total of " + achievement.numToAchieve + " posts!";
+                        break;
+                    case 2:
+                        message += "achieving a total Post Score of " + achievement.numToAchieve + " points!";
+                        break;
+                    case 3:
+                        message += "making a post that has at least " + achievement.numToAchieve + " points!";
+                        break;
+                    case 4:
+                        if(achievement.ID == 31){
+                            message += "viewing your Achievements List!";
+                        } else if (achievement.ID == 32){
+                            message += "getting 100 points for a post that is 3 words or less!";
+                        } else if (achievement.ID == 33){
+                            message += "having 2000+ Time Crunch hours!";
+                        }
+                }
+            }
+        }
+    }
+
     private String constructAchievementsString() {
-        List<Achievement> achievementList = generateAchievementList();
         String str = "";
 
         str += "Achievement Name (Time Crunch Reward)\n\nQuantities of Posts:\n";
@@ -80,7 +133,7 @@ public class AchievementsDialog extends AlertDialog.Builder{
         for(Achievement ach : achievementList){
             if(ach.section == 4){
                 //if achievement has been unlocked or achievement is View Achievement List achievement
-                if(MainActivity.achievementUnlockedList.contains(ach.ID) || ach.ID == 31){
+                if(MainActivity.achievementUnlockedList.contains(ach.ID)){
                     str += "✔ ";
                 }
                 str += ach.name + " (" + ach.reward + " hours)\n";
@@ -90,7 +143,7 @@ public class AchievementsDialog extends AlertDialog.Builder{
         return str;
     }
 
-    private List<Achievement> generateAchievementList() {
+    public static void generateAchievementList() {
         List<Achievement> returnList = new ArrayList<Achievement>();
         //parameters: String name, int numToAchieve, int reward, int id, int section (1 = Quantities of Posts, 2 = Total Post Score, 3 = Individual Post Score, 4 = Extra)
         returnList.add(new Achievement("1 Post", 1, 10, 1, 1));
@@ -120,7 +173,7 @@ public class AchievementsDialog extends AlertDialog.Builder{
         returnList.add(new Achievement("100 Points for a post that's 3 words or less", 1, 2000, 32, 4));
         returnList.add(new Achievement("Have 2000+ Time Crunch hours", 1, 2000, 33, 4));
 
-        return returnList;
+        achievementList = returnList;
     }
 
     private void createDialog() {
