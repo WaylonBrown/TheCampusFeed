@@ -23,7 +23,7 @@
         style="@style/wrap" />
     
     <LinearLayout
-        android:id="@+id/footer"
+        android:id="@+id/fullFooter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -69,6 +69,7 @@
     	</LinearLayout>
     
 	    <LinearLayout
+            android:id="@+id/blueFooter"
 	        android:layout_width="match_parent"
 	        android:layout_height="54dp"
 	        android:orientation="horizontal"
@@ -124,7 +125,6 @@
 	            android:text="Choose"
 	            android:textSize="18sp"
 	            android:textColor="@color/white"
-	            android:clickable="true"
 	            />
 	        
 	    </LinearLayout>

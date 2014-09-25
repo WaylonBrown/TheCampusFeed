@@ -241,6 +241,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
         });
 	}
 
+    //toggle menu on hardware button menu press
     @Override
     public boolean onKeyDown(int keycode, KeyEvent e) {
         switch(keycode) {
@@ -612,7 +613,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
 
     public void showFirstTimeMessages(){
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+        TopPostFragment.disableChooseFeedButton();
         final RelativeLayout overlay = (RelativeLayout)findViewById(R.id.getting_started_overlay);
         overlay.setVisibility(View.VISIBLE);
         ImageView button = (ImageView)findViewById(R.id.ok_button);

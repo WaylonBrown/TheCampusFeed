@@ -59,6 +59,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
     private static boolean endOfListFooterReplaced = false;
 	static View lazyFooterView;
 	static View footerSpace;
+    static LinearLayout blueFooter;
     public static TextView pullDownText;
 	static LinearLayout scrollAwayBottomView;
 	public static TextView collegeNameBottom;
@@ -148,12 +149,13 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 		collegeNameBottom = (TextView)rootView.findViewById(R.id.collegeNameBottomText);
 		TextView showingText = (TextView)rootView.findViewById(R.id.showingFeedText);
 		TextView chooseText = (TextView)rootView.findViewById(R.id.chooseText);
-		
-		collegeNameBottom.setTypeface(FontManager.light);
+        blueFooter = (LinearLayout)rootView.findViewById(R.id.footer);
+
+        collegeNameBottom.setTypeface(FontManager.light);
 		showingText.setTypeface(FontManager.medium);
 		chooseText.setTypeface(FontManager.light);
-		
-		chooseText.setOnClickListener(new OnClickListener(){
+
+        blueFooter.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {

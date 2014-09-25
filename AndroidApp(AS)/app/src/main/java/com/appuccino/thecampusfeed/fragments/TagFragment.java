@@ -54,7 +54,7 @@ public class TagFragment extends Fragment
     static View footerSpace;
     private static ProgressBar lazyLoadingFooterSpinner;
     public static int currentPageNumber = 1;
-	static LinearLayout footer;
+    static LinearLayout blueFooter;
 	static TextView collegeNameBottom;
 
 	public TagFragment()
@@ -73,7 +73,6 @@ public class TagFragment extends Fragment
 		rootView = inflater.inflate(R.layout.fragment_layout_tag,
 				container, false);
 		list = (QuickReturnListView)rootView.findViewById(R.id.fragmentListView);
-		footer = (LinearLayout)rootView.findViewById(R.id.footer);
         progressSpinner = (ProgressBar)rootView.findViewById(R.id.progressSpinner);
 		setupBottomViewUI();
 		
@@ -129,12 +128,13 @@ public class TagFragment extends Fragment
 		collegeNameBottom = (TextView)rootView.findViewById(R.id.collegeNameBottomText);
 		TextView showingText = (TextView)rootView.findViewById(R.id.showingFeedText);
 		TextView chooseText = (TextView)rootView.findViewById(R.id.chooseText);
+        blueFooter = (LinearLayout)rootView.findViewById(R.id.blueFooter);
 		
 		collegeNameBottom.setTypeface(FontManager.light);
 		showingText.setTypeface(FontManager.medium);
 		chooseText.setTypeface(FontManager.light);
-		
-		chooseText.setOnClickListener(new OnClickListener(){
+
+        blueFooter.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {

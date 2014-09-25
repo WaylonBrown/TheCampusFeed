@@ -94,7 +94,6 @@
             android:text="Choose"
             android:textSize="18sp"
             android:textColor="@color/white"
-            android:clickable="true"
             />
         
     </LinearLayout>

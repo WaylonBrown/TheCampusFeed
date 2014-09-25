@@ -57,7 +57,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	static View lazyFooterView;
 	static View footerSpace;
     public static TextView pullDownText;
-    static TextView chooseText;
+    static LinearLayout blueFooter;
 	static LinearLayout scrollAwayBottomView;
 	public static TextView collegeNameBottom;
 
@@ -158,14 +158,14 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	}
 
     public static void disableChooseFeedButton(){
-        if(chooseText != null){
-            chooseText.setOnClickListener(null);
+        if(blueFooter != null){
+            blueFooter.setOnClickListener(null);
         }
     }
 
     public static void reenableChooseFeedButton(){
-        if(chooseText != null){
-            chooseText.setOnClickListener(new OnClickListener(){
+        if(blueFooter != null){
+            blueFooter.setOnClickListener(new OnClickListener(){
 
                 @Override
                 public void onClick(View v) {
@@ -178,13 +178,14 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
 	private void setupBottomViewUI() {
 		collegeNameBottom = (TextView)rootView.findViewById(R.id.collegeNameBottomText);
 		TextView showingText = (TextView)rootView.findViewById(R.id.showingFeedText);
-		chooseText = (TextView)rootView.findViewById(R.id.chooseText);
+        blueFooter = (LinearLayout)rootView.findViewById(R.id.footer);
+		TextView chooseText = (TextView)rootView.findViewById(R.id.chooseText);
 		
 		collegeNameBottom.setTypeface(FontManager.light);
 		showingText.setTypeface(FontManager.medium);
 		chooseText.setTypeface(FontManager.light);
-		
-		chooseText.setOnClickListener(new OnClickListener(){
+
+        blueFooter.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
