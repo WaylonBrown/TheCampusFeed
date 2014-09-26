@@ -10,13 +10,18 @@
 
 @interface CF_DialogViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
 
+
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *dialogHeight;
+
+@property (strong, nonatomic) IBOutlet UIView *dialogView;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
-//@property (strong, nonatomic) IBOutlet UILabel *contentLabel;
 @property (strong, nonatomic) IBOutlet UITextView *contentView;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *contentHeight;
 
 @property (strong, nonatomic) NSString *titleString;
 @property (strong, nonatomic) NSString *contentString;
+
+@property float landscapeHeight;
+@property float portraitHeight;
 
 - (id)initWithTitle:(NSString *)title withContent:(NSString *)content;
 
