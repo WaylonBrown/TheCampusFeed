@@ -24,8 +24,9 @@ public class Comment extends AbstractPostComment{
         collegeID = 234234;
     }
 	
-	public Comment(String message, int id, int parentID, int score, int deltaScore, int collegeID, String time)
+	public Comment(String message, int id, int parentID, int score, int deltaScore, int collegeID, String time, int d)
 	{
+        defaultVoteID = d;
 		this.message = message;
 		this.id = id;
 		this.postID = parentID;

@@ -177,7 +177,7 @@ public class JSONParser {
 				}
 				reader.endObject();
 				
-				ret.add(new Post(id, text, score, deltaScore, collegeID, time, commentCount));
+				ret.add(new Post(id, text, score, deltaScore, collegeID, time, commentCount, -1));
 			}
 			reader.endArray();
 		}catch(Exception e){
@@ -202,6 +202,7 @@ public class JSONParser {
             int collegeID = -1;
             String time = null;
             int commentCount = 0;
+            int defaultVoteID = 0;
 
             reader.beginObject();
             while(reader.hasNext()) {
@@ -245,12 +246,19 @@ public class JSONParser {
                     } catch (Exception e) {
                         reader.skipValue();
                     }
+                }else if (name.equals("default_vote_id")) {
+                    //use in case null is passed in, which prim types can't take
+                    try {
+                        defaultVoteID = reader.nextInt();
+                    } catch (Exception e) {
+                        reader.skipValue();
+                    }
                 } else {
                     reader.skipValue();
                 }
             }
             reader.endObject();
-            ret = new Post(id, text, score, deltaScore, collegeID, time, commentCount);
+            ret = new Post(id, text, score, deltaScore, collegeID, time, commentCount, defaultVoteID);
             return ret;
         }catch(Exception e){
             e.printStackTrace();
@@ -373,6 +381,7 @@ public class JSONParser {
             int postID = -1;
             String time = null;
             int voteDelta = 1;
+            int defaultVoteID = -1;
 
             reader.beginObject();
             while(reader.hasNext()) {
@@ -409,12 +418,19 @@ public class JSONParser {
                     }
                 } else if (name.equals("created_at")) {
                     time = reader.nextString();
+                } else if (name.equals("default_vote_id")) {
+                    //use in case null is passed in, which prim types can't take
+                    try {
+                        defaultVoteID = reader.nextInt();
+                    } catch (Exception e) {
+                        reader.skipValue();
+                    }
                 } else {
                     reader.skipValue();
                 }
             }
             reader.endObject();
-            ret = new Comment(text, id, postID, score, voteDelta, 0, time);
+            ret = new Comment(text, id, postID, score, voteDelta, 0, time, defaultVoteID);
             return ret;
         }catch(Exception e){
             e.printStackTrace();
@@ -496,7 +512,7 @@ public class JSONParser {
 					}
 				}
 				reader.endObject();
-				ret.add(new Comment(message, id, postID, score, deltaScore, collegeID, time));
+				ret.add(new Comment(message, id, postID, score, deltaScore, collegeID, time, -1));
 			}
 			reader.endArray();
 		}catch(Exception e){
@@ -587,7 +603,7 @@ public class JSONParser {
                     }
                 }
                 reader.endObject();
-                ret.add(new Comment(message, id, postID, score, deltaScore, collegeID, time));
+                ret.add(new Comment(message, id, postID, score, deltaScore, collegeID, time, -1));
             }
             reader.endArray();
         }catch(Exception e){

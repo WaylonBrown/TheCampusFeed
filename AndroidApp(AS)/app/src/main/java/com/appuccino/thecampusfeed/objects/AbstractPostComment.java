@@ -14,6 +14,7 @@ public class AbstractPostComment {
 	int vote = 0;		//-1 = downvote, 0 = nothing, 1 = upvote
 	int collegeID = 0;
     public int deltaScore = 0;
+    public int defaultVoteID = -1;
 	
 	public void setVote(int vote)
 	{

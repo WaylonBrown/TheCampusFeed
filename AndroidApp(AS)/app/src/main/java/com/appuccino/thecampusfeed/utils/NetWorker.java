@@ -751,7 +751,7 @@ public class NetWorker {
                  if(MainActivity.getCollegeByID(postCollegeID) != null){
                      responsePost.setCollegeName(MainActivity.getCollegeByID(postCollegeID).getName());
                  }
-                 MainActivity.postVoteList.add(new Vote(-1, responsePost.getID(), true));
+                 MainActivity.postVoteList.add(new Vote(responsePost.defaultVoteID, responsePost.getID(), true));
                  PrefManager.putPostVoteList(MainActivity.postVoteList);
                  main.addNewPostToListAndMyContent(responsePost, c);
              } catch (IOException e) {
@@ -807,7 +807,7 @@ public class NetWorker {
                      responseComment = JSONParser.commentFromJSON(response);
                      int id = responseComment.getID();
                      Log.i("cfeed","ID: " + id);
-                     MainActivity.commentVoteList.add(new Vote(-1, responseComment.getPostID(), responseComment.getID(), true));
+                     MainActivity.commentVoteList.add(new Vote(responseComment.defaultVoteID, responseComment.getPostID(), responseComment.getID(), true));
                      PrefManager.putCommentVoteList(MainActivity.commentVoteList);
                      MainActivity.myCommentsList.add(id);
                      PrefManager.putMyCommentsList(MainActivity.myCommentsList);

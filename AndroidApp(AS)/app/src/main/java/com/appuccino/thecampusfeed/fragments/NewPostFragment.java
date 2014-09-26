@@ -266,6 +266,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 
 	private void pullListFromServer(boolean wasPullToRefresh)
 	{
+        isLoadingMorePosts = true;
 		if(postList == null){
 			postList = new ArrayList<Post>();
 		}

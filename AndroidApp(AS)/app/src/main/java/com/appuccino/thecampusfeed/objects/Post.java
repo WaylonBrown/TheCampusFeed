@@ -17,7 +17,7 @@ public class Post extends AbstractPostComment{
     private int commentCount = 0;
     private String webURL;
     private String appURL;
-	
+
 	public Post(String m, int c)
 	{
 		score = 1;
@@ -58,8 +58,9 @@ public class Post extends AbstractPostComment{
         appURL = "thecampusfeed://posts/" + id;
 	}
 	
-	public Post(int id, String message, int score, int deltaScore, int collegeID, String time, int commentCount)
+	public Post(int id, String message, int score, int deltaScore, int collegeID, String time, int commentCount, int d)
 	{
+        defaultVoteID = d;
 		this.score = score;
         this.deltaScore = deltaScore;
 		this.message = message;
