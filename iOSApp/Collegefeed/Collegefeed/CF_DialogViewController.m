@@ -31,6 +31,8 @@
     {
         [self setModalPresentationStyle:UIModalPresentationCustom];
         [self setTransitioningDelegate:self];
+        self.portraitHeight = 340;
+        self.landscapeHeight = 250;
     }
     return self;
 
@@ -69,6 +71,8 @@
 }
 - (void)setAsHelpScreen
 {
+    self.portraitHeight = 340;
+    self.landscapeHeight = 250;
     [self setTitle:@"Help"];
     [self setContentString:@"TheCampusFeed is an anonymous message board. No logins, no accounts. Anyone can view any college's feed, as well as the All Colleges feed which is a mixture of all colleges' posts put together.\n\nIf you make a post that gets a certain amount of flags, it will be automatically removed. If you have multiple posts removed, you will be banned from posting to the app. Think before you post! To view the rules, click the Flag icon for any post near you."];
 }
@@ -79,30 +83,15 @@
 }
 - (void)fixHeights
 {
-    [self.view setNeedsDisplay];
-    
-    
-    NSStringDrawingContext *ctx = [NSStringDrawingContext new];
-    NSAttributedString *aString = [[NSAttributedString alloc] initWithString:self.contentString];
-    
     if (UIInterfaceOrientationIsLandscape([[UIDevice currentDevice] orientation]))
     {
-        
+        self.dialogHeight.constant = self.landscapeHeight;
     }
     else
     {
-        UITextView *calculationView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, self.view.frame.size.height)]; //2000.0f
-        [calculationView setAttributedText:aString];
-        
-        CGRect textRect = [calculationView.text
-                           boundingRectWithSize:calculationView.frame.size
-                           options:NSStringDrawingUsesLineFragmentOrigin
-                           attributes:@{NSFontAttributeName:CF_FONT_LIGHT(15)}
-                           context:ctx];
-        
-        self.contentHeight.constant = textRect.size.height + 10;
-    
+        self.dialogHeight.constant = self.portraitHeight;
     }
+
     [self.view setNeedsUpdateConstraints];
 }
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
