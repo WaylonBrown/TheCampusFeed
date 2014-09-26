@@ -1,15 +1,15 @@
 //
-//  HelpScreenViewController.m
+//  CF_DialogViewController.m
 //  Collegefeed
 //
 //  Created by Patrick Sheehan on 9/22/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
-#import "HelpScreenViewController.h"
+#import "CF_DialogViewController.h"
 #import "Shared.h"
 
-@implementation HelpScreenViewController
+@implementation CF_DialogViewController
 
 
 - (id)initWithTitle:(NSString *)title withContent:(NSString *)content
@@ -18,22 +18,19 @@
 
     if (self)
     {
-        [self.titleLabel setText:title];
-        [self.contentLabel setText:content];
+        [self setTitleString:title];
+        [self setContentString:content];
     }
     return self;
 }
 
 - (id)init
 {
-    self = [super initWithNibName:@"HelpScreenViewController" bundle:nil];
+    self = [super initWithNibName:@"CF_DialogViewController" bundle:nil];
     if (self)
     {
         [self setModalPresentationStyle:UIModalPresentationCustom];
         [self setTransitioningDelegate:self];
-        
-        [self.titleLabel setFont:CF_FONT_LIGHT(16)];
-        [self.contentLabel setFont:CF_FONT_LIGHT(10)];
     }
     return self;
 
@@ -44,14 +41,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
-
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self setTitle:self.titleString];
-    [self setContent:self.contentString];
+    [self.titleLabel setText:self.titleString];
+    [self.contentView setText:self.contentString];
+    [self.titleLabel setFont:CF_FONT_LIGHT(24)];
+    [self.contentView setFont:CF_FONT_LIGHT(15)];
     [self fixHeights];
 }
 - (void)didReceiveMemoryWarning
@@ -62,17 +61,16 @@
 
 - (void)setTitle:(NSString *)title
 {
-    [self.titleLabel setText:title];
+    [self setTitleString:title];
 }
 - (void)setContent:(NSString *)content
 {
-    [self.contentLabel setText:content];
+    [self setContentString:content];
 }
 - (void)setAsHelpScreen
 {
-    self.titleString = @"Help";
-    self.contentString = @"TheCampusFeed is an anonymous message board. No logins, no accounts. Anyone can view any college's feed, as well as the All Colleges feed which is a mixture of all colleges' posts put together.\n\nIf you make a post that gets a certain amount of flags, it will be automatically removed. If you have multiple posts removed, you will be banned from posting to the app. Think before you post! To view the rules, click the Flag icon for any post near you.";
-    [self fixHeights];
+    [self setTitle:@"Help"];
+    [self setContentString:@"TheCampusFeed is an anonymous message board. No logins, no accounts. Anyone can view any college's feed, as well as the All Colleges feed which is a mixture of all colleges' posts put together.\n\nIf you make a post that gets a certain amount of flags, it will be automatically removed. If you have multiple posts removed, you will be banned from posting to the app. Think before you post! To view the rules, click the Flag icon for any post near you."];
 }
 
 - (IBAction)dismiss:(id)sender
@@ -83,21 +81,28 @@
 {
     [self.view setNeedsDisplay];
     
+    
     NSStringDrawingContext *ctx = [NSStringDrawingContext new];
     NSAttributedString *aString = [[NSAttributedString alloc] initWithString:self.contentString];
-    UITextView *calculationView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.contentLabel.frame.size.width, 2000.0f)];
-    [calculationView setAttributedText:aString];
     
-    CGRect textRect = [calculationView.text
-                       boundingRectWithSize:calculationView.frame.size
-                       options:NSStringDrawingUsesLineFragmentOrigin
-                       attributes:@{NSFontAttributeName:CF_FONT_LIGHT(18)}
-                       context:ctx];
+    if (UIInterfaceOrientationIsLandscape([[UIDevice currentDevice] orientation]))
+    {
+        
+    }
+    else
+    {
+        UITextView *calculationView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, self.view.frame.size.height)]; //2000.0f
+        [calculationView setAttributedText:aString];
+        
+        CGRect textRect = [calculationView.text
+                           boundingRectWithSize:calculationView.frame.size
+                           options:NSStringDrawingUsesLineFragmentOrigin
+                           attributes:@{NSFontAttributeName:CF_FONT_LIGHT(15)}
+                           context:ctx];
+        
+        self.contentHeight.constant = textRect.size.height + 10;
     
-    float newLabelHeight = textRect.size.height;
-    
-    
-    self.labelHeight.constant = newLabelHeight;
+    }
     [self.view setNeedsUpdateConstraints];
 }
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration

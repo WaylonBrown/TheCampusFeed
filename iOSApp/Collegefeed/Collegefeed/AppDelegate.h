@@ -19,7 +19,7 @@
 @class UserCommentsViewController;
 @class TrendingCollegesViewController;
 @class TutorialViewController;
-@class HelpScreenViewController;
+@class CF_DialogViewController;
 @class TimeCrunchViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, LocationFinderDelegateProtocol>
@@ -37,7 +37,7 @@
 @property (strong, nonatomic) UserCommentsViewController *userCommentsController;
 @property (strong, nonatomic) TrendingCollegesViewController*trendingCollegesController;
 @property (strong, nonatomic) TutorialViewController *tutorialController;
-@property (strong, nonatomic) HelpScreenViewController *helpController;
+@property (strong, nonatomic) CF_DialogViewController *helpController;
 @property (strong, nonatomic) TimeCrunchViewController *timeCrunchController;
 
 

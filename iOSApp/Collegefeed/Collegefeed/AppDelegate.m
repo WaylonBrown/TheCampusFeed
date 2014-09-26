@@ -19,7 +19,7 @@
 #import "MenuViewController.h"
 #import "IIViewDeckController.h"
 #import "TutorialViewController.h"
-#import "HelpScreenViewController.h"
+#import "CF_DialogViewController.h"
 #import "TimeCrunchViewController.h"
 
 @interface AppDelegate ()
@@ -73,7 +73,7 @@
 
     self.tutorialController             = [[TutorialViewController alloc] init];
     
-    self.helpController                 = [[HelpScreenViewController alloc] init];
+    self.helpController                 = [[CF_DialogViewController alloc] init];
     [self.helpController setAsHelpScreen];
     
     self.timeCrunchController           = [[TimeCrunchViewController alloc] init];

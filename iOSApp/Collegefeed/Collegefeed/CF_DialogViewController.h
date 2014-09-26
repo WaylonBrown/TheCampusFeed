@@ -1,5 +1,5 @@
 //
-//  HelpScreenViewController.h
+//  CF_DialogViewController.h
 //  Collegefeed
 //
 //  Created by Patrick Sheehan on 9/22/14.
@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HelpScreenViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
+@interface CF_DialogViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
-@property (strong, nonatomic) IBOutlet UILabel *contentLabel;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *labelHeight;
+//@property (strong, nonatomic) IBOutlet UILabel *contentLabel;
+@property (strong, nonatomic) IBOutlet UITextView *contentView;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *contentHeight;
 
 @property (strong, nonatomic) NSString *titleString;
 @property (strong, nonatomic) NSString *contentString;

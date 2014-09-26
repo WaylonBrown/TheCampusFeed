@@ -39,8 +39,8 @@
 		538BF13719B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 538BF13619B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png */; };
 		538E7C8419CFF34000AD5719 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538E7C8119CFF34000AD5719 /* TutorialViewController.m */; };
 		538E7C8519CFF34000AD5719 /* TutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 538E7C8219CFF34000AD5719 /* TutorialViewController.xib */; };
-		538E7C9219D030C000AD5719 /* HelpScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538E7C9019D030C000AD5719 /* HelpScreenViewController.m */; };
-		538E7C9319D030C000AD5719 /* HelpScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 538E7C9119D030C000AD5719 /* HelpScreenViewController.xib */; };
+		538E7C9219D030C000AD5719 /* CF_DialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538E7C9019D030C000AD5719 /* CF_DialogViewController.m */; };
+		538E7C9319D030C000AD5719 /* CF_DialogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 538E7C9119D030C000AD5719 /* CF_DialogViewController.xib */; };
 		538E7C9A19D4B33900AD5719 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538E7C9919D4B33900AD5719 /* MessageUI.framework */; };
 		538E7CA019D4B67400AD5719 /* TimeCrunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538E7C9E19D4B67400AD5719 /* TimeCrunchViewController.m */; };
 		538E7CA119D4B67400AD5719 /* TimeCrunchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 538E7C9F19D4B67400AD5719 /* TimeCrunchViewController.xib */; };
@@ -193,9 +193,9 @@
 		538E7C8119CFF34000AD5719 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
 		538E7C8219CFF34000AD5719 /* TutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialViewController.xib; sourceTree = "<group>"; };
 		538E7C8319CFF34000AD5719 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
-		538E7C8F19D030C000AD5719 /* HelpScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpScreenViewController.h; sourceTree = "<group>"; };
-		538E7C9019D030C000AD5719 /* HelpScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpScreenViewController.m; sourceTree = "<group>"; };
-		538E7C9119D030C000AD5719 /* HelpScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpScreenViewController.xib; sourceTree = "<group>"; };
+		538E7C8F19D030C000AD5719 /* CF_DialogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CF_DialogViewController.h; sourceTree = "<group>"; };
+		538E7C9019D030C000AD5719 /* CF_DialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CF_DialogViewController.m; sourceTree = "<group>"; };
+		538E7C9119D030C000AD5719 /* CF_DialogViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CF_DialogViewController.xib; sourceTree = "<group>"; };
 		538E7C9919D4B33900AD5719 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		538E7C9D19D4B67400AD5719 /* TimeCrunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeCrunchViewController.h; sourceTree = "<group>"; };
 		538E7C9E19D4B67400AD5719 /* TimeCrunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeCrunchViewController.m; sourceTree = "<group>"; };
@@ -416,9 +416,9 @@
 		538E7C9619D030C400AD5719 /* Help Screen */ = {
 			isa = PBXGroup;
 			children = (
-				538E7C8F19D030C000AD5719 /* HelpScreenViewController.h */,
-				538E7C9019D030C000AD5719 /* HelpScreenViewController.m */,
-				538E7C9119D030C000AD5719 /* HelpScreenViewController.xib */,
+				538E7C8F19D030C000AD5719 /* CF_DialogViewController.h */,
+				538E7C9019D030C000AD5719 /* CF_DialogViewController.m */,
+				538E7C9119D030C000AD5719 /* CF_DialogViewController.xib */,
 			);
 			name = "Help Screen";
 			sourceTree = "<group>";
@@ -791,7 +791,7 @@
 				5311F86219C961250053D3CC /* first_small.png in Resources */,
 				53DE348419AD517C004CB5A0 /* card_without_9patch.png in Resources */,
 				531EAAE819881E6600C1E1AA /* twitter_logo.png in Resources */,
-				538E7C9319D030C000AD5719 /* HelpScreenViewController.xib in Resources */,
+				538E7C9319D030C000AD5719 /* CF_DialogViewController.xib in Resources */,
 				533FCA4D193EDE3B00754C07 /* aggieland.gpx in Resources */,
 				53FF2D0C195BCE850040E872 /* UserVotes.txt in Resources */,
 				533FCA4F193FCD8200754C07 /* austin.gpx in Resources */,
@@ -831,7 +831,7 @@
 				53DE348019AD01FF004CB5A0 /* IIWrapController.m in Sources */,
 				5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */,
 				5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */,
-				538E7C9219D030C000AD5719 /* HelpScreenViewController.m in Sources */,
+				538E7C9219D030C000AD5719 /* CF_DialogViewController.m in Sources */,
 				5347EE9D197DC7CC001B2214 /* UserPostsViewController.m in Sources */,
 				538E7CA019D4B67400AD5719 /* TimeCrunchViewController.m in Sources */,
 				538E7C8419CFF34000AD5719 /* TutorialViewController.m in Sources */,
