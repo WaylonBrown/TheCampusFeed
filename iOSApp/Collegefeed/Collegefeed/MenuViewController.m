@@ -46,7 +46,6 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     [self.tableView reloadData];
 }
 
@@ -172,7 +171,7 @@
         }
         else
         {
-            self.selectedIndex = indexPath.row;
+            self.selectedIndex = index;
             [self.viewDeckController setCenterController:viewController];
         }
     }

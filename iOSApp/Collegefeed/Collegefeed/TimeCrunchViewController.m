@@ -8,6 +8,7 @@
 
 #import "TimeCrunchViewController.h"
 #import "Shared.h"
+#import "CF_DialogViewController.h"
 
 @interface TimeCrunchViewController ()
 
@@ -49,6 +50,8 @@
 
 - (IBAction)showCrunchDialog:(id)sender
 {
-    
+    CF_DialogViewController* controller = [CF_DialogViewController new];
+    [controller setAsTimeCrunchInfo];
+    [self.navigationController presentViewController:controller animated:YES completion:nil];
 }
 @end
