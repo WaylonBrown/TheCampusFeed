@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -109,15 +110,24 @@ public class MainActivity extends FragmentActivity implements LocationListener
     public static List<Integer> achievementUnlockedList = new ArrayList<Integer>();
 
     //menu drawer items
-    private TextView menuTopPosts;
-    private TextView menuNewPosts;
-    private TextView menuTags;
-    private TextView menuColleges;
-    private TextView menuMyPosts;
-    private TextView menuMyComments;
-    private TextView menuTimeCrunch;
-    private TextView menuHelp;
-    private TextView menuFeedback;
+    private TextView icon1;
+    private TextView icon2;
+    private TextView icon3;
+    private TextView icon4;
+    private TextView icon5;
+    private TextView icon6;
+    private TextView icon7;
+    private TextView icon8;
+    private TextView icon9;
+    private LinearLayout firstItem;
+    private LinearLayout secondItem;
+    private LinearLayout thirdItem;
+    private LinearLayout fourthItem;
+    private LinearLayout fifthItem;
+    private LinearLayout sixthItem;
+    private LinearLayout seventhItem;
+    private LinearLayout eighthItem;
+    private LinearLayout ninthItem;
 
     //Fragments
     public static TopPostFragment topPostFrag;
@@ -209,11 +219,12 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	}
 
 	private void setupApp(){
+        FontManager.setup(this);
         menuDrawer = MenuDrawer.attach(this);
         menuDrawer.setContentView(R.layout.activity_main);
         menuDrawer.setMenuView(R.layout.menu_drawer);
 		
-		FontManager.setup(this);
+
 		setupActionbar();
 
 		postVoteList = PrefManager.getPostVoteList();
@@ -259,48 +270,47 @@ public class MainActivity extends FragmentActivity implements LocationListener
     }
 
     private void setupMenuDrawerViews() {
-        menuTopPosts = (TextView)findViewById(R.id.topPostsMenuText);
-        menuNewPosts = (TextView)findViewById(R.id.newPostsMenuText);
-        menuTags = (TextView)findViewById(R.id.tagsMenuText);
-        menuColleges = (TextView)findViewById(R.id.collegesMenuText);
-        menuMyPosts = (TextView)findViewById(R.id.myPostsMenuText);
-        menuMyComments = (TextView)findViewById(R.id.myCommentsMenuText);
-        menuTimeCrunch = (TextView)findViewById(R.id.timeCrunchMenuText);
-        menuHelp = (TextView)findViewById(R.id.helpMenuText);
-        menuFeedback = (TextView)findViewById(R.id.feedbackMenuText);
-
-        menuTopPosts.setTypeface(FontManager.light);
-        menuNewPosts.setTypeface(FontManager.light);
-        menuTags.setTypeface(FontManager.light);
-        menuColleges.setTypeface(FontManager.light);
-        menuMyPosts.setTypeface(FontManager.light);
-        menuMyComments.setTypeface(FontManager.light);
-        menuTimeCrunch.setTypeface(FontManager.light);
-        menuHelp.setTypeface(FontManager.light);
-        menuFeedback.setTypeface(FontManager.light);
+        icon1 = (TextView)findViewById(R.id.icon1);
+        icon2 = (TextView)findViewById(R.id.icon2);
+        icon3 = (TextView)findViewById(R.id.icon3);
+        icon4 = (TextView)findViewById(R.id.icon4);
+        icon5 = (TextView)findViewById(R.id.icon5);
+        icon6 = (TextView)findViewById(R.id.icon6);
+        icon7 = (TextView)findViewById(R.id.icon7);
+        icon8 = (TextView)findViewById(R.id.icon8);
+        icon9 = (TextView)findViewById(R.id.icon9);
+        firstItem = (LinearLayout)findViewById(R.id.firstItem);
+        secondItem = (LinearLayout)findViewById(R.id.secondItem);
+        thirdItem = (LinearLayout)findViewById(R.id.thirdItem);
+        fourthItem = (LinearLayout)findViewById(R.id.fourthItem);
+        fifthItem = (LinearLayout)findViewById(R.id.fifthItem);
+        sixthItem = (LinearLayout)findViewById(R.id.sixthItem);
+        seventhItem = (LinearLayout)findViewById(R.id.seventhItem);
+        eighthItem = (LinearLayout)findViewById(R.id.eighthItem);
+        ninthItem = (LinearLayout)findViewById(R.id.ninthItem);
 
         OnClickListener menuClick = new OnClickListener() {
             @Override
             public void onClick(View view) {
                 previouslySelectedMenuItem = selectedMenuItem;
 
-                if(view == menuTopPosts){
+                if(view == firstItem){
                     selectedMenuItem = 0;
-                } else if(view == menuNewPosts){
+                } else if(view == secondItem){
                     selectedMenuItem = 1;
-                } else if(view == menuTags){
+                } else if(view == thirdItem){
                     selectedMenuItem = 2;
-                } else if(view == menuColleges){
+                } else if(view == fourthItem){
                     selectedMenuItem = 3;
-                } else if(view == menuMyPosts){
+                } else if(view == fifthItem){
                     selectedMenuItem = 4;
-                } else if(view == menuMyComments){
+                } else if(view == sixthItem){
                     selectedMenuItem = 5;
-                } else if(view == menuTimeCrunch){
+                } else if(view == seventhItem){
                     selectedMenuItem = 6;
-                } else if(view == menuHelp){
+                } else if(view == eighthItem){
                     selectedMenuItem = 7;
-                } else if(view == menuFeedback){
+                } else if(view == ninthItem){
                     selectedMenuItem = 8;
                 }
 
@@ -308,15 +318,15 @@ public class MainActivity extends FragmentActivity implements LocationListener
             }
         };
 
-        menuTopPosts.setOnClickListener(menuClick);
-        menuNewPosts.setOnClickListener(menuClick);
-        menuTags.setOnClickListener(menuClick);
-        menuColleges.setOnClickListener(menuClick);
-        menuMyPosts.setOnClickListener(menuClick);
-        menuMyComments.setOnClickListener(menuClick);
-        menuTimeCrunch.setOnClickListener(menuClick);
-        menuHelp.setOnClickListener(menuClick);
-        menuFeedback.setOnClickListener(menuClick);
+        firstItem.setOnClickListener(menuClick);
+        secondItem.setOnClickListener(menuClick);
+        thirdItem.setOnClickListener(menuClick);
+        fourthItem.setOnClickListener(menuClick);
+        fifthItem.setOnClickListener(menuClick);
+        sixthItem.setOnClickListener(menuClick);
+        seventhItem.setOnClickListener(menuClick);
+        eighthItem.setOnClickListener(menuClick);
+        ninthItem.setOnClickListener(menuClick);
 
         menuItemSelected();
     }
@@ -330,20 +340,30 @@ public class MainActivity extends FragmentActivity implements LocationListener
             emailForFeedback();
             selectedMenuItem = previouslySelectedMenuItem;
         } else {
-            menuTopPosts.setBackgroundResource(R.drawable.postbuttonclick);
-            menuNewPosts.setBackgroundResource(R.drawable.postbuttonclick);
-            menuTags.setBackgroundResource(R.drawable.postbuttonclick);
-            menuColleges.setBackgroundResource(R.drawable.postbuttonclick);
-            menuMyPosts.setBackgroundResource(R.drawable.postbuttonclick);
-            menuMyComments.setBackgroundResource(R.drawable.postbuttonclick);
-            menuTimeCrunch.setBackgroundResource(R.drawable.postbuttonclick);
-            menuHelp.setBackgroundResource(R.drawable.postbuttonclick);
+            firstItem.setBackgroundResource(R.drawable.postbuttonclick);
+            secondItem.setBackgroundResource(R.drawable.postbuttonclick);
+            thirdItem.setBackgroundResource(R.drawable.postbuttonclick);
+            fourthItem.setBackgroundResource(R.drawable.postbuttonclick);
+            fifthItem.setBackgroundResource(R.drawable.postbuttonclick);
+            sixthItem.setBackgroundResource(R.drawable.postbuttonclick);
+            seventhItem.setBackgroundResource(R.drawable.postbuttonclick);
+            eighthItem.setBackgroundResource(R.drawable.postbuttonclick);
+            icon1.setTextColor(getResources().getColor(R.color.lightblue));
+            icon2.setTextColor(getResources().getColor(R.color.lightblue));
+            icon3.setTextColor(getResources().getColor(R.color.lightblue));
+            icon4.setTextColor(getResources().getColor(R.color.lightblue));
+            icon5.setTextColor(getResources().getColor(R.color.lightblue));
+            icon6.setTextColor(getResources().getColor(R.color.lightblue));
+            icon7.setTextColor(getResources().getColor(R.color.lightblue));
+            icon8.setTextColor(getResources().getColor(R.color.lightblue));
+            icon9.setTextColor(getResources().getColor(R.color.lightblue));
 
             android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
             switch (selectedMenuItem){
                 case 0:
-                    menuTopPosts.setBackgroundColor(getResources().getColor(R.color.blue));
+                    firstItem.setBackgroundColor(getResources().getColor(R.color.blue));
+                    icon1.setTextColor(getResources().getColor(R.color.white));
                     if(topPostFrag == null){    //so that nothing happens except close the menu if nothing is showing
                         topPostFrag = new TopPostFragment(this);
                         ft.replace(R.id.fragmentContainer, topPostFrag).commit();
@@ -351,7 +371,8 @@ public class MainActivity extends FragmentActivity implements LocationListener
                     }
                     break;
                 case 1:
-                    menuNewPosts.setBackgroundColor(getResources().getColor(R.color.blue));
+                    secondItem.setBackgroundColor(getResources().getColor(R.color.blue));
+                    icon2.setTextColor(getResources().getColor(R.color.white));
                     if(newPostFrag == null){
                         newPostFrag = new NewPostFragment(this);
                         ft.replace(R.id.fragmentContainer, newPostFrag).commit();
@@ -359,7 +380,8 @@ public class MainActivity extends FragmentActivity implements LocationListener
                     }
                     break;
                 case 2:
-                    menuTags.setBackgroundColor(getResources().getColor(R.color.blue));
+                    thirdItem.setBackgroundColor(getResources().getColor(R.color.blue));
+                    icon3.setTextColor(getResources().getColor(R.color.white));
                     if(tagFrag == null){
                         tagFrag = new TagFragment(this);
                         ft.replace(R.id.fragmentContainer, tagFrag).commit();
@@ -367,7 +389,8 @@ public class MainActivity extends FragmentActivity implements LocationListener
                     }
                     break;
                 case 3:
-                    menuColleges.setBackgroundColor(getResources().getColor(R.color.blue));
+                    fourthItem.setBackgroundColor(getResources().getColor(R.color.blue));
+                    icon4.setTextColor(getResources().getColor(R.color.white));
                     if(collegeFrag == null){
                         collegeFrag = new MostActiveCollegesFragment(this);
                         ft.replace(R.id.fragmentContainer, collegeFrag).commit();
@@ -375,7 +398,8 @@ public class MainActivity extends FragmentActivity implements LocationListener
                     }
                     break;
                 case 4:
-                    menuMyPosts.setBackgroundColor(getResources().getColor(R.color.blue));
+                    fifthItem.setBackgroundColor(getResources().getColor(R.color.blue));
+                    icon5.setTextColor(getResources().getColor(R.color.white));
                     if(myPostsFrag == null){
                         myPostsFrag = new MyPostsFragment(this);
                         ft.replace(R.id.fragmentContainer, myPostsFrag).commit();
@@ -383,7 +407,8 @@ public class MainActivity extends FragmentActivity implements LocationListener
                     }
                     break;
                 case 5:
-                    menuMyComments.setBackgroundColor(getResources().getColor(R.color.blue));
+                    sixthItem.setBackgroundColor(getResources().getColor(R.color.blue));
+                    icon6.setTextColor(getResources().getColor(R.color.white));
                     if(myCommentsFrag == null){
                         myCommentsFrag = new MyCommentsFragment(this);
                         ft.replace(R.id.fragmentContainer, myCommentsFrag).commit();
@@ -391,7 +416,8 @@ public class MainActivity extends FragmentActivity implements LocationListener
                     }
                     break;
                 case 6:
-                    menuTimeCrunch.setBackgroundColor(getResources().getColor(R.color.blue));
+                    seventhItem.setBackgroundColor(getResources().getColor(R.color.blue));
+                    icon7.setTextColor(getResources().getColor(R.color.white));
                     if(timeCrunchFrag == null){
                         timeCrunchFrag = new TimeCrunchFragment(this);
                         ft.replace(R.id.fragmentContainer, timeCrunchFrag).commit();

@@ -9,6 +9,7 @@ public class FontManager {
 	public static Typeface medium;
 	public static Typeface bold;
 	public static Typeface thin;
+    public static Typeface icon_pack;
 	
 	public static void setup(Context c) 
 	{
@@ -17,5 +18,6 @@ public class FontManager {
     	medium = Typeface.createFromAsset(c.getAssets(), "fonts/omnes_semibold.otf");
     	bold = Typeface.createFromAsset(c.getAssets(), "fonts/mplus-2c-bold.ttf");
     	thin = Typeface.createFromAsset(c.getAssets(), "fonts/Roboto-Thin.ttf");
+        icon_pack = Typeface.createFromAsset(c.getAssets(), "fonts/fontawesome-webfont.ttf");
 	}
 }

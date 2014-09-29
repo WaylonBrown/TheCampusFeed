@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/fill"
     android:background="@color/darkgray">
 
@@ -12,63 +13,136 @@
             android:background="@color/darkgray"
             android:orientation="vertical">
 
-            <com.appuccino.thecampusfeed.extra.CustomTextView
-                android:id="@+id/topPostsMenuText"
+            <LinearLayout
+                android:id="@+id/firstItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
                 android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:textColor="@color/white"
-                android:textSize="20sp"
+                android:orientation="horizontal"
                 android:background="@drawable/postbuttonclick"
-                android:text="Top Posts"
-                android:clickable="true"/>
+                android:clickable="true">
 
-            <com.appuccino.thecampusfeed.extra.CustomTextView
-                android:id="@+id/newPostsMenuText"
+                <com.appuccino.thecampusfeed.extra.CustomTextView
+                    android:id="@+id/icon1"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="7sp"
+                    android:gravity="center"
+                    app:typeface="icon_pack"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    android:text="&#xf201;"/>
+
+                <com.appuccino.thecampusfeed.extra.CustomTextView
+                    android:id="@+id/topPostsMenuText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:text="Top Posts"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/secondItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:gravity="center_vertical"
-                android:textColor="@color/white"
-                android:textSize="20sp"
+                android:orientation="horizontal"
                 android:background="@drawable/postbuttonclick"
-                android:text="New Posts"
-                android:clickable="true"/>
+                android:clickable="true">
 
-            <com.appuccino.thecampusfeed.extra.CustomTextView
-                android:id="@+id/tagsMenuText"
+                <com.appuccino.thecampusfeed.extra.CustomTextView
+                    android:id="@+id/icon2"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="7sp"
+                    android:gravity="center"
+                    app:typeface="icon_pack"
+                    android:textColor="@color/lightblue"
+                    android:textSize="25sp"
+                    android:text="&#xf0e7;"/>
+
+                <com.appuccino.thecampusfeed.extra.CustomTextView
+                    android:id="@+id/newPostsMenuText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:text="New Posts"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/thirdItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:gravity="center_vertical"
-                android:textColor="@color/white"
-                android:textSize="20sp"
+                android:orientation="horizontal"
                 android:background="@drawable/postbuttonclick"
-                android:text="Trending Tags"
-                android:clickable="true"/>
+                android:clickable="true">
 
-            <com.appuccino.thecampusfeed.extra.CustomTextView
-                android:id="@+id/collegesMenuText"
+                <com.appuccino.thecampusfeed.extra.CustomTextView
+                    android:id="@+id/icon3"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="7sp"
+                    android:gravity="center"
+                    app:typeface="icon_pack"
+                    android:textColor="@color/lightblue"
+                    android:textSize="25sp"
+                    android:text="&#xf02b;"/>
+
+                <com.appuccino.thecampusfeed.extra.CustomTextView
+                    android:id="@+id/tagsMenuText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:text="Trending Tags"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/fourthItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
+                android:orientation="horizontal"
                 android:layout_marginBottom="10dp"
-                android:gravity="center_vertical"
-                android:textColor="@color/white"
-                android:textSize="20sp"
                 android:background="@drawable/postbuttonclick"
-                android:text="Most Active Colleges"
-                android:clickable="true"/>
+                android:clickable="true">
+
+                <com.appuccino.thecampusfeed.extra.CustomTextView
+                    android:id="@+id/icon4"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="7sp"
+                    android:gravity="center"
+                    app:typeface="icon_pack"
+                    android:textColor="@color/lightblue"
+                    android:textSize="25sp"
+                    android:text="&#xf19c;"/>
+
+                <com.appuccino.thecampusfeed.extra.CustomTextView
+                    android:id="@+id/collegesMenuText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:text="Most Active Colleges"/>
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -76,76 +150,167 @@
                 android:layout_marginLeft="12dp"
                 android:background="@color/white"/>
 
-            <com.appuccino.thecampusfeed.extra.CustomTextView
-                android:id="@+id/myPostsMenuText"
+            <LinearLayout
+                android:id="@+id/fifthItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
+                android:orientation="horizontal"
                 android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:textColor="@color/white"
-                android:textSize="20sp"
                 android:background="@drawable/postbuttonclick"
-                android:text="My Posts and Achievements"
-                android:clickable="true"/>
+                android:clickable="true">
 
-            <com.appuccino.thecampusfeed.extra.CustomTextView
-                android:id="@+id/myCommentsMenuText"
+                <com.appuccino.thecampusfeed.extra.CustomTextView
+                    android:id="@+id/icon5"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="7sp"
+                    android:gravity="center"
+                    app:typeface="icon_pack"
+                    android:textColor="@color/lightblue"
+                    android:textSize="25sp"
+                    android:text="&#xf091;"/>
+
+                <com.appuccino.thecampusfeed.extra.CustomTextView
+                    android:id="@+id/myPostsMenuText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:text="My Posts and Achievements"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/sixthItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:gravity="center_vertical"
-                android:textColor="@color/white"
-                android:textSize="20sp"
+                android:orientation="horizontal"
                 android:background="@drawable/postbuttonclick"
-                android:text="My Comments"
-                android:clickable="true"/>
+                android:clickable="true">
 
-            <com.appuccino.thecampusfeed.extra.CustomTextView
-                android:id="@+id/timeCrunchMenuText"
+                <com.appuccino.thecampusfeed.extra.CustomTextView
+                    android:id="@+id/icon6"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="7sp"
+                    android:gravity="center"
+                    app:typeface="icon_pack"
+                    android:textColor="@color/lightblue"
+                    android:textSize="25sp"
+                    android:text="&#xf0e6;"/>
+
+                <com.appuccino.thecampusfeed.extra.CustomTextView
+                    android:id="@+id/myCommentsMenuText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:text="My Comments"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/seventhItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:gravity="center_vertical"
-                android:textColor="@color/white"
-                android:textSize="20sp"
+                android:orientation="horizontal"
                 android:background="@drawable/postbuttonclick"
-                android:text="Time Crunch"
-                android:clickable="true"/>
+                android:clickable="true">
 
-            <com.appuccino.thecampusfeed.extra.CustomTextView
-                android:id="@+id/helpMenuText"
+                <com.appuccino.thecampusfeed.extra.CustomTextView
+                    android:id="@+id/icon7"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="7sp"
+                    android:gravity="center"
+                    app:typeface="icon_pack"
+                    android:textColor="@color/lightblue"
+                    android:textSize="25sp"
+                    android:text="&#xf017;"/>
+
+                <com.appuccino.thecampusfeed.extra.CustomTextView
+                    android:id="@+id/timeCrunchMenuText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:text="Time Crunch"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/eighthItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:gravity="center_vertical"
-                android:textColor="@color/white"
-                android:textSize="20sp"
+                android:orientation="horizontal"
                 android:background="@drawable/postbuttonclick"
-                android:text="Help"
-                android:clickable="true"/>
+                android:clickable="true">
 
-            <com.appuccino.thecampusfeed.extra.CustomTextView
-                android:id="@+id/feedbackMenuText"
+                <com.appuccino.thecampusfeed.extra.CustomTextView
+                    android:id="@+id/icon8"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="7sp"
+                    android:gravity="center"
+                    app:typeface="icon_pack"
+                    android:textColor="@color/lightblue"
+                    android:textSize="25sp"
+                    android:text="&#xf059;"/>
+
+                <com.appuccino.thecampusfeed.extra.CustomTextView
+                    android:id="@+id/helpMenuText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:text="Help"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ninthItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:gravity="center_vertical"
-                android:textColor="@color/white"
-                android:textSize="20sp"
+                android:orientation="horizontal"
                 android:background="@drawable/postbuttonclick"
-                android:text="Suggest Feedback"
-                android:clickable="true"/>
+                android:clickable="true">
+
+                <com.appuccino.thecampusfeed.extra.CustomTextView
+                    android:id="@+id/icon9"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="7sp"
+                    android:gravity="center"
+                    app:typeface="icon_pack"
+                    android:textColor="@color/lightblue"
+                    android:textSize="25sp"
+                    android:text="&#xf003;"/>
+
+                <com.appuccino.thecampusfeed.extra.CustomTextView
+                    android:id="@+id/feedbackMenuText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:text="Suggest Feedback"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -41,6 +41,8 @@ public class CustomTextView extends TextView {
                     tf = FontManager.bold;
                 } else if (fontName.equals("thin")){
                     tf = FontManager.thin;
+                } else if (fontName.equals("icon_pack")){
+                    tf = FontManager.icon_pack;
                 } else {
                     //this is the fallback font if none is defined
                     tf = FontManager.light;
@@ -48,6 +50,9 @@ public class CustomTextView extends TextView {
                 setTypeface(tf);
                 //sets default color for if textColor isn't already defined in xml
                 //setTextColor(getResources().getColor(R.color.darkgray));
+            } else {
+                Typeface tf = FontManager.light;
+                setTypeface(tf);
             }
             a.recycle();
         }
