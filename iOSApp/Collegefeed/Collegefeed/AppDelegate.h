@@ -21,6 +21,7 @@
 @class TutorialViewController;
 @class CF_DialogViewController;
 @class TimeCrunchViewController;
+@class MenuViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, LocationFinderDelegateProtocol>
 
@@ -29,6 +30,7 @@
 
 @property (strong, nonatomic) DataController *dataController;
 
+@property (strong, nonatomic) MenuViewController *menuViewController;
 @property (strong, nonatomic) PostsViewController *topPostsController;
 @property (strong, nonatomic) PostsViewController *recentPostsController;
 @property (strong, nonatomic) TagViewController *tagController;
@@ -39,7 +41,6 @@
 @property (strong, nonatomic) TutorialViewController *tutorialController;
 @property (strong, nonatomic) CF_DialogViewController *helpController;
 @property (strong, nonatomic) TimeCrunchViewController *timeCrunchController;
-
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;

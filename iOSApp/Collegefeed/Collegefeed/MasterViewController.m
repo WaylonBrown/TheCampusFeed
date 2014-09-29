@@ -39,7 +39,7 @@
     {
         [self setDataController:controller];
         self.activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        self.toastController = [[ToastController alloc] init];
+        self.toastController = [[ToastController alloc] initAsFirstLaunch:self.dataController.isFirstLaunch];
     }
     return self;
 }
