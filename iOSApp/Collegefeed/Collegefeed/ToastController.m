@@ -12,18 +12,24 @@
 
 @implementation ToastController
 
-- (id)init
+- (id)initAsFirstLaunch:(BOOL)isFirst
 {
-    self.showingNotification = NO;
-    self.condition = [[NSCondition alloc] init];
+    self.firstAppLaunch = isFirst;
+    
+    if (!self.firstAppLaunch)
+    {
+        self.showingNotification = NO;
+        self.condition = [[NSCondition alloc] init];
 
-    self.toastQueue = [NSMutableArray new];
-    if (![CLLocationManager locationServicesEnabled])
-    {   
-        [self toastNoLocationServices];
+        self.toastQueue = [NSMutableArray new];
+        if (![CLLocationManager locationServicesEnabled])
+        {   
+            [self toastNoLocationServices];
+        }
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toastHidden) name:@"ToastHidden" object:nil];
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toastHidden) name:@"ToastHidden" object:nil];
     return self;
 }
 - (void)dealloc
@@ -179,7 +185,7 @@
 
 - (void)dequeueToast
 {
-    if (self.toastQueue.count > 0 && !self.showingNotification)
+    if (self.toastQueue.count > 0 && !self.showingNotification && !self.firstAppLaunch)
     {
         NSString *message = [self.toastQueue objectAtIndex:0];
     

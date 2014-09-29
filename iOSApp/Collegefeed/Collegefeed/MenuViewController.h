@@ -25,5 +25,6 @@
 @property NSInteger selectedIndex;
 
 - (id)initWithViewControllers:(NSArray *)viewControllers;
+- (void)showTutorial;
 
 @end

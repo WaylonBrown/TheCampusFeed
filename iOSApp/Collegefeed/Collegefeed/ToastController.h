@@ -14,8 +14,9 @@
 @property (strong, nonatomic) NSMutableArray *toastQueue;
 @property (nonatomic, strong) NSCondition *condition;
 @property (nonatomic) BOOL showingNotification;
+@property (nonatomic) BOOL firstAppLaunch;
 
-- (id)init;
+- (id)initAsFirstLaunch:(BOOL)isFirst;
 
 - (void)dequeueToast;
 - (void)toastHidden;

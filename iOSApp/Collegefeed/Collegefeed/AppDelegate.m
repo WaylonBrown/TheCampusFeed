@@ -33,94 +33,38 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {   // Set up ViewControllers and DataControllers
+   
+    BOOL isFirstLaunch = NO;
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+    {
+        // app already launched
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        // This is the first launch ever
+        isFirstLaunch = YES;
+    }
 
-    // ***SIMULATE YOUR LOCATION***
     self.dataController = [DataController new];
+    [self.dataController setIsFirstLaunch:isFirstLaunch];
     [self.dataController setAppDelegate:self];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:CF_BLUE]];
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     
-    UIBarButtonItem *menuButton         = [[UIBarButtonItem alloc]
-                                           initWithImage:[UIImage imageNamed:logoImageWithButton]
-                                           style:UIBarButtonItemStylePlain
-                                           target:self
-                                           action:@selector(openLeftMenu)];
+    [self initViewControllers:isFirstLaunch];
+    [self setUpMenuBar];
     
-    self.topPostsController             = [[PostsViewController alloc]
-                                           initAsType:TOP_VIEW
-                                           withDataController:self.dataController];
-
-    self.recentPostsController          = [[PostsViewController alloc]
-                                           initAsType:RECENT_VIEW
-                                           withDataController:self.dataController];
-    
-    self.tagController                  = [[TagViewController alloc]
-                                           initWithDataController:self.dataController];
-    
-    self.trendingCollegesController     = [[TrendingCollegesViewController alloc]
-                                           initWithDataController:self.dataController];
-    
-    self.userPostsController            = [[UserPostsViewController alloc]
-                                           initAsType:USER_POSTS
-                                           withDataController:self.dataController];
-    
-    self.userCommentsController         = [[UserCommentsViewController alloc]
-                                           initAsType:USER_COMMENTS
-                                           withDataController:self.dataController];
-
-    self.tutorialController             = [[TutorialViewController alloc] init];
-    
-    self.helpController                 = [[CF_DialogViewController alloc] init];
-    [self.helpController setAsHelpScreen];
-    
-    self.timeCrunchController           = [[TimeCrunchViewController alloc] init];
-    
-    NSArray *viewControllers            = [NSArray arrayWithObjects:
-                                           self.topPostsController,
-                                           self.recentPostsController,
-                                           self.tagController,
-                                           self.trendingCollegesController,
-                                           self.userPostsController,
-                                           self.userCommentsController,
-                                           self.timeCrunchController,
-                                           self.helpController,
-//                                           self.tutorialController,
-                                           nil];
-
-    // *** Side Menu - MenuViewController *** //
-    MenuViewController *menuViewController  = [[MenuViewController alloc] initWithViewControllers:viewControllers];
-    menuViewController.view.layer.borderWidth     = 0;
-    menuViewController.view.layer.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
-    menuViewController.view.layer.borderColor     = [UIColor colorWithWhite:0.8 alpha:1.0].CGColor;
-    menuViewController.edgesForExtendedLayout     = UIRectEdgeTop | UIRectEdgeBottom | UIRectEdgeLeft;
-    
-    
-    self.deckController = [[IIViewDeckController alloc] initWithCenterViewController:self.topPostsController leftViewController:menuViewController];
-    
-    self.deckController.openSlideAnimationDuration = 0.25f;
-    self.deckController.closeSlideAnimationDuration = 0.25f;
-    self.deckController.leftSize = 100.0f;
-    self.deckController.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
-    
-    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
-                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
-                                       target:nil action:nil];
-
-    negativeSpacer.width = -16;
-    self.deckController.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, menuButton, nil];
-    
-    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:self.deckController];
-    [controller.navigationBar setTranslucent:NO];
-    
-    // *************************************** //
-    
-    self.window.rootViewController = controller;
+    if (isFirstLaunch)
+    {
+        [self.menuViewController showTutorial];
+    }
 
     [self.window makeKeyAndVisible];
-
+    
     return YES;
 }
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -168,6 +112,88 @@
         [self.deckController openLeftView];
     }
 }
+- (void)initViewControllers:(BOOL)asFirstLaunch
+{
+    self.topPostsController             = [[PostsViewController alloc]
+                                           initAsType:TOP_VIEW
+                                           withDataController:self.dataController];
+    
+    self.recentPostsController          = [[PostsViewController alloc]
+                                           initAsType:RECENT_VIEW
+                                           withDataController:self.dataController];
+    
+    self.tagController                  = [[TagViewController alloc]
+                                           initWithDataController:self.dataController];
+    
+    self.trendingCollegesController     = [[TrendingCollegesViewController alloc]
+                                           initWithDataController:self.dataController];
+    
+    self.userPostsController            = [[UserPostsViewController alloc]
+                                           initAsType:USER_POSTS
+                                           withDataController:self.dataController];
+    
+    self.userCommentsController         = [[UserCommentsViewController alloc]
+                                           initAsType:USER_COMMENTS
+                                           withDataController:self.dataController];
+    
+    self.tutorialController             = [[TutorialViewController alloc] init];
+    
+    self.helpController                 = [[CF_DialogViewController alloc] init];
+    [self.helpController setAsHelpScreen];
+    
+    self.timeCrunchController           = [[TimeCrunchViewController alloc] init];
+    
+    NSArray *viewControllers            = [NSArray arrayWithObjects:
+                                           self.topPostsController,
+                                           self.recentPostsController,
+                                           self.tagController,
+                                           self.trendingCollegesController,
+                                           self.userPostsController,
+                                           self.userCommentsController,
+                                           self.timeCrunchController,
+                                           self.helpController,
+                                           //                                           self.tutorialController,
+                                           nil];
+    
+    // *** Side Menu - MenuViewController *** //
+    self.menuViewController  = [[MenuViewController alloc] initWithViewControllers:viewControllers];
+    self.menuViewController.view.layer.borderWidth     = 0;
+    self.menuViewController.view.layer.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
+    self.menuViewController.view.layer.borderColor     = [UIColor colorWithWhite:0.8 alpha:1.0].CGColor;
+    self.menuViewController.edgesForExtendedLayout     = UIRectEdgeTop | UIRectEdgeBottom | UIRectEdgeLeft;
+    
+    self.deckController = [[IIViewDeckController alloc] initWithCenterViewController:self.topPostsController
+                                                                  leftViewController:self.menuViewController];
+    
+    self.deckController.openSlideAnimationDuration = 0.25f;
+    self.deckController.closeSlideAnimationDuration = 0.25f;
+    self.deckController.leftSize = 100.0f;
+    self.deckController.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
+    
+    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:self.deckController];
+    [controller.navigationBar setTranslucent:NO];
+    self.window.rootViewController = controller;
 
+
+}
+- (void)setUpMenuBar
+{
+    [[UINavigationBar appearance] setBarTintColor:[Shared getCustomUIColor:CF_BLUE]];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    
+    UIBarButtonItem *menuButton         = [[UIBarButtonItem alloc]
+                                           initWithImage:[UIImage imageNamed:logoImageWithButton]
+                                           style:UIBarButtonItemStylePlain
+                                           target:self
+                                           action:@selector(openLeftMenu)];
+    
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    
+    negativeSpacer.width = -16;
+    self.deckController.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, menuButton, nil];
+}
 
 @end

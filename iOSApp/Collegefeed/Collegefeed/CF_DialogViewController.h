@@ -28,6 +28,7 @@
 - (void)setTitle:(NSString *)title;
 - (void)setContent:(NSString *)content;
 - (void)setAsHelpScreen;
+- (void)setAsTimeCrunchInfo;
 - (IBAction)dismiss:(id)sender;
 
 @end

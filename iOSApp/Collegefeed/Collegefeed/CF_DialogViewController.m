@@ -43,7 +43,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
-    
+    [self.contentView scrollRectToVisible:CGRectMake(0,0,1,1) animated:NO];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -76,7 +77,12 @@
     [self setTitle:@"Help"];
     [self setContentString:@"TheCampusFeed is an anonymous message board. No logins, no accounts. Anyone can view any college's feed, as well as the All Colleges feed which is a mixture of all colleges' posts put together.\n\nIf you make a post that gets a certain amount of flags, it will be automatically removed. If you have multiple posts removed, you will be banned from posting to the app. Think before you post! To view the rules, click the Flag icon for any post near you."];
 }
-
+- (void)setAsTimeCrunchInfo
+{
+    self.portraitHeight = 400;
+    [self setTitle:@"What is Time Crunch?"];
+    [self setContentString:@"Want to post and comment on your University\'s feed this Summer as if you\'re actually there, but are instead visiting home? What about this Winter Break?\n\nFor every post you make to your University, 24 hours get added to your Time Crunch. Once you activate Time Crunch, your current location at your University is saved in the app for that long! You can get extra hours added by unlocking Achievements.\n\nNOTE: If you turn off Time Crunch once it is active, your hours will be reset to 0!"];
+}
 - (IBAction)dismiss:(id)sender
 {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];

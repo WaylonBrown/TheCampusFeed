@@ -64,7 +64,7 @@
                                 <action selector="dismiss:" destination="-1" eventType="touchUpInside" id="7Js-EP-ggE"/>
                             </connections>
                         </button>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jeQ-qk-yFs">
+                        <textView multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jeQ-qk-yFs">
                             <rect key="frame" x="14" y="62" width="253" height="223"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
@@ -77,6 +77,7 @@
                     <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="VOy-yA-1wW" firstAttribute="top" secondItem="fs0-NN-1hU" secondAttribute="bottom" id="16Z-pH-SFZ"/>
+                        <constraint firstItem="fs0-NN-1hU" firstAttribute="top" secondItem="jeQ-qk-yFs" secondAttribute="bottom" constant="14" id="36I-Ne-OTn"/>
                         <constraint firstAttribute="bottom" secondItem="VOy-yA-1wW" secondAttribute="bottom" id="38k-fj-8q3"/>
                         <constraint firstItem="3Ob-af-UKJ" firstAttribute="trailing" secondItem="jeQ-qk-yFs" secondAttribute="trailing" id="DHT-xu-x0h"/>
                         <constraint firstItem="aVC-uR-SzK" firstAttribute="leading" secondItem="7nr-qo-lMY" secondAttribute="leading" constant="20" id="F5h-ZW-doq"/>
@@ -86,10 +87,12 @@
                         <constraint firstItem="fs0-NN-1hU" firstAttribute="leading" secondItem="7nr-qo-lMY" secondAttribute="leading" id="MMg-ao-auz"/>
                         <constraint firstItem="aVC-uR-SzK" firstAttribute="leading" secondItem="3Ob-af-UKJ" secondAttribute="leading" constant="6" id="MfS-lQ-Zfa"/>
                         <constraint firstItem="VOy-yA-1wW" firstAttribute="top" secondItem="jeQ-qk-yFs" secondAttribute="bottom" constant="15" id="PnX-iF-1jU"/>
+                        <constraint firstItem="jeQ-qk-yFs" firstAttribute="leading" secondItem="7nr-qo-lMY" secondAttribute="leading" constant="14" id="Qmr-eU-cSP"/>
+                        <constraint firstItem="jeQ-qk-yFs" firstAttribute="top" secondItem="3Ob-af-UKJ" secondAttribute="bottom" constant="8" id="ScN-1q-lLn"/>
                         <constraint firstItem="VOy-yA-1wW" firstAttribute="leading" secondItem="7nr-qo-lMY" secondAttribute="leading" id="VU5-cu-2xz"/>
-                        <constraint firstItem="jeQ-qk-yFs" firstAttribute="top" secondItem="3Ob-af-UKJ" secondAttribute="bottom" constant="8" id="Ybi-Lh-QSn"/>
                         <constraint firstAttribute="trailing" secondItem="fs0-NN-1hU" secondAttribute="trailing" id="b7G-aB-2LN"/>
                         <constraint firstAttribute="trailing" secondItem="aVC-uR-SzK" secondAttribute="trailing" constant="13" id="kyF-du-umJ"/>
+                        <constraint firstAttribute="trailing" secondItem="jeQ-qk-yFs" secondAttribute="trailing" constant="13" id="n2b-mk-y06"/>
                         <constraint firstItem="3Ob-af-UKJ" firstAttribute="top" secondItem="aVC-uR-SzK" secondAttribute="bottom" constant="8" id="pg7-eh-v91"/>
                         <constraint firstAttribute="trailing" secondItem="VOy-yA-1wW" secondAttribute="trailing" id="shn-sg-g7y"/>
                         <constraint firstItem="aVC-uR-SzK" firstAttribute="trailing" secondItem="3Ob-af-UKJ" secondAttribute="trailing" id="x1Z-6F-eH8"/>
