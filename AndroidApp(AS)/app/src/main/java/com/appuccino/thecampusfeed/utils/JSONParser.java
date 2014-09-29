@@ -62,7 +62,9 @@ public class JSONParser {
 
     public static ArrayList<College> collegeListFromJSON(String storedCollegeListJSON) throws IOException {
         ArrayList<College> ret = new ArrayList<College>();
-        JsonReader reader = new JsonReader(new StringReader(storedCollegeListJSON));
+        JsonReader reader = null;
+        if(storedCollegeListJSON != null)
+            reader = new JsonReader(new StringReader(storedCollegeListJSON));
 
         try {
             reader.beginArray();

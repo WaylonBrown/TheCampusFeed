@@ -113,7 +113,7 @@ public class AchievementsDialog extends AlertDialog.Builder{
     private String constructAchievementsString() {
         String str = "";
 
-        str += "Achievement Name (Time Crunch Reward)\n\nQuantities of Posts:\n";
+        str += "Achievement Name (Time Crunch Reward)\n\nNumber of Posts:\n";
         for(Achievement ach : achievementList){
             if(ach.section == 1){
                 //if achievement has been unlocked

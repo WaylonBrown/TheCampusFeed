@@ -25,6 +25,7 @@ import com.appuccino.thecampusfeed.objects.Vote;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -143,8 +144,15 @@ public class NetWorker {
              String response = null;
              try {
                  response = client.execute(request, responseHandler);
-             } catch (ClientProtocolException e) {
-                 e.printStackTrace();
+             } catch (HttpResponseException e){
+                 if(e.toString().toLowerCase().contains("server error"))
+                 {
+                     MainActivity.activity.runOnUiThread(new Runnable() {
+                         public void run() {
+                             Toast.makeText(MainActivity.activity, "Servers are temporarily down, please try again shortly", Toast.LENGTH_LONG).show();
+                         }
+                     });
+                 }
              } catch (IOException e) {
                  e.printStackTrace();
              }
