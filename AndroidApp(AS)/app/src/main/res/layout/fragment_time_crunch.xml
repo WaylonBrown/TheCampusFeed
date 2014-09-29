@@ -41,6 +41,21 @@
         />
 
     <com.appuccino.thecampusfeed.extra.CustomTextView
+        android:id="@+id/daysText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_marginTop="-10dp"
+        android:textColor="@color/darkgray"
+        android:text="Start posting to get time!"
+        android:textSize="18sp"
+        android:gravity="center"
+        app:typeface="italic"
+        android:visibility="gone"
+        />
+
+    <com.appuccino.thecampusfeed.extra.CustomTextView
         android:id="@+id/timeCrunchCollegeText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

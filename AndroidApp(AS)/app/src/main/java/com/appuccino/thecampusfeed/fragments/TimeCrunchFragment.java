@@ -31,6 +31,7 @@ public class TimeCrunchFragment extends Fragment
     static Button activateButton;
     static Button deactivateButton;
     static CustomTextView timeText;
+    static CustomTextView daysText;
     static CustomTextView collegeText;
     static CustomTextView bottomText;
 
@@ -61,6 +62,7 @@ public class TimeCrunchFragment extends Fragment
         activateButton = (Button)rootView.findViewById(R.id.activateButton);
         deactivateButton = (Button)rootView.findViewById(R.id.deActivateButton);
         timeText = (CustomTextView)rootView.findViewById(R.id.timeCrunchTimeText);
+        daysText = (CustomTextView)rootView.findViewById(R.id.daysText);
         collegeText = (CustomTextView)rootView.findViewById(R.id.timeCrunchCollegeText);
         bottomText = (CustomTextView)rootView.findViewById(R.id.timeCrunchBottomText);
 
@@ -115,6 +117,19 @@ public class TimeCrunchFragment extends Fragment
             College homeCollege = MainActivity.getCollegeByID(collegeID);
             if(homeCollege != null && timeCrunchHours > 0){
                 collegeText.setText(homeCollege.getName());
+            }
+
+            if(timeCrunchHours > 0){
+                daysText.setVisibility(View.VISIBLE);
+                double days = (double)Math.round(Double.valueOf(timeCrunchHours) / 24.0 * 10) / 10;
+                String daysString = "(" + days + " day";
+                if(days != 1.0){
+                    daysString += "s";
+                }
+                daysString += ")";
+                daysText.setText(daysString);
+            } else {
+                daysText.setVisibility(View.GONE);
             }
 
             String bottomTextString;
@@ -193,8 +208,25 @@ public class TimeCrunchFragment extends Fragment
 
         if(collegeText != null){
             College homeCollege = MainActivity.getCollegeByID(PrefManager.getInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, -1));
-            if(homeCollege != null){
+            if(homeCollege != null && timeCrunchHours > 0){
                 collegeText.setText(homeCollege.getName());
+            } else {
+                collegeText.setText("Start posting to get time!");
+            }
+        }
+
+        if(daysText != null){
+            if(timeCrunchHours > 0){
+                daysText.setVisibility(View.VISIBLE);
+                double days = (double)Math.round(Double.valueOf(timeCrunchHours) / 24.0 * 10) / 10;
+                String daysString = "(" + days + " day";
+                if(days != 1.0){
+                    daysString += "s";
+                }
+                daysString += ")";
+                daysText.setText(daysString);
+            } else {
+                daysText.setVisibility(View.GONE);
             }
         }
     }
