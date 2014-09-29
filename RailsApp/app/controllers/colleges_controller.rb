@@ -27,7 +27,7 @@ class CollegesController < ApplicationController
   end
 
   def trending
-    @colleges = College.all.order(recent_post_count: :desc).page(params[:page]).per(params[:per_page])
+    @colleges = College.all.where("recent_post_count > 0").order(recent_post_count: :desc).page(params[:page]).per(params[:per_page])
     render json: @colleges
   end
 
