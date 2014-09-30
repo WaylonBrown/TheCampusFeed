@@ -5,9 +5,13 @@ unless File.basename($0) == "rake"
   Thread.new do
     while true
       sleep 10
-      Post.all.each{ |post|
+      @posts = []
+      ActiveRecord::with_connection({|con|
+        @posts = Post.all
+      })
+      @posts.each{ |post|
         PostScoreWorker.perform_async post.id
-        sleep 1
+        sleep 0.3
       }
     end
   end
@@ -15,9 +19,13 @@ unless File.basename($0) == "rake"
   Thread.new do
     while true
       sleep 10
-      Comment.all.each{ |comment|
+      @comments = []
+      ActiveRecord::with_connection({|con|
+        @comments = Comment.all
+      })
+      @comments.each{ |comment|
         CommentScoreWorker.perform_async comment.id
-        sleep 1
+        sleep 0.3
       }
     end
   end
@@ -25,9 +33,13 @@ unless File.basename($0) == "rake"
   Thread.new do
     while true
       sleep 10
-      College.all.each{ |college|
+      @colleges = []
+      ActiveRecord::with_connection({|con|
+        @colleges = College.all
+      })
+      @colleges.each{ |college|
         CollegeRecentPostNumberWorker.perform_async college.id
-        sleep 1
+        sleep 0.3
       }
     end
   end
