@@ -266,21 +266,4 @@ public class TimeCrunchFragment extends Fragment
             });
         }
     }
-
-
-    public static void makeLoadingIndicator(boolean makeLoading)
-    {
-//        if(loadingSpinner != null){
-//            if(makeLoading)
-//            {
-//                list.setVisibility(View.INVISIBLE);
-//                loadingSpinner.setVisibility(View.VISIBLE);
-//            }
-//            else
-//            {
-//                list.setVisibility(View.VISIBLE);
-//                loadingSpinner.setVisibility(View.INVISIBLE);
-//            }
-//        }
-    }
 }

@@ -820,8 +820,9 @@ public class NetWorker {
                      MainActivity.myCommentsList.add(id);
                      PrefManager.putMyCommentsList(MainActivity.myCommentsList);
                      //instantly add to new comments
-                     CommentsActivity.commentList.add(0, responseComment);
+                     CommentsActivity.commentList.add(responseComment);
                      CommentsActivity.updateList();
+                     CommentsActivity.scrollToCommentsBottom();
 
                      MainActivity.lastCommentTime = Calendar.getInstance();
                      PrefManager.putLastCommentTime(MainActivity.lastCommentTime);

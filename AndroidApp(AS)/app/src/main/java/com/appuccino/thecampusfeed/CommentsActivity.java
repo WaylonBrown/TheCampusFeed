@@ -57,7 +57,7 @@ public class CommentsActivity extends Activity{
 	static ProgressBar actionBarLoadingIcon;
 	static CustomTextView commentsText;
 	final int minCommentLength = 3;
-	ListView list;
+	static ListView list;
 	public static List<Comment> commentList;
 	static boolean hasPermissions = false;
 	
@@ -609,6 +609,12 @@ public class CommentsActivity extends Activity{
 			commentsText.setText("Comments");
 				
 	}
+
+    public static void scrollToCommentsBottom(){
+        if(list != null && listAdapter != null){
+            list.setSelection(listAdapter.getCount() - 1);
+        }
+    }
 
 	public static void setNewPermissionsIfAvailable() {
 		if(newCommentButton != null && post != null && MainActivity.hasPermissions(post.getCollegeID())){
