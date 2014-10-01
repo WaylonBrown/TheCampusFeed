@@ -78,7 +78,11 @@ public class AchievementsDialog extends AlertDialog.Builder{
                 String message = "You've earned " + achievement.reward + " hours for your Time Crunch by ";
                 switch(achievement.section){
                     case 1:
-                        message += "making a total of " + achievement.numToAchieve + " posts!";
+                        message += "making a total of " + achievement.numToAchieve + " post";
+                        if(achievement.numToAchieve != 1){
+                            message += "s";
+                        }
+                        message += "!";
                         break;
                     case 2:
                         message += "achieving a total Post Score of " + achievement.numToAchieve + " points!";
@@ -92,7 +96,7 @@ public class AchievementsDialog extends AlertDialog.Builder{
                         } else if (achievement.ID == 32){
                             message += "getting 100 points for a post that is 3 words or less!";
                         } else if (achievement.ID == 33){
-                            message += "having 2000+ Time Crunch hours!";
+                            message += "having 2,000+ Time Crunch hours!";
                         }
                 }
 
@@ -174,7 +178,7 @@ public class AchievementsDialog extends AlertDialog.Builder{
         returnList.add(new Achievement("10 Posts", 10, 100, 3, 1));
         returnList.add(new Achievement("50 Posts", 50, 500, 4, 1));
         returnList.add(new Achievement("200 Posts", 200, 2000, 5, 1));
-        returnList.add(new Achievement("1000 Posts", 1000, 10000, 6, 1));
+        returnList.add(new Achievement("1,000 Posts", 1000, 10000, 6, 1));
 
         returnList.add(new Achievement("10 Points", 10, 20, 10, 2));
         returnList.add(new Achievement("30 Points", 30, 60, 11, 2));
@@ -194,7 +198,7 @@ public class AchievementsDialog extends AlertDialog.Builder{
 
         returnList.add(new Achievement("View your Achievements List", 1, 10, 31, 4));
         returnList.add(new Achievement("100 Points for a post that's 3 words or less", 1, 2000, 32, 4));
-        returnList.add(new Achievement("Have 2000+ Time Crunch hours", 1, 2000, 33, 4));
+        returnList.add(new Achievement("Have 2,000+ Time Crunch hours", 1, 2000, 33, 4));
 
         achievementList = returnList;
     }
