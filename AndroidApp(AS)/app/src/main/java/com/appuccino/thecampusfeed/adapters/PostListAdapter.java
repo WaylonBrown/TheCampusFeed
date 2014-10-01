@@ -244,29 +244,26 @@ public class PostListAdapter extends ArrayAdapter<Post>{
     	Calendar thisPostTime = TimeManager.toCalendar(thisPost.getTime());
     	Calendar now = Calendar.getInstance();
 
-//        int timeZoneDifferenceinMS = TimeZone.getTimeZone("GMT-6").getOffset(Calendar.ZONE_OFFSET) - TimeZone.getDefault().getOffset(Calendar.ZONE_OFFSET);
-//        Double timeZoneDifferenceinS = timeZoneDifferenceinMS / 1000.0;
-//        Double timeZoneDifferenceinH = timeZoneDifferenceinS / 3600.0;
-//        Log.i("cfeed", "timezone: " + timeZoneDifferenceinH);
-    	
-    	int yearsDiff;
-    	int monthsDiff;
-    	int weeksDiff;
-    	int daysDiff;
-    	int hoursDiff;
-    	int minutesDiff;
-    	int secondsDiff;
-    	
-    	yearsDiff = now.get(Calendar.YEAR) - thisPostTime.get(Calendar.YEAR);
-    	monthsDiff = now.get(Calendar.MONTH) - thisPostTime.get(Calendar.MONTH);
-    	weeksDiff = now.get(Calendar.WEEK_OF_YEAR) - thisPostTime.get(Calendar.WEEK_OF_YEAR);
-    	daysDiff = now.get(Calendar.DAY_OF_YEAR) - thisPostTime.get(Calendar.DAY_OF_YEAR);
-    	hoursDiff = now.get(Calendar.HOUR_OF_DAY) - thisPostTime.get(Calendar.HOUR_OF_DAY);
-    	minutesDiff = now.get(Calendar.MINUTE) - thisPostTime.get(Calendar.MINUTE);
-    	secondsDiff = now.get(Calendar.SECOND) - thisPostTime.get(Calendar.SECOND);
+        int yearsDiff;
+        int monthsDiff;
+        int weeksDiff;
+        int daysDiff;
+        int hoursDiff;
+        int minutesDiff;
+        int secondsDiff;
 
-//    	Log.i("cfeed","Time difference for post " + thisPost.getMessage().substring(0, 10) + ": Years: " + yearsDiff + " Months: " + monthsDiff +
-//    			" Weeks: " + weeksDiff + " Days: " + daysDiff + " Hours: " + hoursDiff + " Minutes: " + minutesDiff + " Seconds: " + secondsDiff);
+
+        double nowMillis = now.getTimeInMillis();
+        double postMillis = thisPostTime.getTimeInMillis();
+        double nowSeconds = nowMillis / 1000.0;
+        double postSeconds = postMillis / 1000.0;
+        secondsDiff = (int)Math.round(nowSeconds - postSeconds);
+        minutesDiff = secondsDiff / 60;
+        hoursDiff = minutesDiff / 60;
+        daysDiff = hoursDiff / 24;
+        weeksDiff = daysDiff / 7;
+        monthsDiff = daysDiff / 30;
+        yearsDiff = daysDiff / 365;
     	
     	String timeOutputText = "";
     	if(yearsDiff > 0){

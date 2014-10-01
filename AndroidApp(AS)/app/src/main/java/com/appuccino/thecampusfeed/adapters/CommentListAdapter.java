@@ -225,22 +225,27 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
     private void setTime(Comment thisComment, TextView timeText) throws ParseException {
     	Calendar thisCommentTime = TimeManager.toCalendar(thisComment.getTime());
     	Calendar now = Calendar.getInstance();
-    	
-    	int yearsDiff;
-    	int monthsDiff;
-    	int weeksDiff;
-    	int daysDiff;
-    	int hoursDiff;
-    	int minutesDiff;
-    	int secondsDiff;
-    	
-    	yearsDiff = now.get(Calendar.YEAR) - thisCommentTime.get(Calendar.YEAR);
-    	monthsDiff = now.get(Calendar.MONTH) - thisCommentTime.get(Calendar.MONTH);
-    	weeksDiff = now.get(Calendar.WEEK_OF_YEAR) - thisCommentTime.get(Calendar.WEEK_OF_YEAR);
-    	daysDiff = now.get(Calendar.DAY_OF_YEAR) - thisCommentTime.get(Calendar.DAY_OF_YEAR);
-    	hoursDiff = now.get(Calendar.HOUR_OF_DAY) - thisCommentTime.get(Calendar.HOUR_OF_DAY);
-    	minutesDiff = now.get(Calendar.MINUTE) - thisCommentTime.get(Calendar.MINUTE);
-    	secondsDiff = now.get(Calendar.SECOND) - thisCommentTime.get(Calendar.SECOND);
+
+        int yearsDiff;
+        int monthsDiff;
+        int weeksDiff;
+        int daysDiff;
+        int hoursDiff;
+        int minutesDiff;
+        int secondsDiff;
+
+
+        double nowMillis = now.getTimeInMillis();
+        double postMillis = thisCommentTime.getTimeInMillis();
+        double nowSeconds = nowMillis / 1000.0;
+        double postSeconds = postMillis / 1000.0;
+        secondsDiff = (int)Math.round(nowSeconds - postSeconds);
+        minutesDiff = secondsDiff / 60;
+        hoursDiff = minutesDiff / 60;
+        daysDiff = hoursDiff / 24;
+        weeksDiff = daysDiff / 7;
+        monthsDiff = daysDiff / 30;
+        yearsDiff = daysDiff / 365;
     	
 //    	Log.i("cfeed","Time difference for post " + thisPost.getMessage().substring(0, 10) + ": Years: " + yearsDiff + " Months: " + monthsDiff +
 //    			" Weeks: " + weeksDiff + " Days: " + daysDiff + " Hours: " + hoursDiff + " Minutes: " + minutesDiff + " Seconds: " + secondsDiff);

@@ -448,14 +448,19 @@ public class CommentsActivity extends Activity{
     	int hoursDiff;
     	int minutesDiff;
     	int secondsDiff;
-    	
-    	yearsDiff = now.get(Calendar.YEAR) - thisPostTime.get(Calendar.YEAR);
-    	monthsDiff = now.get(Calendar.MONTH) - thisPostTime.get(Calendar.MONTH);
-    	weeksDiff = now.get(Calendar.WEEK_OF_YEAR) - thisPostTime.get(Calendar.WEEK_OF_YEAR);
-    	daysDiff = now.get(Calendar.DAY_OF_YEAR) - thisPostTime.get(Calendar.DAY_OF_YEAR);
-    	hoursDiff = now.get(Calendar.HOUR_OF_DAY) - thisPostTime.get(Calendar.HOUR_OF_DAY);
-    	minutesDiff = now.get(Calendar.MINUTE) - thisPostTime.get(Calendar.MINUTE);
-    	secondsDiff = now.get(Calendar.SECOND) - thisPostTime.get(Calendar.SECOND);
+
+
+        double nowMillis = now.getTimeInMillis();
+        double postMillis = thisPostTime.getTimeInMillis();
+        double nowSeconds = nowMillis / 1000.0;
+        double postSeconds = postMillis / 1000.0;
+        secondsDiff = (int)Math.round(nowSeconds - postSeconds);
+        minutesDiff = secondsDiff / 60;
+        hoursDiff = minutesDiff / 60;
+        daysDiff = hoursDiff / 24;
+        weeksDiff = daysDiff / 7;
+        monthsDiff = daysDiff / 30;
+        yearsDiff = daysDiff / 365;
     	
     	String timeOutputText = "";
     	if(yearsDiff > 0){
