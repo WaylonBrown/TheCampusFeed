@@ -5,12 +5,15 @@
     <color name="blue">#0099CC</color>
     <color name="alphablue">#DD0099CC</color>
     <color name="darkblue">#006B8F</color>
+    <color name="verydarkblue">#004B64</color>
 
     <color name="green">#36B75D</color>
     <color name="darkgreen">#2B924A</color>
+    <color name="verydarkgreen">#1E6634</color>
 
     <color name="red">#EE0000</color>
     <color name="darkred">#BB0000</color>
+    <color name="verydarkred">#830000</color>
     
     <color name="lightlightgray">#F5F5F5</color>
     <color name="bottomviewgray">#EAEAEA</color>

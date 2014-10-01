@@ -5,7 +5,7 @@
             <!-- Top 1dp Shadow -->
             <item>
                 <shape android:shape="rectangle">
-                    <solid android:color="@color/green" />
+                    <solid android:color="@color/verydarkgreen" />
                     <corners android:radius="7dp" />
                 </shape>
             </item>
@@ -14,7 +14,7 @@
                 <shape android:shape="rectangle">
                     <solid android:color="@color/darkgreen" />
                     <corners android:radius="7dp" />
-                    <stroke android:width="1px" android:color="@color/green"/>
+                    <stroke android:width="1px" android:color="@color/verydarkgreen"/>
                     <padding
                         android:top="28dp"
                         android:bottom="36dp" />
