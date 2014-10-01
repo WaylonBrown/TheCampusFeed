@@ -2,7 +2,7 @@ production:
   adapter: mysql2
   encoding: utf8
   database: cf_production
-  pool: 5
+  pool: 20
   host: 10.183.248.28
   username: james
   password: <%= ENV['DB_PASSWORD'] %>
@@ -11,7 +11,7 @@ test: &TEST
   adapter: mysql2
   encoding: utf8
   database: cf_test
-  pool: 5
+  pool: 20
   username: root
   password: F4flkgj43LWB#$LW#E$GFsrdknmfgn#$
 
@@ -19,6 +19,6 @@ development:
   adapter: mysql2
   encoding: utf8
   database: cf_development
-  pool: 5
+  pool: 20
   username: root
   password: F4flkgj43LWB#$LW#E$GFsrdknmfgn#$
