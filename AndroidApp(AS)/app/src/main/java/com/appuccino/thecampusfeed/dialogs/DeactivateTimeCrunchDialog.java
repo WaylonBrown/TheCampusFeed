@@ -28,6 +28,7 @@ public class DeactivateTimeCrunchDialog extends AlertDialog.Builder{
                 PrefManager.putBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false);
                 PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, -1);
                 PrefManager.putInt(PrefManager.TIME_CRUNCH_HOURS, 0);
+                PrefManager.putInt(PrefManager.TIME_CRUNCH_BACKUP_HOURS, 0);
                 PrefManager.putTimeCrunchActivateTimestamp(null);
                 main.getLocation();
                 frag.updateActivationState(false);

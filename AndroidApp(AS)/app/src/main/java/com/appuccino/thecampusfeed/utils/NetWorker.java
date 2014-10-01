@@ -724,11 +724,7 @@ public class NetWorker {
                  Toast.makeText(c, "Failed to post, please try again later.", Toast.LENGTH_LONG).show();
              else{
                  Post responsePost = parseResponseIntoPostAndAdd(response);
-                 //if time crunch isn't active, add time to it
-                 if(!PrefManager.getBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false)){
-                     addTimeCrunchTime(responsePost);
-                 }
-
+                 addTimeCrunchTime(responsePost);
              }
              super.onPostExecute(result);
          }
@@ -740,11 +736,17 @@ public class NetWorker {
                  PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, post.getCollegeID());
              }
 
+             MyLog.i("time crunch home college: " + PrefManager.getInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, -1) + " post college: " + post.getCollegeID());
              //if posting to the college that you already have time crunch hours for
              if (PrefManager.getInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, -1) == post.getCollegeID()) {
                  Toast.makeText(c, MainActivity.TIME_CRUNCH_POST_TIME + " hours added to your Time Crunch", Toast.LENGTH_LONG).show();
                  //add time to the time crunch
-                 PrefManager.putInt(PrefManager.TIME_CRUNCH_HOURS, PrefManager.getInt(PrefManager.TIME_CRUNCH_HOURS, 0) + MainActivity.TIME_CRUNCH_POST_TIME);
+                 //if time crunch is active, add to backup hours instead of normal hours
+                 if(PrefManager.getBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false)){
+                     PrefManager.putInt(PrefManager.TIME_CRUNCH_BACKUP_HOURS, PrefManager.getInt(PrefManager.TIME_CRUNCH_BACKUP_HOURS, 0) + MainActivity.TIME_CRUNCH_POST_TIME);
+                 } else {    //add like normal
+                     PrefManager.putInt(PrefManager.TIME_CRUNCH_HOURS, PrefManager.getInt(PrefManager.TIME_CRUNCH_HOURS, 0) + MainActivity.TIME_CRUNCH_POST_TIME);
+                 }
              } else if (PrefManager.getInt(PrefManager.TIME_CRUNCH_HOURS, 0) > 0){   //if posting to a college that you don't have time crunch hours for, and there are time crunch hours
                  new ChangeTimeCrunchCollegeDialog(main, post.getCollegeID());
              }

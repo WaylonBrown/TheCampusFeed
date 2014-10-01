@@ -31,6 +31,7 @@ public class ActivateTimeCrunchDialog extends AlertDialog.Builder{
                     PrefManager.putBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, true);
                     PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, collegeID);
                     PrefManager.putTimeCrunchActivateTimestamp(Calendar.getInstance());
+                    PrefManager.putInt(PrefManager.TIME_CRUNCH_BACKUP_HOURS, 0);
                     main.setupTimeCrunchLocation();
                     frag.updateActivationState(true);
                 }

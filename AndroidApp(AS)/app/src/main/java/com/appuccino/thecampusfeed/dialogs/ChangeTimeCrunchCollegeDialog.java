@@ -26,6 +26,7 @@ public class ChangeTimeCrunchCollegeDialog extends AlertDialog.Builder{
             {
                 PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, collegeID);
                 PrefManager.putInt(PrefManager.TIME_CRUNCH_HOURS, 0);
+                PrefManager.putInt(PrefManager.TIME_CRUNCH_BACKUP_HOURS, 0);
                 PrefManager.putBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false);
                 TimeCrunchFragment.updateActivationState(false);
             }

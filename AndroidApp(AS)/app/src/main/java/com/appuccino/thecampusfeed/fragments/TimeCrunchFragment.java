@@ -163,8 +163,12 @@ public class TimeCrunchFragment extends Fragment
             if(timeCrunchHours <= 0){
                 MyLog.i("Time crunch is now done");
                 PrefManager.putBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false);
-                PrefManager.putInt(PrefManager.TIME_CRUNCH_HOURS, 0);
-                PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, -1);
+                //set hours to backup hours, that way if any hours were earned while timecrunch was active they'll be there
+                PrefManager.putInt(PrefManager.TIME_CRUNCH_HOURS, PrefManager.getInt(PrefManager.TIME_CRUNCH_BACKUP_HOURS, 0));
+                //keep home college if there were backup hours, otherwise remove it
+                if(PrefManager.getInt(PrefManager.TIME_CRUNCH_BACKUP_HOURS, 0) <= 0){
+                    PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, -1);
+                }
                 PrefManager.putTimeCrunchActivateTimestamp(null);
                 main.getLocation();
                 updateActivationState(false);

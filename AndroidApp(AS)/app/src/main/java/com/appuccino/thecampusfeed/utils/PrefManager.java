@@ -34,6 +34,7 @@ public class PrefManager {
     public static final String TIME_CRUNCH_HOME_COLLEGE = "time_crunch_home_college";
     public static final String TIME_CRUNCH_ACTIVATED = "time_crunch_activated";
     public static final String TIME_CRUNCH_ACTIVATE_TIME = "time_crunch_activate_time";
+    public static final String TIME_CRUNCH_BACKUP_HOURS = "time_crunch_backup_hours";
     public static final String ACHIEVEMENT_LIST = "achievement_list";
 	
 	public static void setup(Context c) 

@@ -57,8 +57,14 @@ public class AchievementsDialog extends AlertDialog.Builder{
             if(achievement != null){
                 MainActivity.achievementUnlockedList.add(id);
                 PrefManager.putAchievementUnlockedList(MainActivity.achievementUnlockedList);
-                PrefManager.putInt(PrefManager.TIME_CRUNCH_HOURS,
-                        PrefManager.getInt(PrefManager.TIME_CRUNCH_HOURS, 0) + achievement.reward);
+                //if time crunch is active, add to backup hours instead of normal hours
+                if(PrefManager.getBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, false)){
+                    PrefManager.putInt(PrefManager.TIME_CRUNCH_BACKUP_HOURS,
+                            PrefManager.getInt(PrefManager.TIME_CRUNCH_BACKUP_HOURS, 0) + achievement.reward);
+                } else {    //add like normal
+                    PrefManager.putInt(PrefManager.TIME_CRUNCH_HOURS,
+                            PrefManager.getInt(PrefManager.TIME_CRUNCH_HOURS, 0) + achievement.reward);
+                }
 
                 //show Achievement Unlocked! dialog
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(c);
