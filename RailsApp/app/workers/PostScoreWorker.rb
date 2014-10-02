@@ -8,7 +8,7 @@ class PostScoreWorker
 
   def hot(up, total, date)
       s = score(up, total)
-      order = Math.log10([s.abs, 1].max)
+      order = Math.log2([s.abs, 1].max)
       sign = 0
 
       if s > 0
