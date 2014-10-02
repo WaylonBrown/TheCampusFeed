@@ -31,9 +31,11 @@ class CommentsController < ApplicationController
   def index
     #Don't want to paginate in the app just yet, so auto-load all comments
     if params[:page]
-      @comments = @post.comments.order('score desc, created_at asc').page(params[:page]).per(params[:per_page])
+      #@comments = @post.comments.order('score desc, created_at asc').page(params[:page]).per(params[:per_page])
+      @comments = @post.comments.order('created_at asc').page(params[:page]).per(params[:per_page])
     else
-      @comments = @post.comments.order('score desc, created_at asc')
+      #@comments = @post.comments.order('score desc, created_at asc')
+      @comments = @post.comments.order('created_at asc')
     end
     render json: @comments
   end
@@ -59,8 +61,12 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
+
+        @comment.make_vote
+        @comment.make_tags
+
         format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @comment }
+        format.json { render action: 'afterCreate', status: :created, location: @comment }
       else
         format.html { render action: 'new' }
         format.json { render json: @comment.errors, status: :unprocessable_entity }

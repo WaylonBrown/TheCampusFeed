@@ -16,7 +16,7 @@ class Comment < ActiveRecord::Base
     self.vote_delta ||= 0
   end
 
-  after_create :make_vote, :make_tags, :increase_comment_count
+  after_create :increase_comment_count
 
   def make_vote
     self.votes.create({upvote: true})

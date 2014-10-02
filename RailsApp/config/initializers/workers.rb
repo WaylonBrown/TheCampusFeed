@@ -13,7 +13,7 @@ unless File.basename($0) == "rake"
       }
     end
   end
-
+=begin
   Thread.new do
     while true
       sleep 10
@@ -25,7 +25,7 @@ unless File.basename($0) == "rake"
       }
     end
   end
-
+=end
   Thread.new do
     while true
       sleep 10

@@ -42,7 +42,7 @@ class Tag < ActiveRecord::Base
 =end
 
   validates_presence_of :casedText
-  validates_format_of :text, :with => /\A[^!\$%\^&+\.,#]*\z/, :on => :create
+  validates_format_of :text, :with => /\A[A-Za-z0-9_]{3,139}\z/, :on => :create
 
   before_validation :fix_casing
 
