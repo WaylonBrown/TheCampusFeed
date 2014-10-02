@@ -59,7 +59,7 @@ gem 'statistics2'
 
 gem 'asset_sync'
 
-gem 'rails_12factor'
+#gem 'rails_12factor'
 
 group :development, :test do
   gem 'spring-commands-rspec'
