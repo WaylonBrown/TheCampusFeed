@@ -19,7 +19,6 @@ class Post < ActiveRecord::Base
   end
 
 
-  after_create :make_vote, :make_tags
 
   def make_vote
     self.votes.create({upvote: true})

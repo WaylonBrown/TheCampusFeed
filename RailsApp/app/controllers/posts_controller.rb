@@ -129,10 +129,15 @@ class PostsController < ApplicationController
     params.require(:user_token)
     @post = @college.posts.build(post_params)
 
+
     respond_to do |format|
       if @post.save
+
+        @post.make_vote.id
+        @post.make_tags
+
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @post }
+        format.json { render action: 'afterCreate', status: :created, location: @post }
       else
         format.html { render action: 'new' }
         format.json { render json: @post.errors, status: :unprocessable_entity }
