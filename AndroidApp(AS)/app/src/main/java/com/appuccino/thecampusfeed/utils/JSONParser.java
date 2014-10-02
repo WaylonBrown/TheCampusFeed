@@ -248,7 +248,7 @@ public class JSONParser {
                     } catch (Exception e) {
                         reader.skipValue();
                     }
-                }else if (name.equals("default_vote_id")) {
+                }else if (name.equals("initial_vote_id")) {
                     //use in case null is passed in, which prim types can't take
                     try {
                         defaultVoteID = reader.nextInt();
@@ -420,7 +420,7 @@ public class JSONParser {
                     }
                 } else if (name.equals("created_at")) {
                     time = reader.nextString();
-                } else if (name.equals("default_vote_id")) {
+                } else if (name.equals("initial_vote_id")) {
                     //use in case null is passed in, which prim types can't take
                     try {
                         defaultVoteID = reader.nextInt();
