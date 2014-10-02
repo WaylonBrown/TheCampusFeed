@@ -149,7 +149,7 @@ public class NetWorker {
                  {
                      MainActivity.activity.runOnUiThread(new Runnable() {
                          public void run() {
-                             Toast.makeText(MainActivity.activity, "Servers are temporarily down, please try again shortly", Toast.LENGTH_LONG).show();
+                             Toast.makeText(MainActivity.activity, "Can't connect, please try again shortly", Toast.LENGTH_LONG).show();
                          }
                      });
                  }
