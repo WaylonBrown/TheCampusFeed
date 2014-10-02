@@ -51,15 +51,17 @@ def sanitizeName(name)
     ret = $1 + "&" + $2
   end
 
-  if /(.* .)-(..*)/.match(ret)
-    if($2.start_with?("Main")){
+  if /(.*)-(.*)/.match(ret)
+    if($2.start_with?("Main"))
       ret = $1
-    } else {
+    else
       ret = $1 + " - " + $2
-    }
-    ret = $1 + "&" + $2
+    end
   end
 
+  if /(.*) Main Campus/.match(ret)
+    ret = $1
+  end
 
   return ret
 end
@@ -171,7 +173,12 @@ o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
   #tags << @randString
 }
 
-(1..1000).each {|e|
+if Rails.env.production?
+  @lim = 1000
+else
+  @lim = 50
+end
+(1..@lim).each {|e|
   testString = rand(1..10) > 5 ? "Test" : "test"
   curPost = Post.create({college_id: cid, text: "This is ##{e}, a ##{testString} post! #{tags[rand(tags.length)]}"})
   (1..10).each {|f|
