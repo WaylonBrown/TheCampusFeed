@@ -133,7 +133,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       if @post.save
 
-        @post.make_vote.id
+        @post.make_vote
         @post.make_tags
 
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
