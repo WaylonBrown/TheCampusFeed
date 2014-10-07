@@ -59,6 +59,9 @@ gem 'statistics2'
 
 gem 'asset_sync'
 
+gem 'staccato'
+
+
 #gem 'rails_12factor'
 
 group :development, :test do
