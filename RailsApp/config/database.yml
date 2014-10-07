@@ -6,6 +6,7 @@ production:
   host: 10.183.248.28
   username: james
   password: <%= ENV['DB_PASSWORD'] %>
+  reconnect: true
 
 test: &TEST
   adapter: mysql2
@@ -14,6 +15,7 @@ test: &TEST
   pool: 20
   username: root
   password: F4flkgj43LWB#$LW#E$GFsrdknmfgn#$
+  reconnect: true
 
 development:
   adapter: mysql2
@@ -22,3 +24,4 @@ development:
   pool: 20
   username: root
   password: F4flkgj43LWB#$LW#E$GFsrdknmfgn#$
+  reconnect: true
