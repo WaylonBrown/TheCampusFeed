@@ -43,6 +43,7 @@
 @property (nonatomic) float previousScrollViewYOffset;
 //@property (nonatomic) float previousScrollSizeHeight;
 @property (nonatomic) BOOL isLoadingPosts;
+@property (nonatomic) BOOL isShowingTutorial;
 
 // Initialization
 - (id)initWithDataController:(DataController *)controller;

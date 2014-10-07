@@ -312,6 +312,11 @@
 
 #pragma mark - Actions
 
+- (void)changeFeed
+{
+    [super changeFeed];
+}
+
 - (BOOL)loadMorePosts
 {
     BOOL success = false;

@@ -30,13 +30,13 @@
 {
     [self.view removeFromSuperview];
     [self removeFromParentViewController];
-
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"TutorialFinished" object:self];
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
-
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"TutorialStarted" object:self];
 }
 - (void)didReceiveMemoryWarning
 {

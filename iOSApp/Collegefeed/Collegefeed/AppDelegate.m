@@ -34,40 +34,56 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {   // Set up ViewControllers and DataControllers
    
-    BOOL isFirstLaunch = NO;
-    
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
-    {
-        // app already launched
-    }
-    else
-    {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        // This is the first launch ever
-        isFirstLaunch = YES;
-    }
+
+//
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+//    {
+//        // app already launched
+//    }
+//    else
+//    {
+//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//        // This is the first launch ever
+//        isFirstLaunch = YES;
+//    }
 
     self.dataController = [DataController new];
-    [self.dataController setIsFirstLaunch:isFirstLaunch];
+//    [self.dataController setIsFirstLaunch:isFirstLaunch];
     [self.dataController setAppDelegate:self];
+    
+//    BOOL isFirstLaunch = NO;
+    NSInteger launchCount = 1;//self.dataController.launchCount;
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     
-    [self initViewControllers:isFirstLaunch];
+    [self initViewControllers];
     [self setUpMenuBar];
     
-    if (isFirstLaunch)
-    {
-        [self.menuViewController showTutorial];
+    switch (launchCount) {
+        case 1:
+            [self.menuViewController showTutorial];
+            break;
+        case 5:
+            
+            break;
+        case 10:
+            
+            break;
+        default:
+            break;
     }
-    
-//    else if (self.dataController.needsUpdate)
-    if (YES)
-    {
-        [self.menuViewController showRequiresUpdate];
-    }
+//    if (self.dataController.isFirstLaunch)
+//    {
+//        [self.menuViewController showTutorial];
+//    }
+//    
+////    else if (self.dataController.needsUpdate)
+//    if (YES)
+//    {
+//        [self.menuViewController showRequiresUpdate];
+//    }
 
     [self.window makeKeyAndVisible];
 
@@ -118,7 +134,7 @@
         [self.deckController openLeftView];
     }
 }
-- (void)initViewControllers:(BOOL)asFirstLaunch
+- (void)initViewControllers
 {
     self.topPostsController             = [[PostsViewController alloc]
                                            initAsType:TOP_VIEW

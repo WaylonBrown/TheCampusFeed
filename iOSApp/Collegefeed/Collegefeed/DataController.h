@@ -32,9 +32,10 @@
 #define KEY_POST_TIME           @"lastPostTime"
 #define KEY_IS_BANNED           @"isBanned"
 #define KEY_COLLEGE_LIST_VERSION    @"listVersion"
+#define KEY_LAUNCH_COUNT        @"launchCount"
+#define KEY_POST_ID             @"postId"
 
 #define POST_ENTITY             @"Post"
-#define KEY_POST_ID             @"postId"
 
 #define COMMENT_ENTITY          @"Comment"
 #define KEY_COMMENT_ID          @"commentId"
@@ -83,6 +84,7 @@
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property BOOL isFirstLaunch;
 @property BOOL needsUpdate;
+@property NSInteger launchCount;
 
 // College Arrays
 @property (strong, nonatomic) NSMutableArray *collegeList;
@@ -152,6 +154,7 @@
 - (void)retrieveUserData;
 - (long)getUserPostScore;
 - (long)getUserCommentScore;
+- (void)handleLaunchNumber;
 - (BOOL)isAbleToPost:(NSNumber *)minutesRemaining;
 - (BOOL)isAbleToComment;
 

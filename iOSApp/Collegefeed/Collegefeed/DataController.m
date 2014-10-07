@@ -66,6 +66,8 @@
             [self getHardCodedCollegeList];
         }
         
+        [self handleLaunchNumber];
+        
         // Populate the initial arrays
         [self retrieveUserData];
 
@@ -105,6 +107,34 @@
 //        [dialog setAsRequiredUpdate];
 //    }
     
+}
+- (void)handleLaunchNumber
+{
+    // Retrieve Launch Count
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedPermissions.count > 1)
+    {
+        NSLog(@"Too many permissions");
+    }
+    NSManagedObject *permission = [fetchedPermissions firstObject];
+    NSNumber *currCount = [permission valueForKey:KEY_LAUNCH_COUNT];
+    
+    NSNumber *newCount = [NSNumber numberWithInt:([currCount intValue] + 1)];
+    
+    [permission setValue:newCount forKey:KEY_LAUNCH_COUNT];
+    
+    if (![context save:&error])
+    {
+        NSLog(@"Failed to save user's vote: %@",
+              [error localizedDescription]);
+    }
 }
 
 #pragma mark - Networker Access - Colleges

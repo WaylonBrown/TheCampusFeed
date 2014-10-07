@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6244" systemVersion="13F34" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="College" syncable="YES">
         <attribute name="collegeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="lat" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -14,6 +14,7 @@
         <attribute name="isBanned" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="lastCommentTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="lastPostTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="launchCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="listVersion" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="Post" syncable="YES">
@@ -27,10 +28,10 @@
         <attribute name="voteId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="College" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Comment" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Permissions" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Post" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Vote" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="College" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="Comment" positionX="0" positionY="0" width="128" height="60"/>
+        <element name="Permissions" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="Post" positionX="0" positionY="0" width="128" height="60"/>
+        <element name="Vote" positionX="0" positionY="0" width="128" height="120"/>
     </elements>
 </model>

@@ -40,6 +40,10 @@
         [self setDataController:controller];
         self.activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         self.toastController = [[ToastController alloc] initAsFirstLaunch:self.dataController.isFirstLaunch];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialFinished) name:@"TutorialFinished" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialStarted) name:@"TutorialStarted" object:nil];
+        
     }
     return self;
 }
@@ -65,7 +69,6 @@
 {
     [self.navigationController.navigationBar setTranslucent:NO];
     [self refresh];
-    
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
@@ -147,10 +150,23 @@
 
 #pragma mark - Actions
 
-- (IBAction)changeFeed;
+- (IBAction)changeFeed
 {   // User wants to change the feed (all colleges, nearby college, or other)
-    FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_NEARBY_OTHER WithDataController:self.dataController WithFeedDelegate:self];
-    [self.navigationController presentViewController:controller animated:YES completion:nil];
+
+    if (!self.isShowingTutorial)
+    {
+        FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_NEARBY_OTHER WithDataController:self.dataController WithFeedDelegate:self];
+        [self.navigationController presentViewController:controller animated:YES completion:nil];
+    }
+}
+- (void)tutorialFinished
+{
+    self.isShowingTutorial = NO;
+    [self changeFeed];
+}
+- (void)tutorialStarted
+{
+    self.isShowingTutorial = YES;
 }
 - (void)showCreationDialogForCollege:(College *) college
 {
