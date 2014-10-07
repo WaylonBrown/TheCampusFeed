@@ -11,6 +11,7 @@
 #import "Shared.h"
 #import "IIViewDeckController.h"
 #import "TutorialViewController.h"
+#import "CF_DialogViewController.h"
 
 @interface MenuViewController ()
 
@@ -122,7 +123,6 @@
 {
     return MENU_CELL_HEIGHT;
 }
-
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section == 0)
@@ -246,5 +246,11 @@
     [self.viewDeckController.centerController.view addSubview:controller.view];
     
 }
-
+- (void)showRequiresUpdate
+{
+    CF_DialogViewController *dialog = [[CF_DialogViewController alloc] init];
+    [dialog setAsRequiredUpdate];
+    [self.viewDeckController.navigationController presentViewController:dialog animated:YES completion:nil];
+    
+}
 @end

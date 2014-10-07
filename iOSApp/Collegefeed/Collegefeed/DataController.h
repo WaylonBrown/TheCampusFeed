@@ -82,6 +82,7 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property BOOL isFirstLaunch;
+@property BOOL needsUpdate;
 
 // College Arrays
 @property (strong, nonatomic) NSMutableArray *collegeList;

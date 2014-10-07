@@ -27,10 +27,10 @@
         <attribute name="voteId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Vote" positionX="-36" positionY="9" width="128" height="118"/>
-        <element name="College" positionX="-27" positionY="54" width="128" height="120"/>
-        <element name="Post" positionX="0" positionY="99" width="128" height="60"/>
-        <element name="Comment" positionX="27" positionY="117" width="128" height="60"/>
-        <element name="Permissions" positionX="54" positionY="135" width="128" height="105"/>
+        <element name="College" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Comment" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Permissions" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Post" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Vote" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

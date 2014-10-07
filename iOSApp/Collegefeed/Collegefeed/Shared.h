@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @class College;
 
@@ -53,6 +54,9 @@
 #define logoImage @"thecampusfeedlogosmall.png"
 #define logoTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:logoImage]]
 
++ (UIFont*)getFontLight:(float)size;
++ (UIFont*)getFontBold:(float)size;
++ (UIFont*)getFontItalic:(float)size;
 + (void)addCollegeNearby:(College *)college;
 + (UIColor*)getCustomUIColor:(int)hexValue;
 + (float)getSmallCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font;

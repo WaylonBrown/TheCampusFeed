@@ -26,7 +26,7 @@
 #import "Shared.h"
 #import "AppDelegate.h"
 #import "ToastController.h"
-
+#import "CF_DialogViewController.h"
 
 @implementation MasterViewController
 
@@ -160,7 +160,12 @@
 }
 - (void)create
 {   // Display popup to let user type a new post
+    CF_DialogViewController *dialog = [[CF_DialogViewController alloc] init];
+    [dialog setAsRequiredUpdate];
+    [self.navigationController presentViewController:dialog animated:YES completion:nil];
     
+    
+    return;
     NSArray *nearbyColleges = self.dataController.nearbyColleges;
     if (nearbyColleges.count == 0)
     {   // None nearby

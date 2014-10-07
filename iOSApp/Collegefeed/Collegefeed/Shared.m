@@ -20,6 +20,18 @@
     
     return color;
 }
++ (UIFont*)getFontLight:(float)size
+{
+    return [UIFont fontWithName:@"Roboto-Light" size:size];
+}
++ (UIFont*)getFontBold:(float)size
+{
+    return [UIFont fontWithName:@"mplus-2c-bold" size:size];
+}
++ (UIFont*)getFontItalic:(float)size
+{
+    return [UIFont fontWithName:@"Roboto-LightItalic" size:size];
+}
 
 #pragma mark - Height of Cell
 

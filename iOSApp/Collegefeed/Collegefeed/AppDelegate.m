@@ -20,7 +20,7 @@
 #import "IIViewDeckController.h"
 #import "TutorialViewController.h"
 #import "CF_DialogViewController.h"
-#import "TimeCrunchViewController.h"
+#import "Collegefeed-Swift.h"
 
 @interface AppDelegate ()
 
@@ -62,9 +62,15 @@
     {
         [self.menuViewController showTutorial];
     }
+    
+//    else if (self.dataController.needsUpdate)
+    if (YES)
+    {
+        [self.menuViewController showRequiresUpdate];
+    }
 
     [self.window makeKeyAndVisible];
-    
+
     return YES;
 }
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -142,7 +148,7 @@
     [self.helpController setAsHelpScreen];
     
     self.timeCrunchController           = [[TimeCrunchViewController alloc] init];
-    
+
     NSArray *viewControllers            = [NSArray arrayWithObjects:
                                            self.topPostsController,
                                            self.recentPostsController,

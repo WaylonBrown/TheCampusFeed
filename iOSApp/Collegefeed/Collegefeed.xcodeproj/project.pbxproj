@@ -42,7 +42,6 @@
 		538E7C9219D030C000AD5719 /* CF_DialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538E7C9019D030C000AD5719 /* CF_DialogViewController.m */; };
 		538E7C9319D030C000AD5719 /* CF_DialogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 538E7C9119D030C000AD5719 /* CF_DialogViewController.xib */; };
 		538E7C9A19D4B33900AD5719 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538E7C9919D4B33900AD5719 /* MessageUI.framework */; };
-		538E7CA019D4B67400AD5719 /* TimeCrunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538E7C9E19D4B67400AD5719 /* TimeCrunchViewController.m */; };
 		538E7CA119D4B67400AD5719 /* TimeCrunchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 538E7C9F19D4B67400AD5719 /* TimeCrunchViewController.xib */; };
 		538E7CA419D4BC8700AD5719 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538E7CA319D4BC8700AD5719 /* QuartzCore.framework */; };
 		5390A91D1914B76800ACD082 /* arrowdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9141914B76800ACD082 /* arrowdown.png */; };
@@ -64,6 +63,7 @@
 		53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B1FDFC19254E4700905E49 /* MasterView.xib */; };
 		53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B1FDFF19254E8F00905E49 /* MasterViewController.m */; };
 		53BDB4CE192F3E4400F45D5C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */; };
+		53C343B219E2685B00C26745 /* TimeCrunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C343B119E2685B00C26745 /* TimeCrunchViewController.swift */; };
 		53C44EA719669FB400367E33 /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C44EA619669FB400367E33 /* flag.png */; };
 		53CEAE2F197778C700DCE476 /* CommentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53CEAE2E197778C700DCE476 /* CommentView.xib */; };
 		53CF330E194E53DB008BB733 /* libNetworker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CF3309194E53B6008BB733 /* libNetworker.a */; };
@@ -147,7 +147,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5306D96E1999E78100637FAE /* Collegefeed-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Collegefeed-Bridging-Header.h"; sourceTree = "<group>"; };
 		5308D2BB193552C600D70C1A /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
 		5311F85D19C961250053D3CC /* ok_button_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ok_button_small.png; sourceTree = "<group>"; };
 		5311F85E19C961250053D3CC /* second_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second_small.png; sourceTree = "<group>"; };
@@ -197,8 +196,6 @@
 		538E7C9019D030C000AD5719 /* CF_DialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CF_DialogViewController.m; sourceTree = "<group>"; };
 		538E7C9119D030C000AD5719 /* CF_DialogViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CF_DialogViewController.xib; sourceTree = "<group>"; };
 		538E7C9919D4B33900AD5719 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		538E7C9D19D4B67400AD5719 /* TimeCrunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeCrunchViewController.h; sourceTree = "<group>"; };
-		538E7C9E19D4B67400AD5719 /* TimeCrunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeCrunchViewController.m; sourceTree = "<group>"; };
 		538E7C9F19D4B67400AD5719 /* TimeCrunchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeCrunchViewController.xib; sourceTree = "<group>"; };
 		538E7CA319D4BC8700AD5719 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5390A9141914B76800ACD082 /* arrowdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdown.png; sourceTree = "<group>"; };
@@ -224,6 +221,8 @@
 		53B1FDFE19254E8F00905E49 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MasterViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		53B1FDFF19254E8F00905E49 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MasterViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		53C343B119E2685B00C26745 /* TimeCrunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeCrunchViewController.swift; sourceTree = "<group>"; };
+		53C343B519E26D3900C26745 /* Collegefeed-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Collegefeed-Bridging-Header.h"; sourceTree = "<group>"; };
 		53C44EA619669FB400367E33 /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
 		53CEAE2E197778C700DCE476 /* CommentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentView.xib; sourceTree = "<group>"; };
 		53CF3303194E53B6008BB733 /* Networker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Networker.xcodeproj; path = Collegefeed/Networker/Networker.xcodeproj; sourceTree = "<group>"; };
@@ -413,21 +412,20 @@
 			name = "User Content";
 			sourceTree = "<group>";
 		};
-		538E7C9619D030C400AD5719 /* Help Screen */ = {
+		538E7C9619D030C400AD5719 /* CF_DialogView */ = {
 			isa = PBXGroup;
 			children = (
 				538E7C8F19D030C000AD5719 /* CF_DialogViewController.h */,
 				538E7C9019D030C000AD5719 /* CF_DialogViewController.m */,
 				538E7C9119D030C000AD5719 /* CF_DialogViewController.xib */,
 			);
-			name = "Help Screen";
+			name = CF_DialogView;
 			sourceTree = "<group>";
 		};
 		538E7CA219D4B67800AD5719 /* Time Crunch */ = {
 			isa = PBXGroup;
 			children = (
-				538E7C9D19D4B67400AD5719 /* TimeCrunchViewController.h */,
-				538E7C9E19D4B67400AD5719 /* TimeCrunchViewController.m */,
+				53C343B119E2685B00C26745 /* TimeCrunchViewController.swift */,
 				538E7C9F19D4B67400AD5719 /* TimeCrunchViewController.xib */,
 			);
 			name = "Time Crunch";
@@ -468,7 +466,6 @@
 				53CF339F194E7A7A008BB733 /* Shared.m */,
 				533475871922B88300E84CC8 /* TTTAttributedLabel.h */,
 				533475881922B88300E84CC8 /* TTTAttributedLabel.m */,
-				5306D96E1999E78100637FAE /* Collegefeed-Bridging-Header.h */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -507,7 +504,7 @@
 				5350557B1951458B009C1911 /* Create Post/Comment */,
 				533475A019232A4A00E84CC8 /* Custom Cells */,
 				535055891953B07A009C1911 /* Tag View */,
-				538E7C9619D030C400AD5719 /* Help Screen */,
+				538E7C9619D030C400AD5719 /* CF_DialogView */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -520,6 +517,7 @@
 				53AE73C61928354F00BE6B02 /* DataController.m */,
 				53F8789F19133F60002A578B /* AppDelegate.h */,
 				53F878A019133F60002A578B /* AppDelegate.m */,
+				53C343B519E26D3900C26745 /* Collegefeed-Bridging-Header.h */,
 				53AB57B7194AAFB3001D1B7B /* Other */,
 			);
 			name = "Source Code";
@@ -833,7 +831,6 @@
 				5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */,
 				538E7C9219D030C000AD5719 /* CF_DialogViewController.m in Sources */,
 				5347EE9D197DC7CC001B2214 /* UserPostsViewController.m in Sources */,
-				538E7CA019D4B67400AD5719 /* TimeCrunchViewController.m in Sources */,
 				538E7C8419CFF34000AD5719 /* TutorialViewController.m in Sources */,
 				53DE347719AD00AE004CB5A0 /* IIViewDeckController.m in Sources */,
 				5350557F19529FCA009C1911 /* FeedSelectViewController.m in Sources */,
@@ -845,6 +842,7 @@
 				53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */,
 				53AE73C71928354F00BE6B02 /* DataController.m in Sources */,
 				53CF33A0194E7A7A008BB733 /* Shared.m in Sources */,
+				53C343B219E2685B00C26745 /* TimeCrunchViewController.swift in Sources */,
 				531EAB431988533500C1E1AA /* UserData.xcdatamodeld in Sources */,
 				5350557719514587009C1911 /* CreatePostCommentViewController.m in Sources */,
 				533475A41923344100E84CC8 /* TableCell.m in Sources */,
@@ -990,6 +988,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEFINES_MODULE = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Collegefeed/Collegefeed-Prefix.pch";
 				INFOPLIST_FILE = "Collegefeed/Collegefeed-Info.plist";
@@ -1016,6 +1015,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEFINES_MODULE = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Collegefeed/Collegefeed-Prefix.pch";
 				INFOPLIST_FILE = "Collegefeed/Collegefeed-Info.plist";

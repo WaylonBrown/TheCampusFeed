@@ -26,5 +26,6 @@
 
 - (id)initWithViewControllers:(NSArray *)viewControllers;
 - (void)showTutorial;
+- (void)showRequiresUpdate;
 
 @end

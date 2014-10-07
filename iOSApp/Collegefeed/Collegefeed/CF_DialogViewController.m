@@ -44,7 +44,6 @@
     // Do any additional setup after loading the view from its nib.
     [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
     [self.contentView scrollRectToVisible:CGRectMake(0,0,1,1) animated:NO];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -54,6 +53,11 @@
     [self.contentView setText:self.contentString];
     [self.titleLabel setFont:CF_FONT_LIGHT(24)];
     [self.contentView setFont:CF_FONT_LIGHT(15)];
+    if (self.dialogType == UPDATE)
+    {
+        [self.button removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+        [self.button addTarget:self action:@selector(showUpdateScreen) forControlEvents:UIControlEventTouchUpInside];
+    }
     [self fixHeights];
 }
 - (void)didReceiveMemoryWarning
@@ -72,6 +76,7 @@
 }
 - (void)setAsHelpScreen
 {
+    self.dialogType = HELP;
     self.portraitHeight = 340;
     self.landscapeHeight = 250;
     [self setTitle:@"Help"];
@@ -79,9 +84,28 @@
 }
 - (void)setAsTimeCrunchInfo
 {
+    self.dialogType = TIME_CRUNCH;
     self.portraitHeight = 400;
     [self setTitle:@"What is Time Crunch?"];
     [self setContentString:@"Want to post and comment on your University\'s feed this Summer as if you\'re actually there, but are instead visiting home? What about this Winter Break?\n\nFor every post you make to your University, 24 hours get added to your Time Crunch. Once you activate Time Crunch, your current location at your University is saved in the app for that long! You can get extra hours added by unlocking Achievements.\n\nNOTE: If you turn off Time Crunch once it is active, your hours will be reset to 0!"];
+}
+- (void)setAsRequiredUpdate
+{
+    self.dialogType = UPDATE;
+    
+    self.portraitHeight = 150;
+    self.landscapeHeight = 100;
+
+    [self setTitle:@"Required Update"];
+    [self setContentString:@"There is a new required app update"];
+    [self.button.titleLabel setText:@"Update App"];
+    
+    
+}
+- (void)goToAppStoreForUpdate
+{
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    
 }
 - (IBAction)dismiss:(id)sender
 {

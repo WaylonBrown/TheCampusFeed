@@ -13,6 +13,7 @@
 #import "Tag.h"
 #import "Vote.h"
 #import "Networker.h"
+#import "CF_DialogViewController.h"
 
 @implementation DataController
 
@@ -30,7 +31,7 @@
         [self setShowingAllColleges:YES];
         [self setShowingSingleCollege:NO];
         
-        // Initialize arrays for the arrays needed
+        // Initialize arrays
         self.collegeList            = [[NSMutableArray alloc] init];
         self.nearbyColleges         = [[NSMutableArray alloc] init];
         self.trendingColleges       = [[NSMutableArray alloc] init];
@@ -94,12 +95,15 @@
                                                                    options:0
                                                                      error:nil];
     
-    float serverVersion = [[jsonArray valueForKey:@"version"] floatValue];
+    float serverVersion = [[jsonArray valueForKey:@"minVersion"] floatValue];
     
-    if (appVersion < serverVersion)
-    {
-        
-    }
+    self.needsUpdate = (appVersion < serverVersion);
+//    if (appVersion < serverVersion)
+//    {
+//        self.needsUpdate = YES;
+//        CF_DialogViewController *dialog = [[CF_DialogViewController alloc] init];
+//        [dialog setAsRequiredUpdate];
+//    }
     
 }
 
