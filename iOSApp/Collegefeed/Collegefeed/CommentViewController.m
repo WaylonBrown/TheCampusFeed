@@ -147,7 +147,8 @@
         float messageHeight = [Shared getLargeCellMessageHeight:commentAtIndex.message WithFont:CF_FONT_LIGHT(16)];
         
         [cell assignWith:commentAtIndex IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
-        
+        cell.gpsIconImageView.hidden = YES;
+
         return cell;
     }
     
@@ -177,7 +178,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {   // return the header title for the 'Comments' section
     
-    if (tableView == self.commentTableView && self.list.count > 0)
+    if (tableView == self.commentTableView && self.dataController.commentList.count > 0)
     {
         UILabel *commentHeader = [[UILabel alloc] initWithFrame:CGRectZero];
         [commentHeader setText:@"Comments"];

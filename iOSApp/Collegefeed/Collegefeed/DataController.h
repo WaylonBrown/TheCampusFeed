@@ -105,7 +105,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic) CLLocationDegrees         lat;
 @property (nonatomic) CLLocationDegrees         lon;
-//@property (nonatomic) BOOL                      foundLocation;
+//@property (nonatomic) BOOL                      
 @property LocationStatus                        locStatus;
 
 // College Arrays

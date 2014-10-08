@@ -41,7 +41,7 @@ class TimeCrunchViewController: UIViewController {
         
     }
     
-    func showCrunchDialog() {
+    @IBAction func showCrunchDialog() {
         let controller = CF_DialogViewController()
         controller.setAsTimeCrunchInfo()
         self.navigationController?.presentViewController(controller, animated: true, completion: nil)

@@ -995,7 +995,6 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    return;
     NSDate *currentTime = [NSDate date];
     NSTimeInterval secs = [currentTime timeIntervalSinceDate:self.locationSearchStart];
     
@@ -1003,22 +1002,15 @@
     {
         [self failedLocationFinding];
     }
-    //    else if (!self.foundLocation)
     else if (self.locStatus == LOCATION_SEARCHING)
     {
         [self setLat:newLocation.coordinate.latitude];
         [self setLon:newLocation.coordinate.longitude];
         [self.locationManager stopUpdatingLocation];
         
-        // Simulate extra time to find location to show 'loading' in feedselectviewcontroller
-//                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-//                    NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 7.0 ];
-//                    [NSThread sleepUntilDate:future];
-        
         [self findNearbyColleges];
         [self.appDelegate foundLocation];
         [self setLocStatus:LOCATION_FOUND];
-//            });
     }
 }
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error

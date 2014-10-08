@@ -40,6 +40,7 @@
     {
         [self setModalPresentationStyle:UIModalPresentationCustom];
         [self setTransitioningDelegate:self];
+        self.buttonCount = 1;
     }
     return self;
 }

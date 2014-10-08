@@ -187,7 +187,6 @@
         Comment *comment = [self.list objectAtIndex:indexPath.row];
         BOOL isNearCollege = NO;//[self.dataController.nearbyColleges containsObject:nil];
         float messageHeight = [Shared getLargeCellMessageHeight:comment.message WithFont:CF_FONT_LIGHT(16)];
-//        [cell assign:comment WithMessageHeight:messageHeight];
 
         [cell assignWith:comment IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
 

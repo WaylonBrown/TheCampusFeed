@@ -113,7 +113,6 @@
     }
     else
     {
-//        [self placeLoadingIndicator];
         [self.navigationItem setRightBarButtonItem:nil];
         [self.toastController toastLocationFoundNotNearCollege];
     }
