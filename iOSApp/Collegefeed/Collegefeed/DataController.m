@@ -56,20 +56,7 @@
         [self fetchTags];
         
         // Get the user's location
-        [self setLocationManager:[[CLLocationManager alloc] init]];
-        [self.locationManager requestWhenInUseAuthorization];
-        [self.locationManager setDelegate:self];
-        if ([CLLocationManager locationServicesEnabled])
-        {
-            self.locationSearchStart = [NSDate date];
-            [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
-            self.locStatus = LOCATION_SEARCHING;
-            [self.locationManager startUpdatingLocation];
-        }
-        else
-        {
-            [self failedLocationFinding];
-        }
+        [self findUserLocation];
         
     }
     return self;
@@ -1004,14 +991,15 @@
     }
 }
 
-#pragma mark - CLLocationManager Delegate Functions
+#pragma mark - CLLocationManager Functions
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
+    return;
     NSDate *currentTime = [NSDate date];
     NSTimeInterval secs = [currentTime timeIntervalSinceDate:self.locationSearchStart];
     
-    if (secs >= 10 || self.locStatus != LOCATION_FOUND)
+    if (secs >= 10)
     {
         [self failedLocationFinding];
     }
@@ -1023,15 +1011,14 @@
         [self.locationManager stopUpdatingLocation];
         
         // Simulate extra time to find location to show 'loading' in feedselectviewcontroller
-        //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        //            NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 1.0 ];
-        //            [NSThread sleepUntilDate:future];
+//                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+//                    NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 7.0 ];
+//                    [NSThread sleepUntilDate:future];
         
         [self findNearbyColleges];
         [self.appDelegate foundLocation];
         [self setLocStatus:LOCATION_FOUND];
-        //        [self setFoundLocation:YES];
-        //    });
+//            });
     }
 }
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
@@ -1044,6 +1031,26 @@
     [self.appDelegate didNotFindLocation];
     [self.locationManager stopUpdatingLocation];
 }
+- (void)findUserLocation
+{
+    [self setLocStatus:LOCATION_SEARCHING];
+    [self setLocationManager:[[CLLocationManager alloc] init]];
+    [self.locationManager requestWhenInUseAuthorization];
+    [self.locationManager setDelegate:self];
+    if ([CLLocationManager locationServicesEnabled])
+    {
+        self.locationSearchStart = [NSDate date];
+        [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+        self.locStatus = LOCATION_SEARCHING;
+        [self.locationManager startUpdatingLocation];
+    }
+    else
+    {
+        // TODO: dialog to tell user how to enable location services
+        [self failedLocationFinding];
+    }
+}
+
 
 #pragma mark - Core Data stack
 

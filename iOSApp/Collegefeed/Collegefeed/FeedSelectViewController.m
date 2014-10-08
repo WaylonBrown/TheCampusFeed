@@ -90,7 +90,6 @@
     int collegeSection = 0;
     float tableViewHeight = 0;
     
-//    bool showLoadingIndicator = !self.dataController.foundLocation;
     bool showLoadingIndicator = self.dataController.locStatus == LOCATION_SEARCHING;
     bool collegesNearby = [self.dataController isNearCollege];
 
@@ -126,13 +125,10 @@
     self.tableHeightConstraint.constant = tableViewHeight;
     [self.view setNeedsUpdateConstraints];
 }
-- (void)foundLocation
+- (void)updateLocation
 {
     [self.tableView reloadData];
     [self fixHeights];
-}
-- (void)didNotFindLocation
-{
     
 }
 
@@ -140,9 +136,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//    bool showLoadingIndicator = !self.dataController.foundLocation;
-//    bool collegesNearby = [self.dataController isNearCollege];
-    
     if (self.type == ALL_NEARBY_OTHER)
     {
         switch (self.dataController.locStatus)
@@ -160,15 +153,6 @@
                 break;
         }
     }
-//    switch (self.type)
-//    {
-//        case ALL_NEARBY_OTHER:
-//            if (self.dataController.locStatus)
-//            return (showLoadingIndicator || collegesNearby) ? 3 : 2;
-//            break;
-//        default:
-//            break;
-//    }
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -218,13 +202,7 @@
         cell = [nib objectAtIndex:0];
     }
 
-//    bool showLoadingIndicator = !self.dataController.foundLocation;
-//    bool stillFindingLocation = self.dataController.locStatus == LOCATION_SEARCHING;
     LocationStatus status = self.dataController.locStatus;
-//    bool noCollegesNearby = self.dataController.foundLocation && ![self.dataController isNearCollege];
-    
-    
-//    bool collegesNearby = [self.dataController isNearCollege];
     [cell hideLoadingIndicator];
     
     NSInteger numCollegesNearby = self.dataController.nearbyColleges.count;
@@ -252,7 +230,7 @@
                     break;
             }
         }
-        else if (LOCATION_FOUND && numCollegesNearby > 1)
+        else if (status == LOCATION_FOUND && numCollegesNearby > 0)
         {
             switch (section)
             {
@@ -292,37 +270,6 @@
             }
             
         }
-        
-        
-//        else if ((section == 0 && !showLoadingIndicator) || (section == 1) && showLoadingIndicator)
-//        {
-//            cellLabel = @"All Colleges";
-//        }
-//        else if (section == 1 &&)
-        
-//        if (indexPath.section == 1)
-//        {
-//            cellLabel = @"All Colleges";
-//        }
-//        else if (showLoadingIndicator && indexPath.section == 0)
-//        {
-//            [cell showLoadingIndicator];
-//            cellLabel = @"Loading...";
-//        }
-//        else if (indexPath.section == 2 || (noCollegesNearby && indexPath.section == 0))
-//        {
-//            cellLabel = @"Choose a College";
-//        }
-//        else if (collegesNearby && indexPath.section == 0)
-//        {
-//            College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
-//            if (college != nil)
-//            {
-//                float labelHeight = [Shared getSmallCellMessageHeight:college.name WithFont:CF_FONT_LIGHT(18) withWidth:265];
-//                [cell assignCollege:college withRankNumber:-1 withMessageHeight:labelHeight];
-//                return cell;
-//            }
-//        }
     }
     else
     {
@@ -346,7 +293,6 @@
         case ALL_NEARBY_OTHER:
         {   // Initial prompt given to user to select which feed to view
             
-//            bool showLoadingIndicator = !self.dataController.foundLocation;
             bool showLoadingIndicator = self.dataController.locStatus == LOCATION_SEARCHING;
             
             if (showLoadingIndicator && indexPath.section == 0)
@@ -394,7 +340,6 @@
 {
     const int headerWidth = tableView.frame.size.width;
 
-//    bool showLoadingIndicator = !self.dataController.foundLocation;
     bool showLoadingIndicator = self.dataController.locStatus == LOCATION_SEARCHING;
 
     bool collegesNearby = [self.dataController isNearCollege];
@@ -410,14 +355,12 @@
         float labelWidth = [headerText sizeWithAttributes:@{NSFontAttributeName:CF_FONT_LIGHT(14)}].width;
                                                             
         UIImageView *gpsIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gps.png"]];
-//        [gpsIcon setFrame:CGRectMake((headerWidth / 2) + 35, 0, gpsIconWidth, gpsIconWidth)];
-//        [gpsIcon setCenter:CGPointMake((headerWidth / 2) + 40, TABLE_HEADER_HEIGHT / 2)];
         [gpsIcon setFrame:CGRectMake(0, 0, gpsIconWidth, gpsIconWidth)];
-        [gpsIcon setCenter:CGPointMake((headerWidth / 2) + (labelWidth / 2) + (gpsIconWidth / 2), TABLE_HEADER_HEIGHT / 2)];
-        
+        [gpsIcon setCenter:CGPointMake((headerWidth / 2) + (labelWidth / 2), TABLE_HEADER_HEIGHT / 2)];
+                
         [headerView addSubview:gpsIcon];
         
-        headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
+        headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(-10, 0, headerWidth, TABLE_HEADER_HEIGHT)];
         [headerLabel setText:headerText];
     }
     else if ((!collegesNearby && section == 0) || (collegesNearby && section == 1))

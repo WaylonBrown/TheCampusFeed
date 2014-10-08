@@ -64,7 +64,6 @@ typedef NS_ENUM(NSInteger, FeedSelectorType)
 
 - (IBAction)dismiss;
 - (void)fixHeights;
-- (void)foundLocation;
-- (void)didNotFindLocation;
+- (void)updateLocation;
 
 @end

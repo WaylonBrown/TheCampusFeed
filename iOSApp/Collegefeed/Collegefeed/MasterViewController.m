@@ -113,7 +113,8 @@
     }
     else
     {
-        [self placeLoadingIndicator];
+//        [self placeLoadingIndicator];
+        [self.navigationItem setRightBarButtonItem:nil];
         [self.toastController toastLocationFoundNotNearCollege];
     }
     
@@ -122,7 +123,7 @@
     {
         if ([presented class] == [FeedSelectViewController class])
         {
-            [((FeedSelectViewController *)presented) foundLocation];
+            [((FeedSelectViewController *)presented) updateLocation];
         }
     }
 }
@@ -137,7 +138,7 @@
     {
         if ([presented class] == [FeedSelectViewController class])
         {
-            [((FeedSelectViewController *)presented) didNotFindLocation];
+            [((FeedSelectViewController *)presented) updateLocation];
         }
     }
 

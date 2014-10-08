@@ -123,8 +123,10 @@
 }
 - (void)toastLocationNotFoundOnTimeout
 {
-    NSString *message = @"Couldn't find location. You can upvote, but nothing else.";
-    [self addToQueue:message];
+    NSString *message1 = @"Couldn't find location. You can upvote, but nothing else.";
+    NSString *message2 = @"Make sure location services are enabled at \"Settings > TheCampusFeed > Privacy\"";
+    [self addToQueue:message1];
+    [self addToQueue:message2];
 }
 - (void)toastTwitterUnavailable
 {
