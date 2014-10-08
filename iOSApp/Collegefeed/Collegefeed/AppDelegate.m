@@ -34,58 +34,42 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {   // Set up ViewControllers and DataControllers
    
-
-//
-//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
-//    {
-//        // app already launched
-//    }
-//    else
-//    {
-//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
-//        [[NSUserDefaults standardUserDefaults] synchronize];
-//        // This is the first launch ever
-//        isFirstLaunch = YES;
-//    }
-
     self.dataController = [DataController new];
-//    [self.dataController setIsFirstLaunch:isFirstLaunch];
     [self.dataController setAppDelegate:self];
     
-//    BOOL isFirstLaunch = NO;
-    NSInteger launchCount = 1;//self.dataController.launchCount;
+    NSInteger launchCount = 10;//[self.dataController getLaunchNumber];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    
+
     [self initViewControllers];
     [self setUpMenuBar];
     
-    switch (launchCount) {
+    [self.window makeKeyAndVisible];
+    
+    switch (launchCount)
+    {
         case 1:
+        {
             [self.menuViewController showTutorial];
             break;
+        }
         case 5:
-            
+        {
+            CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:TWITTER];
+            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
+
             break;
+        }
         case 10:
-            
+        {
+            CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:WEBSITE];
+            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
             break;
+        }
         default:
             break;
     }
-//    if (self.dataController.isFirstLaunch)
-//    {
-//        [self.menuViewController showTutorial];
-//    }
-//    
-////    else if (self.dataController.needsUpdate)
-//    if (YES)
-//    {
-//        [self.menuViewController showRequiresUpdate];
-//    }
-
-    [self.window makeKeyAndVisible];
 
     return YES;
 }
@@ -160,8 +144,7 @@
     
     self.tutorialController             = [[TutorialViewController alloc] init];
     
-    self.helpController                 = [[CF_DialogViewController alloc] init];
-    [self.helpController setAsHelpScreen];
+    self.helpController                 = [[CF_DialogViewController alloc] initWithDialogType:HELP];
     
     self.timeCrunchController           = [[TimeCrunchViewController alloc] init];
 

@@ -176,8 +176,7 @@
 }
 - (void)create
 {   // Display popup to let user type a new post
-    CF_DialogViewController *dialog = [[CF_DialogViewController alloc] init];
-    [dialog setAsRequiredUpdate];
+    CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:UPDATE];
     [self.navigationController presentViewController:dialog animated:YES completion:nil];
     
     

@@ -66,8 +66,6 @@
             [self getHardCodedCollegeList];
         }
         
-        [self handleLaunchNumber];
-        
         // Populate the initial arrays
         [self retrieveUserData];
 
@@ -100,15 +98,16 @@
     float serverVersion = [[jsonArray valueForKey:@"minVersion"] floatValue];
     
     self.needsUpdate = (appVersion < serverVersion);
-//    if (appVersion < serverVersion)
-//    {
-//        self.needsUpdate = YES;
-//        CF_DialogViewController *dialog = [[CF_DialogViewController alloc] init];
-//        [dialog setAsRequiredUpdate];
-//    }
+    if (appVersion < serverVersion)
+    {
+        self.needsUpdate = YES;
+        CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:UPDATE];
+        
+//        [self.window.rootViewController.navigationController presentViewController:dialog animated:YES completion:nil];
+    }
     
 }
-- (void)handleLaunchNumber
+- (NSInteger)getLaunchNumber
 {
     // Retrieve Launch Count
     NSError *error;
@@ -135,6 +134,8 @@
         NSLog(@"Failed to save user's vote: %@",
               [error localizedDescription]);
     }
+    
+    return [newCount integerValue];
 }
 
 #pragma mark - Networker Access - Colleges

@@ -6,7 +6,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CF_DialogViewController">
             <connections>
-                <outlet property="button" destination="VOy-yA-1wW" id="9SW-B8-qzy"/>
+                <outlet property="button1" destination="VOy-yA-1wW" id="nVT-NC-yOo"/>
+                <outlet property="button2" destination="PdB-cj-Xdn" id="1cv-yi-B0g"/>
+                <outlet property="button2Width" destination="QkR-7q-07Q" id="qv0-LQ-DAc"/>
                 <outlet property="contentView" destination="jeQ-qk-yFs" id="uHb-Dv-wpC"/>
                 <outlet property="dialogHeight" destination="KzM-Nw-Cn5" id="twX-lb-PrO"/>
                 <outlet property="dialogView" destination="7nr-qo-lMY" id="IV2-XN-7Tg"/>
@@ -45,7 +47,7 @@
                             <color key="textColor" red="0.20000000300000001" green="0.70980393890000004" blue="0.89803922179999995" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VOy-yA-1wW">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VOy-yA-1wW" userLabel="Button1">
                             <rect key="frame" x="0.0" y="300" width="280" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="jKr-ZU-AEi"/>
@@ -66,6 +68,22 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PdB-cj-Xdn" userLabel="Button2">
+                            <constraints>
+                                <constraint firstAttribute="width" id="QkR-7q-07Q"/>
+                            </constraints>
+                            <state key="normal" title="Cancel">
+                                <color key="titleColor" red="0.26666668057441711" green="0.26666668057441711" blue="0.26666668057441711" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gW6-en-Jms">
+                            <rect key="frame" x="280" y="300" width="1" height="40"/>
+                            <color key="backgroundColor" red="0.26666668057441711" green="0.26666668057441711" blue="0.26666668057441711" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="1" id="9Lg-2m-0qQ"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -79,16 +97,24 @@
                         <constraint firstAttribute="height" constant="340" id="KzM-Nw-Cn5"/>
                         <constraint firstItem="fs0-NN-1hU" firstAttribute="leading" secondItem="7nr-qo-lMY" secondAttribute="leading" id="MMg-ao-auz"/>
                         <constraint firstItem="aVC-uR-SzK" firstAttribute="leading" secondItem="3Ob-af-UKJ" secondAttribute="leading" constant="6" id="MfS-lQ-Zfa"/>
+                        <constraint firstAttribute="trailing" secondItem="PdB-cj-Xdn" secondAttribute="trailing" id="OpV-XX-nkX"/>
                         <constraint firstItem="VOy-yA-1wW" firstAttribute="top" secondItem="jeQ-qk-yFs" secondAttribute="bottom" constant="15" id="PnX-iF-1jU"/>
+                        <constraint firstItem="gW6-en-Jms" firstAttribute="height" secondItem="PdB-cj-Xdn" secondAttribute="height" id="Q5I-yz-aTM"/>
                         <constraint firstItem="jeQ-qk-yFs" firstAttribute="leading" secondItem="7nr-qo-lMY" secondAttribute="leading" constant="14" id="Qmr-eU-cSP"/>
+                        <constraint firstItem="PdB-cj-Xdn" firstAttribute="leading" secondItem="VOy-yA-1wW" secondAttribute="trailing" id="Qms-hy-nti"/>
+                        <constraint firstItem="gW6-en-Jms" firstAttribute="leading" secondItem="VOy-yA-1wW" secondAttribute="trailing" id="RU6-mR-B5H"/>
                         <constraint firstItem="jeQ-qk-yFs" firstAttribute="top" secondItem="3Ob-af-UKJ" secondAttribute="bottom" constant="8" id="ScN-1q-lLn"/>
+                        <constraint firstItem="PdB-cj-Xdn" firstAttribute="height" secondItem="VOy-yA-1wW" secondAttribute="height" id="VGP-vl-naq"/>
                         <constraint firstItem="VOy-yA-1wW" firstAttribute="leading" secondItem="7nr-qo-lMY" secondAttribute="leading" id="VU5-cu-2xz"/>
                         <constraint firstAttribute="trailing" secondItem="fs0-NN-1hU" secondAttribute="trailing" id="b7G-aB-2LN"/>
+                        <constraint firstItem="gW6-en-Jms" firstAttribute="top" secondItem="PdB-cj-Xdn" secondAttribute="top" id="bKj-iY-Le6"/>
+                        <constraint firstAttribute="bottom" secondItem="PdB-cj-Xdn" secondAttribute="bottom" id="hNC-Fe-BwB"/>
                         <constraint firstAttribute="trailing" secondItem="aVC-uR-SzK" secondAttribute="trailing" constant="13" id="kyF-du-umJ"/>
                         <constraint firstAttribute="trailing" secondItem="jeQ-qk-yFs" secondAttribute="trailing" constant="13" id="n2b-mk-y06"/>
                         <constraint firstItem="3Ob-af-UKJ" firstAttribute="top" secondItem="aVC-uR-SzK" secondAttribute="bottom" constant="8" id="pg7-eh-v91"/>
-                        <constraint firstAttribute="trailing" secondItem="VOy-yA-1wW" secondAttribute="trailing" id="shn-sg-g7y"/>
+                        <constraint firstItem="PdB-cj-Xdn" firstAttribute="leading" secondItem="VOy-yA-1wW" secondAttribute="trailing" id="rUr-gL-uKu"/>
                         <constraint firstItem="aVC-uR-SzK" firstAttribute="trailing" secondItem="3Ob-af-UKJ" secondAttribute="trailing" id="x1Z-6F-eH8"/>
+                        <constraint firstItem="gW6-en-Jms" firstAttribute="bottom" secondItem="PdB-cj-Xdn" secondAttribute="bottom" id="xGF-Zs-ONB"/>
                     </constraints>
                 </view>
             </subviews>

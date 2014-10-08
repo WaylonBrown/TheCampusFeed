@@ -154,7 +154,7 @@
 - (void)retrieveUserData;
 - (long)getUserPostScore;
 - (long)getUserCommentScore;
-- (void)handleLaunchNumber;
+- (NSInteger)getLaunchNumber;
 - (BOOL)isAbleToPost:(NSNumber *)minutesRemaining;
 - (BOOL)isAbleToComment;
 
