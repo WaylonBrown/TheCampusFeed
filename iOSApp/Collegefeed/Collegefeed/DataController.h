@@ -125,6 +125,7 @@
 @property (nonatomic) BOOL              showingAllColleges;
 @property (nonatomic) BOOL              showingSingleCollege;
 @property (nonatomic) long              collegeListVersion;
+@property (nonatomic) NSDate            *locationSearchStart;
 
 // Lazy Loading Counters
 @property (nonatomic) long tagPage;

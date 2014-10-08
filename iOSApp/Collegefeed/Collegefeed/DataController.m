@@ -30,26 +30,7 @@
         
         [self setShowingAllColleges:YES];
         [self setShowingSingleCollege:NO];
-        
-        // Initialize arrays
-        self.collegeList            = [[NSMutableArray alloc] init];
-        self.nearbyColleges         = [[NSMutableArray alloc] init];
-        self.trendingColleges       = [[NSMutableArray alloc] init];
-        
-        self.commentList            = [[NSMutableArray alloc] init];
-        self.userComments           = [[NSMutableArray alloc] init];
-
-        self.topPostsAllColleges    = [[NSMutableArray alloc] init];
-        self.recentPostsAllColleges = [[NSMutableArray alloc] init];
-        self.userPosts              = [[NSMutableArray alloc] init];
-        self.allPostsWithTag        = [[NSMutableArray alloc] init];
-        
-        self.allTags                = [[NSMutableArray alloc] init];
-        self.allTagsInCollege       = [[NSMutableArray alloc] init];
-        
-        self.userPostVotes          = [[NSMutableArray alloc] init];
-        self.userCommentVotes       = [[NSMutableArray alloc] init];
-
+        [self initArrays];
         
         [self setTopPostsPage:0];
         [self setRecentPostsPage:0];
@@ -80,14 +61,39 @@
         [self.locationManager setDelegate:self];
         if ([CLLocationManager locationServicesEnabled])
         {
+            self.locationSearchStart = [NSDate date];
             [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
             [self.locationManager startUpdatingLocation];
+        }
+        else
+        {
+            [self failedLocationFinding];
         }
         
     }
     return self;
 }
-
+- (void)initArrays
+{
+    // Initialize arrays
+    self.collegeList            = [[NSMutableArray alloc] init];
+    self.nearbyColleges         = [[NSMutableArray alloc] init];
+    self.trendingColleges       = [[NSMutableArray alloc] init];
+    
+    self.commentList            = [[NSMutableArray alloc] init];
+    self.userComments           = [[NSMutableArray alloc] init];
+    
+    self.topPostsAllColleges    = [[NSMutableArray alloc] init];
+    self.recentPostsAllColleges = [[NSMutableArray alloc] init];
+    self.userPosts              = [[NSMutableArray alloc] init];
+    self.allPostsWithTag        = [[NSMutableArray alloc] init];
+    
+    self.allTags                = [[NSMutableArray alloc] init];
+    self.allTagsInCollege       = [[NSMutableArray alloc] init];
+    
+    self.userPostVotes          = [[NSMutableArray alloc] init];
+    self.userCommentVotes       = [[NSMutableArray alloc] init];
+}
 - (void)checkAppVersionNumber
 {
     float appVersion = [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] floatValue];
@@ -1000,7 +1006,13 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    if (!self.foundLocation)
+    NSDate *currentTime = [NSDate date];
+    NSTimeInterval secs = [currentTime timeIntervalSinceDate:self.locationSearchStart];
+    if (secs >= 10)
+    {
+        [self failedLocationFinding];
+    }
+    else if (!self.foundLocation)
     {
         [self setLat:newLocation.coordinate.latitude];
         [self setLon:newLocation.coordinate.longitude];
@@ -1023,8 +1035,13 @@
 }
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
+    [self failedLocationFinding];
+}
+- (void)failedLocationFinding
+{
     [self.appDelegate didNotFindLocation];
     [self setFoundLocation:NO];
+    [self.locationManager stopUpdatingLocation];
 }
 
 #pragma mark - Core Data stack
