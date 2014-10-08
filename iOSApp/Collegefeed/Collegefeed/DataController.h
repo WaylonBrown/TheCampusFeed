@@ -157,6 +157,7 @@
 - (NSInteger)getLaunchNumber;
 - (BOOL)isAbleToPost:(NSNumber *)minutesRemaining;
 - (BOOL)isAbleToComment;
+- (void)incrementLaunchNumber;
 
 - (NSURL *)applicationDocumentsDirectory;
 /*************************/

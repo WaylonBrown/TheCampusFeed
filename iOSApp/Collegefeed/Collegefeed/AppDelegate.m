@@ -34,10 +34,19 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {   // Set up ViewControllers and DataControllers
    
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+//    {
+//        
+//    }
+//    else
+//    {
+//        [self.menuViewController showTutorial];
+//    }
+    
     self.dataController = [DataController new];
     [self.dataController setAppDelegate:self];
+    [self.dataController incrementLaunchNumber];
     
-    NSInteger launchCount = 10;//[self.dataController getLaunchNumber];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
@@ -47,7 +56,8 @@
     
     [self.window makeKeyAndVisible];
     
-    switch (launchCount)
+    
+    switch (5)//[self.dataController getLaunchNumber])
     {
         case 1:
         {

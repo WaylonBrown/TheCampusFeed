@@ -83,10 +83,33 @@
             [self.locationManager startUpdatingLocation];
         }
         
+//        [self handleLaunchCount];
     }
     return self;
 }
 
+//- (void)handleLaunchCount
+//{
+//    NSInteger count = 5;//[self getLaunchNumber];
+//    switch (count)
+//    {
+//        case 5:
+//        {
+//            CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:TWITTER];
+//            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
+//            
+//            break;
+//        }
+//        case 10:
+//        {
+//            CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:WEBSITE];
+//            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
+//            break;
+//        }
+//        default:
+//            break;
+//    }
+//}
 - (void)checkAppVersionNumber
 {
     float appVersion = [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] floatValue];
@@ -107,7 +130,7 @@
     }
     
 }
-- (NSInteger)getLaunchNumber
+- (void)incrementLaunchNumber
 {
     // Retrieve Launch Count
     NSError *error;
@@ -134,8 +157,27 @@
         NSLog(@"Failed to save user's vote: %@",
               [error localizedDescription]);
     }
+
+}
+- (NSInteger)getLaunchNumber
+{
+    // Retrieve Launch Count
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
     
-    return [newCount integerValue];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedPermissions.count > 1)
+    {
+        NSLog(@"Too many permissions");
+    }
+    NSManagedObject *permission = [fetchedPermissions firstObject];
+    NSNumber *count = [permission valueForKey:KEY_LAUNCH_COUNT];
+    
+    return [count integerValue];
 }
 
 #pragma mark - Networker Access - Colleges

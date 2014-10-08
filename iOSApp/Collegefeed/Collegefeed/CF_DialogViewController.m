@@ -27,7 +27,7 @@
 
     if (self)
     {
-        [self.titleLabel setText:title];
+        [self.titleTextView setText:title];
         [self.contentView setText:content];
     }
     return self;
@@ -40,8 +40,8 @@
     {
         [self setModalPresentationStyle:UIModalPresentationCustom];
         [self setTransitioningDelegate:self];
-        self.portraitHeight = 340;
-        self.landscapeHeight = 250;
+//        self.portraitHeight = 340;
+//        self.landscapeHeight = 250;
     }
     return self;
 }
@@ -78,8 +78,10 @@
             break;
     }
     
-    [self.titleLabel setFont:CF_FONT_LIGHT(24)];
+    [self.titleTextView setFont:CF_FONT_LIGHT(20)];
     [self.contentView setFont:CF_FONT_LIGHT(15)];
+    [self.titleTextView setTextColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
+    
 
     [self fixHeights];
 }
@@ -88,21 +90,26 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 - (IBAction)dismiss:(id)sender
 {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)fixHeights
 {
-    float displayHeight         = self.contentView.frame.size.height;
-    float dialogHeightMinusText = self.dialogView.frame.size.height - displayHeight;
+    float currTextHeight    = self.contentView.frame.size.height;
+    float currTitleHeight   = self.titleTextView.frame.size.height;
     
-    float textHeight = [self.contentView sizeThatFits:CGSizeMake(self.contentView.frame.size.width, MAXFLOAT)].height + 10;
+    float dialogHeightMinusText = self.dialogView.frame.size.height - currTextHeight - currTitleHeight;
     
-    self.dialogHeight.constant = textHeight + dialogHeightMinusText;
+    float newTextHeight     = [self.contentView sizeThatFits:CGSizeMake(self.contentView.frame.size.width, MAXFLOAT)].height;
+    float newTitleHeight    = [self.titleTextView sizeThatFits:CGSizeMake(self.titleTextView.frame.size.width, MAXFLOAT)].height;
+    
+    self.titleHeight.constant = newTitleHeight;
 
+    self.dialogHeight.constant = MIN(newTextHeight + newTitleHeight + dialogHeightMinusText,
+                                     self.view.frame.size.height - 80);
+
+    self.button1Width.constant = self.dialogView.frame.size.width / self.buttonCount;
     [self.view setNeedsUpdateConstraints];
 }
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -115,26 +122,19 @@
 - (void)setAsHelpScreen
 {
     self.dialogType = HELP;
-    self.portraitHeight = 340;
-    self.landscapeHeight = 250;
-    [self.titleLabel setText:@"Help"];
+    [self.titleTextView setText:@"Help"];
     [self.contentView setText:@"TheCampusFeed is an anonymous message board. No logins, no accounts. Anyone can view any college's feed, as well as the All Colleges feed which is a mixture of all colleges' posts put together.\n\nIf you make a post that gets a certain amount of flags, it will be automatically removed. If you have multiple posts removed, you will be banned from posting to the app. Think before you post! To view the rules, click the Flag icon for any post near you."];
 }
 - (void)setAsTimeCrunchInfo
 {
     self.dialogType = TIME_CRUNCH;
-    self.portraitHeight = 400;
-    [self.titleLabel setText:@"What is Time Crunch?"];
+    [self.titleTextView setText:@"What is Time Crunch?"];
     [self.contentView setText:@"Want to post and comment on your University\'s feed this Summer as if you\'re actually there, but are instead visiting home? What about this Winter Break?\n\nFor every post you make to your University, 24 hours get added to your Time Crunch. Once you activate Time Crunch, your current location at your University is saved in the app for that long! You can get extra hours added by unlocking Achievements.\n\nNOTE: If you turn off Time Crunch once it is active, your hours will be reset to 0!"];
 }
 - (void)setAsRequiredUpdate
 {
     self.dialogType = UPDATE;
-    
-    self.portraitHeight = 150;
-    self.landscapeHeight = 100;
-    
-    [self.titleLabel setText:@"Required Update"];
+    [self.titleTextView setText:@"Required Update"];
     [self.contentView setText:@"There is a new required app update"];
     [self.button1.titleLabel setText:@"Update App"];
     
@@ -145,19 +145,20 @@
 - (void)setAsTwitterReminder
 {
     self.dialogType = TWITTER;
-    [self.titleLabel setText:@"Follow TheCampusFeed on Twitter!"];
+    [self.titleTextView setText:@"Follow TheCampusFeed on Twitter!"];
     [self.contentView setText:@"Want to see our pick of the top post on TheCampusFeed per day? Be sure to follow us on Twitter at @The_Campus_Feed!"];
     
     [self.button1 setTitle:@"No Thanks" forState:UIControlStateNormal];
     [self.button2 setTitle:@"Follow on Twitter" forState:UIControlStateNormal];
     [self.button2 addTarget:self action:@selector(followOnTwitter) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.buttonCount = 2;
 
-    self.button2Width.constant = self.dialogView.frame.size.width / 2;
 }
 - (void)setAsWebsiteReminder
 {
     self.dialogType = WEBSITE;
-    [self.titleLabel setText:@"Don't forget TheCampusFeed is also on the web!"];
+    [self.titleTextView setText:@"Don't forget TheCampusFeed is also on the web!"];
     [self.contentView setText:@"Want to check out posts while you're on your computer? Be sure to check out www.TheCampusFeed.com!"];
 }
 
