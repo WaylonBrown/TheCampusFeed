@@ -63,6 +63,7 @@
         {
             self.locationSearchStart = [NSDate date];
             [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+            self.locStatus = LOCATION_SEARCHING;
             [self.locationManager startUpdatingLocation];
         }
         else
@@ -1009,29 +1010,28 @@
 {
     NSDate *currentTime = [NSDate date];
     NSTimeInterval secs = [currentTime timeIntervalSinceDate:self.locationSearchStart];
-    if (secs >= 10)
+    
+    if (secs >= 10 || self.locStatus != LOCATION_FOUND)
     {
         [self failedLocationFinding];
     }
-    else if (!self.foundLocation)
+    //    else if (!self.foundLocation)
+    else if (self.locStatus == LOCATION_SEARCHING)
     {
         [self setLat:newLocation.coordinate.latitude];
         [self setLon:newLocation.coordinate.longitude];
         [self.locationManager stopUpdatingLocation];
         
-// Simulate extra time to find location to show 'loading' in feedselectviewcontroller
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-//            NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 1.0 ];
-//            [NSThread sleepUntilDate:future];
+        // Simulate extra time to find location to show 'loading' in feedselectviewcontroller
+        //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        //            NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 1.0 ];
+        //            [NSThread sleepUntilDate:future];
         
         [self findNearbyColleges];
         [self.appDelegate foundLocation];
-        [self setFoundLocation:YES];
-//    });
-    }
-    else
-    {
-        [self.locationManager stopUpdatingLocation];
+        [self setLocStatus:LOCATION_FOUND];
+        //        [self setFoundLocation:YES];
+        //    });
     }
 }
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
@@ -1040,8 +1040,8 @@
 }
 - (void)failedLocationFinding
 {
+    [self setLocStatus:LOCATION_NOT_FOUND];
     [self.appDelegate didNotFindLocation];
-    [self setFoundLocation:NO];
     [self.locationManager stopUpdatingLocation];
 }
 

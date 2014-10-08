@@ -70,6 +70,13 @@
 
 @end
 
+typedef NS_ENUM(NSInteger, LocationStatus)
+{
+    LOCATION_FOUND,
+    LOCATION_SEARCHING,
+    LOCATION_NOT_FOUND
+};
+
 
 @interface DataController : NSObject<CLLocationManagerDelegate>
 
@@ -82,9 +89,24 @@
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property BOOL isFirstLaunch;
-@property BOOL needsUpdate;
-@property NSInteger launchCount;
+
+// Status Information
+@property (strong, nonatomic) College   *collegeInFocus;
+@property (strong, nonatomic) Post      *postInFocus;
+@property (nonatomic) BOOL              showingAllColleges;
+@property (nonatomic) BOOL              showingSingleCollege;
+@property (nonatomic) long              collegeListVersion;
+@property (strong, nonatomic) NSDate    *locationSearchStart;
+@property (nonatomic) BOOL              isFirstLaunch;
+@property (nonatomic) BOOL              needsUpdate;
+@property (nonatomic) NSInteger         launchCount;
+
+// Location Information
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (nonatomic) CLLocationDegrees         lat;
+@property (nonatomic) CLLocationDegrees         lon;
+//@property (nonatomic) BOOL                      foundLocation;
+@property LocationStatus                        locStatus;
 
 // College Arrays
 @property (strong, nonatomic) NSMutableArray *collegeList;
@@ -112,20 +134,6 @@
 // Vote Arrays
 @property (nonatomic, strong) NSMutableArray *userPostVotes;
 @property (nonatomic, strong) NSMutableArray *userCommentVotes;
-
-// Location Information
-@property (strong, nonatomic) CLLocationManager *locationManager;
-@property (nonatomic) CLLocationDegrees         lat;
-@property (nonatomic) CLLocationDegrees         lon;
-@property (nonatomic) BOOL                      foundLocation;
-
-// Status Information
-@property (strong, nonatomic) College   *collegeInFocus;
-@property (strong, nonatomic) Post      *postInFocus;
-@property (nonatomic) BOOL              showingAllColleges;
-@property (nonatomic) BOOL              showingSingleCollege;
-@property (nonatomic) long              collegeListVersion;
-@property (nonatomic) NSDate            *locationSearchStart;
 
 // Lazy Loading Counters
 @property (nonatomic) long tagPage;

@@ -15,7 +15,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-//@property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIImageView *myImageView;
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *labelHeight;

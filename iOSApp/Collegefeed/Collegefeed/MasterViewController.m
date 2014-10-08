@@ -131,6 +131,16 @@
     [self.activityIndicator stopAnimating];
     [self.navigationItem setRightBarButtonItem:nil];
     [self.toastController toastLocationNotFoundOnTimeout];
+    
+    UIViewController *presented = [self presentedViewController];
+    if (presented)
+    {
+        if ([presented class] == [FeedSelectViewController class])
+        {
+            [((FeedSelectViewController *)presented) didNotFindLocation];
+        }
+    }
+
 }
 
 #pragma mark - UITableView Functions
