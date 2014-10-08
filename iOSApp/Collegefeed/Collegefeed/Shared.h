@@ -57,7 +57,7 @@
 + (UIFont*)getFontLight:(float)size;
 + (UIFont*)getFontBold:(float)size;
 + (UIFont*)getFontItalic:(float)size;
-+ (void)addCollegeNearby:(College *)college;
+//+ (void)addCollegeNearby:(College *)college;
 + (UIColor*)getCustomUIColor:(int)hexValue;
 + (float)getSmallCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font;
 + (float)getSmallCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font withWidth:(float)width;

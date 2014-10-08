@@ -109,8 +109,9 @@
     {
         self.needsUpdate = YES;
         CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:UPDATE];
-        
-//        [self.window.rootViewController.navigationController presentViewController:dialog animated:YES completion:nil];
+
+        // TODO: direct to app store for update
+        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
     }
     
 }

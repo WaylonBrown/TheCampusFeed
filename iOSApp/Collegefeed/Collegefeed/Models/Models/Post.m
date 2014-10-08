@@ -136,6 +136,10 @@
 {
     return self.vote;
 }
+- (void)setCollegeName:(NSString *)name
+{
+    self.collegeName = name;
+}
 - (void)validate
 {
 //    if (self.message.length < MIN_POST_LENGTH)

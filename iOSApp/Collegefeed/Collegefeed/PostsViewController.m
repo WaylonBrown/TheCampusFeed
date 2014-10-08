@@ -375,7 +375,6 @@
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
 {
-    NSString *udid = [UIDevice currentDevice].identifierForVendor.UUIDString;
     BOOL success = [self.dataController createPostWithMessage:message
                                  withCollegeId:self.dataController.collegeInFocus.collegeID];
     

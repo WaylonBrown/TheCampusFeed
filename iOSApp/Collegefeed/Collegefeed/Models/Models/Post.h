@@ -26,7 +26,7 @@
 
 @property (nonatomic, strong) NSString *userToken;
 @property (nonatomic, strong) NSString *message;
-//@property (nonatomic, strong) NSString *collegeName;
+@property (nonatomic, strong) NSString *collegeName;
 @property (nonatomic, strong) NSDate *date;
 
 @property (nonatomic, strong) NSDate *createdAt;
