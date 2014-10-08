@@ -76,6 +76,7 @@
         
         // Get the user's location
         [self setLocationManager:[[CLLocationManager alloc] init]];
+        [self.locationManager requestWhenInUseAuthorization];
         [self.locationManager setDelegate:self];
         if ([CLLocationManager locationServicesEnabled])
         {
@@ -83,33 +84,10 @@
             [self.locationManager startUpdatingLocation];
         }
         
-//        [self handleLaunchCount];
     }
     return self;
 }
 
-//- (void)handleLaunchCount
-//{
-//    NSInteger count = 5;//[self getLaunchNumber];
-//    switch (count)
-//    {
-//        case 5:
-//        {
-//            CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:TWITTER];
-//            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
-//            
-//            break;
-//        }
-//        case 10:
-//        {
-//            CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:WEBSITE];
-//            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//}
 - (void)checkAppVersionNumber
 {
     float appVersion = [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] floatValue];

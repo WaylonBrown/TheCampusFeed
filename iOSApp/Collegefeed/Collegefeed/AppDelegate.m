@@ -33,16 +33,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {   // Set up ViewControllers and DataControllers
-   
-//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
-//    {
-//        
-//    }
-//    else
-//    {
-//        [self.menuViewController showTutorial];
-//    }
-    
+
     self.dataController = [DataController new];
     [self.dataController setAppDelegate:self];
     [self.dataController incrementLaunchNumber];
@@ -57,7 +48,7 @@
     [self.window makeKeyAndVisible];
     
     
-    switch (5)//[self.dataController getLaunchNumber])
+    switch ([self.dataController getLaunchNumber])
     {
         case 1:
         {

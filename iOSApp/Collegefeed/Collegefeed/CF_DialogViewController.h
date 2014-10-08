@@ -24,7 +24,6 @@ typedef NS_ENUM(NSInteger, DialogType)
 
 @property (strong, nonatomic) IBOutlet UIView *dialogView;
 @property (strong, nonatomic) IBOutlet UITextView *titleTextView;
-//@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UITextView *contentView;
 @property (strong, nonatomic) IBOutlet UIButton *button1;
 @property (strong, nonatomic) IBOutlet UIButton *button2;
@@ -35,8 +34,6 @@ typedef NS_ENUM(NSInteger, DialogType)
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *dialogHeight;
 
 @property NSInteger buttonCount;
-//@property float landscapeHeight;
-//@property float portraitHeight;
 
 - (id)initWithDialogType:(DialogType)type;
 - (id)initWithTitle:(NSString *)title withContent:(NSString *)content;

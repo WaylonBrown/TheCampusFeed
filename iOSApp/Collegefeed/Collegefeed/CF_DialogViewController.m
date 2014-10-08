@@ -40,8 +40,6 @@
     {
         [self setModalPresentationStyle:UIModalPresentationCustom];
         [self setTransitioningDelegate:self];
-//        self.portraitHeight = 340;
-//        self.landscapeHeight = 250;
     }
     return self;
 }
