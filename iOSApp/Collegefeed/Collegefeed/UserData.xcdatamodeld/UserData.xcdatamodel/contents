@@ -10,15 +10,16 @@
     <entity name="Comment" syncable="YES">
         <attribute name="commentId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
-    <entity name="Permissions" syncable="YES">
+    <entity name="Post" syncable="YES">
+        <attribute name="postId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Status" syncable="YES">
+        <attribute name="currentFeed" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="isBanned" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="lastCommentTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="lastPostTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="launchCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="listVersion" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-    </entity>
-    <entity name="Post" syncable="YES">
-        <attribute name="postId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="Vote" syncable="YES">
         <attribute name="parentId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -30,7 +31,7 @@
     <elements>
         <element name="College" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Comment" positionX="0" positionY="0" width="128" height="60"/>
-        <element name="Permissions" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="Status" positionX="0" positionY="0" width="128" height="135"/>
         <element name="Post" positionX="0" positionY="0" width="128" height="60"/>
         <element name="Vote" positionX="0" positionY="0" width="128" height="120"/>
     </elements>

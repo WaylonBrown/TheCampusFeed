@@ -27,9 +27,9 @@
     if (self)
     {
         [self checkAppVersionNumber];
-        
         [self setShowingAllColleges:YES];
         [self setShowingSingleCollege:NO];
+
         [self initArrays];
         
         [self setTopPostsPage:0];
@@ -46,6 +46,8 @@
         {
             [self getHardCodedCollegeList];
         }
+        
+        [self restoreSavedFeed];
         
         // Populate the initial arrays
         [self retrieveUserData];
@@ -110,20 +112,20 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
     
     [fetchRequest setEntity:entity];
-    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedPermissions.count > 1)
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
     {
-        NSLog(@"Too many permissions");
+        NSLog(@"Too many status entities");
     }
-    NSManagedObject *permission = [fetchedPermissions firstObject];
-    NSNumber *currCount = [permission valueForKey:KEY_LAUNCH_COUNT];
+    NSManagedObject *status = [fetchedStatus firstObject];
+    NSNumber *currCount = [status valueForKey:KEY_LAUNCH_COUNT];
     
     NSNumber *newCount = [NSNumber numberWithInt:([currCount intValue] + 1)];
     
-    [permission setValue:newCount forKey:KEY_LAUNCH_COUNT];
+    [status setValue:newCount forKey:KEY_LAUNCH_COUNT];
     
     if (![context save:&error])
     {
@@ -139,18 +141,65 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
     
     [fetchRequest setEntity:entity];
-    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedPermissions.count > 1)
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
     {
-        NSLog(@"Too many permissions");
+        NSLog(@"Too many status entities");
     }
-    NSManagedObject *permission = [fetchedPermissions firstObject];
-    NSNumber *count = [permission valueForKey:KEY_LAUNCH_COUNT];
+    NSManagedObject *status = [fetchedStatus firstObject];
+    NSNumber *count = [status valueForKey:KEY_LAUNCH_COUNT];
     
     return [count integerValue];
+}
+- (void)saveCurrentFeed
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
+    {
+        NSLog(@"Too many status entities");
+    }
+    NSManagedObject *status = [fetchedStatus firstObject];
+    NSNumber *collegeIdForFeed = self.showingSingleCollege ? [NSNumber numberWithLong:self.collegeInFocus.collegeID] : nil;
+    
+    [status setValue:collegeIdForFeed forKey:KEY_CURRENT_COLLEGE_FEED];
+    
+    if (![context save:&error])
+    {
+        NSLog(@"Failed to save current feed: %@",
+              [error localizedDescription]);
+    }
+}
+- (void)restoreSavedFeed
+{
+    // Retrieve last saved/visited feed
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
+    {
+        NSLog(@"Too many status entities");
+    }
+    NSManagedObject *status = [fetchedStatus firstObject];
+    long collegeIdForFeed = [[status valueForKey:KEY_CURRENT_COLLEGE_FEED] longValue];
+    self.collegeInFocus = [self getCollegeById:collegeIdForFeed];
+    
+    self.showingAllColleges = self.collegeInFocus == nil;
+    self.showingSingleCollege = !self.showingAllColleges;
 }
 
 #pragma mark - Networker Access - Colleges
@@ -186,23 +235,23 @@
     NSError *error;
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:PERMISSION_ENTITY
+    NSEntityDescription *entity = [NSEntityDescription entityForName:STATUS_ENTITY
                                               inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedPermissions.count > 1)
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
     {
-        NSLog(@"Too many permissions");
+        NSLog(@"Too many status entities");
     }
-    NSManagedObject *permission = [fetchedPermissions firstObject];
+    NSManagedObject *status = [fetchedStatus firstObject];
     long newVersion = [self getNetworkCollegeListVersion];
 
-    if (permission == nil)
+    if (status == nil)
     {
         return YES;
     }
     
-    long currVersion = [[permission valueForKeyPath:KEY_COLLEGE_LIST_VERSION] longValue];
+    long currVersion = [[status valueForKeyPath:KEY_COLLEGE_LIST_VERSION] longValue];
     
     return (currVersion == newVersion) ? NO : YES;
 }
@@ -861,15 +910,15 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedPermissions.count > 1)
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
     {
-        NSLog(@"Too many permissions");
+        NSLog(@"Too many status entities");
     }
-    NSManagedObject *permission = [fetchedPermissions firstObject];
-    NSDate *lastPost = [permission valueForKey:KEY_POST_TIME];
+    NSManagedObject *status = [fetchedStatus firstObject];
+    NSDate *lastPost = [status valueForKey:KEY_POST_TIME];
     if (lastPost != nil)
     {
         NSTimeInterval diff = [lastPost timeIntervalSinceNow];
@@ -889,15 +938,15 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedPermissions.count > 1)
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
     {
-        NSLog(@"Too many permissions");
+        NSLog(@"Too many status entities");
     }
-    NSManagedObject *permission = [fetchedPermissions firstObject];
-    NSDate *lastComment = [permission valueForKey:KEY_COMMENT_TIME];
+    NSManagedObject *status = [fetchedStatus firstObject];
+    NSDate *lastComment = [status valueForKey:KEY_COMMENT_TIME];
     if (lastComment != nil)
     {
         NSTimeInterval diff = [lastComment timeIntervalSinceNow];
@@ -916,21 +965,21 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedPermissions.count > 1)
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
     {
-        NSLog(@"Too many permissions");
+        NSLog(@"Too many status entities");
     }
-    NSManagedObject *permission = [fetchedPermissions firstObject];
+    NSManagedObject *status = [fetchedStatus firstObject];
     
-    if (permission == nil)
+    if (status == nil)
     {
-        permission = [NSEntityDescription insertNewObjectForEntityForName:PERMISSION_ENTITY
+        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
                                                    inManagedObjectContext:context];
     }
-    [permission setValue:[NSNumber numberWithLong:listVersion] forKeyPath:KEY_COLLEGE_LIST_VERSION];
+    [status setValue:[NSNumber numberWithLong:listVersion] forKeyPath:KEY_COLLEGE_LIST_VERSION];
     if (![_managedObjectContext save:&error])
     {
         NSLog(@"Failed to save college list version: %@",
@@ -943,21 +992,21 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedPermissions.count > 1)
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
     {
-        NSLog(@"Too many permissions");
+        NSLog(@"Too many status entities");
     }
-    NSManagedObject *permission = [fetchedPermissions firstObject];
+    NSManagedObject *status = [fetchedStatus firstObject];
     
-    if (permission == nil)
+    if (status == nil)
     {
-        permission = [NSEntityDescription insertNewObjectForEntityForName:PERMISSION_ENTITY
+        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
                                                    inManagedObjectContext:context];
     }
-    [permission setValue:postTime forKeyPath:KEY_POST_TIME];
+    [status setValue:postTime forKeyPath:KEY_POST_TIME];
     if (![_managedObjectContext save:&error])
     {
         NSLog(@"Failed to save user's post time: %@",
@@ -970,20 +1019,20 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedPermissions.count > 1)
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
     {
-        NSLog(@"Too many permissions");
+        NSLog(@"Too many status entities");
     }
-    NSManagedObject *permission = [fetchedPermissions firstObject];
-    if (permission == nil)
+    NSManagedObject *status = [fetchedStatus firstObject];
+    if (status == nil)
     {
-        permission = [NSEntityDescription insertNewObjectForEntityForName:PERMISSION_ENTITY
+        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
                                                    inManagedObjectContext:context];
     }
-    [permission setValue:commentTime forKeyPath:KEY_COMMENT_TIME];
+    [status setValue:commentTime forKeyPath:KEY_COMMENT_TIME];
     if (![_managedObjectContext save:&error])
     {
         NSLog(@"Failed to save user's comment time: %@",

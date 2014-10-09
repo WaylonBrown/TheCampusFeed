@@ -27,15 +27,17 @@
 #define USER_POST_IDS_FILE          @"UserPostIds.txt"
 #define USER_COMMENT_IDS_FILE       @"UserCommentIds.txt"
 
-#define PERMISSION_ENTITY       @"Permissions"
+//#define PERMISSION_ENTITY       @"Permissions"
+#define STATUS_ENTITY           @"Status"
 #define KEY_COMMENT_TIME        @"lastCommentTime"
 #define KEY_POST_TIME           @"lastPostTime"
 #define KEY_IS_BANNED           @"isBanned"
 #define KEY_COLLEGE_LIST_VERSION    @"listVersion"
 #define KEY_LAUNCH_COUNT        @"launchCount"
-#define KEY_POST_ID             @"postId"
+#define KEY_CURRENT_COLLEGE_FEED @"currentFeed"
 
 #define POST_ENTITY             @"Post"
+#define KEY_POST_ID             @"postId"
 
 #define COMMENT_ENTITY          @"Comment"
 #define KEY_COMMENT_ID          @"commentId"
@@ -105,7 +107,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic) CLLocationDegrees         lat;
 @property (nonatomic) CLLocationDegrees         lon;
-//@property (nonatomic) BOOL                      
 @property LocationStatus                        locStatus;
 
 // College Arrays
@@ -167,6 +168,8 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (BOOL)isAbleToPost:(NSNumber *)minutesRemaining;
 - (BOOL)isAbleToComment;
 - (void)incrementLaunchNumber;
+- (void)saveCurrentFeed;
+- (void)restoreSavedFeed;
 
 - (NSURL *)applicationDocumentsDirectory;
 /*************************/

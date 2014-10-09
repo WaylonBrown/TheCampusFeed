@@ -291,30 +291,68 @@
     switch (self.type)
     {
         case ALL_NEARBY_OTHER:
-        {   // Initial prompt given to user to select which feed to view
+        {
+            LocationStatus status = self.dataController.locStatus;
+            NSInteger numCollegesNearby = self.dataController.nearbyColleges.count;
+            NSInteger section = indexPath.section;
+
             
-            bool showLoadingIndicator = self.dataController.locStatus == LOCATION_SEARCHING;
-            
-            if (showLoadingIndicator && indexPath.section == 0)
+            if (status == LOCATION_SEARCHING)
             {
-                return;
+                if (section == 1)
+                {
+                    [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
+                        [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:nil];
+                    }];
+                }
+                else if (section == 2)
+                {
+
+                    [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
+                        [self.feedDelegate showDialogForAllColleges];
+                    }];
+                }
             }
-            if (indexPath.section == 2)
-            {   // Show new dialog of: all colleges to let user choose one they are not close to
-                
-                [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
-                    [self.feedDelegate showDialogForAllColleges];
-                }];
-            }
-            else
-            {   // When user chooses all colleges (nil selection) or one of the nearby ones
-                [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
+            else if (status == LOCATION_FOUND && numCollegesNearby > 0)
+            {
+                if (section == 0)
+                {
                     College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
-                    [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:college];
-                }];
+
+                    [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
+                        [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:college];
+                    }];
+
+                }
+                else if (section == 1)
+                {
+                    [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
+                        [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:nil];
+                    }];
+                }
+                else if (section == 2)
+                {
+                    [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
+                        [self.feedDelegate showDialogForAllColleges];
+                    }];
+                }
             }
-            break;
-        }
+            else // (LOCATION_FOUND && numCollegesNearby == 0) || (LOCATION_NOT_FOUND)
+            {
+                if (section == 0)
+                {
+                    [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
+                        [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:nil];
+                    }];
+                }
+                else if (section == 1)
+                {
+                    [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
+                        [self.feedDelegate showDialogForAllColleges];
+                    }];
+                }
+            }
+        }            
         case ALL_COLLEGES_WITH_SEARCH:
         {   // When user wants to see all colleges and be able to search through them
             [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
@@ -338,6 +376,8 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    if (self.type == ALL_COLLEGES_WITH_SEARCH || self.type == ONLY_NEARBY_COLLEGES) return nil;
+    
     const int headerWidth = tableView.frame.size.width;
 
     bool showLoadingIndicator = self.dataController.locStatus == LOCATION_SEARCHING;
@@ -383,7 +423,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (self.type == ONLY_NEARBY_COLLEGES)
+    if (self.type == ALL_COLLEGES_WITH_SEARCH || self.type == ONLY_NEARBY_COLLEGES)
     {
         return 0;
     }
