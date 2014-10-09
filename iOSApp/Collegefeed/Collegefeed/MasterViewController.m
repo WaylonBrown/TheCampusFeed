@@ -186,11 +186,6 @@
 }
 - (void)create
 {   // Display popup to let user type a new post
-    CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:UPDATE];
-    [self.navigationController presentViewController:dialog animated:YES completion:nil];
-    
-    
-    return;
     NSArray *nearbyColleges = self.dataController.nearbyColleges;
     if (nearbyColleges.count == 0)
     {   // None nearby
@@ -246,7 +241,6 @@
     }
 
     // users cannot cast downvotes to a distant school
-//    [self displayCannotVote];
     return NO;
 }
 - (BOOL)cancelVote:(Vote *)vote

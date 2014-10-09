@@ -331,7 +331,7 @@
         Post *post = [[Post alloc] initWithMessage:message
                                      withCollegeId:collegeId
                                      withUserToken:udid];
-
+        
         NSData *result = [Networker POSTPostData:[post toJSON] WithCollegeId:post.collegeID];
         NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
                                                                    options:0
@@ -347,9 +347,18 @@
         [self updateLastPostTime:postTime];
         
         [self.topPostsAllColleges insertObject:networkPost atIndex:0];
+        [self.topPostsInCollege insertObject:networkPost atIndex:0];
         [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
+        [self.recentPostsInCollege insertObject:networkPost atIndex:0];
         [self.userPosts insertObject:networkPost atIndex:0];
         [self savePost:networkPost];
+        
+        Vote *actualVote = networkPost.vote;
+        if (actualVote != nil)
+        {
+            [self.userPostVotes addObject:actualVote];
+            [self saveVote:actualVote];
+        }
         return YES;
     }
     @catch (NSException *exception)
@@ -464,8 +473,8 @@
             {
                 [self.userCommentVotes addObject:vote];
             }
+            [self saveVote:vote];
         }
-        [self saveVote:vote];
         return YES;
     }
     @catch (NSException *exception)

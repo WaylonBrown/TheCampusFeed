@@ -40,7 +40,7 @@
                             </constraints>
                         </view>
                         <textView multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" editable="NO" text="Title" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xhd-hc-BgP" userLabel="Title Text View">
-                            <rect key="frame" x="20" y="10" width="240" height="34"/>
+                            <rect key="frame" x="14" y="10" width="253" height="34"/>
                             <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="34" id="zTs-Aa-PQb"/>
@@ -92,11 +92,11 @@
                         <constraint firstAttribute="bottom" secondItem="VOy-yA-1wW" secondAttribute="bottom" id="38k-fj-8q3"/>
                         <constraint firstItem="3Ob-af-UKJ" firstAttribute="trailing" secondItem="jeQ-qk-yFs" secondAttribute="trailing" id="DHT-xu-x0h"/>
                         <constraint firstItem="xhd-hc-BgP" firstAttribute="top" secondItem="7nr-qo-lMY" secondAttribute="top" constant="10" id="E69-80-AdJ"/>
-                        <constraint firstItem="xhd-hc-BgP" firstAttribute="leading" secondItem="7nr-qo-lMY" secondAttribute="leading" constant="20" id="FlR-nP-Azn"/>
+                        <constraint firstItem="xhd-hc-BgP" firstAttribute="leading" secondItem="7nr-qo-lMY" secondAttribute="leading" constant="14" id="FlR-nP-Azn"/>
                         <constraint firstItem="3Ob-af-UKJ" firstAttribute="leading" secondItem="jeQ-qk-yFs" secondAttribute="leading" id="IZk-Q1-ULg"/>
                         <constraint firstAttribute="height" constant="340" id="KzM-Nw-Cn5"/>
                         <constraint firstItem="fs0-NN-1hU" firstAttribute="leading" secondItem="7nr-qo-lMY" secondAttribute="leading" id="MMg-ao-auz"/>
-                        <constraint firstAttribute="trailing" secondItem="xhd-hc-BgP" secondAttribute="trailing" constant="20" id="OZq-eI-Q72"/>
+                        <constraint firstAttribute="trailing" secondItem="xhd-hc-BgP" secondAttribute="trailing" constant="13" id="OZq-eI-Q72"/>
                         <constraint firstAttribute="trailing" secondItem="PdB-cj-Xdn" secondAttribute="trailing" id="OpV-XX-nkX"/>
                         <constraint firstItem="VOy-yA-1wW" firstAttribute="top" secondItem="jeQ-qk-yFs" secondAttribute="bottom" constant="15" id="PnX-iF-1jU"/>
                         <constraint firstItem="gW6-en-Jms" firstAttribute="height" secondItem="PdB-cj-Xdn" secondAttribute="height" id="Q5I-yz-aTM"/>

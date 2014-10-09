@@ -73,7 +73,7 @@
 - (NSData*)toJSON
 {   // Returns an NSData representation of this Vote in JSON
     NSString *voteString;
-    if (self.voteID == 0)
+    if (self.voteID == -1)
     {   // Not yet posted to network; use only simple JSON conversion
         
         voteString = [NSString stringWithFormat:
