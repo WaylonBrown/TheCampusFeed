@@ -87,43 +87,29 @@
 {
     NSUInteger numNearbyColleges = self.dataController.nearbyColleges.count;
     
-    int collegeSection = 0;
     float tableViewHeight = 0;
     
-    bool showLoadingIndicator = self.dataController.locStatus == LOCATION_SEARCHING;
-    bool collegesNearby = [self.dataController isNearCollege];
-
-
-    switch (self.type)
+    if (self.type != ALL_COLLEGES_WITH_SEARCH)
     {
-        case ALL_COLLEGES_WITH_SEARCH:
-            return;
-        case ALL_NEARBY_OTHER:
-            collegeSection = 0;
-            int numHeaders = (showLoadingIndicator || collegesNearby) ? 3 : 2;
-            tableViewHeight += (TABLE_HEADER_HEIGHT * numHeaders);
-            tableViewHeight += (TABLE_CELL_HEIGHT * 2); // 'All' and 'Other' options
-            break;
-        case ONLY_NEARBY_COLLEGES:
-            break;
-        default:
-            break;
-    }
-    if (collegesNearby)
-    {
-        for (int i = 0; i < numNearbyColleges; i++)
+        bool collegesNearby = [self.dataController isNearCollege];
+        // Handle two default cells that are always present
+        tableViewHeight += 3 * TABLE_HEADER_HEIGHT;
+        tableViewHeight += 2 * TABLE_CELL_HEIGHT;
+        if (collegesNearby)
         {
-            float collegeCellHeight = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForItem:i inSection:collegeSection]];
-            tableViewHeight += collegeCellHeight;
+            for (int i = 0; i < numNearbyColleges; i++)
+            {
+                float collegeCellHeight = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
+                tableViewHeight += collegeCellHeight;
+            }
         }
+        else
+        {
+            tableViewHeight += TABLE_CELL_HEIGHT;
+        }
+        self.tableHeightConstraint.constant = tableViewHeight;
+        [self.view setNeedsUpdateConstraints];
     }
-    else if (showLoadingIndicator)
-    {
-        tableViewHeight += TABLE_CELL_HEIGHT;
-    }
-    
-    self.tableHeightConstraint.constant = tableViewHeight;
-    [self.view setNeedsUpdateConstraints];
 }
 - (void)updateLocation
 {
@@ -138,20 +124,7 @@
 {
     if (self.type == ALL_NEARBY_OTHER)
     {
-        switch (self.dataController.locStatus)
-        {
-            case LOCATION_FOUND:
-                return ([self.dataController isNearCollege]) ? 3 : 2;
-                break;
-            case LOCATION_SEARCHING:
-                return 3;
-                break;
-            case LOCATION_NOT_FOUND:
-                return 2;
-                break;
-            default:
-                break;
-        }
+        return 3;
     }
     return 1;
 }
@@ -163,11 +136,7 @@
     switch (self.type)
     {
         case ALL_NEARBY_OTHER:
-            if (!isNearColleges)
-            {
-                return 1;
-            }
-            else if (section == 0) // && isNearColleges
+            if (isNearColleges && section == 0)
             {
                 return numNearby;
             }
@@ -179,7 +148,7 @@
             }
             else
             {
-                return self.dataController.collegeList.count;
+                return numNearby;
             }
             break;
         case ONLY_NEARBY_COLLEGES:
@@ -212,38 +181,20 @@
     {
         NSInteger section = indexPath.section;
         
-        if (status == LOCATION_SEARCHING)
+        if (status == LOCATION_SEARCHING || status == LOCATION_NOT_FOUND)
         {
             switch (section)
             {
                 case 0:
-                    [cell showLoadingIndicator];
-                    cellLabel = @"Loading...";
-                    break;
-                case 1:
-                    cellLabel = @"All Colleges";
-                    break;
-                case 2:
-                    cellLabel = @"Choose a College";
-                    break;
-                default:
-                    break;
-            }
-        }
-        else if (status == LOCATION_FOUND && numCollegesNearby > 0)
-        {
-            switch (section)
-            {
-                case 0:
-                {
-                    College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
-                    if (college != nil)
+                    if (status == LOCATION_SEARCHING)
                     {
-                        float labelHeight = [Shared getSmallCellMessageHeight:college.name WithFont:CF_FONT_LIGHT(18) withWidth:265];
-                        [cell assignCollege:college withRankNumber:-1 withMessageHeight:labelHeight];
-                        return cell;
+                        [cell showLoadingIndicator];
+                        cellLabel = @"Loading";
                     }
-                }
+                    else
+                    {
+                        cellLabel = @"(None)";
+                    }
                     break;
                 case 1:
                     cellLabel = @"All Colleges";
@@ -255,20 +206,35 @@
                     break;
             }
         }
-        else // (LOCATION_FOUND && numCollegesNearby == 0) || (LOCATION_NOT_FOUND)
+        else // if (status == LOCATION_FOUND)
         {
             switch (section)
             {
                 case 0:
-                    cellLabel = @"All Colleges";
+                    if (numCollegesNearby > 0)
+                    {
+                        College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
+                        if (college != nil)
+                        {
+                            float labelHeight = [Shared getSmallCellMessageHeight:college.name WithFont:CF_FONT_LIGHT(18) withWidth:265];
+                            [cell assignCollege:college withRankNumber:-1 withMessageHeight:labelHeight];
+                            return cell;
+                        }
+                    }
+                    else
+                    {
+                        cellLabel = @"(None)";
+                    }
                     break;
                 case 1:
+                    cellLabel = @"All Colleges";
+                    break;
+                case 2:
                     cellLabel = @"Choose a College";
                     break;
                 default:
                     break;
             }
-            
         }
     }
     else
@@ -293,66 +259,30 @@
         case ALL_NEARBY_OTHER:
         {
             LocationStatus status = self.dataController.locStatus;
-            NSInteger numCollegesNearby = self.dataController.nearbyColleges.count;
             NSInteger section = indexPath.section;
 
-            
-            if (status == LOCATION_SEARCHING)
+            if (section == 0 && status == LOCATION_FOUND)
             {
-                if (section == 1)
-                {
-                    [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
-                        [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:nil];
-                    }];
-                }
-                else if (section == 2)
-                {
-
-                    [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
-                        [self.feedDelegate showDialogForAllColleges];
-                    }];
-                }
+                College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
+                
+                [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
+                    [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:college];
+                }];
             }
-            else if (status == LOCATION_FOUND && numCollegesNearby > 0)
+            else if (section == 1)
             {
-                if (section == 0)
-                {
-                    College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
-
-                    [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
-                        [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:college];
-                    }];
-
-                }
-                else if (section == 1)
-                {
-                    [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
-                        [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:nil];
-                    }];
-                }
-                else if (section == 2)
-                {
-                    [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
-                        [self.feedDelegate showDialogForAllColleges];
-                    }];
-                }
+                [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
+                    [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:nil];
+                }];
             }
-            else // (LOCATION_FOUND && numCollegesNearby == 0) || (LOCATION_NOT_FOUND)
+            else if (section == 2)
             {
-                if (section == 0)
-                {
-                    [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
-                        [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:nil];
-                    }];
-                }
-                else if (section == 1)
-                {
-                    [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
-                        [self.feedDelegate showDialogForAllColleges];
-                    }];
-                }
+                [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
+                    [self.feedDelegate showDialogForAllColleges];
+                }];
             }
-        }            
+            break;
+        }
         case ALL_COLLEGES_WITH_SEARCH:
         {   // When user wants to see all colleges and be able to search through them
             [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
@@ -371,55 +301,53 @@
         }
         default: break;
     }
-    
-    [self dismiss];
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if (self.type == ALL_COLLEGES_WITH_SEARCH || self.type == ONLY_NEARBY_COLLEGES) return nil;
-    
-    const int headerWidth = tableView.frame.size.width;
-
-    bool showLoadingIndicator = self.dataController.locStatus == LOCATION_SEARCHING;
-
-    bool collegesNearby = [self.dataController isNearCollege];
-    
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
-    UILabel *headerLabel;
-    
-    if (section == 0 && (collegesNearby || showLoadingIndicator))
-    {   // section of colleges 'near you'
-        
-        NSString *headerText = @"Near You";
-        float gpsIconWidth = 20;
-        float labelWidth = [headerText sizeWithAttributes:@{NSFontAttributeName:CF_FONT_LIGHT(14)}].width;
-                                                            
-        UIImageView *gpsIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gps.png"]];
-        [gpsIcon setFrame:CGRectMake(0, 0, gpsIconWidth, gpsIconWidth)];
-        [gpsIcon setCenter:CGPointMake((headerWidth / 2) + (labelWidth / 2), TABLE_HEADER_HEIGHT / 2)];
-                
-        [headerView addSubview:gpsIcon];
-        
-        headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(-10, 0, headerWidth, TABLE_HEADER_HEIGHT)];
-        [headerLabel setText:headerText];
-    }
-    else if ((!collegesNearby && section == 0) || (collegesNearby && section == 1))
+    if (self.type == ALL_NEARBY_OTHER)
     {
-        headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
-        [headerLabel setText:@"Combines All Colleges into 1 Feed"];
-    }
-    else if ((!collegesNearby && section == 1) || (collegesNearby && section == 2))
-    {   // section of all colleges
-        headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
-        [headerLabel setText:@"Other Colleges"];
-    }
+        const int headerWidth = tableView.frame.size.width;
+        
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
+        UILabel *headerLabel;
+        
+        
+        if (section == 0)
+        {   // section of colleges 'near you'
+            
+            NSString *headerText = @"Near You";
+            float gpsIconWidth = 20;
+            float labelWidth = [headerText sizeWithAttributes:@{NSFontAttributeName:CF_FONT_LIGHT(14)}].width;
+                                                                
+            UIImageView *gpsIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gps.png"]];
+            [gpsIcon setFrame:CGRectMake(0, 0, gpsIconWidth, gpsIconWidth)];
+            [gpsIcon setCenter:CGPointMake((headerWidth / 2) + (labelWidth / 2), TABLE_HEADER_HEIGHT / 2)];
+                    
+            [headerView addSubview:gpsIcon];
+            
+            headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(-10, 0, headerWidth, TABLE_HEADER_HEIGHT)];
+            [headerLabel setText:headerText];
+        }
+        else if (section == 1)
+        {
+            headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
+            [headerLabel setText:@"Combines All Colleges into 1 Feed"];
+        }
+        else if (section == 2)
+        {   // section of all colleges
+            headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
+            [headerLabel setText:@"Other Colleges"];
+        }
 
-    [headerView addSubview:headerLabel];
-    [headerLabel setTextAlignment:NSTextAlignmentCenter];
-    [headerLabel setFont:CF_FONT_LIGHT(14)];
-    [headerView setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
+        [headerView addSubview:headerLabel];
+        [headerLabel setTextAlignment:NSTextAlignmentCenter];
+        [headerLabel setFont:CF_FONT_LIGHT(14)];
+        [headerView setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
+        
+        return headerView;
+    }
     
-    return headerView;
+    return nil;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -443,7 +371,7 @@
         if (college != nil)
         {
             NSString *text = college.name;
-            return [Shared getSmallCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(18) withWidth:265];
+            return [Shared getSmallCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(18) withWidth:self.tableView.frame.size.width];
         }
     }
     

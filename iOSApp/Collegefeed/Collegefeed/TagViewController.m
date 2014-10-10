@@ -21,8 +21,6 @@
 - (void)loadView
 {
     [super loadView];
-    
-    // Place logo at the top of the navigation bar
 }
 
 - (void)viewDidLoad
@@ -30,8 +28,8 @@
     // Do any additional setup after loading the view.
     [super viewDidLoad];
     [self.view setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
-    [self.tableView setDataSource:self];
-    [self.tableView setDelegate:self];
+//    [self.tableView setDataSource:self];
+//    [self.tableView setDelegate:self];
     
     self.searchResult = [NSMutableArray arrayWithCapacity:[self.list count]];
     
@@ -233,6 +231,8 @@
         [self switchToSpecificCollege];
     }
     [super refresh];
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - Vanishing Bottom Toolbar
