@@ -28,8 +28,8 @@
     // Do any additional setup after loading the view.
     [super viewDidLoad];
     [self.view setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
-//    [self.tableView setDataSource:self];
-//    [self.tableView setDelegate:self];
+    [self.tableView setDataSource:self];
+    [self.tableView setDelegate:self];
     
     self.searchResult = [NSMutableArray arrayWithCapacity:[self.list count]];
     
@@ -88,10 +88,12 @@
 }
 - (void)switchToAllColleges
 {
+    self.dataController.tagPage = 0;
     [self setList:self.dataController.allTags];
 }
 - (void)switchToSpecificCollege
 {
+    self.dataController.tagPage = 0;
     [self setList:self.dataController.allTagsInCollege];
 }
 
@@ -194,7 +196,16 @@
 
 - (BOOL)loadMoreTags
 {
-    BOOL success = [self.dataController fetchTags];
+    BOOL success = false;
+    if (self.dataController.showingAllColleges)
+    {
+        self.dataController.tagPage = 0;
+        success = [self.dataController fetchTags];
+    }
+    else
+    {
+        success = [self.dataController fetchTagsWithCollegeId:self.dataController.collegeInFocus.collegeID];
+    }
     return success;
 }
 - (void)addNewRows:(NSInteger)oldCount through:(NSInteger)newCount
@@ -217,22 +228,19 @@
     });
 }
 
-
 - (void)refresh
 {   // refresh this tag view
     if (self.dataController.showingAllColleges)
     {
-        [self.dataController fetchTags];
         [self switchToAllColleges];
+        [self.dataController fetchTags];
     }
     else if (self.dataController.showingSingleCollege)
     {
-        [self.dataController fetchTagsWithCollegeId:self.dataController.collegeInFocus.collegeID];
         [self switchToSpecificCollege];
+        [self.dataController fetchTagsWithCollegeId:self.dataController.collegeInFocus.collegeID];
     }
     [super refresh];
-    
-    [self.tableView reloadData];
 }
 
 #pragma mark - Vanishing Bottom Toolbar

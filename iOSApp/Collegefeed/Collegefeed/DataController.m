@@ -434,7 +434,11 @@
 }
 - (BOOL)fetchTagsWithCollegeId:(long)collegeId
 {   // fetch tags trending in a particular college
-    self.allTagsInCollege = [[NSMutableArray alloc] init];
+    if (self.allTagsInCollege == nil)
+    {
+        self.allTagsInCollege = [[NSMutableArray alloc] init];
+    }
+    
     NSData *data = [Networker GETTagsWithCollegeId:collegeId AtPageNum:self.tagPage++];
     return [self parseData:data asClass:[Tag class] intoList:self.allTagsInCollege];
 }
