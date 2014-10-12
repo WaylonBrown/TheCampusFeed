@@ -15,6 +15,7 @@
 #import "Networker.h"
 #import "CF_DialogViewController.h"
 
+
 @implementation DataController
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -26,6 +27,8 @@
     self = [super init];
     if (self)
     {
+        self.FOOBAR = true;
+        
         [self checkAppVersionNumber];
         [self setShowingAllColleges:YES];
         [self setShowingSingleCollege:NO];
@@ -429,12 +432,16 @@
 
 - (BOOL)fetchTags
 {   // fetch tags trending across all colleges
+    if (self.allTags == nil || self.tagPage == 0)
+    {
+        self.allTags = [[NSMutableArray alloc] init];
+    }
     NSData *data = [Networker GETTagsTrendingAtPageNum:self.tagPage++];
     return [self parseData:data asClass:[Tag class] intoList:self.allTags];
 }
 - (BOOL)fetchTagsWithCollegeId:(long)collegeId
 {   // fetch tags trending in a particular college
-    if (self.allTagsInCollege == nil)
+    if (self.allTagsInCollege == nil || self.tagPage == 0)
     {
         self.allTagsInCollege = [[NSMutableArray alloc] init];
     }
@@ -1056,7 +1063,7 @@
 #pragma mark - CLLocationManager Functions
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
+{   
     NSDate *currentTime = [NSDate date];
     NSTimeInterval secs = [currentTime timeIntervalSinceDate:self.locationSearchStart];
     
@@ -1089,6 +1096,7 @@
 {
     [self setLocStatus:LOCATION_SEARCHING];
     [self setLocationManager:[[CLLocationManager alloc] init]];
+    
     [self.locationManager requestWhenInUseAuthorization];
     [self.locationManager setDelegate:self];
     if ([CLLocationManager locationServicesEnabled])

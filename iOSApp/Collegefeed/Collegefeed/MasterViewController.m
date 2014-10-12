@@ -57,7 +57,9 @@
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.tableView;
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+//    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(pullToRefresh) forControlEvents:UIControlEventValueChanged];
+
     tableViewController.refreshControl = self.refreshControl;
 
     // Assign fonts
@@ -204,6 +206,15 @@
         FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ONLY_NEARBY_COLLEGES WithDataController:self.dataController WithPostingDelegate:self];
         [self.navigationController presentViewController:controller animated:YES completion:nil];
     }
+}
+- (void)pullToRefresh
+{
+    if (self.dataController.locStatus != LOCATION_FOUND)
+    {
+        [self.dataController findUserLocation];
+    }
+    
+    [self refresh];
 }
 - (void)refresh
 {   // refresh the current view

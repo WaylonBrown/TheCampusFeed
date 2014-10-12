@@ -199,7 +199,6 @@
     BOOL success = false;
     if (self.dataController.showingAllColleges)
     {
-        self.dataController.tagPage = 0;
         success = [self.dataController fetchTags];
     }
     else

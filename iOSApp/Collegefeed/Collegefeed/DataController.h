@@ -91,6 +91,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property BOOL FOOBAR;
 
 // Status Information
 @property (strong, nonatomic) College   *collegeInFocus;
@@ -175,6 +176,8 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 /*************************/
 /***** Network Access ****/
 /*************************/
+
+- (void)findUserLocation;
 
 // Colleges
 - (void)getNetworkCollegeList;

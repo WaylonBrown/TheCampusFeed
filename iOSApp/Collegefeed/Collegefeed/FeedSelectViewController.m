@@ -260,7 +260,7 @@
         {
             LocationStatus status = self.dataController.locStatus;
             NSInteger section = indexPath.section;
-
+            
             if (section == 0 && status == LOCATION_FOUND)
             {
                 College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
