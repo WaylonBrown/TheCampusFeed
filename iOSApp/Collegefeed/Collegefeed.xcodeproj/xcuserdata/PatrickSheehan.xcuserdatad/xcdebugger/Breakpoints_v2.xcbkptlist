@@ -289,13 +289,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Collegefeed/MasterViewController.m"
-            timestampString = "434838007.415471"
+            filePath = "Collegefeed/TableCell.m"
+            timestampString = "434847642.401793"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "214"
-            endingLineNumber = "214"
-            landmarkName = "-pullToRefresh"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "-upVotePressed:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

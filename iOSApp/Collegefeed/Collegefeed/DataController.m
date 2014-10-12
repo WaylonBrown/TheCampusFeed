@@ -355,7 +355,7 @@
         [self savePost:networkPost];
         
         Vote *actualVote = networkPost.vote;
-        if (actualVote != nil)
+        if (actualVote != nil && actualVote.voteID > 0)
         {
             [self.userPostVotes addObject:actualVote];
             [self saveVote:actualVote];
@@ -482,7 +482,11 @@
             {
                 [self.userCommentVotes addObject:vote];
             }
-            [self saveVote:vote];
+            
+            if (vote != nil && vote.voteID > 0)
+            {
+                [self saveVote:vote];
+            }
         }
         return YES;
     }
@@ -494,21 +498,26 @@
 }
 - (BOOL)cancelVote:(Vote *)vote
 {
-    long voteId = vote.voteID;
-    BOOL success = [Networker DELETEVoteId:voteId];
-    if (success)
+    if (vote != nil && vote.voteID > 0)
     {
-        if (vote.votableType == POST)
+        long voteId = vote.voteID;
+        BOOL success = [Networker DELETEVoteId:voteId];
+        if (success)
         {
-            [self.userPostVotes removeObject:vote];
+            if (vote.votableType == POST)
+            {
+                [self.userPostVotes removeObject:vote];
+            }
+            else if (vote.votableType == COMMENT)
+            {
+                [self.userCommentVotes removeObject:vote];
+            }
         }
-        else if (vote.votableType == COMMENT)
-        {
-            [self.userCommentVotes removeObject:vote];
-        }
+        [self deleteVote:vote];
+        return success;
     }
-    [self deleteVote:vote];
-    return success;
+    
+    return false;
 }
 
 #pragma mark - Local Data Access
