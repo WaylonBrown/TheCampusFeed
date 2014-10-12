@@ -27,7 +27,6 @@
 #define USER_POST_IDS_FILE          @"UserPostIds.txt"
 #define USER_COMMENT_IDS_FILE       @"UserCommentIds.txt"
 
-//#define PERMISSION_ENTITY       @"Permissions"
 #define STATUS_ENTITY           @"Status"
 #define KEY_COMMENT_TIME        @"lastCommentTime"
 #define KEY_POST_TIME           @"lastPostTime"
@@ -91,7 +90,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property BOOL FOOBAR;
 
 // Status Information
 @property (strong, nonatomic) College   *collegeInFocus;

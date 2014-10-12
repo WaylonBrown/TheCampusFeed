@@ -187,7 +187,7 @@
     
     
     UIBarButtonItem *menuButton         = [[UIBarButtonItem alloc]
-                                           initWithImage:[UIImage imageNamed:logoImageWithButton]
+                                           initWithImage:[UIImage imageNamed:@"TheCampusFeedLogo"]
                                            style:UIBarButtonItemStylePlain
                                            target:self
                                            action:@selector(openLeftMenu)];

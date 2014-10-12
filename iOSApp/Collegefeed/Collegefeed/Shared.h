@@ -47,12 +47,13 @@
 #define CF_FONT_BOLD(s)     [UIFont fontWithName:@"mplus-2c-bold" size:s]
 
 // Website
-#define WEBSITE_LINK    @"http://cfeed.herokuapp.com"
+#define WEBSITE_LINK    @"http://www.TheCampusFeed.com"
 
 // Title view for navigation bar
-#define logoImageWithButton @"thecampusfeedlogosmallwithmenubutton"
-#define logoImage @"thecampusfeedlogosmall.png"
-#define logoTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:logoImage]]
+//#define logoImageWithButton @"thecampusfeedlogosmallwithmenubutton"
+//#define logoImage @"thecampusfeedlogosmall.png"
+#define logoImageWithButton @"TheCampusFeedLogo"
+//#define logoTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:logoImage]]
 
 + (UIFont*)getFontLight:(float)size;
 + (UIFont*)getFontBold:(float)size;

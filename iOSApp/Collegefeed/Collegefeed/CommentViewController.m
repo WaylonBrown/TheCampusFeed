@@ -52,8 +52,8 @@
         [self.postTableView reloadData];
         [self.commentTableView reloadData];
         
-        UIImage *facebookImage = [UIImage imageNamed:@"fb_logo.png"];
-        UIImage *twitterImage = [UIImage imageNamed:@"twitter_logo.png"];
+        UIImage *facebookImage = [UIImage imageNamed:@"FacebookLogo"];
+        UIImage *twitterImage = [UIImage imageNamed:@"TwitterLogo"];
         
         UIView *dividerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, self.navigationController.navigationBar.frame.size.height - 16)];
         [dividerView setBackgroundColor:[UIColor whiteColor]];
@@ -71,8 +71,8 @@
                                                                                     target:self
                                                                                     action:@selector(create)];
             
-            UIImage *flagImage = [UIImage imageNamed:@"flag.png"];
-              UIBarButtonItem *flag = [[UIBarButtonItem alloc] initWithImage:flagImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
+            UIImage *flagImage = [UIImage imageNamed:@"Flag"];
+            UIBarButtonItem *flag = [[UIBarButtonItem alloc] initWithImage:flagImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
             
             self.navigationItem.rightBarButtonItems = @[create, flag, divider, facebook, twitter];
         }

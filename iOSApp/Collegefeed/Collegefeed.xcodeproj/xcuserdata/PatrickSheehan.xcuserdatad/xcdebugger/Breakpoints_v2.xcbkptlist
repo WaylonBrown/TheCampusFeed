@@ -178,11 +178,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Collegefeed/DataController.m"
-            timestampString = "434837236.784219"
+            timestampString = "434838686.138859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "-checkAppVersionNumber"
             landmarkType = "5">
          </BreakpointContent>
@@ -194,27 +194,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Collegefeed/DataController.m"
-            timestampString = "434837236.784219"
+            timestampString = "434838686.138859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "338"
-            endingLineNumber = "338"
-            landmarkName = "-createPostWithMessage:withCollegeId:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Collegefeed/DataController.m"
-            timestampString = "434837236.784219"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "360"
-            endingLineNumber = "360"
+            startingLineNumber = "358"
+            endingLineNumber = "358"
             landmarkName = "-createPostWithMessage:withCollegeId:"
             landmarkType = "5">
          </BreakpointContent>
@@ -226,11 +210,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Collegefeed/DataController.m"
-            timestampString = "434837236.784219"
+            timestampString = "434838686.138859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "459"
-            endingLineNumber = "459"
+            startingLineNumber = "457"
+            endingLineNumber = "457"
             landmarkName = "-createVote:"
             landmarkType = "5">
          </BreakpointContent>
@@ -296,38 +280,6 @@
             startingLineNumber = "208"
             endingLineNumber = "208"
             landmarkName = "-loadMoreTags"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Collegefeed/DataController.m"
-            timestampString = "434837985.438873"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1097"
-            endingLineNumber = "1097"
-            landmarkName = "-findUserLocation"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Collegefeed/DataController.m"
-            timestampString = "434837971.575321"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1067"
-            endingLineNumber = "1067"
-            landmarkName = "-locationManager:didUpdateToLocation:fromLocation:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

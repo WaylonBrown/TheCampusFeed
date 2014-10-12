@@ -27,8 +27,6 @@
     self = [super init];
     if (self)
     {
-        self.FOOBAR = true;
-        
         [self checkAppVersionNumber];
         [self setShowingAllColleges:YES];
         [self setShowingSingleCollege:NO];
