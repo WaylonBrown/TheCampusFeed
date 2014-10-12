@@ -1,6 +1,6 @@
 //
 //  AppDelegate.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/1/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -20,7 +20,8 @@
 #import "IIViewDeckController.h"
 #import "TutorialViewController.h"
 #import "CF_DialogViewController.h"
-#import "Collegefeed-Swift.h"
+#import "TheCampusFeed-Swift.h"
+
 
 @interface AppDelegate ()
 

@@ -17,7 +17,7 @@
                BlueprintIdentifier = "53F8788C19133F60002A578B"
                BuildableName = "Collegefeed.app"
                BlueprintName = "Collegefeed"
-               ReferencedContainer = "container:Collegefeed.xcodeproj">
+               ReferencedContainer = "container:TheCampusFeed.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "53F878B319133F60002A578B"
                BuildableName = "CollegefeedTests.xctest"
                BlueprintName = "CollegefeedTests"
-               ReferencedContainer = "container:Collegefeed.xcodeproj">
+               ReferencedContainer = "container:TheCampusFeed.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -45,7 +45,7 @@
             BlueprintIdentifier = "53F8788C19133F60002A578B"
             BuildableName = "Collegefeed.app"
             BlueprintName = "Collegefeed"
-            ReferencedContainer = "container:Collegefeed.xcodeproj">
+            ReferencedContainer = "container:TheCampusFeed.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -64,7 +64,7 @@
             BlueprintIdentifier = "53F8788C19133F60002A578B"
             BuildableName = "Collegefeed.app"
             BlueprintName = "Collegefeed"
-            ReferencedContainer = "container:Collegefeed.xcodeproj">
+            ReferencedContainer = "container:TheCampusFeed.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -86,7 +86,7 @@
             BlueprintIdentifier = "53F8788C19133F60002A578B"
             BuildableName = "Collegefeed.app"
             BlueprintName = "Collegefeed"
-            ReferencedContainer = "container:Collegefeed.xcodeproj">
+            ReferencedContainer = "container:TheCampusFeed.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

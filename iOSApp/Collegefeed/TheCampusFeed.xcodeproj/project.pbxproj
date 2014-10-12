@@ -213,7 +213,7 @@
 		53B1FDFF19254E8F00905E49 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MasterViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		53C343B119E2685B00C26745 /* TimeCrunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeCrunchViewController.swift; sourceTree = "<group>"; };
-		53C343B519E26D3900C26745 /* Collegefeed-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Collegefeed-Bridging-Header.h"; sourceTree = "<group>"; };
+		53C343B519E26D3900C26745 /* TheCampusFeed-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TheCampusFeed-Bridging-Header.h"; sourceTree = "<group>"; };
 		53CEAE2E197778C700DCE476 /* CommentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentView.xib; sourceTree = "<group>"; };
 		53CF3303194E53B6008BB733 /* Networker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Networker.xcodeproj; path = Collegefeed/Networker/Networker.xcodeproj; sourceTree = "<group>"; };
 		53CF339D194E7235008BB733 /* CollegeList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CollegeList.txt; sourceTree = "<group>"; };
@@ -231,7 +231,7 @@
 		53DE347D19AD01FF004CB5A0 /* IIWrapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IIWrapController.h; sourceTree = "<group>"; };
 		53DE347E19AD01FF004CB5A0 /* IIWrapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IIWrapController.m; sourceTree = "<group>"; };
 		53DE348319AD517C004CB5A0 /* card_without_9patch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card_without_9patch.png; sourceTree = "<group>"; };
-		53F8788D19133F60002A578B /* Collegefeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collegefeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		53F8788D19133F60002A578B /* TheCampusFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheCampusFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53F8789019133F60002A578B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		53F8789219133F60002A578B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		53F8789419133F60002A578B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -502,7 +502,7 @@
 				53AE73C61928354F00BE6B02 /* DataController.m */,
 				53F8789F19133F60002A578B /* AppDelegate.h */,
 				53F878A019133F60002A578B /* AppDelegate.m */,
-				53C343B519E26D3900C26745 /* Collegefeed-Bridging-Header.h */,
+				53C343B519E26D3900C26745 /* TheCampusFeed-Bridging-Header.h */,
 				53AB57B7194AAFB3001D1B7B /* Other */,
 			);
 			name = "Source Code";
@@ -566,7 +566,7 @@
 		53F8788E19133F60002A578B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				53F8788D19133F60002A578B /* Collegefeed.app */,
+				53F8788D19133F60002A578B /* TheCampusFeed.app */,
 				53F878B419133F60002A578B /* CollegefeedTests.xctest */,
 			);
 			name = Products;
@@ -652,7 +652,7 @@
 			);
 			name = Collegefeed;
 			productName = Collegefeed;
-			productReference = 53F8788D19133F60002A578B /* Collegefeed.app */;
+			productReference = 53F8788D19133F60002A578B /* TheCampusFeed.app */;
 			productType = "com.apple.product-type.application";
 		};
 		53F878B319133F60002A578B /* CollegefeedTests */ = {
@@ -690,7 +690,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 53F8788819133F60002A578B /* Build configuration list for PBXProject "Collegefeed" */;
+			buildConfigurationList = 53F8788819133F60002A578B /* Build configuration list for PBXProject "TheCampusFeed" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -983,9 +983,9 @@
 					"-all_load",
 				);
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TheCampusFeed;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Collegefeed/Collegefeed-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Collegefeed/TheCampusFeed-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = "/Users/PatrickSheehan/Documents/working/Collegefeed/iOSApp/Collegefeed/Collegefeed/Models/Models /Users/PatrickSheehan/Documents/working/Collegefeed/iOSApp/Collegefeed/Collegefeed/Networker/Networker";
 				WRAPPER_EXTENSION = app;
@@ -1011,9 +1011,9 @@
 					"-all_load",
 				);
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TheCampusFeed;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Collegefeed/Collegefeed-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Collegefeed/TheCampusFeed-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = "/Users/PatrickSheehan/Documents/working/Collegefeed/iOSApp/Collegefeed/Collegefeed/Models/Models /Users/PatrickSheehan/Documents/working/Collegefeed/iOSApp/Collegefeed/Collegefeed/Networker/Networker";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1064,7 +1064,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		53F8788819133F60002A578B /* Build configuration list for PBXProject "Collegefeed" */ = {
+		53F8788819133F60002A578B /* Build configuration list for PBXProject "TheCampusFeed" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				53F878C319133F60002A578B /* Debug */,

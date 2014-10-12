@@ -1,6 +1,6 @@
 //
 //  ToastController.m
-//  Collegefeed
+// TheCampusFeed
 //
 //  Created by Patrick Sheehan on 7/2/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -66,7 +66,7 @@
 }
 - (void)toastNoInternetConnection
 {
-    NSString *message = @"You have no internet connection. Pull down to refresh and try again.";
+    NSString *message = @"A connection error occurred. Pull down to refresh and try again.";
     [self addToQueue:message];
 }
 - (void)toastTagSearchTooShortWithLength:(int)minLength
