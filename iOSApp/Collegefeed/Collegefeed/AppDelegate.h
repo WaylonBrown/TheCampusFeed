@@ -23,7 +23,7 @@
 @class TimeCrunchViewController;
 @class MenuViewController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, LocationFinderDelegateProtocol>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow              *window;
 @property (strong, nonatomic) UITabBarController    *tabBarController;

@@ -26,13 +26,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" placeholderIntrinsicWidth="20" placeholderIntrinsicHeight="20" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Z4f-kk-Oeg">
-                        <rect key="frame" x="275" y="12" width="20" height="20"/>
+                        <rect key="frame" x="275" y="9" width="20" height="20"/>
                     </activityIndicatorView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="tXm-5T-2H1" firstAttribute="leading" secondItem="bGP-uD-UhT" secondAttribute="leading" constant="5" id="2h2-VY-BGF"/>
                     <constraint firstItem="tXm-5T-2H1" firstAttribute="trailing" secondItem="7uO-pg-YcX" secondAttribute="trailing" constant="10" id="6R7-na-0N8"/>
-                    <constraint firstAttribute="centerY" secondItem="Z4f-kk-Oeg" secondAttribute="centerY" id="9xg-qH-e0L"/>
+                    <constraint firstAttribute="centerY" secondItem="Z4f-kk-Oeg" secondAttribute="centerY" constant="2.5" id="9xg-qH-e0L"/>
                     <constraint firstItem="tXm-5T-2H1" firstAttribute="trailing" secondItem="Z4f-kk-Oeg" secondAttribute="trailing" constant="20" id="MOC-Ma-WeF"/>
                     <constraint firstAttribute="trailing" secondItem="tXm-5T-2H1" secondAttribute="trailing" constant="5" id="SfZ-zj-jB8"/>
                     <constraint firstItem="7uO-pg-YcX" firstAttribute="top" secondItem="bGP-uD-UhT" secondAttribute="top" constant="1" id="daj-pP-2Tf"/>

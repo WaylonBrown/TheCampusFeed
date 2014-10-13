@@ -36,7 +36,6 @@
 {   // Set up ViewControllers and DataControllers
 
     self.dataController = [DataController new];
-    [self.dataController setAppDelegate:self];
     [self.dataController incrementLaunchNumber];
     
     
@@ -98,14 +97,6 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
-- (void)foundLocation
-{
-//    [self.topPostsController foundLocation];
-}
-- (void)didNotFindLocation
-{
-//    [self.topPostsController didNotFindLocation];
 }
 - (void)openLeftMenu
 {

@@ -50,8 +50,8 @@
 
 - (void)placeLoadingIndicator;
 - (void)placeCreatePost;
-- (void)foundLocation;
-- (void)didNotFindLocation;
+//- (void)foundLocation;
+//- (void)didNotFindLocation;
 
 // Actions
 - (IBAction)changeFeed;

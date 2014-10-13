@@ -14,10 +14,9 @@
 @property (strong, nonatomic) NSMutableArray *toastQueue;
 @property (nonatomic, strong) NSCondition *condition;
 @property (nonatomic) BOOL showingNotification;
-//@property (nonatomic) BOOL firstAppLaunch;
 @property (nonatomic) BOOL holdingNotifications;
 
-- (id)init;//AsFirstLaunch:(BOOL)isFirst;
+- (id)init;
 
 - (void)dequeueToast;
 - (void)toastHidden;
@@ -32,13 +31,11 @@
 - (void)toastInvalidTagSearch;
 
 // Network Error
-- (void)toastNoInternetConnection;
+- (void)toastLocationConnectionError;
 - (void)toastPostFailed;
 - (void)toastFlagFailed;
 - (void)toastFlagSuccess;
 - (void)toastErrorFetchingCollegeList;
-- (void)toastNoLocationServices;
-- (void)toastLocationNotFoundOnTimeout;
 - (void)toastTwitterUnavailable;
 - (void)toastFacebookUnavailable;
 - (void)toastPostingTooSoon:(NSNumber *)minutesRemaining;

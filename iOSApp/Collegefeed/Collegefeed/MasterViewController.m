@@ -39,11 +39,10 @@
     {
         [self setDataController:controller];
         self.activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-//        self.toastController = [[ToastController alloc] initAsFirstLaunch:self.dataController.isFirstLaunch];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialFinished) name:@"TutorialFinished" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialStarted) name:@"TutorialStarted" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(foundLocation) name:@"FoundLocation" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationWasUpdated) name:@"LocationUpdated" object:nil];
         
     }
     return self;
@@ -106,43 +105,18 @@
                                                                                   target:self action:@selector(create)];
     [self.navigationItem setRightBarButtonItem:createButton];
 }
-- (void)foundLocation
-{   // Called when the user's location is determined. Allow them to create posts
+- (void)locationWasUpdated
+{
+    [self.activityIndicator stopAnimating];
     
     if ([self.dataController isNearCollege])
     {
         [self placeCreatePost];
         [self.tableView reloadData];
-        if (!self.isShowingTutorial)
-        {
-//            [self.toastController toastNearbyColleges:self.dataController.nearbyColleges];
-        }
     }
     else
     {
         [self.navigationItem setRightBarButtonItem:nil];
-        if (!self.isShowingTutorial)
-        {
-            [self.toastController toastLocationFoundNotNearCollege];
-        }
-    }
-    
-    UIViewController *presented = [self presentedViewController];
-    if (presented)
-    {
-        if ([presented class] == [FeedSelectViewController class])
-        {
-            [((FeedSelectViewController *)presented) updateLocation];
-        }
-    }
-}
-- (void)didNotFindLocation
-{   // Called when the user's location cannot be determined. Stop and remove activity indicator
-    [self.activityIndicator stopAnimating];
-    [self.navigationItem setRightBarButtonItem:nil];
-    if (!self.isShowingTutorial)
-    {
-        [self.toastController toastLocationNotFoundOnTimeout];
     }
     
     UIViewController *presented = [self presentedViewController];
@@ -232,12 +206,7 @@
 }
 - (void)refresh
 {   // refresh the current view
-    if ((self.dataController.collegeList == nil || self.dataController.collegeList.count == 0)
-        && !self.isShowingTutorial)
-    {
-        [self.toastController toastNoInternetConnection];
-//        [self.toastController toastErrorFetchingCollegeList];
-    }
+
     NSString *feedName = self.dataController.collegeInFocus.name;
     if (feedName == nil)
     {

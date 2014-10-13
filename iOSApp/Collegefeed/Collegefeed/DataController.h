@@ -65,12 +65,6 @@
 /********************************/
 /***** PROTOCOL DEFINITIONS *****/
 /********************************/
-@protocol LocationFinderDelegateProtocol <NSObject>
-
-- (void)foundLocation;
-- (void)didNotFindLocation;
-
-@end
 
 typedef NS_ENUM(NSInteger, LocationStatus)
 {
@@ -87,7 +81,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 /****************************/
 /***** MEMBER VARIABLES *****/
 /****************************/
-@property (strong, nonatomic) id<LocationFinderDelegateProtocol> appDelegate;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -103,12 +96,12 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic) BOOL              isFirstLaunch;
 @property (nonatomic) BOOL              needsUpdate;
 @property (nonatomic) NSInteger         launchCount;
-
 // Location Information
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic) CLLocationDegrees         lat;
 @property (nonatomic) CLLocationDegrees         lon;
 @property LocationStatus                        locStatus;
+@property (nonatomic) NSInteger     locationUpdateAttempts;
 
 // College Arrays
 @property (strong, nonatomic) NSMutableArray *collegeList;
