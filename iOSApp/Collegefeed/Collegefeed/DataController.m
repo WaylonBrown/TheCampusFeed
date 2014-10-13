@@ -91,22 +91,24 @@
 {
     float appVersion = [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] floatValue];
     NSData *data = [Networker getIOSAppVersionFromServer];
-    NSArray *jsonArray = (NSArray*)[NSJSONSerialization JSONObjectWithData:data
-                                                                   options:0
-                                                                     error:nil];
-    
-    float serverVersion = [[jsonArray valueForKey:@"minVersion"] floatValue];
-    
-    self.needsUpdate = (appVersion < serverVersion);
-    if (appVersion < serverVersion)
+    if (data)
     {
-        self.needsUpdate = YES;
-        CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:UPDATE];
+        NSArray *jsonArray = (NSArray*)[NSJSONSerialization JSONObjectWithData:data
+                                                                       options:0
+                                                                         error:nil];
+        
+        float serverVersion = [[jsonArray valueForKey:@"minVersion"] floatValue];
+        
+        self.needsUpdate = (appVersion < serverVersion);
+        if (appVersion < serverVersion)
+        {
+            self.needsUpdate = YES;
+            CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:UPDATE];
 
-        // TODO: direct to app store for update
-        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
+            // TODO: direct to app store for update
+            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
+        }
     }
-    
 }
 - (void)incrementLaunchNumber
 {
@@ -226,12 +228,16 @@
 - (long)getNetworkCollegeListVersion
 {
     NSData *data = [Networker GETCollegeListVersion];
-    NSArray *jsonArray = (NSArray*)[NSJSONSerialization JSONObjectWithData:data
-                                                                   options:0
-                                                                     error:nil];
-        
-    NSNumber *versionNumber = [jsonArray valueForKey:@"version"];
-    return [versionNumber longValue];
+    if (data)
+    {
+        NSArray *jsonArray = (NSArray*)[NSJSONSerialization JSONObjectWithData:data
+                                                                       options:0
+                                                                         error:nil];
+            
+        NSNumber *versionNumber = [jsonArray valueForKey:@"version"];
+        return [versionNumber longValue];
+    }
+    else return -1;
 }
 - (BOOL)needsNewCollegeList
 {
@@ -266,21 +272,33 @@
 {
     @try
     {
+        if (![self isAbleToComment])
+        {
+            [self.toaster toastCommentingTooSoon];
+            return NO;
+        }
         Comment *comment = [[Comment alloc] initWithCommentMessage:message
                                                           withPost:post];
         NSData *result = [Networker POSTCommentData:[comment toJSON] WithPostId:post.postID];
         
-        NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
-                                                                   options:0
-                                                                     error:nil];
-        Comment *networkComment = [[Comment alloc] initFromJSON:jsonObject];
+        if (result)
+        {
+            NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
+                                                                       options:0
+                                                                         error:nil];
+            Comment *networkComment = [[Comment alloc] initFromJSON:jsonObject];
 
-        NSDate *commentTime = [networkComment getCreatedAt];
-        [self updateLastCommentTime:commentTime];
-        [self.commentList insertObject:networkComment atIndex:self.commentList.count];
-        [self.userComments insertObject:networkComment atIndex:self.userComments.count];
-        [self saveComment:networkComment];
-        return YES;
+            NSDate *commentTime = [networkComment getCreatedAt];
+            [self updateLastCommentTime:commentTime];
+            [self.commentList insertObject:networkComment atIndex:self.commentList.count];
+            [self.userComments insertObject:networkComment atIndex:self.userComments.count];
+            [self saveComment:networkComment];
+            return YES;
+        }
+        else
+        {
+            [self.toaster toastPostFailed];
+        }
     }
     @catch (NSException *exception)
     {
@@ -322,8 +340,10 @@
 - (BOOL)createPostWithMessage:(NSString *)message
                 withCollegeId:(long)collegeId
 {
-    if (![self isAbleToPost:nil])
+    NSNumber *minutesUntilCanPost = [NSNumber new];
+    if (![self isAbleToPost:minutesUntilCanPost])
     {
+        [self.toaster toastPostingTooSoon:minutesUntilCanPost];
         return NO;
     }
     @try
@@ -334,33 +354,40 @@
                                      withUserToken:udid];
         
         NSData *result = [Networker POSTPostData:[post toJSON] WithCollegeId:post.collegeID];
-        NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
-                                                                   options:0
-                                                                     error:nil];
-        Post *networkPost = [[Post alloc] initFromJSON:jsonObject];
-        if (networkPost.collegeID == 0)
+        if (result)
         {
-            [networkPost setCollegeID:collegeId];
+            NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
+                                                                       options:0
+                                                                         error:nil];
+            Post *networkPost = [[Post alloc] initFromJSON:jsonObject];
+            if (networkPost.collegeID == 0)
+            {
+                [networkPost setCollegeID:collegeId];
+            }
+            College *college = [self getCollegeById:collegeId];
+            [networkPost setCollege:college];
+            NSDate *postTime = [networkPost getCreatedAt];
+            [self updateLastPostTime:postTime];
+            
+            [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
+            [self.recentPostsInCollege insertObject:networkPost atIndex:0];
+            [self.userPosts insertObject:networkPost atIndex:0];
+            [self savePost:networkPost];
+            
+            Vote *actualVote = networkPost.vote;
+            if (actualVote != nil && actualVote.voteID > 0)
+            {
+                [self.userPostVotes addObject:actualVote];
+                [self saveVote:actualVote];
+            }
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CreatedPost" object:self];
+            return YES;
         }
-        College *college = [self getCollegeById:collegeId];
-        [networkPost setCollege:college];
-        NSDate *postTime = [networkPost getCreatedAt];
-        [self updateLastPostTime:postTime];
-        
-        [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
-        [self.recentPostsInCollege insertObject:networkPost atIndex:0];
-        [self.userPosts insertObject:networkPost atIndex:0];
-        [self savePost:networkPost];
-        
-        Vote *actualVote = networkPost.vote;
-        if (actualVote != nil && actualVote.voteID > 0)
+        else
         {
-            [self.userPostVotes addObject:actualVote];
-            [self saveVote:actualVote];
+            [self.toaster toastPostFailed];
         }
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"CreatedPost" object:self];
-        return YES;
     }
     @catch (NSException *exception)
     {

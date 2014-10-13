@@ -19,7 +19,7 @@
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
                                withCollegeId:(long)collegeId
                                withUserToken:(NSString *)userToken;
-- (void)commentingTooFrequently;
+//- (void)commentingTooFrequently;
 
 @end
 

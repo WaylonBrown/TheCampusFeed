@@ -323,15 +323,15 @@
 
             [self.commentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataController.commentList.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         }
-        else
-        {
-            [self.toastController toastPostFailed];
-        }
+//        else
+//        {
+//            [self.toastController toastPostFailed];
+//        }
     }
-    else
-    {
-        [self.toastController toastCommentingTooSoon];
-    }
+//    else
+//    {
+//        [self.toastController toastCommentingTooSoon];
+//    }
     
 }
 

@@ -289,26 +289,21 @@
             
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.list.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         }
-        else
-        {
-            [self.toastController toastPostFailed];
-        }
-
-        
-        
-        
-        
+//        else
+//        {
+//            [self.toastController toastPostFailed];
+//        }
         [self refresh];
     }
-    else
-    {
-        [self.toastController toastPostingTooSoon:minutesUntilCanPost];
-    }
+//    else
+//    {
+//        [self.toastController toastPostingTooSoon:minutesUntilCanPost];
+//    }
 }
-- (void)commentingTooFrequently
-{
-    [self.toastController toastCommentingTooSoon];
-}
+//- (void)commentingTooFrequently
+//{
+//    [self.toastController toastCommentingTooSoon];
+//}
 
 #pragma mark - FeedSelectionProtocol Delegate Methods
 

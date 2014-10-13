@@ -373,11 +373,12 @@
     BOOL success = [self.dataController createPostWithMessage:message
                                  withCollegeId:self.dataController.collegeInFocus.collegeID];
     
-    if (!success)
-    {
-        [self.toastController toastPostFailed];
-    }
-    [self refresh];
+//    if (!success)
+//    {
+//        [self.toastController toastPostFailed];
+//    }
+    if (success)
+        [self refresh];
 }
 
 #pragma mark - Vanishing Bottom Toolbar

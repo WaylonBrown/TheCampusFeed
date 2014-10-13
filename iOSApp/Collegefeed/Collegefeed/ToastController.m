@@ -12,7 +12,7 @@
 
 @implementation ToastController
 
-- (id)init//AsFirstLaunch:(BOOL)isFirst
+- (id)init
 {
     self.holdingNotifications = NO;
     self.showingNotification = NO;
