@@ -244,8 +244,7 @@
         [header setText:basicText];
         [header setTextAlignment:NSTextAlignmentCenter];
         [header setFont:CF_FONT_LIGHT(16)];
-        [header setTintColor:[Shared getCustomUIColor:CF_DARKGRAY]];
-        [header setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
+        [header setBackgroundColor:[Shared getCustomUIColor:CF_EXTRALIGHTGRAY]];
 
         return header;
     }

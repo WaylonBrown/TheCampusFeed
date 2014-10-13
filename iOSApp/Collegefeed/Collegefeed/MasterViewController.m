@@ -60,7 +60,18 @@
     [self.refreshControl addTarget:self action:@selector(pullToRefresh) forControlEvents:UIControlEventValueChanged];
 
     tableViewController.refreshControl = self.refreshControl;
+    
+    CGRect frame = CGRectMake(0, 0, self.tableView.frame.size.width, 5);
+    
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    
+    [view setBackgroundColor:[Shared getCustomUIColor:CF_EXTRALIGHTGRAY]];
 
+                                      
+    self.tableView.tableHeaderView = view;
+
+                                      
+                                      
     // Assign fonts
     [self.currentFeedLabel  setFont:CF_FONT_LIGHT(22)];
     [self.showingLabel      setFont:CF_FONT_BOLD(12)];
