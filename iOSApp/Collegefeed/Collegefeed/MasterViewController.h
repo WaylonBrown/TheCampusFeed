@@ -41,7 +41,6 @@
 @property (strong, nonatomic) NSMutableArray *list;
 
 @property (nonatomic) float previousScrollViewYOffset;
-//@property (nonatomic) float previousScrollSizeHeight;
 @property (nonatomic) BOOL isLoadingPosts;
 @property (nonatomic) BOOL isShowingTutorial;
 
@@ -50,8 +49,6 @@
 
 - (void)placeLoadingIndicator;
 - (void)placeCreatePost;
-//- (void)foundLocation;
-//- (void)didNotFindLocation;
 
 // Actions
 - (IBAction)changeFeed;

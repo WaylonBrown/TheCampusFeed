@@ -12,6 +12,7 @@
 #import "IIViewDeckController.h"
 #import "TutorialViewController.h"
 #import "CF_DialogViewController.h"
+#import "PostsViewController.h"
 
 @interface MenuViewController ()
 
@@ -19,21 +20,22 @@
 
 @implementation MenuViewController
 
-- (id)initWithNavControllers:(NSArray *)navControllers
-{
-    self = [super init];
-    if (self != nil)
-    {
-        self.navControllers = navControllers;
-    }
-    return self;
-}
+//- (id)initWithNavControllers:(NSArray *)navControllers
+//{
+//    self = [super init];
+//    if (self != nil)
+//    {
+//        self.navControllers = navControllers;
+//    }
+//    return self;
+//}
 - (id)initWithViewControllers:(NSArray *)viewControllers
 {
     self = [super init];
     if (self != nil)
     {
         self.viewControllers = viewControllers;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchToNewPosts) name:@"CreatedPost" object:nil];
     }
     return self;
 }
@@ -48,6 +50,16 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.tableView reloadData];
+}
+- (void)switchToNewPosts
+{
+    PostsViewController *viewController = self.viewControllers[TOP_POSTS_INDEX];
+    
+    [self.viewDeckController closeLeftView];
+    
+    self.selectedIndex = TOP_POSTS_INDEX;
+    [self.viewDeckController setCenterController:viewController];
+    [viewController.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 #pragma mark - Properties

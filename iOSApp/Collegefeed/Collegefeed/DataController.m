@@ -347,8 +347,6 @@
         NSDate *postTime = [networkPost getCreatedAt];
         [self updateLastPostTime:postTime];
         
-        [self.topPostsAllColleges insertObject:networkPost atIndex:0];
-        [self.topPostsInCollege insertObject:networkPost atIndex:0];
         [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
         [self.recentPostsInCollege insertObject:networkPost atIndex:0];
         [self.userPosts insertObject:networkPost atIndex:0];
@@ -360,6 +358,8 @@
             [self.userPostVotes addObject:actualVote];
             [self saveVote:actualVote];
         }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CreatedPost" object:self];
         return YES;
     }
     @catch (NSException *exception)

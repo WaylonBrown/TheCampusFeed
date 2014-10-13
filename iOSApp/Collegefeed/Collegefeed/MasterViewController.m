@@ -57,7 +57,6 @@
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.tableView;
     self.refreshControl = [[UIRefreshControl alloc] init];
-//    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     [self.refreshControl addTarget:self action:@selector(pullToRefresh) forControlEvents:UIControlEventValueChanged];
 
     tableViewController.refreshControl = self.refreshControl;
@@ -271,8 +270,23 @@
     NSNumber *minutesUntilCanPost = [NSNumber new];
     if ([self.dataController isAbleToPost:minutesUntilCanPost])
     {
-        [self.dataController createPostWithMessage:message
+        bool success = [self.dataController createPostWithMessage:message
                                      withCollegeId:collegeId];
+        if (success)
+        {
+            [self refresh];
+            
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.list.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
+        else
+        {
+            [self.toastController toastPostFailed];
+        }
+
+        
+        
+        
+        
         [self refresh];
     }
     else

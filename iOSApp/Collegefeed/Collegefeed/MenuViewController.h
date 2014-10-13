@@ -10,15 +10,16 @@
 #import <MessageUI/MessageUI.h>
 
 #define MENU_CELL_HEIGHT 60
-#define FEEDBACK_INDEX 8
+#define TOP_POSTS_INDEX 1
 #define HELP_INDEX 7
+#define FEEDBACK_INDEX 8
 
 @interface MenuViewController : UIViewController<UITableViewDataSource, MFMailComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *navControllers;
 
-- (id)initWithNavControllers:(NSArray *)navControllers;
+//- (id)initWithNavControllers:(NSArray *)navControllers;
 
 
 @property (strong, nonatomic) NSArray *viewControllers;
