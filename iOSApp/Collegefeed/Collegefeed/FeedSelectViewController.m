@@ -88,28 +88,68 @@
     NSUInteger numNearbyColleges = self.dataController.nearbyColleges.count;
     
     float tableViewHeight = 0;
+//    switch (self.type)
+//    {
+//        case ALL_COLLEGES_WITH_SEARCH:
+//            return;
+//            break;
+//        case ALL_NEARBY_OTHER:
+//            {
+//                bool collegesNearby = [self.dataController isNearCollege];
+//                // Handle two default cells that are always present
+//                tableViewHeight += 3 * TABLE_HEADER_HEIGHT;
+//                tableViewHeight += 2 * TABLE_CELL_HEIGHT;
+//                if (collegesNearby)
+//                {
+//                    for (int i = 0; i < numNearbyColleges; i++)
+//                    {
+//                        float collegeCellHeight = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
+//                        tableViewHeight += collegeCellHeight;
+//                    }
+//                }
+//                else
+//                {
+//                    tableViewHeight += TABLE_CELL_HEIGHT;
+//                }
+//
+//            }
+//            break;
+//        case ONLY_NEARBY_COLLEGES:
+//            
+//            break;
+//        default:
+//            break;
+//    }
     
-    if (self.type != ALL_COLLEGES_WITH_SEARCH)
+    
+    
+    if (self.type == ALL_COLLEGES_WITH_SEARCH)
     {
-        bool collegesNearby = [self.dataController isNearCollege];
+        return;
+    }
+    
+    bool collegesNearby = [self.dataController isNearCollege];
+    
+    if (self.type == ALL_NEARBY_OTHER)
+    {
         // Handle two default cells that are always present
         tableViewHeight += 3 * TABLE_HEADER_HEIGHT;
         tableViewHeight += 2 * TABLE_CELL_HEIGHT;
-        if (collegesNearby)
-        {
-            for (int i = 0; i < numNearbyColleges; i++)
-            {
-                float collegeCellHeight = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
-                tableViewHeight += collegeCellHeight;
-            }
-        }
-        else
-        {
-            tableViewHeight += TABLE_CELL_HEIGHT;
-        }
-        self.tableHeightConstraint.constant = tableViewHeight;
-        [self.view setNeedsUpdateConstraints];
     }
+    if (collegesNearby)
+    {
+        for (int i = 0; i < numNearbyColleges; i++)
+        {
+            float collegeCellHeight = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
+            tableViewHeight += collegeCellHeight;
+        }
+    }
+    else
+    {
+        tableViewHeight += TABLE_CELL_HEIGHT;
+    }
+    self.tableHeightConstraint.constant = tableViewHeight;
+    [self.view setNeedsUpdateConstraints];
 }
 - (void)updateLocation
 {

@@ -1126,7 +1126,11 @@
     [self setLocStatus:LOCATION_SEARCHING];
     [self setLocationManager:[[CLLocationManager alloc] init]];
     
-    [self.locationManager requestWhenInUseAuthorization];
+    if ([[UIDevice currentDevice] systemVersion].floatValue >= 8.0)
+    {
+        [self.locationManager requestWhenInUseAuthorization];
+    }
+    
     [self.locationManager setDelegate:self];
     if ([CLLocationManager locationServicesEnabled])
     {
