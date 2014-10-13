@@ -14,7 +14,7 @@
 #import "Vote.h"
 #import "Networker.h"
 #import "CF_DialogViewController.h"
-
+#import "ToastController.h"
 
 @implementation DataController
 
@@ -30,7 +30,8 @@
         [self checkAppVersionNumber];
         [self setShowingAllColleges:YES];
         [self setShowingSingleCollege:NO];
-
+        self.toaster = [ToastController new];
+        
         [self initArrays];
         
         [self setTopPostsPage:0];
@@ -1077,6 +1078,7 @@
     if (secs >= 10)
     {
         [self failedLocationFinding];
+        [self.toaster toastLocationNotFoundOnTimeout];
     }
     else if (self.locStatus == LOCATION_SEARCHING)
     {
@@ -1087,6 +1089,8 @@
         [self findNearbyColleges];
         [self.appDelegate foundLocation];
         [self setLocStatus:LOCATION_FOUND];
+        [self.toaster toastNearbyColleges:self.nearbyColleges];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FoundLocation" object:self];
     }
 }
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error

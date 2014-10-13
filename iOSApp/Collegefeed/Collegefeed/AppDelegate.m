@@ -101,11 +101,11 @@
 }
 - (void)foundLocation
 {
-    [self.topPostsController foundLocation];
+//    [self.topPostsController foundLocation];
 }
 - (void)didNotFindLocation
 {
-    [self.topPostsController didNotFindLocation];
+//    [self.topPostsController didNotFindLocation];
 }
 - (void)openLeftMenu
 {

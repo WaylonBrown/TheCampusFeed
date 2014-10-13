@@ -1,6 +1,6 @@
 //
 //  ToastController.h
-// TheCampusFeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 7/2/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -14,12 +14,14 @@
 @property (strong, nonatomic) NSMutableArray *toastQueue;
 @property (nonatomic, strong) NSCondition *condition;
 @property (nonatomic) BOOL showingNotification;
-@property (nonatomic) BOOL firstAppLaunch;
+//@property (nonatomic) BOOL firstAppLaunch;
+@property (nonatomic) BOOL holdingNotifications;
 
-- (id)initAsFirstLaunch:(BOOL)isFirst;
+- (id)init;//AsFirstLaunch:(BOOL)isFirst;
 
 - (void)dequeueToast;
 - (void)toastHidden;
+- (void)releaseBlockedToasts;
 
 // Validation Error
 - (void)toastInvalidDownvote;

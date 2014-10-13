@@ -1,6 +1,6 @@
 //
 //  FeedSelectViewController.h
-// TheCampusFeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 6/18/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.

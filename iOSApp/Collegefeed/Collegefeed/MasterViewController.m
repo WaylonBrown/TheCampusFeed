@@ -1,6 +1,6 @@
 //
 //  MasterViewController.m
-// TheCampusFeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/15/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -39,10 +39,11 @@
     {
         [self setDataController:controller];
         self.activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        self.toastController = [[ToastController alloc] initAsFirstLaunch:self.dataController.isFirstLaunch];
+//        self.toastController = [[ToastController alloc] initAsFirstLaunch:self.dataController.isFirstLaunch];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialFinished) name:@"TutorialFinished" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialStarted) name:@"TutorialStarted" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(foundLocation) name:@"FoundLocation" object:nil];
         
     }
     return self;
@@ -107,16 +108,23 @@
 }
 - (void)foundLocation
 {   // Called when the user's location is determined. Allow them to create posts
+    
     if ([self.dataController isNearCollege])
     {
         [self placeCreatePost];
         [self.tableView reloadData];
-        [self.toastController toastNearbyColleges:self.dataController.nearbyColleges];
+        if (!self.isShowingTutorial)
+        {
+//            [self.toastController toastNearbyColleges:self.dataController.nearbyColleges];
+        }
     }
     else
     {
         [self.navigationItem setRightBarButtonItem:nil];
-        [self.toastController toastLocationFoundNotNearCollege];
+        if (!self.isShowingTutorial)
+        {
+            [self.toastController toastLocationFoundNotNearCollege];
+        }
     }
     
     UIViewController *presented = [self presentedViewController];
@@ -132,7 +140,10 @@
 {   // Called when the user's location cannot be determined. Stop and remove activity indicator
     [self.activityIndicator stopAnimating];
     [self.navigationItem setRightBarButtonItem:nil];
-    [self.toastController toastLocationNotFoundOnTimeout];
+    if (!self.isShowingTutorial)
+    {
+        [self.toastController toastLocationNotFoundOnTimeout];
+    }
     
     UIViewController *presented = [self presentedViewController];
     if (presented)
@@ -174,10 +185,13 @@
 - (void)tutorialFinished
 {
     self.isShowingTutorial = NO;
+    [self.dataController.toaster releaseBlockedToasts];
+    [self pullToRefresh];
     [self changeFeed];
 }
 - (void)tutorialStarted
 {
+    self.dataController.toaster.holdingNotifications = YES;
     self.isShowingTutorial = YES;
 }
 - (void)showCreationDialogForCollege:(College *) college
@@ -218,9 +232,11 @@
 }
 - (void)refresh
 {   // refresh the current view
-    if (self.dataController.collegeList == nil || self.dataController.collegeList.count == 0)
+    if ((self.dataController.collegeList == nil || self.dataController.collegeList.count == 0)
+        && !self.isShowingTutorial)
     {
-        [self.toastController toastErrorFetchingCollegeList];
+        [self.toastController toastNoInternetConnection];
+//        [self.toastController toastErrorFetchingCollegeList];
     }
     NSString *feedName = self.dataController.collegeInFocus.name;
     if (feedName == nil)

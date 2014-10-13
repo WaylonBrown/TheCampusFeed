@@ -1,6 +1,6 @@
 //
 //  ToastController.m
-// TheCampusFeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 7/2/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -12,12 +12,13 @@
 
 @implementation ToastController
 
-- (id)initAsFirstLaunch:(BOOL)isFirst
+- (id)init//AsFirstLaunch:(BOOL)isFirst
 {
-    self.firstAppLaunch = isFirst;
+//    self.firstAppLaunch = isFirst;
+    self.holdingNotifications = NO;
     
-    if (!self.firstAppLaunch)
-    {
+//    if (!self.firstAppLaunch)
+//    {
         self.showingNotification = NO;
         self.condition = [[NSCondition alloc] init];
 
@@ -28,7 +29,7 @@
         }
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toastHidden) name:@"ToastHidden" object:nil];
-    }
+//    }
     
     return self;
 }
@@ -46,7 +47,11 @@
     self.showingNotification = NO;
     [self dequeueToast];
 }
-
+- (void)releaseBlockedToasts
+{
+    self.holdingNotifications = NO;
+    [self dequeueToast];
+}
 #pragma mark - Public Functions
 
 - (void)toastInvalidDownvote
@@ -159,7 +164,7 @@
     for (int i = 0; i < colleges.count; i++)
     {
         College *college = [colleges objectAtIndex:i];
-        
+    
         if (i == 0)
         {
             collegeMessage = [NSString stringWithFormat:@"You're near %@", college.name];
@@ -187,13 +192,15 @@
 
 - (void)dequeueToast
 {
-    if (self.toastQueue.count > 0 && !self.showingNotification && !self.firstAppLaunch)
+//    if (self.toastQueue.count > 0 && !self.showingNotification && !self.firstAppLaunch && !self.showingTutorial)
+    if (self.toastQueue.count > 0 && !self.holdingNotifications)
     {
         NSString *message = [self.toastQueue objectAtIndex:0];
     
         [self.toastQueue removeObjectAtIndex:0];
         
-        self.showingNotification = YES;
+        self.holdingNotifications = YES;
+//        self.showingNotification = YES;
         
         UIView *currentView = [[[[UIApplication sharedApplication] keyWindow] subviews] lastObject];
         float x = currentView.frame.size.width / 2;

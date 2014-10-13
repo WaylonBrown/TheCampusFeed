@@ -1,6 +1,6 @@
 //
 //  TagViewController.m
-// TheCampusFeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/13/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.

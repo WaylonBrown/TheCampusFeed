@@ -15,6 +15,7 @@
 @class College;
 @class Post;
 @class Vote;
+@class ToastController;
 
 #define MILES_FOR_PERMISSION                15
 #define PI_VALUE                            3.14159
@@ -90,6 +91,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (strong, nonatomic) ToastController *toaster;
 
 // Status Information
 @property (strong, nonatomic) College   *collegeInFocus;
