@@ -170,7 +170,7 @@
     }
     else if (tableView == self.commentTableView)
     {
-        text = [(Comment *)[self.list objectAtIndex:[indexPath row]] getMessage];
+        text = [(Comment *)[self.dataController.commentList objectAtIndex:[indexPath row]] getMessage];
     }
 
     return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)] + offset;
@@ -311,12 +311,16 @@
     if ([self.dataController isAbleToComment])
     {
         BOOL success = [self.dataController createCommentWithMessage:message withPost:self.originalPost];
-        
-        if (!success)
+        if (success)
+        {
+            [self refresh];
+
+            [self.commentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataController.commentList.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
+        else
         {
             [self.toastController toastPostFailed];
         }
-        [self refresh];
     }
     else
     {

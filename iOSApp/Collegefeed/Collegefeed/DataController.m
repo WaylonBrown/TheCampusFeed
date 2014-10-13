@@ -277,10 +277,8 @@
 
         NSDate *commentTime = [networkComment getCreatedAt];
         [self updateLastCommentTime:commentTime];
-
-        
-        [self.commentList insertObject:networkComment atIndex:0];
-        [self.userComments insertObject:networkComment atIndex:0];
+        [self.commentList insertObject:networkComment atIndex:self.commentList.count];
+        [self.userComments insertObject:networkComment atIndex:self.userComments.count];
         [self saveComment:networkComment];
         return YES;
     }
