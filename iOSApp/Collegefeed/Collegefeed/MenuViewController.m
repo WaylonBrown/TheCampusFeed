@@ -20,15 +20,6 @@
 
 @implementation MenuViewController
 
-//- (id)initWithNavControllers:(NSArray *)navControllers
-//{
-//    self = [super init];
-//    if (self != nil)
-//    {
-//        self.navControllers = navControllers;
-//    }
-//    return self;
-//}
 - (id)initWithViewControllers:(NSArray *)viewControllers
 {
     self = [super init];
@@ -36,6 +27,8 @@
     {
         self.viewControllers = viewControllers;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchToNewPosts) name:@"CreatedPost" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchToTopPosts) name:@"SwitchToTopPosts" object:nil];
+        
     }
     return self;
 }
@@ -53,13 +46,24 @@
 }
 - (void)switchToNewPosts
 {
+    PostsViewController *viewController = self.viewControllers[NEW_POSTS_INDEX];
+    
+    [self.viewDeckController closeLeftView];
+    
+    self.selectedIndex = NEW_POSTS_INDEX;
+    [self.viewDeckController setCenterController:viewController];
+    [viewController.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+- (void)switchToTopPosts
+{
     PostsViewController *viewController = self.viewControllers[TOP_POSTS_INDEX];
     
     [self.viewDeckController closeLeftView];
     
     self.selectedIndex = TOP_POSTS_INDEX;
     [self.viewDeckController setCenterController:viewController];
-    [viewController.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    [viewController refresh];
+    [viewController.tableView scrollRectToVisible:CGRectMake(0,0,1,1) animated:YES];
 }
 
 #pragma mark - Properties
