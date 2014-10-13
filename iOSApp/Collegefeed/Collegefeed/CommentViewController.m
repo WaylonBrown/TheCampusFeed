@@ -184,7 +184,7 @@
         [commentHeader setText:@"Comments"];
         [commentHeader setTextAlignment:NSTextAlignmentCenter];
         [commentHeader setFont:CF_FONT_LIGHT(13)];
-        [commentHeader setTintColor:[Shared getCustomUIColor:CF_DARKGRAY]];
+        [commentHeader setTintColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
         [commentHeader setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
         
         return commentHeader;
@@ -193,7 +193,13 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (tableView == self.commentTableView) return 25.0;
+    if (tableView == self.commentTableView)
+    {
+        if (self.dataController.commentList.count > 0)
+            return 25.0;
+        else return 0.0;
+    }
+
     else return 5.0;
 }
 
