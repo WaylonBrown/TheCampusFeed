@@ -2,10 +2,12 @@ package com.appuccino.thecampusfeed.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.Html;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -132,12 +134,22 @@ public class PostListAdapter extends ArrayAdapter<Post>{
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                 postHolder.postImage.setImageBitmap(selectedImage);
                 postHolder.postImage.setVisibility(View.VISIBLE);
-                postHolder.messageText.setMinimumHeight(0);
+                if(thisPost.getMessage() == null || thisPost.getMessage().isEmpty()){
+                    postHolder.messageText.setVisibility(View.GONE);
+                } else {
+                    postHolder.messageText.setVisibility(View.VISIBLE);
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+            Resources r = context.getResources();
+            float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, r.getDisplayMetrics());
+            postHolder.messageText.setMinimumHeight(Math.round(px));
         } else {
             postHolder.postImage.setVisibility(View.GONE);
+            Resources r = context.getResources();
+            float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 56, r.getDisplayMetrics());
+            postHolder.messageText.setMinimumHeight(Math.round(px));
         }
 
         setMessageAndColorizeTags(thisPost.getMessage(), postHolder);
