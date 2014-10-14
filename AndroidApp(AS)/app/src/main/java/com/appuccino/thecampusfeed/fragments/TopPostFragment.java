@@ -124,7 +124,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
                 changeFeed(MainActivity.currentFeedCollegeID);
             }
 		}
-		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 0, currentFeedID);
+		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_post, postList, 0, currentFeedID);
 		if(list != null)
 			list.setAdapter(listAdapter);	
 		else

@@ -72,7 +72,7 @@ public class MyCommentsFragment extends Fragment
             list.addFooterView(headerSpace, null, false);
         }
 
-        listAdapter = new CommentListAdapter(mainActivity, R.layout.list_row_collegepost, commentList, null);
+        listAdapter = new CommentListAdapter(mainActivity, R.layout.list_row_post, commentList, null);
         if(list != null)
             list.setAdapter(listAdapter);
 

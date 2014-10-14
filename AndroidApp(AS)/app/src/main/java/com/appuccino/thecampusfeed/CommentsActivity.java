@@ -158,7 +158,7 @@ public class CommentsActivity extends Activity{
 
             commentsText.setText("Loading comments...");
             pullListFromServer();
-            listAdapter = new CommentListAdapter(this, R.layout.list_row_collegepost, commentList, post);
+            listAdapter = new CommentListAdapter(this, R.layout.list_row_post, commentList, post);
             if(list != null && commentList != null)
                 list.setAdapter(listAdapter);
             else

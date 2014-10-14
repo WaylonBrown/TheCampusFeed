@@ -76,7 +76,7 @@ public class TagListActivity extends Activity{
 			
 			ArrayList<Post> postList = new ArrayList<Post>();
 			pullListFromServer();
-			listAdapter = new PostListAdapter(this, R.layout.list_row_collegepost, postList, 0, MainActivity.currentFeedCollegeID);
+			listAdapter = new PostListAdapter(this, R.layout.list_row_post, postList, 0, MainActivity.currentFeedCollegeID);
 			if(list != null)
 				list.setAdapter(listAdapter);	
 			else

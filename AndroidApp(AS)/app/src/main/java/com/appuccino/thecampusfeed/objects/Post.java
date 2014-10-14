@@ -1,5 +1,6 @@
 package com.appuccino.thecampusfeed.objects;
 
+import android.net.Uri;
 import android.util.JsonWriter;
 
 import com.appuccino.thecampusfeed.MainActivity;
@@ -17,21 +18,38 @@ public class Post extends AbstractPostComment{
     private int commentCount = 0;
     private String webURL;
     private String appURL;
+    private Uri imageUri;
 
-	public Post(String m, int c)
-	{
-		score = 1;
+    public Post(String m, int c)
+    {
+        score = 1;
         deltaScore = 1;
-		message = m;
-		time = TimeManager.now();
-		collegeID = c;
-		try{
-			collegeName = MainActivity.getCollegeByID(collegeID).getName();
-		}catch(Exception e){
-		}
+        message = m;
+        time = TimeManager.now();
+        collegeID = c;
+        try{
+            collegeName = MainActivity.getCollegeByID(collegeID).getName();
+        }catch(Exception e){
+        }
         webURL = "";
         appURL = "";
-	}
+    }
+
+    public Post(String m, int c, Uri imgUri)
+    {
+        score = 1;
+        deltaScore = 1;
+        message = m;
+        time = TimeManager.now();
+        collegeID = c;
+        try{
+            collegeName = MainActivity.getCollegeByID(collegeID).getName();
+        }catch(Exception e){
+        }
+        webURL = "";
+        appURL = "";
+        imageUri = imgUri;
+    }
 	
 	public Post(int id, String message, int score, int collegeID, String time)
 	{
@@ -104,6 +122,10 @@ public class Post extends AbstractPostComment{
     {
         collegeName = n;
     }
+
+    public void setImageUri(Uri uri){
+        imageUri = uri;
+    }
 	
 	public ArrayList<Comment> getCommentList()
 	{
@@ -112,6 +134,10 @@ public class Post extends AbstractPostComment{
 
     public String getWebURL(){
         return webURL;
+    }
+
+    public Uri getImageUri(){
+        return imageUri;
     }
 
     public String getAppURL(){

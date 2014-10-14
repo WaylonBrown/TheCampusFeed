@@ -78,7 +78,7 @@ public class MyPostsFragment extends Fragment
             list.addFooterView(footerSpace, null, false);
         }
 
-        listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 0, MainActivity.ALL_COLLEGES);
+        listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_post, postList, 0, MainActivity.ALL_COLLEGES);
         if(list != null)
             list.setAdapter(listAdapter);
 

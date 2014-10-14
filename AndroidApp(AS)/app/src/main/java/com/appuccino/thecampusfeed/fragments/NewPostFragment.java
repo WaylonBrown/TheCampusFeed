@@ -116,7 +116,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
             }
 
 		}
-		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_collegepost, postList, 1, currentFeedID);
+		listAdapter = new PostListAdapter(getActivity(), R.layout.list_row_post, postList, 1, currentFeedID);
 		if(list != null)
 			list.setAdapter(listAdapter);	
 		else

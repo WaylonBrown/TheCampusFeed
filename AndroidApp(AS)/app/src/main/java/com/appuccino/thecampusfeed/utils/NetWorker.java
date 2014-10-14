@@ -1,6 +1,7 @@
 package com.appuccino.thecampusfeed.utils;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -691,6 +692,9 @@ public class NetWorker {
          int postCollegeID;
          MainActivity main;
 
+         //temporary while images arent on the server but just client side yet
+         Uri imageUri;
+
          public MakePostTask(Context context, MainActivity main) {
              c = context;
              this.main = main;
@@ -699,6 +703,8 @@ public class NetWorker {
          @Override
          protected Boolean doInBackground(Post... posts) {
              try{
+                 //temporary while images arent on the server but just client side yet
+                 imageUri = posts[0].getImageUri();
                  postCollegeID = posts[0].getCollegeID();
                  Log.i("cfeed",LOG_TAG + "Posting to feed with ID of " + posts[0].getCollegeID());
                  Log.i("cfeed",LOG_TAG + "Request URL: " + REQUEST_URL + "colleges/" + posts[0].getCollegeID() + "/posts");
@@ -758,6 +764,8 @@ public class NetWorker {
                  Log.i("cfeed","NETWORK: Successful post response, adding to list");
                  responsePost = JSONParser.postFromJSON(response);
                  responsePost.setCollegeID(postCollegeID);
+                 //temporary while images arent on the server but just client side yet
+                 responsePost.setImageUri(imageUri);
                  if(MainActivity.getCollegeByID(postCollegeID) != null){
                      responsePost.setCollegeName(MainActivity.getCollegeByID(postCollegeID).getName());
                  }

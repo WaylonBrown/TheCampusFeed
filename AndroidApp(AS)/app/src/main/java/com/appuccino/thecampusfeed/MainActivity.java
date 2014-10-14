@@ -9,6 +9,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Criteria;
 import android.location.Location;
@@ -55,7 +57,9 @@ import com.appuccino.thecampusfeed.utils.PrefManager;
 
 import net.simonvt.menudrawer.MenuDrawer;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -89,6 +93,8 @@ public class MainActivity extends FragmentActivity implements LocationListener
     public static final int TIME_BETWEEN_POSTS = 0;     //in minutes
     public static final int TIME_BETWEEN_COMMENTS = 0;  //in minutes
     public static final int TIME_CRUNCH_POST_TIME = 24;
+    public static final boolean PICTURE_MODE = true;    //allow users to upload pics, and posts to show them
+    public static final int SELECT_PHOTO_INTENT_CODE = 1;
 
     public Location userLocation;
     private static int selectedMenuItem = 0;
@@ -475,11 +481,12 @@ public class MainActivity extends FragmentActivity implements LocationListener
             if(newPostFrag != null){
                 newPostFrag.postList.add(0, post);
                 newPostFrag.updateList();
+            } else {
+                goToNewPostsAndScrollToTop(post.getCollegeID());
             }
             Log.i("cfeed","New My Posts list is of size " + myPostsList.size());
         }
         myPostsList.add(post.getID());
-        goToNewPostsAndScrollToTop(post.getCollegeID());
         PrefManager.putMyPostsList(myPostsList);
         lastPostTime = Calendar.getInstance();
         PrefManager.putLastPostTime(lastPostTime);
@@ -1065,6 +1072,26 @@ public class MainActivity extends FragmentActivity implements LocationListener
 //        }
 //        return false;
 //    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent){
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+
+        switch(requestCode) {
+            case SELECT_PHOTO_INTENT_CODE:
+                if(resultCode == RESULT_OK && newPostDialog != null && newPostDialog.isShowing()){
+                    try {
+                        final Uri imageUri = imageReturnedIntent.getData();
+                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                        newPostDialog.setImageChosen(selectedImage, imageUri);
+                    } catch (FileNotFoundException e) {
+                        Toast.makeText(this, "Failed to upload image, please try again later.", Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+                }
+        }
+    }
 
     @Override
     public void onBackPressed() {

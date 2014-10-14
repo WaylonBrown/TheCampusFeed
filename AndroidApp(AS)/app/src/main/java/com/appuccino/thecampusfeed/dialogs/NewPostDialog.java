@@ -3,6 +3,9 @@ package com.appuccino.thecampusfeed.dialogs;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -11,11 +14,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appuccino.thecampusfeed.MainActivity;
 import com.appuccino.thecampusfeed.R;
+import com.appuccino.thecampusfeed.extra.CustomTextView;
 import com.appuccino.thecampusfeed.objects.Post;
 import com.appuccino.thecampusfeed.utils.FontManager;
 import com.appuccino.thecampusfeed.utils.NetWorker.MakePostTask;
@@ -29,7 +35,11 @@ public class NewPostDialog extends AlertDialog.Builder{
 	private int selectedCollegeID = -1;
     MainActivity main;
     AlertDialog dialog;
-	
+    private boolean imageSelected = false;
+    CustomTextView checkMark;
+    ImageView previewImage;
+    Uri currentImageUri;
+
 	public NewPostDialog(final Context context, MainActivity main, View layout) {
 		super(context);
 		this.context = context;
@@ -96,9 +106,15 @@ public class NewPostDialog extends AlertDialog.Builder{
             public void onClick(View v)
             {
                 String thisString = postMessage.getText().toString().trim();
-                if(thisString.length() >= MainActivity.MIN_POST_LENGTH)
+                if(thisString.length() >= MainActivity.MIN_POST_LENGTH || imageSelected)
                 {
-                    Post newPost = new Post(thisString, selectedCollegeID);
+                    Post newPost;
+                    if(!imageSelected){
+                        newPost = new Post(thisString, selectedCollegeID);
+                    } else {
+                        newPost = new Post(thisString, selectedCollegeID, currentImageUri);
+                    }
+
                     new MakePostTask(context, main).execute(newPost);
                     dialog.dismiss();
                 }
@@ -111,10 +127,22 @@ public class NewPostDialog extends AlertDialog.Builder{
 
         TextView title = (TextView)layout.findViewById(R.id.newPostTitle);
         TextView college = (TextView)layout.findViewById(R.id.collegeText);
+        CustomTextView cameraButton = (CustomTextView)layout.findViewById(R.id.cameraButton);
+        checkMark = (CustomTextView)layout.findViewById(R.id.checkMark);
+        previewImage = (ImageView)layout.findViewById(R.id.imagePreview);
+        LinearLayout pictureModeLayout = (LinearLayout)layout.findViewById(R.id.pictureModeLayout);
+
         postMessage.setTypeface(FontManager.light);
         college.setTypeface(FontManager.italic);
         title.setTypeface(FontManager.light);
         postButton.setTypeface(FontManager.light);
+
+        if(MainActivity.PICTURE_MODE){
+            pictureModeLayout.setVisibility(View.VISIBLE);
+        } else {
+            pictureModeLayout.setVisibility(View.GONE);
+        }
+        checkMark.setVisibility(View.INVISIBLE);
 
         //ensure keyboard is brought up when dialog shows
         postMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -176,6 +204,15 @@ public class NewPostDialog extends AlertDialog.Builder{
 
         });
 
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                main.startActivityForResult(photoPickerIntent, MainActivity.SELECT_PHOTO_INTENT_CODE);
+            }
+        });
+
         setupCollege(college);
     }
 
@@ -194,4 +231,12 @@ public class NewPostDialog extends AlertDialog.Builder{
 			college.setText(collegeString);
 		}
 	}
+
+    public void setImageChosen(Bitmap image, Uri imageUri){
+        imageSelected = true;
+        checkMark.setVisibility(View.VISIBLE);
+        previewImage.setVisibility(View.VISIBLE);
+        previewImage.setImageBitmap(image);
+        currentImageUri = imageUri;
+    }
 }

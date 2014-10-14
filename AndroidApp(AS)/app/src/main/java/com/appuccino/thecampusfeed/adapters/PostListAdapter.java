@@ -2,6 +2,8 @@ package com.appuccino.thecampusfeed.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +25,8 @@ import com.appuccino.thecampusfeed.utils.NetWorker.MakePostVoteDeleteTask;
 import com.appuccino.thecampusfeed.utils.NetWorker.MakePostVoteTask;
 import com.appuccino.thecampusfeed.utils.TimeManager;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -74,6 +78,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         	postHolder.collegeName = (TextView)row.findViewById(R.id.collegeNameText);
         	postHolder.gpsImage = (ImageView)row.findViewById(R.id.gpsImage);
         	postHolder.gpsImageGap = row.findViewById(R.id.gpsImageGapFiller);
+            postHolder.postImage = (ImageView)row.findViewById(R.id.postImage);
         	postHolder.bottomDivider = row.findViewById(R.id.bottomDivider);
         	postHolder.bottomPadding = row.findViewById(R.id.bottomPadding);
         	postHolder.bottomLayout = (LinearLayout)row.findViewById(R.id.bottomLayout);
@@ -84,7 +89,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
             postHolder.commentText.setTypeface(FontManager.medium);
             if(postHolder.collegeName != null)
             	postHolder.collegeName.setTypeface(FontManager.italic);
-            
+
             row.setTag(postHolder);
         }
         else
@@ -119,7 +124,22 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         	postHolder.bottomPadding.setVisibility(View.GONE);
         	postHolder.collegeName.setVisibility(View.VISIBLE);
         }
-        
+
+        //set image if images are enabled
+        if(MainActivity.PICTURE_MODE && thisPost.getImageUri() != null){
+            try {
+                final InputStream imageStream = context.getContentResolver().openInputStream(thisPost.getImageUri());
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                postHolder.postImage.setImageBitmap(selectedImage);
+                postHolder.postImage.setVisibility(View.VISIBLE);
+                postHolder.messageText.setMinimumHeight(0);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            postHolder.postImage.setVisibility(View.GONE);
+        }
+
         setMessageAndColorizeTags(thisPost.getMessage(), postHolder);
         try {
 			setTime(thisPost, postHolder.timeText);
@@ -394,6 +414,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
     	ImageView arrowUp;
     	ImageView arrowDown;
     	ImageView gpsImage;
+        ImageView postImage;
     	View gpsImageGap;
     	View bottomDivider;
     	View bottomPadding;

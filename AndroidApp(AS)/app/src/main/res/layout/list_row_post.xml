@@ -73,7 +73,17 @@
 		        android:layout_marginTop="6dp"
 		        android:layout_marginRight="8dp"
 		        android:minHeight="60dp"/>
-		    
+
+            <ImageView
+                android:id="@+id/postImage"
+                android:layout_width="match_parent"
+                android:layout_height="330dp"
+                android:layout_marginRight="10dp"
+                android:visibility="gone"
+                android:scaleType="centerInside"/>
+            <!--
+                android:src="@drawable/harleytest"/> -->
+
 		    <LinearLayout 
 		        android:id="@+id/postDetails"
 		        android:layout_width="match_parent"
