@@ -29,5 +29,5 @@ dependencies {
     compile 'com.android.support:support-v4:19.0.0'
     compile 'net.simonvt.menudrawer:menudrawer:3.0.6'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
-
+    compile group:'com.squareup.picasso', name:'picasso', version:'2.3.4'
 }

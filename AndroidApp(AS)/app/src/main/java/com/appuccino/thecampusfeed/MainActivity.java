@@ -9,8 +9,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Criteria;
 import android.location.Location;
@@ -57,9 +55,7 @@ import com.appuccino.thecampusfeed.utils.PrefManager;
 
 import net.simonvt.menudrawer.MenuDrawer;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -1080,15 +1076,10 @@ public class MainActivity extends FragmentActivity implements LocationListener
         switch(requestCode) {
             case SELECT_PHOTO_INTENT_CODE:
                 if(resultCode == RESULT_OK && newPostDialog != null && newPostDialog.isShowing()){
-                    try {
-                        final Uri imageUri = imageReturnedIntent.getData();
-                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                        newPostDialog.setImageChosen(selectedImage, imageUri);
-                    } catch (FileNotFoundException e) {
-                        Toast.makeText(this, "Failed to upload image, please try again later.", Toast.LENGTH_LONG).show();
-                        e.printStackTrace();
-                    }
+                    final Uri imageUri = imageReturnedIntent.getData();
+                    newPostDialog.setImageChosen(imageUri);
+                } else {
+                    Toast.makeText(this, "Failed to upload image, please try again later.", Toast.LENGTH_LONG).show();
                 }
         }
     }

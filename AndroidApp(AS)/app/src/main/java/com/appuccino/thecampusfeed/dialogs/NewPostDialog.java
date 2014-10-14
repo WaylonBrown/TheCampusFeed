@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.text.Editable;
 import android.text.Html;
@@ -25,6 +24,7 @@ import com.appuccino.thecampusfeed.extra.CustomTextView;
 import com.appuccino.thecampusfeed.objects.Post;
 import com.appuccino.thecampusfeed.utils.FontManager;
 import com.appuccino.thecampusfeed.utils.NetWorker.MakePostTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -232,11 +232,11 @@ public class NewPostDialog extends AlertDialog.Builder{
 		}
 	}
 
-    public void setImageChosen(Bitmap image, Uri imageUri){
+    public void setImageChosen(Uri imageUri){
         imageSelected = true;
         checkMark.setVisibility(View.VISIBLE);
         previewImage.setVisibility(View.VISIBLE);
-        previewImage.setImageBitmap(image);
+        Picasso.with(context).load(imageUri).into(previewImage);
         currentImageUri = imageUri;
     }
 }

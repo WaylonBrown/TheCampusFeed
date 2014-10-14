@@ -72,7 +72,7 @@
 		        android:layout_height="wrap_content"
 		        android:layout_marginTop="6dp"
 		        android:layout_marginRight="8dp"
-                android:paddingBottom="4dp"/>
+                android:paddingBottom="10dp"/>
 		        <!--android:minHeight="60dp"/>-->
 
             <ImageView
@@ -81,7 +81,8 @@
                 android:layout_height="330dp"
                 android:layout_marginRight="10dp"
                 android:visibility="gone"
-                android:scaleType="centerInside"/>
+                android:scaleType="centerInside"
+                android:clickable="true"/>
             <!--
                 android:src="@drawable/harleytest"/> -->
 
