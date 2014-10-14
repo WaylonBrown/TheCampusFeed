@@ -1,6 +1,6 @@
 //
 //  CreatePostCommentViewController.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 6/17/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -86,8 +86,8 @@
     NSString *message = self.messageTextView.text;
     message = [message stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
-    if (message.length > MIN_POST_LENGTH
-        && message.length < MAX_POST_LENGTH)
+    if (message.length >= MIN_POST_LENGTH
+        && message.length <= MAX_POST_LENGTH)
     {
         [self.delegate submitPostCommentCreationWithMessage:message
                                               withCollegeId:self.collegeForPost.collegeID

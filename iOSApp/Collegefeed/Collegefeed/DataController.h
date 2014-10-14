@@ -1,6 +1,6 @@
 //
 //  DataController.h
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/17/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -15,6 +15,7 @@
 @class College;
 @class Post;
 @class Vote;
+@class ToastController;
 
 #define MILES_FOR_PERMISSION                15
 #define PI_VALUE                            3.14159
@@ -27,11 +28,13 @@
 #define USER_POST_IDS_FILE          @"UserPostIds.txt"
 #define USER_COMMENT_IDS_FILE       @"UserCommentIds.txt"
 
-#define PERMISSION_ENTITY       @"Permissions"
+#define STATUS_ENTITY           @"Status"
 #define KEY_COMMENT_TIME        @"lastCommentTime"
 #define KEY_POST_TIME           @"lastPostTime"
 #define KEY_IS_BANNED           @"isBanned"
 #define KEY_COLLEGE_LIST_VERSION    @"listVersion"
+#define KEY_LAUNCH_COUNT        @"launchCount"
+#define KEY_CURRENT_COLLEGE_FEED @"currentFeed"
 
 #define POST_ENTITY             @"Post"
 #define KEY_POST_ID             @"postId"
@@ -62,12 +65,13 @@
 /********************************/
 /***** PROTOCOL DEFINITIONS *****/
 /********************************/
-@protocol LocationFinderDelegateProtocol <NSObject>
 
-- (void)foundLocation;
-- (void)didNotFindLocation;
-
-@end
+typedef NS_ENUM(NSInteger, LocationStatus)
+{
+    LOCATION_FOUND,
+    LOCATION_SEARCHING,
+    LOCATION_NOT_FOUND
+};
 
 
 @interface DataController : NSObject<CLLocationManagerDelegate>
@@ -77,11 +81,27 @@
 /****************************/
 /***** MEMBER VARIABLES *****/
 /****************************/
-@property (strong, nonatomic) id<LocationFinderDelegateProtocol> appDelegate;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property BOOL isFirstLaunch;
+@property (strong, nonatomic) ToastController *toaster;
+
+// Status Information
+@property (strong, nonatomic) College   *collegeInFocus;
+@property (strong, nonatomic) Post      *postInFocus;
+@property (nonatomic) BOOL              showingAllColleges;
+@property (nonatomic) BOOL              showingSingleCollege;
+@property (nonatomic) long              collegeListVersion;
+@property (strong, nonatomic) NSDate    *locationSearchStart;
+@property (nonatomic) BOOL              isFirstLaunch;
+@property (nonatomic) BOOL              needsUpdate;
+@property (nonatomic) NSInteger         launchCount;
+// Location Information
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (nonatomic) CLLocationDegrees         lat;
+@property (nonatomic) CLLocationDegrees         lon;
+@property LocationStatus                        locStatus;
+@property (nonatomic) NSInteger     locationUpdateAttempts;
 
 // College Arrays
 @property (strong, nonatomic) NSMutableArray *collegeList;
@@ -109,19 +129,6 @@
 // Vote Arrays
 @property (nonatomic, strong) NSMutableArray *userPostVotes;
 @property (nonatomic, strong) NSMutableArray *userCommentVotes;
-
-// Location Information
-@property (strong, nonatomic) CLLocationManager *locationManager;
-@property (nonatomic) CLLocationDegrees         lat;
-@property (nonatomic) CLLocationDegrees         lon;
-@property (nonatomic) BOOL                      foundLocation;
-
-// Status Information
-@property (strong, nonatomic) College   *collegeInFocus;
-@property (strong, nonatomic) Post      *postInFocus;
-@property (nonatomic) BOOL              showingAllColleges;
-@property (nonatomic) BOOL              showingSingleCollege;
-@property (nonatomic) long              collegeListVersion;
 
 // Lazy Loading Counters
 @property (nonatomic) long tagPage;
@@ -151,13 +158,19 @@
 - (void)retrieveUserData;
 - (long)getUserPostScore;
 - (long)getUserCommentScore;
+- (NSInteger)getLaunchNumber;
 - (BOOL)isAbleToPost:(NSNumber *)minutesRemaining;
 - (BOOL)isAbleToComment;
+- (void)incrementLaunchNumber;
+- (void)saveCurrentFeed;
+- (void)restoreSavedFeed;
 
 - (NSURL *)applicationDocumentsDirectory;
 /*************************/
 /***** Network Access ****/
 /*************************/
+
+- (void)findUserLocation;
 
 // Colleges
 - (void)getNetworkCollegeList;

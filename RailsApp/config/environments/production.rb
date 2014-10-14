@@ -13,6 +13,7 @@ CollegeFeed::Application.configure do
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
+  config.assets.css_compressor = :sass
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
   # Add `rack-cache` to your Gemfile before enabling this.
@@ -28,7 +29,7 @@ CollegeFeed::Application.configure do
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.enabled = true
-  config.assets.compile = true
+  config.assets.compile = false
   #config.assets.precompile =  ['*.js']
 
   # Generate digests for assets URLs.

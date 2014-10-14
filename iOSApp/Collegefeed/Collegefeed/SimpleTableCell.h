@@ -1,6 +1,6 @@
 //
 //  SimpleTableCell.h
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 6/11/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -15,7 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (strong, nonatomic) IBOutlet UIImageView *imageView;
+@property (strong, nonatomic) IBOutlet UIImageView *myImageView;
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *labelHeight;
 

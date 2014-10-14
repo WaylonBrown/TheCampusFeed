@@ -1,6 +1,6 @@
 //
 //  MenuViewController.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 7/22/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -11,6 +11,8 @@
 #import "Shared.h"
 #import "IIViewDeckController.h"
 #import "TutorialViewController.h"
+#import "CF_DialogViewController.h"
+#import "PostsViewController.h"
 
 @interface MenuViewController ()
 
@@ -18,21 +20,15 @@
 
 @implementation MenuViewController
 
-- (id)initWithNavControllers:(NSArray *)navControllers
-{
-    self = [super init];
-    if (self != nil)
-    {
-        self.navControllers = navControllers;
-    }
-    return self;
-}
 - (id)initWithViewControllers:(NSArray *)viewControllers
 {
     self = [super init];
     if (self != nil)
     {
         self.viewControllers = viewControllers;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchToNewPosts) name:@"CreatedPost" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchToTopPosts) name:@"SwitchToTopPosts" object:nil];
+        
     }
     return self;
 }
@@ -47,6 +43,27 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.tableView reloadData];
+}
+- (void)switchToNewPosts
+{
+    PostsViewController *viewController = self.viewControllers[NEW_POSTS_INDEX];
+    
+    [self.viewDeckController closeLeftView];
+    
+    self.selectedIndex = NEW_POSTS_INDEX;
+    [self.viewDeckController setCenterController:viewController];
+    [viewController.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+- (void)switchToTopPosts
+{
+    PostsViewController *viewController = self.viewControllers[TOP_POSTS_INDEX];
+    
+    [self.viewDeckController closeLeftView];
+    
+    self.selectedIndex = TOP_POSTS_INDEX;
+    [self.viewDeckController setCenterController:viewController];
+    [viewController refresh];
+    [viewController.tableView scrollRectToVisible:CGRectMake(0,0,1,1) animated:YES];
 }
 
 #pragma mark - Properties
@@ -122,7 +139,6 @@
 {
     return MENU_CELL_HEIGHT;
 }
-
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section == 0)
@@ -246,5 +262,10 @@
     [self.viewDeckController.centerController.view addSubview:controller.view];
     
 }
-
+- (void)showRequiresUpdate
+{
+    CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:UPDATE];
+    [self.viewDeckController.navigationController presentViewController:dialog animated:YES completion:nil];
+    
+}
 @end

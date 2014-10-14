@@ -1,6 +1,6 @@
 //
 //  LoadingCell.h
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 8/14/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.

@@ -1,12 +1,13 @@
 //
 //  Shared.h
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/27/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @class College;
 
@@ -17,11 +18,12 @@
 #define MIN_POST_LENGTH      10
 
 // Custom colors
-#define CF_LIGHTBLUE   0x33B5E5 // 51, 181, 229
-#define CF_BLUE        0x0099CC
+#define CF_EXTRALIGHTGRAY 0xE4E4E4
 #define CF_LIGHTGRAY   0xE6E6E6
 #define CF_GRAY        0x7C7C7C
 #define CF_DARKGRAY    0x444444
+#define CF_LIGHTBLUE   0x33B5E5 // 51, 181, 229
+#define CF_BLUE        0x0099CC
 #define CF_WHITE       0xFFFFFF
 
 // Cell height prediction values
@@ -46,14 +48,18 @@
 #define CF_FONT_BOLD(s)     [UIFont fontWithName:@"mplus-2c-bold" size:s]
 
 // Website
-#define WEBSITE_LINK    @"http://cfeed.herokuapp.com"
+#define WEBSITE_LINK    @"http://www.TheCampusFeed.com"
 
 // Title view for navigation bar
-#define logoImageWithButton @"thecampusfeedlogosmallwithmenubutton"
-#define logoImage @"thecampusfeedlogosmall.png"
-#define logoTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:logoImage]]
+//#define logoImageWithButton @"thecampusfeedlogosmallwithmenubutton"
+//#define logoImage @"thecampusfeedlogosmall.png"
+#define logoImageWithButton @"TheCampusFeedLogo"
+//#define logoTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:logoImage]]
 
-+ (void)addCollegeNearby:(College *)college;
++ (UIFont*)getFontLight:(float)size;
++ (UIFont*)getFontBold:(float)size;
++ (UIFont*)getFontItalic:(float)size;
+//+ (void)addCollegeNearby:(College *)college;
 + (UIColor*)getCustomUIColor:(int)hexValue;
 + (float)getSmallCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font;
 + (float)getSmallCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font withWidth:(float)width;

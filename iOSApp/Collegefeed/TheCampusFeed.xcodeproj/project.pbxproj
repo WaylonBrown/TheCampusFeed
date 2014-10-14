@@ -11,9 +11,6 @@
 		5311F86119C961250053D3CC /* second_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 5311F85E19C961250053D3CC /* second_small.png */; };
 		5311F86219C961250053D3CC /* first_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 5311F85F19C961250053D3CC /* first_small.png */; };
 		5312942E196504CD00CF13DB /* ToastController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5312942D196504CD00CF13DB /* ToastController.m */; };
-		531EAADE19860E6200C1E1AA /* thecampusfeedlogosmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAADD19860E6200C1E1AA /* thecampusfeedlogosmall.png */; };
-		531EAAE719881E6600C1E1AA /* fb_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAAE519881E6600C1E1AA /* fb_logo.png */; };
-		531EAAE819881E6600C1E1AA /* twitter_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAAE619881E6600C1E1AA /* twitter_logo.png */; };
 		531EAAEC198828B800C1E1AA /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 531EAAEB198828B800C1E1AA /* Social.framework */; };
 		531EAAEF1988300C00C1E1AA /* icon_light_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAAED1988300C00C1E1AA /* icon_light_small.png */; };
 		531EAAF01988300C00C1E1AA /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 531EAAEE1988300C00C1E1AA /* icon.png */; };
@@ -36,13 +33,11 @@
 		5350558F1953C75C009C1911 /* gps.png in Resources */ = {isa = PBXBuildFile; fileRef = 5350558E1953C75C009C1911 /* gps.png */; };
 		5352B5A2195F5C3100FEB2BF /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 5352B5A1195F5C3100FEB2BF /* UIView+Toast.m */; };
 		5358CE74196E5DF800FF4E45 /* libModels.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5358CE6F196E5D7F00FF4E45 /* libModels.a */; };
-		538BF13719B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 538BF13619B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png */; };
 		538E7C8419CFF34000AD5719 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538E7C8119CFF34000AD5719 /* TutorialViewController.m */; };
 		538E7C8519CFF34000AD5719 /* TutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 538E7C8219CFF34000AD5719 /* TutorialViewController.xib */; };
 		538E7C9219D030C000AD5719 /* CF_DialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538E7C9019D030C000AD5719 /* CF_DialogViewController.m */; };
 		538E7C9319D030C000AD5719 /* CF_DialogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 538E7C9119D030C000AD5719 /* CF_DialogViewController.xib */; };
 		538E7C9A19D4B33900AD5719 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538E7C9919D4B33900AD5719 /* MessageUI.framework */; };
-		538E7CA019D4B67400AD5719 /* TimeCrunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538E7C9E19D4B67400AD5719 /* TimeCrunchViewController.m */; };
 		538E7CA119D4B67400AD5719 /* TimeCrunchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 538E7C9F19D4B67400AD5719 /* TimeCrunchViewController.xib */; };
 		538E7CA419D4BC8700AD5719 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538E7CA319D4BC8700AD5719 /* QuartzCore.framework */; };
 		5390A91D1914B76800ACD082 /* arrowdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9141914B76800ACD082 /* arrowdown.png */; };
@@ -64,7 +59,7 @@
 		53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B1FDFC19254E4700905E49 /* MasterView.xib */; };
 		53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B1FDFF19254E8F00905E49 /* MasterViewController.m */; };
 		53BDB4CE192F3E4400F45D5C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */; };
-		53C44EA719669FB400367E33 /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C44EA619669FB400367E33 /* flag.png */; };
+		53C343B219E2685B00C26745 /* TimeCrunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C343B119E2685B00C26745 /* TimeCrunchViewController.swift */; };
 		53CEAE2F197778C700DCE476 /* CommentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53CEAE2E197778C700DCE476 /* CommentView.xib */; };
 		53CF330E194E53DB008BB733 /* libNetworker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CF3309194E53B6008BB733 /* libNetworker.a */; };
 		53CF339E194E7235008BB733 /* CollegeList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53CF339D194E7235008BB733 /* CollegeList.txt */; };
@@ -147,16 +142,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5306D96E1999E78100637FAE /* Collegefeed-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Collegefeed-Bridging-Header.h"; sourceTree = "<group>"; };
 		5308D2BB193552C600D70C1A /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
 		5311F85D19C961250053D3CC /* ok_button_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ok_button_small.png; sourceTree = "<group>"; };
 		5311F85E19C961250053D3CC /* second_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second_small.png; sourceTree = "<group>"; };
 		5311F85F19C961250053D3CC /* first_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first_small.png; sourceTree = "<group>"; };
 		5312942C196504CD00CF13DB /* ToastController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastController.h; sourceTree = "<group>"; };
 		5312942D196504CD00CF13DB /* ToastController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToastController.m; sourceTree = "<group>"; };
-		531EAADD19860E6200C1E1AA /* thecampusfeedlogosmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thecampusfeedlogosmall.png; sourceTree = "<group>"; };
-		531EAAE519881E6600C1E1AA /* fb_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb_logo.png; sourceTree = "<group>"; };
-		531EAAE619881E6600C1E1AA /* twitter_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter_logo.png; sourceTree = "<group>"; };
 		531EAAEB198828B800C1E1AA /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		531EAAED1988300C00C1E1AA /* icon_light_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_light_small.png; sourceTree = "<group>"; };
 		531EAAEE1988300C00C1E1AA /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
@@ -189,7 +180,6 @@
 		5352B5A0195F5C3100FEB2BF /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
 		5352B5A1195F5C3100FEB2BF /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		5358CE69196E5D7F00FF4E45 /* Models.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Models.xcodeproj; path = Collegefeed/Models/Models.xcodeproj; sourceTree = "<group>"; };
-		538BF13619B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thecampusfeedlogosmallwithmenubutton.png; sourceTree = "<group>"; };
 		538E7C8119CFF34000AD5719 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
 		538E7C8219CFF34000AD5719 /* TutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialViewController.xib; sourceTree = "<group>"; };
 		538E7C8319CFF34000AD5719 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
@@ -197,8 +187,6 @@
 		538E7C9019D030C000AD5719 /* CF_DialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CF_DialogViewController.m; sourceTree = "<group>"; };
 		538E7C9119D030C000AD5719 /* CF_DialogViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CF_DialogViewController.xib; sourceTree = "<group>"; };
 		538E7C9919D4B33900AD5719 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		538E7C9D19D4B67400AD5719 /* TimeCrunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeCrunchViewController.h; sourceTree = "<group>"; };
-		538E7C9E19D4B67400AD5719 /* TimeCrunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeCrunchViewController.m; sourceTree = "<group>"; };
 		538E7C9F19D4B67400AD5719 /* TimeCrunchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeCrunchViewController.xib; sourceTree = "<group>"; };
 		538E7CA319D4BC8700AD5719 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5390A9141914B76800ACD082 /* arrowdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowdown.png; sourceTree = "<group>"; };
@@ -224,7 +212,8 @@
 		53B1FDFE19254E8F00905E49 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MasterViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		53B1FDFF19254E8F00905E49 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MasterViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53BDB4CD192F3E4400F45D5C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		53C44EA619669FB400367E33 /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
+		53C343B119E2685B00C26745 /* TimeCrunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeCrunchViewController.swift; sourceTree = "<group>"; };
+		53C343B519E26D3900C26745 /* TheCampusFeed-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TheCampusFeed-Bridging-Header.h"; sourceTree = "<group>"; };
 		53CEAE2E197778C700DCE476 /* CommentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentView.xib; sourceTree = "<group>"; };
 		53CF3303194E53B6008BB733 /* Networker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Networker.xcodeproj; path = Collegefeed/Networker/Networker.xcodeproj; sourceTree = "<group>"; };
 		53CF339D194E7235008BB733 /* CollegeList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CollegeList.txt; sourceTree = "<group>"; };
@@ -242,7 +231,7 @@
 		53DE347D19AD01FF004CB5A0 /* IIWrapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IIWrapController.h; sourceTree = "<group>"; };
 		53DE347E19AD01FF004CB5A0 /* IIWrapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IIWrapController.m; sourceTree = "<group>"; };
 		53DE348319AD517C004CB5A0 /* card_without_9patch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card_without_9patch.png; sourceTree = "<group>"; };
-		53F8788D19133F60002A578B /* Collegefeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collegefeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		53F8788D19133F60002A578B /* TheCampusFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheCampusFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53F8789019133F60002A578B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		53F8789219133F60002A578B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		53F8789419133F60002A578B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -413,21 +402,20 @@
 			name = "User Content";
 			sourceTree = "<group>";
 		};
-		538E7C9619D030C400AD5719 /* Help Screen */ = {
+		538E7C9619D030C400AD5719 /* CF_DialogView */ = {
 			isa = PBXGroup;
 			children = (
 				538E7C8F19D030C000AD5719 /* CF_DialogViewController.h */,
 				538E7C9019D030C000AD5719 /* CF_DialogViewController.m */,
 				538E7C9119D030C000AD5719 /* CF_DialogViewController.xib */,
 			);
-			name = "Help Screen";
+			name = CF_DialogView;
 			sourceTree = "<group>";
 		};
 		538E7CA219D4B67800AD5719 /* Time Crunch */ = {
 			isa = PBXGroup;
 			children = (
-				538E7C9D19D4B67400AD5719 /* TimeCrunchViewController.h */,
-				538E7C9E19D4B67400AD5719 /* TimeCrunchViewController.m */,
+				53C343B119E2685B00C26745 /* TimeCrunchViewController.swift */,
 				538E7C9F19D4B67400AD5719 /* TimeCrunchViewController.xib */,
 			);
 			name = "Time Crunch";
@@ -439,15 +427,10 @@
 				5311F85D19C961250053D3CC /* ok_button_small.png */,
 				5311F85E19C961250053D3CC /* second_small.png */,
 				5311F85F19C961250053D3CC /* first_small.png */,
-				538BF13619B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png */,
 				53DE348319AD517C004CB5A0 /* card_without_9patch.png */,
 				531EAAED1988300C00C1E1AA /* icon_light_small.png */,
 				531EAAEE1988300C00C1E1AA /* icon.png */,
-				531EAAE519881E6600C1E1AA /* fb_logo.png */,
-				531EAAE619881E6600C1E1AA /* twitter_logo.png */,
-				531EAADD19860E6200C1E1AA /* thecampusfeedlogosmall.png */,
 				53F878AE19133F60002A578B /* Images.xcassets */,
-				53C44EA619669FB400367E33 /* flag.png */,
 				5350558E1953C75C009C1911 /* gps.png */,
 				5390A9141914B76800ACD082 /* arrowdown.png */,
 				5390A9151914B76800ACD082 /* arrowdownred.png */,
@@ -468,7 +451,6 @@
 				53CF339F194E7A7A008BB733 /* Shared.m */,
 				533475871922B88300E84CC8 /* TTTAttributedLabel.h */,
 				533475881922B88300E84CC8 /* TTTAttributedLabel.m */,
-				5306D96E1999E78100637FAE /* Collegefeed-Bridging-Header.h */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -507,7 +489,7 @@
 				5350557B1951458B009C1911 /* Create Post/Comment */,
 				533475A019232A4A00E84CC8 /* Custom Cells */,
 				535055891953B07A009C1911 /* Tag View */,
-				538E7C9619D030C400AD5719 /* Help Screen */,
+				538E7C9619D030C400AD5719 /* CF_DialogView */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -520,6 +502,7 @@
 				53AE73C61928354F00BE6B02 /* DataController.m */,
 				53F8789F19133F60002A578B /* AppDelegate.h */,
 				53F878A019133F60002A578B /* AppDelegate.m */,
+				53C343B519E26D3900C26745 /* TheCampusFeed-Bridging-Header.h */,
 				53AB57B7194AAFB3001D1B7B /* Other */,
 			);
 			name = "Source Code";
@@ -583,7 +566,7 @@
 		53F8788E19133F60002A578B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				53F8788D19133F60002A578B /* Collegefeed.app */,
+				53F8788D19133F60002A578B /* TheCampusFeed.app */,
 				53F878B419133F60002A578B /* CollegefeedTests.xctest */,
 			);
 			name = Products;
@@ -669,7 +652,7 @@
 			);
 			name = Collegefeed;
 			productName = Collegefeed;
-			productReference = 53F8788D19133F60002A578B /* Collegefeed.app */;
+			productReference = 53F8788D19133F60002A578B /* TheCampusFeed.app */;
 			productType = "com.apple.product-type.application";
 		};
 		53F878B319133F60002A578B /* CollegefeedTests */ = {
@@ -699,12 +682,15 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Appuccino;
 				TargetAttributes = {
+					53F8788C19133F60002A578B = {
+						DevelopmentTeam = GQ4WEDQ3GS;
+					};
 					53F878B319133F60002A578B = {
 						TestTargetID = 53F8788C19133F60002A578B;
 					};
 				};
 			};
-			buildConfigurationList = 53F8788819133F60002A578B /* Build configuration list for PBXProject "Collegefeed" */;
+			buildConfigurationList = 53F8788819133F60002A578B /* Build configuration list for PBXProject "TheCampusFeed" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -771,7 +757,6 @@
 			files = (
 				5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */,
 				5311F86119C961250053D3CC /* second_small.png in Resources */,
-				538BF13719B7B43A00B3C5D0 /* thecampusfeedlogosmallwithmenubutton.png in Resources */,
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */,
 				538E7CA119D4B67400AD5719 /* TimeCrunchViewController.xib in Resources */,
@@ -779,7 +764,6 @@
 				531EAAF01988300C00C1E1AA /* icon.png in Resources */,
 				53D6E988199DA51500FD9061 /* LoadingCell.xib in Resources */,
 				53AB57C5194ABD11001D1B7B /* Omnes-Semibold.ttf in Resources */,
-				53C44EA719669FB400367E33 /* flag.png in Resources */,
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,
 				53FF2D0A195BCE7D0040E872 /* UserComments.txt in Resources */,
 				538E7C8519CFF34000AD5719 /* TutorialViewController.xib in Resources */,
@@ -790,7 +774,6 @@
 				53FF2D06195BCE430040E872 /* UserPosts.txt in Resources */,
 				5311F86219C961250053D3CC /* first_small.png in Resources */,
 				53DE348419AD517C004CB5A0 /* card_without_9patch.png in Resources */,
-				531EAAE819881E6600C1E1AA /* twitter_logo.png in Resources */,
 				538E7C9319D030C000AD5719 /* CF_DialogViewController.xib in Resources */,
 				533FCA4D193EDE3B00754C07 /* aggieland.gpx in Resources */,
 				53FF2D0C195BCE850040E872 /* UserVotes.txt in Resources */,
@@ -800,14 +783,12 @@
 				5390A9241914B76800ACD082 /* postbuttonclick.xml in Resources */,
 				53AB57BF194AAFF8001D1B7B /* Roboto-LightItalic.ttf in Resources */,
 				53F878AF19133F60002A578B /* Images.xcassets in Resources */,
-				531EAADE19860E6200C1E1AA /* thecampusfeedlogosmall.png in Resources */,
 				53D51E3A1949625300A8BA81 /* SimpleTableCell.xib in Resources */,
 				53AB57BE194AAFF8001D1B7B /* Roboto-Light.ttf in Resources */,
 				5390A91F1914B76800ACD082 /* arrowup.png in Resources */,
 				53CEAE2F197778C700DCE476 /* CommentView.xib in Resources */,
 				53CF339E194E7235008BB733 /* CollegeList.txt in Resources */,
 				53F8789B19133F60002A578B /* InfoPlist.strings in Resources */,
-				531EAAE719881E6600C1E1AA /* fb_logo.png in Resources */,
 				533475A51923344100E84CC8 /* TableCell.xib in Resources */,
 				5311F86019C961250053D3CC /* ok_button_small.png in Resources */,
 			);
@@ -833,7 +814,6 @@
 				5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */,
 				538E7C9219D030C000AD5719 /* CF_DialogViewController.m in Sources */,
 				5347EE9D197DC7CC001B2214 /* UserPostsViewController.m in Sources */,
-				538E7CA019D4B67400AD5719 /* TimeCrunchViewController.m in Sources */,
 				538E7C8419CFF34000AD5719 /* TutorialViewController.m in Sources */,
 				53DE347719AD00AE004CB5A0 /* IIViewDeckController.m in Sources */,
 				5350557F19529FCA009C1911 /* FeedSelectViewController.m in Sources */,
@@ -845,6 +825,7 @@
 				53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */,
 				53AE73C71928354F00BE6B02 /* DataController.m in Sources */,
 				53CF33A0194E7A7A008BB733 /* Shared.m in Sources */,
+				53C343B219E2685B00C26745 /* TimeCrunchViewController.swift in Sources */,
 				531EAB431988533500C1E1AA /* UserData.xcdatamodeld in Sources */,
 				5350557719514587009C1911 /* CreatePostCommentViewController.m in Sources */,
 				533475A41923344100E84CC8 /* TableCell.m in Sources */,
@@ -989,7 +970,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Collegefeed/Collegefeed-Prefix.pch";
 				INFOPLIST_FILE = "Collegefeed/Collegefeed-Info.plist";
@@ -1000,8 +983,9 @@
 					"-all_load",
 				);
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Collegefeed/Collegefeed-Bridging-Header.h";
+				PRODUCT_NAME = TheCampusFeed;
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Collegefeed/TheCampusFeed-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = "/Users/PatrickSheehan/Documents/working/Collegefeed/iOSApp/Collegefeed/Collegefeed/Models/Models /Users/PatrickSheehan/Documents/working/Collegefeed/iOSApp/Collegefeed/Collegefeed/Networker/Networker";
 				WRAPPER_EXTENSION = app;
@@ -1014,8 +998,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Collegefeed/Collegefeed-Prefix.pch";
 				INFOPLIST_FILE = "Collegefeed/Collegefeed-Info.plist";
@@ -1026,8 +1011,9 @@
 					"-all_load",
 				);
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Collegefeed/Collegefeed-Bridging-Header.h";
+				PRODUCT_NAME = TheCampusFeed;
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Collegefeed/TheCampusFeed-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = "/Users/PatrickSheehan/Documents/working/Collegefeed/iOSApp/Collegefeed/Collegefeed/Models/Models /Users/PatrickSheehan/Documents/working/Collegefeed/iOSApp/Collegefeed/Collegefeed/Networker/Networker";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1078,7 +1064,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		53F8788819133F60002A578B /* Build configuration list for PBXProject "Collegefeed" */ = {
+		53F8788819133F60002A578B /* Build configuration list for PBXProject "TheCampusFeed" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				53F878C319133F60002A578B /* Debug */,

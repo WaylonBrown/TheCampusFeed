@@ -1,6 +1,6 @@
 //
 //  AppDelegate.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/1/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -20,7 +20,8 @@
 #import "IIViewDeckController.h"
 #import "TutorialViewController.h"
 #import "CF_DialogViewController.h"
-#import "TimeCrunchViewController.h"
+#import "TheCampusFeed-Swift.h"
+
 
 @interface AppDelegate ()
 
@@ -33,38 +34,44 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {   // Set up ViewControllers and DataControllers
-   
-    BOOL isFirstLaunch = NO;
-    
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
-    {
-        // app already launched
-    }
-    else
-    {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        // This is the first launch ever
-        isFirstLaunch = YES;
-    }
 
     self.dataController = [DataController new];
-    [self.dataController setIsFirstLaunch:isFirstLaunch];
-    [self.dataController setAppDelegate:self];
+    [self.dataController incrementLaunchNumber];
+    
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    
-    [self initViewControllers:isFirstLaunch];
+
+    [self initViewControllers];
     [self setUpMenuBar];
     
-    if (isFirstLaunch)
-    {
-        [self.menuViewController showTutorial];
-    }
-
     [self.window makeKeyAndVisible];
     
+    
+    switch ([self.dataController getLaunchNumber])
+    {
+        case 1:
+        {
+            [self.menuViewController showTutorial];
+            break;
+        }
+        case 5:
+        {
+            CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:TWITTER];
+            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
+
+            break;
+        }
+        case 10:
+        {
+            CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:WEBSITE];
+            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
+            break;
+        }
+        default:
+            break;
+    }
+
     return YES;
 }
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -76,6 +83,8 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    [self.dataController saveCurrentFeed];
 }
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
@@ -89,18 +98,6 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-- (void)foundLocation
-{
-    [self.topPostsController foundLocation];
-//    [self.recentPostsController foundLocation];
-//    [self.tagController foundLocation];
-}
-- (void)didNotFindLocation
-{
-    [self.topPostsController didNotFindLocation];
-//    [self.recentPostsController didNotFindLocation];
-//    [self.tagController didNotFindLocation];
-}
 - (void)openLeftMenu
 {
     if ([self.deckController isSideOpen:IIViewDeckLeftSide])
@@ -112,7 +109,7 @@
         [self.deckController openLeftView];
     }
 }
-- (void)initViewControllers:(BOOL)asFirstLaunch
+- (void)initViewControllers
 {
     self.topPostsController             = [[PostsViewController alloc]
                                            initAsType:TOP_VIEW
@@ -138,11 +135,10 @@
     
     self.tutorialController             = [[TutorialViewController alloc] init];
     
-    self.helpController                 = [[CF_DialogViewController alloc] init];
-    [self.helpController setAsHelpScreen];
+    self.helpController                 = [[CF_DialogViewController alloc] initWithDialogType:HELP];
     
     self.timeCrunchController           = [[TimeCrunchViewController alloc] init];
-    
+
     NSArray *viewControllers            = [NSArray arrayWithObjects:
                                            self.topPostsController,
                                            self.recentPostsController,
@@ -183,7 +179,7 @@
     
     
     UIBarButtonItem *menuButton         = [[UIBarButtonItem alloc]
-                                           initWithImage:[UIImage imageNamed:logoImageWithButton]
+                                           initWithImage:[UIImage imageNamed:@"TheCampusFeedLogo"]
                                            style:UIBarButtonItemStylePlain
                                            target:self
                                            action:@selector(openLeftMenu)];

@@ -1,6 +1,6 @@
 //
 //  UserPostsViewController.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 7/21/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -20,7 +20,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [self.feedToolbar removeFromSuperview];
     [self addScoreFooter];
 }
 
@@ -38,6 +37,8 @@
 
 - (void)addScoreFooter
 {
+    [self.feedToolbar removeFromSuperview];
+
     long points = [self.dataController getUserPostScore];
     self.scoreLabel.text = [NSString stringWithFormat:@"Post Score: %ld", points];
     [self.scoreLabel setFont:CF_FONT_LIGHT(20)];

@@ -1,6 +1,6 @@
 //
 //  ToastController.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 7/2/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -12,23 +12,15 @@
 
 @implementation ToastController
 
-- (id)initAsFirstLaunch:(BOOL)isFirst
+- (id)init
 {
-    self.firstAppLaunch = isFirst;
-    
-    if (!self.firstAppLaunch)
-    {
-        self.showingNotification = NO;
-        self.condition = [[NSCondition alloc] init];
+    self.holdingNotifications = NO;
+    self.showingNotification = NO;
+    self.condition = [[NSCondition alloc] init];
 
-        self.toastQueue = [NSMutableArray new];
-        if (![CLLocationManager locationServicesEnabled])
-        {   
-            [self toastNoLocationServices];
-        }
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toastHidden) name:@"ToastHidden" object:nil];
-    }
+    self.toastQueue = [NSMutableArray new];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toastHidden) name:@"ToastHidden" object:nil];
     
     return self;
 }
@@ -46,7 +38,11 @@
     self.showingNotification = NO;
     [self dequeueToast];
 }
-
+- (void)releaseBlockedToasts
+{
+    self.holdingNotifications = NO;
+    [self dequeueToast];
+}
 #pragma mark - Public Functions
 
 - (void)toastInvalidDownvote
@@ -66,7 +62,7 @@
 }
 - (void)toastNoInternetConnection
 {
-    NSString *message = @"You have no internet connection. Pull down to refresh and try again.";
+    NSString *message = @"A connection error occurred. Pull down to refresh and try again.";
     [self addToQueue:message];
 }
 - (void)toastTagSearchTooShortWithLength:(int)minLength
@@ -114,18 +110,6 @@
     NSString *message = [NSString stringWithFormat:@"Since you aren't near %@, you can only upvote", collegeName];
     [self addToQueue:message];
 }
-- (void)toastNoLocationServices
-{
-    NSString *message1 = @"Location Services are turned off.";
-    NSString *message2 = @"You can upvote, but nothing else.";
-    [self.toastQueue addObject:message1];
-    [self.toastQueue addObject:message2];
-}
-- (void)toastLocationNotFoundOnTimeout
-{
-    NSString *message = @"Couldn't find location. You can upvote, but nothing else.";
-    [self addToQueue:message];
-}
 - (void)toastTwitterUnavailable
 {
     NSString *message = @"You need to have the Twitter app installed to tweet this post.";
@@ -148,7 +132,7 @@
 }
 - (void)toastLocationFoundNotNearCollege
 {
-    NSString *message = @"You aren't near a college, you can upvote but nothing else.";
+    NSString *message = @"No colleges were found near you, you can upvote but nothing else.";
     [self addToQueue:message];
 }
 - (void)toastNearbyColleges:(NSArray *)colleges
@@ -157,7 +141,7 @@
     for (int i = 0; i < colleges.count; i++)
     {
         College *college = [colleges objectAtIndex:i];
-        
+    
         if (i == 0)
         {
             collegeMessage = [NSString stringWithFormat:@"You're near %@", college.name];
@@ -180,15 +164,24 @@
         [self addToQueue:infoMessage];
     }
 }
+- (void)toastLocationConnectionError
+{
+    NSString *message1 = @"There was an error finding your location. You can upvote, but nothing else.";
+    NSString *message2 = @"Make sure location services are enabled at \"Settings > TheCampusFeed > Privacy\"";
+    [self addToQueue:message1];
+    [self addToQueue:message2];
+}
+
 
 #pragma mark - Private Helpers
 
 - (void)dequeueToast
 {
-    if (self.toastQueue.count > 0 && !self.showingNotification && !self.firstAppLaunch)
+    if (self.toastQueue.count > 0 && !self.holdingNotifications && !self.showingNotification)
     {
         NSString *message = [self.toastQueue objectAtIndex:0];
-    
+        
+        NSLog(@"Dequeuing toast: %@", message);
         [self.toastQueue removeObjectAtIndex:0];
         
         self.showingNotification = YES;

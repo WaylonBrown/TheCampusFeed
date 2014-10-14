@@ -1,6 +1,6 @@
 //
 //  FeedSelectViewController.h
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 6/18/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -64,6 +64,6 @@ typedef NS_ENUM(NSInteger, FeedSelectorType)
 
 - (IBAction)dismiss;
 - (void)fixHeights;
-- (void)foundLocation;
+- (void)updateLocation;
 
 @end

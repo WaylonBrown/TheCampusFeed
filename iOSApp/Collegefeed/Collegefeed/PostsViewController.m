@@ -1,6 +1,6 @@
 //
 //  PostsViewController.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/2/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -85,9 +85,6 @@
 - (void)loadView
 {
     [super loadView];
-    
-    // Place logo at the top of the navigation bar
-//    [self.navigationItem setTitleView:logoTitleView];
 }
 
 #pragma mark - Table View Override Functions
@@ -187,7 +184,6 @@
         Comment *comment = [self.list objectAtIndex:indexPath.row];
         BOOL isNearCollege = NO;//[self.dataController.nearbyColleges containsObject:nil];
         float messageHeight = [Shared getLargeCellMessageHeight:comment.message WithFont:CF_FONT_LIGHT(16)];
-//        [cell assign:comment WithMessageHeight:messageHeight];
 
         [cell assignWith:comment IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
 
@@ -222,7 +218,7 @@
         return 50;
     }
     
-    return 5;
+    return 0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -245,8 +241,7 @@
         [header setText:basicText];
         [header setTextAlignment:NSTextAlignmentCenter];
         [header setFont:CF_FONT_LIGHT(16)];
-        [header setTintColor:[Shared getCustomUIColor:CF_DARKGRAY]];
-        [header setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
+        [header setBackgroundColor:[Shared getCustomUIColor:CF_EXTRALIGHTGRAY]];
 
         return header;
     }
@@ -312,6 +307,11 @@
 
 #pragma mark - Actions
 
+- (void)changeFeed
+{
+    [super changeFeed];
+}
+
 - (BOOL)loadMorePosts
 {
     BOOL success = false;
@@ -370,15 +370,15 @@
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
 {
-    NSString *udid = [UIDevice currentDevice].identifierForVendor.UUIDString;
     BOOL success = [self.dataController createPostWithMessage:message
                                  withCollegeId:self.dataController.collegeInFocus.collegeID];
     
-    if (!success)
-    {
-        [self.toastController toastPostFailed];
-    }
-    [self refresh];
+//    if (!success)
+//    {
+//        [self.toastController toastPostFailed];
+//    }
+    if (success)
+        [self refresh];
 }
 
 #pragma mark - Vanishing Bottom Toolbar

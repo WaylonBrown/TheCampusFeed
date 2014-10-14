@@ -1,6 +1,6 @@
 //
 //  ToastController.h
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 7/2/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -14,12 +14,13 @@
 @property (strong, nonatomic) NSMutableArray *toastQueue;
 @property (nonatomic, strong) NSCondition *condition;
 @property (nonatomic) BOOL showingNotification;
-@property (nonatomic) BOOL firstAppLaunch;
+@property (nonatomic) BOOL holdingNotifications;
 
-- (id)initAsFirstLaunch:(BOOL)isFirst;
+- (id)init;
 
 - (void)dequeueToast;
 - (void)toastHidden;
+- (void)releaseBlockedToasts;
 
 // Validation Error
 - (void)toastInvalidDownvote;
@@ -30,13 +31,11 @@
 - (void)toastInvalidTagSearch;
 
 // Network Error
-- (void)toastNoInternetConnection;
+- (void)toastLocationConnectionError;
 - (void)toastPostFailed;
 - (void)toastFlagFailed;
 - (void)toastFlagSuccess;
 - (void)toastErrorFetchingCollegeList;
-- (void)toastNoLocationServices;
-- (void)toastLocationNotFoundOnTimeout;
 - (void)toastTwitterUnavailable;
 - (void)toastFacebookUnavailable;
 - (void)toastPostingTooSoon:(NSNumber *)minutesRemaining;

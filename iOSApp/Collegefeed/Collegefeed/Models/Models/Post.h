@@ -1,6 +1,6 @@
 //
 //  Post.h
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/2/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -26,7 +26,7 @@
 
 @property (nonatomic, strong) NSString *userToken;
 @property (nonatomic, strong) NSString *message;
-//@property (nonatomic, strong) NSString *collegeName;
+@property (nonatomic, strong) NSString *collegeName;
 @property (nonatomic, strong) NSDate *date;
 
 @property (nonatomic, strong) NSDate *createdAt;

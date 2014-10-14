@@ -1,6 +1,6 @@
 //
 //  TrendingCollegesViewController.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 7/21/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -16,24 +16,30 @@
 - (id)initWithDataController:(DataController *)controller
 {
     self = [super initWithDataController:controller];
-    [self setList:self.dataController.trendingColleges];
+    if (self)
+    {
+        [self setList:self.dataController.trendingColleges];
+    }
     return self;
 }
 - (void)loadView
 {
     [super loadView];
-    // Place logo at the top of the navigation bar
-}
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
     [self.feedToolbar setHidden:YES];
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
     [self.tableView reloadData];
 }
-
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+}
+- (void)viewWillAppear:(BOOL)animated
+{   // View is about to appear after being inactive
+    [super viewWillAppear:animated];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -58,15 +64,24 @@
         cell = [nib objectAtIndex:0];
     }
     
+    NSInteger row = indexPath.row;
+    
     // get the college and display in this cell
-    College *collegeAtIndex = (College *)[self.list objectAtIndex:indexPath.row];
+    College *collegeAtIndex = (College *)[self.list objectAtIndex:row];
     
     NSString *text = [collegeAtIndex name];
     float height = [Shared getSmallCellMessageHeight:text WithFont:CF_FONT_LIGHT(18)];
 
-    [cell assignCollege:collegeAtIndex withRankNumber:(indexPath.row + 1) withMessageHeight:height];
+    [cell assignCollege:collegeAtIndex withRankNumber:(row + 1) withMessageHeight:height];
     
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger row = indexPath.row;
+    College *college = (College *)[self.list objectAtIndex:row];
+    [self.dataController switchedToSpecificCollegeOrNil:college];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"SwitchToTopPosts" object:nil];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

@@ -1,6 +1,6 @@
 //
 //  MasterViewController.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/15/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -26,7 +26,7 @@
 #import "Shared.h"
 #import "AppDelegate.h"
 #import "ToastController.h"
-
+#import "CF_DialogViewController.h"
 
 @implementation MasterViewController
 
@@ -39,7 +39,11 @@
     {
         [self setDataController:controller];
         self.activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        self.toastController = [[ToastController alloc] initAsFirstLaunch:self.dataController.isFirstLaunch];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialFinished) name:@"TutorialFinished" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialStarted) name:@"TutorialStarted" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationWasUpdated) name:@"LocationUpdated" object:nil];
+        
     }
     return self;
 }
@@ -53,9 +57,21 @@
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.tableView;
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
-    tableViewController.refreshControl = self.refreshControl;
+    [self.refreshControl addTarget:self action:@selector(pullToRefresh) forControlEvents:UIControlEventValueChanged];
 
+    tableViewController.refreshControl = self.refreshControl;
+    
+    CGRect frame = CGRectMake(0, 0, self.tableView.frame.size.width, 5);
+    
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    
+    [view setBackgroundColor:[Shared getCustomUIColor:CF_EXTRALIGHTGRAY]];
+
+                                      
+    self.tableView.tableHeaderView = view;
+
+                                      
+                                      
     // Assign fonts
     [self.currentFeedLabel  setFont:CF_FONT_LIGHT(22)];
     [self.showingLabel      setFont:CF_FONT_BOLD(12)];
@@ -65,7 +81,6 @@
 {
     [self.navigationController.navigationBar setTranslucent:NO];
     [self refresh];
-    
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
@@ -100,18 +115,18 @@
                                                                                   target:self action:@selector(create)];
     [self.navigationItem setRightBarButtonItem:createButton];
 }
-- (void)foundLocation
-{   // Called when the user's location is determined. Allow them to create posts
+- (void)locationWasUpdated
+{
+    [self.activityIndicator stopAnimating];
+    
     if ([self.dataController isNearCollege])
     {
         [self placeCreatePost];
         [self.tableView reloadData];
-        [self.toastController toastNearbyColleges:self.dataController.nearbyColleges];
     }
     else
     {
-        [self placeLoadingIndicator];
-        [self.toastController toastLocationFoundNotNearCollege];
+        [self.navigationItem setRightBarButtonItem:nil];
     }
     
     UIViewController *presented = [self presentedViewController];
@@ -119,15 +134,10 @@
     {
         if ([presented class] == [FeedSelectViewController class])
         {
-            [((FeedSelectViewController *)presented) foundLocation];
+            [((FeedSelectViewController *)presented) updateLocation];
         }
     }
-}
-- (void)didNotFindLocation
-{   // Called when the user's location cannot be determined. Stop and remove activity indicator
-    [self.activityIndicator stopAnimating];
-    [self.navigationItem setRightBarButtonItem:nil];
-    [self.toastController toastLocationNotFoundOnTimeout];
+
 }
 
 #pragma mark - UITableView Functions
@@ -142,15 +152,31 @@
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 5)];
+    return [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
 }
 
 #pragma mark - Actions
 
-- (IBAction)changeFeed;
+- (IBAction)changeFeed
 {   // User wants to change the feed (all colleges, nearby college, or other)
-    FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_NEARBY_OTHER WithDataController:self.dataController WithFeedDelegate:self];
-    [self.navigationController presentViewController:controller animated:YES completion:nil];
+
+    if (!self.isShowingTutorial)
+    {
+        FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_NEARBY_OTHER WithDataController:self.dataController WithFeedDelegate:self];
+        [self.navigationController presentViewController:controller animated:YES completion:nil];
+    }
+}
+- (void)tutorialFinished
+{
+    self.isShowingTutorial = NO;
+    [self.dataController.toaster releaseBlockedToasts];
+    [self pullToRefresh];
+    [self changeFeed];
+}
+- (void)tutorialStarted
+{
+    self.dataController.toaster.holdingNotifications = YES;
+    self.isShowingTutorial = YES;
 }
 - (void)showCreationDialogForCollege:(College *) college
 {
@@ -160,7 +186,6 @@
 }
 - (void)create
 {   // Display popup to let user type a new post
-    
     NSArray *nearbyColleges = self.dataController.nearbyColleges;
     if (nearbyColleges.count == 0)
     {   // None nearby
@@ -180,12 +205,18 @@
         [self.navigationController presentViewController:controller animated:YES completion:nil];
     }
 }
+- (void)pullToRefresh
+{
+    if (self.dataController.locStatus != LOCATION_FOUND)
+    {
+        [self.dataController findUserLocation];
+    }
+    
+    [self refresh];
+}
 - (void)refresh
 {   // refresh the current view
-    if (self.dataController.collegeList == nil || self.dataController.collegeList.count == 0)
-    {
-        [self.toastController toastErrorFetchingCollegeList];
-    }
+
     NSString *feedName = self.dataController.collegeInFocus.name;
     if (feedName == nil)
     {
@@ -216,7 +247,6 @@
     }
 
     // users cannot cast downvotes to a distant school
-//    [self displayCannotVote];
     return NO;
 }
 - (BOOL)cancelVote:(Vote *)vote
@@ -251,19 +281,29 @@
     NSNumber *minutesUntilCanPost = [NSNumber new];
     if ([self.dataController isAbleToPost:minutesUntilCanPost])
     {
-        [self.dataController createPostWithMessage:message
+        bool success = [self.dataController createPostWithMessage:message
                                      withCollegeId:collegeId];
+        if (success)
+        {
+            [self refresh];
+            
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.list.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
+//        else
+//        {
+//            [self.toastController toastPostFailed];
+//        }
         [self refresh];
     }
-    else
-    {
-        [self.toastController toastPostingTooSoon:minutesUntilCanPost];
-    }
+//    else
+//    {
+//        [self.toastController toastPostingTooSoon:minutesUntilCanPost];
+//    }
 }
-- (void)commentingTooFrequently
-{
-    [self.toastController toastCommentingTooSoon];
-}
+//- (void)commentingTooFrequently
+//{
+//    [self.toastController toastCommentingTooSoon];
+//}
 
 #pragma mark - FeedSelectionProtocol Delegate Methods
 

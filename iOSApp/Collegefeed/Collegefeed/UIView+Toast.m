@@ -234,7 +234,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
         CGRect boundingRect = [string boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
         return CGSizeMake(ceilf(boundingRect.size.width), ceilf(boundingRect.size.height));
     }
-
+    
     return [string sizeWithFont:font constrainedToSize:constrainedSize lineBreakMode:lineBreakMode];
 }
 

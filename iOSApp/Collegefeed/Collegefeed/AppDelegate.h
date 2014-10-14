@@ -1,6 +1,6 @@
 //
 //  AppDelegate.h
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/1/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -23,7 +23,7 @@
 @class TimeCrunchViewController;
 @class MenuViewController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, LocationFinderDelegateProtocol>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow              *window;
 @property (strong, nonatomic) UITabBarController    *tabBarController;

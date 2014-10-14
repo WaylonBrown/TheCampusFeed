@@ -138,11 +138,16 @@ class PostsController < ApplicationController
 
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render action: 'afterCreate', status: :created, location: @post }
+
+        tracker = Staccato.tracker('UA-39872564-2', params[:user_token])
+        tracker.event(category: 'post', action: 'create', value: 1)
       else
         format.html { render action: 'new' }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
+
+
   end
 
   # PATCH/PUT /posts/1

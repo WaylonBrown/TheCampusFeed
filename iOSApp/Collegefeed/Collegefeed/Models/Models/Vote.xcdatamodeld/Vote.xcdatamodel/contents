@@ -7,6 +7,6 @@
         <attribute name="upvote" optional="YES" attributeType="Boolean" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Vote" positionX="-45" positionY="0" width="128" height="103"/>
+        <element name="Vote" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

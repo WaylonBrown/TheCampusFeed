@@ -1,6 +1,6 @@
 //
 //  Shared.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 6/15/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -19,6 +19,18 @@
                                      alpha:1.0];
     
     return color;
+}
++ (UIFont*)getFontLight:(float)size
+{
+    return [UIFont fontWithName:@"Roboto-Light" size:size];
+}
++ (UIFont*)getFontBold:(float)size
+{
+    return [UIFont fontWithName:@"mplus-2c-bold" size:size];
+}
++ (UIFont*)getFontItalic:(float)size
+{
+    return [UIFont fontWithName:@"Roboto-LightItalic" size:size];
 }
 
 #pragma mark - Height of Cell

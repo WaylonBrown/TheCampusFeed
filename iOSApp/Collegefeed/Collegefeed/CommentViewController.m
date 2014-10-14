@@ -1,6 +1,6 @@
 //
 //  CommentViewController.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/3/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -52,8 +52,8 @@
         [self.postTableView reloadData];
         [self.commentTableView reloadData];
         
-        UIImage *facebookImage = [UIImage imageNamed:@"fb_logo.png"];
-        UIImage *twitterImage = [UIImage imageNamed:@"twitter_logo.png"];
+        UIImage *facebookImage = [UIImage imageNamed:@"FacebookLogo"];
+        UIImage *twitterImage = [UIImage imageNamed:@"TwitterLogo"];
         
         UIView *dividerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, self.navigationController.navigationBar.frame.size.height - 16)];
         [dividerView setBackgroundColor:[UIColor whiteColor]];
@@ -71,8 +71,8 @@
                                                                                     target:self
                                                                                     action:@selector(create)];
             
-            UIImage *flagImage = [UIImage imageNamed:@"flag.png"];
-              UIBarButtonItem *flag = [[UIBarButtonItem alloc] initWithImage:flagImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
+            UIImage *flagImage = [UIImage imageNamed:@"Flag"];
+            UIBarButtonItem *flag = [[UIBarButtonItem alloc] initWithImage:flagImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
             
             self.navigationItem.rightBarButtonItems = @[create, flag, divider, facebook, twitter];
         }
@@ -147,7 +147,8 @@
         float messageHeight = [Shared getLargeCellMessageHeight:commentAtIndex.message WithFont:CF_FONT_LIGHT(16)];
         
         [cell assignWith:commentAtIndex IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
-        
+        cell.gpsIconImageView.hidden = YES;
+
         return cell;
     }
     
@@ -169,7 +170,7 @@
     }
     else if (tableView == self.commentTableView)
     {
-        text = [(Comment *)[self.list objectAtIndex:[indexPath row]] getMessage];
+        text = [(Comment *)[self.dataController.commentList objectAtIndex:[indexPath row]] getMessage];
     }
 
     return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)] + offset;
@@ -177,13 +178,13 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {   // return the header title for the 'Comments' section
     
-    if (tableView == self.commentTableView && self.list.count > 0)
+    if (tableView == self.commentTableView && self.dataController.commentList.count > 0)
     {
         UILabel *commentHeader = [[UILabel alloc] initWithFrame:CGRectZero];
         [commentHeader setText:@"Comments"];
         [commentHeader setTextAlignment:NSTextAlignmentCenter];
         [commentHeader setFont:CF_FONT_LIGHT(13)];
-        [commentHeader setTintColor:[Shared getCustomUIColor:CF_DARKGRAY]];
+        [commentHeader setTintColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
         [commentHeader setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
         
         return commentHeader;
@@ -192,7 +193,13 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (tableView == self.commentTableView) return 25.0;
+    if (tableView == self.commentTableView)
+    {
+        if (self.dataController.commentList.count > 0)
+            return 25.0;
+        else return 0.0;
+    }
+
     else return 5.0;
 }
 
@@ -310,17 +317,21 @@
     if ([self.dataController isAbleToComment])
     {
         BOOL success = [self.dataController createCommentWithMessage:message withPost:self.originalPost];
-        
-        if (!success)
+        if (success)
         {
-            [self.toastController toastPostFailed];
+            [self refresh];
+
+            [self.commentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataController.commentList.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         }
-        [self refresh];
+//        else
+//        {
+//            [self.toastController toastPostFailed];
+//        }
     }
-    else
-    {
-        [self.toastController toastCommentingTooSoon];
-    }
+//    else
+//    {
+//        [self.toastController toastCommentingTooSoon];
+//    }
     
 }
 

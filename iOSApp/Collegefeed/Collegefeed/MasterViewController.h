@@ -1,6 +1,6 @@
 //
 //  MasterViewController.h
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/15/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -41,16 +41,14 @@
 @property (strong, nonatomic) NSMutableArray *list;
 
 @property (nonatomic) float previousScrollViewYOffset;
-//@property (nonatomic) float previousScrollSizeHeight;
 @property (nonatomic) BOOL isLoadingPosts;
+@property (nonatomic) BOOL isShowingTutorial;
 
 // Initialization
 - (id)initWithDataController:(DataController *)controller;
 
 - (void)placeLoadingIndicator;
 - (void)placeCreatePost;
-- (void)foundLocation;
-- (void)didNotFindLocation;
 
 // Actions
 - (IBAction)changeFeed;

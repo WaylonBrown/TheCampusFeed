@@ -1,6 +1,6 @@
 //
 //  DataController.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/2/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -13,6 +13,8 @@
 #import "Tag.h"
 #import "Vote.h"
 #import "Networker.h"
+#import "CF_DialogViewController.h"
+#import "ToastController.h"
 
 @implementation DataController
 
@@ -26,36 +28,20 @@
     if (self)
     {
         [self checkAppVersionNumber];
-        
         [self setShowingAllColleges:YES];
         [self setShowingSingleCollege:NO];
+        self.toaster = [ToastController new];
         
-        // Initialize arrays for the arrays needed
-        self.collegeList            = [[NSMutableArray alloc] init];
-        self.nearbyColleges         = [[NSMutableArray alloc] init];
-        self.trendingColleges       = [[NSMutableArray alloc] init];
+        [self initArrays];
         
-        self.commentList            = [[NSMutableArray alloc] init];
-        self.userComments           = [[NSMutableArray alloc] init];
-
-        self.topPostsAllColleges    = [[NSMutableArray alloc] init];
-        self.recentPostsAllColleges = [[NSMutableArray alloc] init];
-        self.userPosts              = [[NSMutableArray alloc] init];
-        self.allPostsWithTag        = [[NSMutableArray alloc] init];
-        
-        self.allTags                = [[NSMutableArray alloc] init];
-        self.allTagsInCollege       = [[NSMutableArray alloc] init];
-        
-        self.userPostVotes          = [[NSMutableArray alloc] init];
-        self.userCommentVotes       = [[NSMutableArray alloc] init];
-
-        
+        // Set initial pagination counts to (network lazy-loading retrieval)
         [self setTopPostsPage:0];
         [self setRecentPostsPage:0];
         [self setTagPostsPage:0];
         [self setTrendingCollegesPage:0];
         [self setTagPage:0];
 
+        // Check endpoint to see if locally-stored college list is up to date
         if ([self needsNewCollegeList])
         {
             [self getNetworkCollegeList];
@@ -65,42 +51,160 @@
             [self getHardCodedCollegeList];
         }
         
-        // Populate the initial arrays
+        [self restoreSavedFeed];
+        
+        // Populate arrays from both network and core (local) data
         [self retrieveUserData];
-
         [self fetchTopPosts];
         [self fetchNewPosts];
         [self getTrendingCollegeList];
         [self fetchTags];
         
         // Get the user's location
-        [self setLocationManager:[[CLLocationManager alloc] init]];
-        [self.locationManager setDelegate:self];
-        if ([CLLocationManager locationServicesEnabled])
-        {
-            [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
-            [self.locationManager startUpdatingLocation];
-        }
+        [self findUserLocation];
         
     }
     return self;
 }
-
+- (void)initArrays
+{
+    // Initialize arrays
+    self.collegeList            = [[NSMutableArray alloc] init];
+    self.nearbyColleges         = [[NSMutableArray alloc] init];
+    self.trendingColleges       = [[NSMutableArray alloc] init];
+    
+    self.commentList            = [[NSMutableArray alloc] init];
+    self.userComments           = [[NSMutableArray alloc] init];
+    
+    self.topPostsAllColleges    = [[NSMutableArray alloc] init];
+    self.recentPostsAllColleges = [[NSMutableArray alloc] init];
+    self.userPosts              = [[NSMutableArray alloc] init];
+    self.allPostsWithTag        = [[NSMutableArray alloc] init];
+    
+    self.allTags                = [[NSMutableArray alloc] init];
+    self.allTagsInCollege       = [[NSMutableArray alloc] init];
+    
+    self.userPostVotes          = [[NSMutableArray alloc] init];
+    self.userCommentVotes       = [[NSMutableArray alloc] init];
+}
 - (void)checkAppVersionNumber
 {
     float appVersion = [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] floatValue];
     NSData *data = [Networker getIOSAppVersionFromServer];
-    NSArray *jsonArray = (NSArray*)[NSJSONSerialization JSONObjectWithData:data
-                                                                   options:0
-                                                                     error:nil];
-    
-    float serverVersion = [[jsonArray valueForKey:@"version"] floatValue];
-    
-    if (appVersion < serverVersion)
+    if (data)
     {
+        NSArray *jsonArray = (NSArray*)[NSJSONSerialization JSONObjectWithData:data
+                                                                       options:0
+                                                                         error:nil];
         
+        float serverVersion = [[jsonArray valueForKey:@"minVersion"] floatValue];
+        
+        self.needsUpdate = (appVersion < serverVersion);
+        if (appVersion < serverVersion)
+        {
+            self.needsUpdate = YES;
+            CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:UPDATE];
+
+            // TODO: direct to app store for update
+            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
+        }
     }
+}
+- (void)incrementLaunchNumber
+{
+    // Retrieve Launch Count
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
     
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
+    {
+        NSLog(@"Too many status entities");
+    }
+    NSManagedObject *status = [fetchedStatus firstObject];
+    NSNumber *currCount = [status valueForKey:KEY_LAUNCH_COUNT];
+    
+    NSNumber *newCount = [NSNumber numberWithInt:([currCount intValue] + 1)];
+    
+    [status setValue:newCount forKey:KEY_LAUNCH_COUNT];
+    
+    if (![context save:&error])
+    {
+        NSLog(@"Failed to save user's vote: %@",
+              [error localizedDescription]);
+    }
+
+}
+- (NSInteger)getLaunchNumber
+{
+    // Retrieve Launch Count
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
+    {
+        NSLog(@"Too many status entities");
+    }
+    NSManagedObject *status = [fetchedStatus firstObject];
+    NSNumber *count = [status valueForKey:KEY_LAUNCH_COUNT];
+    
+    return [count integerValue];
+}
+- (void)saveCurrentFeed
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
+    {
+        NSLog(@"Too many status entities");
+    }
+    NSManagedObject *status = [fetchedStatus firstObject];
+    NSNumber *collegeIdForFeed = self.showingSingleCollege ? [NSNumber numberWithLong:self.collegeInFocus.collegeID] : nil;
+    
+    [status setValue:collegeIdForFeed forKey:KEY_CURRENT_COLLEGE_FEED];
+    
+    if (![context save:&error])
+    {
+        NSLog(@"Failed to save current feed: %@",
+              [error localizedDescription]);
+    }
+}
+- (void)restoreSavedFeed
+{
+    // Retrieve last saved/visited feed
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
+    {
+        NSLog(@"Too many status entities");
+    }
+    NSManagedObject *status = [fetchedStatus firstObject];
+    long collegeIdForFeed = [[status valueForKey:KEY_CURRENT_COLLEGE_FEED] longValue];
+    self.collegeInFocus = [self getCollegeById:collegeIdForFeed];
+    
+    self.showingAllColleges = self.collegeInFocus == nil;
+    self.showingSingleCollege = !self.showingAllColleges;
 }
 
 #pragma mark - Networker Access - Colleges
@@ -124,35 +228,39 @@
 - (long)getNetworkCollegeListVersion
 {
     NSData *data = [Networker GETCollegeListVersion];
-    NSArray *jsonArray = (NSArray*)[NSJSONSerialization JSONObjectWithData:data
-                                                                   options:0
-                                                                     error:nil];
-        
-    NSNumber *versionNumber = [jsonArray valueForKey:@"version"];
-    return [versionNumber longValue];
+    if (data)
+    {
+        NSArray *jsonArray = (NSArray*)[NSJSONSerialization JSONObjectWithData:data
+                                                                       options:0
+                                                                         error:nil];
+            
+        NSNumber *versionNumber = [jsonArray valueForKey:@"version"];
+        return [versionNumber longValue];
+    }
+    else return -1;
 }
 - (BOOL)needsNewCollegeList
 {
     NSError *error;
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:PERMISSION_ENTITY
+    NSEntityDescription *entity = [NSEntityDescription entityForName:STATUS_ENTITY
                                               inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedPermissions.count > 1)
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
     {
-        NSLog(@"Too many permissions");
+        NSLog(@"Too many status entities");
     }
-    NSManagedObject *permission = [fetchedPermissions firstObject];
+    NSManagedObject *status = [fetchedStatus firstObject];
     long newVersion = [self getNetworkCollegeListVersion];
 
-    if (permission == nil)
+    if (status == nil)
     {
         return YES;
     }
     
-    long currVersion = [[permission valueForKeyPath:KEY_COLLEGE_LIST_VERSION] longValue];
+    long currVersion = [[status valueForKeyPath:KEY_COLLEGE_LIST_VERSION] longValue];
     
     return (currVersion == newVersion) ? NO : YES;
 }
@@ -164,23 +272,33 @@
 {
     @try
     {
+        if (![self isAbleToComment])
+        {
+            [self.toaster toastCommentingTooSoon];
+            return NO;
+        }
         Comment *comment = [[Comment alloc] initWithCommentMessage:message
                                                           withPost:post];
         NSData *result = [Networker POSTCommentData:[comment toJSON] WithPostId:post.postID];
         
-        NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
-                                                                   options:0
-                                                                     error:nil];
-        Comment *networkComment = [[Comment alloc] initFromJSON:jsonObject];
+        if (result)
+        {
+            NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
+                                                                       options:0
+                                                                         error:nil];
+            Comment *networkComment = [[Comment alloc] initFromJSON:jsonObject];
 
-        NSDate *commentTime = [networkComment getCreatedAt];
-        [self updateLastCommentTime:commentTime];
-
-        
-        [self.commentList insertObject:networkComment atIndex:0];
-        [self.userComments insertObject:networkComment atIndex:0];
-        [self saveComment:networkComment];
-        return YES;
+            NSDate *commentTime = [networkComment getCreatedAt];
+            [self updateLastCommentTime:commentTime];
+            [self.commentList insertObject:networkComment atIndex:self.commentList.count];
+            [self.userComments insertObject:networkComment atIndex:self.userComments.count];
+            [self saveComment:networkComment];
+            return YES;
+        }
+        else
+        {
+            [self.toaster toastPostFailed];
+        }
     }
     @catch (NSException *exception)
     {
@@ -222,8 +340,10 @@
 - (BOOL)createPostWithMessage:(NSString *)message
                 withCollegeId:(long)collegeId
 {
-    if (![self isAbleToPost:nil])
+    NSNumber *minutesUntilCanPost = [NSNumber new];
+    if (![self isAbleToPost:minutesUntilCanPost])
     {
+        [self.toaster toastPostingTooSoon:minutesUntilCanPost];
         return NO;
     }
     @try
@@ -232,26 +352,42 @@
         Post *post = [[Post alloc] initWithMessage:message
                                      withCollegeId:collegeId
                                      withUserToken:udid];
-
-        NSData *result = [Networker POSTPostData:[post toJSON] WithCollegeId:post.collegeID];
-        NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
-                                                                   options:0
-                                                                     error:nil];
-        Post *networkPost = [[Post alloc] initFromJSON:jsonObject];
-        if (networkPost.collegeID == 0)
-        {
-            [networkPost setCollegeID:collegeId];
-        }
-        College *college = [self getCollegeById:collegeId];
-        [networkPost setCollege:college];
-        NSDate *postTime = [networkPost getCreatedAt];
-        [self updateLastPostTime:postTime];
         
-        [self.topPostsAllColleges insertObject:networkPost atIndex:0];
-        [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
-        [self.userPosts insertObject:networkPost atIndex:0];
-        [self savePost:networkPost];
-        return YES;
+        NSData *result = [Networker POSTPostData:[post toJSON] WithCollegeId:post.collegeID];
+        if (result)
+        {
+            NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
+                                                                       options:0
+                                                                         error:nil];
+            Post *networkPost = [[Post alloc] initFromJSON:jsonObject];
+            if (networkPost.collegeID == 0)
+            {
+                [networkPost setCollegeID:collegeId];
+            }
+            College *college = [self getCollegeById:collegeId];
+            [networkPost setCollege:college];
+            NSDate *postTime = [networkPost getCreatedAt];
+            [self updateLastPostTime:postTime];
+            
+            [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
+            [self.recentPostsInCollege insertObject:networkPost atIndex:0];
+            [self.userPosts insertObject:networkPost atIndex:0];
+            [self savePost:networkPost];
+            
+            Vote *actualVote = networkPost.vote;
+            if (actualVote != nil && actualVote.voteID > 0)
+            {
+                [self.userPostVotes addObject:actualVote];
+                [self saveVote:actualVote];
+            }
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CreatedPost" object:self];
+            return YES;
+        }
+        else
+        {
+            [self.toaster toastPostFailed];
+        }
     }
     @catch (NSException *exception)
     {
@@ -321,12 +457,20 @@
 
 - (BOOL)fetchTags
 {   // fetch tags trending across all colleges
+    if (self.allTags == nil || self.tagPage == 0)
+    {
+        self.allTags = [[NSMutableArray alloc] init];
+    }
     NSData *data = [Networker GETTagsTrendingAtPageNum:self.tagPage++];
     return [self parseData:data asClass:[Tag class] intoList:self.allTags];
 }
 - (BOOL)fetchTagsWithCollegeId:(long)collegeId
 {   // fetch tags trending in a particular college
-    self.allTagsInCollege = [[NSMutableArray alloc] init];
+    if (self.allTagsInCollege == nil || self.tagPage == 0)
+    {
+        self.allTagsInCollege = [[NSMutableArray alloc] init];
+    }
+    
     NSData *data = [Networker GETTagsWithCollegeId:collegeId AtPageNum:self.tagPage++];
     return [self parseData:data asClass:[Tag class] intoList:self.allTagsInCollege];
 }
@@ -365,8 +509,12 @@
             {
                 [self.userCommentVotes addObject:vote];
             }
+            
+            if (vote != nil && vote.voteID > 0)
+            {
+                [self saveVote:vote];
+            }
         }
-        [self saveVote:vote];
         return YES;
     }
     @catch (NSException *exception)
@@ -377,21 +525,26 @@
 }
 - (BOOL)cancelVote:(Vote *)vote
 {
-    long voteId = vote.voteID;
-    BOOL success = [Networker DELETEVoteId:voteId];
-    if (success)
+    if (vote != nil && vote.voteID > 0)
     {
-        if (vote.votableType == POST)
+        long voteId = vote.voteID;
+        BOOL success = [Networker DELETEVoteId:voteId];
+        if (success)
         {
-            [self.userPostVotes removeObject:vote];
+            if (vote.votableType == POST)
+            {
+                [self.userPostVotes removeObject:vote];
+            }
+            else if (vote.votableType == COMMENT)
+            {
+                [self.userCommentVotes removeObject:vote];
+            }
         }
-        else if (vote.votableType == COMMENT)
-        {
-            [self.userCommentVotes removeObject:vote];
-        }
+        [self deleteVote:vote];
+        return success;
     }
-    [self deleteVote:vote];
-    return success;
+    
+    return false;
 }
 
 #pragma mark - Local Data Access
@@ -811,15 +964,15 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedPermissions.count > 1)
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
     {
-        NSLog(@"Too many permissions");
+        NSLog(@"Too many status entities");
     }
-    NSManagedObject *permission = [fetchedPermissions firstObject];
-    NSDate *lastPost = [permission valueForKey:KEY_POST_TIME];
+    NSManagedObject *status = [fetchedStatus firstObject];
+    NSDate *lastPost = [status valueForKey:KEY_POST_TIME];
     if (lastPost != nil)
     {
         NSTimeInterval diff = [lastPost timeIntervalSinceNow];
@@ -839,15 +992,15 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedPermissions.count > 1)
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
     {
-        NSLog(@"Too many permissions");
+        NSLog(@"Too many status entities");
     }
-    NSManagedObject *permission = [fetchedPermissions firstObject];
-    NSDate *lastComment = [permission valueForKey:KEY_COMMENT_TIME];
+    NSManagedObject *status = [fetchedStatus firstObject];
+    NSDate *lastComment = [status valueForKey:KEY_COMMENT_TIME];
     if (lastComment != nil)
     {
         NSTimeInterval diff = [lastComment timeIntervalSinceNow];
@@ -866,21 +1019,21 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedPermissions.count > 1)
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
     {
-        NSLog(@"Too many permissions");
+        NSLog(@"Too many status entities");
     }
-    NSManagedObject *permission = [fetchedPermissions firstObject];
+    NSManagedObject *status = [fetchedStatus firstObject];
     
-    if (permission == nil)
+    if (status == nil)
     {
-        permission = [NSEntityDescription insertNewObjectForEntityForName:PERMISSION_ENTITY
+        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
                                                    inManagedObjectContext:context];
     }
-    [permission setValue:[NSNumber numberWithLong:listVersion] forKeyPath:KEY_COLLEGE_LIST_VERSION];
+    [status setValue:[NSNumber numberWithLong:listVersion] forKeyPath:KEY_COLLEGE_LIST_VERSION];
     if (![_managedObjectContext save:&error])
     {
         NSLog(@"Failed to save college list version: %@",
@@ -893,21 +1046,21 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedPermissions.count > 1)
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
     {
-        NSLog(@"Too many permissions");
+        NSLog(@"Too many status entities");
     }
-    NSManagedObject *permission = [fetchedPermissions firstObject];
+    NSManagedObject *status = [fetchedStatus firstObject];
     
-    if (permission == nil)
+    if (status == nil)
     {
-        permission = [NSEntityDescription insertNewObjectForEntityForName:PERMISSION_ENTITY
+        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
                                                    inManagedObjectContext:context];
     }
-    [permission setValue:postTime forKeyPath:KEY_POST_TIME];
+    [status setValue:postTime forKeyPath:KEY_POST_TIME];
     if (![_managedObjectContext save:&error])
     {
         NSLog(@"Failed to save user's post time: %@",
@@ -920,20 +1073,20 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:PERMISSION_ENTITY inManagedObjectContext:context];
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    NSArray *fetchedPermissions = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedPermissions.count > 1)
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
     {
-        NSLog(@"Too many permissions");
+        NSLog(@"Too many status entities");
     }
-    NSManagedObject *permission = [fetchedPermissions firstObject];
-    if (permission == nil)
+    NSManagedObject *status = [fetchedStatus firstObject];
+    if (status == nil)
     {
-        permission = [NSEntityDescription insertNewObjectForEntityForName:PERMISSION_ENTITY
+        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
                                                    inManagedObjectContext:context];
     }
-    [permission setValue:commentTime forKeyPath:KEY_COMMENT_TIME];
+    [status setValue:commentTime forKeyPath:KEY_COMMENT_TIME];
     if (![_managedObjectContext save:&error])
     {
         NSLog(@"Failed to save user's comment time: %@",
@@ -941,36 +1094,85 @@
     }
 }
 
-#pragma mark - CLLocationManager Delegate Functions
+#pragma mark - CLLocationManager Functions
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    if (!self.foundLocation)
+    if (self.locStatus == LOCATION_FOUND)
+        return;
+    
+    NSDate *currentTime = [NSDate date];
+    NSTimeInterval secs = [currentTime timeIntervalSinceDate:self.locationSearchStart];
+    
+    
+    NSLog(@"DidUpdateToLocation attempt number: %ld", (long)++self.locationUpdateAttempts);
+    
+    if (![CLLocationManager locationServicesEnabled])
     {
+        NSLog(@"Location Services not enabled");
+        [self failedLocationFinding];
+    }
+    else if (self.locationUpdateAttempts >= 4)
+    {
+        NSLog(@"Reached limit of location update attempts");
+        [self failedLocationFinding];
+    }
+    
+    else if (secs >= 10)
+    {
+        NSLog(@"Location update timeout expired");
+        [self failedLocationFinding];
+    }
+    else
+    {
+        NSLog(@"Successfully found location");
         [self setLat:newLocation.coordinate.latitude];
         [self setLon:newLocation.coordinate.longitude];
         [self.locationManager stopUpdatingLocation];
         
-// Simulate extra time to find location to show 'loading' in feedselectviewcontroller
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-//            NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 1.0 ];
-//            [NSThread sleepUntilDate:future];
-        
         [self findNearbyColleges];
-        [self.appDelegate foundLocation];
-        [self setFoundLocation:YES];
-//    });
-    }
-    else
-    {
-        [self.locationManager stopUpdatingLocation];
+        [self setLocStatus:LOCATION_FOUND];
+        [self.toaster toastNearbyColleges:self.nearbyColleges];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationUpdated" object:self];
     }
 }
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    [self.appDelegate didNotFindLocation];
-    [self setFoundLocation:NO];
+    [self failedLocationFinding];
 }
+- (void)failedLocationFinding
+{
+    NSLog(@"Failed Location Finding");
+    [self setLocStatus:LOCATION_NOT_FOUND];
+    [self.locationManager stopUpdatingLocation];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationUpdated" object:self];
+    [self.toaster toastLocationConnectionError];
+}
+- (void)findUserLocation
+{
+    [self setLocStatus:LOCATION_SEARCHING];
+    [self setLocationManager:[[CLLocationManager alloc] init]];
+    
+    if ([[UIDevice currentDevice] systemVersion].floatValue >= 8.0)
+    {
+        [self.locationManager requestWhenInUseAuthorization];
+    }
+    
+    [self.locationManager setDelegate:self];
+    if ([CLLocationManager locationServicesEnabled])
+    {
+        self.locationUpdateAttempts = 0;
+        self.locationSearchStart = [NSDate date];
+        [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+        self.locStatus = LOCATION_SEARCHING;
+        [self.locationManager startUpdatingLocation];
+    }
+    else
+    {
+        [self failedLocationFinding];
+    }
+}
+
 
 #pragma mark - Core Data stack
 

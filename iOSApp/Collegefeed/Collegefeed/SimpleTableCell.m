@@ -1,6 +1,6 @@
 //
 //  SimpleTableCell.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 6/11/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -19,7 +19,7 @@
     UIImage *image = [UIImage imageNamed:@"card_without_9patch.png"];
 //    top = 1, left = 3, bottom = 6, right = 4
     UIImage *stretchableBackground = [image resizableImageWithCapInsets:UIEdgeInsetsMake(3, 5, 8, 6)resizingMode:UIImageResizingModeStretch];
-    self.imageView.image = stretchableBackground;
+    self.myImageView.image = stretchableBackground;
     
     
     // Set font styles

@@ -1,6 +1,6 @@
 //
 //  Post.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/2/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -68,17 +68,20 @@
         NSString *collegeID = (NSString*)[jsonObject valueForKey:@"college_id"];
         NSString *commCount = (NSString*)[jsonObject valueForKey:@"comment_count"];
         NSString *hidden    = (NSString*)[jsonObject valueForKey:@"hidden"];
+        NSString *voteId    = (NSString*)[jsonObject valueForKey:@"initial_vote_id"];
         
         if (votedelta == (id)[NSNull null]) votedelta = nil;
         if (lat == (id)[NSNull null]) lat = nil;
         if (lon == (id)[NSNull null]) lon = nil;
         if (collegeID == (id)[NSNull null]) collegeID = nil;
         if (hidden == (id)[NSNull null]) hidden = nil;
+        if (voteId == (id)[NSNull null]) voteId = nil;
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
         NSDate *createdDate = [dateFormatter dateFromString: created];
-
+        Vote *initialVote = (voteId == nil) ? nil : [[Vote alloc] initWithVoteId:[voteId integerValue] WithParentId:[postID integerValue] WithUpvoteValue:YES AsVotableType:POST];
+        
         [self setPostID:[postID integerValue]];
         [self setScore:[votedelta integerValue]];
         [self setMessage:text];
@@ -87,7 +90,9 @@
         [self setCreatedAt:createdDate];
         [self setCollegeID:[collegeID integerValue]];
         [self setCommentCount:[commCount integerValue]];
+        [self setVote:initialVote];
         [self validate];
+        
         return self;
     }
     return nil;
@@ -135,6 +140,10 @@
 - (Vote *)getVote
 {
     return self.vote;
+}
+- (void)setCollegeName:(NSString *)name
+{
+    self.collegeName = name;
 }
 - (void)validate
 {

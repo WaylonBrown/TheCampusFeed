@@ -1,6 +1,6 @@
 //
 //  Vote.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/5/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -73,7 +73,7 @@
 - (NSData*)toJSON
 {   // Returns an NSData representation of this Vote in JSON
     NSString *voteString;
-    if (self.voteID == 0)
+    if (self.voteID == -1)
     {   // Not yet posted to network; use only simple JSON conversion
         
         voteString = [NSString stringWithFormat:

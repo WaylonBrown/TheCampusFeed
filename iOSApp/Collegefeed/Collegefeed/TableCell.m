@@ -1,6 +1,6 @@
 //
 //  TableCell.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/13/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -102,9 +102,8 @@
     id<ChildCellDelegate> strongDelegate = self.delegate;
     
     Vote *existingVote = [self.object getVote];
-    Vote *newVote = [[Vote alloc] initWithParentID:[self.object getID]
-                                    withUpvoteValue:true
-                                      asVotableType:[self.object getType]];
+    
+    Vote *newVote = [[Vote alloc] initWithVoteId:-1 WithParentId:[self.object getID] WithUpvoteValue:YES AsVotableType:[self.object getType]];
     [newVote setCollegeId:[self.object getCollegeID]];
     
     if (existingVote == nil)
@@ -121,6 +120,8 @@
         {   // User is undoing an existing upvote; cancel it
             [self.object setVote:nil];
             [self.object decrementScore];
+            [self updateVoteButtons];
+            [strongDelegate cancelVote:existingVote];
         }
         else if (existingVote.upvote == false)
         {   // User is changing their downvote to an upvote;
@@ -128,11 +129,10 @@
             [self.object setVote:newVote];
             [self.object incrementScore];
             [self.object incrementScore];
+            [self updateVoteButtons];
+            [strongDelegate cancelVote:existingVote];
+            [strongDelegate castVote:newVote];
         }
-        [self updateVoteButtons];
-        
-        [strongDelegate cancelVote:existingVote];
-        [strongDelegate castVote:newVote];
     }
 }
 - (IBAction)downVotePresed:(id)sender
@@ -146,41 +146,40 @@
     }
     
     Vote *existingVote = [self.object getVote];
-    Vote *newVote = [[Vote alloc] initWithParentID:[self.object getID]
-                                    withUpvoteValue:false
-                                      asVotableType:[self.object getType]];
+    Vote *newVote = [[Vote alloc] initWithVoteId:-1 WithParentId:[self.object getID]
+                                    WithUpvoteValue:NO
+                                      AsVotableType:[self.object getType]];
     [newVote setCollegeId:[self.object getCollegeID]];
     
     if (existingVote == nil)
-    {   // User is submitting a normal upvote
-        if ([strongDelegate castVote:newVote])
-        {
-            [self.object setVote:newVote];
-            [self.object decrementScore];
-        }
+    {   // User is submitting a normal downvote
+
+        [self.object setVote:newVote];
+        [self.object decrementScore];
+        [self updateVoteButtons];
+        [strongDelegate castVote:newVote];
     }
     else
     {
-        [strongDelegate cancelVote:existingVote];
-        
         if (existingVote.upvote == false)
         {   // User is undoing an existing downvote; cancel it
             [self.object setVote:nil];
             [self.object incrementScore];
+            [self updateVoteButtons];
+            [strongDelegate cancelVote:existingVote];
         }
         else if (existingVote.upvote == true)
         {   // User is changing their upvote to a downvote
             // cancel upvote and cast an downvote
-            if ([strongDelegate castVote:newVote])
-            {
-                [self.object setVote:newVote];
-                [self.object decrementScore];
-                [self.object decrementScore];
-            }
+            [self.object setVote:newVote];
+            [self.object decrementScore];
+            [self.object decrementScore];
+            [self updateVoteButtons];
+            [strongDelegate cancelVote:existingVote];
+            [strongDelegate castVote:newVote];
         }
     }
     
-    [self updateVoteButtons];
 }
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
 {

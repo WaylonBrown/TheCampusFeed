@@ -1,6 +1,6 @@
 //
 //  TagViewController.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/13/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -21,8 +21,6 @@
 - (void)loadView
 {
     [super loadView];
-    
-    // Place logo at the top of the navigation bar
 }
 
 - (void)viewDidLoad
@@ -90,10 +88,12 @@
 }
 - (void)switchToAllColleges
 {
+    self.dataController.tagPage = 0;
     [self setList:self.dataController.allTags];
 }
 - (void)switchToSpecificCollege
 {
+    self.dataController.tagPage = 0;
     [self setList:self.dataController.allTagsInCollege];
 }
 
@@ -196,7 +196,15 @@
 
 - (BOOL)loadMoreTags
 {
-    BOOL success = [self.dataController fetchTags];
+    BOOL success = false;
+    if (self.dataController.showingAllColleges)
+    {
+        success = [self.dataController fetchTags];
+    }
+    else
+    {
+        success = [self.dataController fetchTagsWithCollegeId:self.dataController.collegeInFocus.collegeID];
+    }
     return success;
 }
 - (void)addNewRows:(NSInteger)oldCount through:(NSInteger)newCount
@@ -219,18 +227,17 @@
     });
 }
 
-
 - (void)refresh
 {   // refresh this tag view
     if (self.dataController.showingAllColleges)
     {
-        [self.dataController fetchTags];
         [self switchToAllColleges];
+        [self.dataController fetchTags];
     }
     else if (self.dataController.showingSingleCollege)
     {
-        [self.dataController fetchTagsWithCollegeId:self.dataController.collegeInFocus.collegeID];
         [self switchToSpecificCollege];
+        [self.dataController fetchTagsWithCollegeId:self.dataController.collegeInFocus.collegeID];
     }
     [super refresh];
 }

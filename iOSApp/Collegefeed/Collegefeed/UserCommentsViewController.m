@@ -1,12 +1,13 @@
 //
 //  UserCommentsViewController.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 7/21/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
 #import "UserCommentsViewController.h"
+#import "Shared.h"
 
 @interface UserCommentsViewController ()
 
@@ -18,12 +19,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    long points = [self.dataController getUserCommentScore];
-    NSString *feedLabel = [NSString stringWithFormat:@"My Comments (%ld total points)", points];
-    [self.currentFeedLabel setText:feedLabel];
-    [self.tableView reloadData];
-    [self.toolbarSeparator removeFromSuperview];
-    [self.feedButton removeFromSuperview];
+
+//    [self.tableView reloadData];
+    [self addScoreFooter];
 }
 
 - (void)didReceiveMemoryWarning
@@ -38,9 +36,19 @@
     [self.refreshControl endRefreshing];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return [super tableView:tableView heightForRowAtIndexPath:indexPath] - 20;
+//}
+
+- (void)addScoreFooter
 {
-    return [super tableView:tableView heightForRowAtIndexPath:indexPath] - 20;
+    [self.feedToolbar removeFromSuperview];
+    long points = [self.dataController getUserCommentScore];
+    self.scoreLabel.text = [NSString stringWithFormat:@"Comment Score: %ld", points];
+    [self.scoreLabel setFont:CF_FONT_LIGHT(20)];
+    self.scoreToolbar.hidden = NO;
 }
+
 
 @end

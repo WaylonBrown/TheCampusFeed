@@ -1,6 +1,6 @@
 //
 //  Comment.m
-//  Collegefeed
+//  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/3/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
@@ -91,17 +91,22 @@
         NSString *votedelta = (NSString*)[jsonObject valueForKey:@"vote_delta"];
         NSString *postID    = (NSString*)[jsonObject valueForKey:@"post_id"];
         NSString *created   = (NSString*)[jsonObject valueForKey:@"created_at"];
+        NSString *voteId    = (NSString*)[jsonObject valueForKey:@"initial_vote_id"];
 
         if (votedelta == (id)[NSNull null]) votedelta = nil;
+        if (voteId == (id)[NSNull null]) voteId = nil;
+
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
         NSDate *createdDate = [dateFormatter dateFromString: created];
+        Vote *initialVote = (voteId == nil) ? nil : [[Vote alloc] initWithVoteId:[voteId integerValue] WithParentId:[commentID integerValue] WithUpvoteValue:YES AsVotableType:COMMENT];
         
         [self setCommentID:[commentID integerValue]];
         [self setScore:[votedelta integerValue]];
         [self setMessage:text];
         [self setPostID:[postID integerValue]];
         [self setCreatedAt:createdDate];
+        [self setVote:initialVote];
         [self validate];
 
         return self;
