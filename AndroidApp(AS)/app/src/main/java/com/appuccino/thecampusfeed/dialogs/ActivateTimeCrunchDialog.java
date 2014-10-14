@@ -27,13 +27,15 @@ public class ActivateTimeCrunchDialog extends AlertDialog.Builder{
                 @Override
                 public void onClick(DialogInterface dialog, int which)
                 {
-                    //start time crunch
-                    PrefManager.putBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, true);
-                    PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, collegeID);
-                    PrefManager.putTimeCrunchActivateTimestamp(Calendar.getInstance());
-                    PrefManager.putInt(PrefManager.TIME_CRUNCH_BACKUP_HOURS, 0);
-                    main.setupTimeCrunchLocation();
-                    frag.updateActivationState(true);
+                    boolean successful = main.setupTimeCrunchLocation();
+                    if (successful){
+                        //start time crunch
+                        PrefManager.putBoolean(PrefManager.TIME_CRUNCH_ACTIVATED, true);
+                        PrefManager.putInt(PrefManager.TIME_CRUNCH_HOME_COLLEGE, collegeID);
+                        PrefManager.putTimeCrunchActivateTimestamp(Calendar.getInstance());
+                        PrefManager.putInt(PrefManager.TIME_CRUNCH_BACKUP_HOURS, 0);
+                        frag.updateActivationState(true);
+                    }
                 }
             }).setNegativeButton("No", new DialogInterface.OnClickListener()
             {

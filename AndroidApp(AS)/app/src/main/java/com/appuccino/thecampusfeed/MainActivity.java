@@ -782,7 +782,8 @@ public class MainActivity extends FragmentActivity implements LocationListener
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 	}
 
-    public void setupTimeCrunchLocation(){
+    //return if successful
+    public boolean setupTimeCrunchLocation(){
 
         permissionsProgress.setVisibility(View.GONE);
         newPostButton.setVisibility(View.VISIBLE);
@@ -799,10 +800,12 @@ public class MainActivity extends FragmentActivity implements LocationListener
             if(chooseFeedDialog != null && chooseFeedDialog.isShowing()){
                 chooseFeedDialog.populateNearYouList(true);
             }
+            return true;
         } else {
-            Toast.makeText(this, "Error retrieving Time Crunch college.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error retrieving Time Crunch college. Make a post to set your home college.", Toast.LENGTH_LONG).show();
             newPostButton.setVisibility(View.GONE);
             getLocation();
+            return false;
         }
     }
 
