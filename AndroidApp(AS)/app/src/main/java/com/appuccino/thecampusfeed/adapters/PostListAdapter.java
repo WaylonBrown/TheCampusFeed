@@ -2,6 +2,7 @@ package com.appuccino.thecampusfeed.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.text.Html;
 import android.util.Log;
@@ -16,11 +17,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appuccino.thecampusfeed.ImageViewingActivity;
 import com.appuccino.thecampusfeed.MainActivity;
 import com.appuccino.thecampusfeed.R;
 import com.appuccino.thecampusfeed.objects.Post;
 import com.appuccino.thecampusfeed.objects.Vote;
 import com.appuccino.thecampusfeed.utils.FontManager;
+import com.appuccino.thecampusfeed.utils.MyLog;
 import com.appuccino.thecampusfeed.utils.NetWorker.MakePostVoteDeleteTask;
 import com.appuccino.thecampusfeed.utils.NetWorker.MakePostVoteTask;
 import com.appuccino.thecampusfeed.utils.TimeManager;
@@ -148,12 +151,6 @@ public class PostListAdapter extends ArrayAdapter<Post>{
             } else {
                 postHolder.messageText.setVisibility(View.VISIBLE);
             }
-            postHolder.postImage.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //new
-                }
-            });
 
             //dont need minimum height with image, so just set to 1
             Resources r = context.getResources();
@@ -261,7 +258,23 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 				}
 			}        	
         });
-        
+
+        postHolder.postImage.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(thisPost.getImageUri() != null && !thisPost.getImageUri().toString().isEmpty()){
+                    Intent intent = new Intent((Activity)context, ImageViewingActivity.class);
+                    intent.putExtra("imageURI", thisPost.getImageUri().toString());
+                    MyLog.i("click");
+                    context.startActivity(intent);
+                    ((Activity)context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                } else {
+                    Toast.makeText(context, "Error loading image, please try again later.", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
         thisPost.setVote(MainActivity.getVoteByPostId(thisPost.getID()));
         int vote = thisPost.getVote();
 
