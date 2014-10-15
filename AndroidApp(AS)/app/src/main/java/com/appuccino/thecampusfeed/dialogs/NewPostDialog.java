@@ -1,6 +1,7 @@
 package com.appuccino.thecampusfeed.dialogs;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
@@ -125,8 +126,6 @@ public class NewPostDialog extends AlertDialog.Builder{
                         newPost = new Post(thisString, selectedCollegeID, currentImageUri);
                         compressAndUploadImage();
                     }
-
-
                 }
                 else
                 {
@@ -238,6 +237,15 @@ public class NewPostDialog extends AlertDialog.Builder{
     }
 
     public void compressAndUploadImage(){
+        ProgressDialog uploadDialog = new ProgressDialog(main);
+        uploadDialog.setTitle("Uploading image...");
+        uploadDialog.setProgressStyle(uploadDialog.STYLE_HORIZONTAL);
+        uploadDialog.setProgress(0);   //start at 20 since image is compressed
+        uploadDialog.setMax(100);
+        uploadDialog.show();
+        TextView titleText = (TextView) uploadDialog.findViewById(context.getResources().getIdentifier("alertTitle", "id", "android"));
+        titleText.setTypeface(FontManager.light);
+
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(main.getContentResolver(), currentImageUri);
             MyLog.i("Image file size before compression: " + (bitmap.getRowBytes() * bitmap.getHeight()));
@@ -259,12 +267,14 @@ public class NewPostDialog extends AlertDialog.Builder{
 
             Bitmap compressedBitmap = Bitmap.createScaledBitmap(bitmap, width, height, true);
             MyLog.i("Image file size after compression: " + (compressedBitmap.getRowBytes() * compressedBitmap.getHeight()));
-            if(MainActivity.TEST_MODE_ON){
+            if(MainActivity.COMPRESSION_TEST_MODE_ON){
                 Toast.makeText(main, "Test mode is on, replacing preview with compressed image and not posting post", Toast.LENGTH_SHORT).show();
                 //replaces preview with compressed image and doesn't post
                 testCompressedImage(compressedBitmap);
+                uploadDialog.dismiss();
             } else {    //upload
-
+                //20% since image is compressed
+                uploadDialog.setProgress(20);
             }
 
         } catch (IOException e) {
