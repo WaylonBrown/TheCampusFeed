@@ -180,6 +180,7 @@ public class AchievementsDialog extends AlertDialog.Builder{
         returnList.add(new Achievement("200 Posts", 200, 2000, 5, 1));
         returnList.add(new Achievement("1,000 Posts", 1000, 10000, 6, 1));
 
+        returnList.add(new Achievement("5 Points", 5, 10, 9, 2));
         returnList.add(new Achievement("10 Points", 10, 20, 10, 2));
         returnList.add(new Achievement("30 Points", 30, 60, 11, 2));
         returnList.add(new Achievement("100 Points", 100, 200, 12, 2));

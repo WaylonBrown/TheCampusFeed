@@ -144,15 +144,17 @@ public class NewPostDialog extends AlertDialog.Builder{
         }
         checkMark.setVisibility(View.INVISIBLE);
 
-        //ensure keyboard is brought up when dialog shows
-        postMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        //if not in picture mode, ensure keyboard is brought up when dialog shows
+        if(!MainActivity.PICTURE_MODE){
+            postMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus) {
+                        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                    }
                 }
-            }
-        });
+            });
+        }
 
         final TextView tagsText = (TextView)layout.findViewById(R.id.newPostTagsText);
         tagsText.setTypeface(FontManager.light);
@@ -207,9 +209,14 @@ public class NewPostDialog extends AlertDialog.Builder{
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                photoPickerIntent.setType("image/*");
-                main.startActivityForResult(photoPickerIntent, MainActivity.SELECT_PHOTO_INTENT_CODE);
+                //if user has unlocked the 5 total post points achievement, allow pics
+                if(MainActivity.achievementUnlockedList.contains(9)){
+                    Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                    photoPickerIntent.setType("image/*");
+                    main.startActivityForResult(photoPickerIntent, MainActivity.SELECT_PHOTO_INTENT_CODE);
+                } else {
+                    new ActivateTimeCrunchDialog(main, null, 0, "", "In order to post pictures, you need to first unlock the achievement \"Achieve a total post score of at least 5\"", false);
+                }
             }
         });
 

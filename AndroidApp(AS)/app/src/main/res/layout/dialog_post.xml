@@ -39,6 +39,7 @@
         android:textSize="22sp"
 		android:inputType="textMultiLine"
 		android:maxLength="140"
+        android:hint="What's up?"
         /> 
     
     <com.appuccino.thecampusfeed.extra.CustomTextView
