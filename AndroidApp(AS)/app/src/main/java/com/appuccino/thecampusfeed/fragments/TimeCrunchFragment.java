@@ -153,9 +153,16 @@ public class TimeCrunchFragment extends Fragment
             MyLog.i("Time crunch is active, calculating hours left");
             Calendar now = Calendar.getInstance();
             long difference = now.getTimeInMillis() - activateTime.getTimeInMillis();
-            //int hoursDifference = (int)Math.ceil(difference / (60*60*1000));
-            //use for testing: this uses seconds instead of hours
-            int hoursDifference = (int)Math.ceil(difference / (1000));
+
+            int hoursDifference;
+            if(MainActivity.TEST_MODE_ON){
+                //seconds instead of hours
+                hoursDifference = (int)Math.ceil(difference / (1000));
+                Toast.makeText(main, "Test mode is on, using seconds instead of hours", Toast.LENGTH_SHORT).show();
+            } else {
+                hoursDifference = (int)Math.ceil(difference / (60*60*1000));
+            }
+
             MyLog.i("hoursDifference: " + hoursDifference);
             timeCrunchHours = timeCrunchHours - hoursDifference;
             MyLog.i("timeCrunchHours: " + timeCrunchHours);

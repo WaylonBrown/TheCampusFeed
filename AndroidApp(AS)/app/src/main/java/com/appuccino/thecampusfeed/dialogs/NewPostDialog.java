@@ -2,9 +2,12 @@ package com.appuccino.thecampusfeed.dialogs;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -23,9 +26,13 @@ import com.appuccino.thecampusfeed.R;
 import com.appuccino.thecampusfeed.extra.CustomTextView;
 import com.appuccino.thecampusfeed.objects.Post;
 import com.appuccino.thecampusfeed.utils.FontManager;
+import com.appuccino.thecampusfeed.utils.MyLog;
 import com.appuccino.thecampusfeed.utils.NetWorker.MakePostTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +46,7 @@ public class NewPostDialog extends AlertDialog.Builder{
     CustomTextView checkMark;
     ImageView previewImage;
     Uri currentImageUri;
+    private static int IMAGE_MAX_DIMENSION = 500;
 
 	public NewPostDialog(final Context context, MainActivity main, View layout) {
 		super(context);
@@ -111,12 +119,14 @@ public class NewPostDialog extends AlertDialog.Builder{
                     Post newPost;
                     if(!imageSelected){
                         newPost = new Post(thisString, selectedCollegeID);
+                        new MakePostTask(context, main).execute(newPost);
+                        dialog.dismiss();
                     } else {
                         newPost = new Post(thisString, selectedCollegeID, currentImageUri);
+                        compressAndUploadImage();
                     }
 
-                    new MakePostTask(context, main).execute(newPost);
-                    dialog.dismiss();
+
                 }
                 else
                 {
@@ -210,7 +220,11 @@ public class NewPostDialog extends AlertDialog.Builder{
             @Override
             public void onClick(View view) {
                 //if user has unlocked the 5 total post points achievement, allow pics
-                if(MainActivity.achievementUnlockedList.contains(9)){
+                if(MainActivity.achievementUnlockedList.contains(9) || MainActivity.TEST_MODE_ON){
+                    //if achievement isnt unlocked but allowing to add image because of test mode
+                    if(!MainActivity.achievementUnlockedList.contains(9) && MainActivity.TEST_MODE_ON){
+                        Toast.makeText(main, "Test mode is on, allowing to post image even though no achievement", Toast.LENGTH_SHORT).show();
+                    }
                     Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                     photoPickerIntent.setType("image/*");
                     main.startActivityForResult(photoPickerIntent, MainActivity.SELECT_PHOTO_INTENT_CODE);
@@ -221,6 +235,67 @@ public class NewPostDialog extends AlertDialog.Builder{
         });
 
         setupCollege(college);
+    }
+
+    public void compressAndUploadImage(){
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(main.getContentResolver(), currentImageUri);
+            MyLog.i("Image file size before compression: " + (bitmap.getRowBytes() * bitmap.getHeight()));
+            //compression, between the width and height the longer one is 100
+            float widthToHeightRatio = (float)bitmap.getWidth() / (float)bitmap.getHeight();
+            int width = 0;
+            int height = 0;
+            //width is greater
+            if(widthToHeightRatio > 1.0f){
+                height = Math.round(IMAGE_MAX_DIMENSION * (float)bitmap.getHeight() / (float)bitmap.getWidth());
+                width = IMAGE_MAX_DIMENSION;
+            } else if (widthToHeightRatio < 1.0f) { //height is greater
+                width = Math.round(IMAGE_MAX_DIMENSION * (float)bitmap.getWidth() / (float)bitmap.getHeight());
+                height = IMAGE_MAX_DIMENSION;
+            } else {    //width and height are exact same
+                width = IMAGE_MAX_DIMENSION;
+                height = IMAGE_MAX_DIMENSION;
+            }
+
+            Bitmap compressedBitmap = Bitmap.createScaledBitmap(bitmap, width, height, true);
+            MyLog.i("Image file size after compression: " + (compressedBitmap.getRowBytes() * compressedBitmap.getHeight()));
+            if(MainActivity.TEST_MODE_ON){
+                Toast.makeText(main, "Test mode is on, replacing preview with compressed image and not posting post", Toast.LENGTH_SHORT).show();
+                //replaces preview with compressed image and doesn't post
+                testCompressedImage(compressedBitmap);
+            } else {    //upload
+
+            }
+
+        } catch (IOException e) {
+            makeImageErrorToast();
+            e.printStackTrace();
+        }
+    }
+
+    //optional for testing
+    public void testCompressedImage(Bitmap bm){
+        //test compressed image
+        ContextWrapper cw = new ContextWrapper(main);
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("TheCampFeedTest", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath=new File(directory,"test.jpg");
+
+        FileOutputStream fos = null;
+        try {
+
+            fos = new FileOutputStream(mypath);
+
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bm.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        previewImage.setVisibility(View.VISIBLE);
+        Picasso.with(context).load(mypath).fit().centerInside().into(previewImage);
     }
 
     public boolean isShowing(){
@@ -245,5 +320,9 @@ public class NewPostDialog extends AlertDialog.Builder{
         previewImage.setVisibility(View.VISIBLE);
         Picasso.with(context).load(imageUri).into(previewImage);
         currentImageUri = imageUri;
+    }
+
+    public void makeImageErrorToast(){
+        Toast.makeText(main, "Error uploading image, please try again.", Toast.LENGTH_LONG).show();
     }
 }

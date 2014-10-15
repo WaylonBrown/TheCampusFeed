@@ -78,6 +78,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
     NewPostDialog newPostDialog;
 	
 	//final values
+    public static final boolean TEST_MODE_ON = true;
 	public static final int ALL_COLLEGES = 0;	//used for permissions
 	public static final String PREFERENCE_KEY_COLLEGE_LIST1 = "all_colleges_preference_key1";
 	public static final String PREFERENCE_KEY_COLLEGE_LIST2 = "all_colleges_preference_key2";
@@ -86,8 +87,8 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	public static final int MIN_POST_LENGTH = 10;
 	public static final int MIN_COMMENT_LENGTH = 5;
     //TODO: make sure these values are correct
-    public static final int TIME_BETWEEN_POSTS = 0;     //in minutes
-    public static final int TIME_BETWEEN_COMMENTS = 0;  //in minutes
+    public static int TIME_BETWEEN_POSTS = 10;     //in minutes
+    public static int TIME_BETWEEN_COMMENTS = 1;  //in minutes
     public static final int TIME_CRUNCH_POST_TIME = 24;
     public static final boolean PICTURE_MODE = true;    //allow users to upload pics, and posts to show them
     public static final int SELECT_PHOTO_INTENT_CODE = 1;
@@ -148,6 +149,12 @@ public class MainActivity extends FragmentActivity implements LocationListener
         checkForceRequiredUpdate();
 		setupApp();
         AchievementsDialog.generateAchievementList();
+
+        if(TEST_MODE_ON){
+            Toast.makeText(this, "Test mode is on, using zero for post and comment time limit", Toast.LENGTH_SHORT).show();
+            TIME_BETWEEN_POSTS = 0;
+            TIME_BETWEEN_COMMENTS = 0;
+        }
 
         collegeListCheckSum = PrefManager.getCollegeListCheckSum();
         lastPostTime = PrefManager.getLastPostTime();
