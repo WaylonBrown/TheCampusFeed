@@ -28,6 +28,7 @@ import com.appuccino.thecampusfeed.extra.CustomTextView;
 import com.appuccino.thecampusfeed.objects.Post;
 import com.appuccino.thecampusfeed.utils.FontManager;
 import com.appuccino.thecampusfeed.utils.MyLog;
+import com.appuccino.thecampusfeed.utils.NetWorker;
 import com.appuccino.thecampusfeed.utils.NetWorker.MakePostTask;
 import com.squareup.picasso.Picasso;
 
@@ -267,42 +268,47 @@ public class NewPostDialog extends AlertDialog.Builder{
 
             Bitmap compressedBitmap = Bitmap.createScaledBitmap(bitmap, width, height, true);
             MyLog.i("Image file size after compression: " + (compressedBitmap.getRowBytes() * compressedBitmap.getHeight()));
+
+            //20% since image is compressed
+            uploadDialog.setProgress(20);
+            ContextWrapper cw = new ContextWrapper(main);
+            // path to /data/data/yourapp/app_data/imageDir
+            File directory = cw.getDir("TheCampFeed", Context.MODE_PRIVATE);
+            // Create imageDir
+            File mypath=new File(directory,"uploadedImage.jpg");
+            MyLog.i("Files path is: " + mypath.getAbsolutePath());
+
+            FileOutputStream fos = null;
+            try {
+
+                fos = new FileOutputStream(mypath);
+
+                // Use the compress method on the BitMap object to write image to the OutputStream
+                compressedBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                fos.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             if(MainActivity.COMPRESSION_TEST_MODE_ON){
                 Toast.makeText(main, "Test mode is on, replacing preview with compressed image and not posting post", Toast.LENGTH_SHORT).show();
                 //replaces preview with compressed image and doesn't post
-                testCompressedImage(compressedBitmap);
+                testCompressedImage(compressedBitmap, mypath);
                 uploadDialog.dismiss();
-            } else {    //upload
-                //20% since image is compressed
-                uploadDialog.setProgress(20);
+            } else {    //save then upload image
+                new NetWorker.UploadImageTask(main, main, mypath).execute(compressedBitmap);
             }
 
         } catch (IOException e) {
             makeImageErrorToast();
+            uploadDialog.dismiss();
             e.printStackTrace();
         }
     }
 
-    //optional for testing
-    public void testCompressedImage(Bitmap bm){
-        //test compressed image
-        ContextWrapper cw = new ContextWrapper(main);
-        // path to /data/data/yourapp/app_data/imageDir
-        File directory = cw.getDir("TheCampFeedTest", Context.MODE_PRIVATE);
-        // Create imageDir
-        File mypath=new File(directory,"test.jpg");
+    //optional for testing, saves Bitmap to system then shows in app after compression
+    public void testCompressedImage(Bitmap bm, File mypath){
 
-        FileOutputStream fos = null;
-        try {
-
-            fos = new FileOutputStream(mypath);
-
-            // Use the compress method on the BitMap object to write image to the OutputStream
-            bm.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         previewImage.setVisibility(View.VISIBLE);
         Picasso.with(context).load(mypath).fit().centerInside().into(previewImage);
