@@ -1,0 +1,33 @@
+{
+  "resource": "Tags",
+  "http_method": "GET",
+  "route": "/api/v1/tags/trending?page=2&per_page=1",
+  "description": "Get page 2 of the currently trending tags",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/v1/tags/trending?page=2&per_page=1",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+        "page": "2",
+        "per_page": "1"
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "[{\"text\":\"making\",\"use_count\":1}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"a0ee6a570df8540ad273989d43d77725\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"00cbad45-677d-4728-a5b4-881032f0bb7a","X-Runtime":"0.006511","Content-Length":"33"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

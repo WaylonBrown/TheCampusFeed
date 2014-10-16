@@ -7,15 +7,17 @@ resource "Posts" do
   before do
     @c = College.create(:name => "Swag University", :id => 2015)
     (1..3).each do |i|
-      @c.posts.create(:text => "its a #test post #{i}", :id => i);
+      @c.posts.create(:text => "its a #test post #{i}", :id => i)
     end
+    @image = Image.create(:id => 1)
+    @image_comment = @c.posts.create(:text => "This here post has an image ", :id => 99, :image_id => 1)
 
     @c2 = College.create(:name => "Yolo University", :id => 2016)
     (4..6).each do |i|
-      @c2.posts.create(:text => "its a #test post 2.0 #{i}", :id => i);
+      @c2.posts.create(:text => "its a #test post 2.0 #{i}", :id => i)
     end
+    @c2.posts.create(:text => "its a #test post 2.0", :id => 7, :hidden => true)
 
-      @c2.posts.create(:text => "its a #test post 2.0", :id => 7, :hidden => true);
     
   end
 
@@ -27,6 +29,17 @@ resource "Posts" do
     end
 
   end
+
+  get "/api/v1/posts/99" do
+
+    example "Get a post with an image" do
+      do_request
+      status.should == 200
+    end
+
+  end
+  
+
 
   get "/api/v1/posts/recent" do
 
@@ -119,6 +132,15 @@ resource "Posts" do
       do_request(
         :text => "This is a #post #wtih #tag #testing #yo #yo #yo",
         :user_token => "18006969696"
+      )
+      status.should == 201
+    end
+
+    example "Creating a post with an image" do
+      do_request(
+        :text => "Here is a quality photo of my anonymous butt for you all to enjoy.",
+        :user_token => "18006969696",
+        :image_id => 1
       )
       status.should == 201
     end
