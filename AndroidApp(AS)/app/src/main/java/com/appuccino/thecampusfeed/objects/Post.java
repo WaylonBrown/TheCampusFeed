@@ -19,6 +19,7 @@ public class Post extends AbstractPostComment{
     private String webURL;
     private String appURL;
     private Uri imageUri;
+    private int imageID;
 
     public Post(String m, int c)
     {
@@ -76,7 +77,7 @@ public class Post extends AbstractPostComment{
         appURL = "thecampusfeed://posts/" + id;
 	}
 	
-	public Post(int id, String message, int score, int deltaScore, int collegeID, String time, int commentCount, int d)
+	public Post(int id, String message, int score, int deltaScore, int collegeID, String time, int commentCount, Uri uri, int d)
 	{
         defaultVoteID = d;
 		this.score = score;
@@ -95,12 +96,13 @@ public class Post extends AbstractPostComment{
 		}
 		else
 		{
-			//TODO: IGNORE make call to get updated college list here
 			collegeName = "";
 		}
-        //webURL = "www.thecampusfeed.com/posttest/" + id;
+
         webURL = "http://thecampusfeed.com/post/" + id;
         appURL = "thecampusfeed://posts/" + id;
+        if(uri != null && !uri.toString().isEmpty())
+            this.imageUri = uri;
 	}
 
 	
@@ -121,6 +123,10 @@ public class Post extends AbstractPostComment{
     public void setCollegeName(String n)
     {
         collegeName = n;
+    }
+
+    public void setImageID(int id){
+        imageID = id;
     }
 
     public void setImageUri(Uri uri){
@@ -153,6 +159,7 @@ public class Post extends AbstractPostComment{
         writer.beginObject();
         writer.name("text"); writer.value(message);
         writer.name("user_token"); writer.value(0);
+        writer.name("image_id"); writer.value(imageID);
         writer.endObject();
         writer.close();
 

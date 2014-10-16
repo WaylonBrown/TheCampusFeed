@@ -13,6 +13,7 @@ import com.appuccino.thecampusfeed.TagListActivity;
 import com.appuccino.thecampusfeed.dialogs.ChangeTimeCrunchCollegeDialog;
 import com.appuccino.thecampusfeed.dialogs.ChooseFeedDialog;
 import com.appuccino.thecampusfeed.dialogs.ForceRequiredUpdateDialog;
+import com.appuccino.thecampusfeed.dialogs.NewPostDialog;
 import com.appuccino.thecampusfeed.fragments.MostActiveCollegesFragment;
 import com.appuccino.thecampusfeed.fragments.MyCommentsFragment;
 import com.appuccino.thecampusfeed.fragments.MyPostsFragment;
@@ -41,12 +42,14 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 public class NetWorker {
 
@@ -1175,11 +1178,15 @@ public class NetWorker {
         String response = null;
         MainActivity main;
         File myPath;
+        int imageID;
+        Uri imageUri;
+        NewPostDialog dialog;
 
-        public UploadImageTask(Context context, MainActivity main, File mypath) {
+        public UploadImageTask(Context context, MainActivity main, NewPostDialog dialog, File mypath) {
             c = context;
             this.main = main;
             myPath = mypath;
+            this.dialog = dialog;
         }
 
         @Override
@@ -1189,7 +1196,7 @@ public class NetWorker {
             DataOutputStream outputStream = null;
             DataInputStream inputStream = null;
             String pathToOurFile = myPath.getAbsolutePath();
-            String urlServer = "http://192.168.1.1/handle_upload.php";
+            String urlServer = REQUEST_URL + "/images";
             String lineEnd = "\r\n";
             String twoHyphens = "--";
             String boundary =  "*****";
@@ -1218,7 +1225,7 @@ public class NetWorker {
 
                 outputStream = new DataOutputStream( connection.getOutputStream() );
                 outputStream.writeBytes(twoHyphens + boundary + lineEnd);
-                outputStream.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + pathToOurFile +"\"" + lineEnd);
+                outputStream.writeBytes("Content-Disposition: form-data; name=\"image[upload]\";filename=\"" + pathToOurFile +"\"" + lineEnd);
                 outputStream.writeBytes(lineEnd);
 
                 bytesAvailable = fileInputStream.available();
@@ -1242,10 +1249,21 @@ public class NetWorker {
                 // Responses from the server (code and message)
                 int serverResponseCode = connection.getResponseCode();
                 String serverResponseMessage = connection.getResponseMessage();
+                InputStream str = (InputStream)(connection.getContent());
+                Scanner scan = new Scanner(str);
+                String responseBody = scan.nextLine();
+
+                MyLog.d("Server response code: " + serverResponseCode);
+                MyLog.d("Server response message: " + serverResponseMessage);
+                MyLog.d("Server response body: " + responseBody);
 
                 fileInputStream.close();
                 outputStream.flush();
                 outputStream.close();
+
+                String[] responseSplit = responseBody.split(",");
+                imageID = Integer.valueOf(responseSplit[0]);
+                imageUri = Uri.parse(responseSplit[1]);
             }
             catch (Exception ex)
             {
@@ -1262,7 +1280,7 @@ public class NetWorker {
             if(!result)
                 Toast.makeText(c, "Failed to upload image, please try again.", Toast.LENGTH_LONG).show();
             else{
-                
+                dialog.imageUploaded(imageID, imageUri);
             }
             super.onPostExecute(result);
         }

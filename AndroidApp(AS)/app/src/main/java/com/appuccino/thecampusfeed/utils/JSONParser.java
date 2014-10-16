@@ -1,5 +1,6 @@
 package com.appuccino.thecampusfeed.utils;
 
+import android.net.Uri;
 import android.util.JsonReader;
 
 import com.appuccino.thecampusfeed.objects.College;
@@ -123,6 +124,7 @@ public class JSONParser {
 				int collegeID = -1;
 				String time = null;
 				int commentCount = 0;
+                Uri imageUri = null;
 				
 				reader.beginObject();
 				while(reader.hasNext()){
@@ -163,8 +165,11 @@ public class JSONParser {
 						}
 					}
 					else if(name.equals("created_at")){
-						time = reader.nextString();
-					}
+                        time = reader.nextString();
+                    }
+                    else if(name.equals("image_uri")){
+                        imageUri = Uri.parse(reader.nextString());
+                    }
 					else if(name.equals("comment_count")){
 						//use in case null is passed in, which prim types can't take
 						try{
@@ -179,7 +184,7 @@ public class JSONParser {
 				}
 				reader.endObject();
 				
-				ret.add(new Post(id, text, score, deltaScore, collegeID, time, commentCount, -1));
+				ret.add(new Post(id, text, score, deltaScore, collegeID, time, commentCount, imageUri, -1));
 			}
 			reader.endArray();
 		}catch(Exception e){
@@ -205,6 +210,7 @@ public class JSONParser {
             String time = null;
             int commentCount = 0;
             int defaultVoteID = 0;
+            Uri uri = null;
 
             reader.beginObject();
             while(reader.hasNext()) {
@@ -248,6 +254,8 @@ public class JSONParser {
                     } catch (Exception e) {
                         reader.skipValue();
                     }
+                }else if(name.equals("image_uri")){
+                    uri = Uri.parse(reader.nextString());
                 }else if (name.equals("initial_vote_id")) {
                     //use in case null is passed in, which prim types can't take
                     try {
@@ -260,7 +268,7 @@ public class JSONParser {
                 }
             }
             reader.endObject();
-            ret = new Post(id, text, score, deltaScore, collegeID, time, commentCount, defaultVoteID);
+            ret = new Post(id, text, score, deltaScore, collegeID, time, commentCount, uri, defaultVoteID);
             return ret;
         }catch(Exception e){
             e.printStackTrace();

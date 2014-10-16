@@ -44,11 +44,13 @@ public class NewPostDialog extends AlertDialog.Builder{
 	private int selectedCollegeID = -1;
     MainActivity main;
     AlertDialog dialog;
+    ProgressDialog uploadDialog;
     private boolean imageSelected = false;
     CustomTextView checkMark;
     ImageView previewImage;
     Uri currentImageUri;
     private static int IMAGE_MAX_DIMENSION = 500;
+    Post post;
 
 	public NewPostDialog(final Context context, MainActivity main, View layout) {
 		super(context);
@@ -118,13 +120,12 @@ public class NewPostDialog extends AlertDialog.Builder{
                 String thisString = postMessage.getText().toString().trim();
                 if(thisString.length() >= MainActivity.MIN_POST_LENGTH || imageSelected)
                 {
-                    Post newPost;
                     if(!imageSelected){
-                        newPost = new Post(thisString, selectedCollegeID);
-                        new MakePostTask(context, main).execute(newPost);
+                        post = new Post(thisString, selectedCollegeID);
+                        new MakePostTask(context, main).execute(post);
                         dialog.dismiss();
                     } else {
-                        newPost = new Post(thisString, selectedCollegeID, currentImageUri);
+                        post = new Post(thisString, selectedCollegeID, currentImageUri);
                         compressAndUploadImage();
                     }
                 }
@@ -238,7 +239,7 @@ public class NewPostDialog extends AlertDialog.Builder{
     }
 
     public void compressAndUploadImage(){
-        ProgressDialog uploadDialog = new ProgressDialog(main);
+        uploadDialog = new ProgressDialog(main);
         uploadDialog.setTitle("Uploading image...");
         uploadDialog.setProgressStyle(uploadDialog.STYLE_HORIZONTAL);
         uploadDialog.setProgress(0);   //start at 20 since image is compressed
@@ -296,7 +297,7 @@ public class NewPostDialog extends AlertDialog.Builder{
                 testCompressedImage(compressedBitmap, mypath);
                 uploadDialog.dismiss();
             } else {    //save then upload image
-                new NetWorker.UploadImageTask(main, main, mypath).execute(compressedBitmap);
+                new NetWorker.UploadImageTask(main, main, this, mypath).execute(compressedBitmap);
             }
 
         } catch (IOException e) {
@@ -306,10 +307,25 @@ public class NewPostDialog extends AlertDialog.Builder{
         }
     }
 
+    public void imageUploaded(int imageID, Uri imageUri){
+        if(uploadDialog != null && uploadDialog.isShowing()){
+            uploadDialog.dismiss();
+        }
+        if(dialog != null && dialog.isShowing()){
+            dialog.dismiss();
+        }
+
+        if(post != null){
+            post.setImageID(imageID);
+            post.setImageUri(imageUri);
+            new MakePostTask(context, main).execute(post);
+        } else {
+            Toast.makeText(main, "Error making post, please try again.", Toast.LENGTH_LONG).show();
+        }
+    }
+
     //optional for testing, saves Bitmap to system then shows in app after compression
     public void testCompressedImage(Bitmap bm, File mypath){
-
-
         previewImage.setVisibility(View.VISIBLE);
         Picasso.with(context).load(mypath).fit().centerInside().into(previewImage);
     }
