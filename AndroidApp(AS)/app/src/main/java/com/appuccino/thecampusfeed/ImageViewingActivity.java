@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 
@@ -38,6 +39,14 @@ public class ImageViewingActivity extends Activity{
 		actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
 		actionBar.setIcon(R.drawable.logofake);
         actionBar.setDisplayShowHomeEnabled(false);
+
+        ImageView backButton = (ImageView)findViewById(R.id.backButtonTag);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 	}
 
 	@Override
