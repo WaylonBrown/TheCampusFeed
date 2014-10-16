@@ -274,7 +274,7 @@ public class NewPostDialog extends AlertDialog.Builder{
             uploadDialog.setProgress(20);
             ContextWrapper cw = new ContextWrapper(main);
             // path to /data/data/yourapp/app_data/imageDir
-            File directory = cw.getDir("TheCampFeed", Context.MODE_PRIVATE);
+            File directory = cw.getDir("TheCampusFeed", Context.MODE_PRIVATE);
             // Create imageDir
             File mypath=new File(directory,"uploadedImage.jpg");
             MyLog.i("Files path is: " + mypath.getAbsolutePath());
@@ -297,7 +297,7 @@ public class NewPostDialog extends AlertDialog.Builder{
                 testCompressedImage(compressedBitmap, mypath);
                 uploadDialog.dismiss();
             } else {    //save then upload image
-                new NetWorker.UploadImageTask(main, main, this, mypath).execute(compressedBitmap);
+                new NetWorker.UploadImageTask(main, main, this, uploadDialog, mypath).execute(compressedBitmap);
             }
 
         } catch (IOException e) {

@@ -1,5 +1,6 @@
 package com.appuccino.thecampusfeed.utils;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -782,7 +783,7 @@ public class NetWorker {
                  MainActivity.postVoteList.add(new Vote(responsePost.defaultVoteID, responsePost.getID(), true));
                  PrefManager.putPostVoteList(MainActivity.postVoteList);
                  main.addNewPostToListAndMyContent(responsePost, c);
-             } catch (IOException e) {
+             } catch (Exception e) {
                  Log.i("cfeed","ERROR: post not added");
                  e.printStackTrace();
              }
@@ -1181,12 +1182,14 @@ public class NetWorker {
         int imageID;
         Uri imageUri;
         NewPostDialog dialog;
+        ProgressDialog uploadDialog;
 
-        public UploadImageTask(Context context, MainActivity main, NewPostDialog dialog, File mypath) {
+        public UploadImageTask(Context context, MainActivity main, NewPostDialog dialog, ProgressDialog uploadDialog, File mypath) {
             c = context;
             this.main = main;
             myPath = mypath;
             this.dialog = dialog;
+            this.uploadDialog = uploadDialog;
         }
 
         @Override
@@ -1235,6 +1238,7 @@ public class NetWorker {
                 // Read file
                 bytesRead = fileInputStream.read(buffer, 0, bufferSize);
 
+                int initialBytesToRead = bytesRead;
                 while (bytesRead > 0)
                 {
                     outputStream.write(buffer, 0, bufferSize);
@@ -1248,10 +1252,15 @@ public class NetWorker {
 
                 // Responses from the server (code and message)
                 int serverResponseCode = connection.getResponseCode();
+                uploadDialog.setProgress(41);
                 String serverResponseMessage = connection.getResponseMessage();
+                uploadDialog.setProgress(60);
                 InputStream str = (InputStream)(connection.getContent());
+                uploadDialog.setProgress(80);
+
                 Scanner scan = new Scanner(str);
                 String responseBody = scan.nextLine();
+                uploadDialog.setProgress(100);
 
                 MyLog.d("Server response code: " + serverResponseCode);
                 MyLog.d("Server response message: " + serverResponseMessage);
@@ -1260,6 +1269,7 @@ public class NetWorker {
                 fileInputStream.close();
                 outputStream.flush();
                 outputStream.close();
+                uploadDialog.setProgress(100);
 
                 String[] responseSplit = responseBody.split(",");
                 imageID = Integer.valueOf(responseSplit[0]);
@@ -1267,8 +1277,7 @@ public class NetWorker {
             }
             catch (Exception ex)
             {
-                //Exception handling
-
+                ex.printStackTrace();
                 return false;
             }
 

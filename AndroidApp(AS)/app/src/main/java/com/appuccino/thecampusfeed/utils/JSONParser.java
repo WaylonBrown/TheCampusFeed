@@ -255,7 +255,12 @@ public class JSONParser {
                         reader.skipValue();
                     }
                 }else if(name.equals("image_uri")){
-                    uri = Uri.parse(reader.nextString());
+                    try{
+                        uri = Uri.parse(reader.nextString());
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+
                 }else if (name.equals("initial_vote_id")) {
                     //use in case null is passed in, which prim types can't take
                     try {
