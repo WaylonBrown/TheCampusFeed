@@ -49,7 +49,7 @@ public class NewPostDialog extends AlertDialog.Builder{
     CustomTextView checkMark;
     ImageView previewImage;
     Uri currentImageUri;
-    private static int IMAGE_MAX_DIMENSION = 500;
+    private static int IMAGE_MAX_DIMENSION = 700;
     Post post;
 
 	public NewPostDialog(final Context context, MainActivity main, View layout) {
@@ -131,7 +131,7 @@ public class NewPostDialog extends AlertDialog.Builder{
                 }
                 else
                 {
-                    Toast.makeText(context, "Post must be at least " + MainActivity.MIN_POST_LENGTH + " characters long.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Text posts must be at least " + MainActivity.MIN_POST_LENGTH + " characters long.", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -350,7 +350,7 @@ public class NewPostDialog extends AlertDialog.Builder{
         imageSelected = true;
         checkMark.setVisibility(View.VISIBLE);
         previewImage.setVisibility(View.VISIBLE);
-        Picasso.with(context).load(imageUri).into(previewImage);
+        Picasso.with(context).load(imageUri).fit().centerInside().into(previewImage);
         currentImageUri = imageUri;
     }
 

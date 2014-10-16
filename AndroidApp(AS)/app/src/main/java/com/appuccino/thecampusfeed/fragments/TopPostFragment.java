@@ -27,6 +27,7 @@ import com.appuccino.thecampusfeed.extra.QuickReturnListView;
 import com.appuccino.thecampusfeed.objects.College;
 import com.appuccino.thecampusfeed.objects.Post;
 import com.appuccino.thecampusfeed.utils.FontManager;
+import com.appuccino.thecampusfeed.utils.MyLog;
 import com.appuccino.thecampusfeed.utils.NetWorker.GetPostsTask;
 import com.appuccino.thecampusfeed.utils.NetWorker.PostSelector;
 import com.appuccino.thecampusfeed.utils.PrefManager;
@@ -76,6 +77,7 @@ public class TopPostFragment extends Fragment implements OnRefreshListener
         if(mainActivity == null){
             mainActivity = (MainActivity)getActivity();
         }
+        MyLog.d("College list count: " + MainActivity.collegeList.size());
 		rootView = inflater.inflate(R.layout.fragment_layout,
 				container, false);
 		list = (QuickReturnListView)rootView.findViewById(R.id.fragmentListView);

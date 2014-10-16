@@ -1087,7 +1087,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
                 if(resultCode == RESULT_OK && newPostDialog != null && newPostDialog.isShowing()){
                     final Uri imageUri = imageReturnedIntent.getData();
                     newPostDialog.setImageChosen(imageUri);
-                } else {
+                } else if (resultCode != RESULT_CANCELED){
                     Toast.makeText(this, "Failed to upload image, please try again.", Toast.LENGTH_LONG).show();
                 }
         }

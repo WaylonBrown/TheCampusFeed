@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import com.appuccino.thecampusfeed.utils.MyLog;
 import com.appuccino.thecampusfeed.utils.NetWorker.MakePostVoteDeleteTask;
 import com.appuccino.thecampusfeed.utils.NetWorker.MakePostVoteTask;
 import com.appuccino.thecampusfeed.utils.TimeManager;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -83,7 +86,9 @@ public class PostListAdapter extends ArrayAdapter<Post>{
             postHolder.postImage = (ImageView)row.findViewById(R.id.postImage);
         	postHolder.bottomDivider = row.findViewById(R.id.bottomDivider);
         	postHolder.bottomPadding = row.findViewById(R.id.bottomPadding);
-        	postHolder.bottomLayout = (LinearLayout)row.findViewById(R.id.bottomLayout);
+            postHolder.bottomLayout = (LinearLayout)row.findViewById(R.id.bottomLayout);
+            postHolder.imageLoadingProg = (ProgressBar)row.findViewById(R.id.postImageLoading);
+            postHolder.imageRelLayout = (RelativeLayout)row.findViewById(R.id.imageRelLayout);
             
             postHolder.scoreText.setTypeface(FontManager.bold);
             postHolder.messageText.setTypeface(FontManager.light);
@@ -129,8 +134,19 @@ public class PostListAdapter extends ArrayAdapter<Post>{
 
         //set image if images are enabled
         if(MainActivity.PICTURE_MODE && thisPost.getImageUri() != null && !thisPost.getImageUri().toString().isEmpty()){
-
-            Picasso.with(context).load(thisPost.getImageUri()).into(postHolder.postImage);
+            postHolder.imageRelLayout.setVisibility(View.VISIBLE);
+            postHolder.imageLoadingProg.setVisibility(View.VISIBLE);
+            final PostHolder finalPostHolder1 = postHolder;
+            Picasso.with(context).load(thisPost.getImageUri()).fit().centerCrop().into(postHolder.postImage, new Callback(){
+                @Override
+                public void onSuccess() {
+                    finalPostHolder1.imageLoadingProg.setVisibility(View.GONE);
+                }
+                @Override
+                public void onError() {
+                    finalPostHolder1.imageLoadingProg.setVisibility(View.GONE);
+                }
+            });
             postHolder.postImage.setVisibility(View.VISIBLE);
             if(thisPost.getMessage() == null || thisPost.getMessage().isEmpty()){
                 postHolder.messageText.setVisibility(View.GONE);
@@ -143,6 +159,8 @@ public class PostListAdapter extends ArrayAdapter<Post>{
             float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, r.getDisplayMetrics());
             postHolder.messageText.setMinimumHeight(Math.round(px));
         } else {
+            postHolder.imageRelLayout.setVisibility(View.GONE);
+            postHolder.imageLoadingProg.setVisibility(View.GONE);
             postHolder.postImage.setVisibility(View.GONE);
             //set the minimum height to 60 so that it pushes down bottom part of post
             Resources r = context.getResources();
@@ -454,5 +472,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
     	View bottomDivider;
     	View bottomPadding;
     	LinearLayout bottomLayout;
+        ProgressBar imageLoadingProg;
+        RelativeLayout imageRelLayout;
     }
 }
