@@ -46,6 +46,8 @@ class ImagesController < ApplicationController
         )
         @image.uri = file.public_url
 
+        @image.save
+
         format.all { render text: "#{@image.id},#{@image.uri}" }
       else
         format.html { render action: 'new' }
