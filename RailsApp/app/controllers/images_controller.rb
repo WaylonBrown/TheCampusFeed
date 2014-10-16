@@ -27,6 +27,10 @@ class ImagesController < ApplicationController
   # POST /images.json
   def create
 
+    @image = Image.new(image_params)
+
+    respond_to do |format|
+      if @image.save
     @client = Fog::Storage.new(
       :provider => 'rackspace',
       :rackspace_username => ENV['RACKSPACE_USERNAME'],
@@ -36,14 +40,11 @@ class ImagesController < ApplicationController
 
     directory = @client.directories.get('CFEED_USER_IMG')
     file = directory.files.create(
-      :key => 'testing',
-      :body => params[:image][:upload].read
+      :key => "#{@image.id}.jpg",
+      :body => params[:image][:upload]
     )
-    @image = Image.new(image_params)
     @image.uri = file.public_url
-    respond_to do |format|
-      if @image.save
-        format.html { redirect_to @image, notice: 'Image was successfully created.' }
+        format.html { render text: "#{@image.id},#{@image.uri}" } #redirect_to @image, notice: 'Image was successfully created.' }
         format.json { render action: 'show', status: :created, location: @image }
       else
         format.html { render action: 'new' }
