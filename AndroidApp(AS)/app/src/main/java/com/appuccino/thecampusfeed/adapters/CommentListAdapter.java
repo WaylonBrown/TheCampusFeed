@@ -2,8 +2,10 @@ package com.appuccino.thecampusfeed.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.text.Html;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,7 +65,8 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         	commentHolder.timeText = (TextView)row.findViewById(R.id.timeText);
         	commentHolder.commentsText = (TextView)row.findViewById(R.id.commentText);
         	commentHolder.arrowUp = (ImageView)row.findViewById(R.id.arrowUp);
-        	commentHolder.arrowDown = (ImageView)row.findViewById(R.id.arrowDown);
+            commentHolder.arrowDown = (ImageView)row.findViewById(R.id.arrowDown);
+            commentHolder.image = (ImageView)row.findViewById(R.id.postImage);
         	commentHolder.bottomPadding = row.findViewById(R.id.bottomPadding);
             
             commentHolder.scoreText.setTypeface(FontManager.bold);
@@ -80,6 +83,12 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         commentHolder.messageText.setText(thisComment.getMessage());
         commentHolder.commentsText.setVisibility(View.GONE);
         commentHolder.bottomPadding.setVisibility(View.VISIBLE);
+        //gives the post message a minimum height
+        Resources r = context.getResources();
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 64, r.getDisplayMetrics());
+        commentHolder.messageText.setMinimumHeight(Math.round(px));
+        //comments don't have images
+        commentHolder.image.setVisibility(View.GONE);
         
         try {
 			setTime(thisComment, commentHolder.timeText);
@@ -353,7 +362,8 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
     	TextView timeText;
     	TextView commentsText;
     	ImageView arrowUp;
-    	ImageView arrowDown;
+        ImageView arrowDown;
+        ImageView image;
     	View bottomPadding;
     }
 }

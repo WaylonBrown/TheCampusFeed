@@ -80,6 +80,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	//final values
     public static final boolean TEST_MODE_ON = true;
     public static final boolean COMPRESSION_TEST_MODE_ON = false;
+    public static final boolean ALL_POSTS_HAVE_IMAGES_TEST_MODE_ON = false;
 	public static final int ALL_COLLEGES = 0;	//used for permissions
 	public static final String PREFERENCE_KEY_COLLEGE_LIST1 = "all_colleges_preference_key1";
 	public static final String PREFERENCE_KEY_COLLEGE_LIST2 = "all_colleges_preference_key2";

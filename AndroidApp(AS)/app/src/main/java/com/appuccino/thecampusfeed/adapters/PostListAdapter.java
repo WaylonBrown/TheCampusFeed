@@ -128,21 +128,7 @@ public class PostListAdapter extends ArrayAdapter<Post>{
         }
 
         //set image if images are enabled
-        if(MainActivity.PICTURE_MODE && thisPost.getImageUri() != null){
-//            try {
-//                final InputStream imageStream = context.getContentResolver().openInputStream(thisPost.getImageUri());
-//                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-//                postHolder.postImage.setImageBitmap(selectedImage);
-//                postHolder.postImage.setVisibility(View.VISIBLE);
-//                if(thisPost.getMessage() == null || thisPost.getMessage().isEmpty()){
-//                    postHolder.messageText.setVisibility(View.GONE);
-//                } else {
-//                    postHolder.messageText.setVisibility(View.VISIBLE);
-//                }
-//
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
+        if(MainActivity.PICTURE_MODE && thisPost.getImageUri() != null && !thisPost.getImageUri().toString().isEmpty()){
 
             Picasso.with(context).load(thisPost.getImageUri()).into(postHolder.postImage);
             postHolder.postImage.setVisibility(View.VISIBLE);
@@ -160,16 +146,18 @@ public class PostListAdapter extends ArrayAdapter<Post>{
             postHolder.postImage.setVisibility(View.GONE);
             //set the minimum height to 60 so that it pushes down bottom part of post
             Resources r = context.getResources();
-            float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, r.getDisplayMetrics());
+            float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 64, r.getDisplayMetrics());
             postHolder.messageText.setMinimumHeight(Math.round(px));
         }
 
         //TESTING: use to make every post have an image
-        Resources r = context.getResources();
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, r.getDisplayMetrics());
-        postHolder.messageText.setMinimumHeight(Math.round(px));
-        Picasso.with(context).load(R.drawable.harleytest).into(postHolder.postImage);
-        postHolder.postImage.setVisibility(View.VISIBLE);
+        if(MainActivity.ALL_POSTS_HAVE_IMAGES_TEST_MODE_ON){
+            Resources r = context.getResources();
+            float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, r.getDisplayMetrics());
+            postHolder.messageText.setMinimumHeight(Math.round(px));
+            Picasso.with(context).load(R.drawable.harleytest).into(postHolder.postImage);
+            postHolder.postImage.setVisibility(View.VISIBLE);
+        }
 
         setMessageAndColorizeTags(thisPost.getMessage(), postHolder);
         try {
