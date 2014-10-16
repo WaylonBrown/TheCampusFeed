@@ -1,6 +1,8 @@
 CollegeFeed::Application.routes.draw do
 
 
+
+  resources :images
   get '/partials/:partialName' => 'partials#byName'
 
 =begin
@@ -33,6 +35,7 @@ CollegeFeed::Application.routes.draw do
       get '/comments/many' => 'comments#many'
       get '/posts/many' => 'posts#many'
 
+      #resources :images, only: [:create, :index]
       resources :comments, only: [:show]
       resources :flags, only: [:show]
       resources :votes, only: [:show, :destroy]

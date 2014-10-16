@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140916011200) do
+ActiveRecord::Schema.define(version: 20141015050103) do
 
   create_table "colleges", force: true do |t|
     t.string   "name"
@@ -44,6 +44,12 @@ ActiveRecord::Schema.define(version: 20140916011200) do
   create_table "flags", force: true do |t|
     t.integer  "flaggable_id"
     t.string   "flaggable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "images", force: true do |t|
+    t.string   "uri"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

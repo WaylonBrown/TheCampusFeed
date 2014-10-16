@@ -1,5 +1,5 @@
 <div ng-app="cfeed" >
-  <div ng-controller="showPostCtrl">
+  <div>
     <nav class="navbar navbar-default" role="navigation" id="default">
       <div class="absoluteFull" id="navBg" randombgpos>
 
@@ -37,10 +37,31 @@
     <div class="container">
 
 
-      <div class="col-med-12 card">
-        <h1><%= @post.text %></h1>
-        <div ng-repeat="comment in allComments" class="comment">
-          {{comment.text}}
+      <div class="col-med-12">
+        <div class="card slide pointer">
+          <div class="card-background absoluteFull" randombgpos>
+          </div>
+          <div class="card-controls">
+            <div class="button-container">
+              <div class="button" data-toggle="modal" data-target="#getAppModal"><div class="button-text"><%= fa_icon "arrow-up" %></div></div>
+              <div class="button" data-toggle="modal" data-target="#getAppModal"><div class="button-text"><%= fa_icon "arrow-down" %></div></div>
+              <div class="button" data-toggle="modal" data-target="#getAppModal"><div class="button-text"><%= fa_icon "flag" %></div></div>
+              <div class="button" data-toggle="modal" data-target="#sendEmailModal"><div class="button-text"><%= fa_icon "envelope" %></div></div>
+            </div>
+          </div>
+          <div class="card-content">
+            <h3 converttagstolinks=""><%= @post.text %></h3>
+            <hr/>
+            <div class="pull-left"><i collegenamefromid cid="<%= @post.college_id%>"></i></div>
+            <div class="pull-right">
+            <div class="badge"><%= @post.comment_count %></div>
+              <span class="comments-string">Comments</span></div>
+
+            <div class="clearfix"></div>
+            <hr/>
+            <div postcomments postcollege=<%= @post.college_id %> postid=<%= @post.id %>>
+            </div>
+          </div>
         </div>
       </div>
     </div>
