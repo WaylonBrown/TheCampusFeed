@@ -4,12 +4,16 @@ require 'PostScoreWorker'
 unless File.basename($0) == "rake"
   Thread.new do
     while true
+      @week_ago = Time.now - 1.week
+      p @week_ago
+      logger.info "Starting PostScoreWorker cycle"
+      p @week_ago
       sleep 10
       ActiveRecord::Base.connection_pool.with_connection{|con|
-        Post.find_each{ |post|
+        Post.find_each(:conditions => "created_at > #{@week_ago.to_i}") do |post|
           PostScoreWorker.perform_async post.id
           sleep 0.3
-        }
+        end
       }
     end
   end
@@ -29,6 +33,7 @@ unless File.basename($0) == "rake"
   Thread.new do
     while true
       sleep 10
+      logger.info "Starting CollegeRecentPostNumberWorker cycle"
       ActiveRecord::Base.connection_pool.with_connection{|con|
         College.find_each{ |college|
           CollegeRecentPostNumberWorker.perform_async college.id

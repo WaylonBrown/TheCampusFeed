@@ -60,6 +60,7 @@ gem 'statistics2'
 gem 'asset_sync'
 
 gem 'staccato'
+#gem 'staccato-rails'
 
 
 #gem 'rails_12factor'
