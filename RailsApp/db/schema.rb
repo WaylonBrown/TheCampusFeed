@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141015050103) do
+ActiveRecord::Schema.define(version: 20141016053202) do
 
   create_table "colleges", force: true do |t|
     t.string   "name"
@@ -52,7 +52,10 @@ ActiveRecord::Schema.define(version: 20141015050103) do
     t.string   "uri"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "post_id"
   end
+
+  add_index "images", ["post_id"], name: "index_images_on_post_id", using: :btree
 
   create_table "partials", force: true do |t|
     t.string   "name"
@@ -71,9 +74,11 @@ ActiveRecord::Schema.define(version: 20141015050103) do
     t.boolean  "hidden"
     t.integer  "vote_delta"
     t.integer  "comment_count"
+    t.integer  "image_id"
   end
 
   add_index "posts", ["college_id"], name: "index_posts_on_college_id", using: :btree
+  add_index "posts", ["image_id"], name: "index_posts_on_image_id", using: :btree
 
   create_table "posts_tags", force: true do |t|
     t.integer "post_id"

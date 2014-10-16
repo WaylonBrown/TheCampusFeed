@@ -22,8 +22,8 @@
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "[{\"id\":41,\"text\":\"yolo\"},{\"id\":42,\"text\":\"swag\"},{\"id\":43,\"text\":\"making\"},{\"id\":44,\"text\":\"money\"}]",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"9f8e96ce4bd61d8c14050e18fe544a9f\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"fc487ce8-1185-4d1b-b8fc-4b109626c61d","X-Runtime":"0.013195","Content-Length":"100"},
+      "response_body": "[{\"text\":\"yolo\",\"use_count\":2},{\"text\":\"making\",\"use_count\":1},{\"text\":\"money\",\"use_count\":1},{\"text\":\"swag\",\"use_count\":1}]",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"346f02df3dd388126f361703fa99b9c7\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=GET; path=/","X-Request-Id":"506d3d9c-0ba8-40c5-a7af-be67d5f95a8e","X-Runtime":"0.003996","Content-Length":"124"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

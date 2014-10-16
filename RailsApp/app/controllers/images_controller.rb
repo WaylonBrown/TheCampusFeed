@@ -31,21 +31,22 @@ class ImagesController < ApplicationController
 
     respond_to do |format|
       if @image.save
-    @client = Fog::Storage.new(
-      :provider => 'rackspace',
-      :rackspace_username => ENV['RACKSPACE_USERNAME'],
-      :rackspace_api_key => ENV['RACKSPACE_API_KEY'],
-      :rackspace_region => :dfw
-    )
 
-    directory = @client.directories.get('CFEED_USER_IMG')
-    file = directory.files.create(
-      :key => "#{@image.id}.jpg",
-      :body => params[:image][:upload]
-    )
-    @image.uri = file.public_url
-        format.html { render text: "#{@image.id},#{@image.uri}" } #redirect_to @image, notice: 'Image was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @image }
+        @client = Fog::Storage.new(
+          :provider => 'rackspace',
+          :rackspace_username => ENV['RACKSPACE_USERNAME'],
+          :rackspace_api_key => ENV['RACKSPACE_API_KEY'],
+          :rackspace_region => :dfw
+        )
+
+        directory = @client.directories.get('CFEED_USER_IMG')
+        file = directory.files.create(
+          :key => "#{@image.id}.jpg",
+          :body => params[:image][:upload]
+        )
+        @image.uri = file.public_url
+
+        format.all { render text: "#{@image.id},#{@image.uri}" }
       else
         format.html { render action: 'new' }
         format.json { render json: @image.errors, status: :unprocessable_entity }

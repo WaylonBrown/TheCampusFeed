@@ -1,5 +1,7 @@
 class Post < ActiveRecord::Base
 
+
+  has_one :image
   has_many :comments
   has_many :votes, as: :votable
   has_many :flags, as: :flaggable
@@ -11,6 +13,7 @@ class Post < ActiveRecord::Base
 
   validates :text, length: {minimum: 10, maximum: 140}
 
+  after_create :make_tags, :make_vote
   after_initialize :init
   
   def init

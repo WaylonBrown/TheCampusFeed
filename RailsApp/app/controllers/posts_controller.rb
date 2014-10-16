@@ -129,12 +129,12 @@ class PostsController < ApplicationController
     params.require(:user_token)
     @post = @college.posts.build(post_params)
 
-
     respond_to do |format|
       if @post.save
-
-        @post.make_vote
-        @post.make_tags
+        if(params[:image_id])
+          @post.image = Image.find(params[:image_id])
+          @post.save
+        end
 
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render action: 'afterCreate', status: :created, location: @post }
@@ -187,7 +187,7 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:text, :score, :lat, :lon, :college_id, :user_token)
+      params.require(:post).permit(:text, :score, :lat, :lon, :college_id, :user_token, :image_id)
     end
     def require_college
       params.require(:college_id)

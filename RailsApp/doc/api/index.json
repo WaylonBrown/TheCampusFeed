@@ -64,6 +64,11 @@
           "groups": "all"
         },
         {
+          "description": "Creating a post with an image",
+          "link": "posts/creating_a_post_with_an_image.json",
+          "groups": "all"
+        },
+        {
           "description": "Creating a post with an invalid hashtag",
           "link": "posts/creating_a_post_with_an_invalid_hashtag.json",
           "groups": "all"
@@ -76,6 +81,11 @@
         {
           "description": "Error when post is too short",
           "link": "posts/error_when_post_is_too_short.json",
+          "groups": "all"
+        },
+        {
+          "description": "Get a post with an image",
+          "link": "posts/get_a_post_with_an_image.json",
           "groups": "all"
         },
         {
@@ -139,8 +149,18 @@
       "name": "Tags",
       "examples": [
         {
+          "description": "Get page 2 of the currently trending tags",
+          "link": "tags/get_page__of_the_currently_trending_tags.json",
+          "groups": "all"
+        },
+        {
           "description": "Get the currently trending tags",
           "link": "tags/get_the_currently_trending_tags.json",
+          "groups": "all"
+        },
+        {
+          "description": "Get the currently trending tags for college ID 2015",
+          "link": "tags/get_the_currently_trending_tags_for_college_id_.json",
           "groups": "all"
         },
         {
