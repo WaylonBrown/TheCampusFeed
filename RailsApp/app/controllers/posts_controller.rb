@@ -94,8 +94,8 @@ class PostsController < ApplicationController
     else
       @posts = Post.all
     end
-    
-    render json: @posts.where('hidden IS NOT TRUE').order('id desc').page(params[:page]).per(params[:per_page])
+
+    @posts = @posts.where('hidden IS NOT TRUE').order('id desc').page(params[:page]).per(params[:per_page])
   end
 
   def trending
@@ -105,7 +105,7 @@ class PostsController < ApplicationController
       @posts = Post.all
     end
     
-    render json: @posts.where('hidden IS NOT TRUE').order('score desc, id asc').page(params[:page]).per(params[:per_page])
+    @posts = @posts.where('hidden IS NOT TRUE').order('score desc, id asc').page(params[:page]).per(params[:per_page])
   end
 
   # GET /posts/1
