@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ import com.appuccino.thecampusfeed.utils.FontManager;
 import com.appuccino.thecampusfeed.utils.MyLog;
 import com.appuccino.thecampusfeed.utils.NetWorker;
 import com.appuccino.thecampusfeed.utils.NetWorker.MakePostTask;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -48,6 +51,8 @@ public class NewPostDialog extends AlertDialog.Builder{
     private boolean imageSelected = false;
     CustomTextView checkMark;
     ImageView previewImage;
+    ProgressBar progressBar;
+    RelativeLayout layoutPreview;
     Uri currentImageUri;
     private static int IMAGE_MAX_DIMENSION = 700;
     Post post;
@@ -142,7 +147,10 @@ public class NewPostDialog extends AlertDialog.Builder{
         checkMark = (CustomTextView)layout.findViewById(R.id.checkMark);
         previewImage = (ImageView)layout.findViewById(R.id.imagePreview);
         LinearLayout pictureModeLayout = (LinearLayout)layout.findViewById(R.id.pictureModeLayout);
+        progressBar = (ProgressBar)layout.findViewById(R.id.previewLoading);
+        layoutPreview = (RelativeLayout)layout.findViewById(R.id.layoutPreview);
 
+        layoutPreview.setVisibility(View.GONE);
         postMessage.setTypeface(FontManager.light);
         college.setTypeface(FontManager.italic);
         title.setTypeface(FontManager.light);
@@ -220,7 +228,11 @@ public class NewPostDialog extends AlertDialog.Builder{
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //if user has unlocked the 5 total post points achievement, allow pics
+                if(checkMark != null){
+                    checkMark.setVisibility(View.GONE);
+                }
+                
+                //if user has unlocked the 5 total post points achievement or test mode is on, allow pics
                 if(MainActivity.achievementUnlockedList.contains(9) || MainActivity.TEST_MODE_ON){
                     //if achievement isnt unlocked but allowing to add image because of test mode
                     if(!MainActivity.achievementUnlockedList.contains(9) && MainActivity.TEST_MODE_ON){
@@ -229,6 +241,8 @@ public class NewPostDialog extends AlertDialog.Builder{
                     Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                     photoPickerIntent.setType("image/*");
                     main.startActivityForResult(photoPickerIntent, MainActivity.SELECT_PHOTO_INTENT_CODE);
+                    progressBar.setVisibility(View.VISIBLE);
+                    layoutPreview.setVisibility(View.VISIBLE);
                 } else {
                     new ActivateTimeCrunchDialog(main, null, 0, "", "In order to post pictures, you need to first unlock the achievement \"Achieve a total post score of at least 5\"", false);
                 }
@@ -330,6 +344,13 @@ public class NewPostDialog extends AlertDialog.Builder{
         Picasso.with(context).load(mypath).fit().centerInside().into(previewImage);
     }
 
+    public void setViewsOnCancel(){
+        if(layoutPreview != null){
+            layoutPreview.setVisibility(View.GONE);
+            checkMark.setVisibility(View.GONE);
+        }
+    }
+
     public boolean isShowing(){
         if(dialog == null)
             return false;
@@ -348,9 +369,25 @@ public class NewPostDialog extends AlertDialog.Builder{
 
     public void setImageChosen(Uri imageUri){
         imageSelected = true;
-        checkMark.setVisibility(View.VISIBLE);
         previewImage.setVisibility(View.VISIBLE);
-        Picasso.with(context).load(imageUri).fit().centerInside().into(previewImage);
+        Picasso.with(context).load(imageUri).fit().centerInside().into(previewImage, new Callback() {
+            @Override
+            public void onSuccess() {
+                if(progressBar != null){
+                    progressBar.setVisibility(View.GONE);
+                    checkMark.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onError() {
+                if(progressBar != null){
+                    progressBar.setVisibility(View.GONE);
+                    layoutPreview.setVisibility(View.GONE);
+                    checkMark.setVisibility(View.GONE);
+                }
+            }
+        });
         currentImageUri = imageUri;
     }
 
