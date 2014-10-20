@@ -1,3 +1,14 @@
+class PostValidator < ActiveModel::Validator
+  def validate(post)
+    if post.text.length < 10 && post.image == nil
+      post.errors[:text] << "Text length is too short."
+    end
+    if post.text.length > 140
+      post.errors[:text] << "Text length is too long."
+    end
+  end
+end
+
 class Post < ActiveRecord::Base
 
 
@@ -11,7 +22,7 @@ class Post < ActiveRecord::Base
   belongs_to :user, inverse_of: :posts
 
 
-  validates :text, length: {minimum: 10, maximum: 140}
+  validates_with PostValidator
 
   after_create :make_tags, :make_vote
   after_initialize :init
@@ -19,6 +30,7 @@ class Post < ActiveRecord::Base
   def init
     self.vote_delta ||= 0
     self.comment_count ||= 0
+    self.hidden ||= false
   end
 
 
