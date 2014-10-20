@@ -61,7 +61,7 @@ CollegeFeed::Application.configure do
   # config.cache_store = :mem_cache_store
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  config.action_controller.asset_host = "http://e2a06b211823327476a5-4cc7b79f8ccd23fb3ba18f6b1c75293a.r22.cf1.rackcdn.com/"
+  config.action_controller.asset_host = "//e2a06b211823327476a5-4cc7b79f8ccd23fb3ba18f6b1c75293a.ssl.cf1.rackcdn.com/"
 
 
   # Precompile additional assets.
