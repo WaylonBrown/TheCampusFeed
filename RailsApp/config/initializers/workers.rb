@@ -5,9 +5,7 @@ unless File.basename($0) == "rake"
   Thread.new do
     while true
       @week_ago = Time.now - 1.week
-      p @week_ago
-      logger.info "Starting PostScoreWorker cycle"
-      p @week_ago
+      #logger.info "Starting PostScoreWorker cycle"
       sleep 10
       ActiveRecord::Base.connection_pool.with_connection{|con|
         Post.find_each(:conditions => "created_at > #{@week_ago.to_i}") do |post|
@@ -33,7 +31,7 @@ unless File.basename($0) == "rake"
   Thread.new do
     while true
       sleep 10
-      logger.info "Starting CollegeRecentPostNumberWorker cycle"
+      #logger.info "Starting CollegeRecentPostNumberWorker cycle"
       ActiveRecord::Base.connection_pool.with_connection{|con|
         College.find_each{ |college|
           CollegeRecentPostNumberWorker.perform_async college.id
