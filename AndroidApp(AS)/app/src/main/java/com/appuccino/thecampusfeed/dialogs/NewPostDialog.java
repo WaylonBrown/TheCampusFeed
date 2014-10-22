@@ -54,7 +54,7 @@ public class NewPostDialog extends AlertDialog.Builder{
     ProgressBar progressBar;
     RelativeLayout layoutPreview;
     Uri currentImageUri;
-    private static int IMAGE_MAX_DIMENSION = 700;
+    private static int IMAGE_MAX_DIMENSION = 800;
     Post post;
 
 	public NewPostDialog(final Context context, MainActivity main, View layout) {
@@ -231,7 +231,10 @@ public class NewPostDialog extends AlertDialog.Builder{
                 if(checkMark != null){
                     checkMark.setVisibility(View.GONE);
                 }
-                
+                if(previewImage != null){
+                    previewImage.setVisibility(View.GONE);
+                }
+
                 //if user has unlocked the 5 total post points achievement or test mode is on, allow pics
                 if(MainActivity.achievementUnlockedList.contains(9) || MainActivity.TEST_MODE_ON){
                     //if achievement isnt unlocked but allowing to add image because of test mode
@@ -348,6 +351,12 @@ public class NewPostDialog extends AlertDialog.Builder{
         if(layoutPreview != null){
             layoutPreview.setVisibility(View.GONE);
             checkMark.setVisibility(View.GONE);
+        }
+    }
+
+    public void imageLoadingFromNetworkFailed(){
+        if(uploadDialog != null){
+            uploadDialog.dismiss();
         }
     }
 

@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +69,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
             commentHolder.arrowDown = (ImageView)row.findViewById(R.id.arrowDown);
             commentHolder.image = (ImageView)row.findViewById(R.id.postImage);
         	commentHolder.bottomPadding = row.findViewById(R.id.bottomPadding);
+            commentHolder.imageRelLayout = (RelativeLayout)row.findViewById(R.id.imageRelLayout);
             
             commentHolder.scoreText.setTypeface(FontManager.bold);
             commentHolder.messageText.setTypeface(FontManager.light);
@@ -83,6 +85,8 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         commentHolder.messageText.setText(thisComment.getMessage());
         commentHolder.commentsText.setVisibility(View.GONE);
         commentHolder.bottomPadding.setVisibility(View.VISIBLE);
+        commentHolder.imageRelLayout.setVisibility(View.GONE);
+
         //gives the post message a minimum height
         Resources r = context.getResources();
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 64, r.getDisplayMetrics());
@@ -365,5 +369,6 @@ public class CommentListAdapter extends ArrayAdapter<Comment>{
         ImageView arrowDown;
         ImageView image;
     	View bottomPadding;
+        RelativeLayout imageRelLayout;
     }
 }
