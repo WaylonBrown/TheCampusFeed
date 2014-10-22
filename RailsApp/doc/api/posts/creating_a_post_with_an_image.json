@@ -31,8 +31,8 @@
       "request_content_type": "application/json",
       "response_status": 201,
       "response_status_text": "Created",
-      "response_body": "{\"id\":327,\"text\":\"Here is a quality photo of my anonymous butt for you all to enjoy.\",\"score\":null,\"vote_delta\":0,\"hidden\":null,\"created_at\":\"2014-10-16T06:23:57.601Z\",\"updated_at\":\"2014-10-16T06:23:57.601Z\",\"initial_vote_id\":2948,\"image_uri\":null}",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/posts/327","Content-Type":"application/json; charset=utf-8","ETag":"\"97b4b4ed5d3a991af043a53d82fc8560\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"32ba9739-662a-4172-a0de-f5e3a617420d","X-Runtime":"0.123556","Content-Length":"248"},
+      "response_body": "{\"id\":115,\"text\":\"Here is a quality photo of my anonymous butt for you all to enjoy.\",\"score\":null,\"hidden\":false,\"created_at\":\"2014-10-20T00:28:33.682Z\",\"updated_at\":\"2014-10-20T00:28:33.682Z\",\"vote_delta\":1,\"initial_vote_id\":324,\"image_uri\":null}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Location":"http://example.org/api/v1/posts/115","Content-Type":"application/json; charset=utf-8","ETag":"\"63b2afba088d354518dd904aee47154c\"","Cache-Control":"max-age=0, private, must-revalidate","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"2bfcaf0c-68e3-4532-9edb-a3016d99682a","X-Runtime":"0.102752","Content-Length":"248"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

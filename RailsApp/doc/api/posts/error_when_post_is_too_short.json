@@ -31,8 +31,8 @@
       "request_content_type": "application/json",
       "response_status": 422,
       "response_status_text": "Unprocessable Entity",
-      "response_body": "{\"text\":[\"is too short (minimum is 10 characters)\"]}",
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","Cache-Control":"no-cache","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"8703ac9a-5aaa-4fd6-9897-133671efc15f","X-Runtime":"0.003914","Content-Length":"52"},
+      "response_body": "{\"text\":[\"Text length is too short.\"]}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","Cache-Control":"no-cache","Set-Cookie":"request_method=POST; path=/","X-Request-Id":"605618cc-3256-4dde-a694-014d3d2ec997","X-Runtime":"0.003520","Content-Length":"38"},
       "response_content_type": "application/json; charset=utf-8",
       "curl": null
 }

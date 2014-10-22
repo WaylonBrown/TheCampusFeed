@@ -147,7 +147,7 @@ CollegeFeed::Application.routes.draw do
       end
     end
 =end
-    root to: 'static_pages#webapp'
+    root to: 'static_pages#landing'
     get '/college/:id' => 'static_pages#webapp_college'
     get '/tag/:text' => 'static_pages#webapp_tag'
     get '/post/:id' => 'posts#show'

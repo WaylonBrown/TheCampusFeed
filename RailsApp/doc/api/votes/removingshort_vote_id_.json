@@ -23,7 +23,7 @@
       "response_status": 204,
       "response_status_text": "No Content",
       "response_body": null,
-      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Cache-Control":"no-cache","Set-Cookie":"request_method=DELETE; path=/","X-Request-Id":"4ac07cd8-37f9-49ef-8f2a-34ac485febae","X-Runtime":"0.005274"},
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Cache-Control":"no-cache","Set-Cookie":"request_method=DELETE; path=/","X-Request-Id":"18c94626-d8ec-4fd0-ad89-bb292815f8d7","X-Runtime":"0.005371"},
       "response_content_type": null,
       "curl": null
 }
