@@ -25,7 +25,7 @@
         [self setTransitioningDelegate:self];
         [self setModelType:type];
         [self setCollegeForPost:college];
-        self.toastController = [[ToastController alloc] init];
+//        self.toastController = [[ToastController alloc] init];
     }
     return self;
 }

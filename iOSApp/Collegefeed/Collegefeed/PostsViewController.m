@@ -296,11 +296,11 @@
     {
         if ([self.dataController.nearbyColleges containsObject:college])
         {
-            [self.toastController toastFeedSwitchedToNearbyCollege:college.name];
+            [self.dataController.toaster toastFeedSwitchedToNearbyCollege:college.name];
         }
         else
         {
-            [self.toastController toastFeedSwitchedToDistantCollege:college.name];
+            [self.dataController.toaster toastFeedSwitchedToDistantCollege:college.name];
         }
     }
 }
