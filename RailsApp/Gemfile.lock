@@ -83,6 +83,8 @@ GEM
     fog-softlayer (0.3.16)
       fog-core
       fog-json
+    font-awesome-rails (4.1.0.0)
+      railties (>= 3.2, < 5.0)
     formatador (0.2.5)
     github-markdown (0.6.5)
     guard (2.6.1)
@@ -282,6 +284,7 @@ DEPENDENCIES
   bootstrap-sass
   chunky_png
   coffee-rails (~> 4.0.0)
+  font-awesome-rails
   guard-rspec
   image_suckr
   jbuilder (~> 1.2)
