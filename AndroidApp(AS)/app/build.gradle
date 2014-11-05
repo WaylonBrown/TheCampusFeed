@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     //compileSdkVersion 'android-L'
-    compileSdkVersion 19
+    compileSdkVersion 21
     buildToolsVersion "20.0.0"
 
     defaultConfig {
         applicationId "com.appuccino.thecampusfeed"
         minSdkVersion 14
         //targetSdkVersion 'L'
-        targetSdkVersion 19
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
     }
@@ -26,9 +26,10 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    //compile 'com.android.support:appcompat-v7:21.0.+'
+    compile 'com.android.support:appcompat-v7:21.0.+'
     compile 'com.android.support:support-v4:21.0.0'
     compile 'net.simonvt.menudrawer:menudrawer:3.0.6'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
     compile group:'com.squareup.picasso', name:'picasso', version:'2.3.4'
+    compile 'com.android.support:appcompat-v7:21.0.+'
 }

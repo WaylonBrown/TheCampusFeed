@@ -76,7 +76,7 @@ public class NewPostDialog extends AlertDialog.Builder{
 			if(MainActivity.permissions.size() == 1)
 			{
 				selectedCollegeID = MainActivity.permissions.get(0);
-				Log.i("cfeed","SelctedCollegeID: " + selectedCollegeID);
+				Log.i("cfeed","SelectedCollegeID: " + selectedCollegeID);
 				createDialog(layout);
 			}
 			else	//in range of multiple colleges

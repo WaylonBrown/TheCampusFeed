@@ -27,6 +27,7 @@ import com.appuccino.thecampusfeed.objects.Post;
 import com.appuccino.thecampusfeed.objects.Tag;
 import com.appuccino.thecampusfeed.objects.Vote;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -49,16 +50,15 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.security.GeneralSecurityException;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -72,13 +72,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
 public class NetWorker {
 
-     public final static String SERVER_URL = "https://www.thecampusfeed.com/api/";
+     public final static String SERVER_URL = "https://thecampusfeed.com/api/";
      public final static String API_VERSION = "v1/";
      public final static String REQUEST_URL = SERVER_URL + API_VERSION;
      public final static String LOG_TAG = "NETWORK: ";
@@ -117,12 +119,13 @@ public class NetWorker {
     }
 
      public static HttpClient client = getNewHttpClient();
+     public static SSLSocketFactory sf = null;
      public static HttpClient getNewHttpClient() {
         try {
             KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
             trustStore.load(null, null);
 
-            SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
+            sf = new MySSLSocketFactory(trustStore);
             sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 
             HttpParams params = new BasicHttpParams();
@@ -802,8 +805,10 @@ public class NetWorker {
                  HttpPost request = new HttpPost(REQUEST_URL + "colleges/" + posts[0].getCollegeID() + "/posts");
                  request.setHeader("Content-Type", "application/json");
                  request.setEntity(new ByteArrayEntity(posts[0].toJSONString().toByteArray()));
-                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                 response = client.execute(request, responseHandler);
+
+                 HttpResponse httpResponse = client.execute(request);
+                 java.util.Scanner s = new java.util.Scanner(httpResponse.getEntity().getContent()).useDelimiter("\\A");
+                 response = s.hasNext() ? s.next() : "";
                  Log.d("cfeed", LOG_TAG + "Server response: " + response);
                  return true;
              } catch (ClientProtocolException e) {
@@ -820,6 +825,7 @@ public class NetWorker {
              if(!result)
                  Toast.makeText(c, "Failed to post, please try again later.", Toast.LENGTH_LONG).show();
              else{
+                 MyLog.i("RESETASDFASFD: " + response);
                  Post responsePost = parseResponseIntoPostAndAdd(response);
                  addTimeCrunchTime(responsePost);
              }
@@ -1233,7 +1239,7 @@ public class NetWorker {
 
         public void onPostExecute(Boolean result){
             Log.d("http", LOG_TAG + "success: " + result);
-            if(result){
+            if(result && response != null){
                 Double forceUpdateVersion = null;
                 try {
                     String versionString = JSONParser.appVersionFromJSON(response);
@@ -1275,9 +1281,8 @@ public class NetWorker {
         @Override
         protected Boolean doInBackground(Bitmap... bitmaps) {
 
-            HttpURLConnection connection = null;
+            HttpsURLConnection connection = null;
             DataOutputStream outputStream = null;
-            DataInputStream inputStream = null;
             String pathToOurFile = myPath.getAbsolutePath();
             String urlServer = REQUEST_URL + "/images";
             String lineEnd = "\r\n";
@@ -1293,7 +1298,40 @@ public class NetWorker {
                 FileInputStream fileInputStream = new FileInputStream(new File(pathToOurFile) );
 
                 URL url = new URL(urlServer);
-                connection = (HttpURLConnection) url.openConnection();
+                connection = (HttpsURLConnection) url.openConnection();
+
+                KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+                trustStore.load(null, null);
+                TrustManagerFactory tmf =
+                        TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+                tmf.init(trustStore);
+                SSLContext ctx = SSLContext.getInstance("TLS");
+
+
+                //THIS PART ACCEPTS ALL CERTIFICATES, FIX THIS LATER
+                // Create a trust manager that does not validate certificate chains
+                TrustManager[] trustAllCerts = new TrustManager[] {
+                        new X509TrustManager() {
+                            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                                return new X509Certificate[0];
+                            }
+                            public void checkClientTrusted(
+                                    java.security.cert.X509Certificate[] certs, String authType) {
+                            }
+                            public void checkServerTrusted(
+                                    java.security.cert.X509Certificate[] certs, String authType) {
+                            }
+                        }
+                };
+                // Install the all-trusting trust manager
+                SSLContext sc = null;
+                try {
+                    sc = SSLContext.getInstance("SSL");
+                    sc.init(null, trustAllCerts, new java.security.SecureRandom());
+                    HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+                } catch (GeneralSecurityException e) {
+                }
+                connection.setSSLSocketFactory(sc.getSocketFactory());
 
                 // Allow Inputs &amp; Outputs.
                 connection.setDoInput(true);
