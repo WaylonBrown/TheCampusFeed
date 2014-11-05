@@ -146,11 +146,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Collegefeed/DataController.m"
-            timestampString = "434931010.98974"
+            timestampString = "434935563.745937"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "480"
-            endingLineNumber = "480"
+            startingLineNumber = "484"
+            endingLineNumber = "484"
             landmarkName = "-createVote:"
             landmarkType = "5">
          </BreakpointContent>

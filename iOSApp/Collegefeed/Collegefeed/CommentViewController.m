@@ -31,7 +31,7 @@
     if (self)
     {
         [self setDataController:controller];
-        self.toastController = [[ToastController alloc] init];
+//        self.toastController = [[ToastController alloc] init];
     }
     return self;
 }
@@ -243,7 +243,7 @@
     }
     else
     {
-        [self.toastController toastFacebookUnavailable];
+        [self.dataController.toaster toastFacebookUnavailable];
     }
 }
 - (void)shareOnTwitter
@@ -259,7 +259,7 @@
     }
     else
     {
-        [self.toastController toastTwitterUnavailable];
+        [self.dataController.toaster toastTwitterUnavailable];
     }
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -268,11 +268,11 @@
     {
         if ([self.dataController flagPost:self.originalPost.postID])
         {
-            [self.toastController toastFlagSuccess];
+            [self.dataController.toaster toastFlagSuccess];
         }
         else
         {
-            [self.toastController toastFlagFailed];
+            [self.dataController.toaster toastFlagFailed];
         }
     }
 }

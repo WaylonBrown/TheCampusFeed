@@ -235,7 +235,7 @@
 
 - (void)displayCannotVote
 {    // users cannot cast downvotes to a distant school
-    [self.toastController toastInvalidDownvote];
+    [self.dataController.toaster toastInvalidDownvote];
 }
 - (BOOL)castVote:(Vote *)vote
 {   // vote was cast in a table cell

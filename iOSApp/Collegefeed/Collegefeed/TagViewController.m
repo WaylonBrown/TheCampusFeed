@@ -188,7 +188,7 @@
     }
     else
     {
-        [self.toastController toastInvalidTagSearch];
+        [self.dataController.toaster toastInvalidTagSearch];
     }
 }
 
