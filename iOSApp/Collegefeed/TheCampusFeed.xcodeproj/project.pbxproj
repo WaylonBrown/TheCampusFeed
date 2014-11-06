@@ -47,14 +47,11 @@
 		5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 5390A9191914B76800ACD082 /* collegefeedlogosmall.png */; };
 		5390A9241914B76800ACD082 /* postbuttonclick.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5390A91B1914B76800ACD082 /* postbuttonclick.xml */; };
 		5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A93A191552AE00ACD082 /* CommentViewController.m */; };
-		5390A94119158E0E00ACD082 /* ViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A94019158E0E00ACD082 /* ViewControllerTests.m */; };
-		5390A94319158E1A00ACD082 /* DataControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390A94219158E1A00ACD082 /* DataControllerTests.m */; };
 		53963DE71916E5F50084E646 /* PostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53963DE61916E5F50084E646 /* PostsViewController.m */; };
 		53AB57BC194AAFF8001D1B7B /* mplus-2c-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 53AB57B8194AAFF8001D1B7B /* mplus-2c-bold.ttf */; };
 		53AB57BE194AAFF8001D1B7B /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 53AB57BA194AAFF8001D1B7B /* Roboto-Light.ttf */; };
 		53AB57BF194AAFF8001D1B7B /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 53AB57BB194AAFF8001D1B7B /* Roboto-LightItalic.ttf */; };
 		53AB57C5194ABD11001D1B7B /* Omnes-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 53AB57C4194ABD11001D1B7B /* Omnes-Semibold.ttf */; };
-		53AE73C3192802BD00BE6B02 /* ModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73C2192802BD00BE6B02 /* ModelTests.m */; };
 		53AE73C71928354F00BE6B02 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE73C61928354F00BE6B02 /* DataController.m */; };
 		53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B1FDFC19254E4700905E49 /* MasterView.xib */; };
 		53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B1FDFF19254E8F00905E49 /* MasterViewController.m */; };
@@ -83,7 +80,6 @@
 		53F878B719133F60002A578B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789019133F60002A578B /* Foundation.framework */; };
 		53F878B819133F60002A578B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789419133F60002A578B /* UIKit.framework */; };
 		53F878C019133F60002A578B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 53F878BE19133F60002A578B /* InfoPlist.strings */; };
-		53F878C219133F60002A578B /* CollegefeedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F878C119133F60002A578B /* CollegefeedTests.m */; };
 		53FF2D06195BCE430040E872 /* UserPosts.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D05195BCE430040E872 /* UserPosts.txt */; };
 		53FF2D0A195BCE7D0040E872 /* UserComments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D09195BCE7D0040E872 /* UserComments.txt */; };
 		53FF2D0C195BCE850040E872 /* UserVotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D0B195BCE850040E872 /* UserVotes.txt */; };
@@ -197,8 +193,6 @@
 		5390A91B1914B76800ACD082 /* postbuttonclick.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = postbuttonclick.xml; sourceTree = "<group>"; };
 		5390A939191552AE00ACD082 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
 		5390A93A191552AE00ACD082 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CommentViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5390A94019158E0E00ACD082 /* ViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerTests.m; sourceTree = "<group>"; };
-		5390A94219158E1A00ACD082 /* DataControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DataControllerTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53963DE51916E5F50084E646 /* PostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = PostsViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		53963DE61916E5F50084E646 /* PostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PostsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53AB57B8194AAFF8001D1B7B /* mplus-2c-bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "mplus-2c-bold.ttf"; path = "fonts/mplus-2c-bold.ttf"; sourceTree = "<group>"; };
@@ -206,7 +200,6 @@
 		53AB57BB194AAFF8001D1B7B /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-LightItalic.ttf"; path = "fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
 		53AB57C4194ABD11001D1B7B /* Omnes-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Omnes-Semibold.ttf"; path = "fonts/Omnes-Semibold.ttf"; sourceTree = "<group>"; };
 		53AE73BC1927ED6600BE6B02 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DataController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		53AE73C2192802BD00BE6B02 /* ModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelTests.m; sourceTree = "<group>"; };
 		53AE73C61928354F00BE6B02 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DataController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53B1FDFC19254E4700905E49 /* MasterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterView.xib; sourceTree = "<group>"; };
 		53B1FDFE19254E8F00905E49 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MasterViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -246,7 +239,6 @@
 		53F878B519133F60002A578B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		53F878BD19133F60002A578B /* CollegefeedTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CollegefeedTests-Info.plist"; sourceTree = "<group>"; };
 		53F878BF19133F60002A578B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		53F878C119133F60002A578B /* CollegefeedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollegefeedTests.m; sourceTree = "<group>"; };
 		53FA791219381A4F00EF246E /* ChildCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildCellDelegate.h; sourceTree = "<group>"; };
 		53FF2D05195BCE430040E872 /* UserPosts.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserPosts.txt; sourceTree = "<group>"; };
 		53FF2D09195BCE7D0040E872 /* UserComments.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserComments.txt; sourceTree = "<group>"; };
@@ -615,10 +607,6 @@
 		53F878BB19133F60002A578B /* CollegefeedTests */ = {
 			isa = PBXGroup;
 			children = (
-				5390A94219158E1A00ACD082 /* DataControllerTests.m */,
-				5390A94019158E0E00ACD082 /* ViewControllerTests.m */,
-				53F878C119133F60002A578B /* CollegefeedTests.m */,
-				53AE73C2192802BD00BE6B02 /* ModelTests.m */,
 				53F878BC19133F60002A578B /* Supporting Files */,
 			);
 			path = CollegefeedTests;
@@ -843,10 +831,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5390A94119158E0E00ACD082 /* ViewControllerTests.m in Sources */,
-				53F878C219133F60002A578B /* CollegefeedTests.m in Sources */,
-				5390A94319158E1A00ACD082 /* DataControllerTests.m in Sources */,
-				53AE73C3192802BD00BE6B02 /* ModelTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -976,7 +960,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Collegefeed/Collegefeed-Prefix.pch";
 				INFOPLIST_FILE = "Collegefeed/Collegefeed-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -987,7 +971,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Collegefeed/TheCampusFeed-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				USER_HEADER_SEARCH_PATHS = "/Users/PatrickSheehan/Documents/working/Collegefeed/iOSApp/Collegefeed/Collegefeed/Models/Models /Users/PatrickSheehan/Documents/working/Collegefeed/iOSApp/Collegefeed/Collegefeed/Networker/Networker";
+				USER_HEADER_SEARCH_PATHS = "./Collegefeed/Models/Models/** ./Collegefeed/Networker/Networker/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1004,7 +988,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Collegefeed/Collegefeed-Prefix.pch";
 				INFOPLIST_FILE = "Collegefeed/Collegefeed-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1014,7 +998,7 @@
 				PRODUCT_NAME = TheCampusFeed;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Collegefeed/TheCampusFeed-Bridging-Header.h";
-				USER_HEADER_SEARCH_PATHS = "/Users/PatrickSheehan/Documents/working/Collegefeed/iOSApp/Collegefeed/Collegefeed/Models/Models /Users/PatrickSheehan/Documents/working/Collegefeed/iOSApp/Collegefeed/Collegefeed/Networker/Networker";
+				USER_HEADER_SEARCH_PATHS = "./Collegefeed/Models/Models/** ./Collegefeed/Networker/Networker/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

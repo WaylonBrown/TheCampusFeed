@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+//#import "Models/Models/CFModelProtocol.h"
 #import "CFModelProtocol.h"
 
 #define TEXT_VIEW_LINE_HEIGHT 17
