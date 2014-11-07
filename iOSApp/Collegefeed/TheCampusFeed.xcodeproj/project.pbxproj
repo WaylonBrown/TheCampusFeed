@@ -76,10 +76,6 @@
 		53F8789D19133F60002A578B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F8789C19133F60002A578B /* main.m */; };
 		53F878A119133F60002A578B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F878A019133F60002A578B /* AppDelegate.m */; };
 		53F878AF19133F60002A578B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53F878AE19133F60002A578B /* Images.xcassets */; };
-		53F878B619133F60002A578B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F878B519133F60002A578B /* XCTest.framework */; };
-		53F878B719133F60002A578B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789019133F60002A578B /* Foundation.framework */; };
-		53F878B819133F60002A578B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F8789419133F60002A578B /* UIKit.framework */; };
-		53F878C019133F60002A578B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 53F878BE19133F60002A578B /* InfoPlist.strings */; };
 		53FF2D06195BCE430040E872 /* UserPosts.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D05195BCE430040E872 /* UserPosts.txt */; };
 		53FF2D0A195BCE7D0040E872 /* UserComments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D09195BCE7D0040E872 /* UserComments.txt */; };
 		53FF2D0C195BCE850040E872 /* UserVotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D0B195BCE850040E872 /* UserVotes.txt */; };
@@ -127,13 +123,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 53CF32D9194E5341008BB733;
 			remoteInfo = Networker;
-		};
-		53F878B919133F60002A578B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 53F8788519133F60002A578B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 53F8788C19133F60002A578B;
-			remoteInfo = Collegefeed;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -235,10 +224,7 @@
 		53F8789F19133F60002A578B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		53F878A019133F60002A578B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		53F878AE19133F60002A578B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Collegefeed/Images.xcassets; sourceTree = SOURCE_ROOT; };
-		53F878B419133F60002A578B /* CollegefeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CollegefeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		53F878B519133F60002A578B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		53F878BD19133F60002A578B /* CollegefeedTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CollegefeedTests-Info.plist"; sourceTree = "<group>"; };
-		53F878BF19133F60002A578B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		53FA791219381A4F00EF246E /* ChildCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildCellDelegate.h; sourceTree = "<group>"; };
 		53FF2D05195BCE430040E872 /* UserPosts.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserPosts.txt; sourceTree = "<group>"; };
 		53FF2D09195BCE7D0040E872 /* UserComments.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserComments.txt; sourceTree = "<group>"; };
@@ -259,16 +245,6 @@
 				53F8789319133F60002A578B /* CoreGraphics.framework in Frameworks */,
 				53F8789519133F60002A578B /* UIKit.framework in Frameworks */,
 				53F8789119133F60002A578B /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		53F878B119133F60002A578B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				53F878B619133F60002A578B /* XCTest.framework in Frameworks */,
-				53F878B819133F60002A578B /* UIKit.framework in Frameworks */,
-				53F878B719133F60002A578B /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,7 +525,6 @@
 				5358CE69196E5D7F00FF4E45 /* Models.xcodeproj */,
 				53CF3303194E53B6008BB733 /* Networker.xcodeproj */,
 				53F8789619133F60002A578B /* Collegefeed */,
-				53F878BB19133F60002A578B /* CollegefeedTests */,
 				53F8788F19133F60002A578B /* Frameworks */,
 				53F8788E19133F60002A578B /* Products */,
 			);
@@ -559,7 +534,6 @@
 			isa = PBXGroup;
 			children = (
 				53F8788D19133F60002A578B /* TheCampusFeed.app */,
-				53F878B419133F60002A578B /* CollegefeedTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -604,29 +578,12 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		53F878BB19133F60002A578B /* CollegefeedTests */ = {
-			isa = PBXGroup;
-			children = (
-				53F878BC19133F60002A578B /* Supporting Files */,
-			);
-			path = CollegefeedTests;
-			sourceTree = "<group>";
-		};
-		53F878BC19133F60002A578B /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				53F878BD19133F60002A578B /* CollegefeedTests-Info.plist */,
-				53F878BE19133F60002A578B /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		53F8788C19133F60002A578B /* Collegefeed */ = {
+		53F8788C19133F60002A578B /* TheCampusFeed */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 53F878C519133F60002A578B /* Build configuration list for PBXNativeTarget "Collegefeed" */;
+			buildConfigurationList = 53F878C519133F60002A578B /* Build configuration list for PBXNativeTarget "TheCampusFeed" */;
 			buildPhases = (
 				53F8788919133F60002A578B /* Sources */,
 				53F8788A19133F60002A578B /* Frameworks */,
@@ -638,28 +595,10 @@
 				5358CE73196E5DEA00FF4E45 /* PBXTargetDependency */,
 				53CF330D194E53D8008BB733 /* PBXTargetDependency */,
 			);
-			name = Collegefeed;
+			name = TheCampusFeed;
 			productName = Collegefeed;
 			productReference = 53F8788D19133F60002A578B /* TheCampusFeed.app */;
 			productType = "com.apple.product-type.application";
-		};
-		53F878B319133F60002A578B /* CollegefeedTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 53F878C819133F60002A578B /* Build configuration list for PBXNativeTarget "CollegefeedTests" */;
-			buildPhases = (
-				53F878B019133F60002A578B /* Sources */,
-				53F878B119133F60002A578B /* Frameworks */,
-				53F878B219133F60002A578B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				53F878BA19133F60002A578B /* PBXTargetDependency */,
-			);
-			name = CollegefeedTests;
-			productName = CollegefeedTests;
-			productReference = 53F878B419133F60002A578B /* CollegefeedTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -672,9 +611,6 @@
 				TargetAttributes = {
 					53F8788C19133F60002A578B = {
 						DevelopmentTeam = GQ4WEDQ3GS;
-					};
-					53F878B319133F60002A578B = {
-						TestTargetID = 53F8788C19133F60002A578B;
 					};
 				};
 			};
@@ -701,8 +637,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				53F8788C19133F60002A578B /* Collegefeed */,
-				53F878B319133F60002A578B /* CollegefeedTests */,
+				53F8788C19133F60002A578B /* TheCampusFeed */,
 			);
 		};
 /* End PBXProject section */
@@ -782,14 +717,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		53F878B219133F60002A578B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				53F878C019133F60002A578B /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -827,13 +754,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		53F878B019133F60002A578B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -847,11 +767,6 @@
 			name = Networker;
 			targetProxy = 53CF330C194E53D8008BB733 /* PBXContainerItemProxy */;
 		};
-		53F878BA19133F60002A578B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 53F8788C19133F60002A578B /* Collegefeed */;
-			targetProxy = 53F878B919133F60002A578B /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -859,14 +774,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				53F8789A19133F60002A578B /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		53F878BE19133F60002A578B /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				53F878BF19133F60002A578B /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1003,48 +910,6 @@
 			};
 			name = Release;
 		};
-		53F878C919133F60002A578B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Collegefeed.app/Collegefeed";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Collegefeed/Collegefeed-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "CollegefeedTests/CollegefeedTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		53F878CA19133F60002A578B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Collegefeed.app/Collegefeed";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Collegefeed/Collegefeed-Prefix.pch";
-				INFOPLIST_FILE = "CollegefeedTests/CollegefeedTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1057,20 +922,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		53F878C519133F60002A578B /* Build configuration list for PBXNativeTarget "Collegefeed" */ = {
+		53F878C519133F60002A578B /* Build configuration list for PBXNativeTarget "TheCampusFeed" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				53F878C619133F60002A578B /* Debug */,
 				53F878C719133F60002A578B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		53F878C819133F60002A578B /* Build configuration list for PBXNativeTarget "CollegefeedTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				53F878C919133F60002A578B /* Debug */,
-				53F878CA19133F60002A578B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
