@@ -108,19 +108,22 @@
         self.selectedPost = (Post *)[self.list objectAtIndex:indexPath.row];
     }
     
+    
     [self.commentViewController setOriginalPost:self.selectedPost];
-    
-    
-    UIBarButtonItem *backButton =
-    [[UIBarButtonItem alloc] initWithTitle:@""
-                                     style:UIBarButtonItemStyleBordered
-                                    target:nil
-                                    action:nil];
-    
-    [[self navigationItem] setBackBarButtonItem:backButton];
-    
     [self.navigationController pushViewController:self.commentViewController
                                          animated:YES];
+    
+//    UIBarButtonItem *backButton =
+//    [[UIBarButtonItem alloc] initWithTitle:@""
+//                                     style:UIBarButtonItemStylePlain
+//                                    target:nil
+//                                    action:nil];
+//    
+//    [[self navigationItem] setBackBarButtonItem:backButton];
+//    
+//    [self.navigationController pushViewController:self.commentViewController
+//                                         animated:YES];
+    
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list

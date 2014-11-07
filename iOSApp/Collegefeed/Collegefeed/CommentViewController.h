@@ -19,5 +19,5 @@
 @property (strong, nonatomic) IBOutlet UITableView *postTableView;
 @property (strong, nonatomic) IBOutlet UITableView *commentTableView;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *postTableHeightConstraint;
-
+@property BOOL commentsLoaded;
 @end

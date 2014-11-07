@@ -308,9 +308,15 @@
 }
 - (void)fetchCommentsWithPostId:(long)postId
 {
-    self.commentList = [[NSMutableArray alloc] init];
-    NSData *data = [Networker GETCommentsWithPostId:postId];
-    [self parseData:data asClass:[Comment class] intoList:self.commentList];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+
+        self.commentList = [[NSMutableArray alloc] init];
+        NSData *data = [Networker GETCommentsWithPostId:postId];
+        [self parseData:data asClass:[Comment class] intoList:self.commentList];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CommentsLoaded" object:self];
+        });
+    });
 }
 - (void)fetchUserCommentsWithIdArray:(NSArray *)commentIds
 {

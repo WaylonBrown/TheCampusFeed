@@ -10,8 +10,6 @@
 
 #define CONTENT_TYPE    @"application/json;charset=UTF-8"
 #define API_URL         @"http://www.thecampusfeed.com/api"
-//#define API_URL         @"http://www.secretcamp.us/api"
-//#define API_URL         @"http://cfeed.herokuapp.com/api"
 #define API_VERSION     @"v1"
 #define PAGINATION_NUM  25
 

@@ -96,6 +96,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic) BOOL              isFirstLaunch;
 @property (nonatomic) BOOL              needsUpdate;
 @property (nonatomic) NSInteger         launchCount;
+
 // Location Information
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic) CLLocationDegrees         lat;

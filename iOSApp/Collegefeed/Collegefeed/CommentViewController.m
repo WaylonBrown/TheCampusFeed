@@ -31,7 +31,7 @@
     if (self)
     {
         [self setDataController:controller];
-//        self.toastController = [[ToastController alloc] init];
+        self.commentsLoaded = NO;
     }
     return self;
 }
@@ -47,10 +47,10 @@
 
         float postCellHeight = [self tableView:self.postTableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
         self.postTableHeightConstraint.constant = postCellHeight;
-        [self.view setNeedsUpdateConstraints];
+//        [self.view setNeedsUpdateConstraints];
         
         [self.postTableView reloadData];
-        [self.commentTableView reloadData];
+//        [self.commentTableView reloadData];
         
         UIImage *facebookImage = [UIImage imageNamed:@"FacebookLogo"];
         UIImage *twitterImage = [UIImage imageNamed:@"TwitterLogo"];
@@ -64,23 +64,23 @@
         UIBarButtonItem *twitter = [[UIBarButtonItem alloc] initWithImage:twitterImage style:UIBarButtonItemStylePlain target:self action:@selector(shareOnTwitter)];
 
         
-        College *college = [self.dataController getCollegeById:self.originalPost.collegeID];
-        if ([self.dataController.nearbyColleges containsObject:college])
-        {
-            UIBarButtonItem *create = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-                                                                                    target:self
-                                                                                    action:@selector(create)];
-            
-            UIImage *flagImage = [UIImage imageNamed:@"Flag"];
-            UIBarButtonItem *flag = [[UIBarButtonItem alloc] initWithImage:flagImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
-            
-            self.navigationItem.rightBarButtonItems = @[create, flag, divider, facebook, twitter];
-        }
-        else
-        {
-            self.navigationItem.rightBarButtonItems = @[facebook, twitter];
-
-        }
+//        College *college = [self.dataController getCollegeById:self.originalPost.collegeID];
+//        if ([self.dataController.nearbyColleges containsObject:college])
+//        {
+//            UIBarButtonItem *create = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+//                                                                                    target:self
+//                                                                                    action:@selector(create)];
+//            
+//            UIImage *flagImage = [UIImage imageNamed:@"Flag"];
+//            UIBarButtonItem *flag = [[UIBarButtonItem alloc] initWithImage:flagImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
+//            
+//            self.navigationItem.rightBarButtonItems = @[create, flag, divider, facebook, twitter];
+//        }
+//        else
+//        {
+//            self.navigationItem.rightBarButtonItems = @[facebook, twitter];
+//
+//        }
         
     }
 }
@@ -90,12 +90,23 @@
     
     self.commentTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.postTableView reloadData];
-    [self.commentTableView reloadData];
+//    [self.commentTableView reloadData];
 }
 - (void)loadView
 {   // called when the comment view is initially loaded
   
     [super loadView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveEvent:) name:@"CommentsLoaded" object:nil];
+    
+    UIBarButtonItem *backButton =
+    [[UIBarButtonItem alloc] initWithTitle:@""
+                                     style:UIBarButtonItemStylePlain
+                                    target:nil
+                                    action:nil];
+
+    [[self navigationItem] setBackBarButtonItem:backButton];
+
 }
 
 #pragma mark - Table view methods
@@ -107,7 +118,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Number of rows in table views
     if (tableView == self.postTableView) return 1;
-    else if (tableView == self.commentTableView) return [self.dataController.commentList count];
+    else if (tableView == self.commentTableView) return self.commentsLoaded ? [self.dataController.commentList count] : 0;
     
     return 0;
 }
@@ -211,6 +222,12 @@
 
 #pragma mark - Actions
 
+- (void)receiveEvent:(NSNotification *)notification
+{
+    self.commentsLoaded = YES;
+    [self.commentTableView reloadData];
+}
+
 - (void)cancel
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -281,7 +298,7 @@
     [super refresh];
     
     [self.postTableView reloadData];
-    [self.commentTableView reloadData];
+//    [self.commentTableView reloadData];
 }
 
 #pragma mark - Helper Methods
