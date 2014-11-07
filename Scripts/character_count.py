@@ -1,6 +1,8 @@
 from __future__ import division
 from campusfeed_crawler import CampusFeedCrawler
+from utility import Utility
 import collections
+import csv
 import json
 import re
 
@@ -21,9 +23,11 @@ class CharCounter(object):
 
 def main():
     posts = CampusFeedCrawler.fetch_posts()
-    post_lengths_set = CharCounter.get_list_of_post_lengths(posts)
+    list_of_post_lengths = CharCounter.get_list_of_post_lengths(posts)
+    cnt = collections.Counter(list_of_post_lengths)
+    f = 'post_lengths.csv'
+    Utility.write_dict_to_file(cnt, f)
 
-    print post_lengths_set
 
 if __name__ == '__main__':
     main()
