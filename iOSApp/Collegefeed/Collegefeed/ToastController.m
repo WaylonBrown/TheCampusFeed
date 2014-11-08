@@ -57,7 +57,7 @@
 }
 - (void)toastPostTooShortWithLength:(int)minLength
 {
-    NSString *message = [NSString stringWithFormat:@"Post must be at least %d characters long.", minLength];
+    NSString *message = [NSString stringWithFormat:@"Text post must be at least %d characters long.", minLength];
     [self addToQueue:message];
 }
 - (void)toastNoInternetConnection
