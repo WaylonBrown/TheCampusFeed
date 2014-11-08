@@ -78,7 +78,7 @@
              @"My Comments",
              @"Time Crunch",
              @"Help",
-             @"Suggest Feedback"];
+             @"Give Feedback"];
 }
 
 
@@ -173,7 +173,7 @@
     [self.viewDeckController closeLeftView];
 
     if (index == FEEDBACK_INDEX)
-    {   // 'Suggest feedback'
+    {   // 'Give feedback'
         [self openMail];
     }
     else if (index < self.viewControllers.count)

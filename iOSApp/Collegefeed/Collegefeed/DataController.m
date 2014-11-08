@@ -313,6 +313,7 @@
         self.commentList = [[NSMutableArray alloc] init];
         NSData *data = [Networker GETCommentsWithPostId:postId];
         [self parseData:data asClass:[Comment class] intoList:self.commentList];
+        [NSThread sleepForTimeInterval:3];
         dispatch_async(dispatch_get_main_queue(), ^{
             [[NSNotificationCenter defaultCenter] postNotificationName:@"CommentsLoaded" object:self];
         });
