@@ -47,7 +47,7 @@
 // Initialization
 - (id)initWithDataController:(DataController *)controller;
 
-- (void)placeLoadingIndicator;
+- (void)placeLoadingIndicatorInToolbar;
 - (void)placeCreatePost;
 
 // Actions

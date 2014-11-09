@@ -39,8 +39,10 @@
 {   // this function called right before the comments view appears
     [super viewWillAppear:animated];
     [[self navigationItem] setBackBarButtonItem:self.backButton];
+    [self.commentLoadingIndicator startAnimating];
     
     Post* parentPost = self.dataController.postInFocus;
+
     [self setHasFinishedLoadingComments:NO];
     [self.dataController fetchCommentsForPost:parentPost];
     [self makeToolbarButtons:parentPost];
@@ -101,6 +103,7 @@
     UIView *dividerView = [[UIView alloc] initWithFrame:dividerFrame];
     [dividerView setBackgroundColor:[UIColor whiteColor]];
     self.dividerButton = [[UIBarButtonItem alloc] initWithCustomView:dividerView];
+
 }
 - (void)makeToolbarButtons:(Post *)parentPost
 {
@@ -123,6 +126,7 @@
                                                 self.twitterButton];
     
 }
+
 #pragma mark - Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -259,6 +263,7 @@
 - (void)receiveEvent:(NSNotification *)notification
 {
     self.hasFinishedLoadingComments = YES;
+    [self.commentLoadingIndicator stopAnimating];
     [self.commentTableView reloadData];
 }
 - (void)cancel

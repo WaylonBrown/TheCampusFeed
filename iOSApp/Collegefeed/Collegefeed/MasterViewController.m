@@ -96,11 +96,11 @@
     }
     else
     {
-        [self placeLoadingIndicator];
+        [self placeLoadingIndicatorInToolbar];
     }
 
 }
-- (void)placeLoadingIndicator
+- (void)placeLoadingIndicatorInToolbar
 {   // Place the loading indicator in the navigation bar (instead of create post button)
     UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
 
