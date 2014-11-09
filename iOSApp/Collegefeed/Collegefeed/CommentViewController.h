@@ -15,10 +15,24 @@
 
 @interface CommentViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate, CreationViewProtocol>
 
-@property (strong, nonatomic) Post *originalPost;
+// View properties
 @property (strong, nonatomic) IBOutlet UITableView *postTableView;
 @property (strong, nonatomic) IBOutlet UITableView *commentTableView;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *postTableHeightConstraint;
 
+@property (strong, nonatomic) UIBarButtonItem *facebookButton;
+@property (strong, nonatomic) UIBarButtonItem *twitterButton;
+@property (strong, nonatomic) UIBarButtonItem *composeButton;
+@property (strong, nonatomic) UIBarButtonItem *flagButton;
+@property (strong, nonatomic) UIBarButtonItem *dividerButton;
+
+@property (strong, nonatomic) UIBarButtonItem *backButton;
+
+// Status properties
 @property BOOL hasFinishedLoadingComments;
+
+// Functions
+- (void)makeToolbarButtons:(Post *)parentPost;
+- (void)initializeViewElements;
+
 @end

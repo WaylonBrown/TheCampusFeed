@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
-#define TESTING_SLOW_NETWORK NO
+#define TESTING_SLOW_NETWORK YES
 
 #import "DataController.h"
 #import "College.h"
@@ -320,7 +320,7 @@
             [self parseData:data asClass:[Comment class] intoList:self.commentList];
             
             if (TESTING_SLOW_NETWORK)
-                [NSThread sleepForTimeInterval:2];
+                [NSThread sleepForTimeInterval:1];
         }
         dispatch_async(dispatch_get_main_queue(), ^
         {

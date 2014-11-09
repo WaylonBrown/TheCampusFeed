@@ -100,7 +100,6 @@
     
     NSObject<PostAndCommentProtocol> *selected = [self.list objectAtIndex:indexPath.row];
     
-    
     if (self.viewType == USER_COMMENTS)
     {   // User selected one of their submitted comments (in a Post format)
         Comment *selectedComment = (Comment *)[self.list objectAtIndex:indexPath.row];
@@ -112,26 +111,11 @@
     else
     {
         [self.dataController setPostInFocus:(Post *)selected];
-//        self.selectedPost = (Post *)selected;
     }
     
-//    [self.dataController setPostInFocus:self.selectedPost];
-    
-//    [self.commentViewController setOriginalPost:self.selectedPost];
     [self.navigationController pushViewController:self.commentViewController
                                          animated:YES];
-    
-//    UIBarButtonItem *backButton =
-//    [[UIBarButtonItem alloc] initWithTitle:@""
-//                                     style:UIBarButtonItemStylePlain
-//                                    target:nil
-//                                    action:nil];
-//    
-//    [[self navigationItem] setBackBarButtonItem:backButton];
-//    
-//    [self.navigationController pushViewController:self.commentViewController
-//                                         animated:YES];
-    
+    [[self navigationItem] setBackBarButtonItem:self.commentViewController.backButton];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
