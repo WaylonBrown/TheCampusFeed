@@ -51,6 +51,7 @@
 
 - (void)assignWith:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
 {
+    
     self.userIsNearCollege = isNearby;
     [self.gpsIconImageView setHidden:(!isNearby)];
     [self assign:obj WithMessageHeight:height];
@@ -76,13 +77,15 @@
     [self.ageLabel          setText:[self getAgeAsString:[obj getCreatedAt]]];
     
     if ([obj getType] == POST)
-    {
+    {   // Post cell
         [self.collegeLabel      setText:[obj getCollegeName]];
     }
     else
-    {
-        self.dividerHeight.constant = 0;
-        self.collegeLabelHeight.constant = 0;        
+    {   // Comment cell
+        [self.dividerHeight setConstant:0];
+        [self.collegeLabelHeight setConstant:0];
+        [self.commentCountLabel setHidden:YES];
+        [self.gpsIconImageView setHidden:YES];
     }
 
     // Parse message for Tags

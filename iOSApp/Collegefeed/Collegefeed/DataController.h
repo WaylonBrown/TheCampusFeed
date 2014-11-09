@@ -182,7 +182,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (BOOL)createCommentWithMessage:(NSString *)message
                         withPost:(Post*)post;
 
-- (void)fetchCommentsWithPostId:(long)postId;
+- (void)fetchCommentsForPost:(Post *)post;
 - (void)fetchUserCommentsWithIdArray:(NSArray *)commentIds;
 
 // Flags

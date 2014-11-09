@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
+#define TESTING_SLOW_NETWORK NO
+
 #import "DataController.h"
 #import "College.h"
 #import "Comment.h"
@@ -306,16 +308,23 @@
     }
     return NO;
 }
-- (void)fetchCommentsWithPostId:(long)postId
+- (void)fetchCommentsForPost:(Post *)post
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
+    {
         self.commentList = [[NSMutableArray alloc] init];
-        NSData *data = [Networker GETCommentsWithPostId:postId];
-        [self parseData:data asClass:[Comment class] intoList:self.commentList];
-        [NSThread sleepForTimeInterval:3];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"CommentsLoaded" object:self];
+        if (post != nil)
+        {
+            NSData *data = [Networker GETCommentsWithPostId:post.postID];
+            [self parseData:data asClass:[Comment class] intoList:self.commentList];
+            
+            if (TESTING_SLOW_NETWORK)
+                [NSThread sleepForTimeInterval:2];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetchingComments" object:self];
         });
     });
 }

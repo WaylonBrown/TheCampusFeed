@@ -93,23 +93,31 @@
 {   // Present a Comment View for the selected post
 
     if (indexPath.row >= self.list.count)
-    {
+    {   // Selection was out of bounds
+        NSLog(@"ERROR: Out of bounds row selection from a PostsViewController");
         return;
     }
     
+    NSObject<PostAndCommentProtocol> *selected = [self.list objectAtIndex:indexPath.row];
+    
+    
     if (self.viewType == USER_COMMENTS)
-    {
+    {   // User selected one of their submitted comments (in a Post format)
         Comment *selectedComment = (Comment *)[self.list objectAtIndex:indexPath.row];
         long postId = selectedComment.postID;
         self.selectedPost = [self.dataController fetchPostWithId:postId];
+        
+        // ToDo: Similiar navigation as loading a comment view (see below)
     }
     else
     {
-        self.selectedPost = (Post *)[self.list objectAtIndex:indexPath.row];
+        [self.dataController setPostInFocus:(Post *)selected];
+//        self.selectedPost = (Post *)selected;
     }
     
+//    [self.dataController setPostInFocus:self.selectedPost];
     
-    [self.commentViewController setOriginalPost:self.selectedPost];
+//    [self.commentViewController setOriginalPost:self.selectedPost];
     [self.navigationController pushViewController:self.commentViewController
                                          animated:YES];
     
@@ -223,7 +231,6 @@
     
     return 0;
 }
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if (self.viewType == TAG_VIEW && self.tagMessage != nil)
@@ -251,6 +258,7 @@
     
     return nil;
 }
+
 #pragma mark - Navigation
 
 - (void)switchToAllColleges
