@@ -204,6 +204,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 
 - (void)fetchUserPostsWithIdArray:(NSArray *)postIds;
 - (Post *)fetchPostWithId:(long)postId;
+- (Post *)fetchParentPostOfComment:(Comment *)comment;
 
 // Tags
 - (BOOL)fetchTags;

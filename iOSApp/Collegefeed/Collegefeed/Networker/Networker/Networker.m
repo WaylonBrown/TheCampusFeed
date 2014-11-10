@@ -313,6 +313,11 @@
                    API_URL, API_VERSION, idString]];
     return [self GET:url];
 }
++ (NSData *)GETPostWithId:(long)postId
+{
+    NSArray *arr = @[[NSNumber numberWithLong:postId]];
+    return [self GETPostsWithIdArray:arr];
+}
 
 #pragma mark - Tags
 

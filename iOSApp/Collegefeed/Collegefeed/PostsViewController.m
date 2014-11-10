@@ -101,12 +101,12 @@
     NSObject<PostAndCommentProtocol> *selected = [self.list objectAtIndex:indexPath.row];
     
     if (self.viewType == USER_COMMENTS)
-    {   // User selected one of their submitted comments (in a Post format)
-        Comment *selectedComment = (Comment *)[self.list objectAtIndex:indexPath.row];
-        long postId = selectedComment.postID;
-        self.selectedPost = [self.dataController fetchPostWithId:postId];
-        
-        // ToDo: Similiar navigation as loading a comment view (see below)
+    {   // User selected one of their submitted comments (they are in Post format)
+        Post *parentPost = [self.dataController fetchParentPostOfComment:(Comment *)selected];
+        if (parentPost != nil)
+        {
+            [self.dataController setPostInFocus:parentPost];
+        }
     }
     else
     {

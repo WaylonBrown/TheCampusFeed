@@ -468,6 +468,17 @@
     [self parseData:data asClass:[Post class] intoList:singlePostArray];
     return singlePostArray.count ? [singlePostArray firstObject] : nil;
 }
+- (Post *)fetchParentPostOfComment:(Comment *)comment
+{
+    if (comment)
+    {
+        long postId = comment.postID;
+        NSData *postData = [Networker GETPostWithId:postId];
+        return (Post*)[[self parseData:postData asClass:[Post class]] firstObject];
+    }
+    
+    return nil;
+}
 
 #pragma mark - Networker Access - Tags
 
@@ -876,6 +887,69 @@
 
 #pragma mark - Helper Methods
 
+-(NSArray *)parseData:(NSData *)data asClass:(Class)class
+{
+    NSMutableArray *arr = [NSMutableArray new];
+    
+    if (data != nil)
+    {
+        NSArray *jsonArray = (NSArray*)[NSJSONSerialization JSONObjectWithData:data
+                                                                       options:0
+                                                                         error:nil];
+        if (jsonArray && jsonArray.count)
+        {
+//            for (int i = 0; i < jsonArray.count; i++)
+            for (NSDictionary *jsonObject in jsonArray)
+            {
+                // Individual JSON object
+//                NSDictionary *jsonObject = (NSDictionary *) [jsonArray objectAtIndex:i];
+                
+                if ([Post class] == class)
+                {
+                    Post *post = [[Post alloc] initFromJSON:jsonObject];
+                    long postID = [post getID];
+                    long collegeID = [post getCollegeID];
+                    College *college = [self getCollegeById:collegeID];
+                    [post setCollege:college];
+                    for (Vote *vote in self.userPostVotes)
+                    {
+                        if (vote.parentID == postID)
+                        {
+                            [post setVote:vote];
+                            break;
+                        }
+                    }
+                    
+                    [arr addObject:post];
+                }
+                else if ([Comment class] == class)
+                {
+                    Comment *comment = [[Comment alloc] initFromJSON:jsonObject];
+                    long commentID = [comment getID];
+                    for (Vote *vote in self.userCommentVotes)
+                    {
+                        if (vote.parentID == commentID)
+                        {
+                            [comment setVote:vote];
+                            break;
+                        }
+                    }
+                    
+                    [arr addObject:comment];
+                }
+                else
+                {   // college or tag
+                    [arr addObject:[[class alloc] initFromJSON:jsonObject]];
+                }
+            }
+        }
+
+    }
+    
+    return arr;
+    
+
+}
 -(BOOL)parseData:(NSData *)data asClass:(Class)class intoList:(NSMutableArray *)array
 {
     if (data == nil)
