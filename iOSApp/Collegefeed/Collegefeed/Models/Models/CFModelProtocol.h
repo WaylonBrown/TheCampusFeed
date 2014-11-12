@@ -23,11 +23,12 @@ typedef NS_ENUM(NSInteger, ModelType)
 
 @protocol CFModelProtocol <NSObject>
 
++ (NSArray *)getListFromJsonData:(NSData *)jsonData error:(NSError **)error;
+
 - (id)initFromNetworkData:(NSData *)data;
-- (id)initFromJSON:(NSDictionary *)jsonObject;
+- (id)initFromJSON:(NSDictionary *)jsonDict;
 - (NSData*)toJSON;
-- (long)getID;
-- (void)validate;
+- (NSNumber *)getID; 
 - (ModelType)getType;
 
 @end

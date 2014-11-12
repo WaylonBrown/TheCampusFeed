@@ -95,9 +95,9 @@
                                 allowLossyConversion:YES];
     return voteData;
 }
-- (long)getID
+- (NSNumber *)getID
 {
-    return self.voteID;
+    return [NSNumber numberWithLong:self.voteID];
 }
 - (void)validate
 {

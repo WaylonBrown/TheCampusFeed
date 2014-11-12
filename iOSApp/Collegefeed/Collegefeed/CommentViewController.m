@@ -160,7 +160,7 @@
 
         if (parentPost != nil)
         {
-            float messageHeight = [Shared getLargeCellMessageHeight:parentPost.message WithFont:CF_FONT_LIGHT(16)];
+            float messageHeight = [Shared getLargeCellMessageHeight:parentPost.text WithFont:CF_FONT_LIGHT(16)];
             [cell assignWith:parentPost IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
         }
         
@@ -178,7 +178,7 @@
                 [comment setCollegeID:parentPost.collegeID];
             }
             
-            float messageHeight = [Shared getLargeCellMessageHeight:comment.message WithFont:CF_FONT_LIGHT(16)];
+            float messageHeight = [Shared getLargeCellMessageHeight:comment.text WithFont:CF_FONT_LIGHT(16)];
             [cell assignWith:comment IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
         }
     }
@@ -196,23 +196,23 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *text = @"";
+    NSString *cellText = @"";
     float offset = -24; // to omit extra height of college label
     
     if (tableView == self.postTableView)
     {
         Post *post = self.dataController.postInFocus;
         if (post != nil)
-            text = post.message;
+            cellText = post.text;
     }
     else if (tableView == self.commentTableView)
     {
         Comment *comment = [self.dataController.commentList objectAtIndex:[indexPath row]];
         if (comment != nil)
-            text = comment.message;
+            cellText = comment.text;
     }
 
-    return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)] + offset;
+    return [Shared getLargeCellHeightEstimateWithText:cellText WithFont:CF_FONT_LIGHT(16)] + offset;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {   // return the header title for the 'Comments' section

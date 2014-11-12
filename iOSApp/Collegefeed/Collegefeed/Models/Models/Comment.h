@@ -10,27 +10,28 @@
 
 #import "CFModelProtocol.h"
 #import "PostAndCommentProtocol.h"
+#import "Post.h"
 
 @class Post;
 
-@interface Comment : NSObject<CFModelProtocol, PostAndCommentProtocol>
+@interface Comment : Post //NSObject<CFModelProtocol, PostAndCommentProtocol>
 
-@property (nonatomic) long commentID;
-@property (nonatomic) long postID;
-@property (nonatomic) long collegeID;
-@property (nonatomic) long score;
-@property (nonatomic, strong) Vote *vote;
+@property (nonatomic) NSNumber *post_id;
+@property (nonatomic) NSNumber *commentID;
+//@property (nonatomic) NSNumber *postID;
+//@property (nonatomic) NSNumber *collegeID;
+//@property (nonatomic) NSNumber *score;
+//@property (nonatomic, strong) Vote *vote;
 
-@property (nonatomic, strong) NSString *message;
-@property (nonatomic, strong) NSString *collegeName;
-@property (nonatomic, strong) NSDate *date;
+//@property (nonatomic, strong) NSString *text;
+//@property (nonatomic, strong) NSString *collegeName;
+//@property (nonatomic, strong) NSDate *date;
 
-@property (nonatomic, strong) NSDate *createdAt;
-@property (nonatomic, strong) NSDate *updatedAt;
+//@property (nonatomic, strong) NSDate *createdAt;
+//@property (nonatomic, strong) NSDate *updatedAt;
 
-@property (nonatomic, strong) NSURL *POSTurl;
+//@property (nonatomic, strong) NSURL *POSTurl;
 
-// NOTE: Use this constructor!
 - (id)initWithCommentMessage:(NSString *)message
                     withPost:(Post *)post;
 
@@ -40,5 +41,5 @@
              withPostID:(NSInteger)newPostID;
 
 - (id)initWithPost:(Post *)post;
-- (long)getPostID;
+- (NSNumber *)getPostID;
 @end

@@ -14,32 +14,36 @@
 
 @interface Post : NSObject<CFModelProtocol, PostAndCommentProtocol>
 
-@property (nonatomic) NSMutableArray *commentList;
-@property (nonatomic) float lat;
-@property (nonatomic) float lon;
-@property (nonatomic) long postID;
-@property (nonatomic) long collegeID;
-@property (nonatomic) long score;
-@property (nonatomic) long commentCount;
+// In API JSON
+@property (nonatomic) NSNumber *postID;
+@property (nonatomic) NSNumber *id;
+@property (nonatomic) NSString *text;
+@property (nonatomic) NSNumber *score;
+@property (nonatomic) NSDate *created_at;
+@property (nonatomic) NSDate *updated_at;
+@property (nonatomic) NSNumber *collegeID;
+@property (nonatomic) NSNumber *lat;
+@property (nonatomic) NSNumber *lon;
+@property (nonatomic) BOOL hidden;
+@property (nonatomic) NSNumber *vote_delta;
+@property (nonatomic) NSNumber *comment_count;
+@property (nonatomic) NSNumber *image_id;
+
+// Not in API JSON
 @property (nonatomic, strong) Vote *vote;
 @property (nonatomic, strong) College *college;
-
 @property (nonatomic, strong) NSString *userToken;
-@property (nonatomic, strong) NSString *message;
 @property (nonatomic, strong) NSString *collegeName;
 @property (nonatomic, strong) NSDate *date;
-
-@property (nonatomic, strong) NSDate *createdAt;
-@property (nonatomic, strong) NSDate *updatedAt;
-
 @property (nonatomic, strong) NSURL *POSTurl;
+//@property (nonatomic) NSMutableArray *commentList;
 
 - (id)initWithMessage:(NSString *)newMessage
-        withCollegeId:(long)collegeId
+        withCollegeId:(NSNumber *)collegeId
         withUserToken:(NSString *)userToken;
 
-- (id)initWithPostID:(NSInteger)newPostID
-           withScore:(NSInteger)newScore
+- (id)initWithPostID:(NSNumber *)newPostID
+           withScore:(NSNumber *)newScore
          withMessage:(NSString *)newMessage;
 
 @end

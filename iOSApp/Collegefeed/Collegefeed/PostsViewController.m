@@ -178,7 +178,7 @@
     {
         Comment *comment = [self.list objectAtIndex:indexPath.row];
         BOOL isNearCollege = NO;//[self.dataController.nearbyColleges containsObject:nil];
-        float messageHeight = [Shared getLargeCellMessageHeight:comment.message WithFont:CF_FONT_LIGHT(16)];
+        float messageHeight = [Shared getLargeCellMessageHeight:comment.text WithFont:CF_FONT_LIGHT(16)];
 
         [cell assignWith:comment IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
 
@@ -188,7 +188,7 @@
     // get the post and display in this cell
     Post *post = [self.list objectAtIndex:indexPath.row];
     BOOL isNearCollege = [self.dataController.nearbyColleges containsObject:post.college];
-    float messageHeight = [Shared getLargeCellMessageHeight:post.message WithFont:CF_FONT_LIGHT(16)];
+    float messageHeight = [Shared getLargeCellMessageHeight:post.text WithFont:CF_FONT_LIGHT(16)];
     [cell assignWith:post IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
     
     return cell;
@@ -201,7 +201,7 @@
     if (row < [self.list count])
     {
         Post *post = [self.list objectAtIndex:row];
-        text = [post getMessage];
+        text = [post getText];
         return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)];
     }
     return [Shared getSmallCellHeightEstimateWithText:@"" WithFont:nil];

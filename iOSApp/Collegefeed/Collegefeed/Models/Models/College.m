@@ -72,9 +72,9 @@
 {
     return nil;
 }
-- (long)getID
+- (NSNumber *)getID
 {
-    return self.collegeID;
+    return [NSNumber numberWithLong:self.collegeID];
 }
 - (void)validate
 {

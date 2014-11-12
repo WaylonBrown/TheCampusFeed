@@ -281,7 +281,7 @@
         }
         Comment *comment = [[Comment alloc] initWithCommentMessage:message
                                                           withPost:post];
-        NSData *result = [Networker POSTCommentData:[comment toJSON] WithPostId:post.postID];
+        NSData *result = [Networker POSTCommentData:[comment toJSON] WithPostId:[post.id longValue]];
         
         if (result)
         {
@@ -290,7 +290,7 @@
                                                                          error:nil];
             Comment *networkComment = [[Comment alloc] initFromJSON:jsonObject];
 
-            NSDate *commentTime = [networkComment getCreatedAt];
+            NSDate *commentTime = [networkComment getCreated_at];
             [self updateLastCommentTime:commentTime];
             [self.commentList insertObject:networkComment atIndex:self.commentList.count];
             [self.userComments insertObject:networkComment atIndex:self.userComments.count];
@@ -316,7 +316,7 @@
         self.commentList = [[NSMutableArray alloc] init];
         if (post != nil)
         {
-            NSData *data = [Networker GETCommentsWithPostId:post.postID];
+            NSData *data = [Networker GETCommentsWithPostId:[post.id longValue]];
             [self parseData:data asClass:[Comment class] intoList:self.commentList];
             
             if (TESTING_SLOW_NETWORK)
@@ -366,10 +366,10 @@
     {
         NSString *udid = [UIDevice currentDevice].identifierForVendor.UUIDString;
         Post *post = [[Post alloc] initWithMessage:message
-                                     withCollegeId:collegeId
+                                     withCollegeId:[NSNumber numberWithLong:collegeId]
                                      withUserToken:udid];
         
-        NSData *result = [Networker POSTPostData:[post toJSON] WithCollegeId:post.collegeID];
+        NSData *result = [Networker POSTPostData:[post toJSON] WithCollegeId:[post.collegeID longValue]];
         if (result)
         {
             NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
@@ -378,11 +378,11 @@
             Post *networkPost = [[Post alloc] initFromJSON:jsonObject];
             if (networkPost.collegeID == 0)
             {
-                [networkPost setCollegeID:collegeId];
+                [networkPost setCollegeID:[NSNumber numberWithLong:collegeId]];
             }
             College *college = [self getCollegeById:collegeId];
             [networkPost setCollege:college];
-            NSDate *postTime = [networkPost getCreatedAt];
+            NSDate *postTime = [networkPost getCreated_at];
             [self updateLastPostTime:postTime];
             
             [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
@@ -472,9 +472,12 @@
 {
     if (comment)
     {
-        long postId = comment.postID;
+        long postId = [comment.postID longValue];
         NSData *postData = [Networker GETPostWithId:postId];
-        return (Post*)[[self parseData:postData asClass:[Post class]] firstObject];
+        
+        return [[Post getListFromJsonData:postData error:nil] firstObject];
+        
+//        return (Post*)[[self parseData:postData asClass:[Post class]] firstObject];
     }
     
     return nil;
@@ -717,7 +720,7 @@
     NSError *error;
     NSManagedObject *mgdPost = [NSEntityDescription insertNewObjectForEntityForName:POST_ENTITY
                                                                 inManagedObjectContext:context];
-    [mgdPost setValue:[NSNumber numberWithLong:post.postID] forKeyPath:KEY_POST_ID];
+    [mgdPost setValue:[NSNumber numberWithLong:[post.id longValue]] forKeyPath:KEY_POST_ID];
     
     if (![_managedObjectContext save:&error])
     {
@@ -751,7 +754,7 @@
     NSError *error;
     NSManagedObject *mgdComment = [NSEntityDescription insertNewObjectForEntityForName:COMMENT_ENTITY
                                                              inManagedObjectContext:context];
-    [mgdComment setValue:[NSNumber numberWithLong:comment.commentID] forKeyPath:KEY_COMMENT_ID];
+    [mgdComment setValue:[NSNumber numberWithLong:[comment.id longValue]] forKeyPath:KEY_COMMENT_ID];
 
     if (![_managedObjectContext save:&error])
     {
@@ -871,7 +874,7 @@
     long totalScore = 0;
     for (Post* post in self.userPosts)
     {
-        totalScore += post.score;
+        totalScore += [post.score longValue];;
     }
     return totalScore;
 }
@@ -880,7 +883,7 @@
     long totalScore = 0;
     for (Comment* comment in self.userComments)
     {
-        totalScore += comment.score;
+        totalScore += [comment.score longValue];
     }
     return totalScore;
 }
@@ -907,10 +910,10 @@
                 if ([Post class] == class)
                 {
                     Post *post = [[Post alloc] initFromJSON:jsonObject];
-                    long postID = [post getID];
-                    long collegeID = [post getCollegeID];
-                    College *college = [self getCollegeById:collegeID];
+//                    long collegeID = [post getCollegeID];
+                    College *college = [self getCollegeById:[[post getCollegeID] longValue]];
                     [post setCollege:college];
+                    long postID = [[post getID] longValue];
                     for (Vote *vote in self.userPostVotes)
                     {
                         if (vote.parentID == postID)
@@ -925,7 +928,7 @@
                 else if ([Comment class] == class)
                 {
                     Comment *comment = [[Comment alloc] initFromJSON:jsonObject];
-                    long commentID = [comment getID];
+                    long commentID = [[comment getID] longValue];
                     for (Vote *vote in self.userCommentVotes)
                     {
                         if (vote.parentID == commentID)
@@ -952,6 +955,7 @@
 }
 -(BOOL)parseData:(NSData *)data asClass:(Class)class intoList:(NSMutableArray *)array
 {
+    
     if (data == nil)
     {
         return NO;
@@ -978,8 +982,8 @@
             if ([Post class] == class)
             {
                 Post *post = [[Post alloc] initFromJSON:jsonObject];
-                long postID = [post getID];
-                long collegeID = [post getCollegeID];
+                long postID = [[post getID] longValue];
+                long collegeID = [[post getCollegeID] longValue];
                 College *college = [self getCollegeById:collegeID];
                 [post setCollege:college];
 //                [post setCollegeName:college.name];
@@ -996,7 +1000,7 @@
             else if ([Comment class] == class)
             {
                 Comment *comment = [[Comment alloc] initFromJSON:jsonObject];
-                long commentID = [comment getID];
+                long commentID = [[comment getID] longValue];
                 object = comment;
                 for (Vote *vote in self.userCommentVotes)
                 {

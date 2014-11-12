@@ -72,9 +72,9 @@
     
     // assign cell's plain text labels
     self.messageLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentTop;
-    [self.messageLabel      setText:[obj getMessage]];
+    [self.messageLabel      setText:[obj getText]];
     [self.commentCountLabel setText:[self getCommentLabelString]];
-    [self.ageLabel          setText:[self getAgeAsString:[obj getCreatedAt]]];
+    [self.ageLabel          setText:[self getAgeAsString:[obj getCreated_at]]];
     
     if ([obj getType] == POST)
     {   // Post cell
@@ -233,7 +233,7 @@
     if ([self.object class] == [Post class])
     {
         return [NSString stringWithFormat:@"%d comments",
-                (int)((Post*)self.object).commentCount];
+                (int)((Post*)self.object).comment_count];
     }
     return @"";
 }

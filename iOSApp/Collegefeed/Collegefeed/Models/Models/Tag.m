@@ -82,9 +82,9 @@
                               allowLossyConversion:YES];
     return tagData;
 }
-- (long)getID
+- (NSNumber *)getID
 {
-    return self.tagID;
+    return [NSNumber numberWithLong:self.tagID];
 }
 - (void)validate
 {
