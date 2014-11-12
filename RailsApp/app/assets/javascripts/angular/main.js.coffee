@@ -7,6 +7,7 @@ angular.module("cfeed").run ["$rootScope", "$resource", ($rootScope, $resource) 
   })
   $rootScope.Post = $resource('/api/v1/colleges/:collegeId/posts/:postId', {postId: '@id'})
   $rootScope.Comment = $resource('/api/v1/colleges/:collegeId/posts/:postId/comments/:commentId', {commentId: '@id'}, {
+
   })
   $rootScope.Tag = $resource('/api/v1/tags/:tagId', {tagId: '@id'}, {
     trending: {method: 'GET', url: '/api/v1/tags/trending/', isArray: true}

@@ -74,7 +74,7 @@
     <div class="col-md-2">
     </div>
     <div class="col-md-4" id="posts" infinite-scroll="atBottom()">
-      <div class="card slide pointer" ng-repeat="post in posts.recentPosts" ng-click="selectPost(post)" ng-class="{active: post.active}">
+      <div class="card slide pointer" ng-repeat="post in posts.recentPosts" >
         <div class="card-background absoluteFull" randombgpos>
         </div>
         <div class="card-controls">
@@ -86,6 +86,11 @@
           </div>
         </div>
         <div class="card-content">
+          <div class="card-arrows">
+            <div class="button" data-toggle="modal" data-target="#getAppModal"><div class="button-text"><%= fa_icon "arrow-up" %></div></div>
+            {{post.vote_delta}}
+            <div class="button" data-toggle="modal" data-target="#getAppModal"><div class="button-text"><%= fa_icon "arrow-down" %></div></div>
+          </div>
           <h3 converttagstolinks="">{{post.text}}</h3>
           <hr/>
           <div class="pull-left"><i collegenamefromid cid="{{post.college_id}}"></i></div>
@@ -95,7 +100,7 @@
 
           <div class="clearfix"></div>
           <hr/>
-          <div postcomments postcollege="{{post.college_id}}" postid="{{post.id}}">
+          <div postcomments="5" postcollege="{{post.college_id}}" postid="{{post.id}}">
           </div>
         </div>
       </div>

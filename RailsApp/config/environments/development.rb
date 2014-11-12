@@ -39,4 +39,5 @@ CollegeFeed::Application.configure do
   config.assets.compile = true
   #config.assets.precompile =  ['*.js']
 
+  config.force_ssl = false
 end
