@@ -369,16 +369,16 @@
                                      withCollegeId:[NSNumber numberWithLong:collegeId]
                                      withUserToken:udid];
         
-        NSData *result = [Networker POSTPostData:[post toJSON] WithCollegeId:[post.collegeID longValue]];
+        NSData *result = [Networker POSTPostData:[post toJSON] WithCollegeId:[post.college_id longValue]];
         if (result)
         {
             NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
                                                                        options:0
                                                                          error:nil];
             Post *networkPost = [[Post alloc] initFromJSON:jsonObject];
-            if (networkPost.collegeID == 0)
+            if (networkPost.college_id == 0)
             {
-                [networkPost setCollegeID:[NSNumber numberWithLong:collegeId]];
+                [networkPost setCollege_id:[NSNumber numberWithLong:collegeId]];
             }
             College *college = [self getCollegeById:collegeId];
             [networkPost setCollege:college];
@@ -472,7 +472,7 @@
 {
     if (comment)
     {
-        long postId = [comment.postID longValue];
+        long postId = [comment.post_id longValue];
         NSData *postData = [Networker GETPostWithId:postId];
         
         return [[Post getListFromJsonData:postData error:nil] firstObject];
@@ -840,7 +840,7 @@
     {
         long voteId = [[vote valueForKey:KEY_VOTE_ID] longValue];
         long parentId = [[vote valueForKey:KEY_PARENT_ID] longValue];
-        bool upvote = [[vote valueForKey:KEY_UPVOTE] boolValue];
+        BOOL upvote = [[vote valueForKey:KEY_UPVOTE] boolValue];
         NSString *type = [vote valueForKey:KEY_TYPE];
         
         ModelType modelType;
@@ -911,7 +911,7 @@
                 {
                     Post *post = [[Post alloc] initFromJSON:jsonObject];
 //                    long collegeID = [post getCollegeID];
-                    College *college = [self getCollegeById:[[post getCollegeID] longValue]];
+                    College *college = [self getCollegeById:[[post getCollege_id] longValue]];
                     [post setCollege:college];
                     long postID = [[post getID] longValue];
                     for (Vote *vote in self.userPostVotes)
@@ -983,7 +983,7 @@
             {
                 Post *post = [[Post alloc] initFromJSON:jsonObject];
                 long postID = [[post getID] longValue];
-                long collegeID = [[post getCollegeID] longValue];
+                long collegeID = [[post getCollege_id] longValue];
                 College *college = [self getCollegeById:collegeID];
                 [post setCollege:college];
 //                [post setCollegeName:college.name];

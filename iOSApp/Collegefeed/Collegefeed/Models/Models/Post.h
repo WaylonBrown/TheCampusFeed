@@ -15,16 +15,16 @@
 @interface Post : NSObject<CFModelProtocol, PostAndCommentProtocol>
 
 // In API JSON
-@property (nonatomic) NSNumber *postID;
 @property (nonatomic) NSNumber *id;
+@property (nonatomic) NSNumber *post_id;
 @property (nonatomic) NSString *text;
 @property (nonatomic) NSNumber *score;
 @property (nonatomic) NSDate *created_at;
 @property (nonatomic) NSDate *updated_at;
-@property (nonatomic) NSNumber *collegeID;
+@property (nonatomic) NSNumber *college_id;
 @property (nonatomic) NSNumber *lat;
 @property (nonatomic) NSNumber *lon;
-@property (nonatomic) BOOL hidden;
+@property (nonatomic) NSNumber *hidden;
 @property (nonatomic) NSNumber *vote_delta;
 @property (nonatomic) NSNumber *comment_count;
 @property (nonatomic) NSNumber *image_id;
@@ -36,7 +36,6 @@
 @property (nonatomic, strong) NSString *collegeName;
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, strong) NSURL *POSTurl;
-//@property (nonatomic) NSMutableArray *commentList;
 
 - (id)initWithMessage:(NSString *)newMessage
         withCollegeId:(NSNumber *)collegeId

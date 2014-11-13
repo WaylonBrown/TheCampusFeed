@@ -109,7 +109,7 @@
 {
     if (parentPost != nil)
     {
-        College *college = [self.dataController getCollegeById:parentPost.collegeID];
+        College *college = [self.dataController getCollegeById:parentPost.college_id];
         if ([self.dataController.nearbyColleges containsObject:college])
         {
             
@@ -175,7 +175,7 @@
         {
             if (parentPost != nil)
             {
-                [comment setCollegeID:parentPost.collegeID];
+                [comment setCollege_id:parentPost.college_id];
             }
             
             float messageHeight = [Shared getLargeCellMessageHeight:comment.text WithFont:CF_FONT_LIGHT(16)];
@@ -323,7 +323,7 @@
     {   // attempt to flag a post as inappropriate
         Post *parentPost = self.dataController.postInFocus;
 
-        if ((parentPost != nil) && [self.dataController flagPost:parentPost.postID])
+        if ((parentPost != nil) && [self.dataController flagPost:parentPost.post_id])
         {
             [self.dataController.toaster toastFlagSuccess];
         }
@@ -364,7 +364,7 @@
     Post *parentPost = self.dataController.postInFocus;
     if (parentPost != nil)
     {
-        [vote setGrandparentID:parentPost.postID];
+        [vote setGrandparentID:parentPost.post_id];
         return [super castVote:vote];
     }
     

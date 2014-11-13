@@ -14,23 +14,9 @@
 
 @class Post;
 
-@interface Comment : Post //NSObject<CFModelProtocol, PostAndCommentProtocol>
+@interface Comment : Post
 
-@property (nonatomic) NSNumber *post_id;
-@property (nonatomic) NSNumber *commentID;
-//@property (nonatomic) NSNumber *postID;
-//@property (nonatomic) NSNumber *collegeID;
-//@property (nonatomic) NSNumber *score;
-//@property (nonatomic, strong) Vote *vote;
-
-//@property (nonatomic, strong) NSString *text;
-//@property (nonatomic, strong) NSString *collegeName;
-//@property (nonatomic, strong) NSDate *date;
-
-//@property (nonatomic, strong) NSDate *createdAt;
-//@property (nonatomic, strong) NSDate *updatedAt;
-
-//@property (nonatomic, strong) NSURL *POSTurl;
+//@property (nonatomic) NSNumber *commentID;
 
 - (id)initWithCommentMessage:(NSString *)message
                     withPost:(Post *)post;
@@ -40,6 +26,6 @@
             withMessage:(NSString *)newMessage
              withPostID:(NSInteger)newPostID;
 
-- (id)initWithPost:(Post *)post;
-- (NSNumber *)getPostID;
+//- (id)initWithPost:(Post *)post;
+//- (NSNumber *)getPost_id;
 @end

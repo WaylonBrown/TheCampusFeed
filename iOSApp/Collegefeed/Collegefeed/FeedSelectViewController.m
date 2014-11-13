@@ -95,7 +95,7 @@
 //            break;
 //        case ALL_NEARBY_OTHER:
 //            {
-//                bool collegesNearby = [self.dataController isNearCollege];
+//                BOOL collegesNearby = [self.dataController isNearCollege];
 //                // Handle two default cells that are always present
 //                tableViewHeight += 3 * TABLE_HEADER_HEIGHT;
 //                tableViewHeight += 2 * TABLE_CELL_HEIGHT;
@@ -128,7 +128,7 @@
         return;
     }
     
-    bool collegesNearby = [self.dataController isNearCollege];
+    BOOL collegesNearby = [self.dataController isNearCollege];
     
     if (self.type == ALL_NEARBY_OTHER)
     {
@@ -171,7 +171,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSUInteger numNearby = self.dataController.nearbyColleges.count;
-    bool isNearColleges = numNearby > 0;
+    BOOL isNearColleges = numNearby > 0;
     
     switch (self.type)
     {

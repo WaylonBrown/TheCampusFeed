@@ -281,7 +281,7 @@
     NSNumber *minutesUntilCanPost = [NSNumber new];
     if ([self.dataController isAbleToPost:minutesUntilCanPost])
     {
-        bool success = [self.dataController createPostWithMessage:message
+        BOOL success = [self.dataController createPostWithMessage:message
                                      withCollegeId:collegeId];
         if (success)
         {

@@ -106,8 +106,8 @@
     
     Vote *existingVote = [self.object getVote];
     
-    Vote *newVote = [[Vote alloc] initWithVoteId:-1 WithParentId:[self.object getID] WithUpvoteValue:YES AsVotableType:[self.object getType]];
-    [newVote setCollegeId:[self.object getCollegeID]];
+    Vote *newVote = [[Vote alloc] initWithVoteId:-1 WithParentId:[[self.object getID] longValue] WithUpvoteValue:YES AsVotableType:[self.object getType]];
+    [newVote setCollegeId:[[self.object getCollege_id] longValue]];
     
     if (existingVote == nil)
     {   // User is submitting a normal upvote
@@ -149,10 +149,10 @@
     }
     
     Vote *existingVote = [self.object getVote];
-    Vote *newVote = [[Vote alloc] initWithVoteId:-1 WithParentId:[self.object getID]
+    Vote *newVote = [[Vote alloc] initWithVoteId:-1 WithParentId:[[self.object getID] longValue]
                                     WithUpvoteValue:NO
                                       AsVotableType:[self.object getType]];
-    [newVote setCollegeId:[self.object getCollegeID]];
+    [newVote setCollegeId:[[self.object getCollege_id] longValue]];
     
     if (existingVote == nil)
     {   // User is submitting a normal downvote
@@ -232,15 +232,17 @@
 {   // Gets a string for the comment count label if this cell represents a Post
     if ([self.object class] == [Post class])
     {
-        return [NSString stringWithFormat:@"%d comments",
-                (int)((Post*)self.object).comment_count];
+        NSNumber *count = ((Post *)self.object).comment_count;
+        long countLongValue = [count longValue];
+        return [NSString stringWithFormat:@"%ld comments",
+                countLongValue];
     }
     return @"";
 }
 - (void)findHashTags
 {   // parse cell's message label to assign links to hashtagged words
     [self.messageLabel setDelegate:self];
-    NSMutableCharacterSet *acceptableSet = [NSCharacterSet characterSetWithCharactersInString:@"qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789#_"];
+    NSCharacterSet *acceptableSet = [NSCharacterSet characterSetWithCharactersInString:@"qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789#_"];
     NSCharacterSet *unacceptableSet = [acceptableSet invertedSet];
     NSArray *words = [self.messageLabel.text componentsSeparatedByCharactersInSet:unacceptableSet];
     
@@ -282,7 +284,7 @@
         [self.downVoteButton setSelected:NO];
     }
 
-    [self.scoreLabel setText:[NSString stringWithFormat:@"%ld", [self.object getScore]]];
+    [self.scoreLabel setText:[NSString stringWithFormat:@"%ld", [[self.object getScore] longValue]]];
 }
 
 @end

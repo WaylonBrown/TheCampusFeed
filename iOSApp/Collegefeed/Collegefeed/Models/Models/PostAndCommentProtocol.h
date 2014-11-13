@@ -19,14 +19,14 @@
 @protocol PostAndCommentProtocol <NSObject>
 
 - (NSNumber *)getID;
-- (NSNumber *)getPostID;
+- (NSNumber *)getPost_id;
 - (NSString *)getText;
 - (NSDate *)getCreated_at;
 - (NSNumber *)getScore;
 - (void)decrementScore;
 - (void)incrementScore;
 - (NSString *)getCollegeName;
-- (NSNumber *)getCollegeID;
+- (NSNumber *)getCollege_id;
 - (void)setVote:(Vote *)vote;
 - (ModelType)getType;
 - (Vote *)getVote;
