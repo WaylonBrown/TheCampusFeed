@@ -39,14 +39,6 @@
     {
         [self setDataController:controller];
         self.activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialFinished) name:@"TutorialFinished" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialStarted) name:@"TutorialStarted" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationWasUpdated) name:@"LocationUpdated" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchedAllContent) name:@"HasFetchedAllContent" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishedFetchRequest) name:@"FinishedFetching" object:nil];
-
-        
     }
     return self;
 }
@@ -54,6 +46,12 @@
 {   // called when this view is initially loaded
     
     [super loadView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialFinished) name:@"TutorialFinished" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialStarted) name:@"TutorialStarted" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationWasUpdated) name:@"LocationUpdated" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchedAllContent) name:@"HasFetchedAllContent" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishedFetchRequest) name:@"FinishedFetching" object:nil];
 
     // Add a refresh control to the top of the table view
     // (assigned to a tableViewController to avoid a 'stutter' in the UI)
@@ -150,7 +148,8 @@
 {   // return the number of sections in the table view
     return 1;
 }
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPathff{   // User should not directly modify a TableCell
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{   // User should not directly modify a TableCell
     return NO;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -165,7 +164,6 @@
     self.hasFinishedFetchRequest = YES;
     [self.contentLoadingIndicator stopAnimating];
     [self.tableView reloadData];
-
 }
 - (void)fetchedAllContent
 {

@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
-#define DELAY_FOR_SLOW_NETWORK 2
+#define DELAY_FOR_SLOW_NETWORK 0
 
 #import "DataController.h"
 #import "College.h"
@@ -22,7 +22,7 @@
 @implementation NSMutableArray (Utilities)
 
 - (void)insertObjectsWithUniqueIds:(NSArray *)arr
-{    
+{
     [self addObjectsFromArray:arr];
     for (NSObject<CFModelProtocol> *object in self)
     {
@@ -345,11 +345,13 @@
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
     {
+        
         if (post != nil)
         {
             NSData *commentData = [Networker GETCommentsWithPostId:[post.id longValue]];
             NSArray *fetchedComments = [self parseData:commentData asModelType:COMMENT];
-            [self.commentList insertObjectsWithUniqueIds:fetchedComments];
+            self.commentList = [NSMutableArray arrayWithArray:fetchedComments];
+//            [self.commentList insertObjectsWithUniqueIds:fetchedComments];
             
             [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
         }

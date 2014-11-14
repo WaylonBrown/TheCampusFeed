@@ -48,12 +48,11 @@
 
 // Initialization
 - (id)initWithDataController:(DataController *)controller;
-
 - (void)placeLoadingIndicatorInToolbar;
 - (void)placeCreatePost;
 
 // Actions
-- (void)receiveEvent:(NSNotification *)notification;
+- (void)finishedFetchRequest;
 - (IBAction)changeFeed;
 - (void)create;
 - (void)refresh;

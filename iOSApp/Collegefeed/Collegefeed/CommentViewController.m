@@ -32,6 +32,8 @@
     {
         [self setDataController:controller];
         [self initializeViewElements];
+        
+        
     }
     return self;
 }
@@ -51,10 +53,10 @@
         float postCellHeight = [self tableView:self.postTableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
         self.postTableHeightConstraint.constant = postCellHeight;
         [self.view setNeedsUpdateConstraints];
-        
-        [self.postTableView reloadData];
-        [self.commentTableView reloadData];
     }
+    
+    [self.postTableView reloadData];
+    [self.commentTableView reloadData];
 }
 - (void)viewDidLoad
 {   // called once the comment view has loaded
@@ -69,6 +71,8 @@
   
     [super loadView];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishedFetchRequest) name:@"FinishedFetching" object:nil];
+
 }
 - (void)initializeViewElements
 {
@@ -257,9 +261,10 @@
 
 #pragma mark - Actions
 
-- (void)receiveEvent:(NSNotification *)notification
+- (void)finishedFetchRequest
 {
-    [super receiveEvent:notification];
+    self.hasFinishedFetchRequest = YES;
+    [self.contentLoadingIndicator stopAnimating];
     [self.commentTableView reloadData];
 }
 - (void)cancel
