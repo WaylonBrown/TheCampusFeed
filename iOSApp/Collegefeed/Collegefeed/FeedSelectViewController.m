@@ -306,13 +306,13 @@
                 College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
                 
                 [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
-                    [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:college];
+                    [self.feedDelegate switchToFeedForCollegeOrNil:college];
                 }];
             }
             else if (section == 1)
             {
                 [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
-                    [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:nil];
+                    [self.feedDelegate switchToFeedForCollegeOrNil:nil];
                 }];
             }
             else if (section == 2)
@@ -327,7 +327,7 @@
         {   // When user wants to see all colleges and be able to search through them
             [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
                 College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
-                [self.feedDelegate submitSelectionForFeedWithCollegeOrNil:college];
+                [self.feedDelegate switchToFeedForCollegeOrNil:college];
             }];
             break;
         }

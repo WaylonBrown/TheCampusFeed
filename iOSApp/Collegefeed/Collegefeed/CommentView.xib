@@ -6,8 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CommentViewController">
             <connections>
-                <outlet property="commentLoadingIndicator" destination="raq-a8-9Sg" id="yKs-Uy-nKw"/>
                 <outlet property="commentTableView" destination="e2t-m9-f0M" id="RZt-3K-R7C"/>
+                <outlet property="contentLoadingIndicator" destination="raq-a8-9Sg" id="J6E-0D-Vir"/>
                 <outlet property="postTableHeightConstraint" destination="k6u-bc-0sI" id="vkm-zJ-sKi"/>
                 <outlet property="postTableView" destination="aEV-VT-52H" id="LWc-EL-ok2"/>
                 <outlet property="view" destination="cKt-4a-JCZ" id="cpw-7Q-b8c"/>

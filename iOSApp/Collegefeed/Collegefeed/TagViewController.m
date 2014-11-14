@@ -21,31 +21,36 @@
 - (void)loadView
 {
     [super loadView];
-}
-
-- (void)viewDidLoad
-{
-    // Do any additional setup after loading the view.
-    [super viewDidLoad];
+    
     [self.view setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
-    [self.tableView setDataSource:self];
-    [self.tableView setDelegate:self];
-    
-    self.searchResult = [NSMutableArray arrayWithCapacity:[self.list count]];
-    
+
     // Search bar
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     self.tableView.tableHeaderView = searchBar;
     [searchBar setKeyboardType:UIKeyboardTypeAlphabet];
     [searchBar setText:@"#"];
     [searchBar setDelegate:self];
+    
+    // ToDo: change to UISearchController
     self.searchDisplay = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
     
     self.searchDisplay.delegate = self;
     self.searchDisplay.searchResultsDataSource = self;
     self.searchDisplay.searchResultsDelegate = self;
 }
-
+- (void)viewDidLoad
+{
+    // Do any additional setup after loading the view.
+    [super viewDidLoad];
+    [self.tableView setDataSource:self];
+    [self.tableView setDelegate:self];
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self setList:[self.dataController getCurrentTagList]];
+    [self.dataController fetchTagsWithReset:YES];
+}
 
 #pragma mark - Navigation
 
@@ -64,7 +69,7 @@
     }
     else
     {
-        self.selectedTag = (Tag *)[self.dataController.allTags objectAtIndex:indexPath.row];
+        self.selectedTag = (Tag *)[self.dataController.tagListForAllColleges objectAtIndex:indexPath.row];
     }
     
     if (self.selectedTag == nil)
@@ -86,16 +91,6 @@
     [self.navigationController pushViewController:controller
                                          animated:YES];
 }
-- (void)switchToAllColleges
-{
-    self.dataController.tagPage = 0;
-    [self setList:self.dataController.allTags];
-}
-- (void)switchToSpecificCollege
-{
-    self.dataController.tagPage = 0;
-    [self setList:self.dataController.allTagsInCollege];
-}
 
 #pragma mark - UITableView Functions
 
@@ -105,7 +100,7 @@
     {
         return [self.searchResult count];
     }
-    else if (self.hasReachedEndOfList)
+    else if (self.hasFetchedAllContent)
     {
         return self.list.count;
     }
@@ -128,13 +123,20 @@
     }
     if (tableView == self.searchDisplay.searchResultsTableView)
     {
-        Tag *tagAtIndex = (Tag*)[self.searchResult objectAtIndex:indexPath.row];
-        [cell assignTag:tagAtIndex];
+        Tag *tag = (Tag*)[self.searchResult objectAtIndex:indexPath.row];
+        [cell assignTag:tag];
     }
     else
     {
-        if (indexPath.row == self.list.count)
+        if (indexPath.row < self.list.count)
         {
+            // get the tag and display in this cell
+            Tag *tag = (Tag *)[self.list objectAtIndex:indexPath.row];
+            [cell assignTag:tag];
+        }
+        else
+        {
+            // reached end of visible list; load more tags
             static NSString *LoadingCellIdentifier = @"LoadingCell";
             LoadingCell *cell = (LoadingCell *)[tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier];
             
@@ -146,26 +148,11 @@
             }
             [cell showLoadingIndicator];
             
-            if (!self.hasReachedEndOfList)
+            if (!self.hasFetchedAllContent)
             {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                    NSInteger oldCount = self.list.count;
-                    self.hasReachedEndOfList = ![self loadMoreTags];
-                    NSInteger newCount = self.list.count;
-                    
-                    if (oldCount != newCount)
-                    {
-                        [self addNewRows:oldCount through:newCount];
-                    }
-                });
+                [self.dataController fetchTagsWithReset:NO];
             }
-            
-            return cell;
         }
-        
-        // get the tag and display in this cell
-        Tag *tagAtIndex = (Tag *)[self.list objectAtIndex:indexPath.row];
-        [cell assignTag:tagAtIndex];
     }
     return cell;
 }
@@ -194,53 +181,13 @@
 
 #pragma mark - Actions
 
-- (BOOL)loadMoreTags
-{
-    BOOL success = false;
-    if (self.dataController.showingAllColleges)
-    {
-        success = [self.dataController fetchTags];
-    }
-    else
-    {
-        success = [self.dataController fetchTagsWithCollegeId:self.dataController.collegeInFocus.collegeID];
-    }
-    return success;
-}
-- (void)addNewRows:(NSInteger)oldCount through:(NSInteger)newCount
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        NSMutableArray* newRows = [NSMutableArray array];
-        
-        for (NSInteger i = oldCount; i < newCount; i++)
-        {
-            NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
-            [newRows addObject:newIndexPath];
-        }
-        
-        [self.tableView beginUpdates];
-        [self.tableView insertRowsAtIndexPaths:newRows withRowAnimation:UITableViewRowAnimationTop];
-        [self.tableView endUpdates];
-        [self.tableView reloadData];
-        
-    });
-}
+//- (void)receiveEvent:(NSNotification *)notification
+//{
+//    [super receiveEvent:notification];
+        // ToDo, might need this below
+//    self.searchResult = [NSMutableArray arrayWithCapacity:[self.list count]];
+//}
 
-- (void)refresh
-{   // refresh this tag view
-    if (self.dataController.showingAllColleges)
-    {
-        [self switchToAllColleges];
-        [self.dataController fetchTags];
-    }
-    else if (self.dataController.showingSingleCollege)
-    {
-        [self switchToSpecificCollege];
-        [self.dataController fetchTagsWithCollegeId:self.dataController.collegeInFocus.collegeID];
-    }
-    [super refresh];
-}
 
 #pragma mark - Vanishing Bottom Toolbar
 
@@ -267,10 +214,19 @@
     else if (scrollDiff < 0 && (frame.origin.y + size > scrollHeight))
     {   // flick down / scroll up / show bar
         self.toolBarSpaceFromBottom.constant += 4;
+        [self setList:[self.dataController getCurrentTagList]];
     }
     
     self.toolBarSpaceFromBottom.constant = MIN(self.toolBarSpaceFromBottom.constant, 50);
     [self.feedToolbar updateConstraintsIfNeeded];
+}
+
+#pragma mark - FeedSelectionProtocol Delegate Methods
+
+- (void)switchToFeedForCollegeOrNil:(College *)college
+{
+    [super switchToFeedForCollegeOrNil:college];
+    [self setList:[self.dataController getCurrentTagList]];
 }
 
 @end

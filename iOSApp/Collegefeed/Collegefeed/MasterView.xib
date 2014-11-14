@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MasterViewController">
             <connections>
                 <outlet property="chooseLabel" destination="uT4-eW-7Pl" id="DOI-Zn-NpM"/>
+                <outlet property="contentLoadingIndicator" destination="Vre-G5-Ab8" id="nO0-oz-EZ8"/>
                 <outlet property="currentFeedLabel" destination="SXB-AF-c0g" id="r7O-QH-CUk"/>
                 <outlet property="feedButton" destination="1L3-iO-Uw7" id="xLt-VP-iqI"/>
                 <outlet property="feedToolbar" destination="onw-bZ-Ayo" id="guM-k8-k3E"/>
@@ -127,6 +128,10 @@
                         <constraint firstAttribute="trailing" secondItem="1L3-iO-Uw7" secondAttribute="trailing" id="nT2-9A-bTv"/>
                     </constraints>
                 </view>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Vre-G5-Ab8">
+                    <rect key="frame" x="142" y="216" width="37" height="37"/>
+                    <color key="color" red="0.20000000000000001" green="0.70980392160000005" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
@@ -135,9 +140,11 @@
                 <constraint firstAttribute="bottom" secondItem="onw-bZ-Ayo" secondAttribute="top" constant="50" id="CAC-MK-eSD"/>
                 <constraint firstItem="aEV-VT-52H" firstAttribute="top" secondItem="cKt-4a-JCZ" secondAttribute="top" id="HTI-BE-RpM"/>
                 <constraint firstAttribute="bottom" secondItem="aEV-VT-52H" secondAttribute="bottom" id="JE9-8B-hTk"/>
+                <constraint firstItem="aEV-VT-52H" firstAttribute="centerX" secondItem="Vre-G5-Ab8" secondAttribute="centerX" id="Qfe-TV-Hpd"/>
                 <constraint firstItem="N3W-iU-Kby" firstAttribute="leading" secondItem="cKt-4a-JCZ" secondAttribute="leading" id="R5n-dP-7bV"/>
                 <constraint firstItem="onw-bZ-Ayo" firstAttribute="leading" secondItem="cKt-4a-JCZ" secondAttribute="leading" id="VYU-mS-F2q"/>
                 <constraint firstAttribute="trailing" secondItem="N3W-iU-Kby" secondAttribute="trailing" id="d2b-yI-P3Z"/>
+                <constraint firstItem="aEV-VT-52H" firstAttribute="centerY" secondItem="Vre-G5-Ab8" secondAttribute="centerY" constant="50" id="ru0-6A-fJx"/>
                 <constraint firstAttribute="trailing" secondItem="aEV-VT-52H" secondAttribute="trailing" id="vdo-pn-HEn"/>
                 <constraint firstAttribute="bottom" secondItem="N3W-iU-Kby" secondAttribute="bottom" id="x6Q-bi-iFl"/>
             </constraints>

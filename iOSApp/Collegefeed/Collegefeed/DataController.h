@@ -73,6 +73,9 @@ typedef NS_ENUM(NSInteger, LocationStatus)
     LOCATION_NOT_FOUND
 };
 
+@interface NSMutableArray (Utilities)
+- (void)insertObjectsWithUniqueIds:(NSArray *)arr;
+@end
 
 @interface DataController : NSObject<CLLocationManagerDelegate>
 
@@ -124,8 +127,8 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic, strong) NSMutableArray *allPostsWithTagInCollege;
 
 // Tag Arrays
-@property (nonatomic, strong) NSMutableArray *allTags;
-@property (nonatomic, strong) NSMutableArray *allTagsInCollege;
+@property (nonatomic, strong) NSMutableArray *tagListForAllColleges;
+@property (nonatomic, strong) NSMutableArray *tagListForCollege;
 
 // Vote Arrays
 @property (nonatomic, strong) NSMutableArray *userPostVotes;
@@ -156,6 +159,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (BOOL)isNearCollege;
 - (BOOL)isNearCollegeWithId:(long)collegeId;
 
+- (NSMutableArray *)getCurrentTagList;
 - (void)retrieveUserData;
 - (long)getUserPostScore;
 - (long)getUserCommentScore;
@@ -207,8 +211,8 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (Post *)fetchParentPostOfComment:(Comment *)comment;
 
 // Tags
-- (BOOL)fetchTags;
-- (BOOL)fetchTagsWithCollegeId:(long)collegeId;
+- (void)fetchTagsWithReset:(BOOL)reset;
+//- (BOOL)fetchTagsWithCollegeId:(long)collegeId;
 
 // Votes
 - (BOOL)createVote:(Vote *)vote;

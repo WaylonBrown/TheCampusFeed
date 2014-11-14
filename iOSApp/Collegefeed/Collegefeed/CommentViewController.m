@@ -39,12 +39,11 @@
 {   // this function called right before the comments view appears
     [super viewWillAppear:animated];
     [[self navigationItem] setBackBarButtonItem:self.backButton];
-    [self.commentLoadingIndicator startAnimating];
+    [self.contentLoadingIndicator startAnimating];
     
     Post* parentPost = self.dataController.postInFocus;
 
-    [self setHasFinishedLoadingComments:NO];
-    [self.dataController fetchCommentsForPost:parentPost];
+    [self.dataController fetchCommentsForPost:parentPost];  // request dispatched async in DataController
     [self makeToolbarButtons:parentPost];
     
     if (parentPost != nil)
@@ -70,7 +69,6 @@
   
     [super loadView];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveEvent:) name:@"FinishedFetchingComments" object:nil];
 }
 - (void)initializeViewElements
 {
@@ -109,10 +107,9 @@
 {
     if (parentPost != nil)
     {
-        College *college = [self.dataController getCollegeById:parentPost.college_id];
+        College *college = [self.dataController getCollegeById:[parentPost.college_id longValue]];
         if ([self.dataController.nearbyColleges containsObject:college])
         {
-            
             self.navigationItem.rightBarButtonItems = @[self.composeButton,
                                                         self.flagButton,
                                                         self.dividerButton,
@@ -135,9 +132,9 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Number of rows in table views
-    if (tableView == self.postTableView) return 1;
-    else if (tableView == self.commentTableView) return self.hasFinishedLoadingComments ? [self.dataController.commentList count] : 0;
     
+    if (tableView == self.commentTableView) return [self.dataController.commentList count];
+    else if (tableView == self.postTableView) return 1;
     return 0;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -225,7 +222,7 @@
         [commentHeader setTintColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
         [commentHeader setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
         
-        if (self.hasFinishedLoadingComments)
+        if (self.hasFinishedFetchRequest)
         {   // finished network access for comments
             
             if (self.dataController.commentList.count > 0)
@@ -262,8 +259,7 @@
 
 - (void)receiveEvent:(NSNotification *)notification
 {
-    self.hasFinishedLoadingComments = YES;
-    [self.commentLoadingIndicator stopAnimating];
+    [super receiveEvent:notification];
     [self.commentTableView reloadData];
 }
 - (void)cancel
@@ -323,7 +319,7 @@
     {   // attempt to flag a post as inappropriate
         Post *parentPost = self.dataController.postInFocus;
 
-        if ((parentPost != nil) && [self.dataController flagPost:parentPost.post_id])
+        if ((parentPost != nil) && [self.dataController flagPost:[parentPost.post_id longValue]])
         {
             [self.dataController.toaster toastFlagSuccess];
         }

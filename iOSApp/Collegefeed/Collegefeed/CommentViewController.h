@@ -26,10 +26,6 @@
 @property (strong, nonatomic) UIBarButtonItem *flagButton;
 @property (strong, nonatomic) UIBarButtonItem *dividerButton;
 @property (strong, nonatomic) UIBarButtonItem *backButton;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *commentLoadingIndicator;
-
-// Status properties
-@property BOOL hasFinishedLoadingComments;
 
 // Functions
 - (void)makeToolbarButtons:(Post *)parentPost;

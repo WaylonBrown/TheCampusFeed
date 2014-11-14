@@ -6,17 +6,41 @@
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
-#define TESTING_SLOW_NETWORK YES
+#define DELAY_FOR_SLOW_NETWORK 2
 
 #import "DataController.h"
 #import "College.h"
 #import "Comment.h"
+#import "CFModelProtocol.h"
 #import "Post.h"
 #import "Tag.h"
 #import "Vote.h"
 #import "Networker.h"
 #import "CF_DialogViewController.h"
 #import "ToastController.h"
+
+@implementation NSMutableArray (Utilities)
+
+- (void)insertObjectsWithUniqueIds:(NSArray *)arr
+{    
+    [self addObjectsFromArray:arr];
+    for (NSObject<CFModelProtocol> *object in self)
+    {
+        NSUInteger index = [self indexOfObject:object];
+        NSArray *tailSubArray = [self subarrayWithRange:NSMakeRange(index + 1, [self count] - index - 1)];
+        
+        for (NSObject<CFModelProtocol> *object2 in [tailSubArray reverseObjectEnumerator])
+        {
+            if ([object class] == [object2 class]
+                && [[object getID] isEqualToNumber:[object2 getID]])
+            {
+                [self removeObject:object2]; // object instead?
+            }
+        }
+    }
+}
+
+@end
 
 @implementation DataController
 
@@ -55,12 +79,12 @@
         
         [self restoreSavedFeed];
         
+        // ToDo: Get rid of these?
         // Populate arrays from both network and core (local) data
         [self retrieveUserData];
         [self fetchTopPosts];
         [self fetchNewPosts];
         [self getTrendingCollegeList];
-        [self fetchTags];
         
         // Get the user's location
         [self findUserLocation];
@@ -83,8 +107,8 @@
     self.userPosts              = [[NSMutableArray alloc] init];
     self.allPostsWithTag        = [[NSMutableArray alloc] init];
     
-    self.allTags                = [[NSMutableArray alloc] init];
-    self.allTagsInCollege       = [[NSMutableArray alloc] init];
+    self.tagListForAllColleges                = [[NSMutableArray alloc] init];
+    self.tagListForCollege       = [[NSMutableArray alloc] init];
     
     self.userPostVotes          = [[NSMutableArray alloc] init];
     self.userCommentVotes       = [[NSMutableArray alloc] init];
@@ -208,6 +232,15 @@
     self.showingAllColleges = self.collegeInFocus == nil;
     self.showingSingleCollege = !self.showingAllColleges;
 }
+- (NSMutableArray *)getCurrentTagList
+{
+    if (self.showingSingleCollege)
+    {
+        return self.tagListForCollege;
+    }
+    
+    return self.tagListForAllColleges;
+}
 
 #pragma mark - Networker Access - Colleges
 
@@ -310,21 +343,19 @@
 }
 - (void)fetchCommentsForPost:(Post *)post
 {
-    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
     {
-        self.commentList = [[NSMutableArray alloc] init];
         if (post != nil)
         {
-            NSData *data = [Networker GETCommentsWithPostId:[post.id longValue]];
-            [self parseData:data asClass:[Comment class] intoList:self.commentList];
+            NSData *commentData = [Networker GETCommentsWithPostId:[post.id longValue]];
+            NSArray *fetchedComments = [self parseData:commentData asModelType:COMMENT];
+            [self.commentList insertObjectsWithUniqueIds:fetchedComments];
             
-            if (TESTING_SLOW_NETWORK)
-                [NSThread sleepForTimeInterval:1];
+            [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
         }
         dispatch_async(dispatch_get_main_queue(), ^
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetchingComments" object:self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self];
         });
     });
 }
@@ -474,10 +505,7 @@
     {
         long postId = [comment.post_id longValue];
         NSData *postData = [Networker GETPostWithId:postId];
-        
         return [[Post getListFromJsonData:postData error:nil] firstObject];
-        
-//        return (Post*)[[self parseData:postData asClass:[Post class]] firstObject];
     }
     
     return nil;
@@ -485,24 +513,33 @@
 
 #pragma mark - Networker Access - Tags
 
-- (BOOL)fetchTags
+- (void)fetchTagsWithReset:(BOOL)reset
 {   // fetch tags trending across all colleges
-    if (self.allTags == nil || self.tagPage == 0)
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
     {
-        self.allTags = [[NSMutableArray alloc] init];
-    }
-    NSData *data = [Networker GETTagsTrendingAtPageNum:self.tagPage++];
-    return [self parseData:data asClass:[Tag class] intoList:self.allTags];
-}
-- (BOOL)fetchTagsWithCollegeId:(long)collegeId
-{   // fetch tags trending in a particular college
-    if (self.allTagsInCollege == nil || self.tagPage == 0)
-    {
-        self.allTagsInCollege = [[NSMutableArray alloc] init];
-    }
-    
-    NSData *data = [Networker GETTagsWithCollegeId:collegeId AtPageNum:self.tagPage++];
-    return [self parseData:data asClass:[Tag class] intoList:self.allTagsInCollege];
+        self.tagPage = reset ? 1 : self.tagPage + 1;
+        NSMutableArray *currentTagList = [self getCurrentTagList];
+        
+        NSData *tagData = [NSData new];
+        if (self.showingAllColleges)
+        {
+            tagData = [Networker GetTagsForAllCollegesAtPageNum:self.tagPage];
+        }
+        else if (self.collegeInFocus != nil)
+        {
+            tagData = [Networker GETTagsWithCollegeId:[[self.collegeInFocus getID] longValue] AtPageNum:self.tagPage];
+        }
+        
+        NSArray *fetchedTags = [self parseData:tagData asModelType:TAG];
+        [currentTagList insertObjectsWithUniqueIds:fetchedTags];
+        
+        [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
+
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:([fetchedTags count] == 0) ? @"HasFetchedAllContent" : @"FinishedFetching" object:self];
+        });
+    });
 }
 
 #pragma mark - Networker Access - Votes
@@ -890,8 +927,33 @@
 
 #pragma mark - Helper Methods
 
--(NSArray *)parseData:(NSData *)data asClass:(Class)class
+
+//- (NSArray *)unionOfFirst:(NSArray *)array1 withSecond:(NSArray *)array2
+//{
+//    NSMutableArray *unionArr = [[NSMutableArray alloc] initWithArray:array2];
+//    for (NSObject<CFModelProtocol> *obj1 in array1)
+//    {
+//        NSNumber *obj1Id = [obj1 getID];
+//        BOOL alreadyExists;
+//        
+//        for (NSObject<CFModelProtocol> *obj2 in unionArr)
+//        {
+//            if ([obj2 getID] == obj1Id)
+//            {
+//                alreadyExists = YES;
+//                break;
+//            }
+//        }
+//        if (!alreadyExists)
+//            [unionArr addObject:obj1];
+//    }
+//    
+//    return unionArr;
+//}
+- (NSArray *)parseData:(NSData *)data asModelType:(ModelType) type
 {
+    // VERSION 3
+    
     NSMutableArray *arr = [NSMutableArray new];
     
     if (data != nil)
@@ -901,16 +963,91 @@
                                                                          error:nil];
         if (jsonArray && jsonArray.count)
         {
-//            for (int i = 0; i < jsonArray.count; i++)
+            for (NSDictionary *jsonObject in jsonArray)
+            {
+                switch (type)
+                {
+                    case POST:
+                        {
+                            Post *post = [[Post alloc] initFromJSON:jsonObject];
+                            //                    long collegeID = [post getCollegeID];
+                            College *college = [self getCollegeById:[[post getCollege_id] longValue]];
+                            [post setCollege:college];
+                            long postID = [[post getID] longValue];
+                            for (Vote *vote in self.userPostVotes)
+                            {
+                                if (vote.parentID == postID)
+                                {
+                                    [post setVote:vote];
+                                    break;
+                                }
+                            }
+                            
+                            [arr addObject:post];
+                            break;
+                        }
+                    case COMMENT:
+                        {
+                            Comment *comment = [[Comment alloc] initFromJSON:jsonObject];
+                            long commentID = [[comment getID] longValue];
+                            for (Vote *vote in self.userCommentVotes)
+                            {
+                                if (vote.parentID == commentID)
+                                {
+                                    [comment setVote:vote];
+                                    break;
+                                }
+                            }
+                            
+                            [arr addObject:comment];
+                            break;
+                        }
+                    case TAG:
+                        {
+                            [arr addObject:[[Tag alloc] initFromJSON:jsonObject]];
+                            break;
+                        }
+                    case COLLEGE:
+                        {
+                            [arr addObject:[[College alloc] initFromJSON:jsonObject]];
+                            break;
+                        }
+                    case VOTE:
+                        {
+                            [arr addObject:[[Vote alloc] initFromJSON:jsonObject]];
+                            break;
+                        }
+                }
+            }
+        }
+        
+    }
+    
+    return arr;
+}
+-(NSArray *)parseData:(NSData *)data asClass:(Class)class
+{
+    
+    // VERSION 2
+    NSMutableArray *arr = [NSMutableArray new];
+    
+    if (data != nil)
+    {
+        NSArray *jsonArray = (NSArray*)[NSJSONSerialization JSONObjectWithData:data
+                                                                       options:0
+                                                                         error:nil];
+        if (jsonArray && jsonArray.count)
+        {
+            //            for (int i = 0; i < jsonArray.count; i++)
             for (NSDictionary *jsonObject in jsonArray)
             {
                 // Individual JSON object
-//                NSDictionary *jsonObject = (NSDictionary *) [jsonArray objectAtIndex:i];
+                //                NSDictionary *jsonObject = (NSDictionary *) [jsonArray objectAtIndex:i];
                 
                 if ([Post class] == class)
                 {
                     Post *post = [[Post alloc] initFromJSON:jsonObject];
-//                    long collegeID = [post getCollegeID];
+                    //                    long collegeID = [post getCollegeID];
                     College *college = [self getCollegeById:[[post getCollege_id] longValue]];
                     [post setCollege:college];
                     long postID = [[post getID] longValue];
@@ -946,15 +1083,16 @@
                 }
             }
         }
-
+        
     }
     
     return arr;
     
-
+    
 }
 -(BOOL)parseData:(NSData *)data asClass:(Class)class intoList:(NSMutableArray *)array
 {
+    // VERSION 1
     
     if (data == nil)
     {

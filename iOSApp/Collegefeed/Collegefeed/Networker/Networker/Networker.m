@@ -321,7 +321,7 @@
 
 #pragma mark - Tags
 
-+ (NSData *)GETTagsTrendingAtPageNum:(long)pageNum
++ (NSData *)GetTagsForAllCollegesAtPageNum:(long)pageNum
 {
     NSURL *url = [[NSURL alloc] initWithString:
                   [NSString stringWithFormat:@"%@/%@/tags/trending?page=%ld&per_page=%d",

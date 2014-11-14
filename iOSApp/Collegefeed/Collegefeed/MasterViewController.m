@@ -43,6 +43,9 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialFinished) name:@"TutorialFinished" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialStarted) name:@"TutorialStarted" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationWasUpdated) name:@"LocationUpdated" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchedAllContent) name:@"HasFetchedAllContent" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishedFetchRequest) name:@"FinishedFetching" object:nil];
+
         
     }
     return self;
@@ -51,7 +54,7 @@
 {   // called when this view is initially loaded
     
     [super loadView];
-    
+
     // Add a refresh control to the top of the table view
     // (assigned to a tableViewController to avoid a 'stutter' in the UI)
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
@@ -66,12 +69,9 @@
     UIView *view = [[UIView alloc] initWithFrame:frame];
     
     [view setBackgroundColor:[Shared getCustomUIColor:CF_EXTRALIGHTGRAY]];
-
                                       
     self.tableView.tableHeaderView = view;
 
-                                      
-                                      
     // Assign fonts
     [self.currentFeedLabel  setFont:CF_FONT_LIGHT(22)];
     [self.showingLabel      setFont:CF_FONT_BOLD(12)];
@@ -85,6 +85,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
     [super viewWillAppear:animated];
+    
+    [self setHasFinishedFetchRequest:NO];
+    [self.contentLoadingIndicator stopAnimating];
+
     [self refresh];
 
     // Show loading indicator until a nearby college is found,
@@ -146,8 +150,7 @@
 {   // return the number of sections in the table view
     return 1;
 }
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{   // User should not directly modify a TableCell
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPathff{   // User should not directly modify a TableCell
     return NO;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -157,6 +160,18 @@
 
 #pragma mark - Actions
 
+- (void)finishedFetchRequest
+{
+    self.hasFinishedFetchRequest = YES;
+    [self.contentLoadingIndicator stopAnimating];
+    [self.tableView reloadData];
+
+}
+- (void)fetchedAllContent
+{
+    self.hasFetchedAllContent = YES;
+    [self finishedFetchRequest];
+}
 - (IBAction)changeFeed
 {   // User wants to change the feed (all colleges, nearby college, or other)
 
@@ -307,7 +322,7 @@
 
 #pragma mark - FeedSelectionProtocol Delegate Methods
 
-- (void)submitSelectionForFeedWithCollegeOrNil:(College *)college
+- (void)switchToFeedForCollegeOrNil:(College *)college
 {
     [self.dataController switchedToSpecificCollegeOrNil:college];
     if (college == nil)
