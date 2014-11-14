@@ -62,24 +62,17 @@
         return;
     }
     
-    self.selectedTag = nil;
     if (tableView == self.searchDisplay.searchResultsTableView)
     {
-        self.selectedTag = (Tag *)[self.searchResult objectAtIndex:indexPath.row];
+        [self.dataController setTagInFocus:[self.searchResult objectAtIndex:indexPath.row]];
     }
     else
     {
-        self.selectedTag = (Tag *)[self.dataController.tagListForAllColleges objectAtIndex:indexPath.row];
-    }
-    
-    if (self.selectedTag == nil)
-    {
-        return;
+        [self.dataController setTagInFocus:[self.dataController.tagListForAllColleges objectAtIndex:indexPath.row]];
     }
     
     PostsViewController* controller = [[PostsViewController alloc] initAsType:TAG_VIEW
                                                            withDataController:self.dataController];
-    [controller setTagMessage:self.selectedTag.name];
     
     UIBarButtonItem *backButton =
             [[UIBarButtonItem alloc] initWithTitle:@""
@@ -100,14 +93,12 @@
     {
         return [self.searchResult count];
     }
-    else if (self.hasFetchedAllContent)
+    else if (self.hasFinishedFetchRequest)
     {
         return self.list.count;
     }
-    else
-    {
-        return self.list.count + 1;
-    }
+    
+    return 0;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
@@ -134,24 +125,9 @@
             Tag *tag = (Tag *)[self.list objectAtIndex:indexPath.row];
             [cell assignTag:tag];
         }
-        else
-        {
-            // reached end of visible list; load more tags
-            static NSString *LoadingCellIdentifier = @"LoadingCell";
-            LoadingCell *cell = (LoadingCell *)[tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier];
-            
-            if (cell == nil)
-            {
-                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:LoadingCellIdentifier
-                                                             owner:self options:nil];
-                cell = [nib objectAtIndex:0];
-            }
-            [cell showLoadingIndicator];
-            
-            if (!self.hasFetchedAllContent)
-            {
-                [self.dataController fetchTagsWithReset:NO];
-            }
+        else if (!self.hasFetchedAllContent)
+        {   // reached end of visible list; load more tags
+            [self.dataController fetchTagsWithReset:NO];
         }
     }
     return cell;
@@ -180,13 +156,6 @@
 }
 
 #pragma mark - Actions
-
-//- (void)receiveEvent:(NSNotification *)notification
-//{
-//    [super receiveEvent:notification];
-        // ToDo, might need this below
-//    self.searchResult = [NSMutableArray arrayWithCapacity:[self.list count]];
-//}
 
 
 #pragma mark - Vanishing Bottom Toolbar

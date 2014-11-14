@@ -70,9 +70,6 @@
 {   // called when the comment view is initially loaded
   
     [super loadView];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishedFetchRequest) name:@"FinishedFetching" object:nil];
-
 }
 - (void)initializeViewElements
 {
@@ -168,7 +165,7 @@
         [cell.commentCountLabel setHidden:YES];
         [cell.gpsIconImageView setHidden:YES];
     }
-    else if (tableView == self.commentTableView)
+    else if (tableView == self.commentTableView && indexPath.row < [self.dataController.commentList count])
     {   // CommentView table; get the comments to be displayed
         
         Comment *comment = (Comment*)[self.dataController.commentList objectAtIndex:indexPath.row];

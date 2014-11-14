@@ -11,6 +11,7 @@
 #import "PostsViewController.h"
 #import "Post.h"
 #import "Vote.h"
+#import "Tag.h"
 #import "CommentViewController.h"
 #import "Shared.h"
 #import "College.h"
@@ -49,6 +50,7 @@
                 break;
             case TAG_VIEW:
                 [self setList:self.dataController.allPostsWithTag];
+                self.tagMessage = self.dataController.tagInFocus.name;
                 break;
             default:
                 break;
@@ -61,6 +63,9 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
+    
+    [super viewWillAppear:animated];
+    
     if (self.viewType == TAG_VIEW)
     {
         if (self.tagMessage == nil)
@@ -69,10 +74,12 @@
         }
         else
         {
+            // ToDo: make this method have multithreaded callback
             [self.dataController fetchPostsWithTagMessage:self.tagMessage];
         }
     }
-    [super viewWillAppear:animated];
+    
+    [self.contentLoadingIndicator stopAnimating];
 }
 - (void)viewDidLoad
 {

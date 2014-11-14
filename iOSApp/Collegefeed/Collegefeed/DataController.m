@@ -519,8 +519,16 @@
 {   // fetch tags trending across all colleges
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
     {
-        self.tagPage = reset ? 1 : self.tagPage + 1;
         NSMutableArray *currentTagList = [self getCurrentTagList];
+        if (reset)
+        {
+            self.tagPage = 1;
+            [currentTagList removeAllObjects];
+        }
+        else
+        {
+            self.tagPage++;
+        }
         
         NSData *tagData = [NSData new];
         if (self.showingAllColleges)

@@ -85,7 +85,9 @@
     [super viewWillAppear:animated];
     
     [self setHasFinishedFetchRequest:NO];
-    [self.contentLoadingIndicator stopAnimating];
+    [self.contentLoadingIndicator startAnimating];
+
+//    [self.contentLoadingIndicator stopAnimating];
 
     [self refresh];
 

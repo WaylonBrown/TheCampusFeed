@@ -14,6 +14,7 @@
 @class Comment;
 @class College;
 @class Post;
+@class Tag;
 @class Vote;
 @class ToastController;
 
@@ -92,6 +93,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 // Status Information
 @property (strong, nonatomic) College   *collegeInFocus;
 @property (strong, nonatomic) Post      *postInFocus;
+@property (strong, nonatomic) Tag       *tagInFocus;
 @property (nonatomic) BOOL              showingAllColleges;
 @property (nonatomic) BOOL              showingSingleCollege;
 @property (nonatomic) long              collegeListVersion;
