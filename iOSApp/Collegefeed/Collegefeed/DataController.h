@@ -188,7 +188,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (BOOL)createCommentWithMessage:(NSString *)message
                         withPost:(Post*)post;
 
-- (void)fetchCommentsForPost:(Post *)post;
+- (void)fetchCommentsForPost:(Post *)post; /* MULTITHREADED COMPLETE */
 - (void)fetchUserCommentsWithIdArray:(NSArray *)commentIds;
 
 // Flags
@@ -198,8 +198,8 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (BOOL)createPostWithMessage:(NSString *)message
                 withCollegeId:(long)collegeId;
 
-- (BOOL)fetchTopPosts;
-- (void)fetchTopPostsInCollege;
+- (void)fetchTopPostsForAllColleges;
+- (void)fetchTopPostsInSingleCollege;
 
 - (BOOL)fetchNewPosts;
 - (void)fetchNewPostsInCollege;

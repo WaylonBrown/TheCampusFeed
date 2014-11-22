@@ -82,7 +82,7 @@
         // ToDo: Get rid of these?
         // Populate arrays from both network and core (local) data
         [self retrieveUserData];
-        [self fetchTopPosts];
+//        [self fetchTopPosts];
         [self fetchNewPosts];
         [self getTrendingCollegeList];
         
@@ -345,23 +345,22 @@
 }
 - (void)fetchCommentsForPost:(Post *)post
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
-    {
-        
-        if (post != nil)
-        {
-            NSData *commentData = [Networker GETCommentsWithPostId:[post.id longValue]];
-            NSArray *fetchedComments = [self parseData:commentData asModelType:COMMENT];
-            self.commentList = [NSMutableArray arrayWithArray:fetchedComments];
-//            [self.commentList insertObjectsWithUniqueIds:fetchedComments];
-            
-            [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
-        }
-        dispatch_async(dispatch_get_main_queue(), ^
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self];
-        });
-    });
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
+                   ^{
+                        if (post != nil)
+                        {
+                            NSData *commentData = [Networker GETCommentsWithPostId:[post.id longValue]];
+                            NSArray *fetchedComments = [self parseData:commentData asModelType:COMMENT];
+                            self.commentList = [NSMutableArray arrayWithArray:fetchedComments];
+                            // [self.commentList insertObjectsWithUniqueIds:fetchedComments];
+                            
+                            [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
+                        }
+                        dispatch_async(dispatch_get_main_queue(), ^
+                        {
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self];
+                        });
+                    });
 }
 - (void)fetchUserCommentsWithIdArray:(NSArray *)commentIds
 {
@@ -449,12 +448,24 @@
     }
     return NO;
 }
-- (BOOL)fetchTopPosts
+- (void)fetchTopPostsForAllColleges
 {
-    NSData* data = [Networker GETTrendingPostsAtPageNum:self.topPostsPage++];
-    return [self parseData:data asClass:[Post class] intoList:self.topPostsAllColleges];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
+                   {
+                       NSData* data = [Networker GETTrendingPostsAtPageNum:self.topPostsPage++];
+                       NSArray *fetchedPosts = [self parseData:data asModelType:POST];
+                       [self.topPostsAllColleges insertObjectsWithUniqueIds:fetchedPosts];
+                       
+                       [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
+                       
+                       dispatch_async(dispatch_get_main_queue(), ^
+                                      {
+                                          [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self];
+                                      });
+
+                   });
 }
-- (void)fetchTopPostsInCollege
+- (void)fetchTopPostsInSingleCollege
 {
     self.topPostsInCollege = [[NSMutableArray alloc] init];
     long collegeId = self.collegeInFocus.collegeID;

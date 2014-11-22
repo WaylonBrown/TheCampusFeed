@@ -42,21 +42,22 @@
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
     
+    [self setCorrectPostList];
+    
     [super viewWillAppear:animated];
     
-    [self setCorrectPostList];
-    if (self.viewType == TAG_VIEW)
-    {
-        if (self.tagMessage == nil)
-        {
-            NSLog(@"No Tag message provided for a PostsView filtered by Tag");
-        }
-        else
-        {
-            // ToDo: make this method have multithreaded callback
-            [self.dataController fetchPostsWithTagMessage:self.tagMessage];
-        }
-    }
+//    if (self.viewType == TAG_VIEW)
+//    {
+//        if (self.tagMessage == nil)
+//        {
+//            NSLog(@"No Tag message provided for a PostsView filtered by Tag");
+//        }
+//        else
+//        {
+//            // ToDo: make this method have multithreaded callback
+//            [self.dataController fetchPostsWithTagMessage:self.tagMessage];
+//        }
+//    }
 }
 - (void)makeToolbarButtons
 {   // Assigns correct icons and buttons to the upper toolbar
@@ -251,32 +252,122 @@
     [super fetchContent];
     
     // Spawn separate thread for network access
-    [self.dataController fetchNewPosts];
+
+    BOOL allColleges = self.dataController.showingAllColleges;
+    
+    switch (self.viewType)
+    {
+        case TOP_VIEW:
+            if (allColleges)
+                [self.dataController fetchTopPostsForAllColleges];
+            else
+                [self.dataController fetchTopPostsInSingleCollege];
+            
+            break;
+        case RECENT_VIEW:
+            break;
+        case TAG_VIEW:
+            break;
+        case USER_POSTS:
+            break;
+        case USER_COMMENTS:
+            break;
+        default:
+            break;
+    }
+}
+- (void)finishedFetchRequest
+{
+    [super finishedFetchRequest];
+    
+    [self.tableView reloadData];
+    
+    // TODO: addNewRows once finished fetching
 }
 - (BOOL)loadMorePosts
 {
     BOOL success = false;
     
-    switch (self.viewType)
-    {
-        case TOP_VIEW:
-            success = [self.dataController fetchTopPosts];
-            break;
-        case RECENT_VIEW:
-            success = [self.dataController fetchNewPosts];
-            break;
-        case TAG_VIEW:
-            success = [self.dataController fetchMorePostsWithTagMessage:self.tagMessage];
-            break;
-        default:
-            break;
-    }
+//    switch (self.viewType)
+//    {
+//        case TOP_VIEW:
+//            [self.dataController fetchTopPostsForAllColleges];
+//            break;
+//        case RECENT_VIEW:
+//            success = [self.dataController fetchNewPosts];
+//            break;
+//        case TAG_VIEW:
+//            success = [self.dataController fetchMorePostsWithTagMessage:self.tagMessage];
+//            break;
+//        default:
+//            break;
+//    }
     
     return success;
 }
 
 #pragma mark - Local Actions
 
+- (void)changeFeed
+{
+    [super changeFeed];
+}
+- (void)refresh
+{   // refresh this post view
+    [self setCorrectPostList];
+    [super refresh];
+    
+//    if (self.dataController.showingAllColleges)
+//    {
+//        [self switchToAllColleges];
+//    }
+//    else if (self.dataController.showingSingleCollege)
+//    {
+//        [self switchToSpecificCollege];
+//    }
+}
+
+#pragma mark - Helper Methods
+
+- (void)setCorrectPostList
+{
+    BOOL allColleges = self.dataController.showingAllColleges;
+
+    switch (self.viewType)
+    {
+        case TOP_VIEW:
+            if (allColleges)
+                [self setList:self.dataController.topPostsAllColleges];
+            else
+                [self setList:self.dataController.topPostsInCollege];
+            
+            break;
+        case RECENT_VIEW:
+            if (allColleges)
+                [self setList:self.dataController.recentPostsAllColleges];
+            else
+                [self setList:self.dataController.recentPostsInCollege];
+            
+            break;
+        case TAG_VIEW:
+            if (allColleges)
+                [self setList:self.dataController.allPostsWithTag];
+            else
+                [self setList:self.dataController.allPostsWithTagInCollege];
+            
+            self.tagMessage = self.dataController.tagInFocus.name;
+            
+            break;
+        case USER_POSTS:
+            [self setList:self.dataController.userPosts];
+            break;
+        case USER_COMMENTS:
+            [self setList:self.dataController.userComments];
+            break;
+        default:
+            break;
+    }
+}
 - (void)switchToAllColleges
 {
     //    self.hasReachedEndOfList = NO;
@@ -301,7 +392,7 @@
     switch (self.viewType)
     {
         case TOP_VIEW:
-            [self.dataController fetchTopPostsInCollege];
+            [self.dataController fetchTopPostsInSingleCollege];
             [self setList:self.dataController.topPostsInCollege];
             break;
         case RECENT_VIEW:
@@ -331,10 +422,6 @@
         }
     }
 }
-- (void)changeFeed
-{
-    [super changeFeed];
-}
 - (void)addNewRows:(NSInteger)oldCount through:(NSInteger)newCount
 {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -354,53 +441,6 @@
         
     });
 }
-- (void)refresh
-{   // refresh this post view
-    [self setCorrectPostList];
-    [super refresh];
-    
-//    if (self.dataController.showingAllColleges)
-//    {
-//        [self switchToAllColleges];
-//    }
-//    else if (self.dataController.showingSingleCollege)
-//    {
-//        [self switchToSpecificCollege];
-//    }
-}
-- (void)setCorrectPostList
-{
-    switch (self.viewType)
-    {
-        case TOP_VIEW:
-            [self setList: (self.dataController.showingAllColleges)
-             ? self.dataController.topPostsAllColleges
-                         : self.dataController.topPostsInCollege];
-            break;
-        case RECENT_VIEW:
-            [self setList: (self.dataController.showingAllColleges)
-             ? self.dataController.recentPostsAllColleges
-                         : self.dataController.recentPostsInCollege];
-            break;
-        case TAG_VIEW:
-            [self setList: (self.dataController.showingAllColleges)
-             ? self.dataController.allPostsWithTag
-                         : self.dataController.allPostsWithTagInCollege];
-            self.tagMessage = self.dataController.tagInFocus.name;
-            break;
-        case USER_POSTS:
-            [self setList:self.dataController.userPosts];
-            break;
-        case USER_COMMENTS:
-            [self setList:self.dataController.userComments];
-            break;
-        default:
-            break;
-    }
-}
-
-#pragma mark - Helper Methods
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     scrollView.bounces = (scrollView.contentOffset.y < 50);

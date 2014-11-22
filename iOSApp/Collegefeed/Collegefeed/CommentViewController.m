@@ -248,9 +248,10 @@
     [self.dataController fetchCommentsForPost:self.dataController.postInFocus];
 }
 - (void)finishedFetchRequest
-{
-    self.hasFinishedFetchRequest = YES;
-    [self.contentLoadingIndicator stopAnimating];
+{   // A fetch request was completed, make necessary updates
+    
+    [super finishedFetchRequest];
+    
     [self.commentTableView reloadData];
 }
 - (void)shareOnFacebook
