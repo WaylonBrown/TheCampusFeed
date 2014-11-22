@@ -176,7 +176,7 @@
     if (self.viewType == USER_COMMENTS)
     {
         Comment *comment = [self.list objectAtIndex:indexPath.row];
-        BOOL isNearCollege = NO;//[self.dataController.nearbyColleges containsObject:nil];
+        BOOL isNearCollege = NO; //[self.dataController.nearbyColleges containsObject:nil];
         float messageHeight = [Shared getLargeCellMessageHeight:comment.text WithFont:CF_FONT_LIGHT(16)];
 
         [cell assignWith:comment IsNearCollege:isNearCollege WithMessageHeight:messageHeight];

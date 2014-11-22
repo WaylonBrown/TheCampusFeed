@@ -21,21 +21,31 @@
 
 @implementation NSMutableArray (Utilities)
 
-- (void)insertObjectsWithUniqueIds:(NSArray *)arr
+- (void)insertObjectsWithUniqueIds:(NSArray *)newObjectsArray
 {
-    [self addObjectsFromArray:arr];
-    for (NSObject<CFModelProtocol> *object in self)
+//    [self addObjectsFromArray:arr];
+    for (NSObject *newObj in newObjectsArray)
     {
-        NSUInteger index = [self indexOfObject:object];
-        NSArray *tailSubArray = [self subarrayWithRange:NSMakeRange(index + 1, [self count] - index - 1)];
-        
-        for (NSObject<CFModelProtocol> *object2 in [tailSubArray reverseObjectEnumerator])
+        if ([newObj respondsToSelector:@selector(getID)])
         {
-            if ([object class] == [object2 class]
-                && [[object getID] isEqualToNumber:[object2 getID]])
+            NSNumber *existingID = [newObj performSelector:@selector(getID)];
+            
+            BOOL alreadyExists = NO;
+            
+            for (NSObject *existingObj in self)
             {
-                [self removeObject:object2]; // object instead?
+                if ([existingObj respondsToSelector:@selector(getID)])
+                {
+                    NSNumber *newID = [newObj performSelector:@selector(getID)];
+                    
+                    if ([newID isEqualToNumber:existingID])
+                        alreadyExists = YES;
+                }
             }
+            
+            if (!alreadyExists)
+                [self addObject:newObj];
+
         }
     }
 }
