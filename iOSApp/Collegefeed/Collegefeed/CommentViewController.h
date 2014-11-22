@@ -27,8 +27,4 @@
 @property (strong, nonatomic) UIBarButtonItem *dividerButton;
 @property (strong, nonatomic) UIBarButtonItem *backButton;
 
-// Functions
-- (void)makeToolbarButtons:(Post *)parentPost;
-- (void)initializeViewElements;
-
 @end

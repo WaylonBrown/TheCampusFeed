@@ -30,31 +30,9 @@
     if (self)
     {
         [self setViewType:type];
-        [self switchToAllColleges];
+//        [self switchToAllColleges];
         
         [self setCommentViewController:[[CommentViewController alloc] initWithDataController:self.dataController]];
-        
-        switch (type)
-        {
-            case TOP_VIEW:
-                [self setList:self.dataController.topPostsAllColleges];
-                break;
-            case RECENT_VIEW:
-                [self setList:self.dataController.recentPostsAllColleges];
-                break;
-            case USER_POSTS:
-                [self setList:self.dataController.userPosts];
-                break;
-            case USER_COMMENTS:
-                [self setList:self.dataController.userComments];
-                break;
-            case TAG_VIEW:
-                [self setList:self.dataController.allPostsWithTag];
-                self.tagMessage = self.dataController.tagInFocus.name;
-                break;
-            default:
-                break;
-        }
     }
     return self;
 }
@@ -65,7 +43,7 @@
 {   // View is about to appear after being inactive
     
     [super viewWillAppear:animated];
-    
+    [self setCorrectPostList];
     if (self.viewType == TAG_VIEW)
     {
         if (self.tagMessage == nil)
@@ -79,7 +57,7 @@
         }
     }
     
-    [self.contentLoadingIndicator stopAnimating];
+//    [self.contentLoadingIndicator stopAnimating];
 }
 - (void)viewDidLoad
 {
@@ -126,15 +104,14 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
-    NSUInteger num = self.list.count;
-
-    return num == 0 ? 0 : num + 1;
+    return self.list.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
     // this specifies the prototype (PostTableCell) and assigns the labels
     NSUInteger rowNum = indexPath.row;
     NSUInteger listcount = self.list.count;
+    
     
     if (rowNum == listcount)
     {
@@ -252,24 +229,24 @@
 
 #pragma mark - Navigation
 
-- (void)switchToAllColleges
-{
-    self.hasReachedEndOfList = NO;
-    switch (self.viewType)
-    {
-        case TOP_VIEW:
-            [self setList:self.dataController.topPostsAllColleges];
-            break;
-        case RECENT_VIEW:
-            [self setList:self.dataController.recentPostsAllColleges];
-            break;
-        case TAG_VIEW:
-            [self setList:self.dataController.allPostsWithTag];
-            break;
-        default:
-            break;
-    }
-}
+//- (void)switchToAllColleges
+//{
+//    self.hasReachedEndOfList = NO;
+//    switch (self.viewType)
+//    {
+//        case TOP_VIEW:
+//            [self setList:self.dataController.topPostsAllColleges];
+//            break;
+//        case RECENT_VIEW:
+//            [self setList:self.dataController.recentPostsAllColleges];
+//            break;
+//        case TAG_VIEW:
+//            [self setList:self.dataController.allPostsWithTag];
+//            break;
+//        default:
+//            break;
+//    }
+//}
 - (void)switchToSpecificCollege
 {
     self.hasReachedEndOfList = NO;
@@ -309,11 +286,20 @@
 
 #pragma mark - Actions
 
+- (void)fetchContent
+{   // Fetches new content for this view
+    
+    [super fetchContent];
+    
+//    [self.contentLoadingIndicator startAnimating];
+    
+    // Spawn separate thread for network access
+    
+}
 - (void)changeFeed
 {
     [super changeFeed];
 }
-
 - (BOOL)loadMorePosts
 {
     BOOL success = false;
@@ -354,18 +340,49 @@
         
     });
 }
-
 - (void)refresh
 {   // refresh this post view
-    if (self.dataController.showingAllColleges)
-    {
-        [self switchToAllColleges];
-    }
-    else if (self.dataController.showingSingleCollege)
-    {
-        [self switchToSpecificCollege];
-    }
+    [self setCorrectPostList];
     [super refresh];
+    
+//    if (self.dataController.showingAllColleges)
+//    {
+//        [self switchToAllColleges];
+//    }
+//    else if (self.dataController.showingSingleCollege)
+//    {
+//        [self switchToSpecificCollege];
+//    }
+}
+- (void)setCorrectPostList
+{
+    switch (self.viewType)
+    {
+        case TOP_VIEW:
+            [self setList: (self.dataController.showingAllColleges)
+             ? self.dataController.topPostsAllColleges
+                         : self.dataController.topPostsInCollege];
+            break;
+        case RECENT_VIEW:
+            [self setList: (self.dataController.showingAllColleges)
+             ? self.dataController.recentPostsAllColleges
+                         : self.dataController.recentPostsInCollege];
+            break;
+        case TAG_VIEW:
+            [self setList: (self.dataController.showingAllColleges)
+             ? self.dataController.allPostsWithTag
+                         : self.dataController.allPostsWithTagInCollege];
+            self.tagMessage = self.dataController.tagInFocus.name;
+            break;
+        case USER_POSTS:
+            [self setList:self.dataController.userPosts];
+            break;
+        case USER_COMMENTS:
+            [self setList:self.dataController.userComments];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - CreationViewProtocol Delegate Methods

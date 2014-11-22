@@ -128,7 +128,7 @@
                         <constraint firstAttribute="trailing" secondItem="1L3-iO-Uw7" secondAttribute="trailing" id="nT2-9A-bTv"/>
                     </constraints>
                 </view>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Vre-G5-Ab8">
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Vre-G5-Ab8">
                     <rect key="frame" x="142" y="216" width="37" height="37"/>
                     <color key="color" red="0.20000000000000001" green="0.70980392160000005" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </activityIndicatorView>

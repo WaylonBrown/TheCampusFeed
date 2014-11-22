@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
-#define DELAY_FOR_SLOW_NETWORK 0
+#define DELAY_FOR_SLOW_NETWORK 1
 
 #import "DataController.h"
 #import "College.h"
@@ -307,11 +307,13 @@
 {
     @try
     {
-        if (![self isAbleToComment])
-        {
-            [self.toaster toastCommentingTooSoon];
-            return NO;
-        }
+        // ToDo: Commented out post timing restriction for demo
+
+//        if (![self isAbleToComment])
+//        {
+//            [self.toaster toastCommentingTooSoon];
+//            return NO;
+//        }
         Comment *comment = [[Comment alloc] initWithCommentMessage:message
                                                           withPost:post];
         NSData *result = [Networker POSTCommentData:[comment toJSON] WithPostId:[post.id longValue]];
@@ -389,12 +391,15 @@
 - (BOOL)createPostWithMessage:(NSString *)message
                 withCollegeId:(long)collegeId
 {
-    NSNumber *minutesUntilCanPost = [NSNumber new];
-    if (![self isAbleToPost:minutesUntilCanPost])
-    {
-        [self.toaster toastPostingTooSoon:minutesUntilCanPost];
-        return NO;
-    }
+        // ToDo: Commented out post timing restriction for demo
+    
+    
+//    NSNumber *minutesUntilCanPost = [NSNumber new];
+//    if (![self isAbleToPost:minutesUntilCanPost])
+//    {
+//        [self.toaster toastPostingTooSoon:minutesUntilCanPost];
+//        return NO;
+//    }
     @try
     {
         NSString *udid = [UIDevice currentDevice].identifierForVendor.UUIDString;
@@ -468,8 +473,37 @@
     NSData* data = [Networker GETRecentPostsWithCollegeId:collegeId];
     [self parseData:data asClass:[Post class] intoList:self.recentPostsInCollege];
 }
-- (void)fetchPostsWithTagMessage:(NSString*)tagMessage
+- (void)fetchPostsWithTagMessage:(NSString*)tagMessage withReset:(BOOL)reset
 {
+    // MULTITHREADED HERE
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
+    {
+        NSMutableArray *currentPostList = self.allPostsWithTag;
+        if (reset)
+        {
+            self.tagPostsPage = 1;
+            [currentPostList removeAllObjects];
+        }
+        else
+        {
+            self.tagPostsPage++;
+        }
+        if (tagMessage != nil)
+        {
+            NSData* postsData = [Networker GETAllPostsWithTag:tagMessage atPageNum:self.tagPostsPage];
+            NSArray *fetchedPosts = [self parseData:postsData asModelType:POST];
+            [currentPostList insertObjectsWithUniqueIds:fetchedPosts];
+           
+           [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self];
+        });
+    });
+    
+    
     [self setTagPostsPage:0];
     [self setAllPostsWithTag:[[NSMutableArray alloc] init]];
     NSData* data = [Networker GETAllPostsWithTag:tagMessage atPageNum:self.tagPostsPage];

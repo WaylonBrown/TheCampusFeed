@@ -23,7 +23,7 @@
 
 @implementation CommentViewController
 
-#pragma mark - Initialization and view loading
+#pragma mark - Initialization
 
 - (id)initWithDataController:(DataController *)controller
 {
@@ -32,44 +32,25 @@
     {
         [self setDataController:controller];
         [self initializeViewElements];
-        
-        
     }
     return self;
 }
-- (void)viewWillAppear:(BOOL)animated
-{   // this function called right before the comments view appears
-    [super viewWillAppear:animated];
-    [[self navigationItem] setBackBarButtonItem:self.backButton];
-    [self.contentLoadingIndicator startAnimating];
-    
-    Post* parentPost = self.dataController.postInFocus;
 
-    [self.dataController fetchCommentsForPost:parentPost];  // request dispatched async in DataController
-    [self makeToolbarButtons:parentPost];
-    
-    if (parentPost != nil)
-    {
-        float postCellHeight = [self tableView:self.postTableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-        self.postTableHeightConstraint.constant = postCellHeight;
-        [self.view setNeedsUpdateConstraints];
-    }
-    
-    [self.postTableView reloadData];
-    [self.commentTableView reloadData];
-}
-- (void)viewDidLoad
-{   // called once the comment view has loaded
-    [super viewDidLoad];
-    
-    self.commentTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self.postTableView reloadData];
-    [self.commentTableView reloadData];
-}
+#pragma mark - View Loading
+
 - (void)loadView
 {   // called when the comment view is initially loaded
   
     [super loadView];
+    
+    self.commentTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+}
+- (void)viewWillAppear:(BOOL)animated
+{   // View is about to appear after being inactive
+ 
+    [self.dataController.commentList removeAllObjects];
+    [super viewWillAppear:animated];
+    
 }
 - (void)initializeViewElements
 {
@@ -102,10 +83,14 @@
     UIView *dividerView = [[UIView alloc] initWithFrame:dividerFrame];
     [dividerView setBackgroundColor:[UIColor whiteColor]];
     self.dividerButton = [[UIBarButtonItem alloc] initWithCustomView:dividerView];
-
 }
-- (void)makeToolbarButtons:(Post *)parentPost
-{
+- (void)makeToolbarButtons
+{   // Assigns correct icons and buttons to the upper toolbar
+    
+    Post* parentPost = self.dataController.postInFocus;
+    
+    [self initializeViewElements];
+    
     if (parentPost != nil)
     {
         College *college = [self.dataController getCollegeById:[parentPost.college_id longValue]];
@@ -122,22 +107,10 @@
     
     self.navigationItem.rightBarButtonItems = @[self.facebookButton,
                                                 self.twitterButton];
-    
 }
 
-#pragma mark - Table view methods
+#pragma mark - TableView
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{   // first section is the original post, second is the post's comments
-    return 1;
-}
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{   // Number of rows in table views
-    
-    if (tableView == self.commentTableView) return [self.dataController.commentList count];
-    else if (tableView == self.postTableView) return 1;
-    return 0;
-}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Get the table view cell for the given row
     // This method handles two table views: one for the post and another for it's comments
@@ -155,7 +128,7 @@
     
     if (tableView == self.postTableView)
     {   // PostView table; get the original post to display in this table
-
+        
         if (parentPost != nil)
         {
             float messageHeight = [Shared getLargeCellMessageHeight:parentPost.text WithFont:CF_FONT_LIGHT(16)];
@@ -184,8 +157,19 @@
     [cell setDelegate:self];
     [cell.dividerHeight setConstant:0];
     [cell.collegeLabelHeight setConstant:0];
-
+    
     return cell;
+}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{   // first section is the original post, second is the post's comments
+    return 1;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{   // Number of rows in table views
+    
+    if (tableView == self.commentTableView) return [self.dataController.commentList count];
+    else if (tableView == self.postTableView) return 1;
+    return 0;
 }
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Return NO if you do not want the item to be re-orderable.
@@ -250,20 +234,59 @@
     return (tableView == self.commentTableView) ? 25 : 5;
 }
 
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{   // In a storyboard-based application, you will often want to do a little preparation before navigation
+#pragma mark - Network Actions
+- (void)fetchContent
+{   // Fetches new content for this view
+    
+    [self.dataController.commentList removeAllObjects];
+    [self.contentLoadingIndicator startAnimating];
+    
+    [super fetchContent];
+    
+    // Spawn separate thread for network access
+    [self.dataController fetchCommentsForPost:self.dataController.postInFocus];
 }
-
-#pragma mark - Actions
-
 - (void)finishedFetchRequest
 {
     self.hasFinishedFetchRequest = YES;
     [self.contentLoadingIndicator stopAnimating];
     [self.commentTableView reloadData];
 }
+- (void)shareOnFacebook
+{
+    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        
+        [controller setInitialText:@"Check out TheCampusFeed!"];
+        [controller addImage:[UIImage imageNamed:@"icon.png"]];
+        [controller addURL:[NSURL URLWithString:WEBSITE_LINK]];
+        
+        [self presentViewController:controller animated:YES completion:Nil];
+    }
+    else
+    {
+        [self.dataController.toaster toastFacebookUnavailable];
+    }
+}
+- (void)shareOnTwitter
+{
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+    {
+        SLComposeViewController *tweetSheet = [SLComposeViewController
+                                               composeViewControllerForServiceType:SLServiceTypeTwitter];
+        [tweetSheet setInitialText:[NSString stringWithFormat:@"Check out TheCampusFeed! %@", WEBSITE_LINK]];
+        [tweetSheet addImage:[UIImage imageNamed:@"icon.png"]];
+        
+        [self presentViewController:tweetSheet animated:YES completion:nil];
+    }
+    else
+    {
+        [self.dataController.toaster toastTwitterUnavailable];
+    }
+}
+
+#pragma mark - Local Actions
+
 - (void)cancel
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -282,38 +305,6 @@
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Flag as Inappropriate?" message:message delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
     [alert show];
-}
-- (void)shareOnFacebook
-{
-    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
-        SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-        
-        [controller setInitialText:@"Check out TheCampusFeed!"];
-        [controller addImage:[UIImage imageNamed:@"icon.png"]];
-        [controller addURL:[NSURL URLWithString:WEBSITE_LINK]];
-
-        [self presentViewController:controller animated:YES completion:Nil];
-    }
-    else
-    {
-        [self.dataController.toaster toastFacebookUnavailable];
-    }
-}
-- (void)shareOnTwitter
-{
-    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
-    {
-        SLComposeViewController *tweetSheet = [SLComposeViewController
-                                               composeViewControllerForServiceType:SLServiceTypeTwitter];
-        [tweetSheet setInitialText:[NSString stringWithFormat:@"Check out TheCampusFeed! %@", WEBSITE_LINK]];
-        [tweetSheet addImage:[UIImage imageNamed:@"icon.png"]];
-
-        [self presentViewController:tweetSheet animated:YES completion:nil];
-    }
-    else
-    {
-        [self.dataController.toaster toastTwitterUnavailable];
-    }
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -334,9 +325,17 @@
 - (void)refresh
 {
     [super refresh];
+    if (self.dataController.postInFocus != nil)
+    {
+        float postCellHeight = [self tableView:self.postTableView heightForRowAtIndexPath:
+                                [NSIndexPath indexPathForRow:0 inSection:0]];
+        
+        self.postTableHeightConstraint.constant = postCellHeight;
+        [self.view setNeedsUpdateConstraints];
+    }
     
     [self.postTableView reloadData];
-//    [self.commentTableView reloadData];
+    [self.commentTableView reloadData];
 }
 
 #pragma mark - Helper Methods
@@ -362,7 +361,7 @@
     Post *parentPost = self.dataController.postInFocus;
     if (parentPost != nil)
     {
-        [vote setGrandparentID:parentPost.post_id];
+        [vote setGrandparentID:[parentPost.post_id longValue]];
         return [super castVote:vote];
     }
     
@@ -375,7 +374,8 @@
                                withCollegeId:(long)collegeId
                                withUserToken:(NSString *)userToken
 {
-    if ([self.dataController isAbleToComment])
+//    if ([self.dataController isAbleToComment])
+    if (true)
     {
         Post *parentPost = self.dataController.postInFocus;
         if (parentPost != nil)

@@ -48,10 +48,15 @@
 
 // Initialization
 - (id)initWithDataController:(DataController *)controller;
+- (void)initializeViewElements;
+
+// TODO: remove these two
 - (void)placeLoadingIndicatorInToolbar;
 - (void)placeCreatePost;
 
 // Actions
+- (void)makeToolbarButtons;
+- (void)fetchContent;
 - (void)finishedFetchRequest;
 - (IBAction)changeFeed;
 - (void)create;

@@ -84,24 +84,22 @@
 {   // View is about to appear after being inactive
     [super viewWillAppear:animated];
     
-    [self setHasFinishedFetchRequest:NO];
-    [self.contentLoadingIndicator startAnimating];
-
-//    [self.contentLoadingIndicator stopAnimating];
-
+    [self fetchContent];
+    [self makeToolbarButtons];
+    
     [self refresh];
 
     // Show loading indicator until a nearby college is found,
     // then replace it with a create post button
-     
-    if ([self.dataController isNearCollege])
-    {
-        [self placeCreatePost];
-    }
-    else
-    {
-        [self placeLoadingIndicatorInToolbar];
-    }
+//     
+//    if ([self.dataController isNearCollege])
+//    {
+//        [self placeCreatePost];
+//    }
+//    else
+//    {
+//        [self placeLoadingIndicatorInToolbar];
+//    }
 
 }
 - (void)placeLoadingIndicatorInToolbar
@@ -160,6 +158,16 @@
 }
 
 #pragma mark - Actions
+
+- (void)makeToolbarButtons
+{   // Assigns correct icons and buttons to the upper toolbar
+    
+}
+- (void)fetchContent
+{   // Fetches new content for this view
+    [self setHasFinishedFetchRequest:NO];
+
+}
 
 - (void)finishedFetchRequest
 {
@@ -239,7 +247,7 @@
     }
     
     [self.currentFeedLabel setText:feedName];
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
     [self.refreshControl endRefreshing];
     
     self.toolBarSpaceFromBottom.constant = 50;
@@ -293,8 +301,12 @@
                                withCollegeId:(long)collegeId
                                withUserToken:(NSString *)userToken
 {
-    NSNumber *minutesUntilCanPost = [NSNumber new];
-    if ([self.dataController isAbleToPost:minutesUntilCanPost])
+//    NSNumber *minutesUntilCanPost = [NSNumber new];
+//    if ([self.dataController isAbleToPost:minutesUntilCanPost])
+    
+    // ToDo: Commented out post timing restriction for demo
+
+    if (true)
     {
         BOOL success = [self.dataController createPostWithMessage:message
                                      withCollegeId:collegeId];
