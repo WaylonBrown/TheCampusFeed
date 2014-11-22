@@ -109,7 +109,7 @@
                                                 self.twitterButton];
 }
 
-#pragma mark - TableView
+#pragma mark - Table View
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Get the table view cell for the given row
@@ -235,6 +235,7 @@
 }
 
 #pragma mark - Network Actions
+
 - (void)fetchContent
 {   // Fetches new content for this view
     

@@ -30,7 +30,7 @@
 
 @implementation MasterViewController
 
-#pragma mark - Initialization and View Loading
+#pragma mark - Initialization
 
 - (id)initWithDataController:(DataController *)controller
 {
@@ -42,24 +42,39 @@
     }
     return self;
 }
-- (void)loadView
-{   // called when this view is initially loaded
-    
-    [super loadView];
-    
+- (void)setNotificationObservers
+{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialFinished) name:@"TutorialFinished" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialStarted) name:@"TutorialStarted" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationWasUpdated) name:@"LocationUpdated" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchedAllContent) name:@"HasFetchedAllContent" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishedFetchRequest) name:@"FinishedFetching" object:nil];
+}
 
+#pragma mark - View Loading
+
+- (void)initializeViewElements
+{
+    
+}
+- (void)makeToolbarButtons
+{   // Assigns correct icons and buttons to the upper toolbar
+    
+}
+- (void)loadView
+{   // called when this view is initially loaded
+    
+    [super loadView];
+    
+    [self setNotificationObservers];
+    
     // Add a refresh control to the top of the table view
     // (assigned to a tableViewController to avoid a 'stutter' in the UI)
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.tableView;
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(pullToRefresh) forControlEvents:UIControlEventValueChanged];
-
+    
     tableViewController.refreshControl = self.refreshControl;
     
     CGRect frame = CGRectMake(0, 0, self.tableView.frame.size.width, 5);
@@ -67,9 +82,9 @@
     UIView *view = [[UIView alloc] initWithFrame:frame];
     
     [view setBackgroundColor:[Shared getCustomUIColor:CF_EXTRALIGHTGRAY]];
-                                      
+    
     self.tableView.tableHeaderView = view;
-
+    
     // Assign fonts
     [self.currentFeedLabel  setFont:CF_FONT_LIGHT(22)];
     [self.showingLabel      setFont:CF_FONT_BOLD(12)];
@@ -88,24 +103,11 @@
     [self makeToolbarButtons];
     
     [self refresh];
-
-    // Show loading indicator until a nearby college is found,
-    // then replace it with a create post button
-//     
-//    if ([self.dataController isNearCollege])
-//    {
-//        [self placeCreatePost];
-//    }
-//    else
-//    {
-//        [self placeLoadingIndicatorInToolbar];
-//    }
-
 }
 - (void)placeLoadingIndicatorInToolbar
 {   // Place the loading indicator in the navigation bar (instead of create post button)
     UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
-
+    
     [self.navigationItem setRightBarButtonItem:button];
     
     [self.activityIndicator startAnimating];
@@ -117,6 +119,24 @@
                                                                                   target:self action:@selector(create)];
     [self.navigationItem setRightBarButtonItem:createButton];
 }
+
+#pragma mark - Table View
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{   // return the number of sections in the table view
+    return 1;
+}
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{   // User should not directly modify a TableCell
+    return NO;
+}
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
+}
+
+#pragma mark - Network Actions
+
 - (void)locationWasUpdated
 {
     [self.activityIndicator stopAnimating];
@@ -139,36 +159,13 @@
             [((FeedSelectViewController *)presented) updateLocation];
         }
     }
-
-}
-
-#pragma mark - UITableView Functions
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{   // return the number of sections in the table view
-    return 1;
-}
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{   // User should not directly modify a TableCell
-    return NO;
-}
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    return [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
-}
-
-#pragma mark - Actions
-
-- (void)makeToolbarButtons
-{   // Assigns correct icons and buttons to the upper toolbar
     
 }
 - (void)fetchContent
 {   // Fetches new content for this view
     [self setHasFinishedFetchRequest:NO];
-
+    
 }
-
 - (void)finishedFetchRequest
 {
     self.hasFinishedFetchRequest = YES;
@@ -180,32 +177,17 @@
     self.hasFetchedAllContent = YES;
     [self finishedFetchRequest];
 }
+
+#pragma mark - Local Actions
+
 - (IBAction)changeFeed
 {   // User wants to change the feed (all colleges, nearby college, or other)
-
+    
     if (!self.isShowingTutorial)
     {
         FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_NEARBY_OTHER WithDataController:self.dataController WithFeedDelegate:self];
         [self.navigationController presentViewController:controller animated:YES completion:nil];
     }
-}
-- (void)tutorialFinished
-{
-    self.isShowingTutorial = NO;
-    [self.dataController.toaster releaseBlockedToasts];
-    [self pullToRefresh];
-    [self changeFeed];
-}
-- (void)tutorialStarted
-{
-    self.dataController.toaster.holdingNotifications = YES;
-    self.isShowingTutorial = YES;
-}
-- (void)showCreationDialogForCollege:(College *) college
-{
-    CreatePostCommentViewController *alert = [[CreatePostCommentViewController alloc] initWithType:POST withCollege:college];
-    [alert setDelegate:self];
-    [self presentViewController:alert animated:YES completion:nil];
 }
 - (void)create
 {   // Display popup to let user type a new post
@@ -228,6 +210,28 @@
         [self.navigationController presentViewController:controller animated:YES completion:nil];
     }
 }
+- (void)refresh
+{   // refresh the current view
+    
+    NSString *feedName = self.dataController.collegeInFocus.name;
+    if (feedName == nil)
+    {
+        feedName = @"All Colleges";
+    }
+    
+    [self.currentFeedLabel setText:feedName];
+    //    [self.tableView reloadData];
+    [self.refreshControl endRefreshing];
+    
+    self.toolBarSpaceFromBottom.constant = 50;
+    [self.feedToolbar updateConstraintsIfNeeded];
+}
+- (void)showCreationDialogForCollege:(College *) college
+{
+    CreatePostCommentViewController *alert = [[CreatePostCommentViewController alloc] initWithType:POST withCollege:college];
+    [alert setDelegate:self];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 - (void)pullToRefresh
 {
     if (self.dataController.locStatus != LOCATION_FOUND)
@@ -237,24 +241,25 @@
     
     [self refresh];
 }
-- (void)refresh
-{   // refresh the current view
 
-    NSString *feedName = self.dataController.collegeInFocus.name;
-    if (feedName == nil)
-    {
-        feedName = @"All Colleges";
-    }
-    
-    [self.currentFeedLabel setText:feedName];
-//    [self.tableView reloadData];
-    [self.refreshControl endRefreshing];
-    
-    self.toolBarSpaceFromBottom.constant = 50;
-    [self.feedToolbar updateConstraintsIfNeeded];
+#pragma mark - Helper Methods
+
+- (void)tutorialFinished
+{
+    self.isShowingTutorial = NO;
+    [self.dataController.toaster releaseBlockedToasts];
+    [self pullToRefresh];
+    [self changeFeed];
+}
+- (void)tutorialStarted
+{
+    self.dataController.toaster.holdingNotifications = YES;
+    self.isShowingTutorial = YES;
 }
 
-#pragma mark - ChildCellDelegate Methods
+#pragma mark - Delegate Methods
+
+/* ChildCellDelegate */
 
 - (void)displayCannotVote
 {    // users cannot cast downvotes to a distant school
@@ -295,7 +300,7 @@
                                          animated:YES];
 }
 
-#pragma mark - CreationViewProtocol Delegate Methods
+/* CreationViewProtocolDelegate */
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
                                withCollegeId:(long)collegeId
@@ -327,12 +332,12 @@
 //        [self.toastController toastPostingTooSoon:minutesUntilCanPost];
 //    }
 }
-//- (void)commentingTooFrequently
-//{
+- (void)commentingTooFrequently
+{
 //    [self.toastController toastCommentingTooSoon];
-//}
+}
 
-#pragma mark - FeedSelectionProtocol Delegate Methods
+/* FeedSelectionProtocolDelegate */
 
 - (void)switchToFeedForCollegeOrNil:(College *)college
 {
@@ -355,7 +360,7 @@
     [self.navigationController presentViewController:controller animated:YES completion:nil];
 }
 
-#pragma mark - CollegeForPostingSelectionProtocol Delegate Methods
+/* CollegeForPostingSelectionProtocolDelegate */
 
 - (void)submitSelectionForPostWithCollege:(College *)college
 {

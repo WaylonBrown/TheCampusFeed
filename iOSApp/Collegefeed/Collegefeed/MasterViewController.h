@@ -48,19 +48,25 @@
 
 // Initialization
 - (id)initWithDataController:(DataController *)controller;
+- (void)setNotificationObservers;
+
+// View Loading
 - (void)initializeViewElements;
+- (void)makeToolbarButtons;
+
+// Network Actions
+- (void)locationWasUpdated;
+- (void)fetchContent;
+- (void)finishedFetchRequest;
+
+// Local Actions
+- (IBAction)changeFeed;
+- (void)create;
+- (void)refresh;
 
 // TODO: remove these two
 - (void)placeLoadingIndicatorInToolbar;
 - (void)placeCreatePost;
-
-// Actions
-- (void)makeToolbarButtons;
-- (void)fetchContent;
-- (void)finishedFetchRequest;
-- (IBAction)changeFeed;
-- (void)create;
-- (void)refresh;
 
 @end
 

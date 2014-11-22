@@ -22,7 +22,7 @@
 
 @implementation PostsViewController
 
-#pragma mark - Initializations
+#pragma mark - Initialization
 
 - (id)initAsType:(ViewType)type withDataController:(DataController *)controller
 {
@@ -43,6 +43,7 @@
 {   // View is about to appear after being inactive
     
     [super viewWillAppear:animated];
+    
     [self setCorrectPostList];
     if (self.viewType == TAG_VIEW)
     {
@@ -56,8 +57,21 @@
             [self.dataController fetchPostsWithTagMessage:self.tagMessage];
         }
     }
+}
+- (void)makeToolbarButtons
+{   // Assigns correct icons and buttons to the upper toolbar
     
-//    [self.contentLoadingIndicator stopAnimating];
+    // Show loading indicator until a nearby college is found,
+    // then replace it with a compose button
+
+    if ([self.dataController isNearCollege])
+    {
+        [self placeCreatePost];
+    }
+    else
+    {
+        [self placeLoadingIndicatorInToolbar];
+    }
 }
 - (void)viewDidLoad
 {
@@ -72,7 +86,7 @@
     [super loadView];
 }
 
-#pragma mark - Table View Override Functions
+#pragma mark - Table View
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Comment View for the selected post
@@ -227,26 +241,60 @@
     return nil;
 }
 
-#pragma mark - Navigation
+#pragma mark - Network Actions
 
-//- (void)switchToAllColleges
-//{
-//    self.hasReachedEndOfList = NO;
-//    switch (self.viewType)
-//    {
-//        case TOP_VIEW:
-//            [self setList:self.dataController.topPostsAllColleges];
-//            break;
-//        case RECENT_VIEW:
-//            [self setList:self.dataController.recentPostsAllColleges];
-//            break;
-//        case TAG_VIEW:
-//            [self setList:self.dataController.allPostsWithTag];
-//            break;
-//        default:
-//            break;
-//    }
-//}
+- (void)fetchContent
+{   // Fetches new content for this view
+    [self setCorrectPostList];
+    [self.contentLoadingIndicator startAnimating];
+    
+    [super fetchContent];
+    
+    // Spawn separate thread for network access
+    [self.dataController fetchNewPosts];
+}
+- (BOOL)loadMorePosts
+{
+    BOOL success = false;
+    
+    switch (self.viewType)
+    {
+        case TOP_VIEW:
+            success = [self.dataController fetchTopPosts];
+            break;
+        case RECENT_VIEW:
+            success = [self.dataController fetchNewPosts];
+            break;
+        case TAG_VIEW:
+            success = [self.dataController fetchMorePostsWithTagMessage:self.tagMessage];
+            break;
+        default:
+            break;
+    }
+    
+    return success;
+}
+
+#pragma mark - Local Actions
+
+- (void)switchToAllColleges
+{
+    //    self.hasReachedEndOfList = NO;
+    //    switch (self.viewType)
+    //    {
+    //        case TOP_VIEW:
+    //            [self setList:self.dataController.topPostsAllColleges];
+    //            break;
+    //        case RECENT_VIEW:
+    //            [self setList:self.dataController.recentPostsAllColleges];
+    //            break;
+    //        case TAG_VIEW:
+    //            [self setList:self.dataController.allPostsWithTag];
+    //            break;
+    //        default:
+    //            break;
+    //    }
+}
 - (void)switchToSpecificCollege
 {
     self.hasReachedEndOfList = NO;
@@ -283,43 +331,9 @@
         }
     }
 }
-
-#pragma mark - Actions
-
-- (void)fetchContent
-{   // Fetches new content for this view
-    
-    [super fetchContent];
-    
-//    [self.contentLoadingIndicator startAnimating];
-    
-    // Spawn separate thread for network access
-    
-}
 - (void)changeFeed
 {
     [super changeFeed];
-}
-- (BOOL)loadMorePosts
-{
-    BOOL success = false;
-
-    switch (self.viewType)
-    {
-        case TOP_VIEW:
-            success = [self.dataController fetchTopPosts];
-            break;
-        case RECENT_VIEW:
-            success = [self.dataController fetchNewPosts];
-            break;
-        case TAG_VIEW:
-            success = [self.dataController fetchMorePostsWithTagMessage:self.tagMessage];
-            break;
-        default:
-            break;
-    }
-    
-    return success;
 }
 - (void)addNewRows:(NSInteger)oldCount through:(NSInteger)newCount
 {
@@ -385,22 +399,7 @@
     }
 }
 
-#pragma mark - CreationViewProtocol Delegate Methods
-
-- (void)submitPostCommentCreationWithMessage:(NSString *)message
-{
-    BOOL success = [self.dataController createPostWithMessage:message
-                                 withCollegeId:self.dataController.collegeInFocus.collegeID];
-    
-//    if (!success)
-//    {
-//        [self.toastController toastPostFailed];
-//    }
-    if (success)
-        [self refresh];
-}
-
-#pragma mark - Vanishing Bottom Toolbar
+#pragma mark - Helper Methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -429,6 +428,21 @@
     
     self.toolBarSpaceFromBottom.constant = MIN(self.toolBarSpaceFromBottom.constant, 50);
     [self.feedToolbar updateConstraintsIfNeeded];
+}
+
+#pragma mark - CreationViewProtocol Delegate Methods
+
+- (void)submitPostCommentCreationWithMessage:(NSString *)message
+{
+    BOOL success = [self.dataController createPostWithMessage:message
+                                 withCollegeId:self.dataController.collegeInFocus.collegeID];
+    
+//    if (!success)
+//    {
+//        [self.toastController toastPostFailed];
+//    }
+    if (success)
+        [self refresh];
 }
 
 @end
