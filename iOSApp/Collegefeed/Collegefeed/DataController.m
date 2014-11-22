@@ -19,38 +19,7 @@
 #import "CF_DialogViewController.h"
 #import "ToastController.h"
 
-@implementation NSMutableArray (Utilities)
-
-- (void)insertObjectsWithUniqueIds:(NSArray *)newObjectsArray
-{
-//    [self addObjectsFromArray:arr];
-    for (NSObject *newObj in newObjectsArray)
-    {
-        if ([newObj respondsToSelector:@selector(getID)])
-        {
-            NSNumber *existingID = [newObj performSelector:@selector(getID)];
-            
-            BOOL alreadyExists = NO;
-            
-            for (NSObject *existingObj in self)
-            {
-                if ([existingObj respondsToSelector:@selector(getID)])
-                {
-                    NSNumber *newID = [newObj performSelector:@selector(getID)];
-                    
-                    if ([newID isEqualToNumber:existingID])
-                        alreadyExists = YES;
-                }
-            }
-            
-            if (!alreadyExists)
-                [self addObject:newObj];
-
-        }
-    }
-}
-
-@end
+#import "TheCampusFeed-Swift.h"
 
 @implementation DataController
 
