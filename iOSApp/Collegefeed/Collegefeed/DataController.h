@@ -74,9 +74,9 @@ typedef NS_ENUM(NSInteger, LocationStatus)
     LOCATION_NOT_FOUND
 };
 
-@interface NSMutableArray (Utilities)
-- (void)insertObjectsWithUniqueIds:(NSArray *)arr;
-@end
+//@interface NSMutableArray (Utilities)
+//- (void)insertObjectsWithUniqueIds:(NSArray *)arr;
+//@end
 
 @interface DataController : NSObject<CLLocationManagerDelegate>
 

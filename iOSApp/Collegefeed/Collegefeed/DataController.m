@@ -427,13 +427,20 @@
     }
     return NO;
 }
-- (void)fetchTopPostsForAllColleges
+
+- (void)fetchObjectsOfType:(ModelType)type
+            ForAllColleges:(BOOL)allColleges
+                 IntoArray:(NSMutableArray *)array
+         WithFetchFunction:(NSData* (^)(void))fetchBlock
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
                    {
-                       NSData* data = [Networker GETTrendingPostsAtPageNum:self.topPostsPage++];
-                       NSArray *fetchedPosts = [self parseData:data asModelType:POST];
-                       [self.topPostsAllColleges insertObjectsWithUniqueIds:fetchedPosts];
+                       NSData* data = fetchBlock();
+                       
+                       
+                       NSArray *fetchedObjects = [self parseData:data asModelType:type];
+                       
+                       [array insertObjectsWithUniqueIds:fetchedObjects];
                        
                        [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
                        
@@ -441,8 +448,19 @@
                                       {
                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self];
                                       });
-
+                       
                    });
+}
+
+
+- (void)fetchTopPostsForAllColleges
+{
+    [self fetchObjectsOfType:POST
+              ForAllColleges:YES
+                   IntoArray:self.topPostsAllColleges
+           WithFetchFunction:^{
+               return [Networker GETTrendingPostsAtPageNum:self.topPostsPage++];
+           }];
 }
 - (void)fetchTopPostsInSingleCollege
 {

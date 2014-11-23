@@ -248,7 +248,7 @@
 {   // Fetches new content for this view
     [self setCorrectPostList];
     
-//    if (self.list.count == 0) [self.contentLoadingIndicator startAnimating];
+    if (self.list.count == 0) [self.contentLoadingIndicator startAnimating];
     
     [super fetchContent];
     
