@@ -211,6 +211,61 @@
 
 #pragma mark - Posts
 
++ (NSData *)GetTopPostsAtPageNum:(long)pageNum
+{
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/posts/trending?page=%ld&per_page=%d",
+                   API_URL, API_VERSION, pageNum, PAGINATION_NUM]];
+    return [self GET:url];
+}
++ (NSData *)GetTopPostsAtPageNum:(long)pageNum
+                   WithCollegeId:(long)collegeId
+{
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/colleges/%ld/posts/trending?page=%ld&per_page=%d",
+                   API_URL, API_VERSION, collegeId, pageNum, PAGINATION_NUM]];
+    return [self GET:url];
+}
+
++ (NSData *)GetNewPostsAtPageNum:(long)pageNum
+{
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/posts/recent?page=%ld&per_page=%d",
+                   API_URL, API_VERSION, pageNum, PAGINATION_NUM]];
+    return [self GET:url];
+}
++ (NSData *)GetNewPostsAtPageNum:(long)pageNum
+                   WithCollegeId:(long)collegeId
+{
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/colleges/%ld/posts/recent",
+                   API_URL, API_VERSION, collegeId]];
+    return [self GET:url];
+}
+
++ (NSData *)GetPostsWithTag:(NSString *)tagMessage
+                  AtPageNum:(long)pageNum
+{
+    NSString* tagWithoutHash = [tagMessage stringByReplacingOccurrencesOfString:@"#"
+                                                                  withString:@""];
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/posts/byTag/%@?page=%ld&per_page=%d",
+                   API_URL, API_VERSION, tagWithoutHash, pageNum, PAGINATION_NUM]];
+    return [self GET:url];
+}
++ (NSData *)GetPostsWithTag:(NSString *)tagMessage
+                  AtPageNum:(long)pageNum
+              WithCollegeId:(long)collegeId
+{
+    NSString* tagWithoutHash = [tagMessage stringByReplacingOccurrencesOfString:@"#"
+                                                                     withString:@""];
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/colleges/%ld/posts/byTag/%@?page=%ld&per_page=%d",
+                   API_URL, API_VERSION, collegeId, tagWithoutHash, pageNum, PAGINATION_NUM]];
+    return [self GET:url];
+}
+
+
 + (NSData *)POSTPostData:(NSData *)data WithCollegeId:(long)collegeId;
 {
     NSURL *url = [[NSURL alloc] initWithString:
@@ -228,16 +283,7 @@
                    API_URL, API_VERSION, collegeId, tagWithoutHash]];
     return [self GET:url];
 }
-+ (NSData *)GETAllPostsWithTag:(NSString*)tagName
-                     atPageNum:(long)pageNum
-{
-    NSString* tagWithoutHash = [tagName stringByReplacingOccurrencesOfString:@"#"
-                                                                  withString:@""];
-    NSURL *url = [[NSURL alloc] initWithString:
-                  [NSString stringWithFormat:@"%@/%@/posts/byTag/%@?page=%ld&per_page=%d",
-                   API_URL, API_VERSION, tagWithoutHash, pageNum, PAGINATION_NUM]];
-    return [self GET:url];
-}
+
 + (NSData *)GETAllPosts
 {
     NSURL *url = [[NSURL alloc] initWithString:
@@ -252,37 +298,6 @@
                    API_URL, API_VERSION, collegeId]];
     return [self GET:url];
 }
-
-+ (NSData *)GETRecentPostsAtPageNum:(long)pageNum
-{
-    NSURL *url = [[NSURL alloc] initWithString:
-                  [NSString stringWithFormat:@"%@/%@/posts/recent?page=%ld&per_page=%d",
-                   API_URL, API_VERSION, pageNum, PAGINATION_NUM]];
-    return [self GET:url];
-}
-+ (NSData *)GETRecentPostsWithCollegeId:(long)collegeId
-{
-    NSURL *url = [[NSURL alloc] initWithString:
-                  [NSString stringWithFormat:@"%@/%@/colleges/%ld/posts/recent",
-                   API_URL, API_VERSION, collegeId]];
-    return [self GET:url];
-}
-
-+ (NSData *)GETTrendingPostsAtPageNum:(long)pageNum
-{
-    NSURL *url = [[NSURL alloc] initWithString:
-                  [NSString stringWithFormat:@"%@/%@/posts/trending?page=%ld&per_page=%d",
-                   API_URL, API_VERSION, pageNum, PAGINATION_NUM]];
-    return [self GET:url];
-}
-+ (NSData *)GETTrendingPostsWithCollegeId:(long)collegeId
-{
-    NSURL *url = [[NSURL alloc] initWithString:
-                  [NSString stringWithFormat:@"%@/%@/colleges/%ld/posts/trending",
-                   API_URL, API_VERSION, collegeId]];
-    return [self GET:url];
-}
-
 + (NSData *)GETPostsWithIdArray:(NSArray *)Ids
 {
     if (Ids.count == 0 || Ids == nil)

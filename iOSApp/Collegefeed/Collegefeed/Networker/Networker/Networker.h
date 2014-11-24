@@ -32,22 +32,27 @@
 + (NSData *)GETCommentsWithIdArray:(NSArray *)Ids;
 
 // Posts
++ (NSData *)GetTopPostsAtPageNum:(long)pageNum;
++ (NSData *)GetTopPostsAtPageNum:(long)pageNum
+                   WithCollegeId:(long)collegeId;
+
++ (NSData *)GetNewPostsAtPageNum:(long)pageNum;
++ (NSData *)GetNewPostsAtPageNum:(long)pageNum
+                   WithCollegeId:(long)collegeId;
+
++ (NSData *)GetPostsWithTag:(NSString *)tagMessage
+                  AtPageNum:(long)pageNum;
++ (NSData *)GetPostsWithTag:(NSString *)tagMessage
+                  AtPageNum:(long)pageNum
+              WithCollegeId:(long)collegeId;
+
+
+
 + (NSData *)POSTPostData:(NSData *)data WithCollegeId:(long)collegeId;
-
-+ (NSData *)GETAllPostsWithTag:(NSString *)tagName
-                     atPageNum:(long)pageNum;
-
-+ (NSData *)GETPostsWithTagName:(NSString *)tagName
-                  withCollegeId:(long)collegeId;
 
 + (NSData *)GETAllPosts;
 + (NSData *)GETPostsWithCollegeId:(long)collegeId;
 
-+ (NSData *)GETRecentPostsAtPageNum:(long)pageNum;
-+ (NSData *)GETRecentPostsWithCollegeId:(long)collegeId;
-
-+ (NSData *)GETTrendingPostsAtPageNum:(long)pageNum;
-+ (NSData *)GETTrendingPostsWithCollegeId:(long)collegeId;
 + (NSData *)GETPostsWithIdArray:(NSArray *)Ids;
 + (NSData *)GETPostWithId:(long)postId;
 

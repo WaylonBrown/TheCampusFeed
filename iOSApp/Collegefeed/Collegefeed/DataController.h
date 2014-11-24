@@ -25,6 +25,7 @@
 #define MINIMUM_POSTING_INTERVAL_MINUTES    5
 #define MINIMUM_COMMENTING_INTERVAL_MINUTES 1
 
+// TODO: move these all to a plist file
 
 #define USER_POST_IDS_FILE          @"UserPostIds.txt"
 #define USER_COMMENT_IDS_FILE       @"UserCommentIds.txt"
@@ -74,10 +75,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
     LOCATION_NOT_FOUND
 };
 
-//@interface NSMutableArray (Utilities)
-//- (void)insertObjectsWithUniqueIds:(NSArray *)arr;
-//@end
-
 @interface DataController : NSObject<CLLocationManagerDelegate>
 
 
@@ -122,11 +119,11 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic, strong) NSMutableArray *topPostsAllColleges;
 @property (nonatomic, strong) NSMutableArray *recentPostsAllColleges;
 @property (nonatomic, strong) NSMutableArray *userPosts;
-@property (nonatomic, strong) NSMutableArray *allPostsWithTag;
+@property (nonatomic, strong) NSMutableArray *postsWithTagAllColleges;
 
 @property (nonatomic, strong) NSMutableArray *topPostsInCollege;
 @property (nonatomic, strong) NSMutableArray *recentPostsInCollege;
-@property (nonatomic, strong) NSMutableArray *allPostsWithTagInCollege;
+@property (nonatomic, strong) NSMutableArray *postsWithTagInCollege;
 
 // Tag Arrays
 @property (nonatomic, strong) NSMutableArray *tagListForAllColleges;
@@ -137,10 +134,18 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic, strong) NSMutableArray *userCommentVotes;
 
 // Lazy Loading Counters
+@property (nonatomic) long pageForTopPostsAllColleges;
+@property (nonatomic) long pageForTopPostsSingleCollege;
+@property (nonatomic) long pageForNewPostsAllColleges;
+@property (nonatomic) long pageForNewPostsSingleCollege;
+@property (nonatomic) long pageForTaggedPostsAllColleges;
+@property (nonatomic) long pageForTaggedPostsSingleCollege;
+
+
 @property (nonatomic) long tagPage;
-@property (nonatomic) long topPostsPage;
-@property (nonatomic) long recentPostsPage;
-@property (nonatomic) long tagPostsPage;
+//@property (nonatomic) long topPostsPage;
+//@property (nonatomic) long recentPostsPage;
+//@property (nonatomic) long tagPostsPage;
 @property (nonatomic) long trendingCollegesPage;
 
 
@@ -199,16 +204,19 @@ typedef NS_ENUM(NSInteger, LocationStatus)
                 withCollegeId:(long)collegeId;
 
 - (void)fetchTopPostsForAllColleges;
-- (void)fetchTopPostsInSingleCollege;
+- (void)fetchTopPostsForSingleCollege;
 
-- (BOOL)fetchNewPosts;
-- (void)fetchNewPostsInCollege;
+- (void)fetchNewPostsForAllColleges;
+- (void)fetchNewPostsForSingleCollege;
 
-- (void)fetchPostsWithTagMessage:(NSString*)tagMessage;
-- (void)fetchAllPostsInCollegeWithTagMessage:(NSString*)tagMessage;
+- (void)fetchPostsWithTagForAllColleges:(NSString*)tagMessage;
+- (void)fetchPostsWithTagForSingleCollege:(NSString*)tagMessage;
+
+
 - (BOOL)fetchMorePostsWithTagMessage:(NSString*)tagMessage;
 
 - (void)fetchUserPostsWithIdArray:(NSArray *)postIds;
+
 - (Post *)fetchPostWithId:(long)postId;
 - (Post *)fetchParentPostOfComment:(Comment *)comment;
 

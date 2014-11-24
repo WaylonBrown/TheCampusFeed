@@ -262,7 +262,7 @@
             if (allColleges)
                 [self.dataController fetchTopPostsForAllColleges];
             else
-                [self.dataController fetchTopPostsInSingleCollege];
+                [self.dataController fetchTopPostsForSingleCollege];
             
             break;
         case RECENT_VIEW:
@@ -352,9 +352,9 @@
             break;
         case TAG_VIEW:
             if (allColleges)
-                [self setList:self.dataController.allPostsWithTag];
+                [self setList:self.dataController.postsWithTagAllColleges];
             else
-                [self setList:self.dataController.allPostsWithTagInCollege];
+                [self setList:self.dataController.postsWithTagInCollege];
             
             self.tagMessage = self.dataController.tagInFocus.name;
             
@@ -393,19 +393,19 @@
     switch (self.viewType)
     {
         case TOP_VIEW:
-            [self.dataController fetchTopPostsInSingleCollege];
+            [self.dataController fetchTopPostsForSingleCollege];
             [self setList:self.dataController.topPostsInCollege];
             break;
         case RECENT_VIEW:
-            [self.dataController fetchNewPostsInCollege];
+            [self.dataController fetchNewPostsForSingleCollege];
             [self setList:self.dataController.recentPostsInCollege];
             break;
         case TAG_VIEW:
             if (self.tagMessage != nil)
             {
-                [self.dataController fetchAllPostsInCollegeWithTagMessage:self.tagMessage];
+                [self.dataController fetchPostsWithTagForSingleCollege:self.tagMessage];
             }
-            [self setList:self.dataController.allPostsWithTagInCollege];
+            [self setList:self.dataController.postsWithTagInCollege];
             break;
         default:
             break;

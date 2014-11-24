@@ -288,11 +288,11 @@
     [controller setTagMessage:tagMessage];
     if (self.dataController.showingSingleCollege)
     {
-        [self.dataController fetchAllPostsInCollegeWithTagMessage:tagMessage];
+        [self.dataController fetchPostsWithTagForSingleCollege:tagMessage];
     }
     else
     {
-        [self.dataController fetchPostsWithTagMessage:tagMessage];
+        [self.dataController fetchPostsWithTagForAllColleges:tagMessage];
     }
     
     

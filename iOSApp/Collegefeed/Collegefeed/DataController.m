@@ -27,6 +27,7 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
+#pragma mark - Initialization
 - (id)init
 {
     self = [super init];
@@ -40,9 +41,9 @@
         [self initArrays];
         
         // Set initial pagination counts to (network lazy-loading retrieval)
-        [self setTopPostsPage:0];
-        [self setRecentPostsPage:0];
-        [self setTagPostsPage:0];
+//        [self setTopPostsPage:0];
+//        [self setRecentPostsPage:0];
+//        [self setTagPostsPage:0];
         [self setTrendingCollegesPage:0];
         [self setTagPage:0];
 
@@ -62,7 +63,7 @@
         // Populate arrays from both network and core (local) data
         [self retrieveUserData];
 //        [self fetchTopPosts];
-        [self fetchNewPosts];
+        [self fetchNewPostsForAllColleges];
         [self getTrendingCollegeList];
         
         // Get the user's location
@@ -84,7 +85,7 @@
     self.topPostsAllColleges    = [[NSMutableArray alloc] init];
     self.recentPostsAllColleges = [[NSMutableArray alloc] init];
     self.userPosts              = [[NSMutableArray alloc] init];
-    self.allPostsWithTag        = [[NSMutableArray alloc] init];
+    self.postsWithTagAllColleges        = [[NSMutableArray alloc] init];
     
     self.tagListForAllColleges                = [[NSMutableArray alloc] init];
     self.tagListForCollege       = [[NSMutableArray alloc] init];
@@ -92,6 +93,8 @@
     self.userPostVotes          = [[NSMutableArray alloc] init];
     self.userCommentVotes       = [[NSMutableArray alloc] init];
 }
+
+
 - (void)checkAppVersionNumber
 {
     float appVersion = [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] floatValue];
@@ -219,6 +222,36 @@
     }
     
     return self.tagListForAllColleges;
+}
+
+#pragma mark - Network Access
+
+- (void)fetchObjectsOfType:(ModelType)type
+                 IntoArray:(NSMutableArray *)array
+         WithFetchFunction:(NSData* (^)(void))fetchBlock
+{
+    if (array == nil)
+    {
+        array = [NSMutableArray new];
+    }
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
+                   {
+                       NSData* data = fetchBlock();
+                       
+                       
+                       NSArray *fetchedObjects = [self parseData:data asModelType:type];
+                       
+                       [array insertObjectsWithUniqueIds:fetchedObjects];
+                       
+                       [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
+                       
+                       dispatch_async(dispatch_get_main_queue(), ^
+                                      {
+                                          [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self];
+                                      });
+                       
+                   });
 }
 
 #pragma mark - Networker Access - Colleges
@@ -428,107 +461,121 @@
     return NO;
 }
 
-- (void)fetchObjectsOfType:(ModelType)type
-            ForAllColleges:(BOOL)allColleges
-                 IntoArray:(NSMutableArray *)array
-         WithFetchFunction:(NSData* (^)(void))fetchBlock
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
-                   {
-                       NSData* data = fetchBlock();
-                       
-                       
-                       NSArray *fetchedObjects = [self parseData:data asModelType:type];
-                       
-                       [array insertObjectsWithUniqueIds:fetchedObjects];
-                       
-                       [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
-                       
-                       dispatch_async(dispatch_get_main_queue(), ^
-                                      {
-                                          [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self];
-                                      });
-                       
-                   });
-}
+
+
+
+// ****************************
+
 
 
 - (void)fetchTopPostsForAllColleges
 {
     [self fetchObjectsOfType:POST
-              ForAllColleges:YES
                    IntoArray:self.topPostsAllColleges
            WithFetchFunction:^{
-               return [Networker GETTrendingPostsAtPageNum:self.topPostsPage++];
+               
+               return [Networker GetTopPostsAtPageNum:self.pageForTopPostsAllColleges++];
            }];
 }
-- (void)fetchTopPostsInSingleCollege
+- (void)fetchTopPostsForSingleCollege
 {
-    self.topPostsInCollege = [[NSMutableArray alloc] init];
-    long collegeId = self.collegeInFocus.collegeID;
-    NSData* data = [Networker GETTrendingPostsWithCollegeId:collegeId];
-    [self parseData:data asClass:[Post class] intoList:self.topPostsInCollege];
+    [self fetchObjectsOfType:POST
+                   IntoArray:self.topPostsInCollege
+           WithFetchFunction:^{
+               
+               return [Networker GetTopPostsAtPageNum:self.pageForTopPostsSingleCollege++
+                                             WithCollegeId:self.collegeInFocus.collegeID];
+           }];
 }
-- (BOOL)fetchNewPosts
+- (void)fetchNewPostsForAllColleges
 {
-    NSData* data = [Networker GETRecentPostsAtPageNum:self.recentPostsPage++];
-    return [self parseData:data asClass:[Post class] intoList:self.recentPostsAllColleges];
+    [self fetchObjectsOfType:POST
+                   IntoArray:self.recentPostsAllColleges
+           WithFetchFunction:^{
+               
+               return [Networker GetNewPostsAtPageNum:self.pageForNewPostsAllColleges++];
+           }];
 }
-- (void)fetchNewPostsInCollege
+- (void)fetchNewPostsForSingleCollege
 {
-    [self setRecentPostsInCollege:[[NSMutableArray alloc] init]];
-    long collegeId = self.collegeInFocus.collegeID;
-    NSData* data = [Networker GETRecentPostsWithCollegeId:collegeId];
-    [self parseData:data asClass:[Post class] intoList:self.recentPostsInCollege];
+    [self fetchObjectsOfType:POST
+                   IntoArray:self.recentPostsInCollege
+           WithFetchFunction:^{
+               
+               return [Networker GetNewPostsAtPageNum:self.pageForNewPostsSingleCollege++
+                                           WithCollegeId:self.collegeInFocus.collegeID];
+           }];
 }
-- (void)fetchPostsWithTagMessage:(NSString*)tagMessage withReset:(BOOL)reset
+- (void)fetchPostsWithTagForAllColleges:(NSString*)tagMessage
 {
-    // MULTITHREADED HERE
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
-    {
-        NSMutableArray *currentPostList = self.allPostsWithTag;
-        if (reset)
-        {
-            self.tagPostsPage = 1;
-            [currentPostList removeAllObjects];
-        }
-        else
-        {
-            self.tagPostsPage++;
-        }
-        if (tagMessage != nil)
-        {
-            NSData* postsData = [Networker GETAllPostsWithTag:tagMessage atPageNum:self.tagPostsPage];
-            NSArray *fetchedPosts = [self parseData:postsData asModelType:POST];
-            [currentPostList insertObjectsWithUniqueIds:fetchedPosts];
-           
-           [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
-        }
-        dispatch_async(dispatch_get_main_queue(), ^
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self];
-        });
-    });
-    
-    
-    [self setTagPostsPage:0];
-    [self setAllPostsWithTag:[[NSMutableArray alloc] init]];
-    NSData* data = [Networker GETAllPostsWithTag:tagMessage atPageNum:self.tagPostsPage];
-    [self parseData:data asClass:[Post class] intoList:self.allPostsWithTag];
+    [self fetchObjectsOfType:POST
+                   IntoArray:self.postsWithTagAllColleges
+           WithFetchFunction:^{
+               
+               return [Networker GetPostsWithTag:tagMessage
+                                       AtPageNum:self.pageForTaggedPostsAllColleges++];
+           }];
 }
-- (void)fetchAllPostsInCollegeWithTagMessage:(NSString *)tagMessage
+- (void)fetchPostsWithTagForSingleCollege:(NSString *)tagMessage
 {
-    [self setAllPostsWithTagInCollege:[[NSMutableArray alloc] init]];
-    long collegeId = self.collegeInFocus.collegeID;
-    NSData* data = [Networker GETPostsWithTagName:tagMessage withCollegeId:collegeId];
-    [self parseData:data asClass:[Post class] intoList:self.allPostsWithTagInCollege];
+    [self fetchObjectsOfType:POST
+                   IntoArray:self.postsWithTagInCollege
+           WithFetchFunction:^{
+               
+               return [Networker GetPostsWithTag:tagMessage
+                                       AtPageNum:self.pageForTaggedPostsSingleCollege++
+                                   WithCollegeId:self.collegeInFocus.collegeID];
+           }];
 }
-- (BOOL)fetchMorePostsWithTagMessage:(NSString*)tagMessage
-{
-    NSData* data = [Networker GETAllPostsWithTag:tagMessage atPageNum:self.tagPostsPage++];
-    return [self parseData:data asClass:[Post class] intoList:self.allPostsWithTag];
-}
+
+
+// ****************************
+
+
+
+//- (BOOL)fetchMorePostsWithTagMessage:(NSString*)tagMessage
+//{
+//    NSData* data = [Networker GETAllPostsWithTag:tagMessage atPageNum:self.tagPostsPage++];
+//    return [self parseData:data asClass:[Post class] intoList:self.postsWithTagAllColleges];
+//}
+//- (void)fetchPostsWithTagMessage:(NSString*)tagMessage withReset:(BOOL)reset
+//{
+//    // MULTITHREADED HERE
+//    
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
+//                   {
+//                       NSMutableArray *currentPostList = self.postsWithTagAllColleges;
+//                       if (reset)
+//                       {
+//                           self.tagPostsPage = 1;
+//                           [currentPostList removeAllObjects];
+//                       }
+//                       else
+//                       {
+//                           self.tagPostsPage++;
+//                       }
+//                       if (tagMessage != nil)
+//                       {
+//                           NSData* postsData = [Networker GETAllPostsWithTag:tagMessage atPageNum:self.tagPostsPage];
+//                           NSArray *fetchedPosts = [self parseData:postsData asModelType:POST];
+//                           [currentPostList insertObjectsWithUniqueIds:fetchedPosts];
+//                           
+//                           [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
+//                       }
+//                       dispatch_async(dispatch_get_main_queue(), ^
+//                                      {
+//                                          [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self];
+//                                      });
+//                   });
+//    
+//    
+//    [self setTagPostsPage:0];
+//    [self setPostsWithTagAllColleges:[[NSMutableArray alloc] init]];
+//    NSData* data = [Networker GETAllPostsWithTag:tagMessage atPageNum:self.tagPostsPage];
+//    [self parseData:data asClass:[Post class] intoList:self.postsWithTagAllColleges];
+//}
+
+
 - (void)fetchUserPostsWithIdArray:(NSArray *)postIds
 {
     [self setUserPosts:[NSMutableArray new]];
