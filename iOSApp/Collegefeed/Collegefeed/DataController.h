@@ -124,7 +124,11 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (BOOL)isNearCollegeWithId:(long)collegeId;
 
 - (NSMutableArray *)getCurrentTagList;
+
+- (void)retrieveUserPosts;
+- (void)retrieveUserComments;
 - (void)retrieveUserData;
+
 - (long)getUserPostScore;
 - (long)getUserCommentScore;
 - (NSInteger)getLaunchNumber;

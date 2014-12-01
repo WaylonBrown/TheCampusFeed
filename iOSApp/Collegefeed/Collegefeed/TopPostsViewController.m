@@ -15,6 +15,8 @@
 - (void)fetchContent
 {   // Fetches new content for this view
     
+    [super fetchContent];
+    
     if (self.dataController.showingAllColleges)
     {
         [self.dataController fetchTopPostsForAllColleges];

@@ -39,14 +39,8 @@
         
         [self initArrays];
         
-        // Set initial pagination counts to (network lazy-loading retrieval)
-//        [self setTopPostsPage:0];
-//        [self setRecentPostsPage:0];
-//        [self setTagPostsPage:0];
-        [self setTrendingCollegesPage:0];
-        [self setTagPage:0];
-
         // Check endpoint to see if locally-stored college list is up to date
+        // TODO: on a separate thread
         if ([self needsNewCollegeList])
         {
             [self getNetworkCollegeList];
@@ -58,12 +52,8 @@
         
         [self restoreSavedFeed];
         
-        // ToDo: Get rid of these?
         // Populate arrays from both network and core (local) data
-        [self retrieveUserData];
-//        [self fetchTopPosts];
-        [self fetchNewPostsForAllColleges];
-        [self getTrendingCollegeList];
+        [self retrieveUserVotes];
         
         // Get the user's location
         [self findUserLocation];
@@ -255,7 +245,6 @@
                                       {
                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self];
                                       });
-                       
                    });
 }
 
@@ -467,11 +456,7 @@
 }
 
 
-
-
-// ****************************
-
-
+#pragma mark - Post Fetching
 
 - (void)fetchTopPostsForAllColleges
 {
@@ -533,9 +518,51 @@
            }];
 }
 
-
-// ****************************
-
+- (void)retrieveUserPosts
+{
+    [self fetchObjectsOfType:POST
+                   IntoArray:self.userPosts
+           WithFetchFunction:^{
+               
+               NSMutableArray *postIds = [[NSMutableArray alloc] init];
+               
+               NSError *error;
+               NSManagedObjectContext *context = [self managedObjectContext];
+               NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+               NSEntityDescription *entity = [NSEntityDescription entityForName:POST_ENTITY
+                                                         inManagedObjectContext:context];
+               
+               [fetchRequest setEntity:entity];
+               
+               NSArray *fetchedPosts = [_managedObjectContext executeFetchRequest:fetchRequest
+                                                                            error:&error];
+               for (NSManagedObject *post in fetchedPosts)
+               {
+                   [postIds addObject:(NSNumber *)[post valueForKey:KEY_POST_ID]];
+               }
+               
+               return [Networker GETPostsWithIdArray:postIds];
+           }];
+}
+- (Post *)fetchPostWithId:(long)postId
+{
+    NSArray *singleton = @[[NSString stringWithFormat:@"%ld", postId]];
+    NSData *data = [Networker GETPostsWithIdArray:singleton];
+    NSMutableArray *singlePostArray = [NSMutableArray new];
+    [self parseData:data asClass:[Post class] intoList:singlePostArray];
+    return singlePostArray.count ? [singlePostArray firstObject] : nil;
+}
+- (Post *)fetchParentPostOfComment:(Comment *)comment
+{
+    if (comment)
+    {
+        long postId = [comment.post_id longValue];
+        NSData *postData = [Networker GETPostWithId:postId];
+        return [[Post getListFromJsonData:postData error:nil] firstObject];
+    }
+    
+    return nil;
+}
 
 
 //- (BOOL)fetchMorePostsWithTagMessage:(NSString*)tagMessage
@@ -580,32 +607,6 @@
 //    [self parseData:data asClass:[Post class] intoList:self.postsWithTagAllColleges];
 //}
 
-
-- (void)fetchUserPostsWithIdArray:(NSArray *)postIds
-{
-    [self setUserPosts:[NSMutableArray new]];
-    NSData *data = [Networker GETPostsWithIdArray:postIds];
-    [self parseData:data asClass:[Post class] intoList:self.userPosts];
-}
-- (Post *)fetchPostWithId:(long)postId
-{
-    NSArray *singleton = @[[NSString stringWithFormat:@"%ld", postId]];
-    NSData *data = [Networker GETPostsWithIdArray:singleton];
-    NSMutableArray *singlePostArray = [NSMutableArray new];
-    [self parseData:data asClass:[Post class] intoList:singlePostArray];
-    return singlePostArray.count ? [singlePostArray firstObject] : nil;
-}
-- (Post *)fetchParentPostOfComment:(Comment *)comment
-{
-    if (comment)
-    {
-        long postId = [comment.post_id longValue];
-        NSData *postData = [Networker GETPostWithId:postId];
-        return [[Post getListFromJsonData:postData error:nil] firstObject];
-    }
-    
-    return nil;
-}
 
 #pragma mark - Networker Access - Tags
 
@@ -869,26 +870,6 @@
               [error localizedDescription]);
     }
 }
-- (void)retrieveUserPosts
-{
-    // Retrieve Posts
-    NSMutableArray *postIds = [[NSMutableArray alloc] init];
-    
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:POST_ENTITY inManagedObjectContext:context];
-    
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedPosts = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    for (NSManagedObject *post in fetchedPosts)
-    {
-        NSNumber *postId = [post valueForKey:KEY_POST_ID];
-        [postIds addObject:postId];
-    }
-    [self fetchUserPostsWithIdArray:postIds];
-}
 - (void)saveComment:(Comment *)comment
 {
     NSManagedObjectContext *context = [self managedObjectContext];
@@ -1007,8 +988,8 @@
 - (void)retrieveUserData
 {
     [self retrieveUserVotes];
-    [self retrieveUserPosts];
-    [self retrieveUserComments];
+//    [self retrieveUserPosts];
+//    [self retrieveUserComments];
 }
 - (long)getUserPostScore
 {

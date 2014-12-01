@@ -225,6 +225,11 @@
 - (void)finishedFetchRequest
 {
     [super finishedFetchRequest];
+    
+    if (self.list.count == 0)
+    {
+        // TODO: Show "No Posts to display" or something
+    }
 }
 
 #pragma mark - Local Actions

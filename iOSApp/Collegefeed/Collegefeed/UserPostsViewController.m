@@ -9,11 +9,9 @@
 #import "UserPostsViewController.h"
 #import "Shared.h"
 
-@interface UserPostsViewController ()
-
-@end
-
 @implementation UserPostsViewController
+
+#pragma mark - View Loading
 
 - (void)viewDidLoad
 {
@@ -23,16 +21,32 @@
     [self addScoreFooter];
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - Local Actions
+
+- (void)fetchContent
+{   // Fetches new content for this view
+    
+    [super fetchContent];
+    
+    [self.dataController retrieveUserPosts];
+}
+- (void)finishedFetchRequest
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [super finishedFetchRequest];
 }
 
 - (void)refresh
 {
-    [self.tableView reloadData];
-    [self.refreshControl endRefreshing];
+    [super refresh];
+}
+
+#pragma mark - Helper Methods
+
+- (void)setCorrectPostList
+{
+    [self setList:self.dataController.userPosts];
+    
+    [super setCorrectPostList];
 }
 
 - (void)addScoreFooter

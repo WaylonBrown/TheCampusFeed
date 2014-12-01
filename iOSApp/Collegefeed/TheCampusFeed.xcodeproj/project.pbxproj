@@ -352,6 +352,8 @@
 				CD539DD81A2CDE99004A794E /* NewPostsViewController.m */,
 				CD539DDA1A2CE488004A794E /* TagPostsViewController.h */,
 				CD539DDB1A2CE488004A794E /* TagPostsViewController.m */,
+				5347EE9A197DC7CC001B2214 /* UserPostsViewController.h */,
+				5347EE9B197DC7CC001B2214 /* UserPostsViewController.m */,
 			);
 			name = "Post View";
 			sourceTree = "<group>";
@@ -377,8 +379,6 @@
 		536D0E11196D0F5A00677C1B /* User Content */ = {
 			isa = PBXGroup;
 			children = (
-				5347EE9A197DC7CC001B2214 /* UserPostsViewController.h */,
-				5347EE9B197DC7CC001B2214 /* UserPostsViewController.m */,
 				5347EEA4197DCE9F001B2214 /* UserCommentsViewController.h */,
 				5347EEA5197DCE9F001B2214 /* UserCommentsViewController.m */,
 			);
