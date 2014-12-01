@@ -26,7 +26,6 @@
 - (void)setCorrectPostList;
 - (void)fetchContent;
 - (void)finishedFetchRequest;
-- (BOOL)loadMorePosts;
 
 @end
 

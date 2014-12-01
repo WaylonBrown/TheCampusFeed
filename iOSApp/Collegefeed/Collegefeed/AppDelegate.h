@@ -12,9 +12,11 @@
 #import "DataController.h"
 
 @class College;
+
 @class TopPostsViewController;
 @class NewPostsViewController;
 @class PostsViewController;
+
 @class TagViewController;
 @class CollegePickerViewController;
 @class UserPostsViewController;

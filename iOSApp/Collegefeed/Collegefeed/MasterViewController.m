@@ -16,6 +16,7 @@
 #import "CommentViewController.h"
 #import "PostsViewController.h"
 #import "TutorialViewController.h"
+#import "TagPostsViewController.h"
 
 // Minor views and dialogs
 #import "TableCell.h"
@@ -283,17 +284,17 @@
 }
 - (void)didSelectTag:(NSString *)tagMessage
 {
-    PostsViewController  *controller = [[PostsViewController alloc] initAsType:TAG_VIEW
-                                                            withDataController:self.dataController];
+    TagPostsViewController *controller = [[TagPostsViewController alloc] initWithDataController:self.dataController];
     [controller setTagMessage:tagMessage];
-    if (self.dataController.showingSingleCollege)
-    {
-        [self.dataController fetchPostsWithTagForSingleCollege:tagMessage];
-    }
-    else
-    {
-        [self.dataController fetchPostsWithTagForAllColleges:tagMessage];
-    }
+    
+//    if (self.dataController.showingSingleCollege)
+//    {
+//        [self.dataController fetchPostsWithTagForSingleCollege:tagMessage];
+//    }
+//    else
+//    {
+//        [self.dataController fetchPostsWithTagForAllColleges:tagMessage];
+//    }
     
     
     [self.navigationController pushViewController:controller

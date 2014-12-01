@@ -81,6 +81,7 @@
 		53FF2D0C195BCE850040E872 /* UserVotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D0B195BCE850040E872 /* UserVotes.txt */; };
 		CD539DD31A2CCE7D004A794E /* TopPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD21A2CCE7D004A794E /* TopPostsViewController.m */; };
 		CD539DD91A2CDE99004A794E /* NewPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD81A2CDE99004A794E /* NewPostsViewController.m */; };
+		CD539DDC1A2CE488004A794E /* TagPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DDB1A2CE488004A794E /* TagPostsViewController.m */; };
 		CD5887591A21501100D864FD /* NSMutableArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -236,6 +237,8 @@
 		CD539DD21A2CCE7D004A794E /* TopPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPostsViewController.m; sourceTree = "<group>"; };
 		CD539DD71A2CDE99004A794E /* NewPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPostsViewController.h; sourceTree = "<group>"; };
 		CD539DD81A2CDE99004A794E /* NewPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPostsViewController.m; sourceTree = "<group>"; };
+		CD539DDA1A2CE488004A794E /* TagPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagPostsViewController.h; sourceTree = "<group>"; };
+		CD539DDB1A2CE488004A794E /* TagPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagPostsViewController.m; sourceTree = "<group>"; };
 		CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMutableArrayExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -346,6 +349,8 @@
 				CD539DD21A2CCE7D004A794E /* TopPostsViewController.m */,
 				CD539DD71A2CDE99004A794E /* NewPostsViewController.h */,
 				CD539DD81A2CDE99004A794E /* NewPostsViewController.m */,
+				CD539DDA1A2CE488004A794E /* TagPostsViewController.h */,
+				CD539DDB1A2CE488004A794E /* TagPostsViewController.m */,
 			);
 			name = "Post View";
 			sourceTree = "<group>";
@@ -758,6 +763,7 @@
 				53F878A119133F60002A578B /* AppDelegate.m in Sources */,
 				53DE347F19AD01FF004CB5A0 /* IISideController.m in Sources */,
 				5352B5A2195F5C3100FEB2BF /* UIView+Toast.m in Sources */,
+				CD539DDC1A2CE488004A794E /* TagPostsViewController.m in Sources */,
 				5347EEAA197DD407001B2214 /* TrendingCollegesViewController.m in Sources */,
 				53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */,
 				53AE73C71928354F00BE6B02 /* DataController.m in Sources */,

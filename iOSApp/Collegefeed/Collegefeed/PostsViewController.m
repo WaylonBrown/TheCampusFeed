@@ -32,8 +32,6 @@
     if (self)
     {
         [self setViewType:type];
-//        [self switchToAllColleges];
-        
         [self setCommentViewController:[[CommentViewController alloc] initWithDataController:self.dataController]];
     }
     return self;
@@ -57,19 +55,6 @@
     [self setCorrectPostList];
     
     [super viewWillAppear:animated];
-    
-//    if (self.viewType == TAG_VIEW)
-//    {
-//        if (self.tagMessage == nil)
-//        {
-//            NSLog(@"No Tag message provided for a PostsView filtered by Tag");
-//        }
-//        else
-//        {
-//            // ToDo: make this method have multithreaded callback
-//            [self.dataController fetchPostsWithTagMessage:self.tagMessage];
-//        }
-//    }
 }
 - (void)makeToolbarButtons
 {   // Assigns correct icons and buttons to the upper toolbar
@@ -221,39 +206,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (self.viewType == TAG_VIEW && self.tagMessage != nil)
-    {
-        return 50;
-    }
-    
     return 0;
-}
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    if (self.viewType == TAG_VIEW && self.tagMessage != nil)
-    {
-        NSString *basicText = [NSString stringWithFormat:@"Posts with %@", self.tagMessage];
-        
-        CGRect frame = CGRectMake(0, 0, tableView.frame.size.width, 50);
-        
-        UILabel *header = [[UILabel alloc] init];
-        if (self.dataController.showingSingleCollege && self.dataController.collegeInFocus.name != nil)
-        {
-            NSString *collegeSubHeader = [NSString stringWithFormat:@"in feed: %@", self.dataController.collegeInFocus.name];
-            basicText = [NSString stringWithFormat:@"%@\n%@", basicText, collegeSubHeader];
-            [header setNumberOfLines:2];
-        }
-        
-        [header setFrame:frame];
-        [header setText:basicText];
-        [header setTextAlignment:NSTextAlignmentCenter];
-        [header setFont:CF_FONT_LIGHT(16)];
-        [header setBackgroundColor:[Shared getCustomUIColor:CF_EXTRALIGHTGRAY]];
-
-        return header;
-    }
-    
-    return nil;
 }
 
 #pragma mark - Network Actions
@@ -268,61 +221,10 @@
     {
         [self.contentLoadingIndicator startAnimating];
     }
-    
-//    switch (self.viewType)
-//    {
-//        case TOP_VIEW:
-//            if (allColleges)
-//                [self.dataController fetchTopPostsForAllColleges];
-//            else
-//                [self.dataController fetchTopPostsForSingleCollege];
-//            
-//            break;
-//        case RECENT_VIEW:
-//            break;
-//        case TAG_VIEW:
-//            break;
-//        case USER_POSTS:
-//            break;
-//        case USER_COMMENTS:
-//            break;
-//        default:
-//            break;
-//    }
 }
 - (void)finishedFetchRequest
 {
     [super finishedFetchRequest];
-}
-- (BOOL)loadMorePosts
-{
-    BOOL success = false;
-    BOOL allColleges = self.dataController.showingAllColleges;
-
-    switch (self.viewType)
-    {
-//        case TOP_VIEW:
-//            if (allColleges)
-//                [self.dataController fetchTopPostsForAllColleges];
-//            else
-//                [self.dataController fetchTopPostsForSingleCollege];
-//            
-//            break;
-        case RECENT_VIEW:
-            if (allColleges)
-                [self.dataController fetchNewPostsForAllColleges];
-            else
-                [self.dataController fetchNewPostsForSingleCollege];
-            
-            break;
-        case TAG_VIEW:
-            success = [self.dataController fetchMorePostsWithTagMessage:self.tagMessage];
-            break;
-        default:
-            break;
-    }
-    
-    return success;
 }
 
 #pragma mark - Local Actions
@@ -336,122 +238,21 @@
     [self setCorrectPostList];
     if (self.list.count == 0)
     {
-//        [self loadMorePosts];
         [self fetchContent];
     }
     [super refresh];
-    
-//    if (self.dataController.showingAllColleges)
-//    {
-//        [self switchToAllColleges];
-//    }
-//    else if (self.dataController.showingSingleCollege)
-//    {
-//        [self switchToSpecificCollege];
-//    }
 }
 
 #pragma mark - Helper Methods
 
 - (void)setCorrectPostList
 {
-//    BOOL allColleges = self.dataController.showingAllColleges;
-
-//    switch (self.viewType)
-//    {
-//        case TOP_VIEW:
-//            if (allColleges)
-//                [self setList:self.dataController.topPostsAllColleges];
-//            else
-//                [self setList:self.dataController.topPostsInCollege];
-//            
-//            break;
-//        case RECENT_VIEW:
-//            if (allColleges)
-//                [self setList:self.dataController.recentPostsAllColleges];
-//            else
-//                [self setList:self.dataController.recentPostsInCollege];
-//            
-//            break;
-//        case TAG_VIEW:
-//            if (allColleges)
-//                [self setList:self.dataController.postsWithTagAllColleges];
-//            else
-//                [self setList:self.dataController.postsWithTagInCollege];
-//            
-//            self.tagMessage = self.dataController.tagInFocus.name;
-//            
-//            break;
-//        case USER_POSTS:
-//            [self setList:self.dataController.userPosts];
-//            break;
-//        case USER_COMMENTS:
-//            [self setList:self.dataController.userComments];
-//            break;
-//        default:
-//            break;
-//    }
-    
     if (self.list == nil)
     {
         self.list = [NSMutableArray new];
     }
 }
 
-- (void)switchToAllColleges
-{
-    //    self.hasReachedEndOfList = NO;
-    //    switch (self.viewType)
-    //    {
-    //        case TOP_VIEW:
-    //            [self setList:self.dataController.topPostsAllColleges];
-    //            break;
-    //        case RECENT_VIEW:
-    //            [self setList:self.dataController.recentPostsAllColleges];
-    //            break;
-    //        case TAG_VIEW:
-    //            [self setList:self.dataController.allPostsWithTag];
-    //            break;
-    //        default:
-    //            break;
-    //    }
-}
-- (void)switchToSpecificCollege
-{
-    self.hasReachedEndOfList = NO;
-    switch (self.viewType)
-    {
-        case TOP_VIEW:
-            [self.dataController fetchTopPostsForSingleCollege];
-            [self setList:self.dataController.topPostsInCollege];
-            break;
-        case RECENT_VIEW:
-            [self.dataController fetchNewPostsForSingleCollege];
-            [self setList:self.dataController.recentPostsInCollege];
-            break;
-        case TAG_VIEW:
-            if (self.tagMessage != nil)
-            {
-                [self.dataController fetchPostsWithTagForSingleCollege:self.tagMessage];
-            }
-            [self setList:self.dataController.postsWithTagInCollege];
-            break;
-        default:
-            break;
-    }
-    College *college = self.dataController.collegeInFocus;
-    if (college != nil)
-    {
-        if ([self.dataController.nearbyColleges containsObject:college])
-        {
-            [self.dataController.toaster toastFeedSwitchedToNearbyCollege:college.name];
-        }
-        else
-        {
-            [self.dataController.toaster toastFeedSwitchedToDistantCollege:college.name];
-        }
-    }
-}
 - (void)addNewRows:(NSInteger)oldCount through:(NSInteger)newCount
 {
     dispatch_async(dispatch_get_main_queue(), ^{
