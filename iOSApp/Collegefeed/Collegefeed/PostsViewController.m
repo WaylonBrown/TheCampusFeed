@@ -264,12 +264,13 @@
 
     [self setCorrectPostList];
     
-    if (self.list.count == 0) [self.contentLoadingIndicator startAnimating];
-    
-    // Spawn separate thread for network access
-    
-    switch (self.viewType)
+    if (self.list.count == 0)
     {
+        [self.contentLoadingIndicator startAnimating];
+    }
+    
+//    switch (self.viewType)
+//    {
 //        case TOP_VIEW:
 //            if (allColleges)
 //                [self.dataController fetchTopPostsForAllColleges];
@@ -277,17 +278,17 @@
 //                [self.dataController fetchTopPostsForSingleCollege];
 //            
 //            break;
-        case RECENT_VIEW:
-            break;
-        case TAG_VIEW:
-            break;
-        case USER_POSTS:
-            break;
-        case USER_COMMENTS:
-            break;
-        default:
-            break;
-    }
+//        case RECENT_VIEW:
+//            break;
+//        case TAG_VIEW:
+//            break;
+//        case USER_POSTS:
+//            break;
+//        case USER_COMMENTS:
+//            break;
+//        default:
+//            break;
+//    }
 }
 - (void)finishedFetchRequest
 {
@@ -335,7 +336,8 @@
     [self setCorrectPostList];
     if (self.list.count == 0)
     {
-        [self loadMorePosts];
+//        [self loadMorePosts];
+        [self fetchContent];
     }
     [super refresh];
     

@@ -1,14 +1,14 @@
 //
-//  TopPostsViewController.m
+//  NewPostsViewController.m
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 12/1/14.
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
-#import "TopPostsViewController.h"
+#import "NewPostsViewController.h"
 
-@implementation TopPostsViewController
+@implementation NewPostsViewController
 
 #pragma mark - Network Actions
 
@@ -17,17 +17,18 @@
     
     if (self.dataController.showingAllColleges)
     {
-        [self.dataController fetchTopPostsForAllColleges];
+        [self.dataController fetchNewPostsForAllColleges];
     }
     else
     {
-        [self.dataController fetchTopPostsForSingleCollege];
+        [self.dataController fetchNewPostsForSingleCollege];
     }
 }
 - (void)finishedFetchRequest
 {
     [super finishedFetchRequest];
 }
+
 #pragma mark - Local Actions
 
 - (void)changeFeed
@@ -45,11 +46,11 @@
 {
     if (self.dataController.showingAllColleges)
     {
-        [self setList:self.dataController.topPostsAllColleges];
+        [self setList:self.dataController.recentPostsAllColleges];
     }
     else
     {
-        [self setList:self.dataController.topPostsInCollege];
+        [self setList:self.dataController.recentPostsInCollege];
     }
     
     [super setCorrectPostList];

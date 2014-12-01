@@ -26,6 +26,7 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 #pragma mark - Initialization
+
 - (id)init
 {
     self = [super init];

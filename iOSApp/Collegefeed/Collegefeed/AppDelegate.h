@@ -13,6 +13,7 @@
 
 @class College;
 @class TopPostsViewController;
+@class NewPostsViewController;
 @class PostsViewController;
 @class TagViewController;
 @class CollegePickerViewController;
@@ -33,7 +34,7 @@
 
 @property (strong, nonatomic) MenuViewController *menuViewController;
 @property (strong, nonatomic) TopPostsViewController *topPostsController;
-@property (strong, nonatomic) PostsViewController *recentPostsController;
+@property (strong, nonatomic) NewPostsViewController *recentPostsController;
 @property (strong, nonatomic) TagViewController *tagController;
 @property (strong, nonatomic) CollegePickerViewController *collegeController;
 @property (strong, nonatomic) UserPostsViewController* userPostsController;
