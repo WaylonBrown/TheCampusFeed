@@ -220,7 +220,7 @@
     }
     
     [self.currentFeedLabel setText:feedName];
-    //    [self.tableView reloadData];
+    [self.tableView reloadData];
     [self.refreshControl endRefreshing];
     
     self.toolBarSpaceFromBottom.constant = 50;

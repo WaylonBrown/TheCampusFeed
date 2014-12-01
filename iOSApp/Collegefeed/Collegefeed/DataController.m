@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
-#define DELAY_FOR_SLOW_NETWORK 1
-
 #import "DataController.h"
 #import "College.h"
 #import "Comment.h"
@@ -82,10 +80,16 @@
     self.commentList            = [[NSMutableArray alloc] init];
     self.userComments           = [[NSMutableArray alloc] init];
     
-    self.topPostsAllColleges    = [[NSMutableArray alloc] init];
-    self.recentPostsAllColleges = [[NSMutableArray alloc] init];
-    self.userPosts              = [[NSMutableArray alloc] init];
-    self.postsWithTagAllColleges        = [[NSMutableArray alloc] init];
+    // Posts
+    self.topPostsAllColleges        = [[NSMutableArray alloc] init];
+    self.recentPostsAllColleges     = [[NSMutableArray alloc] init];
+    self.postsWithTagAllColleges    = [[NSMutableArray alloc] init];
+    self.topPostsInCollege          = [[NSMutableArray alloc] init];
+    self.recentPostsInCollege       = [[NSMutableArray alloc] init];
+    self.postsWithTagInCollege      = [[NSMutableArray alloc] init];
+    self.userPosts                  = [[NSMutableArray alloc] init];
+    
+    
     
     self.tagListForAllColleges                = [[NSMutableArray alloc] init];
     self.tagListForCollege       = [[NSMutableArray alloc] init];

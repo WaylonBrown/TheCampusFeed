@@ -18,6 +18,8 @@
 @class Vote;
 @class ToastController;
 
+#define DELAY_FOR_SLOW_NETWORK 1
+
 #define MILES_FOR_PERMISSION                15
 #define PI_VALUE                            3.14159
 #define EARTH_RADIUS_MILES                  3959
@@ -118,12 +120,11 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 // Post Arrays
 @property (nonatomic, strong) NSMutableArray *topPostsAllColleges;
 @property (nonatomic, strong) NSMutableArray *recentPostsAllColleges;
-@property (nonatomic, strong) NSMutableArray *userPosts;
 @property (nonatomic, strong) NSMutableArray *postsWithTagAllColleges;
-
 @property (nonatomic, strong) NSMutableArray *topPostsInCollege;
 @property (nonatomic, strong) NSMutableArray *recentPostsInCollege;
 @property (nonatomic, strong) NSMutableArray *postsWithTagInCollege;
+@property (nonatomic, strong) NSMutableArray *userPosts;
 
 // Tag Arrays
 @property (nonatomic, strong) NSMutableArray *tagListForAllColleges;

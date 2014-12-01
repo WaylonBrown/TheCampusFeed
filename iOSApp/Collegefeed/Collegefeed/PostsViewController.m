@@ -288,21 +288,30 @@
 - (BOOL)loadMorePosts
 {
     BOOL success = false;
-    
-//    switch (self.viewType)
-//    {
-//        case TOP_VIEW:
-//            [self.dataController fetchTopPostsForAllColleges];
-//            break;
-//        case RECENT_VIEW:
-//            success = [self.dataController fetchNewPosts];
-//            break;
-//        case TAG_VIEW:
-//            success = [self.dataController fetchMorePostsWithTagMessage:self.tagMessage];
-//            break;
-//        default:
-//            break;
-//    }
+    BOOL allColleges = self.dataController.showingAllColleges;
+
+    switch (self.viewType)
+    {
+        case TOP_VIEW:
+            if (allColleges)
+                [self.dataController fetchTopPostsForAllColleges];
+            else
+                [self.dataController fetchTopPostsForSingleCollege];
+            
+            break;
+        case RECENT_VIEW:
+            if (allColleges)
+                [self.dataController fetchNewPostsForAllColleges];
+            else
+                [self.dataController fetchNewPostsForSingleCollege];
+            
+            break;
+        case TAG_VIEW:
+            success = [self.dataController fetchMorePostsWithTagMessage:self.tagMessage];
+            break;
+        default:
+            break;
+    }
     
     return success;
 }
@@ -316,6 +325,10 @@
 - (void)refresh
 {   // refresh this post view
     [self setCorrectPostList];
+    if (self.list.count == 0)
+    {
+        [self loadMorePosts];
+    }
     [super refresh];
     
 //    if (self.dataController.showingAllColleges)
