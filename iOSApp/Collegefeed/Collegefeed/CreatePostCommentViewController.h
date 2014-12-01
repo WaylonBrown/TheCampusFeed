@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "Models/Models/CFModelProtocol.h"
 #import "CFModelProtocol.h"
+#import "Constants.h"
 
-#define TEXT_VIEW_LINE_HEIGHT 17
 
 @class College;
 @class ToastController;

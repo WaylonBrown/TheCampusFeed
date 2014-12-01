@@ -7,11 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-#define CONTENT_TYPE    @"application/json;charset=UTF-8"
-#define API_URL         @"https://www.thecampusfeed.com/api"
-#define API_VERSION     @"v1"
-#define PAGINATION_NUM  25
+#import "../../Constants.h"
 
 @interface Networker : NSObject
 

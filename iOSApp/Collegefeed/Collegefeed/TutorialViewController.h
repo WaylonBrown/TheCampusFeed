@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define TABLE_HEADER_HEIGHT 20
-#define TABLE_CELL_HEIGHT 44
+#import "Constants.h"
 
 @class College;
 @class DataController;

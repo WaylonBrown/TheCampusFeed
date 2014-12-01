@@ -11,6 +11,8 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
+#import "Constants.h"
+
 @class Comment;
 @class College;
 @class Post;
@@ -18,52 +20,6 @@
 @class Vote;
 @class ToastController;
 
-#define DELAY_FOR_SLOW_NETWORK 1
-
-#define MILES_FOR_PERMISSION                15
-#define PI_VALUE                            3.14159
-#define EARTH_RADIUS_MILES                  3959
-#define LOCATION_MANAGER_TIMEOUT            10
-#define MINIMUM_POSTING_INTERVAL_MINUTES    5
-#define MINIMUM_COMMENTING_INTERVAL_MINUTES 1
-
-// TODO: move these all to a plist file
-
-#define USER_POST_IDS_FILE          @"UserPostIds.txt"
-#define USER_COMMENT_IDS_FILE       @"UserCommentIds.txt"
-
-#define STATUS_ENTITY           @"Status"
-#define KEY_COMMENT_TIME        @"lastCommentTime"
-#define KEY_POST_TIME           @"lastPostTime"
-#define KEY_IS_BANNED           @"isBanned"
-#define KEY_COLLEGE_LIST_VERSION    @"listVersion"
-#define KEY_LAUNCH_COUNT        @"launchCount"
-#define KEY_CURRENT_COLLEGE_FEED @"currentFeed"
-
-#define POST_ENTITY             @"Post"
-#define KEY_POST_ID             @"postId"
-
-#define COMMENT_ENTITY          @"Comment"
-#define KEY_COMMENT_ID          @"commentId"
-
-#define COLLEGE_ENTITY          @"College"
-#define KEY_COLLEGE_ID          @"collegeId"
-#define KEY_LAT                 @"lat"
-#define KEY_LON                 @"lon"
-#define KEY_NAME                @"name"
-#define KEY_SHORT_NAME          @"shortName"
-
-#define VOTE_ENTITY             @"Vote"
-#define KEY_PARENT_ID           @"parentId"
-#define KEY_VOTE_ID             @"voteId"
-#define KEY_TYPE                @"type"
-#define KEY_UPVOTE              @"upvote"
-#define KEY_UPVOTED_POSTS       @"UpvotedPosts"
-#define KEY_UPVOTED_COMMENTS    @"UpvotedComments"
-#define KEY_DOWNVOTED_POSTS     @"DownvotedPosts"
-#define KEY_DOWNVOTED_COMMENTS  @"DownvotedComments"
-#define VALUE_POST              @"Post"
-#define VALUE_COMMENT           @"Comment"
 
 #pragma mark - Protocol Definitions
 /********************************/

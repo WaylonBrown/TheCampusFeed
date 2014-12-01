@@ -239,6 +239,7 @@
 		CD539DD81A2CDE99004A794E /* NewPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPostsViewController.m; sourceTree = "<group>"; };
 		CD539DDA1A2CE488004A794E /* TagPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagPostsViewController.h; sourceTree = "<group>"; };
 		CD539DDB1A2CE488004A794E /* TagPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagPostsViewController.m; sourceTree = "<group>"; };
+		CD539DDD1A2CF54C004A794E /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMutableArrayExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -486,8 +487,8 @@
 				53F8789F19133F60002A578B /* AppDelegate.h */,
 				53F878A019133F60002A578B /* AppDelegate.m */,
 				53C343B519E26D3900C26745 /* TheCampusFeed-Bridging-Header.h */,
-				53AB57B7194AAFB3001D1B7B /* Other */,
 				CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */,
+				53AB57B7194AAFB3001D1B7B /* Other */,
 			);
 			name = "Source Code";
 			sourceTree = "<group>";
@@ -590,6 +591,7 @@
 				53F8789919133F60002A578B /* InfoPlist.strings */,
 				53F8789C19133F60002A578B /* main.m */,
 				53F8789E19133F60002A578B /* Collegefeed-Prefix.pch */,
+				CD539DDD1A2CF54C004A794E /* Constants.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

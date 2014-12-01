@@ -7,12 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-// Constant lengths for validations
-#define MAX_POST_LENGTH      140
-#define MAX_COMMENT_LENGTH   140
-#define MIN_POST_LENGTH      10
-#define MIN_COMMENT_LENGTH   10
+#import "../../Constants.h"
 
 @class Vote;
 

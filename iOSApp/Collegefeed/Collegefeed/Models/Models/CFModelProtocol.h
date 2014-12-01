@@ -7,10 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-// Constant lengths for validations
-#define MIN_TAG_LENGTH 4
-#define MAX_TAG_LENGTH 140
+#import "../../Constants.h"
 
 typedef NS_ENUM(NSInteger, ModelType)
 {
