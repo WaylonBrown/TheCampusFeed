@@ -44,7 +44,7 @@
 
 #pragma mark - Helper Methods
 
-- (void)setCorrectPostList
+- (void)setCorrectList
 {
     if (self.dataController.showingAllColleges)
     {
@@ -52,10 +52,10 @@
     }
     else
     {
-        [self setList:self.dataController.recentPostsInCollege];
+        [self setList:self.dataController.recentPostsSingleCollege];
     }
     
-    [super setCorrectPostList];
+    [super setCorrectList];
 }
 
 @end

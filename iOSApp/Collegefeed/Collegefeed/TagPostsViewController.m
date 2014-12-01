@@ -106,7 +106,7 @@
 
 #pragma mark - Helper Methods
 
-- (void)setCorrectPostList
+- (void)setCorrectList
 {
     if (self.dataController.showingAllColleges)
     {
@@ -114,10 +114,10 @@
     }
     else
     {
-        [self setList:self.dataController.postsWithTagInCollege];
+        [self setList:self.dataController.postsWithTagSingleCollege];
     }
     
-    [super setCorrectPostList];
+    [super setCorrectList];
 }
 
 @end

@@ -52,12 +52,14 @@
 + (NSData *)GETPostsWithIdArray:(NSArray *)Ids;
 + (NSData *)GETPostWithId:(long)postId;
 
-// Flags
-+ (NSData *)POSTFlagPost:(long)postId;
 
 // Tags
-+ (NSData *)GetTagsForAllCollegesAtPageNum:(long)pageNum;
-+ (NSData *)GETTagsWithCollegeId:(long)collegeId AtPageNum:(long)pageNum;
++ (NSData *)GetTrendingTagsAtPageNum:(long)pageNum;
++ (NSData *)GetTrendingTagsAtPageNum:(long)pageNum
+                       WithCollegeId:(long)collegeId;
+
+// Flags
++ (NSData *)POSTFlagPost:(long)postId;
 
 // Votes
 + (NSData *)POSTVoteData:(NSData *)data WithPostId:(long)postId;

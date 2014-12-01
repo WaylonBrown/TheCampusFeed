@@ -19,6 +19,8 @@
 
 @implementation TagViewController
 
+#pragma mark - View Loading
+
 - (void)loadView
 {
     [super loadView];
@@ -49,44 +51,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self setList:[self.dataController getCurrentTagList]];
-    [self.dataController fetchTagsWithReset:YES];
 }
 
-#pragma mark - Navigation
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{   // Present a Post view of all posts with the selected tag
-    
-    if (indexPath.row >= self.list.count)
-    {
-        return;
-    }
-    
-    if (tableView == self.searchDisplay.searchResultsTableView)
-    {
-        [self.dataController setTagInFocus:[self.searchResult objectAtIndex:indexPath.row]];
-    }
-    else
-    {
-        [self.dataController setTagInFocus:[self.dataController.tagListForAllColleges objectAtIndex:indexPath.row]];
-    }
-    
-    PostsViewController* controller = [[PostsViewController alloc] initAsType:TAG_VIEW
-                                                           withDataController:self.dataController];
-    
-    UIBarButtonItem *backButton =
-            [[UIBarButtonItem alloc] initWithTitle:@""
-                                             style:UIBarButtonItemStyleBordered
-                                            target:nil
-                                            action:nil];
-    
-    [[self navigationItem] setBackBarButtonItem:backButton];
-    [self.navigationController pushViewController:controller
-                                         animated:YES];
-}
-
-#pragma mark - UITableView Functions
+#pragma mark - Table View
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list
@@ -106,7 +73,7 @@
     
     static NSString *CellIdentifier = @"SimpleTableCell";
     SimpleTableCell *cell = (SimpleTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-
+    
     if (cell == nil)
     {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier
@@ -126,20 +93,98 @@
             Tag *tag = (Tag *)[self.list objectAtIndex:indexPath.row];
             [cell assignTag:tag];
         }
-        else if (!self.hasFetchedAllContent)
-        {   // reached end of visible list; load more tags
-            [self.dataController fetchTagsWithReset:NO];
-        }
+//        else if (!self.hasFetchedAllContent)
+//        {   // reached end of visible list; load more tags
+//            [self.dataController fetchTagsWithReset:NO];
+//        }
     }
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{   // Present a Post view of all posts with the selected tag
+    
+    if (indexPath.row >= self.list.count)
+    {
+        return;
+    }
+    
+    if (tableView == self.searchDisplay.searchResultsTableView)
+    {
+        [self.dataController setTagInFocus:[self.searchResult objectAtIndex:indexPath.row]];
+    }
+    else
+    {
+        [self.dataController setTagInFocus:[self.dataController.trendingTagsAllColleges objectAtIndex:indexPath.row]];
+    }
+    
+    PostsViewController* controller = [[PostsViewController alloc] initAsType:TAG_VIEW
+                                                           withDataController:self.dataController];
+    
+    UIBarButtonItem *backButton =
+    [[UIBarButtonItem alloc] initWithTitle:@""
+                                     style:UIBarButtonItemStyleBordered
+                                    target:nil
+                                    action:nil];
+    
+    [[self navigationItem] setBackBarButtonItem:backButton];
+    [self.navigationController pushViewController:controller
+                                         animated:YES];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 56;
 }
 
-#pragma mark - Search Bar 
+#pragma mark - Network Actions
 
+- (void)fetchContent
+{
+    [super fetchContent];
+    if (self.dataController.showingAllColleges)
+    {
+        [self.dataController fetchTrendingTagsForAllColleges];
+    }
+    else
+    {
+        [self.dataController fetchTrendingTagsForSingleCollege];
+    }
+}
+- (void)finishedFetchRequest
+{
+    [super finishedFetchRequest];
+    
+    if (self.list.count == 0)
+    {
+        // TODO: Show "No Tags to display" etc.
+    }
+}
+
+#pragma mark - Local Actions
+
+- (void)changeFeed
+{
+    [super changeFeed];
+}
+- (void)refresh
+{
+    [super refresh];
+}
+
+#pragma mark - Helper Methods
+
+- (void)setCorrectList
+{
+    if (self.dataController.showingAllColleges)
+    {
+        [self setList:self.dataController.trendingTagsAllColleges];
+    }
+    else
+    {
+        [self setList:self.dataController.trendingTagsSingleCollege];
+    }
+    
+    [super setCorrectList];
+}
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     NSString *tag  = searchBar.text;
@@ -153,12 +198,6 @@
         [self.dataController.toaster toastInvalidTagSearch];
     }
 }
-
-#pragma mark - Actions
-
-
-#pragma mark - Vanishing Bottom Toolbar
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     scrollView.bounces = (scrollView.contentOffset.y < 50);
@@ -189,12 +228,5 @@
     [self.feedToolbar updateConstraintsIfNeeded];
 }
 
-#pragma mark - FeedSelectionProtocol Delegate Methods
-
-- (void)switchToFeedForCollegeOrNil:(College *)college
-{
-    [super switchToFeedForCollegeOrNil:college];
-    [self setList:[self.dataController getCurrentTagList]];
-}
 
 @end

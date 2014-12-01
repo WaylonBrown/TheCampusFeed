@@ -77,14 +77,14 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic, strong) NSMutableArray *topPostsAllColleges;
 @property (nonatomic, strong) NSMutableArray *recentPostsAllColleges;
 @property (nonatomic, strong) NSMutableArray *postsWithTagAllColleges;
-@property (nonatomic, strong) NSMutableArray *topPostsInCollege;
-@property (nonatomic, strong) NSMutableArray *recentPostsInCollege;
-@property (nonatomic, strong) NSMutableArray *postsWithTagInCollege;
+@property (nonatomic, strong) NSMutableArray *topPostsSingleCollege;
+@property (nonatomic, strong) NSMutableArray *recentPostsSingleCollege;
+@property (nonatomic, strong) NSMutableArray *postsWithTagSingleCollege;
 @property (nonatomic, strong) NSMutableArray *userPosts;
 
 // Tag Arrays
-@property (nonatomic, strong) NSMutableArray *tagListForAllColleges;
-@property (nonatomic, strong) NSMutableArray *tagListForCollege;
+@property (nonatomic, strong) NSMutableArray *trendingTagsAllColleges;
+@property (nonatomic, strong) NSMutableArray *trendingTagsSingleCollege;
 
 // Vote Arrays
 @property (nonatomic, strong) NSMutableArray *userPostVotes;
@@ -98,8 +98,12 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic) long pageForTaggedPostsAllColleges;
 @property (nonatomic) long pageForTaggedPostsSingleCollege;
 
+@property (nonatomic) long pageForTrendingTagsAllColleges;
+@property (nonatomic) long pageForTrendingTagsSingleCollege;
 
-@property (nonatomic) long tagPage;
+
+
+//@property (nonatomic) long tagPage;
 //@property (nonatomic) long topPostsPage;
 //@property (nonatomic) long recentPostsPage;
 //@property (nonatomic) long tagPostsPage;
@@ -182,7 +186,10 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (Post *)fetchParentPostOfComment:(Comment *)comment;
 
 // Tags
-- (void)fetchTagsWithReset:(BOOL)reset;
+- (void)fetchTrendingTagsForAllColleges;
+- (void)fetchTrendingTagsForSingleCollege;
+
+//- (void)fetchTagsWithReset:(BOOL)reset;
 //- (BOOL)fetchTagsWithCollegeId:(long)collegeId;
 
 // Votes

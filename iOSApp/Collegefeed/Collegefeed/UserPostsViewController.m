@@ -42,11 +42,11 @@
 
 #pragma mark - Helper Methods
 
-- (void)setCorrectPostList
+- (void)setCorrectList
 {
     [self setList:self.dataController.userPosts];
     
-    [super setCorrectPostList];
+    [super setCorrectList];
 }
 
 - (void)addScoreFooter

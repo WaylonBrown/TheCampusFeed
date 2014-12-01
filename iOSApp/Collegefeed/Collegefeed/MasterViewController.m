@@ -165,6 +165,11 @@
 - (void)fetchContent
 {   // Fetches new content for this view
     [self setHasFinishedFetchRequest:NO];
+    [self setCorrectList];
+    if (self.list.count == 0)
+    {
+        [self.contentLoadingIndicator startAnimating];
+    }
     
 }
 - (void)finishedFetchRequest
@@ -220,6 +225,12 @@
         feedName = @"All Colleges";
     }
     
+    [self setCorrectList];
+    if (self.list.count == 0)
+    {
+        [self fetchContent];
+    }
+    
     [self.currentFeedLabel setText:feedName];
     [self.tableView reloadData];
     [self.refreshControl endRefreshing];
@@ -245,6 +256,13 @@
 
 #pragma mark - Helper Methods
 
+- (void)setCorrectList
+{
+    if (self.list == nil)
+    {
+        self.list = [NSMutableArray new];
+    }
+}
 - (void)tutorialFinished
 {
     self.isShowingTutorial = NO;

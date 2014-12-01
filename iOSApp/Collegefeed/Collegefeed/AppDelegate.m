@@ -118,15 +118,12 @@
     
     self.recentPostsController          = [[NewPostsViewController alloc] initWithDataController:self.dataController];
     
-    self.tagController                  = [[TagViewController alloc]
-                                           initWithDataController:self.dataController];
+    self.tagController                  = [[TagViewController alloc] initWithDataController:self.dataController];
     
     self.trendingCollegesController     = [[TrendingCollegesViewController alloc]
                                            initWithDataController:self.dataController];
     
-    self.userPostsController            = [[UserPostsViewController alloc]
-                                           initAsType:USER_POSTS
-                                           withDataController:self.dataController];
+    self.userPostsController            = [[UserPostsViewController alloc] initWithDataController:self.dataController];
     
     self.userCommentsController         = [[UserCommentsViewController alloc]
                                            initAsType:USER_COMMENTS

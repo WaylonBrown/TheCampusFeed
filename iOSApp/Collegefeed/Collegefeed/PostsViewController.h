@@ -22,7 +22,7 @@
 
 - (id)initAsType:(ViewType)type withDataController:(DataController *)controller;
 
-- (void)setCorrectPostList;
+- (void)setCorrectList;
 - (void)fetchContent;
 - (void)finishedFetchRequest;
 

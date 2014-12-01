@@ -464,6 +464,7 @@
 				53B1FE0119254EB900905E49 /* MasterView */,
 				535055881953B067009C1911 /* Post View */,
 				CD539DD61A2CDE5D004A794E /* Comment View */,
+				535055891953B07A009C1911 /* Tag View */,
 				538E7CA219D4B67800AD5719 /* Time Crunch */,
 				5311F85C19C960A90053D3CC /* Tutorial View */,
 				5347EEAF197E9E9E001B2214 /* Menu Navigation View */,
@@ -472,7 +473,6 @@
 				5350558119529FD5009C1911 /* Select College */,
 				5350557B1951458B009C1911 /* Create Post/Comment */,
 				533475A019232A4A00E84CC8 /* Custom Cells */,
-				535055891953B07A009C1911 /* Tag View */,
 				538E7C9619D030C400AD5719 /* CF_DialogView */,
 			);
 			name = Views;

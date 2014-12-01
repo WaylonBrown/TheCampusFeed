@@ -52,7 +52,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
     
-    [self setCorrectPostList];
+    [self setCorrectList];
     
     [super viewWillAppear:animated];
 }
@@ -214,13 +214,6 @@
 - (void)fetchContent
 {   // Fetches new content for this view
     [super fetchContent];
-
-    [self setCorrectPostList];
-    
-    if (self.list.count == 0)
-    {
-        [self.contentLoadingIndicator startAnimating];
-    }
 }
 - (void)finishedFetchRequest
 {
@@ -240,22 +233,14 @@
 }
 - (void)refresh
 {   // refresh this post view
-    [self setCorrectPostList];
-    if (self.list.count == 0)
-    {
-        [self fetchContent];
-    }
     [super refresh];
 }
 
 #pragma mark - Helper Methods
 
-- (void)setCorrectPostList
+- (void)setCorrectList
 {
-    if (self.list == nil)
-    {
-        self.list = [NSMutableArray new];
-    }
+    [super setCorrectList];
 }
 
 - (void)addNewRows:(NSInteger)oldCount through:(NSInteger)newCount
