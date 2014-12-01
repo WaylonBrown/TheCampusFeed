@@ -12,6 +12,25 @@
 
 @implementation TagPostsViewController
 
+#pragma mark - Initialization
+
+- (id)initWithDataController:(DataController *)controller WithTagMessage:(NSString *)text
+{
+    self = [super initWithDataController:controller];
+    if (self)
+    {
+        self.tagMessage = text;
+        
+        // Back button
+        self.backButton = [[UIBarButtonItem alloc] initWithTitle:@""
+                                                           style:UIBarButtonItemStylePlain
+                                                          target:nil
+                                                          action:nil];
+    }
+    
+    return self;
+}
+
 #pragma mark - Table View
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -55,6 +74,7 @@
 
 - (void)fetchContent
 {   // Fetches new content for this view
+    if (self.tagMessage == nil) return;
     
     if (self.dataController.showingAllColleges)
     {

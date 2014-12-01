@@ -11,6 +11,7 @@
 #import "Tag.h"
 #import "TagViewController.h"
 #import "PostsViewController.h"
+#import "TagPostsViewController.h"
 #import "Shared.h"
 #import "SimpleTableCell.h"
 #import "ToastController.h"
@@ -144,10 +145,8 @@
     NSString *tag  = searchBar.text;
     if ([Tag withMessageIsValid:tag])
     {
-        [self.dataController fetchPostsWithTagForAllColleges:tag];
-        PostsViewController *postsView = [[PostsViewController alloc] initAsType:TAG_VIEW withDataController:self.dataController];
-        [postsView setTagMessage:tag];
-        [self.navigationController pushViewController:postsView animated:YES];
+        TagPostsViewController *controller = [[TagPostsViewController alloc] initWithDataController:self.dataController WithTagMessage:tag];
+        [self.navigationController pushViewController:controller animated:YES];
     }
     else
     {

@@ -10,4 +10,9 @@
 
 @interface TagPostsViewController : PostsViewController
 
+@property (strong, nonatomic) NSString* tagMessage;
+@property (nonatomic, strong) UIBarButtonItem *backButton;
+
+- (id)initWithDataController:(DataController *)controller WithTagMessage:(NSString *)text;
+
 @end

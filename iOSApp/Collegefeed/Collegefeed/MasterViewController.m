@@ -284,21 +284,11 @@
 }
 - (void)didSelectTag:(NSString *)tagMessage
 {
-    TagPostsViewController *controller = [[TagPostsViewController alloc] initWithDataController:self.dataController];
-    [controller setTagMessage:tagMessage];
-    
-//    if (self.dataController.showingSingleCollege)
-//    {
-//        [self.dataController fetchPostsWithTagForSingleCollege:tagMessage];
-//    }
-//    else
-//    {
-//        [self.dataController fetchPostsWithTagForAllColleges:tagMessage];
-//    }
-    
+    TagPostsViewController *controller = [[TagPostsViewController alloc] initWithDataController:self.dataController WithTagMessage:tagMessage];
     
     [self.navigationController pushViewController:controller
                                          animated:YES];
+    [[self navigationItem] setBackBarButtonItem:controller.backButton];
 }
 
 /* CreationViewProtocolDelegate */

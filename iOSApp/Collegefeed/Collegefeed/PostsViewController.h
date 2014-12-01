@@ -16,7 +16,6 @@
 
 @property (strong, nonatomic) Post* selectedPost;
 @property (strong, nonatomic) CommentViewController* commentViewController;
-@property (strong, nonatomic) NSString* tagMessage;
 
 @property (nonatomic) ViewType viewType;
 @property (nonatomic) BOOL hasReachedEndOfList;
