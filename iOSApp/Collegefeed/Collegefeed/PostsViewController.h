@@ -23,5 +23,10 @@
 
 - (id)initAsType:(ViewType)type withDataController:(DataController *)controller;
 
+- (void)setCorrectPostList;
+- (void)fetchContent;
+- (void)finishedFetchRequest;
+- (BOOL)loadMorePosts;
+
 @end
 

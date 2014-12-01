@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "TopPostsViewController.h"
 #import "PostsViewController.h"
 #import "CommentViewController.h"
 #import "TagViewController.h"
@@ -111,9 +112,7 @@
 }
 - (void)initViewControllers
 {
-    self.topPostsController             = [[PostsViewController alloc]
-                                           initAsType:TOP_VIEW
-                                           withDataController:self.dataController];
+    self.topPostsController             = [[TopPostsViewController alloc] initWithDataController:self.dataController];
     
     self.recentPostsController          = [[PostsViewController alloc]
                                            initAsType:RECENT_VIEW

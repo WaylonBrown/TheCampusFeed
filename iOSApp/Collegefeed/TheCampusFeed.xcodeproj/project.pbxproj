@@ -79,6 +79,7 @@
 		53FF2D06195BCE430040E872 /* UserPosts.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D05195BCE430040E872 /* UserPosts.txt */; };
 		53FF2D0A195BCE7D0040E872 /* UserComments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D09195BCE7D0040E872 /* UserComments.txt */; };
 		53FF2D0C195BCE850040E872 /* UserVotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D0B195BCE850040E872 /* UserVotes.txt */; };
+		CD539DD31A2CCE7D004A794E /* TopPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD21A2CCE7D004A794E /* TopPostsViewController.m */; };
 		CD5887591A21501100D864FD /* NSMutableArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -230,6 +231,8 @@
 		53FF2D05195BCE430040E872 /* UserPosts.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserPosts.txt; sourceTree = "<group>"; };
 		53FF2D09195BCE7D0040E872 /* UserComments.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserComments.txt; sourceTree = "<group>"; };
 		53FF2D0B195BCE850040E872 /* UserVotes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserVotes.txt; sourceTree = "<group>"; };
+		CD539DD11A2CCE7D004A794E /* TopPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPostsViewController.h; sourceTree = "<group>"; };
+		CD539DD21A2CCE7D004A794E /* TopPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPostsViewController.m; sourceTree = "<group>"; };
 		CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMutableArrayExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -339,6 +342,8 @@
 				5390A939191552AE00ACD082 /* CommentViewController.h */,
 				5390A93A191552AE00ACD082 /* CommentViewController.m */,
 				53CEAE2E197778C700DCE476 /* CommentView.xib */,
+				CD539DD11A2CCE7D004A794E /* TopPostsViewController.h */,
+				CD539DD21A2CCE7D004A794E /* TopPostsViewController.m */,
 			);
 			name = "Post/Comment View";
 			sourceTree = "<group>";
@@ -733,6 +738,7 @@
 				538E7C9219D030C000AD5719 /* CF_DialogViewController.m in Sources */,
 				5347EE9D197DC7CC001B2214 /* UserPostsViewController.m in Sources */,
 				538E7C8419CFF34000AD5719 /* TutorialViewController.m in Sources */,
+				CD539DD31A2CCE7D004A794E /* TopPostsViewController.m in Sources */,
 				53DE347719AD00AE004CB5A0 /* IIViewDeckController.m in Sources */,
 				5350557F19529FCA009C1911 /* FeedSelectViewController.m in Sources */,
 				5347EEB5197E9EC7001B2214 /* MenuViewController.m in Sources */,

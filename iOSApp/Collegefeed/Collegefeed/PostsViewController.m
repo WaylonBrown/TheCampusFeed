@@ -26,12 +26,24 @@
 
 - (id)initAsType:(ViewType)type withDataController:(DataController *)controller
 {
+    NSLog(@"WARNING: Deprecated method: [PVC initAsType]");
+    
     self = [super initWithDataController:controller];
     if (self)
     {
         [self setViewType:type];
 //        [self switchToAllColleges];
         
+        [self setCommentViewController:[[CommentViewController alloc] initWithDataController:self.dataController]];
+    }
+    return self;
+}
+
+- (id)initWithDataController:(DataController *)controller
+{
+    self = [super initWithDataController:controller];
+    if (self)
+    {
         [self setCommentViewController:[[CommentViewController alloc] initWithDataController:self.dataController]];
     }
     return self;
@@ -89,78 +101,52 @@
 
 #pragma mark - Table View
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{   // Present a Comment View for the selected post
-
-    if (indexPath.row >= self.list.count)
-    {   // Selection was out of bounds
-        NSLog(@"ERROR: Out of bounds row selection from a PostsViewController");
-        return;
-    }
-    
-    NSObject<PostAndCommentProtocol> *selected = [self.list objectAtIndex:indexPath.row];
-    
-    if (self.viewType == USER_COMMENTS)
-    {   // User selected one of their submitted comments (they are in Post format)
-        Post *parentPost = [self.dataController fetchParentPostOfComment:(Comment *)selected];
-        if (parentPost != nil)
-        {
-            [self.dataController setPostInFocus:parentPost];
-        }
-    }
-    else
-    {
-        [self.dataController setPostInFocus:(Post *)selected];
-    }
-    
-    [self.navigationController pushViewController:self.commentViewController
-                                         animated:YES];
-    [[self navigationItem] setBackBarButtonItem:self.commentViewController.backButton];
-}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{   // Return the number of posts in the list
+{   // Return the number of posts in the list, plus one additional if there are more to be fetched
     return self.list.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
     // this specifies the prototype (PostTableCell) and assigns the labels
-    NSUInteger rowNum = indexPath.row;
-    NSUInteger listcount = self.list.count;
-    
-    
-    if (rowNum == listcount)
-    {
-        static NSString *LoadingCellIdentifier = @"LoadingCell";
-        LoadingCell *cell = (LoadingCell *)[tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier];
-        
-        if (cell == nil)
-        {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:LoadingCellIdentifier
-                                                         owner:self options:nil];
-            cell = [nib objectAtIndex:0];
-        }
-        
-        if (!self.hasReachedEndOfList)
-        {
-            [cell showLoadingIndicator];
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                NSInteger oldCount = listcount;
-                self.hasReachedEndOfList = ![self loadMorePosts];
-                NSInteger newCount = self.list.count;
-                
-                if (oldCount != newCount)
-                {
-                    [self addNewRows:oldCount through:newCount];
-                }
-                else
-                {
-                    [cell hideLoadingIndicator];
-                }
-            });
-        }
-        
-        return cell;
-    }
+//    NSUInteger rowNum = indexPath.row;
+//    NSUInteger listcount = self.list.count;
+//    
+//    if (rowNum == listcount)
+//    {
+//        static NSString *LoadingCellIdentifier = @"LoadingCell";
+//        LoadingCell *cell = (LoadingCell *)[tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier];
+//        
+//        if (cell == nil)
+//        {
+//            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:LoadingCellIdentifier
+//                                                         owner:self options:nil];
+//            cell = [nib objectAtIndex:0];
+//        }
+//        
+////        if (!self.hasReachedEndOfList)
+//        if (!self.hasFetchedAllContent)
+//        {
+//            [cell showLoadingIndicator];
+//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+//                NSInteger oldCount = listcount;
+////                self.hasReachedEndOfList = ![self loadMorePosts];
+//                
+//                [self loadMorePosts];
+//                NSInteger newCount = self.list.count;
+//                
+//                if (oldCount != newCount)
+//                {
+//                    [self addNewRows:oldCount through:newCount];
+//                }
+//                else
+//                {
+//                    [cell hideLoadingIndicator];
+//                }
+//            });
+//        }
+//        
+//        return cell;
+//    }
     
     static NSString *CellIdentifier = @"TableCell";
     TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -173,16 +159,16 @@
 
     }
     [cell setDelegate: self];
-    if (self.viewType == USER_COMMENTS)
-    {
-        Comment *comment = [self.list objectAtIndex:indexPath.row];
-        BOOL isNearCollege = NO; //[self.dataController.nearbyColleges containsObject:nil];
-        float messageHeight = [Shared getLargeCellMessageHeight:comment.text WithFont:CF_FONT_LIGHT(16)];
-
-        [cell assignWith:comment IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
-
-        return cell;
-    }
+//    if (self.viewType == USER_COMMENTS)
+//    {
+//        Comment *comment = [self.list objectAtIndex:indexPath.row];
+//        BOOL isNearCollege = NO; //[self.dataController.nearbyColleges containsObject:nil];
+//        float messageHeight = [Shared getLargeCellMessageHeight:comment.text WithFont:CF_FONT_LIGHT(16)];
+//
+//        [cell assignWith:comment IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
+//
+//        return cell;
+//    }
     
     // get the post and display in this cell
     Post *post = [self.list objectAtIndex:indexPath.row];
@@ -191,6 +177,34 @@
     [cell assignWith:post IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
     
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{   // Present a Comment View for the selected post
+    
+    if (indexPath.row >= self.list.count)
+    {   // Selection was out of bounds
+        NSLog(@"ERROR: Out of bounds row selection from a PostsViewController");
+        return;
+    }
+    
+    Post *selectedPost = [self.list objectAtIndex:indexPath.row];
+//    NSObject<PostAndCommentProtocol> *selected = [self.list objectAtIndex:indexPath.row];
+//    if (self.viewType == USER_COMMENTS)
+//    {   // User selected one of their submitted comments (they are in Post format)
+//        Post *parentPost = [self.dataController fetchParentPostOfComment:(Comment *)selected];
+//        if (parentPost != nil)
+//        {
+//            [self.dataController setPostInFocus:parentPost];
+//        }
+//    }
+//    else
+//    {
+    [self.dataController setPostInFocus:selectedPost];
+//    }
+    
+    [self.navigationController pushViewController:self.commentViewController
+                                         animated:YES];
+    [[self navigationItem] setBackBarButtonItem:self.commentViewController.backButton];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -246,25 +260,23 @@
 
 - (void)fetchContent
 {   // Fetches new content for this view
+    [super fetchContent];
+
     [self setCorrectPostList];
     
     if (self.list.count == 0) [self.contentLoadingIndicator startAnimating];
     
-    [super fetchContent];
-    
     // Spawn separate thread for network access
-
-    BOOL allColleges = self.dataController.showingAllColleges;
     
     switch (self.viewType)
     {
-        case TOP_VIEW:
-            if (allColleges)
-                [self.dataController fetchTopPostsForAllColleges];
-            else
-                [self.dataController fetchTopPostsForSingleCollege];
-            
-            break;
+//        case TOP_VIEW:
+//            if (allColleges)
+//                [self.dataController fetchTopPostsForAllColleges];
+//            else
+//                [self.dataController fetchTopPostsForSingleCollege];
+//            
+//            break;
         case RECENT_VIEW:
             break;
         case TAG_VIEW:
@@ -280,10 +292,6 @@
 - (void)finishedFetchRequest
 {
     [super finishedFetchRequest];
-    
-    [self.tableView reloadData];
-    
-    // TODO: addNewRows once finished fetching
 }
 - (BOOL)loadMorePosts
 {
@@ -292,13 +300,13 @@
 
     switch (self.viewType)
     {
-        case TOP_VIEW:
-            if (allColleges)
-                [self.dataController fetchTopPostsForAllColleges];
-            else
-                [self.dataController fetchTopPostsForSingleCollege];
-            
-            break;
+//        case TOP_VIEW:
+//            if (allColleges)
+//                [self.dataController fetchTopPostsForAllColleges];
+//            else
+//                [self.dataController fetchTopPostsForSingleCollege];
+//            
+//            break;
         case RECENT_VIEW:
             if (allColleges)
                 [self.dataController fetchNewPostsForAllColleges];
@@ -345,43 +353,49 @@
 
 - (void)setCorrectPostList
 {
-    BOOL allColleges = self.dataController.showingAllColleges;
+//    BOOL allColleges = self.dataController.showingAllColleges;
 
-    switch (self.viewType)
+//    switch (self.viewType)
+//    {
+//        case TOP_VIEW:
+//            if (allColleges)
+//                [self setList:self.dataController.topPostsAllColleges];
+//            else
+//                [self setList:self.dataController.topPostsInCollege];
+//            
+//            break;
+//        case RECENT_VIEW:
+//            if (allColleges)
+//                [self setList:self.dataController.recentPostsAllColleges];
+//            else
+//                [self setList:self.dataController.recentPostsInCollege];
+//            
+//            break;
+//        case TAG_VIEW:
+//            if (allColleges)
+//                [self setList:self.dataController.postsWithTagAllColleges];
+//            else
+//                [self setList:self.dataController.postsWithTagInCollege];
+//            
+//            self.tagMessage = self.dataController.tagInFocus.name;
+//            
+//            break;
+//        case USER_POSTS:
+//            [self setList:self.dataController.userPosts];
+//            break;
+//        case USER_COMMENTS:
+//            [self setList:self.dataController.userComments];
+//            break;
+//        default:
+//            break;
+//    }
+    
+    if (self.list == nil)
     {
-        case TOP_VIEW:
-            if (allColleges)
-                [self setList:self.dataController.topPostsAllColleges];
-            else
-                [self setList:self.dataController.topPostsInCollege];
-            
-            break;
-        case RECENT_VIEW:
-            if (allColleges)
-                [self setList:self.dataController.recentPostsAllColleges];
-            else
-                [self setList:self.dataController.recentPostsInCollege];
-            
-            break;
-        case TAG_VIEW:
-            if (allColleges)
-                [self setList:self.dataController.postsWithTagAllColleges];
-            else
-                [self setList:self.dataController.postsWithTagInCollege];
-            
-            self.tagMessage = self.dataController.tagInFocus.name;
-            
-            break;
-        case USER_POSTS:
-            [self setList:self.dataController.userPosts];
-            break;
-        case USER_COMMENTS:
-            [self setList:self.dataController.userComments];
-            break;
-        default:
-            break;
+        self.list = [NSMutableArray new];
     }
 }
+
 - (void)switchToAllColleges
 {
     //    self.hasReachedEndOfList = NO;

@@ -12,6 +12,7 @@
 #import "DataController.h"
 
 @class College;
+@class TopPostsViewController;
 @class PostsViewController;
 @class TagViewController;
 @class CollegePickerViewController;
@@ -31,7 +32,7 @@
 @property (strong, nonatomic) DataController *dataController;
 
 @property (strong, nonatomic) MenuViewController *menuViewController;
-@property (strong, nonatomic) PostsViewController *topPostsController;
+@property (strong, nonatomic) TopPostsViewController *topPostsController;
 @property (strong, nonatomic) PostsViewController *recentPostsController;
 @property (strong, nonatomic) TagViewController *tagController;
 @property (strong, nonatomic) CollegePickerViewController *collegeController;
