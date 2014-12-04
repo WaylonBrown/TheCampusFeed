@@ -12,6 +12,8 @@
 	<dict>
 		<key>81B9F5554FEDAF0F5F7D5014B9F99CC448661621</key>
 		<string>https://github.com/AggieDev/Collegefeed.git</string>
+		<key>DB9C02E9313E64BF41640AF890E85D985263D2D7</key>
+		<string>https://github.com/pas0185/Watchdog.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>iOSApp/Collegefeed/TheCampusFeed.xcodeproj</string>
@@ -19,6 +21,8 @@
 	<dict>
 		<key>81B9F5554FEDAF0F5F7D5014B9F99CC448661621</key>
 		<string>../../../..</string>
+		<key>DB9C02E9313E64BF41640AF890E85D985263D2D7</key>
+		<string>../../../../../Watchdog</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/AggieDev/Collegefeed.git</string>
@@ -35,6 +39,14 @@
 			<string>81B9F5554FEDAF0F5F7D5014B9F99CC448661621</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Collegefeed</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>DB9C02E9313E64BF41640AF890E85D985263D2D7</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Watchdog</string>
 		</dict>
 	</array>
 </dict>
