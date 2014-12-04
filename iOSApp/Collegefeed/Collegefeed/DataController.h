@@ -101,12 +101,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic) long pageForTrendingTagsAllColleges;
 @property (nonatomic) long pageForTrendingTagsSingleCollege;
 
-
-
-//@property (nonatomic) long tagPage;
-//@property (nonatomic) long topPostsPage;
-//@property (nonatomic) long recentPostsPage;
-//@property (nonatomic) long tagPostsPage;
 @property (nonatomic) long trendingCollegesPage;
 
 

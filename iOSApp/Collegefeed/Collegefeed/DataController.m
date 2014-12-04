@@ -17,6 +17,10 @@
 #import "CF_DialogViewController.h"
 #import "ToastController.h"
 
+
+// TODO: Include Watchdog from its own static library
+#import "Watchdog.h"
+
 #import "TheCampusFeed-Swift.h"
 
 @implementation DataController
@@ -59,8 +63,26 @@
         // Get the user's location
         [self findUserLocation];
         
+        // Watchdog for automated content moderation
+        [self watchdogTester];
+
+        
     }
     return self;
+}
+
+- (void)watchdogTester
+{
+    NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys:
+                             [NSNumber numberWithInt:10], @"minLength",
+                             [NSNumber numberWithInt:140], @"maxLength",
+                             [NSNumber numberWithBool:YES], @"blockPhoneNumbers",
+                             [NSNumber numberWithBool:YES], @"blockEmailAddresses",
+                             nil];
+    
+    Watchdog* myWatchDog = [[Watchdog alloc] initWithOptions:options];
+    
+    NSLog(@"Finished creating Watchdog");
 }
 - (void)initArrays
 {

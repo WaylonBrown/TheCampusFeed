@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 
-
 #import "TopPostsViewController.h"
 #import "NewPostsViewController.h"
 #import "TagViewController.h"
@@ -39,6 +38,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {   // Set up ViewControllers and DataControllers
 
+    
+    
+    
     self.dataController = [DataController new];
     [self.dataController incrementLaunchNumber];
     

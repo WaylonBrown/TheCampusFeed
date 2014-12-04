@@ -83,6 +83,7 @@
 		CD539DD91A2CDE99004A794E /* NewPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD81A2CDE99004A794E /* NewPostsViewController.m */; };
 		CD539DDC1A2CE488004A794E /* TagPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DDB1A2CE488004A794E /* TagPostsViewController.m */; };
 		CD5887591A21501100D864FD /* NSMutableArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */; };
+		CDF1FAC91A30D07D003D421F /* Watchdog.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF1FAC81A30D07D003D421F /* Watchdog.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -242,6 +243,8 @@
 		CD539DDD1A2CF54C004A794E /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMutableArrayExtensions.swift; sourceTree = "<group>"; };
 		CDF1FA8C1A30B160003D421F /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = ../../../../../../../System/Library/Frameworks/Python.framework; sourceTree = "<group>"; };
+		CDF1FAC71A30D07D003D421F /* Watchdog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Watchdog.h; sourceTree = "<group>"; };
+		CDF1FAC81A30D07D003D421F /* Watchdog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Watchdog.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -575,6 +578,7 @@
 		53F8789619133F60002A578B /* Collegefeed */ = {
 			isa = PBXGroup;
 			children = (
+				CDF1FAC61A30D06B003D421F /* Watchdog (temporary) */,
 				53B090B8192DA1FA00E3D996 /* Source Code */,
 				53B090B5192DA13100E3D996 /* Views */,
 				53B090B9192DA21600E3D996 /* Resources */,
@@ -606,6 +610,15 @@
 				53CEAE2E197778C700DCE476 /* CommentView.xib */,
 			);
 			name = "Comment View";
+			sourceTree = "<group>";
+		};
+		CDF1FAC61A30D06B003D421F /* Watchdog (temporary) */ = {
+			isa = PBXGroup;
+			children = (
+				CDF1FAC71A30D07D003D421F /* Watchdog.h */,
+				CDF1FAC81A30D07D003D421F /* Watchdog.m */,
+			);
+			name = "Watchdog (temporary)";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -776,6 +789,7 @@
 				531EAB431988533500C1E1AA /* UserData.xcdatamodeld in Sources */,
 				5350557719514587009C1911 /* CreatePostCommentViewController.m in Sources */,
 				533475A41923344100E84CC8 /* TableCell.m in Sources */,
+				CDF1FAC91A30D07D003D421F /* Watchdog.m in Sources */,
 				CD539DD91A2CDE99004A794E /* NewPostsViewController.m in Sources */,
 				53963DE71916E5F50084E646 /* PostsViewController.m in Sources */,
 				53D6E986199DA4F500FD9061 /* LoadingCell.m in Sources */,
@@ -853,6 +867,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LIBRARY_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -891,6 +906,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LIBRARY_SEARCH_PATHS = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
