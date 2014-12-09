@@ -296,7 +296,9 @@
 - (void)create
 {   // Display popup to let user type a new comment
     
-    CreatePostCommentViewController *alert = [[CreatePostCommentViewController alloc] initWithType:COMMENT withCollege:nil];
+    CreatePostCommentViewController *alert = [[CreatePostCommentViewController alloc] initWithType:COMMENT
+                                                                                       withCollege:nil
+                                                                                withDataController:self.dataController];
     [alert setDelegate:self];
     [self presentViewController:alert animated:YES completion:nil];
 }
@@ -379,6 +381,8 @@
 //    if ([self.dataController isAbleToComment])
     if (true)
     {
+        [self.createController dismiss:self];
+
         Post *parentPost = self.dataController.postInFocus;
         if (parentPost != nil)
         {

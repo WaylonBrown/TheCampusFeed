@@ -12,6 +12,7 @@
 
 
 @class College;
+@class DataController;
 @class ToastController;
 
 @protocol CreationViewProtocol <NSObject>
@@ -50,7 +51,8 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *tagTextViewHeight;
 
 - (id)initWithType:(ModelType)type
-       withCollege:(College *)college;
+       withCollege:(College *)college
+withDataController:(DataController *)controller;
 
 - (IBAction)submit:(id)sender;
 - (IBAction)dismiss:(id)sender;

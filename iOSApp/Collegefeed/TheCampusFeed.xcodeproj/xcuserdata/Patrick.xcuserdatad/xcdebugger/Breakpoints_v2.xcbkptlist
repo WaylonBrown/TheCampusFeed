@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Collegefeed/Networker/Networker/Networker.m"
-            timestampString = "439163448.721236"
+            filePath = "../../../Watchdog/Watchdog/Watchdog.m"
+            timestampString = "439802618.724445"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
-            landmarkName = "+GetTrendingTagsAtPageNum:"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
+            landmarkName = "-shouldBlockForVulgar:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

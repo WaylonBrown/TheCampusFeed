@@ -23,6 +23,12 @@
 
 #import "TheCampusFeed-Swift.h"
 
+@interface DataController()
+
+//@property (strong, nonatomic) Watchdog *myWatchDog;
+
+@end
+
 @implementation DataController
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -76,12 +82,13 @@
     NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys:
                              [NSNumber numberWithInt:10], @"minLength",
                              [NSNumber numberWithInt:140], @"maxLength",
-                             [NSNumber numberWithBool:YES], @"blockPhoneNumbers",
-                             [NSNumber numberWithBool:YES], @"blockEmailAddresses",
+                             [NSNumber numberWithBool:YES], @"blockPhone",
+                             [NSNumber numberWithBool:YES], @"blockEmail",
+                             [NSNumber numberWithBool:YES], @"blockVulgar",
+//                             [NSNumber numberWithBool:YES], @"blockSexual",
                              nil];
     
-    Watchdog* myWatchDog = [[Watchdog alloc] initWithOptions:options];
-    
+    self.myWatchDog = [[Watchdog alloc] initWithOptions:options];
     NSLog(@"Finished creating Watchdog");
 }
 - (void)initArrays
@@ -428,6 +435,52 @@
 //        [self.toaster toastPostingTooSoon:minutesUntilCanPost];
 //        return NO;
 //    }
+    
+//    [self.toaster toastCommentingTooSoon];
+
+    NSMutableDictionary* resultDict = [NSMutableDictionary new];
+    BOOL validMessage = [self.myWatchDog shouldSubmitMessage:message
+                                                 WithResults:resultDict];
+    
+
+    if (!validMessage)
+    {
+        NSString *errorToastMessage = @"Sorry, your message was rejected. Please try again. Reason:";
+        
+        NSMutableArray *errorReasons = [NSMutableArray new];
+        if (![[resultDict valueForKey:@"isValidLength"] boolValue])
+        {
+            [errorReasons addObject:@"Invalid length"];
+            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Invalid length,"];
+        }
+        if ([[resultDict valueForKey:@"shouldBlockForNumber"] boolValue])
+        {
+            [errorReasons addObject:@"Phone numbers not allowed"];
+            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Phone numbers not allowed,"];
+        }
+        if ([[resultDict valueForKey:@"shouldBlockForEmail"] boolValue])
+        {
+            [errorReasons addObject:@"Email addresses not allowed"];
+            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Email addresses not allowed,"];
+        }
+        if ([[resultDict valueForKey:@"shouldBlockForVulgar"] boolValue])
+        {
+            [errorReasons addObject:@"Vulgarity not allowed"];
+            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Vulgarity not allowed,"];
+        }
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Rejected!"
+                                                        message:errorToastMessage
+                                                       delegate:self
+                                              cancelButtonTitle:@"Nvm..."
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+        [self.toaster toastCustomMessage:[errorToastMessage substringToIndex:[errorToastMessage length] - 1]];
+
+        return NO;
+    }
+    
     @try
     {
         NSString *udid = [UIDevice currentDevice].identifierForVendor.UUIDString;
@@ -468,7 +521,7 @@
         }
         else
         {
-            [self.toaster toastPostFailed];
+//            [self.toaster toastPostFailed];
         }
     }
     @catch (NSException *exception)
@@ -975,29 +1028,13 @@
 
 #pragma mark - Helper Methods
 
-
-//- (NSArray *)unionOfFirst:(NSArray *)array1 withSecond:(NSArray *)array2
-//{
-//    NSMutableArray *unionArr = [[NSMutableArray alloc] initWithArray:array2];
-//    for (NSObject<CFModelProtocol> *obj1 in array1)
-//    {
-//        NSNumber *obj1Id = [obj1 getID];
-//        BOOL alreadyExists;
-//        
-//        for (NSObject<CFModelProtocol> *obj2 in unionArr)
-//        {
-//            if ([obj2 getID] == obj1Id)
-//            {
-//                alreadyExists = YES;
-//                break;
-//            }
-//        }
-//        if (!alreadyExists)
-//            [unionArr addObject:obj1];
-//    }
-//    
-//    return unionArr;
-//}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        
+    }
+}
 - (NSArray *)parseData:(NSData *)data asModelType:(ModelType) type
 {
     // VERSION 3

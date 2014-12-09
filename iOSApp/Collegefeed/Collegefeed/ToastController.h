@@ -22,6 +22,9 @@
 - (void)toastHidden;
 - (void)releaseBlockedToasts;
 
+- (void)toastCustomMessage:(NSString *)message;
+
+
 // Validation Error
 - (void)toastInvalidDownvote;
 - (void)toastCommentTooShortWithLength:(int)minLength;

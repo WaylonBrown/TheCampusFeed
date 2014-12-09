@@ -19,7 +19,7 @@
 @class Tag;
 @class Vote;
 @class ToastController;
-
+@class Watchdog;
 
 #pragma mark - Protocol Definitions
 /********************************/
@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
     LOCATION_NOT_FOUND
 };
 
-@interface DataController : NSObject<CLLocationManagerDelegate>
+@interface DataController : NSObject<CLLocationManagerDelegate, UIAlertViewDelegate>
 
 
 #pragma mark - Member Variables
@@ -44,6 +44,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (strong, nonatomic) ToastController *toaster;
+@property (strong, nonatomic) Watchdog *myWatchDog;
 
 // Status Information
 @property (strong, nonatomic) College   *collegeInFocus;

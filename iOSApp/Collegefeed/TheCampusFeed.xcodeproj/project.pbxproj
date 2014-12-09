@@ -79,11 +79,12 @@
 		53FF2D06195BCE430040E872 /* UserPosts.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D05195BCE430040E872 /* UserPosts.txt */; };
 		53FF2D0A195BCE7D0040E872 /* UserComments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D09195BCE7D0040E872 /* UserComments.txt */; };
 		53FF2D0C195BCE850040E872 /* UserVotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D0B195BCE850040E872 /* UserVotes.txt */; };
+		CD1ED4C21A36B13600F8A1AF /* Watchdog.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1ED4C11A36B13600F8A1AF /* Watchdog.m */; };
 		CD539DD31A2CCE7D004A794E /* TopPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD21A2CCE7D004A794E /* TopPostsViewController.m */; };
 		CD539DD91A2CDE99004A794E /* NewPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD81A2CDE99004A794E /* NewPostsViewController.m */; };
 		CD539DDC1A2CE488004A794E /* TagPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DDB1A2CE488004A794E /* TagPostsViewController.m */; };
 		CD5887591A21501100D864FD /* NSMutableArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */; };
-		CDF1FAC91A30D07D003D421F /* Watchdog.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF1FAC81A30D07D003D421F /* Watchdog.m */; };
+		CDF66BEB1A36CEBD008C62DD /* bad_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = CDF66BEA1A36CEBD008C62DD /* bad_words.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -234,6 +235,8 @@
 		53FF2D05195BCE430040E872 /* UserPosts.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserPosts.txt; sourceTree = "<group>"; };
 		53FF2D09195BCE7D0040E872 /* UserComments.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserComments.txt; sourceTree = "<group>"; };
 		53FF2D0B195BCE850040E872 /* UserVotes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserVotes.txt; sourceTree = "<group>"; };
+		CD1ED4C01A36B13600F8A1AF /* Watchdog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Watchdog.h; path = ../../../../Watchdog/Watchdog/Watchdog.h; sourceTree = "<group>"; };
+		CD1ED4C11A36B13600F8A1AF /* Watchdog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Watchdog.m; path = ../../../../Watchdog/Watchdog/Watchdog.m; sourceTree = "<group>"; };
 		CD539DD11A2CCE7D004A794E /* TopPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPostsViewController.h; sourceTree = "<group>"; };
 		CD539DD21A2CCE7D004A794E /* TopPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPostsViewController.m; sourceTree = "<group>"; };
 		CD539DD71A2CDE99004A794E /* NewPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPostsViewController.h; sourceTree = "<group>"; };
@@ -243,8 +246,7 @@
 		CD539DDD1A2CF54C004A794E /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMutableArrayExtensions.swift; sourceTree = "<group>"; };
 		CDF1FA8C1A30B160003D421F /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = ../../../../../../../System/Library/Frameworks/Python.framework; sourceTree = "<group>"; };
-		CDF1FAC71A30D07D003D421F /* Watchdog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Watchdog.h; sourceTree = "<group>"; };
-		CDF1FAC81A30D07D003D421F /* Watchdog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Watchdog.m; sourceTree = "<group>"; };
+		CDF66BEA1A36CEBD008C62DD /* bad_words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bad_words.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -578,7 +580,7 @@
 		53F8789619133F60002A578B /* Collegefeed */ = {
 			isa = PBXGroup;
 			children = (
-				CDF1FAC61A30D06B003D421F /* Watchdog (temporary) */,
+				CD1ED4BF1A36B11600F8A1AF /* Watchdog (reference!) */,
 				53B090B8192DA1FA00E3D996 /* Source Code */,
 				53B090B5192DA13100E3D996 /* Views */,
 				53B090B9192DA21600E3D996 /* Resources */,
@@ -589,6 +591,7 @@
 		53F8789719133F60002A578B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CDF66BEA1A36CEBD008C62DD /* bad_words.txt */,
 				53FF2D05195BCE430040E872 /* UserPosts.txt */,
 				53FF2D09195BCE7D0040E872 /* UserComments.txt */,
 				53FF2D0B195BCE850040E872 /* UserVotes.txt */,
@@ -602,6 +605,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		CD1ED4BF1A36B11600F8A1AF /* Watchdog (reference!) */ = {
+			isa = PBXGroup;
+			children = (
+				CD1ED4C01A36B13600F8A1AF /* Watchdog.h */,
+				CD1ED4C11A36B13600F8A1AF /* Watchdog.m */,
+			);
+			name = "Watchdog (reference!)";
+			sourceTree = "<group>";
+		};
 		CD539DD61A2CDE5D004A794E /* Comment View */ = {
 			isa = PBXGroup;
 			children = (
@@ -610,15 +622,6 @@
 				53CEAE2E197778C700DCE476 /* CommentView.xib */,
 			);
 			name = "Comment View";
-			sourceTree = "<group>";
-		};
-		CDF1FAC61A30D06B003D421F /* Watchdog (temporary) */ = {
-			isa = PBXGroup;
-			children = (
-				CDF1FAC71A30D07D003D421F /* Watchdog.h */,
-				CDF1FAC81A30D07D003D421F /* Watchdog.m */,
-			);
-			name = "Watchdog (temporary)";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -729,6 +732,7 @@
 				531EAAEF1988300C00C1E1AA /* icon_light_small.png in Resources */,
 				531EAAF01988300C00C1E1AA /* icon.png in Resources */,
 				53D6E988199DA51500FD9061 /* LoadingCell.xib in Resources */,
+				CDF66BEB1A36CEBD008C62DD /* bad_words.txt in Resources */,
 				53AB57C5194ABD11001D1B7B /* Omnes-Semibold.ttf in Resources */,
 				5390A91E1914B76800ACD082 /* arrowdownred.png in Resources */,
 				53FF2D0A195BCE7D0040E872 /* UserComments.txt in Resources */,
@@ -789,7 +793,7 @@
 				531EAB431988533500C1E1AA /* UserData.xcdatamodeld in Sources */,
 				5350557719514587009C1911 /* CreatePostCommentViewController.m in Sources */,
 				533475A41923344100E84CC8 /* TableCell.m in Sources */,
-				CDF1FAC91A30D07D003D421F /* Watchdog.m in Sources */,
+				CD1ED4C21A36B13600F8A1AF /* Watchdog.m in Sources */,
 				CD539DD91A2CDE99004A794E /* NewPostsViewController.m in Sources */,
 				53963DE71916E5F50084E646 /* PostsViewController.m in Sources */,
 				53D6E986199DA4F500FD9061 /* LoadingCell.m in Sources */,
@@ -927,6 +931,7 @@
 				INFOPLIST_FILE = "Collegefeed/Collegefeed-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "/Users/Patrick/Documents/dev/**";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -936,7 +941,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Collegefeed/TheCampusFeed-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				USER_HEADER_SEARCH_PATHS = "./Collegefeed/Models/Models/** ./Collegefeed/Networker/Networker/**";
+				USER_HEADER_SEARCH_PATHS = "./Collegefeed/Models/Models/** ./Collegefeed/Networker/Networker/** /Users/Patrick/Documents/dev/Watchdog/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -955,6 +960,7 @@
 				INFOPLIST_FILE = "Collegefeed/Collegefeed-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "/Users/Patrick/Documents/dev/**";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -963,7 +969,7 @@
 				PRODUCT_NAME = TheCampusFeed;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Collegefeed/TheCampusFeed-Bridging-Header.h";
-				USER_HEADER_SEARCH_PATHS = "./Collegefeed/Models/Models/** ./Collegefeed/Networker/Networker/**";
+				USER_HEADER_SEARCH_PATHS = "./Collegefeed/Models/Models/** ./Collegefeed/Networker/Networker/** /Users/Patrick/Documents/dev/Watchdog/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

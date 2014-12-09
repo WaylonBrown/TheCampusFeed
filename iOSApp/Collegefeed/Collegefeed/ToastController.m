@@ -45,6 +45,10 @@
 }
 #pragma mark - Public Functions
 
+- (void)toastCustomMessage:(NSString *)message
+{
+    [self addToQueue:message];
+}
 - (void)toastInvalidDownvote
 {
     NSString *message = @"You need to be near the college to downvote";

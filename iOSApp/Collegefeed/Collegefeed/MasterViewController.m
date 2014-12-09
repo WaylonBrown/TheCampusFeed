@@ -240,9 +240,11 @@
 }
 - (void)showCreationDialogForCollege:(College *) college
 {
-    CreatePostCommentViewController *alert = [[CreatePostCommentViewController alloc] initWithType:POST withCollege:college];
-    [alert setDelegate:self];
-    [self presentViewController:alert animated:YES completion:nil];
+    self.createController = [[CreatePostCommentViewController alloc] initWithType:POST
+                                                                      withCollege:college
+                                                               withDataController:self.dataController];
+    [self.createController setDelegate:self];
+    [self presentViewController:self.createController animated:YES completion:nil];
 }
 - (void)pullToRefresh
 {
@@ -322,8 +324,11 @@
 
     if (true)
     {
+        [self.createController dismiss:self];
+
         BOOL success = [self.dataController createPostWithMessage:message
-                                     withCollegeId:collegeId];
+                                                    withCollegeId:collegeId];
+        
         if (success)
         {
             [self refresh];

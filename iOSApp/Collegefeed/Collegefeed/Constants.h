@@ -9,7 +9,7 @@
 
 // Testing
 
-#define DELAY_FOR_SLOW_NETWORK 1
+#define DELAY_FOR_SLOW_NETWORK 0
 #define DEMONSTRATION_MODE YES
 
 // Length Requirements

@@ -12,11 +12,13 @@
 #import "ToastController.h"
 #import "UIView+Toast.h"
 #import "Tag.h"
+#import "DataController.h"
 
 @implementation CreatePostCommentViewController
 
 - (id)initWithType:(ModelType)type
        withCollege:(College *)college
+withDataController:(DataController *)controller
 {
     self = [super init];
     if (self)
@@ -85,28 +87,12 @@
 {
     NSString *message = self.messageTextView.text;
     message = [message stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    [self.delegate submitPostCommentCreationWithMessage:message
+                                         withCollegeId:self.collegeForPost.collegeID
+                                         withUserToken:@"EMPTY_TOKEN"];
 
-    if (message.length >= MIN_POST_LENGTH
-        && message.length <= MAX_POST_LENGTH)
-    {
-        [self.delegate submitPostCommentCreationWithMessage:message
-                                              withCollegeId:self.collegeForPost.collegeID
-                                              withUserToken:@"EMPTY_TOKEN"];
-        [self dismiss:nil];
-    }
-    else if (message.length < MIN_POST_LENGTH)
-    {
-        switch (self.modelType)
-        {
-            case POST:
-                [self.toastController toastPostTooShortWithLength:MIN_POST_LENGTH];
-                break;
-            case COMMENT:
-                [self.toastController toastCommentTooShortWithLength:MIN_POST_LENGTH];
-            default:
-                break;
-        }
-    }
+//    [self dismiss:nil];
 }
 
 - (IBAction)dismiss:(id)sender

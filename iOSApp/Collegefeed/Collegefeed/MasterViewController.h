@@ -12,6 +12,7 @@
 #import "CreatePostCommentViewController.h"
 #import "FeedSelectViewController.h"
 #import "DataController.h"
+#import "CreatePostCommentViewController.h"
 
 @class ToastController;
 @protocol FeedSelectionProtocol;
@@ -45,6 +46,9 @@
 @property (nonatomic) BOOL isShowingTutorial;
 @property (nonatomic) BOOL hasFinishedFetchRequest;
 @property (nonatomic) BOOL hasFetchedAllContent;
+
+// Child Views
+@property (nonatomic) CreatePostCommentViewController *createController;
 
 // Initialization
 - (id)initWithDataController:(DataController *)controller;
