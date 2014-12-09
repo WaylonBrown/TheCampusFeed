@@ -469,14 +469,16 @@
             errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Vulgarity not allowed,"];
         }
         
+        errorToastMessage = [errorToastMessage substringToIndex:[errorToastMessage length] - 1];
+        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Rejected!"
                                                         message:errorToastMessage
                                                        delegate:self
-                                              cancelButtonTitle:@"Nvm..."
+                                              cancelButtonTitle:@"Ok"
                                               otherButtonTitles:nil];
         [alert show];
         
-        [self.toaster toastCustomMessage:[errorToastMessage substringToIndex:[errorToastMessage length] - 1]];
+//        [self.toaster toastCustomMessage:errorToastMessage];
 
         return NO;
     }
