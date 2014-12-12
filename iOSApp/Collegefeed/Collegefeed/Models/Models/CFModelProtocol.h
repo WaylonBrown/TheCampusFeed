@@ -27,6 +27,7 @@ typedef NS_ENUM(NSInteger, ModelType)
 - (NSData*)toJSON;
 - (NSNumber *)getID; 
 - (ModelType)getType;
+- (NSString *)getCellIdentifier;
 
 @end
 

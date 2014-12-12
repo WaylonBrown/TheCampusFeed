@@ -135,8 +135,13 @@
 //        return cell;
 //    }
     
+    Post *post = [self.list objectAtIndex:indexPath.row];
+
+    
+    
 //    static NSString *CellIdentifier = @"TableCell";
     static NSString *CellIdentifier = @"PostTableCell";
+    
     PostTableCell *cell = (PostTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 //    TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
@@ -147,23 +152,10 @@
         cell = [nib objectAtIndex:0];
 
     }
-//    [cell setDelegate: self];
+    [cell setDelegate: self];
     
-    
-    
-//    if (self.viewType == USER_COMMENTS)
-//    {
-//        Comment *comment = [self.list objectAtIndex:indexPath.row];
-//        BOOL isNearCollege = NO; //[self.dataController.nearbyColleges containsObject:nil];
-//        float messageHeight = [Shared getLargeCellMessageHeight:comment.text WithFont:CF_FONT_LIGHT(16)];
-//
-//        [cell assignWith:comment IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
-//
-//        return cell;
-//    }
     
     // get the post and display in this cell
-    Post *post = [self.list objectAtIndex:indexPath.row];
     if([self.dataController.nearbyColleges containsObject:post.college])
     {   // TODO: make this assignment done automatically somewhere when Post model is being built
         
@@ -173,6 +165,14 @@
 //        [cell setIsNearCollege:YES];
     }
     bool success = [cell assignmentSuccessWith:post];
+    if (self.dataController.showingAllColleges)
+    {
+        [cell showCollegeLabel];
+    }
+    else
+    {
+        [cell hideCollegeLabel];
+    }
 //    float messageHeight = [Shared getLargeCellMessageHeight:post.text WithFont:CF_FONT_LIGHT(16)];
 //    [cell assignWith:post IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
     
@@ -215,7 +215,8 @@
     {
         Post *post = [self.list objectAtIndex:row];
 //        text = [post getText];
-        return [PostTableCell getCellHeight:post];  //:text];
+        float height = [PostTableCell getCellHeight:post];
+        return height;
         
 //        return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)];
     }

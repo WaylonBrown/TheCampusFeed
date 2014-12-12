@@ -31,13 +31,23 @@
 #define CF_BLUE        0x0099CC
 #define CF_WHITE       0xFFFFFF
 
+// TableCell Identifiers
+#define POST_TABLE_CELL                         @"PostTableCell"
+#define POST_TABLE_CELL_WITH_COLLEGE            @"PostTableCellWithCollege"
+#define POST_TABLE_CELL_WITH_IMAGE              @"PostTableCellWithImage"
+#define POST_TABLE_CELL_WITH_COLLEGE_AND_IMAGE  @"PostTableCellWithCollegeAndImage"
+
+
 // TableCell Height Estimates
+#define CELL_CROPPED_PICTURE_HEIGHT     80
+#define LARGE_CELL_TOP_TO_LABEL       11
+#define LARGE_CELL_LABEL_TO_BOTTOM    64
+#define LARGE_CELL_MIN_LABEL_HEIGHT   53
+
+
 #define MESSAGE_HEIGHT_TOP_CUSHION      10
 #define DEFAULT_CELL_HEIGHT           100
 #define LARGE_CELL_LABEL_WIDTH        252.0f
-#define LARGE_CELL_TOP_TO_LABEL       6.0f
-#define LARGE_CELL_LABEL_TO_BOTTOM    61.0f
-#define LARGE_CELL_MIN_LABEL_HEIGHT   53.0f
 
 #define SMALL_CELL_LABEL_WIDTH        290.0f
 #define SMALL_CELL_TOP_TO_LABEL       0

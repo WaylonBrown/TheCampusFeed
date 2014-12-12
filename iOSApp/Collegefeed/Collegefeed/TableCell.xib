@@ -6,16 +6,13 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TableCell" rowHeight="125" id="gC4-dY-lVa" customClass="TableCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="125"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TableCell" rowHeight="203" id="gC4-dY-lVa" customClass="TableCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="203"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gC4-dY-lVa" id="Ixu-1G-g49">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="124"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="l2e-bF-BKO">
-                        <rect key="frame" x="5" y="0.0" width="310" height="178"/>
-                    </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="age" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BKu-Nu-Dmc">
                         <rect key="frame" x="180" y="122" width="119" height="21"/>
                         <constraints>
@@ -134,6 +131,9 @@
                             <action selector="downVotePresed:" destination="gC4-dY-lVa" eventType="touchUpInside" id="gbW-Z8-sD9"/>
                         </connections>
                     </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="l2e-bF-BKO">
+                        <rect key="frame" x="5" y="0.0" width="310" height="178"/>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="e0k-T0-uPn" firstAttribute="height" secondItem="ynl-aq-mI3" secondAttribute="height" id="0AN-LZ-QUS"/>
@@ -195,7 +195,7 @@
                 <outlet property="scoreLabel" destination="fUN-qQ-auA" id="jfg-Bn-Lvh"/>
                 <outlet property="upVoteButton" destination="907-dL-mOV" id="SCj-k1-rrj"/>
             </connections>
-            <point key="canvasLocation" x="140" y="146.5"/>
+            <point key="canvasLocation" x="140" y="185.5"/>
         </tableViewCell>
     </objects>
     <resources>

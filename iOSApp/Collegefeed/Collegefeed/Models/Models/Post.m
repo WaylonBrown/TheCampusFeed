@@ -194,7 +194,7 @@
 }
 - (NSString *)getImage_url
 {
-    return self.image_url;
+    return (self.image_url == nil) ? self.image_uri : self.image_uri;
 }
 - (BOOL)hasImage
 {
