@@ -19,6 +19,8 @@
 
 @interface MasterViewController : UIViewController <ChildCellDelegate, CreationViewProtocol, FeedSelectionProtocol, CollegeForPostingSelectionProtocol>
 
+#pragma mark - Variables
+
 // Member variables
 @property (strong, nonatomic) NSMutableArray *list;
 @property (strong, nonatomic) ToastController *toastController;
@@ -49,6 +51,8 @@
 
 // Child Views
 @property (nonatomic) CreatePostCommentViewController *createController;
+
+#pragma mark - Public Functions
 
 // Initialization
 - (id)initWithDataController:(DataController *)controller;

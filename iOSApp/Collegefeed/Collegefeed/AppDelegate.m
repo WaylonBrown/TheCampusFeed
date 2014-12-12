@@ -128,9 +128,11 @@
     
     self.userPostsController            = [[UserPostsViewController alloc] initWithDataController:self.dataController];
     
-    self.userCommentsController         = [[UserCommentsViewController alloc]
-                                           initAsType:USER_COMMENTS
-                                           withDataController:self.dataController];
+    
+    
+//    self.userCommentsController         = [[UserCommentsViewController alloc]
+//                                           initAsType:USER_COMMENTS
+//                                           withDataController:self.dataController];
     
     self.tutorialController             = [[TutorialViewController alloc] init];
     
@@ -144,7 +146,7 @@
                                            self.tagController,
                                            self.trendingCollegesController,
                                            self.userPostsController,
-                                           self.userCommentsController,
+//                                           self.userCommentsController,
                                            self.timeCrunchController,
                                            self.helpController,
                                            //                                           self.tutorialController,

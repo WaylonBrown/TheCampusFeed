@@ -79,7 +79,7 @@
                             <constraint firstAttribute="height" constant="100" id="n5l-rf-cD0"/>
                         </constraints>
                     </imageView>
-                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="jjO-og-xap">
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="jjO-og-xap">
                         <rect key="frame" x="159" y="99" width="37" height="37"/>
                         <color key="color" red="0.20000000000000001" green="0.70980392160000005" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </activityIndicatorView>
@@ -206,6 +206,7 @@
                 <outlet property="backgroundImageView" destination="Cq5-45-3Ym" id="LuP-Wy-O2C"/>
                 <outlet property="collegeLabel" destination="hl9-Zj-GSm" id="6CO-DM-E60"/>
                 <outlet property="collegeLabelHeight" destination="Q1h-oW-YG6" id="SHd-AF-j2o"/>
+                <outlet property="collegeLabelViewHeight" destination="r6V-Jq-ngh" id="ol0-3O-LSP"/>
                 <outlet property="commentCountLabel" destination="T4l-1k-Oub" id="BNn-Xm-2Lm"/>
                 <outlet property="dividerHeight" destination="Mvl-v2-UTp" id="7nK-a2-W4g"/>
                 <outlet property="dividerView" destination="fdl-XN-cDl" id="FTl-VH-e2o"/>

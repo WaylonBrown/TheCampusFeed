@@ -15,9 +15,8 @@
 @interface PostTableCell : TableCell<TableCellProtocol>
 
 @property (nonatomic, strong) Post* object;
-@property (weak, nonatomic) IBOutlet UIImageView *collegeLabelView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelViewHeight;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *pictureActivityIndicator;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelViewHeight;
 
 - (void)setNearCollege;
 - (void)hideCollegeLabel;

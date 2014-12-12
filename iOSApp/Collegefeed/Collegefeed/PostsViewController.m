@@ -26,19 +26,6 @@
 
 #pragma mark - Initialization
 
-- (id)initAsType:(ViewType)type withDataController:(DataController *)controller
-{
-    NSLog(@"WARNING: Deprecated method: [PVC initAsType]");
-    
-    self = [super initWithDataController:controller];
-    if (self)
-    {
-        [self setViewType:type];
-        [self setCommentViewController:[[CommentViewController alloc] initWithDataController:self.dataController]];
-    }
-    return self;
-}
-
 - (id)initWithDataController:(DataController *)controller
 {
     self = [super initWithDataController:controller];
