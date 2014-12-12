@@ -33,10 +33,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *upVoteButton;
 @property (weak, nonatomic) IBOutlet UIButton *downVoteButton;
 @property (weak, nonatomic) IBOutlet UIImageView *gpsIconImageView;
-@property (strong, nonatomic) IBOutlet UIView *dividerView;
+@property (weak, nonatomic) IBOutlet UIView *dividerView;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *pictureView;
 
-
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *pictureHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *postMessageHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *dividerHeight;

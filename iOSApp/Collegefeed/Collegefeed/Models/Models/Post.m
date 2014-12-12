@@ -107,7 +107,6 @@
     
     self = [super init];
     
-    
     if (self)
     {
         for (NSString *key in jsonDict)
@@ -193,6 +192,13 @@
 {
     return POST;
 }
-
+- (NSString *)getImage_url
+{
+    return self.image_url;
+}
+- (BOOL)hasImage
+{
+    return self.image_url != nil;
+}
 
 @end

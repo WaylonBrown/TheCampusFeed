@@ -39,7 +39,6 @@
 {
     [super layoutSubviews];
 }
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
@@ -51,7 +50,6 @@
 
 - (void)assignWith:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
 {
-    
     self.userIsNearCollege = isNearby;
     [self.gpsIconImageView setHidden:(!isNearby)];
     [self assign:obj WithMessageHeight:height];
@@ -79,6 +77,10 @@
     if ([obj getType] == POST)
     {   // Post cell
         [self.collegeLabel      setText:[obj getCollegeName]];
+        if ([obj hasImage])
+        {
+            [self populateImageViewFromUrl:[obj getImage_url]];
+        }
     }
     else
     {   // Comment cell
@@ -192,6 +194,17 @@
 
 #pragma mark - Helper Methods
 
+- (void)populateImageViewFromUrl:(NSString *)imgURL
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
+        
+        //set your image on main thread.
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.pictureView setImage:[UIImage imageWithData:data]];
+        });    
+    });
+}
 - (NSString *)getAgeAsString:(NSDate *)creationDate
 {   // return string indicating how long ago the post was created
     

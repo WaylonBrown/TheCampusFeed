@@ -28,6 +28,8 @@
 @property (nonatomic) NSNumber *vote_delta;
 @property (nonatomic) NSNumber *comment_count;
 @property (nonatomic) NSNumber *image_id;
+@property (nonatomic) NSString *image_url;
+@property (nonatomic) NSString *image_uri;
 
 // Not in API JSON
 @property (nonatomic, strong) Vote *vote;

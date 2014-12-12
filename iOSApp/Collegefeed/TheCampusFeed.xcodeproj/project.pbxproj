@@ -290,7 +290,7 @@
 			name = Toasts;
 			sourceTree = "<group>";
 		};
-		533475A019232A4A00E84CC8 /* Custom Cells */ = {
+		533475A019232A4A00E84CC8 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
 				533475A11923344100E84CC8 /* TableCell.h */,
@@ -303,7 +303,7 @@
 				53D6E985199DA4F500FD9061 /* LoadingCell.m */,
 				53D6E987199DA51500FD9061 /* LoadingCell.xib */,
 			);
-			name = "Custom Cells";
+			name = TableViewCell;
 			path = ..;
 			sourceTree = "<group>";
 		};
@@ -478,7 +478,7 @@
 				536D0E11196D0F5A00677C1B /* User Content */,
 				5350558119529FD5009C1911 /* Select College */,
 				5350557B1951458B009C1911 /* Create Post/Comment */,
-				533475A019232A4A00E84CC8 /* Custom Cells */,
+				533475A019232A4A00E84CC8 /* TableViewCell */,
 				538E7C9619D030C400AD5719 /* CF_DialogView */,
 			);
 			name = Views;

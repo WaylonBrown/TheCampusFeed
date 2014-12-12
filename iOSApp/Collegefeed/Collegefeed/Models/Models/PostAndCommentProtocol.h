@@ -26,5 +26,7 @@
 - (ModelType)getType;
 - (Vote *)getVote;
 - (void)setCollegeName:(NSString *)name;
+- (NSString *)getImage_url;
+- (BOOL)hasImage;
 
 @end
