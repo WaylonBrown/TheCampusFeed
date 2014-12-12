@@ -35,13 +35,9 @@
         [self findHashTags];
         [self updateVoteButtons];
   
-                    self.pictureHeight.constant = 60;
-        
-        
         if ([post hasImage])
         {
-            [self populateImageViewFromUrl:@"https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xap1/v/t1.0-1/p160x160/10848015_1527859764150204_3596210494637346061_n.jpg?oh=20dbf0fd1be0d87fb4275baf40867827&oe=550FDF47&__gda__=1426200760_45a6984b0a46f9557ad0c3219f1bb656"];
-//            [self populateImageViewFromUrl:[post getImage_url]];
+            [self populateImageViewFromUrl:[post getImage_url]];
             self.pictureHeight.constant = POST_CELL_PICTURE_HEIGHT_CROPPED;
         }
         else
@@ -77,13 +73,17 @@
 }
 - (void)populateImageViewFromUrl:(NSString *)imgURL
 {
+    [self.pictureActivityIndicator startAnimating];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
-        
-//        //set your image on main thread.
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [self.pictureView setImage:[UIImage imageWithData:data]];
-//        });
+
+        [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
+
+        // set your image on main thread.
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.pictureView setImage:[UIImage imageWithData:data]];
+            [self.pictureActivityIndicator stopAnimating];
+        });
     });
 }
 - (void)hideCollegeLabel

@@ -73,12 +73,16 @@
                         <color key="textColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowup.png" translatesAutoresizingMaskIntoConstraints="NO" id="Y0W-Fs-6OI" userLabel="Picture Image View">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Y0W-Fs-6OI" userLabel="Picture Image View">
                         <rect key="frame" x="56" y="67" width="243" height="100"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="100" id="n5l-rf-cD0"/>
                         </constraints>
                     </imageView>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="jjO-og-xap">
+                        <rect key="frame" x="159" y="99" width="37" height="37"/>
+                        <color key="color" red="0.20000000000000001" green="0.70980392160000005" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </activityIndicatorView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eN2-k4-A8N" userLabel="Upvote Area">
                         <rect key="frame" x="0.0" y="0.0" width="48" height="49"/>
                         <constraints>
@@ -153,6 +157,7 @@
                     </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Y0W-Fs-6OI" firstAttribute="centerY" secondItem="jjO-og-xap" secondAttribute="centerY" id="0wt-oL-cNa"/>
                     <constraint firstItem="t5I-NT-5A5" firstAttribute="leading" secondItem="Cq5-45-3Ym" secondAttribute="leading" constant="11" id="4RL-wK-Y4q"/>
                     <constraint firstItem="kfg-5C-Lm8" firstAttribute="width" secondItem="T4l-1k-Oub" secondAttribute="width" id="CMO-wk-jJd"/>
                     <constraint firstItem="Cq5-45-3Ym" firstAttribute="trailing" secondItem="sIp-eV-JKx" secondAttribute="trailing" constant="16" id="Dhl-oK-knH"/>
@@ -182,6 +187,7 @@
                     <constraint firstItem="t5I-NT-5A5" firstAttribute="top" secondItem="Cq5-45-3Ym" secondAttribute="top" constant="11" id="nH5-0a-bvC"/>
                     <constraint firstItem="wrD-ci-tbq" firstAttribute="leading" secondItem="c9W-O6-zoM" secondAttribute="leading" id="pwz-0t-FeY"/>
                     <constraint firstItem="Y0W-Fs-6OI" firstAttribute="trailing" secondItem="Cq5-45-3Ym" secondAttribute="trailing" constant="-16" id="rBG-hv-xmV"/>
+                    <constraint firstItem="Y0W-Fs-6OI" firstAttribute="centerX" secondItem="jjO-og-xap" secondAttribute="centerX" id="sOC-IS-6b0"/>
                     <constraint firstItem="1ge-Ex-mpH" firstAttribute="width" secondItem="Cq5-45-3Ym" secondAttribute="width" id="svx-XG-IAL"/>
                     <constraint firstAttribute="trailing" secondItem="Cq5-45-3Ym" secondAttribute="trailing" constant="5" id="tm6-z4-sCa"/>
                     <constraint firstItem="1ge-Ex-mpH" firstAttribute="top" secondItem="T4l-1k-Oub" secondAttribute="bottom" constant="1" id="tq9-9X-5ig"/>
@@ -207,6 +213,7 @@
                 <outlet property="gpsIconImageView" destination="25r-WJ-O4q" id="6r9-zg-mnZ"/>
                 <outlet property="messageHeight" destination="lep-TQ-8VJ" id="beD-5s-qqh"/>
                 <outlet property="messageLabel" destination="sIp-eV-JKx" id="Lr9-9a-eHP"/>
+                <outlet property="pictureActivityIndicator" destination="jjO-og-xap" id="yWw-kc-rnd"/>
                 <outlet property="pictureHeight" destination="n5l-rf-cD0" id="nZd-0G-eLD"/>
                 <outlet property="pictureView" destination="Y0W-Fs-6OI" id="4wv-B8-bI3"/>
                 <outlet property="scoreLabel" destination="eMo-5T-azS" id="Xf0-49-cK8"/>
