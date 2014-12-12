@@ -23,22 +23,26 @@
         // assign cell's plain text labels
         self.messageLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentTop;
         [self.messageLabel      setText:[post getText]];
+        [self.collegeLabel      setText:[post getCollegeName]];
         [self.commentCountLabel setText:[self getCommentLabelString]];
         [self.ageLabel          setText:[self getAgeLabelString:[post getCreated_at]]];
         
-        [self.dividerHeight setConstant:0];
-        [self.collegeLabelHeight setConstant:0];
         
-        // Parse message for Tags
+        
+//        [self.dividerHeight setConstant:0];
+//        [self.collegeLabelHeight setConstant:0];
+        
         [self findHashTags];
-        
-        // assign arrow colors according to user's vote
         [self updateVoteButtons];
+  
+                    self.pictureHeight.constant = 60;
+        
         
         if ([post hasImage])
         {
-            [self populateImageViewFromUrl:[post getImage_url]];
-            self.pictureHeight.constant = CELL_CROPPED_PICTURE_HEIGHT;
+            [self populateImageViewFromUrl:@"https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xap1/v/t1.0-1/p160x160/10848015_1527859764150204_3596210494637346061_n.jpg?oh=20dbf0fd1be0d87fb4275baf40867827&oe=550FDF47&__gda__=1426200760_45a6984b0a46f9557ad0c3219f1bb656"];
+//            [self populateImageViewFromUrl:[post getImage_url]];
+            self.pictureHeight.constant = POST_CELL_PICTURE_HEIGHT_CROPPED;
         }
         else
         {
@@ -65,7 +69,7 @@
 }
 + (CGFloat)getCellHeight:(Post *)obj
 {
-    return [self getMessageHeight:[obj getText]] + LARGE_CELL_TOP_TO_LABEL + LARGE_CELL_LABEL_TO_BOTTOM /*+ CELL_HEIGHT_CUSHION*/ + ([obj hasImage] ? CELL_CROPPED_PICTURE_HEIGHT : 0);
+    return [self getMessageHeight:[obj getText]] + LARGE_CELL_TOP_TO_LABEL + LARGE_CELL_LABEL_TO_BOTTOM /*+ CELL_HEIGHT_CUSHION*/ + ([obj hasImage] ? POST_CELL_PICTURE_HEIGHT_CROPPED : 0);
 }
 - (void)setNearCollege
 {
@@ -90,10 +94,6 @@
 }
 - (void)showCollegeLabel
 {
-    UIImage *image = [UIImage imageNamed:@"card_without_9patch.png"];
-    UIImage *stretchableBackground = [image resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 8, 6) resizingMode:UIImageResizingModeStretch];
-    self.collegeLabelView.image = stretchableBackground;
-    
     self.collegeLabelViewHeight.constant = 30;
     [self.gpsIconImageView setHidden:!self.object.isNearCollege];
     [self setNeedsDisplay];
