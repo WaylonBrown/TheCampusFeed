@@ -32,7 +32,8 @@
 #define CF_WHITE       0xFFFFFF
 
 // TableCell Height Estimates
-
+#define MESSAGE_HEIGHT_TOP_CUSHION      10
+#define DEFAULT_CELL_HEIGHT           100
 #define LARGE_CELL_LABEL_WIDTH        252.0f
 #define LARGE_CELL_TOP_TO_LABEL       6.0f
 #define LARGE_CELL_LABEL_TO_BOTTOM    61.0f

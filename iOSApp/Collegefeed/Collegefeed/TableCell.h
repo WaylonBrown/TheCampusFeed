@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "TTTAttributedLabel.h"
+#import "TableCellProtocol.h"
+#import "ChildCellDelegate.h"
 
 @class Model;
 @class Post;
@@ -18,12 +20,11 @@
 @protocol PostAndCommentProtocol;
 @protocol CFModelProtocol;
 
-@interface TableCell : UITableViewCell <TTTAttributedLabelDelegate>
+@interface TableCell : UITableViewCell <TableCellProtocol, TTTAttributedLabelDelegate>
 
 @property (nonatomic, strong) NSObject<PostAndCommentProtocol, CFModelProtocol> *object;
-
-@property (weak, nonatomic) id<ChildCellDelegate> delegate;
-@property (nonatomic) BOOL userIsNearCollege;
+@property (nonatomic, strong) id<ChildCellDelegate> delegate;
+@property (nonatomic) BOOL isNearCollege;
 
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
@@ -38,17 +39,21 @@
 @property (weak, nonatomic) IBOutlet UIImageView *pictureView;
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *pictureHeight;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *postMessageHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *messageHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *dividerHeight;
 
-//- (void)assign:(NSObject<PostAndCommentProtocol> *)obj WithMessageHeight:(float)height;
+//- (BOOL)assignmentSuccessWith:(NSObject *)obj;
+- (NSString *)getCommentLabelString;
+- (NSString *)getAgeLabelString:(NSDate *)creationDate;
+- (void)findHashTags;
+- (void)updateVoteButtons;
+- (IBAction) upVotePressed:(id)sender;
+- (IBAction) downVotePresed:(id)sender;
+
+
 
 - (void)assignWith:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
 
-//- (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
-
-- (IBAction) upVotePressed:(id)sender;
-- (IBAction) downVotePresed:(id)sender;
 
 @end

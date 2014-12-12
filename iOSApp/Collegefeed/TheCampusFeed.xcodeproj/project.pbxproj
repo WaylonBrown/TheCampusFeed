@@ -79,6 +79,8 @@
 		53FF2D06195BCE430040E872 /* UserPosts.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D05195BCE430040E872 /* UserPosts.txt */; };
 		53FF2D0A195BCE7D0040E872 /* UserComments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D09195BCE7D0040E872 /* UserComments.txt */; };
 		53FF2D0C195BCE850040E872 /* UserVotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D0B195BCE850040E872 /* UserVotes.txt */; };
+		CD1B774B1A3AED6E00686579 /* PostTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD1B774A1A3AED6E00686579 /* PostTableCell.m */; };
+		CD1B774D1A3AEF7200686579 /* PostTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD1B774C1A3AEF7200686579 /* PostTableCell.xib */; };
 		CD539DD31A2CCE7D004A794E /* TopPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD21A2CCE7D004A794E /* TopPostsViewController.m */; };
 		CD539DD91A2CDE99004A794E /* NewPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD81A2CDE99004A794E /* NewPostsViewController.m */; };
 		CD539DDC1A2CE488004A794E /* TagPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DDB1A2CE488004A794E /* TagPostsViewController.m */; };
@@ -235,6 +237,10 @@
 		53FF2D05195BCE430040E872 /* UserPosts.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserPosts.txt; sourceTree = "<group>"; };
 		53FF2D09195BCE7D0040E872 /* UserComments.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserComments.txt; sourceTree = "<group>"; };
 		53FF2D0B195BCE850040E872 /* UserVotes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserVotes.txt; sourceTree = "<group>"; };
+		CD1B77481A3AD8B300686579 /* TableCellProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TableCellProtocol.h; path = Collegefeed/TableCellProtocol.h; sourceTree = "<group>"; };
+		CD1B774A1A3AED6E00686579 /* PostTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostTableCell.m; sourceTree = "<group>"; };
+		CD1B774C1A3AEF7200686579 /* PostTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTableCell.xib; sourceTree = "<group>"; };
+		CD1B774E1A3AFA3900686579 /* PostTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostTableCell.h; sourceTree = "<group>"; };
 		CD539DD11A2CCE7D004A794E /* TopPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPostsViewController.h; sourceTree = "<group>"; };
 		CD539DD21A2CCE7D004A794E /* TopPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPostsViewController.m; sourceTree = "<group>"; };
 		CD539DD71A2CDE99004A794E /* NewPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPostsViewController.h; sourceTree = "<group>"; };
@@ -290,12 +296,16 @@
 			name = Toasts;
 			sourceTree = "<group>";
 		};
-		533475A019232A4A00E84CC8 /* TableViewCell */ = {
+		533475A019232A4A00E84CC8 /* TableCell */ = {
 			isa = PBXGroup;
 			children = (
+				CD1B77481A3AD8B300686579 /* TableCellProtocol.h */,
 				533475A11923344100E84CC8 /* TableCell.h */,
 				533475A21923344100E84CC8 /* TableCell.m */,
 				533475A31923344100E84CC8 /* TableCell.xib */,
+				CD1B774E1A3AFA3900686579 /* PostTableCell.h */,
+				CD1B774A1A3AED6E00686579 /* PostTableCell.m */,
+				CD1B774C1A3AEF7200686579 /* PostTableCell.xib */,
 				53D51E361949625300A8BA81 /* SimpleTableCell.h */,
 				53D51E371949625300A8BA81 /* SimpleTableCell.m */,
 				53D51E381949625300A8BA81 /* SimpleTableCell.xib */,
@@ -303,7 +313,7 @@
 				53D6E985199DA4F500FD9061 /* LoadingCell.m */,
 				53D6E987199DA51500FD9061 /* LoadingCell.xib */,
 			);
-			name = TableViewCell;
+			name = TableCell;
 			path = ..;
 			sourceTree = "<group>";
 		};
@@ -478,7 +488,7 @@
 				536D0E11196D0F5A00677C1B /* User Content */,
 				5350558119529FD5009C1911 /* Select College */,
 				5350557B1951458B009C1911 /* Create Post/Comment */,
-				533475A019232A4A00E84CC8 /* TableViewCell */,
+				533475A019232A4A00E84CC8 /* TableCell */,
 				538E7C9619D030C400AD5719 /* CF_DialogView */,
 			);
 			name = Views;
@@ -724,6 +734,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD1B774D1A3AEF7200686579 /* PostTableCell.xib in Resources */,
 				5390A9221914B76800ACD082 /* collegefeedlogosmall.png in Resources */,
 				5311F86119C961250053D3CC /* second_small.png in Resources */,
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
@@ -780,6 +791,7 @@
 				CD539DD31A2CCE7D004A794E /* TopPostsViewController.m in Sources */,
 				53DE347719AD00AE004CB5A0 /* IIViewDeckController.m in Sources */,
 				5350557F19529FCA009C1911 /* FeedSelectViewController.m in Sources */,
+				CD1B774B1A3AED6E00686579 /* PostTableCell.m in Sources */,
 				5347EEB5197E9EC7001B2214 /* MenuViewController.m in Sources */,
 				53F878A119133F60002A578B /* AppDelegate.m in Sources */,
 				53DE347F19AD01FF004CB5A0 /* IISideController.m in Sources */,

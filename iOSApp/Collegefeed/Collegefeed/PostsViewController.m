@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "PostTableCell.h"
+
 #import "TableCell.h"
 #import "PostsViewController.h"
 #import "Post.h"
@@ -133,8 +135,10 @@
 //        return cell;
 //    }
     
-    static NSString *CellIdentifier = @"TableCell";
-    TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//    static NSString *CellIdentifier = @"TableCell";
+    static NSString *CellIdentifier = @"PostTableCell";
+    PostTableCell *cell = (PostTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//    TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil)
     {
@@ -143,7 +147,10 @@
         cell = [nib objectAtIndex:0];
 
     }
-    [cell setDelegate: self];
+//    [cell setDelegate: self];
+    
+    
+    
 //    if (self.viewType == USER_COMMENTS)
 //    {
 //        Comment *comment = [self.list objectAtIndex:indexPath.row];
@@ -157,9 +164,17 @@
     
     // get the post and display in this cell
     Post *post = [self.list objectAtIndex:indexPath.row];
-    BOOL isNearCollege = [self.dataController.nearbyColleges containsObject:post.college];
-    float messageHeight = [Shared getLargeCellMessageHeight:post.text WithFont:CF_FONT_LIGHT(16)];
-    [cell assignWith:post IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
+    if([self.dataController.nearbyColleges containsObject:post.college])
+    {   // TODO: make this assignment done automatically somewhere when Post model is being built
+        
+        post.isNearCollege = YES;
+        
+//        [cell setNearCollege];
+//        [cell setIsNearCollege:YES];
+    }
+    bool success = [cell assignmentSuccessWith:post];
+//    float messageHeight = [Shared getLargeCellMessageHeight:post.text WithFont:CF_FONT_LIGHT(16)];
+//    [cell assignWith:post IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
     
     return cell;
 }
@@ -199,10 +214,13 @@
     if (row < [self.list count])
     {
         Post *post = [self.list objectAtIndex:row];
-        text = [post getText];
-        return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)];
+//        text = [post getText];
+        return [PostTableCell getCellHeight:post];  //:text];
+        
+//        return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)];
     }
-    return [Shared getSmallCellHeightEstimateWithText:@"" WithFont:nil];
+    return DEFAULT_CELL_HEIGHT;
+//    return [Shared getSmallCellHeightEstimateWithText:@"" WithFont:nil];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {

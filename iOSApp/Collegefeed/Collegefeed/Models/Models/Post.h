@@ -38,6 +38,7 @@
 @property (nonatomic, strong) NSString *collegeName;
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, strong) NSURL *POSTurl;
+@property (nonatomic) BOOL isNearCollege;
 
 - (id)initWithMessage:(NSString *)newMessage
         withCollegeId:(NSNumber *)collegeId
