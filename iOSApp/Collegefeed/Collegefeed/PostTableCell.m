@@ -48,10 +48,6 @@
     
     return NO;
 }
-- (void)viewWillAppear:(BOOL)animated
-{
-    
-}
 - (CGFloat)getMessageHeight
 {
     return [PostTableCell getMessageHeight:[self.object getText]];

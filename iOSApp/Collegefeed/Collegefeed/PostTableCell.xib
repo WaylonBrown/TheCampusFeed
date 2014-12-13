@@ -73,7 +73,7 @@
                         <color key="textColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Y0W-Fs-6OI" userLabel="Picture Image View">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Y0W-Fs-6OI" userLabel="Picture Image View">
                         <rect key="frame" x="56" y="67" width="243" height="100"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="100" id="n5l-rf-cD0"/>
