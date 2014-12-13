@@ -122,15 +122,9 @@
 //        return cell;
 //    }
     
-    Post *post = [self.list objectAtIndex:indexPath.row];
-
-    
-    
-//    static NSString *CellIdentifier = @"TableCell";
+    // Build a TableCell for Posts
     static NSString *CellIdentifier = @"PostTableCell";
-    
     PostTableCell *cell = (PostTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//    TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil)
     {
@@ -140,16 +134,13 @@
 
     }
     [cell setDelegate: self];
+
+    // Get the post and display in this cell
+    Post *post = [self.list objectAtIndex:indexPath.row];
     
-    
-    // get the post and display in this cell
     if([self.dataController.nearbyColleges containsObject:post.college])
     {   // TODO: make this assignment done automatically somewhere when Post model is being built
-        
         post.isNearCollege = YES;
-        
-//        [cell setNearCollege];
-//        [cell setIsNearCollege:YES];
     }
     bool success = [cell assignmentSuccessWith:post];
     if (self.dataController.showingAllColleges)
@@ -160,9 +151,7 @@
     {
         [cell hideCollegeLabel];
     }
-//    float messageHeight = [Shared getLargeCellMessageHeight:post.text WithFont:CF_FONT_LIGHT(16)];
-//    [cell assignWith:post IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
-    
+
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -175,19 +164,7 @@
     }
     
     Post *selectedPost = [self.list objectAtIndex:indexPath.row];
-//    NSObject<PostAndCommentProtocol> *selected = [self.list objectAtIndex:indexPath.row];
-//    if (self.viewType == USER_COMMENTS)
-//    {   // User selected one of their submitted comments (they are in Post format)
-//        Post *parentPost = [self.dataController fetchParentPostOfComment:(Comment *)selected];
-//        if (parentPost != nil)
-//        {
-//            [self.dataController setPostInFocus:parentPost];
-//        }
-//    }
-//    else
-//    {
     [self.dataController setPostInFocus:selectedPost];
-//    }
     
     [self.navigationController pushViewController:self.commentViewController
                                          animated:YES];
@@ -196,19 +173,14 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger row = indexPath.row;
-    NSString *text = @"";
     
     if (row < [self.list count])
     {
         Post *post = [self.list objectAtIndex:row];
-//        text = [post getText];
-        float height = [PostTableCell getCellHeight:post];
-        return height;
-        
-//        return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)];
+        return [PostTableCell getCellHeight:post];
     }
+    
     return DEFAULT_CELL_HEIGHT;
-//    return [Shared getSmallCellHeightEstimateWithText:@"" WithFont:nil];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {

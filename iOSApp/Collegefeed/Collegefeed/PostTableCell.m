@@ -15,6 +15,7 @@
 {
     if ([super assignmentSuccessWith:post])
     {
+        
         [self setObject:post];
         
         [self.gpsIconImageView setHidden:post.isNearCollege];
@@ -26,11 +27,6 @@
         [self.collegeLabel      setText:[post getCollegeName]];
         [self.commentCountLabel setText:[self getCommentLabelString]];
         [self.ageLabel          setText:[self getAgeLabelString:[post getCreated_at]]];
-        
-        
-        
-//        [self.dividerHeight setConstant:0];
-//        [self.collegeLabelHeight setConstant:0];
         
         [self findHashTags];
         [self updateVoteButtons];
@@ -52,7 +48,10 @@
     
     return NO;
 }
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    
+}
 - (CGFloat)getMessageHeight
 {
     return [PostTableCell getMessageHeight:[self.object getText]];
@@ -73,13 +72,15 @@
 }
 - (void)populateImageViewFromUrl:(NSString *)imgURL
 {
+    self.pictureView.image = nil;
     [self.pictureActivityIndicator startAnimating];
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
 
         [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
 
-        // set your image on main thread.
+        // set image on main thread.
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.pictureView setImage:[UIImage imageWithData:data]];
             [self.pictureActivityIndicator stopAnimating];
