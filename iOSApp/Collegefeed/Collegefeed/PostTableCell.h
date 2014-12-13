@@ -16,7 +16,6 @@
 
 @property (nonatomic, strong) Post* object;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *pictureActivityIndicator;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelViewHeight;
 
 - (void)setNearCollege;
 - (void)hideCollegeLabel;

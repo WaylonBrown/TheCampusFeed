@@ -42,6 +42,7 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *messageHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *dividerHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelViewHeight;
 
 //- (BOOL)assignmentSuccessWith:(NSObject *)obj;
 - (NSString *)getCommentLabelString;

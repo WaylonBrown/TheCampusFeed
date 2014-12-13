@@ -83,6 +83,7 @@
 		CD539DD91A2CDE99004A794E /* NewPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD81A2CDE99004A794E /* NewPostsViewController.m */; };
 		CD539DDC1A2CE488004A794E /* TagPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DDB1A2CE488004A794E /* TagPostsViewController.m */; };
 		CD5887591A21501100D864FD /* NSMutableArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */; };
+		CD76C1CD1A3BC176002F0C9F /* CommentTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD76C1CC1A3BC176002F0C9F /* CommentTableCell.m */; };
 		CDF14D921A3B6D24006D8F2C /* PostTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF14D8E1A3B6D24006D8F2C /* PostTableCell.m */; };
 		CDF14D931A3B6D24006D8F2C /* PostTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDF14D8F1A3B6D24006D8F2C /* PostTableCell.xib */; };
 		CDF66BEB1A36CEBD008C62DD /* bad_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = CDF66BEA1A36CEBD008C62DD /* bad_words.txt */; };
@@ -246,6 +247,8 @@
 		CD539DDB1A2CE488004A794E /* TagPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagPostsViewController.m; sourceTree = "<group>"; };
 		CD539DDD1A2CF54C004A794E /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMutableArrayExtensions.swift; sourceTree = "<group>"; };
+		CD76C1CB1A3BC176002F0C9F /* CommentTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentTableCell.h; path = Collegefeed/CommentTableCell.h; sourceTree = "<group>"; };
+		CD76C1CC1A3BC176002F0C9F /* CommentTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentTableCell.m; path = Collegefeed/CommentTableCell.m; sourceTree = "<group>"; };
 		CDF14D8D1A3B6D24006D8F2C /* PostTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostTableCell.h; path = Collegefeed/PostTableCell.h; sourceTree = "<group>"; };
 		CDF14D8E1A3B6D24006D8F2C /* PostTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostTableCell.m; path = Collegefeed/PostTableCell.m; sourceTree = "<group>"; };
 		CDF14D8F1A3B6D24006D8F2C /* PostTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostTableCell.xib; path = Collegefeed/PostTableCell.xib; sourceTree = "<group>"; };
@@ -299,6 +302,7 @@
 		533475A019232A4A00E84CC8 /* TableCell */ = {
 			isa = PBXGroup;
 			children = (
+				CD76C1C81A3BC14D002F0C9F /* CommentTableCell */,
 				CD1B77481A3AD8B300686579 /* TableCellProtocol.h */,
 				533475A11923344100E84CC8 /* TableCell.h */,
 				533475A21923344100E84CC8 /* TableCell.m */,
@@ -632,6 +636,15 @@
 			name = "Comment View";
 			sourceTree = "<group>";
 		};
+		CD76C1C81A3BC14D002F0C9F /* CommentTableCell */ = {
+			isa = PBXGroup;
+			children = (
+				CD76C1CB1A3BC176002F0C9F /* CommentTableCell.h */,
+				CD76C1CC1A3BC176002F0C9F /* CommentTableCell.m */,
+			);
+			name = CommentTableCell;
+			sourceTree = "<group>";
+		};
 		CDF14D951A3B6DA2006D8F2C /* PostTableCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -792,6 +805,7 @@
 			files = (
 				53DE348019AD01FF004CB5A0 /* IIWrapController.m in Sources */,
 				5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */,
+				CD76C1CD1A3BC176002F0C9F /* CommentTableCell.m in Sources */,
 				5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */,
 				538E7C9219D030C000AD5719 /* CF_DialogViewController.m in Sources */,
 				CDF14D921A3B6D24006D8F2C /* PostTableCell.m in Sources */,
