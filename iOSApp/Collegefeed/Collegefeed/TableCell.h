@@ -37,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet UIView *dividerView;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *pictureView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *pictureActivityIndicator;
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *pictureHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *messageHeight;

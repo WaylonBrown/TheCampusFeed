@@ -15,7 +15,6 @@
 @interface PostTableCell : TableCell<TableCellProtocol>
 
 @property (nonatomic, strong) Post* object;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *pictureActivityIndicator;
 
 - (void)setNearCollege;
 - (void)hideCollegeLabel;

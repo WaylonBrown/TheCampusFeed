@@ -6,9 +6,11 @@
 //  Copyright (c) 2014 Appuccino. All rights reserved.
 //
 
-#import "TableCell.h"
+#import "PostTableCell.h"
 #import "Comment.h"
 
-@interface CommentTableCell : TableCell<TableCellProtocol>
+@interface CommentTableCell : PostTableCell
+
+@property (nonatomic, strong) Comment* object;
 
 @end

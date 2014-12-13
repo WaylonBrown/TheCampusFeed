@@ -123,15 +123,12 @@
 //    }
     
     // Build a TableCell for Posts
-    static NSString *CellIdentifier = @"PostTableCell";
+    static NSString *CellIdentifier = @"TableCell";
     PostTableCell *cell = (PostTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil)
     {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier
-                                                     owner:self options:nil];
-        cell = [nib objectAtIndex:0];
-
+        cell = [PostTableCell new];
     }
     [cell setDelegate: self];
 
@@ -142,7 +139,7 @@
     {   // TODO: make this assignment done automatically somewhere when Post model is being built
         post.isNearCollege = YES;
     }
-    bool success = [cell assignmentSuccessWith:post];
+    [cell assignmentSuccessWith:post];
     if (self.dataController.showingAllColleges)
     {
         [cell showCollegeLabel];

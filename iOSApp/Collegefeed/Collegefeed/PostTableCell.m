@@ -11,11 +11,18 @@
 // Represents the most basic cell for Posts (no images or college names)
 @implementation PostTableCell
 
+- (id)init
+{
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TableCell"
+                                                 owner:self options:nil];
+    self = (PostTableCell *)[nib objectAtIndex:0];
+    
+    return self;
+}
 - (BOOL)assignmentSuccessWith:(Post *)post
 {
     if ([super assignmentSuccessWith:post])
     {
-        
         [self setObject:post];
         
         [self.gpsIconImageView setHidden:post.isNearCollege];

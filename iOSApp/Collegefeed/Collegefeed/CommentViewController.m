@@ -9,6 +9,8 @@
 #import <Social/Social.h>
 
 #import "TableCell.h"
+#import "PostTableCell.h"
+
 #import "PostsViewController.h"
 #import "Post.h"
 #import "PostsViewController.h"
@@ -23,7 +25,6 @@
 
 @implementation CommentViewController
 
-#pragma mark - Initialization
 
 - (id)initWithDataController:(DataController *)controller
 {
@@ -128,15 +129,18 @@
     
     if (tableView == self.postTableView)
     {   // PostView table; get the original post to display in this table
+        static NSString *CellIdentifier = @"PostTableCell";
+        PostTableCell *cell = (PostTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         
-        if (parentPost != nil)
+        if (cell == nil)
         {
-            float messageHeight = [Shared getLargeCellMessageHeight:parentPost.text WithFont:CF_FONT_LIGHT(16)];
-            [cell assignWith:parentPost IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier
+                                                         owner:self options:nil];
+            cell = [nib objectAtIndex:0];
+            
         }
-        
-        [cell.commentCountLabel setHidden:YES];
-        [cell.gpsIconImageView setHidden:YES];
+        [cell assignmentSuccessWith:parentPost];
+        [cell hideCollegeLabel];
     }
     else if (tableView == self.commentTableView && indexPath.row < [self.dataController.commentList count])
     {   // CommentView table; get the comments to be displayed

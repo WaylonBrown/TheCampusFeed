@@ -10,12 +10,34 @@
 
 @implementation CommentTableCell
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+- (BOOL)assignmentSuccessWith:(Comment *)comment
+{
+    if ([super assignmentSuccessWith:comment])
+    {
+        [self setObject:comment];
+        
+        [self.gpsIconImageView setHidden:YES];
+        self.collegeLabelViewHeight.constant = 0;
+        self.pictureHeight.constant = 0;
+        self.messageHeight.constant = [self getMessageHeight];;
+        
+        // assign cell's plain text labels
+        self.messageLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentTop;
+        [self.messageLabel      setText:[comment getText]];
+        [self.commentCountLabel setText:[self getCommentLabelString]];
+        [self.ageLabel          setText:[self getAgeLabelString:[comment getCreated_at]]];
+        
+        [self findHashTags];
+        [self updateVoteButtons];
+        
+        
+        [self setNeedsDisplay];
+        
+        return YES;
+    }
+    
+    return NO;
 }
-*/
+
 
 @end
