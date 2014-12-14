@@ -387,8 +387,7 @@
                         {
                             NSData *commentData = [Networker GETCommentsWithPostId:[post.id longValue]];
                             NSArray *fetchedComments = [self parseData:commentData asModelType:COMMENT];
-                            self.commentList = [NSMutableArray arrayWithArray:fetchedComments];
-                            // [self.commentList insertObjectsWithUniqueIds:fetchedComments];
+                            [self.commentList insertObjectsWithUniqueIds:fetchedComments];
                             
                             [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
                         }
@@ -1037,7 +1036,7 @@
         
     }
 }
-- (NSArray *)parseData:(NSData *)data asModelType:(ModelType) type
+- (NSArray *)parseData:(NSData *)data asModelType:(ModelType)type
 {
     // VERSION 3
     

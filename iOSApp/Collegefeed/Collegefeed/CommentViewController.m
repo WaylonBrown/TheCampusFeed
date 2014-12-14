@@ -34,6 +34,7 @@
     {
         [self setDataController:controller];
         [self initializeViewElements];
+        
     }
     return self;
 }
@@ -50,7 +51,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
  
-    [self.dataController.commentList removeAllObjects];
+//    [self.dataController.commentList removeAllObjects];
+    
+    [self setCorrectList];
     [super viewWillAppear:animated];
     
 }
@@ -117,65 +120,36 @@
 {   // Get the table view cell for the given row
     // This method handles two table views: one for the post and another for it's comments
     
-//    static NSString *CellIdentifier = @"TableCell";
-//    TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//    if (cell == nil)
-//    {
-//        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
-//        cell = [nib objectAtIndex:0];
-//    }
-    
     Post *parentPost = self.dataController.postInFocus;
-    BOOL isNearCollege = [self.dataController.nearbyColleges containsObject:parentPost.college];
+    static NSString *CellIdentifier = @"TableCell";
+    
+    CommentTableCell *cell = (CommentTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell == nil)
+    {
+        cell = (CommentTableCell *)[[[NSBundle mainBundle] loadNibNamed:CellIdentifier
+                                                                  owner:self options:nil] objectAtIndex:0];
+    }
     
     if (tableView == self.postTableView)
     {   // PostView table; get the original post to display in this table
-        
-        static NSString *PostCellIdentifier = @"PostTableCell";
-        PostTableCell *postCell = (PostTableCell *)[tableView dequeueReusableCellWithIdentifier:PostCellIdentifier];
-        
-        if (postCell == nil)
-        {
-            postCell = [PostTableCell new];
-        }
-        
-        [postCell assignWithPost:parentPost withCollegeLabel:NO];
-        
-        return postCell;
+        [cell assignWithPost:parentPost withCollegeLabel:NO];
+        return cell;
     }
-    else if (tableView == self.commentTableView && indexPath.row < [self.dataController.commentList count])
+    else if (tableView == self.commentTableView)
     {   // CommentView table; get the comments to be displayed
-        static NSString *CommentCellIdentifier = @"CommentTableCell";
-        CommentTableCell *cell = (CommentTableCell *)[tableView dequeueReusableCellWithIdentifier:CommentCellIdentifier];
 
-        if (cell == nil)
+        if (self.list.count < indexPath.row)
         {
-            cell = [CommentTableCell new];
+            Comment *comment = [self.list objectAtIndex:indexPath.row];
+            [cell assignWithComment:comment];
+            cell.delegate = self;
         }
         
-        Comment *comment = (Comment*)[self.dataController.commentList objectAtIndex:indexPath.row];
-        if (comment != nil)
-        {
-            if (parentPost != nil)
-            {
-                [comment setCollege_id:parentPost.college_id];
-            }
-            [cell assignWithComment:comment];
-//            [cell assignmentSuccessWith:comment];
-            
-//            float messageHeight = [Shared getLargeCellMessageHeight:comment.text WithFont:CF_FONT_LIGHT(16)];
-//            [cell assignWith:comment IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
-        }
-
-        [cell setDelegate:self];
         return cell;
     }
     
-    return [TableCell new];
-//    [cell setDelegate:self];
-//    [cell.dividerHeight setConstant:0];
-//    [cell.collegeLabelHeight setConstant:0];
-//    return cell;
+    return nil;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {   // first section is the original post, second is the post's comments
@@ -183,8 +157,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Number of rows in table views
-    
-    if (tableView == self.commentTableView) return [self.dataController.commentList count];
+    if (tableView == self.commentTableView) return [self.list count];
     else if (tableView == self.postTableView) return 1;
     return 0;
 }
@@ -196,22 +169,25 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *cellText = @"";
-    float offset = -24; // to omit extra height of college label
     
     if (tableView == self.postTableView)
     {
         Post *post = self.dataController.postInFocus;
         if (post != nil)
             cellText = post.text;
+        
+        return [CommentTableCell getCellHeight:post];
     }
     else if (tableView == self.commentTableView)
     {
-        Comment *comment = [self.dataController.commentList objectAtIndex:[indexPath row]];
+        Comment *comment = [self.list objectAtIndex:[indexPath row]];
         if (comment != nil)
             cellText = comment.text;
-    }
 
-    return [Shared getLargeCellHeightEstimateWithText:cellText WithFont:CF_FONT_LIGHT(16)] + offset;
+        return [CommentTableCell getCellHeight:comment];
+    }
+    
+    return 0;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {   // return the header title for the 'Comments' section
@@ -256,10 +232,9 @@
 - (void)fetchContent
 {   // Fetches new content for this view
     
-    [self.dataController.commentList removeAllObjects];
-    [self.contentLoadingIndicator startAnimating];
-    
     [super fetchContent];
+    
+    [self.contentLoadingIndicator startAnimating];
     
     // Spawn separate thread for network access
     [self.dataController fetchCommentsForPost:self.dataController.postInFocus];
@@ -361,6 +336,10 @@
 
 #pragma mark - Helper Methods
 
+- (void)setCorrectList
+{
+    [self setList:self.dataController.commentList];
+}
 - (NSString *)getAgeOfCommentAsString:(NSDate *)commentDate
 {   // return string indicating how long ago the comment was created
     int commentAgeSeconds = [[NSDate date] timeIntervalSinceDate:commentDate];

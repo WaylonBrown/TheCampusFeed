@@ -20,8 +20,6 @@
 @property (nonatomic) ViewType viewType;
 @property (nonatomic) BOOL hasReachedEndOfList;
 
-- (id)initAsType:(ViewType)type withDataController:(DataController *)controller;
-
 - (void)setCorrectList;
 - (void)fetchContent;
 - (void)finishedFetchRequest;

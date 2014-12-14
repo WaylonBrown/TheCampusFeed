@@ -24,13 +24,14 @@
         [self setObject:comment];
         
         [super shouldShowCollegeLabel:NO];
+        [self.commentCountLabel setHidden:YES];
+        
         self.pictureHeight.constant = 0;
         self.messageHeight.constant = [self getMessageHeight];;
         
-        // assign cell's plain text labels
         self.messageLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentTop;
         [self.messageLabel      setText:[comment getText]];
-        [self.commentCountLabel setText:[self getCommentLabelString]];
+
         [self.ageLabel          setText:[self getAgeLabelString:[comment getCreated_at]]];
         
         [self findHashTags];

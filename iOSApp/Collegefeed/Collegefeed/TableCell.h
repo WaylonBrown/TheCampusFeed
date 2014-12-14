@@ -11,6 +11,8 @@
 #import "TableCellProtocol.h"
 #import "ChildCellDelegate.h"
 
+#define DEFAULT_COLLEGE_LABEL_HEIGHT 
+
 @class Model;
 @class Post;
 @class Vote;
@@ -41,8 +43,6 @@
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *pictureHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *messageHeight;
-//@property (strong, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelHeight;
-//@property (strong, nonatomic) IBOutlet NSLayoutConstraint *dividerHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelViewHeight;
 
 //- (BOOL)assignmentSuccessWith:(NSObject *)obj;

@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "PostTableCell.h"
 
-//#import "TableCell.h"
 #import "PostsViewController.h"
 #import "Post.h"
 #import "Vote.h"
@@ -38,6 +37,10 @@
 
 #pragma mark - View Loading
 
+- (void)loadView
+{
+    [super loadView];
+}
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
     
@@ -67,10 +70,6 @@
 
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-}
-- (void)loadView
-{
-    [super loadView];
 }
 
 #pragma mark - Table View
@@ -133,7 +132,10 @@
 
 //        cell = [[PostTableCell alloc] init];
     }
-    [cell setDelegate: self];
+    
+    
+    cell.delegate = self;
+//    [cell setDelegate: self];
 
     // Get the post and display in this cell
     Post *post = [self.list objectAtIndex:indexPath.row];

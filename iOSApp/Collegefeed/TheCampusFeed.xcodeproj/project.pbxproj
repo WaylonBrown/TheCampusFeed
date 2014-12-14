@@ -301,13 +301,13 @@
 			isa = PBXGroup;
 			children = (
 				CD1B77481A3AD8B300686579 /* TableCellProtocol.h */,
+				533475A31923344100E84CC8 /* TableCell.xib */,
 				533475A11923344100E84CC8 /* TableCell.h */,
 				533475A21923344100E84CC8 /* TableCell.m */,
-				533475A31923344100E84CC8 /* TableCell.xib */,
-				CD76C1CB1A3BC176002F0C9F /* CommentTableCell.h */,
-				CD76C1CC1A3BC176002F0C9F /* CommentTableCell.m */,
 				CDF14D8D1A3B6D24006D8F2C /* PostTableCell.h */,
 				CDF14D8E1A3B6D24006D8F2C /* PostTableCell.m */,
+				CD76C1CB1A3BC176002F0C9F /* CommentTableCell.h */,
+				CD76C1CC1A3BC176002F0C9F /* CommentTableCell.m */,
 				CD76C1CE1A3D50CA002F0C9F /* TODO */,
 			);
 			name = TableCell;
