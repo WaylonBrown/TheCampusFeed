@@ -171,7 +171,7 @@
     if (row < [self.list count])
     {
         Post *post = [self.list objectAtIndex:row];
-        return [PostTableCell getCellHeight:post];
+        return [PostTableCell getCellHeightWithObject:post withCollege:self.dataController.showingAllColleges];
     }
     
     return DEFAULT_CELL_HEIGHT;

@@ -133,8 +133,10 @@
     
     if (tableView == self.postTableView)
     {   // PostView table; get the original post to display in this table
-        [cell assignWithPost:parentPost withCollegeLabel:NO];
-        return cell;
+        PostTableCell *postCell = (PostTableCell *)[[[NSBundle mainBundle] loadNibNamed:CellIdentifier
+                                                                                  owner:self options:nil] objectAtIndex:0];
+        [postCell assignWithPost:parentPost withCollegeLabel:NO];
+        return postCell;
     }
     else if (tableView == self.commentTableView)
     {   // CommentView table; get the comments to be displayed
@@ -176,7 +178,7 @@
         if (post != nil)
             cellText = post.text;
         
-        return [CommentTableCell getCellHeight:post];
+        return [PostTableCell getCellHeight:post];
     }
     else if (tableView == self.commentTableView)
     {

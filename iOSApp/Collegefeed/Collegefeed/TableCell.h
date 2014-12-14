@@ -11,7 +11,7 @@
 #import "TableCellProtocol.h"
 #import "ChildCellDelegate.h"
 
-#define DEFAULT_COLLEGE_LABEL_HEIGHT 
+#define DEFAULT_COLLEGE_LABEL_HEIGHT 33
 
 @class Model;
 @class Post;
@@ -27,7 +27,6 @@
 @property (nonatomic, strong) NSObject<PostAndCommentProtocol, CFModelProtocol> *object;
 @property (nonatomic, strong) id<ChildCellDelegate> delegate;
 @property (nonatomic) BOOL isNearCollege;
-
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
@@ -40,22 +39,16 @@
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *pictureView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *pictureActivityIndicator;
-
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *pictureHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *messageHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelViewHeight;
 
-//- (BOOL)assignmentSuccessWith:(NSObject *)obj;
+
 - (NSString *)getCommentLabelString;
 - (NSString *)getAgeLabelString:(NSDate *)creationDate;
 - (void)findHashTags;
 - (void)updateVoteButtons;
 - (IBAction) upVotePressed:(id)sender;
 - (IBAction) downVotePresed:(id)sender;
-
-
-
-//- (void)assignWith:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
-
 
 @end

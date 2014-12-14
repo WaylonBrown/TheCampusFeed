@@ -41,7 +41,7 @@
 // TableCell Height Estimates
 #define POST_CELL_PICTURE_HEIGHT_CROPPED     125
 #define LARGE_CELL_TOP_TO_LABEL       11
-#define LARGE_CELL_LABEL_TO_BOTTOM    64
+#define LARGE_CELL_LABEL_TO_BOTTOM    31
 #define LARGE_CELL_MIN_LABEL_HEIGHT   53
 
 

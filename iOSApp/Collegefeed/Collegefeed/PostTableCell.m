@@ -74,15 +74,13 @@
 {
     return [PostTableCell getMessageHeight:[self.object getText]];
 }
-- (CGFloat)getCellHeight
+- (CGFloat)getCellHeightWithCollege:(BOOL)withCollege
 {
-    #define CELL_HEIGHT_CUSHION 13
-    
-    return [self getMessageHeight] + LARGE_CELL_TOP_TO_LABEL + LARGE_CELL_LABEL_TO_BOTTOM  /*+ CELL_HEIGHT_CUSHION*/ + self.pictureHeight.constant + self.collegeLabelViewHeight.constant;
+    return [PostTableCell getCellHeightWithObject:self.object withCollege:withCollege];
 }
-+ (CGFloat)getCellHeight:(Post *)obj
++ (CGFloat)getCellHeightWithObject:(Post *)obj withCollege:(BOOL)withCollege
 {
-    return [self getMessageHeight:[obj getText]] + LARGE_CELL_TOP_TO_LABEL + LARGE_CELL_LABEL_TO_BOTTOM /*+ CELL_HEIGHT_CUSHION*/ + ([obj hasImage] ? POST_CELL_PICTURE_HEIGHT_CROPPED : 0);
+    return [self getMessageHeight:[obj getText]] + LARGE_CELL_TOP_TO_LABEL + LARGE_CELL_LABEL_TO_BOTTOM + ([obj hasImage] ? POST_CELL_PICTURE_HEIGHT_CROPPED : 0) + (withCollege ? DEFAULT_COLLEGE_LABEL_HEIGHT : 0);
 }
 - (void)setNearCollege
 {

@@ -1029,13 +1029,6 @@
 
 #pragma mark - Helper Methods
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0)
-    {
-        
-    }
-}
 - (NSArray *)parseData:(NSData *)data asModelType:(ModelType)type
 {
     // VERSION 3
@@ -1056,7 +1049,7 @@
                     case POST:
                         {
                             Post *post = [[Post alloc] initFromJSON:jsonObject];
-                            //                    long collegeID = [post getCollegeID];
+                            //long collegeID = [post getCollegeID];
                             College *college = [self getCollegeById:[[post getCollege_id] longValue]];
                             [post setCollege:college];
                             long postID = [[post getID] longValue];
