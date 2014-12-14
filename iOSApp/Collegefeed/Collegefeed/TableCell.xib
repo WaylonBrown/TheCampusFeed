@@ -14,7 +14,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rqB-Zs-r8z" userLabel="Background Image View">
-                        <rect key="frame" x="5" y="0.0" width="310" height="226"/>
+                        <rect key="frame" x="5" y="0.0" width="310" height="231"/>
                     </imageView>
                     <button opaque="NO" contentMode="center" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CFP-gB-DqR">
                         <rect key="frame" x="16" y="11" width="24" height="27"/>
@@ -115,7 +115,7 @@
                         </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FDW-Wg-pRI" userLabel="College Label View">
-                        <rect key="frame" x="5" y="196" width="310" height="33"/>
+                        <rect key="frame" x="5" y="201" width="310" height="33"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nko-N3-VWB" userLabel="View - divider">
                                 <rect key="frame" x="3" y="0.0" width="303" height="1"/>
@@ -126,7 +126,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="collegeLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LUb-KP-81z">
-                                <rect key="frame" x="33" y="4" width="244" height="22"/>
+                                <rect key="frame" x="33" y="6" width="244" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -147,7 +147,6 @@
                             <constraint firstAttribute="centerX" secondItem="LUb-KP-81z" secondAttribute="centerX" id="QWd-w3-i19"/>
                             <constraint firstAttribute="trailing" secondItem="1ds-f6-7RQ" secondAttribute="trailing" constant="10" id="TBP-6c-hN2"/>
                             <constraint firstAttribute="height" constant="33" id="VMl-uB-s9z"/>
-                            <constraint firstAttribute="height" secondItem="LUb-KP-81z" secondAttribute="height" constant="11" id="jEI-fI-6yB"/>
                             <constraint firstItem="LUb-KP-81z" firstAttribute="leading" secondItem="FDW-Wg-pRI" secondAttribute="leading" constant="33" id="k0t-Q9-59l"/>
                             <constraint firstItem="Nko-N3-VWB" firstAttribute="top" secondItem="FDW-Wg-pRI" secondAttribute="top" id="mSO-DC-Sow"/>
                             <constraint firstAttribute="centerY" secondItem="LUb-KP-81z" secondAttribute="centerY" constant="1.5" id="mjf-X1-MZh"/>
@@ -165,7 +164,7 @@
                     <constraint firstItem="B99-nK-Jhn" firstAttribute="leading" secondItem="0wk-86-p2R" secondAttribute="leading" id="Gzx-I1-6T4"/>
                     <constraint firstItem="CFP-gB-DqR" firstAttribute="top" secondItem="B99-nK-Jhn" secondAttribute="top" id="Hvw-G8-eN4"/>
                     <constraint firstItem="csb-Z3-LkW" firstAttribute="centerY" secondItem="e8i-2h-uka" secondAttribute="centerY" id="IqC-vR-usa"/>
-                    <constraint firstItem="FDW-Wg-pRI" firstAttribute="top" secondItem="0wk-86-p2R" secondAttribute="bottom" constant="3" id="N7a-1N-AqX"/>
+                    <constraint firstItem="FDW-Wg-pRI" firstAttribute="top" secondItem="0wk-86-p2R" secondAttribute="bottom" constant="8" id="N7a-1N-AqX"/>
                     <constraint firstItem="FDW-Wg-pRI" firstAttribute="leading" secondItem="GGx-nH-SsM" secondAttribute="leading" constant="5" id="NPN-dd-pTb"/>
                     <constraint firstItem="FDW-Wg-pRI" firstAttribute="top" secondItem="0wk-86-p2R" secondAttribute="bottom" constant="1" id="NlO-JG-gNy"/>
                     <constraint firstItem="rqB-Zs-r8z" firstAttribute="top" secondItem="GGx-nH-SsM" secondAttribute="top" id="Q0P-ri-Jec"/>

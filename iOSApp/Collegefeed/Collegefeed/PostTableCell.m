@@ -106,6 +106,7 @@
 
 - (void)shouldShowCollegeLabel:(BOOL)showLabel
 {
+    [self.collegeLabel setHidden:!showLabel];
     self.collegeLabelViewHeight.constant = showLabel ? 30 : 0;
     [self.gpsIconImageView setHidden:!showLabel];
     [self setNeedsDisplay];
