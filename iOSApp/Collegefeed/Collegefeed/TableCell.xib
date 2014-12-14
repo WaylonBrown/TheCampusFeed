@@ -127,9 +127,6 @@
                             </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="collegeLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LUb-KP-81z">
                                 <rect key="frame" x="33" y="4" width="244" height="22"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="22" id="k1g-Jn-PN6"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -150,6 +147,7 @@
                             <constraint firstAttribute="centerX" secondItem="LUb-KP-81z" secondAttribute="centerX" id="QWd-w3-i19"/>
                             <constraint firstAttribute="trailing" secondItem="1ds-f6-7RQ" secondAttribute="trailing" constant="10" id="TBP-6c-hN2"/>
                             <constraint firstAttribute="height" constant="33" id="VMl-uB-s9z"/>
+                            <constraint firstAttribute="height" secondItem="LUb-KP-81z" secondAttribute="height" constant="11" id="jEI-fI-6yB"/>
                             <constraint firstItem="LUb-KP-81z" firstAttribute="leading" secondItem="FDW-Wg-pRI" secondAttribute="leading" constant="33" id="k0t-Q9-59l"/>
                             <constraint firstItem="Nko-N3-VWB" firstAttribute="top" secondItem="FDW-Wg-pRI" secondAttribute="top" id="mSO-DC-Sow"/>
                             <constraint firstAttribute="centerY" secondItem="LUb-KP-81z" secondAttribute="centerY" constant="1.5" id="mjf-X1-MZh"/>
@@ -203,12 +201,10 @@
             <inset key="separatorInset" minX="100" minY="0.0" maxX="100" maxY="0.0"/>
             <connections>
                 <outlet property="ageLabel" destination="98b-fn-NHG" id="0UQ-ag-OrC"/>
-                <outlet property="backgroundImageView" destination="rqB-Zs-r8z" id="V03-2F-dYq"/>
+                <outlet property="backgroundImageView" destination="rqB-Zs-r8z" id="lkX-qR-rFv"/>
                 <outlet property="collegeLabel" destination="LUb-KP-81z" id="OhT-tM-xfo"/>
-                <outlet property="collegeLabelHeight" destination="k1g-Jn-PN6" id="dLC-Wj-kwh"/>
                 <outlet property="collegeLabelViewHeight" destination="VMl-uB-s9z" id="NH6-er-DZE"/>
                 <outlet property="commentCountLabel" destination="0wk-86-p2R" id="Pbc-pD-JSr"/>
-                <outlet property="dividerHeight" destination="cWM-Cp-62n" id="l6D-oe-umT"/>
                 <outlet property="dividerView" destination="Nko-N3-VWB" id="8pw-7D-XVu"/>
                 <outlet property="downVoteButton" destination="evX-b2-uvx" id="ERS-RN-eAV"/>
                 <outlet property="gpsIconImageView" destination="1ds-f6-7RQ" id="90w-F2-4e5"/>

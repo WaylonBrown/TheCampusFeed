@@ -16,8 +16,8 @@
 
 @property (nonatomic, strong) Post* object;
 
+- (BOOL)assignWithPost:(Post *)post withCollegeLabel:(BOOL)showLabel;
 - (void)setNearCollege;
-- (void)hideCollegeLabel;
-- (void)showCollegeLabel;
+- (void)shouldShowCollegeLabel:(BOOL)showLabel;
 
 @end

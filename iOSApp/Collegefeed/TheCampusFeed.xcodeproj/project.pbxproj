@@ -304,14 +304,11 @@
 				533475A11923344100E84CC8 /* TableCell.h */,
 				533475A21923344100E84CC8 /* TableCell.m */,
 				533475A31923344100E84CC8 /* TableCell.xib */,
-				CD76C1C81A3BC14D002F0C9F /* CommentTableCell */,
-				CDF14D951A3B6DA2006D8F2C /* PostTableCell */,
-				53D51E361949625300A8BA81 /* SimpleTableCell.h */,
-				53D51E371949625300A8BA81 /* SimpleTableCell.m */,
-				53D51E381949625300A8BA81 /* SimpleTableCell.xib */,
-				53D6E984199DA4F500FD9061 /* LoadingCell.h */,
-				53D6E985199DA4F500FD9061 /* LoadingCell.m */,
-				53D6E987199DA51500FD9061 /* LoadingCell.xib */,
+				CD76C1CB1A3BC176002F0C9F /* CommentTableCell.h */,
+				CD76C1CC1A3BC176002F0C9F /* CommentTableCell.m */,
+				CDF14D8D1A3B6D24006D8F2C /* PostTableCell.h */,
+				CDF14D8E1A3B6D24006D8F2C /* PostTableCell.m */,
+				CD76C1CE1A3D50CA002F0C9F /* TODO */,
 			);
 			name = TableCell;
 			path = ..;
@@ -634,22 +631,17 @@
 			name = "Comment View";
 			sourceTree = "<group>";
 		};
-		CD76C1C81A3BC14D002F0C9F /* CommentTableCell */ = {
+		CD76C1CE1A3D50CA002F0C9F /* TODO */ = {
 			isa = PBXGroup;
 			children = (
-				CD76C1CB1A3BC176002F0C9F /* CommentTableCell.h */,
-				CD76C1CC1A3BC176002F0C9F /* CommentTableCell.m */,
+				53D51E361949625300A8BA81 /* SimpleTableCell.h */,
+				53D51E371949625300A8BA81 /* SimpleTableCell.m */,
+				53D51E381949625300A8BA81 /* SimpleTableCell.xib */,
+				53D6E984199DA4F500FD9061 /* LoadingCell.h */,
+				53D6E985199DA4F500FD9061 /* LoadingCell.m */,
+				53D6E987199DA51500FD9061 /* LoadingCell.xib */,
 			);
-			name = CommentTableCell;
-			sourceTree = "<group>";
-		};
-		CDF14D951A3B6DA2006D8F2C /* PostTableCell */ = {
-			isa = PBXGroup;
-			children = (
-				CDF14D8D1A3B6D24006D8F2C /* PostTableCell.h */,
-				CDF14D8E1A3B6D24006D8F2C /* PostTableCell.m */,
-			);
-			name = PostTableCell;
+			name = TODO;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -9,8 +9,10 @@
 #import "PostTableCell.h"
 #import "Comment.h"
 
-@interface CommentTableCell : PostTableCell
+@interface CommentTableCell : PostTableCell<TableCellProtocol>
 
 @property (nonatomic, strong) Comment* object;
+
+- (BOOL)assignWithComment:(Comment *)comment;
 
 @end

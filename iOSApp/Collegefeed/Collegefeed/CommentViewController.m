@@ -10,6 +10,7 @@
 
 #import "TableCell.h"
 #import "PostTableCell.h"
+#import "CommentTableCell.h"
 
 #import "PostsViewController.h"
 #import "Post.h"
@@ -116,34 +117,41 @@
 {   // Get the table view cell for the given row
     // This method handles two table views: one for the post and another for it's comments
     
-    static NSString *CellIdentifier = @"TableCell";
-    TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil)
-    {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
-        cell = [nib objectAtIndex:0];
-    }
+//    static NSString *CellIdentifier = @"TableCell";
+//    TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//    if (cell == nil)
+//    {
+//        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
+//        cell = [nib objectAtIndex:0];
+//    }
     
     Post *parentPost = self.dataController.postInFocus;
     BOOL isNearCollege = [self.dataController.nearbyColleges containsObject:parentPost.college];
     
     if (tableView == self.postTableView)
     {   // PostView table; get the original post to display in this table
-        static NSString *CellIdentifier = @"PostTableCell";
-        PostTableCell *cell = (PostTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         
-        if (cell == nil)
+        static NSString *PostCellIdentifier = @"PostTableCell";
+        PostTableCell *postCell = (PostTableCell *)[tableView dequeueReusableCellWithIdentifier:PostCellIdentifier];
+        
+        if (postCell == nil)
         {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier
-                                                         owner:self options:nil];
-            cell = [nib objectAtIndex:0];
-            
+            postCell = [PostTableCell new];
         }
-        [cell assignmentSuccessWith:parentPost];
-        [cell hideCollegeLabel];
+        
+        [postCell assignWithPost:parentPost withCollegeLabel:NO];
+        
+        return postCell;
     }
     else if (tableView == self.commentTableView && indexPath.row < [self.dataController.commentList count])
     {   // CommentView table; get the comments to be displayed
+        static NSString *CommentCellIdentifier = @"CommentTableCell";
+        CommentTableCell *cell = (CommentTableCell *)[tableView dequeueReusableCellWithIdentifier:CommentCellIdentifier];
+
+        if (cell == nil)
+        {
+            cell = [CommentTableCell new];
+        }
         
         Comment *comment = (Comment*)[self.dataController.commentList objectAtIndex:indexPath.row];
         if (comment != nil)
@@ -152,17 +160,22 @@
             {
                 [comment setCollege_id:parentPost.college_id];
             }
+            [cell assignWithComment:comment];
+//            [cell assignmentSuccessWith:comment];
             
-            float messageHeight = [Shared getLargeCellMessageHeight:comment.text WithFont:CF_FONT_LIGHT(16)];
-            [cell assignWith:comment IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
+//            float messageHeight = [Shared getLargeCellMessageHeight:comment.text WithFont:CF_FONT_LIGHT(16)];
+//            [cell assignWith:comment IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
         }
+
+        [cell setDelegate:self];
+        return cell;
     }
     
-    [cell setDelegate:self];
-    [cell.dividerHeight setConstant:0];
-    [cell.collegeLabelHeight setConstant:0];
-    
-    return cell;
+    return [TableCell new];
+//    [cell setDelegate:self];
+//    [cell.dividerHeight setConstant:0];
+//    [cell.collegeLabelHeight setConstant:0];
+//    return cell;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {   // first section is the original post, second is the post's comments

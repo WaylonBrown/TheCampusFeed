@@ -41,8 +41,8 @@
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *pictureHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *messageHeight;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelHeight;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *dividerHeight;
+//@property (strong, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelHeight;
+//@property (strong, nonatomic) IBOutlet NSLayoutConstraint *dividerHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelViewHeight;
 
 //- (BOOL)assignmentSuccessWith:(NSObject *)obj;
@@ -55,7 +55,7 @@
 
 
 
-- (void)assignWith:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
+//- (void)assignWith:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
 
 
 @end

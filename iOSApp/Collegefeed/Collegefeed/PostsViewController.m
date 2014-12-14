@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "PostTableCell.h"
 
-#import "TableCell.h"
+//#import "TableCell.h"
 #import "PostsViewController.h"
 #import "Post.h"
 #import "Vote.h"
@@ -128,7 +128,10 @@
     
     if (cell == nil)
     {
-        cell = [PostTableCell new];
+        cell = (PostTableCell *)[[[NSBundle mainBundle] loadNibNamed:CellIdentifier
+                                                               owner:self options:nil] objectAtIndex:0];
+
+//        cell = [[PostTableCell alloc] init];
     }
     [cell setDelegate: self];
 
@@ -139,15 +142,7 @@
     {   // TODO: make this assignment done automatically somewhere when Post model is being built
         post.isNearCollege = YES;
     }
-    [cell assignmentSuccessWith:post];
-    if (self.dataController.showingAllColleges)
-    {
-        [cell showCollegeLabel];
-    }
-    else
-    {
-        [cell hideCollegeLabel];
-    }
+    [cell assignWithPost:post withCollegeLabel:self.dataController.showingAllColleges];
 
     return cell;
 }

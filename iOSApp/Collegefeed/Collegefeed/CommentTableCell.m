@@ -10,14 +10,20 @@
 
 @implementation CommentTableCell
 
-- (BOOL)assignmentSuccessWith:(Comment *)comment
+- (BOOL)assignmentSuccessWith:(NSObject *)obj
+{
+    if ([obj class] != [Comment class])
+        return NO;
+    
+    return [self assignWithComment:(Comment *)obj];
+}
+- (BOOL)assignWithComment:(Comment *)comment
 {
     if ([super assignmentSuccessWith:comment])
     {
         [self setObject:comment];
         
-        [self.gpsIconImageView setHidden:YES];
-        self.collegeLabelViewHeight.constant = 0;
+        [super shouldShowCollegeLabel:NO];
         self.pictureHeight.constant = 0;
         self.messageHeight.constant = [self getMessageHeight];;
         
@@ -30,7 +36,6 @@
         [self findHashTags];
         [self updateVoteButtons];
         
-        
         [self setNeedsDisplay];
         
         return YES;
@@ -38,6 +43,22 @@
     
     return NO;
 }
+- (CGFloat)getMessageHeight
+{
+    return [super getMessageHeight];
+}
+- (CGFloat)getCellHeight
+{
+    return [super getCellHeight];
+}
 
++ (CGFloat)getCellHeight:(Comment *)obj
+{
+    return [super getCellHeight:obj];
+}
++ (CGFloat)getMessageHeight:(NSString *)text
+{
+    return [super getMessageHeight:text];
+}
 
 @end

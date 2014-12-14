@@ -61,52 +61,52 @@
 {
     self.isNearCollege = isNearby;
     [self.gpsIconImageView setHidden:(!isNearby)];
-    [self assign:obj WithMessageHeight:height];
+//    [self assign:obj WithMessageHeight:height];
 }
 
-- (void)assign:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj WithMessageHeight:(float)height;
-{   // configure view of the cell according to obj's properties
-    
-    if (obj == nil)
-    {
-        NSLog(@"Error assigning properties to table cell");
-        return;
-    }
-    
-    self.messageHeight.constant = height;
-
-    [self setObject:obj];
-    
-    // assign cell's plain text labels
-    self.messageLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentTop;
-    [self.messageLabel      setText:[obj getText]];
-    [self.commentCountLabel setText:[self getCommentLabelString]];
-    [self.ageLabel          setText:[self getAgeLabelString:[obj getCreated_at]]];
-    
-    if ([obj getType] == POST)
-    {   // Post cell
-        [self.collegeLabel      setText:[obj getCollegeName]];
-        if ([obj hasImage])
-        {
-            [self populateImageViewFromUrl:[obj getImage_url]];
-        }
-    }
-    else
-    {   // Comment cell
-        [self.dividerHeight setConstant:0];
-        [self.collegeLabelHeight setConstant:0];
-        [self.commentCountLabel setHidden:YES];
-        [self.gpsIconImageView setHidden:YES];
-    }
-
-    // Parse message for Tags
-    [self findHashTags];
-
-    // assign arrow colors according to user's vote
-    [self updateVoteButtons];
-    
-    [self setNeedsDisplay];
-}
+//- (void)assign:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj WithMessageHeight:(float)height;
+//{   // configure view of the cell according to obj's properties
+//    
+//    if (obj == nil)
+//    {
+//        NSLog(@"Error assigning properties to table cell");
+//        return;
+//    }
+//    
+//    self.messageHeight.constant = height;
+//
+//    [self setObject:obj];
+//    
+//    // assign cell's plain text labels
+//    self.messageLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentTop;
+//    [self.messageLabel      setText:[obj getText]];
+//    [self.commentCountLabel setText:[self getCommentLabelString]];
+//    [self.ageLabel          setText:[self getAgeLabelString:[obj getCreated_at]]];
+//    
+//    if ([obj getType] == POST)
+//    {   // Post cell
+//        [self.collegeLabel      setText:[obj getCollegeName]];
+//        if ([obj hasImage])
+//        {
+//            [self populateImageViewFromUrl:[obj getImage_url]];
+//        }
+//    }
+//    else
+//    {   // Comment cell
+//        [self.dividerHeight setConstant:0];
+//        [self.collegeLabelHeight setConstant:0];
+//        [self.commentCountLabel setHidden:YES];
+//        [self.gpsIconImageView setHidden:YES];
+//    }
+//
+//    // Parse message for Tags
+//    [self findHashTags];
+//
+//    // assign arrow colors according to user's vote
+//    [self updateVoteButtons];
+//    
+//    [self setNeedsDisplay];
+//}
 
 #pragma mark - Actions
 

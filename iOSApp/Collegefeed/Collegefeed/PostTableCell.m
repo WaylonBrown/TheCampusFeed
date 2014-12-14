@@ -11,15 +11,28 @@
 // Represents the most basic cell for Posts (no images or college names)
 @implementation PostTableCell
 
-- (id)init
+- (void)awakeFromNib
 {
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TableCell"
-                                                 owner:self options:nil];
-    self = (PostTableCell *)[nib objectAtIndex:0];
-    
-    return self;
+    [super awakeFromNib];
 }
-- (BOOL)assignmentSuccessWith:(Post *)post
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+}
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    [super setSelected:selected animated:animated];
+    
+    // Configure the view for the selected state
+}
+
+- (BOOL)assignmentSuccessWith:(NSObject *)obj
+{
+    if ([obj class] != [Post class])
+        return NO;
+    return [self assignWithPost:(Post *)obj withCollegeLabel:NO];
+}
+- (BOOL)assignWithPost:(Post *)post withCollegeLabel:(BOOL)showLabel
 {
     if ([super assignmentSuccessWith:post])
     {
@@ -47,6 +60,8 @@
         {
             self.pictureHeight.constant = 0;
         }
+        
+        [self shouldShowCollegeLabel:showLabel];
         
         [self setNeedsDisplay];
         
@@ -90,16 +105,11 @@
         });
     });
 }
-- (void)hideCollegeLabel
+
+- (void)shouldShowCollegeLabel:(BOOL)showLabel
 {
-    self.collegeLabelViewHeight.constant = 0;
-    [self.gpsIconImageView setHidden:YES];
-    [self setNeedsDisplay];
-}
-- (void)showCollegeLabel
-{
-    self.collegeLabelViewHeight.constant = 30;
-    [self.gpsIconImageView setHidden:!self.object.isNearCollege];
+    self.collegeLabelViewHeight.constant = showLabel ? 30 : 0;
+    [self.gpsIconImageView setHidden:!showLabel];
     [self setNeedsDisplay];
 }
 
