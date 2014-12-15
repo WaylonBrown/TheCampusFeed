@@ -153,7 +153,10 @@
     
     if (rowNum == listcount - 1)
     {   // if reached end of list
-        [self fetchContent];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self fetchContent];
+        });
     }
     
     return cell;
