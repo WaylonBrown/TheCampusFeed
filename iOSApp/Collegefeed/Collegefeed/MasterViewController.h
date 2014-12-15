@@ -33,7 +33,7 @@
 @property (strong, nonatomic) IBOutlet UIView *scoreToolbar;
 @property (strong, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *contentLoadingIndicator;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *contentLoadingIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *currentFeedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *showingLabel;
 @property (weak, nonatomic) IBOutlet UIButton *feedButton;

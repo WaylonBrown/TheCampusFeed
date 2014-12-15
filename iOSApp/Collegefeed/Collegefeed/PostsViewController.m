@@ -82,51 +82,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
     // this specifies the prototype (PostTableCell) and assigns the labels
+    
     NSUInteger rowNum = indexPath.row;
     NSUInteger listcount = self.list.count;
-
-//    if (rowNum == listcount - 1)
-//    {
-//        static NSString *LoadingCellIdentifier = @"LoadingCell";
-//        LoadingCell *cell = (LoadingCell *)[tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier];
-//        
-//        if (cell == nil)
-//        {
-//            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:LoadingCellIdentifier
-//                                                         owner:self options:nil];
-//            cell = [nib objectAtIndex:0];
-//        }
-//
-//        [cell showLoadingIndicator];
-//        [self fetchContent];
-    
-//        return cell;
-//    }
-//
-////        if (!self.hasReachedEndOfList)
-//        if (!self.hasFetchedAllContent)
-//        {
-//            [cell showLoadingIndicator];
-//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-//                NSInteger oldCount = listcount;
-////                self.hasReachedEndOfList = ![self loadMorePosts];
-//                
-//                [self loadMorePosts];
-//                NSInteger newCount = self.list.count;
-//                
-//                if (oldCount != newCount)
-//                {
-//                    [self addNewRows:oldCount through:newCount];
-//                }
-//                else
-//                {
-//                    [cell hideLoadingIndicator];
-//                }
-//            });
-//        }
-//        
-//        return cell;
-//    }
+    if (rowNum == listcount - 1)
+    {   // if last post in list
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self fetchContent];
+        });
+    }
     
     // Build a TableCell for Posts
     static NSString *CellIdentifier = @"TableCell";
@@ -137,10 +101,7 @@
         cell = (PostTableCell *)[[[NSBundle mainBundle] loadNibNamed:CellIdentifier
                                                                owner:self options:nil] objectAtIndex:0];
     }
-    
-    
     cell.delegate = self;
-//    [cell setDelegate: self];
 
     // Get the post and display in this cell
     Post *post = [self.list objectAtIndex:indexPath.row];
@@ -150,14 +111,6 @@
         post.isNearCollege = YES;
     }
     [cell assignWithPost:post withCollegeLabel:self.dataController.showingAllColleges];
-    
-    if (rowNum == listcount - 1)
-    {   // if reached end of list
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self fetchContent];
-        });
-    }
     
     return cell;
 }
@@ -226,26 +179,6 @@
 - (void)setCorrectList
 {
     [super setCorrectList];
-}
-
-- (void)addNewRows:(NSInteger)oldCount through:(NSInteger)newCount
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        NSMutableArray* newRows = [NSMutableArray array];
-        
-        for (NSInteger i = oldCount; i < newCount; i++)
-        {
-            NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
-            [newRows addObject:newIndexPath];
-        }
-        
-        [self.tableView beginUpdates];
-        [self.tableView insertRowsAtIndexPaths:newRows withRowAnimation:UITableViewRowAnimationTop];
-        [self.tableView endUpdates];
-        [self.tableView reloadData];
-        
-    });
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {

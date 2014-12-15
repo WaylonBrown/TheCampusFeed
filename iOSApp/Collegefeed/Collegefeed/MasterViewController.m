@@ -79,12 +79,18 @@
     tableViewController.refreshControl = self.refreshControl;
     
     CGRect frame = CGRectMake(0, 0, self.tableView.frame.size.width, 5);
-    
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    
     [view setBackgroundColor:[Shared getCustomUIColor:CF_EXTRALIGHTGRAY]];
-    
     self.tableView.tableHeaderView = view;
+    
+    
+    self.contentLoadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    
+    [self.contentLoadingIndicator setColor:[Shared getCustomUIColor:CF_BLUE]];
+    [self.contentLoadingIndicator startAnimating];
+    self.contentLoadingIndicator.frame = CGRectMake(0, 0, 320, 44);
+    self.tableView.tableFooterView = self.contentLoadingIndicator;
+    
     
     // Assign fonts
     [self.currentFeedLabel  setFont:CF_FONT_LIGHT(22)];
@@ -175,12 +181,13 @@
 - (void)finishedFetchRequest
 {
     self.hasFinishedFetchRequest = YES;
-    [self.contentLoadingIndicator stopAnimating];
+//    [self.contentLoadingIndicator stopAnimating];
     [self.tableView reloadData];
 }
 - (void)fetchedAllContent
 {
     self.hasFetchedAllContent = YES;
+    [self.contentLoadingIndicator stopAnimating];
     [self finishedFetchRequest];
 }
 
