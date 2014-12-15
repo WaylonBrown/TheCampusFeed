@@ -76,15 +76,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list, plus one additional if there are more to be fetched
+    
     return self.list.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
     // this specifies the prototype (PostTableCell) and assigns the labels
-//    NSUInteger rowNum = indexPath.row;
-//    NSUInteger listcount = self.list.count;
-//    
-//    if (rowNum == listcount)
+    NSUInteger rowNum = indexPath.row;
+    NSUInteger listcount = self.list.count;
+
+//    if (rowNum == listcount - 1)
 //    {
 //        static NSString *LoadingCellIdentifier = @"LoadingCell";
 //        LoadingCell *cell = (LoadingCell *)[tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier];
@@ -95,7 +96,13 @@
 //                                                         owner:self options:nil];
 //            cell = [nib objectAtIndex:0];
 //        }
-//        
+//
+//        [cell showLoadingIndicator];
+//        [self fetchContent];
+    
+//        return cell;
+//    }
+//
 ////        if (!self.hasReachedEndOfList)
 //        if (!self.hasFetchedAllContent)
 //        {
@@ -129,8 +136,6 @@
     {
         cell = (PostTableCell *)[[[NSBundle mainBundle] loadNibNamed:CellIdentifier
                                                                owner:self options:nil] objectAtIndex:0];
-
-//        cell = [[PostTableCell alloc] init];
     }
     
     
@@ -145,7 +150,12 @@
         post.isNearCollege = YES;
     }
     [cell assignWithPost:post withCollegeLabel:self.dataController.showingAllColleges];
-
+    
+    if (rowNum == listcount - 1)
+    {   // if reached end of list
+        [self fetchContent];
+    }
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

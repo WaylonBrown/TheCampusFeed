@@ -75,10 +75,7 @@
 #define PAGINATION_NUM  25
 
 // Title view for navigation bar
-//#define logoImageWithButton @"thecampusfeedlogosmallwithmenubutton"
-//#define logoImage @"thecampusfeedlogosmall.png"
 #define logoImageWithButton @"TheCampusFeedLogo"
-//#define logoTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:logoImage]]
 
 // Numerics
 

@@ -62,7 +62,6 @@
         
         [self restoreSavedFeed];
         
-        // ToDo: Get rid of these?
         // Populate arrays from both network and core (local) data
         [self retrieveUserVotes];
         
