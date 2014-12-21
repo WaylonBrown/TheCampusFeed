@@ -86,7 +86,6 @@
 		CD76C1CD1A3BC176002F0C9F /* CommentTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD76C1CC1A3BC176002F0C9F /* CommentTableCell.m */; };
 		CDF14D921A3B6D24006D8F2C /* PostTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF14D8E1A3B6D24006D8F2C /* PostTableCell.m */; };
 		CDF66BEB1A36CEBD008C62DD /* bad_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = CDF66BEA1A36CEBD008C62DD /* bad_words.txt */; };
-		CDF66BF01A36E618008C62DD /* Watchdog.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF66BEF1A36E618008C62DD /* Watchdog.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -252,8 +251,6 @@
 		CDF14D8E1A3B6D24006D8F2C /* PostTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostTableCell.m; path = Collegefeed/PostTableCell.m; sourceTree = "<group>"; };
 		CDF1FA8C1A30B160003D421F /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = ../../../../../../../System/Library/Frameworks/Python.framework; sourceTree = "<group>"; };
 		CDF66BEA1A36CEBD008C62DD /* bad_words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bad_words.txt; sourceTree = "<group>"; };
-		CDF66BEE1A36E618008C62DD /* Watchdog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Watchdog.h; path = ../../../../Watchdog/ObjC/Watchdog/Watchdog.h; sourceTree = "<group>"; };
-		CDF66BEF1A36E618008C62DD /* Watchdog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Watchdog.m; path = ../../../../Watchdog/ObjC/Watchdog/Watchdog.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -587,7 +584,6 @@
 		53F8789619133F60002A578B /* Collegefeed */ = {
 			isa = PBXGroup;
 			children = (
-				CD1ED4BF1A36B11600F8A1AF /* Watchdog (reference!) */,
 				53B090B8192DA1FA00E3D996 /* Source Code */,
 				53B090B5192DA13100E3D996 /* Views */,
 				53B090B9192DA21600E3D996 /* Resources */,
@@ -610,15 +606,6 @@
 				CD539DDD1A2CF54C004A794E /* Constants.h */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		CD1ED4BF1A36B11600F8A1AF /* Watchdog (reference!) */ = {
-			isa = PBXGroup;
-			children = (
-				CDF66BEE1A36E618008C62DD /* Watchdog.h */,
-				CDF66BEF1A36E618008C62DD /* Watchdog.m */,
-			);
-			name = "Watchdog (reference!)";
 			sourceTree = "<group>";
 		};
 		CD539DD61A2CDE5D004A794E /* Comment View */ = {
@@ -815,7 +802,6 @@
 				531EAB431988533500C1E1AA /* UserData.xcdatamodeld in Sources */,
 				5350557719514587009C1911 /* CreatePostCommentViewController.m in Sources */,
 				533475A41923344100E84CC8 /* TableCell.m in Sources */,
-				CDF66BF01A36E618008C62DD /* Watchdog.m in Sources */,
 				CD539DD91A2CDE99004A794E /* NewPostsViewController.m in Sources */,
 				53963DE71916E5F50084E646 /* PostsViewController.m in Sources */,
 				53D6E986199DA4F500FD9061 /* LoadingCell.m in Sources */,
@@ -963,7 +949,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Collegefeed/TheCampusFeed-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				USER_HEADER_SEARCH_PATHS = "./Collegefeed/Models/Models/** ./Collegefeed/Networker/Networker/** /Users/Patrick/Documents/dev/Watchdog/**";
+				USER_HEADER_SEARCH_PATHS = "./Collegefeed/Models/Models/** ./Collegefeed/Networker/Networker/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -991,7 +977,7 @@
 				PRODUCT_NAME = TheCampusFeed;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Collegefeed/TheCampusFeed-Bridging-Header.h";
-				USER_HEADER_SEARCH_PATHS = "./Collegefeed/Models/Models/** ./Collegefeed/Networker/Networker/** /Users/Patrick/Documents/dev/Watchdog/**";
+				USER_HEADER_SEARCH_PATHS = "./Collegefeed/Models/Models/** ./Collegefeed/Networker/Networker/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

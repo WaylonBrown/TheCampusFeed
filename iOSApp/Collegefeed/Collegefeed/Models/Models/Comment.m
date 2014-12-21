@@ -7,24 +7,12 @@
 //
 
 #import "Comment.h"
-#import "Post.h"
 #import "Vote.h"
 
 @implementation Comment
 
 + (NSArray *)getListFromJsonData:(NSData *)jsonData error:(NSError **)error;
 {
-//    {
-//        "id": 7,
-//        "text": "another test",
-//        "score": null,
-//        "created_at": "2014-10-20T00:28:33.000Z",
-//        "updated_at": "2014-10-20T00:28:33.000Z",
-//        "post_id": "2",
-//        "hidden": true,
-//        "vote_delta": 0
-//    }
-    
     NSError *localError = nil;
     NSDictionary *list = [NSJSONSerialization JSONObjectWithData:jsonData
                                                          options:0

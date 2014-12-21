@@ -51,6 +51,7 @@
 }
 
 #pragma mark - Protocol Methods
+
 - (id)initFromNetworkData:(NSData *)data
 {
     NSDictionary *jsonObject = (NSDictionary *)(NSArray *)[NSJSONSerialization JSONObjectWithData:data

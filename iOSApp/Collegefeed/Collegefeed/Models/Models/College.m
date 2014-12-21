@@ -51,7 +51,7 @@
     return nil;
 }
 
-#pragma mark - Model Interface Methods
+#pragma mark - CFModelProtocol Methods
 
 - (id)initFromJSON:(NSDictionary *)jsonObject
 {
@@ -68,6 +68,38 @@
                            withLon:[lon floatValue]];
     
 }
+- (id)initFromNetworkData:(NSData *)data
+{
+    NSDictionary *jsonObject = (NSDictionary *)(NSArray *)[NSJSONSerialization JSONObjectWithData:data
+                                                                                          options:0
+                                                                                            error:nil];
+    return [self initFromJSON:jsonObject];
+}
+
++ (NSArray *)getListFromJsonData:(NSData *)jsonData error:(NSError **)error;
+{
+    NSError *localError = nil;
+    NSDictionary *collegeList = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                                options:0
+                                                                  error:&localError];
+    
+    if (localError != nil)
+    {
+        *error = localError;
+        return nil;
+    }
+    
+    
+    NSMutableArray *colleges = [[NSMutableArray alloc] init];
+    
+    for (NSDictionary *collegeDict in collegeList)
+    {
+        College *college = [[College alloc] initFromJSON:collegeDict];
+        [colleges addObject:college];
+    }
+    
+    return colleges;
+}
 - (NSData*)toJSON
 {
     return nil;
@@ -75,10 +107,6 @@
 - (NSNumber *)getID
 {
     return [NSNumber numberWithLong:self.collegeID];
-}
-- (void)validate
-{
-    
 }
 - (ModelType)getType
 {

@@ -19,7 +19,7 @@
 
 
 // TODO: Include Watchdog from its own static library
-#import "Watchdog.h"
+//#import "Watchdog.h"
 
 #import "TheCampusFeed-Swift.h"
 
@@ -87,7 +87,7 @@
 //                             [NSNumber numberWithBool:YES], @"blockSexual",
                              nil];
     
-    self.myWatchDog = [[Watchdog alloc] initWithOptions:options];
+//    self.myWatchDog = [[Watchdog alloc] initWithOptions:options];
     NSLog(@"Finished creating Watchdog");
 }
 - (void)initArrays
@@ -349,8 +349,8 @@
 //            [self.toaster toastCommentingTooSoon];
 //            return NO;
 //        }
-        Comment *comment = [[Comment alloc] initWithCommentMessage:message
-                                                          withPost:post];
+        Comment *comment = [[Comment alloc] initWithMessage:message withCollegeId:post.college_id withUserToken:@"EMPTY_TOKEN"];
+        
         NSData *result = [Networker POSTCommentData:[comment toJSON] WithPostId:[post.id longValue]];
         
         if (result)
@@ -437,10 +437,11 @@
 //    [self.toaster toastCommentingTooSoon];
 
     NSMutableDictionary* resultDict = [NSMutableDictionary new];
-    BOOL validMessage = [self.myWatchDog shouldSubmitMessage:message
-                                                 WithResults:resultDict];
+//    BOOL validMessage = [self.myWatchDog shouldSubmitMessage:message
+//                                                 WithResults:resultDict];
     
-
+    BOOL validMessage = true;
+    
     if (!validMessage)
     {
         NSString *errorToastMessage = @"Sorry, your message was rejected. Please try again. Reason:";
