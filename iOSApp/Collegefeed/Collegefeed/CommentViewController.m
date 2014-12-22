@@ -45,17 +45,22 @@
 {   // called when the comment view is initially loaded
   
     [super loadView];
-    
-//    self.commentTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
- 
-//    [self.dataController.commentList removeAllObjects];
     
     [self setCorrectList];
-    [super viewWillAppear:animated];
     
+    if (self.dataController.postInFocus != nil)
+    {
+        float postCellHeight = [self tableView:self.postTableView heightForRowAtIndexPath:
+                                [NSIndexPath indexPathForRow:0 inSection:0]];
+        
+        self.postTableHeightConstraint.constant = postCellHeight;
+        [self.view setNeedsUpdateConstraints];
+    }
+    
+    [super viewWillAppear:animated];
 }
 - (void)initializeViewElements
 {
@@ -128,7 +133,7 @@
         
         return [PostTableCell getCellHeight:post];
     }
-    else // if (tableView == self.commentTableView)
+    else
     {
         Comment *comment = [self.list objectAtIndex:[indexPath row]];
         if (comment != nil)
@@ -310,20 +315,6 @@
         }
     }
 }
-- (void)refresh
-{
-    if (self.dataController.postInFocus != nil)
-    {
-        float postCellHeight = [self tableView:self.postTableView heightForRowAtIndexPath:
-                                [NSIndexPath indexPathForRow:0 inSection:0]];
-        
-        self.postTableHeightConstraint.constant = postCellHeight;
-        [self.view setNeedsUpdateConstraints];
-    }
-    
-    [self.postTableView reloadData];
-//    [self.commentTableView reloadData];
-}
 
 #pragma mark - Helper Methods
 
@@ -376,8 +367,6 @@
             BOOL success = [self.dataController createCommentWithMessage:message withPost:parentPost];
             if (success)
             {
-                [self refresh];
-                
                 [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataController.commentList.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 //                [self.commentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataController.commentList.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
             }
