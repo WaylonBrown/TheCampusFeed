@@ -116,61 +116,6 @@
 
 #pragma mark - Table View
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{   // Get the table view cell for the given row
-    // This method handles two table views: one for the post and another for it's comments
-    
-    Post *parentPost = self.dataController.postInFocus;
-    static NSString *CellIdentifier = @"TableCell";
-    
-    CommentTableCell *cell = (CommentTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (cell == nil)
-    {
-        cell = (CommentTableCell *)[[[NSBundle mainBundle] loadNibNamed:CellIdentifier
-                                                                  owner:self options:nil] objectAtIndex:0];
-    }
-    
-    if (tableView == self.postTableView)
-    {   // PostView table; get the original post to display in this table
-        PostTableCell *postCell = (PostTableCell *)[[[NSBundle mainBundle] loadNibNamed:CellIdentifier
-                                                                                  owner:self options:nil] objectAtIndex:0];
-        [postCell assignWithPost:parentPost withCollegeLabel:NO];
-        return postCell;
-    }
-    else // if (tableView == self.commentTableView)
-    {   // CommentView table; get the comments to be displayed
-
-        if (self.list.count < indexPath.row)
-        {
-            Comment *comment = [self.list objectAtIndex:indexPath.row];
-            [cell assignWithComment:comment];
-            cell.delegate = self;
-        }
-        
-        return cell;
-    }
-    
-    return nil;
-}
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{   // first section is the original post, second is the post's comments
-    return 1;
-}
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{   // Number of rows in table views
-    if (tableView == self.postTableView)
-        return 1;
-    else
-        return [self.list count];
- 
-    return 0;
-}
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{   // Return NO if you do not want the item to be re-orderable.
- 
-    return NO;
-}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *cellText = @"";
@@ -188,10 +133,52 @@
         Comment *comment = [self.list objectAtIndex:[indexPath row]];
         if (comment != nil)
             cellText = comment.text;
-
+        
         return [CommentTableCell getCellHeight:comment];
     }
     
+    return 0;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{   // Get the table view cell for the given row
+    // This method handles two table views: one for the post and another for it's comments
+    
+    static NSString *CellIdentifier = @"TableCell";
+    PostTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell == nil)
+    {
+        cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier
+                                              owner:self
+                                            options:nil] objectAtIndex:0];
+    }
+    
+    if (tableView == self.postTableView)
+    {   // PostView table; get the original post to display in this table
+        
+        [cell assignWithPost:self.dataController.postInFocus withCollegeLabel:NO];
+    }
+    else
+    {   // CommentView table; get the comments to be displayed
+        
+        Comment *comment = [self.list objectAtIndex:indexPath.row];
+        [cell assignWithPost:comment withCollegeLabel:NO];
+        cell.delegate = self;
+    }
+    
+    return cell;
+}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{   // first section is the original post, second is the post's comments
+    return 1;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{   // Number of rows in table views
+    if (tableView == self.postTableView)
+        return 1;
+    else
+        return [self.list count];
+ 
     return 0;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -325,7 +312,6 @@
 }
 - (void)refresh
 {
-//    [super refresh];
     if (self.dataController.postInFocus != nil)
     {
         float postCellHeight = [self tableView:self.postTableView heightForRowAtIndexPath:
