@@ -119,14 +119,14 @@
 {
     self.topPostsController             = [[TopPostsViewController alloc] initWithDataController:self.dataController];
     
-    self.recentPostsController          = [[NewPostsViewController alloc] initWithDataController:self.dataController];
-    
-    self.tagController                  = [[TagViewController alloc] initWithDataController:self.dataController];
-    
-    self.trendingCollegesController     = [[TrendingCollegesViewController alloc]
-                                           initWithDataController:self.dataController];
-    
-    self.userPostsController            = [[UserPostsViewController alloc] initWithDataController:self.dataController];
+//    self.recentPostsController          = [[NewPostsViewController alloc] initWithDataController:self.dataController];
+//    
+//    self.tagController                  = [[TagViewController alloc] initWithDataController:self.dataController];
+//    
+//    self.trendingCollegesController     = [[TrendingCollegesViewController alloc]
+//                                           initWithDataController:self.dataController];
+//    
+//    self.userPostsController            = [[UserPostsViewController alloc] initWithDataController:self.dataController];
     
     
     
@@ -134,21 +134,21 @@
 //                                           initAsType:USER_COMMENTS
 //                                           withDataController:self.dataController];
     
-    self.tutorialController             = [[TutorialViewController alloc] init];
-    
-    self.helpController                 = [[CF_DialogViewController alloc] initWithDialogType:HELP];
-    
-    self.timeCrunchController           = [[TimeCrunchViewController alloc] init];
+//    self.tutorialController             = [[TutorialViewController alloc] init];
+//    
+//    self.helpController                 = [[CF_DialogViewController alloc] initWithDialogType:HELP];
+//    
+//    self.timeCrunchController           = [[TimeCrunchViewController alloc] init];
 
     NSArray *viewControllers            = [NSArray arrayWithObjects:
                                            self.topPostsController,
-                                           self.recentPostsController,
-                                           self.tagController,
-                                           self.trendingCollegesController,
-                                           self.userPostsController,
+//                                           self.recentPostsController,
+//                                           self.tagController,
+//                                           self.trendingCollegesController,
+//                                           self.userPostsController,
 //                                           self.userCommentsController,
-                                           self.timeCrunchController,
-                                           self.helpController,
+//                                           self.timeCrunchController,
+//                                           self.helpController,
                                            //                                           self.tutorialController,
                                            nil];
     

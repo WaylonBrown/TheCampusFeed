@@ -26,9 +26,9 @@
         [self.dataController fetchTopPostsForSingleCollege];
     }
 }
-- (void)finishedFetchRequest
+- (void)finishedFetchRequest:(NSNotification *)notification
 {
-    [super finishedFetchRequest];
+    [super finishedFetchRequest:notification];
 }
 #pragma mark - Local Actions
 

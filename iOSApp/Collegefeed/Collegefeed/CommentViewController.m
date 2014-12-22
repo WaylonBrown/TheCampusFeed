@@ -244,10 +244,10 @@
     // Spawn separate thread for network access
     [self.dataController fetchCommentsForPost:self.dataController.postInFocus];
 }
-- (void)finishedFetchRequest
+- (void)finishedFetchRequest:(NSNotification *)notification
 {   // A fetch request was completed, make necessary updates
     
-    [super finishedFetchRequest];
+    [super finishedFetchRequest:notification];
     
 //    [self.commentTableView reloadData];
 }

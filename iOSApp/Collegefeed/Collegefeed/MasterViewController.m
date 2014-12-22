@@ -48,8 +48,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialFinished) name:@"TutorialFinished" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialStarted) name:@"TutorialStarted" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationWasUpdated) name:@"LocationUpdated" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchedAllContent) name:@"HasFetchedAllContent" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishedFetchRequest) name:@"FinishedFetching" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishedFetchRequest: ) name:@"FinishedFetching" object:nil];
 }
 
 #pragma mark - View Loading
@@ -105,10 +104,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
     [super viewWillAppear:animated];
+
+    if (self.list.count == 0)
+    {
+        [self fetchContent];
+    }
     
-    [self fetchContent];
     [self makeToolbarButtons];
-    
     [self refresh];
 }
 - (void)placeLoadingIndicatorInToolbar
@@ -170,25 +172,21 @@
 }
 - (void)fetchContent
 {   // Fetches new content for this view
+    
+    [self.contentLoadingIndicator startAnimating];
     [self setHasFinishedFetchRequest:NO];
     [self setCorrectList];
-    if (self.list.count == 0)
-    {
-        [self.contentLoadingIndicator startAnimating];
+}
+- (void)finishedFetchRequest:(NSNotification *)notification
+{
+    if ([[[notification userInfo] valueForKey:@"newObjectsCount"] longValue] == 0)
+    {   // fetched all content for the current feed
+        self.hasFetchedAllContent = YES;
+        [self.contentLoadingIndicator stopAnimating];
     }
     
-}
-- (void)finishedFetchRequest
-{
     self.hasFinishedFetchRequest = YES;
-//    [self.contentLoadingIndicator stopAnimating];
     [self.tableView reloadData];
-}
-- (void)fetchedAllContent
-{
-    self.hasFetchedAllContent = YES;
-    [self.contentLoadingIndicator stopAnimating];
-    [self finishedFetchRequest];
 }
 
 #pragma mark - Local Actions
@@ -235,7 +233,7 @@
     [self setCorrectList];
     if (self.list.count == 0)
     {
-        [self fetchContent];
+//        [self fetchContent];
     }
     
     [self.currentFeedLabel setText:feedName];

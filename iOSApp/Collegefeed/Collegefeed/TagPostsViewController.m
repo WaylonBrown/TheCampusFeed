@@ -89,9 +89,9 @@
         [self.dataController fetchPostsWithTagForSingleCollege:self.tagMessage];
     }
 }
-- (void)finishedFetchRequest
+- (void)finishedFetchRequest:(NSNotification *)notification
 {
-    [super finishedFetchRequest];
+    [super finishedFetchRequest:notification];
 }
 #pragma mark - Local Actions
 

@@ -85,7 +85,7 @@
     
     NSUInteger rowNum = indexPath.row;
     NSUInteger listcount = self.list.count;
-    if (rowNum == listcount - 1)
+    if (rowNum == listcount - 1 && !self.hasFetchedAllContent)
     {   // if last post in list
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchContent];
@@ -153,9 +153,9 @@
 {   // Fetches new content for this view
     [super fetchContent];
 }
-- (void)finishedFetchRequest
+- (void)finishedFetchRequest:(NSNotification *)notification
 {
-    [super finishedFetchRequest];
+    [super finishedFetchRequest:notification];
     
     if (self.list.count == 0)
     {

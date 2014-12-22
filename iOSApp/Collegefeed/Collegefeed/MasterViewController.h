@@ -65,7 +65,7 @@
 // Network Actions
 - (void)locationWasUpdated;
 - (void)fetchContent;
-- (void)finishedFetchRequest;
+- (void)finishedFetchRequest:(NSNotification *)notification;
 
 // Local Actions
 - (IBAction)changeFeed;

@@ -10,7 +10,8 @@ import Foundation
 
 extension NSMutableArray
 {
-    func insertObjectsWithUniqueIds(newObjectsArray: NSArray) {
+    func insertObjectsWithUniqueIds(newObjectsArray: NSArray) -> Int {
+        var numAdded = 0;
         for newObj in newObjectsArray {
             if newObj.respondsToSelector("getID"){
                 var existingID = newObj.getID() as NSNumber
@@ -28,8 +29,11 @@ extension NSMutableArray
                 
                 if (!alreadyExists) {
                     self.addObject(newObj)
+                    numAdded++;
                 }
             }
         }
+        
+        return numAdded
     }
 }

@@ -30,9 +30,9 @@
     
     [self.dataController retrieveUserPosts];
 }
-- (void)finishedFetchRequest
+- (void)finishedFetchRequest:(NSNotification *)notification
 {
-    [super finishedFetchRequest];
+    [super finishedFetchRequest:notification];
 }
 
 - (void)refresh

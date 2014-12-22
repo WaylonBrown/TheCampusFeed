@@ -149,9 +149,9 @@
         [self.dataController fetchTrendingTagsForSingleCollege];
     }
 }
-- (void)finishedFetchRequest
+- (void)finishedFetchRequest:(NSNotification *)notification
 {
-    [super finishedFetchRequest];
+    [super finishedFetchRequest:notification];
     
     if (self.list.count == 0)
     {

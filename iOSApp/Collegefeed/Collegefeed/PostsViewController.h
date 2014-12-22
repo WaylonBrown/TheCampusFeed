@@ -22,7 +22,7 @@
 
 - (void)setCorrectList;
 - (void)fetchContent;
-- (void)finishedFetchRequest;
+- (void)finishedFetchRequest:(NSNotification *)notification;
 
 @end
 
