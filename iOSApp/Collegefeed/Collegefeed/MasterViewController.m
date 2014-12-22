@@ -354,6 +354,8 @@
 
 - (void)switchToFeedForCollegeOrNil:(College *)college
 {
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+    
     [self.dataController switchedToSpecificCollegeOrNil:college];
     [self setCorrectList];
 
@@ -379,6 +381,8 @@
 }
 - (void)showDialogForAllColleges
 {
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+
     FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_COLLEGES_WITH_SEARCH WithDataController:self.dataController WithFeedDelegate:self];
     [self.navigationController presentViewController:controller animated:YES completion:nil];
 }

@@ -303,37 +303,30 @@
             NSInteger section = indexPath.section;
             
             if (section == 0 && status == LOCATION_FOUND)
-            {
+            {   // Selected a nearby college
                 College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
-                
-                [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
-                    [self.feedDelegate switchToFeedForCollegeOrNil:college];
-                }];
+                [self.feedDelegate switchToFeedForCollegeOrNil:college];
             }
             else if (section == 1)
-            {
-                [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
-                    [self.feedDelegate switchToFeedForCollegeOrNil:nil];
-                }];
+            {   // Selected all colleges
+                [self.feedDelegate switchToFeedForCollegeOrNil:nil];
             }
             else if (section == 2)
-            {
-                [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
-                    [self.feedDelegate showDialogForAllColleges];
-                }];
+            {   // Search for a college
+                [self.feedDelegate showDialogForAllColleges];
             }
             break;
         }
         case ALL_COLLEGES_WITH_SEARCH:
         {   // When user wants to see all colleges and be able to search through them
-            [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
-                College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
-                [self.feedDelegate switchToFeedForCollegeOrNil:college];
-            }];
+            College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
+            [self.feedDelegate switchToFeedForCollegeOrNil:college];
+            
             break;
         }
         case ONLY_NEARBY_COLLEGES:
         {   // When user is selecting which of nearby colleges to post to
+            
             [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
                 College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
                 [self.postingDelegate submitSelectionForPostWithCollege:college];
