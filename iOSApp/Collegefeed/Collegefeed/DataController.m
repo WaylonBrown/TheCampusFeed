@@ -263,16 +263,24 @@
                    {
                        NSData* data = fetchBlock();
                        
-                       
                        NSArray *fetchedObjects = [self parseData:data asModelType:type];
                        
+                       NSUInteger oldCount = [array count];
                        [array insertObjectsWithUniqueIds:fetchedObjects];
+                       NSUInteger newCount = [array count];
                        
                        [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
                        
                        dispatch_async(dispatch_get_main_queue(), ^
                                       {
-                                          [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self];
+                                          if (newCount - oldCount > 0)
+                                          {   // Fetched at least one object
+                                              [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self];
+                                          }
+                                          else
+                                          {   // Didn't fetch any objects, finished fetching
+                                              [[NSNotificationCenter defaultCenter] postNotificationName:@"HasFetchedAllContent" object:self];
+                                          }
                                       });
                    });
 }

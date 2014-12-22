@@ -46,7 +46,7 @@
   
     [super loadView];
     
-    self.commentTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+//    self.commentTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
@@ -138,7 +138,7 @@
         [postCell assignWithPost:parentPost withCollegeLabel:NO];
         return postCell;
     }
-    else if (tableView == self.commentTableView)
+    else // if (tableView == self.commentTableView)
     {   // CommentView table; get the comments to be displayed
 
         if (self.list.count < indexPath.row)
@@ -159,8 +159,11 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Number of rows in table views
-    if (tableView == self.commentTableView) return [self.list count];
-    else if (tableView == self.postTableView) return 1;
+    if (tableView == self.postTableView)
+        return 1;
+    else
+        return [self.list count];
+ 
     return 0;
 }
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
@@ -180,7 +183,7 @@
         
         return [PostTableCell getCellHeight:post];
     }
-    else if (tableView == self.commentTableView)
+    else // if (tableView == self.commentTableView)
     {
         Comment *comment = [self.list objectAtIndex:[indexPath row]];
         if (comment != nil)
@@ -194,7 +197,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {   // return the header title for the 'Comments' section
     
-    if (tableView == self.commentTableView)
+    if (tableView != self.postTableView) // self.commentTableView)
     {
         UILabel *commentHeader = [[UILabel alloc] initWithFrame:CGRectZero];
         [commentHeader setTextAlignment:NSTextAlignmentCenter];
@@ -226,7 +229,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return (tableView == self.commentTableView) ? 25 : 5;
+    return (tableView == self.tableView) ? 25 : 5;
 }
 
 #pragma mark - Network Actions
@@ -246,7 +249,7 @@
     
     [super finishedFetchRequest];
     
-    [self.commentTableView reloadData];
+//    [self.commentTableView reloadData];
 }
 - (void)shareOnFacebook
 {
@@ -333,7 +336,7 @@
     }
     
     [self.postTableView reloadData];
-    [self.commentTableView reloadData];
+//    [self.commentTableView reloadData];
 }
 
 #pragma mark - Helper Methods
@@ -388,8 +391,9 @@
             if (success)
             {
                 [self refresh];
-
-                [self.commentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataController.commentList.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataController.commentList.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//                [self.commentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataController.commentList.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
             }
         }
 //        else
