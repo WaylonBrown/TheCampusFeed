@@ -3,7 +3,7 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 12/1/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 #import "NewPostsViewController.h"
@@ -19,16 +19,22 @@
     
     if (self.dataController.showingAllColleges)
     {
+        NSLog(@"Fetching New Posts in all colleges");
         [self.dataController fetchNewPostsForAllColleges];
     }
     else
     {
+        NSLog(@"Fetching New Posts in %@", self.dataController.collegeInFocus.name);
         [self.dataController fetchNewPostsForSingleCollege];
     }
 }
 - (void)finishedFetchRequest:(NSNotification *)notification
 {
-    [super finishedFetchRequest:notification];
+    if ([[[notification userInfo] valueForKey:@"feedName"] isEqualToString:@"newPosts"])
+    {
+        NSLog(@"Finished fetching New Posts");
+        [super finishedFetchRequest:notification];
+    }
 }
 
 #pragma mark - Local Actions
@@ -37,10 +43,6 @@
 {
     [super changeFeed];
 }
-//- (void)refresh
-//{   // refresh this post view
-//    [super refresh];
-//}
 
 #pragma mark - Helper Methods
 

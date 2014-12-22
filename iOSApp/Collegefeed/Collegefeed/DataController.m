@@ -3,7 +3,7 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/2/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 #import "DataController.h"
@@ -252,6 +252,7 @@
 
 - (void)fetchObjectsOfType:(ModelType)type
                  IntoArray:(NSMutableArray *)array
+        WithFeedIdentifier:(NSString *)feedName
          WithFetchFunction:(NSData* (^)(void))fetchBlock
 {
     if (array == nil)
@@ -271,7 +272,9 @@
                        
                        dispatch_async(dispatch_get_main_queue(), ^
                                       {
-                                          NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:newObjectsCount, @"newObjectsCount", nil];
+                                          NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                                                    newObjectsCount, @"newObjectsCount",
+                                                                    feedName, @"feedName", nil];
                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:userInfo];
                                       });
                    });
@@ -541,6 +544,7 @@
     
     [self fetchObjectsOfType:POST
                    IntoArray:self.topPostsAllColleges
+          WithFeedIdentifier:@"topPosts"
            WithFetchFunction:^{
                
                return [Networker GetTopPostsAtPageNum:self.pageForTopPostsAllColleges];
@@ -552,6 +556,7 @@
     
     [self fetchObjectsOfType:POST
                    IntoArray:self.topPostsSingleCollege
+          WithFeedIdentifier:@"topPosts"
            WithFetchFunction:^{
                
                return [Networker GetTopPostsAtPageNum:self.pageForTopPostsSingleCollege
@@ -564,6 +569,7 @@
     
     [self fetchObjectsOfType:POST
                    IntoArray:self.recentPostsAllColleges
+          WithFeedIdentifier:@"newPosts"
            WithFetchFunction:^{
                
                return [Networker GetNewPostsAtPageNum:self.pageForNewPostsAllColleges];
@@ -575,6 +581,7 @@
     
     [self fetchObjectsOfType:POST
                    IntoArray:self.recentPostsSingleCollege
+          WithFeedIdentifier:@"newPosts"
            WithFetchFunction:^{
                
                return [Networker GetNewPostsAtPageNum:self.pageForNewPostsSingleCollege
@@ -587,6 +594,7 @@
     
     [self fetchObjectsOfType:POST
                    IntoArray:self.postsWithTagAllColleges
+          WithFeedIdentifier:@"tagPosts"
            WithFetchFunction:^{
                
                return [Networker GetPostsWithTag:tagMessage
@@ -599,6 +607,7 @@
     
     [self fetchObjectsOfType:POST
                    IntoArray:self.postsWithTagSingleCollege
+          WithFeedIdentifier:@"tagPosts"
            WithFetchFunction:^{
                
                return [Networker GetPostsWithTag:tagMessage
@@ -611,6 +620,7 @@
 {
     [self fetchObjectsOfType:POST
                    IntoArray:self.userPosts
+          WithFeedIdentifier:@"userPosts"
            WithFetchFunction:^{
                
                NSMutableArray *postIds = [[NSMutableArray alloc] init];
@@ -661,6 +671,7 @@
     
     [self fetchObjectsOfType:TAG
                    IntoArray:self.trendingTagsAllColleges
+          WithFeedIdentifier:@"trendingTags"
            WithFetchFunction:^{
                
                return [Networker GetTrendingTagsAtPageNum:self.pageForTrendingTagsAllColleges];
@@ -672,6 +683,7 @@
     
     [self fetchObjectsOfType:TAG
                    IntoArray:self.trendingTagsAllColleges
+          WithFeedIdentifier:@"trendingTags"
            WithFetchFunction:^{
                
                return [Networker GetTrendingTagsAtPageNum:self.pageForTrendingTagsSingleCollege

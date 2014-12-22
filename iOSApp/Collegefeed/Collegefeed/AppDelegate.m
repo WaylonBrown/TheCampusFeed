@@ -3,7 +3,7 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/1/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 #import "AppDelegate.h"
@@ -119,21 +119,21 @@
 {
     self.topPostsController             = [[TopPostsViewController alloc] initWithDataController:self.dataController];
     
-//    self.recentPostsController          = [[NewPostsViewController alloc] initWithDataController:self.dataController];
-//    
-//    self.tagController                  = [[TagViewController alloc] initWithDataController:self.dataController];
-//    
+    self.recentPostsController          = [[NewPostsViewController alloc] initWithDataController:self.dataController];
+    
+    self.tagController                  = [[TagViewController alloc] initWithDataController:self.dataController];
+    
 //    self.trendingCollegesController     = [[TrendingCollegesViewController alloc]
 //                                           initWithDataController:self.dataController];
 //    
 //    self.userPostsController            = [[UserPostsViewController alloc] initWithDataController:self.dataController];
-    
-    
-    
+//    
+//    
+//    
 //    self.userCommentsController         = [[UserCommentsViewController alloc]
 //                                           initAsType:USER_COMMENTS
 //                                           withDataController:self.dataController];
-    
+//    
 //    self.tutorialController             = [[TutorialViewController alloc] init];
 //    
 //    self.helpController                 = [[CF_DialogViewController alloc] initWithDialogType:HELP];
@@ -142,8 +142,8 @@
 
     NSArray *viewControllers            = [NSArray arrayWithObjects:
                                            self.topPostsController,
-//                                           self.recentPostsController,
-//                                           self.tagController,
+                                           self.recentPostsController,
+                                           self.tagController,
 //                                           self.trendingCollegesController,
 //                                           self.userPostsController,
 //                                           self.userCommentsController,

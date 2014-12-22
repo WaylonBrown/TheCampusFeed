@@ -3,23 +3,10 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/2/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
-#import "AppDelegate.h"
-#import "PostTableCell.h"
-
 #import "PostsViewController.h"
-#import "Post.h"
-#import "Vote.h"
-#import "Tag.h"
-#import "CommentViewController.h"
-#import "Shared.h"
-#import "College.h"
-#import "SimpleTableCell.h"
-#import "ToastController.h"
-#import "Comment.h"
-#import "LoadingCell.h"
 
 @implementation PostsViewController
 
@@ -164,10 +151,6 @@
 {
     [super changeFeed];
 }
-//- (void)refresh
-//{   // refresh this post view
-//    [super refresh];
-//}
 
 #pragma mark - Helper Methods
 

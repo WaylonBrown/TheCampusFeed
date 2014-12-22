@@ -3,7 +3,7 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/15/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 // Models
@@ -378,7 +378,6 @@
 
 - (void)switchToFeedForCollegeOrNil:(College *)college
 {
-//    College *oldCollege = self.dataController.collegeInFocus;
     [self.dataController switchedToSpecificCollegeOrNil:college];
     [self setCorrectList];
 
@@ -390,7 +389,7 @@
         }
         [self.tableView reloadData];
     }
-    else // if (oldCollege != nil && ![[oldCollege getID] isEqualToNumber:[college getID]])
+    else
     {
         [self.list removeAllObjects];
         self.dataController.pageForNewPostsSingleCollege = 0;
