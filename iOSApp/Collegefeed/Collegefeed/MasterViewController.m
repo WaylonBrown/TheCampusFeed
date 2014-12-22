@@ -99,7 +99,6 @@
 - (void)viewDidLoad
 {
     [self.navigationController.navigationBar setTranslucent:NO];
-    [self refresh];
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
@@ -110,8 +109,10 @@
         [self fetchContent];
     }
     
+    [self refreshFeedLabel];
+    
     [self makeToolbarButtons];
-    [self refresh];
+    [self.tableView reloadData];
 }
 - (void)placeLoadingIndicatorInToolbar
 {   // Place the loading indicator in the navigation bar (instead of create post button)
@@ -131,6 +132,11 @@
 
 #pragma mark - Table View
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{   // Return the number of posts in the list, plus one additional if there are more to be fetched
+    
+    return self.list.count;
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {   // return the number of sections in the table view
     return 1;
@@ -221,28 +227,27 @@
         [self.navigationController presentViewController:controller animated:YES completion:nil];
     }
 }
-- (void)refresh
-{   // refresh the current view
+//- (void)refresh
+//{   // refresh the current view
+//    NSString *feedName = self.dataController.collegeInFocus.name;
+//    if (feedName == nil)
+//    {
+//        feedName = @"All Colleges";
+//    }
     
-    NSString *feedName = self.dataController.collegeInFocus.name;
-    if (feedName == nil)
-    {
-        feedName = @"All Colleges";
-    }
-    
-    [self setCorrectList];
-    if (self.list.count == 0)
-    {
+//    [self setCorrectList];
+//    if (self.list.count == 0)
+//    {
 //        [self fetchContent];
-    }
+//    }
     
-    [self.currentFeedLabel setText:feedName];
-    [self.tableView reloadData];
-    [self.refreshControl endRefreshing];
-    
-    self.toolBarSpaceFromBottom.constant = 50;
-    [self.feedToolbar updateConstraintsIfNeeded];
-}
+//    [self.currentFeedLabel setText:feedName];
+//    [self.tableView reloadData];
+//    [self.refreshControl endRefreshing];
+//    
+//    self.toolBarSpaceFromBottom.constant = 50;
+//    [self.feedToolbar updateConstraintsIfNeeded];
+//}
 - (void)showCreationDialogForCollege:(College *) college
 {
     self.createController = [[CreatePostCommentViewController alloc] initWithType:POST
@@ -258,11 +263,24 @@
         [self.dataController findUserLocation];
     }
     
-    [self refresh];
+//    [self refresh];
 }
 
 #pragma mark - Helper Methods
 
+- (void)refreshFeedLabel
+{
+    if (self.dataController.collegeInFocus == nil)
+    {
+        [self.currentFeedLabel setText:@"All Colleges"];
+    }
+    else
+    {
+        [self.currentFeedLabel setText:self.dataController.collegeInFocus.name];
+    }
+    self.toolBarSpaceFromBottom.constant = 50;
+    [self.feedToolbar updateConstraintsIfNeeded];
+}
 - (void)setCorrectList
 {
     if (self.list == nil)
@@ -336,7 +354,7 @@
         
         if (success)
         {
-            [self refresh];
+//            [self refresh];
             
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.list.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         }
@@ -344,7 +362,7 @@
 //        {
 //            [self.toastController toastPostFailed];
 //        }
-        [self refresh];
+//        [self refresh];
     }
 //    else
 //    {
@@ -360,17 +378,28 @@
 
 - (void)switchToFeedForCollegeOrNil:(College *)college
 {
+//    College *oldCollege = self.dataController.collegeInFocus;
     [self.dataController switchedToSpecificCollegeOrNil:college];
+    [self setCorrectList];
+
     if (college == nil)
     {
-        [self.currentFeedLabel setText:@"All Colleges"];
+        if ([self.list count] == 0)
+        {
+            [self fetchContent];
+        }
+        [self.tableView reloadData];
     }
-    else
+    else // if (oldCollege != nil && ![[oldCollege getID] isEqualToNumber:[college getID]])
     {
-        [self.currentFeedLabel setText:college.name];
+        [self.list removeAllObjects];
+        self.dataController.pageForNewPostsSingleCollege = 0;
+        self.dataController.pageForTopPostsSingleCollege = 0;
+        self.dataController.pageForTrendingTagsSingleCollege = 0;
+        [self fetchContent];
     }
-
-    [self refresh];
+    
+    [self refreshFeedLabel];
     self.tableView.contentOffset = CGPointMake(0, 0 - self.tableView.contentInset.top);
 }
 - (void)showDialogForAllColleges

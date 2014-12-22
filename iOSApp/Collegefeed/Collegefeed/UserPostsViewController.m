@@ -35,10 +35,10 @@
     [super finishedFetchRequest:notification];
 }
 
-- (void)refresh
-{
-    [super refresh];
-}
+//- (void)refresh
+//{
+//    [super refresh];
+//}
 
 #pragma mark - Helper Methods
 

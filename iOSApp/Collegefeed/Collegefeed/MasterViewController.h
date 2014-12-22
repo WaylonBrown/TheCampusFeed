@@ -70,7 +70,7 @@
 // Local Actions
 - (IBAction)changeFeed;
 - (void)create;
-- (void)refresh;
+//- (void)refresh;
 
 // Helper Methods
 - (void)setCorrectList;

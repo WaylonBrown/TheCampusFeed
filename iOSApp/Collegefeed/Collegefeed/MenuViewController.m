@@ -62,7 +62,7 @@
     
     self.selectedIndex = TOP_POSTS_INDEX;
     [self.viewDeckController setCenterController:viewController];
-    [viewController refresh];
+//    [viewController refresh];
     [viewController.tableView scrollRectToVisible:CGRectMake(0,0,1,1) animated:YES];
 }
 

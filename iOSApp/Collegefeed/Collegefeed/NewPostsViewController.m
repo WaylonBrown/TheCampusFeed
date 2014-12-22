@@ -37,10 +37,10 @@
 {
     [super changeFeed];
 }
-- (void)refresh
-{   // refresh this post view
-    [super refresh];
-}
+//- (void)refresh
+//{   // refresh this post view
+//    [super refresh];
+//}
 
 #pragma mark - Helper Methods
 

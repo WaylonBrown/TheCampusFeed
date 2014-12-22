@@ -74,11 +74,6 @@
 
 #pragma mark - Table View
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{   // Return the number of posts in the list, plus one additional if there are more to be fetched
-    
-    return self.list.count;
-}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
     // this specifies the prototype (PostTableCell) and assigns the labels
@@ -169,10 +164,10 @@
 {
     [super changeFeed];
 }
-- (void)refresh
-{   // refresh this post view
-    [super refresh];
-}
+//- (void)refresh
+//{   // refresh this post view
+//    [super refresh];
+//}
 
 #pragma mark - Helper Methods
 
@@ -220,8 +215,8 @@
 //    {
 //        [self.toastController toastPostFailed];
 //    }
-    if (success)
-        [self refresh];
+//    if (success)
+//        [self refresh];
 }
 
 @end

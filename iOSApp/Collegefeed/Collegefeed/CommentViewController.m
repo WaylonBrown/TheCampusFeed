@@ -325,7 +325,7 @@
 }
 - (void)refresh
 {
-    [super refresh];
+//    [super refresh];
     if (self.dataController.postInFocus != nil)
     {
         float postCellHeight = [self tableView:self.postTableView heightForRowAtIndexPath:
