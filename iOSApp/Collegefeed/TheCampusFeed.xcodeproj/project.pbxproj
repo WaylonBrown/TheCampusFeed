@@ -87,6 +87,7 @@
 		CDF14D921A3B6D24006D8F2C /* PostTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF14D8E1A3B6D24006D8F2C /* PostTableCell.m */; };
 		CDF66BEB1A36CEBD008C62DD /* bad_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = CDF66BEA1A36CEBD008C62DD /* bad_words.txt */; };
 		CDFD68271A488A1100B6F4DA /* CollegeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFD68261A488A1100B6F4DA /* CollegeViewController.m */; };
+		CDFD682C1A48972300B6F4DA /* SearchableCollegesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFD682B1A48972300B6F4DA /* SearchableCollegesViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -254,6 +255,8 @@
 		CDF66BEA1A36CEBD008C62DD /* bad_words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bad_words.txt; sourceTree = "<group>"; };
 		CDFD68251A488A1100B6F4DA /* CollegeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollegeViewController.h; sourceTree = "<group>"; };
 		CDFD68261A488A1100B6F4DA /* CollegeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollegeViewController.m; sourceTree = "<group>"; };
+		CDFD682A1A48972300B6F4DA /* SearchableCollegesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchableCollegesViewController.h; sourceTree = "<group>"; };
+		CDFD682B1A48972300B6F4DA /* SearchableCollegesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchableCollegesViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,15 +320,17 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		5347EEA7197DD3C3001B2214 /* Trending Colleges */ = {
+		5347EEA7197DD3C3001B2214 /* College View */ = {
 			isa = PBXGroup;
 			children = (
 				CDFD68251A488A1100B6F4DA /* CollegeViewController.h */,
 				CDFD68261A488A1100B6F4DA /* CollegeViewController.m */,
 				5347EEA8197DD407001B2214 /* TrendingCollegesViewController.h */,
 				5347EEA9197DD407001B2214 /* TrendingCollegesViewController.m */,
+				CDFD682A1A48972300B6F4DA /* SearchableCollegesViewController.h */,
+				CDFD682B1A48972300B6F4DA /* SearchableCollegesViewController.m */,
 			);
-			name = "Trending Colleges";
+			name = "College View";
 			sourceTree = "<group>";
 		};
 		5347EEAF197E9E9E001B2214 /* Menu Navigation View */ = {
@@ -483,12 +488,12 @@
 				535055881953B067009C1911 /* Post View */,
 				CD539DD61A2CDE5D004A794E /* Comment View */,
 				535055891953B07A009C1911 /* Tag View */,
+				5347EEA7197DD3C3001B2214 /* College View */,
+				5350558119529FD5009C1911 /* Select College */,
 				538E7CA219D4B67800AD5719 /* Time Crunch */,
 				5311F85C19C960A90053D3CC /* Tutorial View */,
 				5347EEAF197E9E9E001B2214 /* Menu Navigation View */,
-				5347EEA7197DD3C3001B2214 /* Trending Colleges */,
 				536D0E11196D0F5A00677C1B /* User Content */,
-				5350558119529FD5009C1911 /* Select College */,
 				5350557B1951458B009C1911 /* Create Post/Comment */,
 				533475A019232A4A00E84CC8 /* TableCell */,
 				538E7C9619D030C400AD5719 /* CF_DialogView */,
@@ -813,6 +818,7 @@
 				53D6E986199DA4F500FD9061 /* LoadingCell.m in Sources */,
 				53F8789D19133F60002A578B /* main.m in Sources */,
 				53D51E391949625300A8BA81 /* SimpleTableCell.m in Sources */,
+				CDFD682C1A48972300B6F4DA /* SearchableCollegesViewController.m in Sources */,
 				5312942E196504CD00CF13DB /* ToastController.m in Sources */,
 				533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */,
 				5347EEA6197DCE9F001B2214 /* UserCommentsViewController.m in Sources */,

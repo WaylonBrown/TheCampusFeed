@@ -16,5 +16,6 @@
 @property (weak, nonatomic) Tag* selectedTag;
 @property (nonatomic, strong) NSMutableArray *searchResult;
 @property (nonatomic, strong) UISearchDisplayController *searchDisplay;
+@property (nonatomic, strong) UISearchController *searchController;
 
 @end
