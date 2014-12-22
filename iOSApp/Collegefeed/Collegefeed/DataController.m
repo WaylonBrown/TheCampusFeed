@@ -292,11 +292,17 @@
     long version = [self getNetworkCollegeListVersion];
     [self updateCollegeListVersion:version];
 }
-- (void)getTrendingCollegeList
+- (void)fetchTopColleges
 {
-    self.trendingColleges = [[NSMutableArray alloc] init];
-    NSData *data = [Networker GETTrendingColleges];
-    [self parseData:data asClass:[College class] intoList:self.trendingColleges];
+    self.pageForTopColleges++;
+    
+    [self fetchObjectsOfType:COLLEGE
+                   IntoArray:self.trendingColleges
+          WithFeedIdentifier:@"topColleges"
+           WithFetchFunction:^{
+               
+               return [Networker GETTrendingCollegesAtPageNum:self.pageForTopColleges];
+           }];
 }
 - (long)getNetworkCollegeListVersion
 {

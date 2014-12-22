@@ -86,6 +86,7 @@
 		CD76C1CD1A3BC176002F0C9F /* CommentTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD76C1CC1A3BC176002F0C9F /* CommentTableCell.m */; };
 		CDF14D921A3B6D24006D8F2C /* PostTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF14D8E1A3B6D24006D8F2C /* PostTableCell.m */; };
 		CDF66BEB1A36CEBD008C62DD /* bad_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = CDF66BEA1A36CEBD008C62DD /* bad_words.txt */; };
+		CDFD68271A488A1100B6F4DA /* CollegeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFD68261A488A1100B6F4DA /* CollegeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -251,6 +252,8 @@
 		CDF14D8E1A3B6D24006D8F2C /* PostTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostTableCell.m; path = Collegefeed/PostTableCell.m; sourceTree = "<group>"; };
 		CDF1FA8C1A30B160003D421F /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = ../../../../../../../System/Library/Frameworks/Python.framework; sourceTree = "<group>"; };
 		CDF66BEA1A36CEBD008C62DD /* bad_words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bad_words.txt; sourceTree = "<group>"; };
+		CDFD68251A488A1100B6F4DA /* CollegeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollegeViewController.h; sourceTree = "<group>"; };
+		CDFD68261A488A1100B6F4DA /* CollegeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollegeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -305,6 +308,9 @@
 				CDF14D8E1A3B6D24006D8F2C /* PostTableCell.m */,
 				CD76C1CB1A3BC176002F0C9F /* CommentTableCell.h */,
 				CD76C1CC1A3BC176002F0C9F /* CommentTableCell.m */,
+				53D51E381949625300A8BA81 /* SimpleTableCell.xib */,
+				53D51E361949625300A8BA81 /* SimpleTableCell.h */,
+				53D51E371949625300A8BA81 /* SimpleTableCell.m */,
 				CD76C1CE1A3D50CA002F0C9F /* TODO */,
 			);
 			name = TableCell;
@@ -314,6 +320,8 @@
 		5347EEA7197DD3C3001B2214 /* Trending Colleges */ = {
 			isa = PBXGroup;
 			children = (
+				CDFD68251A488A1100B6F4DA /* CollegeViewController.h */,
+				CDFD68261A488A1100B6F4DA /* CollegeViewController.m */,
 				5347EEA8197DD407001B2214 /* TrendingCollegesViewController.h */,
 				5347EEA9197DD407001B2214 /* TrendingCollegesViewController.m */,
 			);
@@ -621,9 +629,6 @@
 		CD76C1CE1A3D50CA002F0C9F /* TODO */ = {
 			isa = PBXGroup;
 			children = (
-				53D51E361949625300A8BA81 /* SimpleTableCell.h */,
-				53D51E371949625300A8BA81 /* SimpleTableCell.m */,
-				53D51E381949625300A8BA81 /* SimpleTableCell.xib */,
 				53D6E984199DA4F500FD9061 /* LoadingCell.h */,
 				53D6E985199DA4F500FD9061 /* LoadingCell.m */,
 				53D6E987199DA51500FD9061 /* LoadingCell.xib */,
@@ -794,6 +799,7 @@
 				53DE347F19AD01FF004CB5A0 /* IISideController.m in Sources */,
 				5352B5A2195F5C3100FEB2BF /* UIView+Toast.m in Sources */,
 				CD539DDC1A2CE488004A794E /* TagPostsViewController.m in Sources */,
+				CDFD68271A488A1100B6F4DA /* CollegeViewController.m in Sources */,
 				5347EEAA197DD407001B2214 /* TrendingCollegesViewController.m in Sources */,
 				53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */,
 				53AE73C71928354F00BE6B02 /* DataController.m in Sources */,

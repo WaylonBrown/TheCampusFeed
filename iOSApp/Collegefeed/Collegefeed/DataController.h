@@ -102,7 +102,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic) long pageForTrendingTagsAllColleges;
 @property (nonatomic) long pageForTrendingTagsSingleCollege;
 
-@property (nonatomic) long trendingCollegesPage;
+@property (nonatomic) long pageForTopColleges;
 
 
 #pragma mark - Public Functions
@@ -146,7 +146,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 
 // Colleges
 - (void)getNetworkCollegeList;
-- (void)getTrendingCollegeList;
+- (void)fetchTopColleges;
 - (BOOL)needsNewCollegeList;
 
 // Comments

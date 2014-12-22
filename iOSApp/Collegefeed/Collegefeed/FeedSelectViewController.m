@@ -257,8 +257,8 @@
                         College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
                         if (college != nil)
                         {
-                            float labelHeight = [Shared getSmallCellMessageHeight:college.name WithFont:CF_FONT_LIGHT(18) withWidth:265];
-                            [cell assignCollege:college withRankNumber:-1 withMessageHeight:labelHeight];
+//                            float labelHeight = [Shared getSmallCellMessageHeight:college.name WithFont:CF_FONT_LIGHT(18) withWidth:265];
+                            [cell assignCollege:college withRankNumberOrNil:nil];// withMessageHeight:labelHeight];
                             return cell;
                         }
                     }
@@ -283,8 +283,8 @@
         College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
         if (college != nil)
         {
-            float labelHeight = [Shared getSmallCellMessageHeight:college.name WithFont:CF_FONT_LIGHT(18) withWidth:265];
-            [cell assignCollege:college withRankNumber:-1 withMessageHeight:labelHeight];
+//            float labelHeight = [Shared getSmallCellMessageHeight:college.name WithFont:CF_FONT_LIGHT(18) withWidth:265];
+            [cell assignCollege:college withRankNumberOrNil:nil]; // withMessageHeight:labelHeight];
             return cell;
         }
     }

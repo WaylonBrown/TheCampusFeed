@@ -123,9 +123,9 @@
     
     self.tagController                  = [[TagViewController alloc] initWithDataController:self.dataController];
     
-//    self.trendingCollegesController     = [[TrendingCollegesViewController alloc]
-//                                           initWithDataController:self.dataController];
-//    
+    self.trendingCollegesController     = [[TrendingCollegesViewController alloc]
+                                           initWithDataController:self.dataController];
+    
 //    self.userPostsController            = [[UserPostsViewController alloc] initWithDataController:self.dataController];
 //    
 //    
@@ -144,7 +144,7 @@
                                            self.topPostsController,
                                            self.recentPostsController,
                                            self.tagController,
-//                                           self.trendingCollegesController,
+                                           self.trendingCollegesController,
 //                                           self.userPostsController,
 //                                           self.userCommentsController,
 //                                           self.timeCrunchController,

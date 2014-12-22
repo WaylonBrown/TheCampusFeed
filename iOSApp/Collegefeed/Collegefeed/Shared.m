@@ -88,7 +88,7 @@
     
     return MAX(height, SMALL_CELL_MIN_LABEL_HEIGHT);
 }
-+ (float)getSmallCellMessageHeight:(NSString *)text WithFont:(UIFont *)font  withWidth:(float)width
++ (float)getSmallCellMessageHeight:(NSString *)text WithFont:(UIFont *)font withWidth:(float)width
 {
     
 #define MESSAGE_HEIGHT_CUSHION 17

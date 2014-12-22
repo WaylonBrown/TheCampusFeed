@@ -22,34 +22,6 @@
     }
     return self;
 }
-- (void)loadView
-{
-    [super loadView];
-    
-    [self.feedToolbar setHidden:YES];
-    [self.tableView setDataSource:self];
-    [self.tableView setDelegate:self];
-    [self.tableView reloadData];
-}
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-- (void)viewWillAppear:(BOOL)animated
-{   // View is about to appear after being inactive
-    [super viewWillAppear:animated];
-}
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.list.count;
-}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
@@ -69,10 +41,7 @@
     // get the college and display in this cell
     College *collegeAtIndex = (College *)[self.list objectAtIndex:row];
     
-    NSString *text = [collegeAtIndex name];
-    float height = [Shared getSmallCellMessageHeight:text WithFont:CF_FONT_LIGHT(18)];
-
-    [cell assignCollege:collegeAtIndex withRankNumber:(row + 1) withMessageHeight:height];
+    [cell assignCollege:collegeAtIndex withRankNumberOrNil:[NSNumber numberWithLong:(row + 1)]];
     
     return cell;
 }
@@ -89,10 +58,22 @@
     return [Shared getSmallCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(18)];
 }
 
-- (void)refresh
+#pragma mark - Network Actions
+
+- (void)fetchContent
+{   // Fetches new content for this view
+    [super fetchContent];
+
+    NSLog(@"Fetching Top colleges");
+    [self.dataController fetchTopColleges];
+}
+- (void)finishedFetchRequest:(NSNotification *)notification
 {
-    [self.tableView reloadData];
-    [self.refreshControl endRefreshing];
+    if ([[[notification userInfo] valueForKey:@"feedName"] isEqualToString:@"topColleges"])
+    {
+        NSLog(@"Finished fetching Top Colleges");
+        [super finishedFetchRequest:notification];
+    }
 }
 
 @end

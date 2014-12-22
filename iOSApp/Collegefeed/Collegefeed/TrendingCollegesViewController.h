@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MasterViewController.h"
+//#import "MasterViewController.h"
+#import "CollegeViewController.h"
 
-@interface TrendingCollegesViewController : MasterViewController <UITableViewDataSource, UITableViewDelegate>
+//@interface TrendingCollegesViewController : MasterViewController <UITableViewDataSource, UITableViewDelegate>
+@interface TrendingCollegesViewController : CollegeViewController<UITableViewDataSource, UITableViewDelegate>
 
 @end
