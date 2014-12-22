@@ -6,12 +6,8 @@
 //  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
-//#import "MasterViewController.h"
 #import "CollegeViewController.h"
 
-//@interface TrendingCollegesViewController : MasterViewController <UITableViewDataSource, UITableViewDelegate>
 @interface TrendingCollegesViewController : CollegeViewController<UITableViewDataSource, UITableViewDelegate>
 
 @end
