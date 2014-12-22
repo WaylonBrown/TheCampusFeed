@@ -142,16 +142,22 @@
     [super fetchContent];
     if (self.dataController.showingAllColleges)
     {
+        NSLog(@"Fetching Trending Tags in all colleges");
         [self.dataController fetchTrendingTagsForAllColleges];
     }
     else
     {
+        NSLog(@"Fetching Trending Tags in %@", self.dataController.collegeInFocus.name);
         [self.dataController fetchTrendingTagsForSingleCollege];
     }
 }
 - (void)finishedFetchRequest:(NSNotification *)notification
 {
-    [super finishedFetchRequest:notification];
+    if ([[[notification userInfo] valueForKey:@"feedName"] isEqualToString:@"trendingTags"])
+    {
+        NSLog(@"Finished fetching Trending Tags");
+        [super finishedFetchRequest:notification];
+    }
     
     if (self.list.count == 0)
     {
@@ -165,10 +171,6 @@
 {
     [super changeFeed];
 }
-//- (void)refresh
-//{
-//    [super refresh];
-//}
 
 #pragma mark - Helper Methods
 

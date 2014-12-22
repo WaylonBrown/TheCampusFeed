@@ -134,7 +134,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Return the number of posts in the list, plus one additional if there are more to be fetched
-    
     return self.list.count;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -185,7 +184,7 @@
 }
 - (void)finishedFetchRequest:(NSNotification *)notification
 {
-    if ([[[notification userInfo] valueForKey:@"newObjectsCount"] longValue] == 0)
+    if ([[[notification userInfo] valueForKey:@"newObjectsCount"] longValue] < PAGINATION_NUM)
     {   // fetched all content for the current feed
         self.hasFetchedAllContent = YES;
         [self.contentLoadingIndicator stopAnimating];
@@ -227,27 +226,6 @@
         [self.navigationController presentViewController:controller animated:YES completion:nil];
     }
 }
-//- (void)refresh
-//{   // refresh the current view
-//    NSString *feedName = self.dataController.collegeInFocus.name;
-//    if (feedName == nil)
-//    {
-//        feedName = @"All Colleges";
-//    }
-    
-//    [self setCorrectList];
-//    if (self.list.count == 0)
-//    {
-//        [self fetchContent];
-//    }
-    
-//    [self.currentFeedLabel setText:feedName];
-//    [self.tableView reloadData];
-//    [self.refreshControl endRefreshing];
-//    
-//    self.toolBarSpaceFromBottom.constant = 50;
-//    [self.feedToolbar updateConstraintsIfNeeded];
-//}
 - (void)showCreationDialogForCollege:(College *) college
 {
     self.createController = [[CreatePostCommentViewController alloc] initWithType:POST
@@ -262,8 +240,6 @@
     {
         [self.dataController findUserLocation];
     }
-    
-//    [self refresh];
 }
 
 #pragma mark - Helper Methods
