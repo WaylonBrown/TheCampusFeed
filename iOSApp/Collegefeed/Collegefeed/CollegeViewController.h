@@ -14,4 +14,14 @@
 
 @interface CollegeViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate>
 
+- (id)initWithDataController:(DataController *)controller;
+- (void)loadView;
+- (void)viewDidLoad;
+- (void)viewWillAppear:(BOOL)animated;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)fetchContent;
+- (void)finishedFetchRequest:(NSNotification *)notification;
+
+
 @end

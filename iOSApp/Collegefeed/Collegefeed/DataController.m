@@ -282,16 +282,6 @@
 
 #pragma mark - Networker Access - Colleges
 
-- (void)getNetworkCollegeList
-{
-    self.collegeList = [[NSMutableArray alloc] init];
-    NSData *data = [Networker GETAllColleges];
-    [self parseData:data asClass:[College class] intoList:self.collegeList];
-    [self writeCollegestoCoreData];
-    
-    long version = [self getNetworkCollegeListVersion];
-    [self updateCollegeListVersion:version];
-}
 - (void)fetchTopColleges
 {
     self.pageForTopColleges++;
@@ -304,6 +294,39 @@
                return [Networker GETTrendingCollegesAtPageNum:self.pageForTopColleges];
            }];
 }
+- (void)fetchAllColleges
+{
+    if ([self needsNewCollegeList] || self.collegeList.count == 0)
+    {
+        [self getNetworkCollegeList];
+    }
+    else
+    {
+        NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                  @"allColleges", @"feedName", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:userInfo];
+    }
+}
+- (void)getNetworkCollegeList
+{
+    [self fetchObjectsOfType:COLLEGE
+                   IntoArray:self.collegeList
+          WithFeedIdentifier:@"allColleges"
+           WithFetchFunction:^{
+
+               return [Networker GETAllColleges];
+           }];
+    
+    
+//    self.collegeList = [[NSMutableArray alloc] init];
+//    NSData *data = [Networker GETAllColleges];
+//    [self parseData:data asClass:[College class] intoList:self.collegeList];
+    [self writeCollegestoCoreData];
+    
+    long version = [self getNetworkCollegeListVersion];
+    [self updateCollegeListVersion:version];
+}
+
 - (long)getNetworkCollegeListVersion
 {
     NSData *data = [Networker GETCollegeListVersion];
@@ -804,7 +827,7 @@
     }
     if (![_managedObjectContext save:&error])
     {
-        NSLog(@"Failed to save user's post votes: %@",
+        NSLog(@"Failed to save colleges to core data: %@",
               [error localizedDescription]);
     }
 }

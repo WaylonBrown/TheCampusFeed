@@ -145,8 +145,10 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (void)findUserLocation;
 
 // Colleges
-- (void)getNetworkCollegeList;
 - (void)fetchTopColleges;
+- (void)fetchAllColleges;
+
+- (void)getNetworkCollegeList;
 - (BOOL)needsNewCollegeList;
 
 // Comments
