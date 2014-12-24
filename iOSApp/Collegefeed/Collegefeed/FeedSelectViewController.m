@@ -189,7 +189,7 @@
             }
             else
             {
-                return numNearby;
+                return self.dataController.collegeList.count;
             }
             break;
         case ONLY_NEARBY_COLLEGES:
@@ -506,8 +506,13 @@
 
 #pragma mark - Search Bar
 
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    NSLog(@"end editing");
+}
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
+    NSLog(@"begin editing");
     // Adjust views when search starts
     float windowHeight = self.view.frame.size.height;
     float dialogHeight = self.alertView.frame.size.height;
@@ -526,15 +531,21 @@
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
+    NSLog(@"START: filter content for search text");
     [self.searchResult removeAllObjects];
     NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchText];
     
     self.searchResult = [NSMutableArray arrayWithArray: [self.dataController.collegeList filteredArrayUsingPredicate:resultPredicate]];
+
+    NSLog(@"END: filter content for search text");
 }
 
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
+    NSLog(@"START: should reload table for search string");
     [self filterContentForSearchText:searchString scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    
+    NSLog(@"END: should reload table for search string");
     
     return YES;
 }

@@ -16,7 +16,7 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tXm-5T-2H1">
                         <rect key="frame" x="5" y="0.0" width="310" height="43"/>
                     </imageView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." lineBreakMode="wordWrap" numberOfLines="6" baselineAdjustment="alignBaselines" minimumFontSize="7" preferredMaxLayoutWidth="290" translatesAutoresizingMaskIntoConstraints="NO" id="7uO-pg-YcX">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" preferredMaxLayoutWidth="290" translatesAutoresizingMaskIntoConstraints="NO" id="7uO-pg-YcX">
                         <rect key="frame" x="15" y="1" width="290" height="36"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="36" id="oCq-NY-zgR"/>

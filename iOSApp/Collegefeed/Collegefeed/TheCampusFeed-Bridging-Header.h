@@ -13,5 +13,7 @@
 #import "CF_DialogViewController.h"
 #import "CFModelProtocol.h"
 #import "CollegeViewController.h"
+#import "Constants.h"
+#import "MasterViewController.h"
 
 #endif

@@ -388,10 +388,12 @@
 - (void)showDialogForAllColleges
 {
     [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
-    CollegeSearchViewController *controller = [[CollegeSearchViewController alloc] initWithDataController:self.dataController];
+//    CollegeSearchViewController *controller = [[CollegeSearchViewController alloc] initWithDataController:self.dataController];
     
     
-//    FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_COLLEGES_WITH_SEARCH WithDataController:self.dataController WithFeedDelegate:self];
+    FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_COLLEGES_WITH_SEARCH
+                                                                       WithDataController:self.dataController
+                                                                         WithFeedDelegate:self];
 
     [self.navigationController presentViewController:controller animated:YES completion:nil];
 }

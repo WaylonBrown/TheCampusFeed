@@ -8,21 +8,54 @@
 
 import UIKit
 
-class CollegeSearchViewController: CollegeViewController {
-
+class CollegeSearchViewController: CollegeViewController, UISearchBarDelegate, UISearchDisplayDelegate {
+    
+    var searchController = UISearchDisplayController()
+    
+    override init!(dataController controller: DataController!) {
+        super.init(dataController: controller)
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override func loadView() {
+        super.loadView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
      
         // Do any additional setup after loading the view.
+        self.tableView.estimatedRowHeight = 44.0
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        
+        
+        
+        var searchBar = UISearchBar(frame: CGRectMake(0, 0, 0, 38))
+        searchBar.sizeToFit()
+        searchBar.delegate = self
+        self.searchController = UISearchDisplayController(searchBar: searchBar, contentsController: self)
+        
+        self.searchController.searchResultsDelegate = self;
+        self.searchController.searchResultsDataSource = self;
+        self.searchController.delegate = self;
+        
+        self.tableView.tableHeaderView = self.searchDisplayController?.searchBar
+        
         self.list = self.dataController.collegeList
         self.tableView.reloadData()
     }
-
+    
+    override func viewDidAppear(animated: Bool) {
+//        tableView.reloadData()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     override func fetchContent() {
         super.fetchContent()
         

@@ -13,6 +13,7 @@
                 <outlet property="feedToolbar" destination="onw-bZ-Ayo" id="guM-k8-k3E"/>
                 <outlet property="scoreLabel" destination="Cxc-Zd-Pw2" id="ujf-RB-1C3"/>
                 <outlet property="scoreToolbar" destination="N3W-iU-Kby" id="39n-lG-pbs"/>
+                <outlet property="searchDisplayController" destination="02a-lg-b7W" id="I3K-BY-2pX"/>
                 <outlet property="showingLabel" destination="q0Q-LO-cjs" id="udx-dq-wdK"/>
                 <outlet property="tableView" destination="aEV-VT-52H" id="gZ0-54-1eh"/>
                 <outlet property="tableViewSpaceFromBottom" destination="JE9-8B-hTk" id="bDt-dK-ogm"/>
@@ -150,6 +151,14 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
         </view>
+        <searchDisplayController id="02a-lg-b7W">
+            <connections>
+                <outlet property="delegate" destination="-1" id="ceb-ju-LIL"/>
+                <outlet property="searchContentsController" destination="-1" id="TeF-KQ-ULV"/>
+                <outlet property="searchResultsDataSource" destination="-1" id="DB9-3O-fX4"/>
+                <outlet property="searchResultsDelegate" destination="-1" id="Avm-CP-NDH"/>
+            </connections>
+        </searchDisplayController>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
