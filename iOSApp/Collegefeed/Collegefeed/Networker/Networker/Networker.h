@@ -7,11 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 #import "../../Constants.h"
 
 @interface Networker : NSObject
 
 + (NSData *)getIOSAppVersionFromServer;
+
+// Images
++ (NSNumber *)POSTImage:(UIImage *)image;
 
 // Colleges
 + (NSData *)GETAllColleges;

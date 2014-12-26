@@ -108,6 +108,14 @@
     return [self GET:url];
 }
 
+#pragma mark - Images
+
++ (NSNumber *)POSTImage:(UIImage *)image
+{
+    // TODO: post image to server and return image_id
+    
+    return nil;
+}
 
 #pragma mark - Colleges
 

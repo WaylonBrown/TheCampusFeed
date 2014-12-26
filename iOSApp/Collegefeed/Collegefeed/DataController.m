@@ -455,10 +455,7 @@
 
 - (NSNumber *)postImageToServer:(UIImage *)image
 {
-    
-    // TODO: post image to server and get image_id from response
-    
-    return nil;
+    return [Networker POSTImage:image];
 }
 - (BOOL)createPostWithMessage:(NSString *)message
                 withCollegeId:(long)collegeId
