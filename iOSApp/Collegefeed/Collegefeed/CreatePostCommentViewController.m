@@ -72,6 +72,8 @@ withDataController:(DataController *)controller
     [self.messageTextView setDelegate:self];
     [self.tagTextView setDelegate:self];
     
+    [self.takeNewPhotoButton.titleLabel setFont:CF_FONT_LIGHT(18)];
+    [self.existingPhotoButton.titleLabel setFont:CF_FONT_LIGHT(18)];
     [self.messageTextView becomeFirstResponder];
 }
 
@@ -103,13 +105,24 @@ withDataController:(DataController *)controller
 
 - (IBAction)cameraButtonPressed:(id)sender
 {
-    [self takePicture];
-//    [self selectPicture];
+    [self.messageTextView resignFirstResponder];
+    [self.cameraSourceSelectorView setHidden:NO];
 }
 
-
-- (void)selectPicture
+- (IBAction)takeNewPhoto:(id)sender
 {
+    [self.cameraSourceSelectorView setHidden:YES];
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+}
+
+- (IBAction)useExistingPhoto:(id)sender
+{
+    [self.cameraSourceSelectorView setHidden:YES];
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.allowsEditing = YES;
@@ -118,15 +131,6 @@ withDataController:(DataController *)controller
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
-- (void)takePicture
-{
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    
-    [self presentViewController:picker animated:YES completion:NULL];
-}
 - (void)receivedNotification:(NSNotification *) notification
 {
     NSDictionary *dictionary = [notification userInfo];

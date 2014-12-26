@@ -44,6 +44,9 @@
 @property (strong, nonatomic) IBOutlet UITextView *tagTextView;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIButton *cameraButton;
+@property (strong, nonatomic) IBOutlet UIView *cameraSourceSelectorView;
+@property (strong, nonatomic) IBOutlet UIButton *takeNewPhotoButton;
+@property (strong, nonatomic) IBOutlet UIButton *existingPhotoButton;
 
 @property (strong, nonatomic) ToastController *toastController;
 
@@ -62,6 +65,8 @@ withDataController:(DataController *)controller;
 - (IBAction)submit:(id)sender;
 - (IBAction)dismiss:(id)sender;
 - (IBAction)cameraButtonPressed:(id)sender;
+- (IBAction)takeNewPhoto:(id)sender;
+- (IBAction)useExistingPhoto:(id)sender;
 
 @end
 
