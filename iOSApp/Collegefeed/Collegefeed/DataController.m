@@ -381,7 +381,7 @@
 //            [self.toaster toastCommentingTooSoon];
 //            return NO;
 //        }
-        Comment *comment = [[Comment alloc] initWithMessage:message withCollegeId:post.college_id withUserToken:@"EMPTY_TOKEN"];
+        Comment *comment = [[Comment alloc] initWithMessage:message withCollegeId:post.college_id withUserToken:@"EMPTY_TOKEN" withImageId:nil];
         
         NSData *result = [Networker POSTCommentData:[comment toJSON] WithPostId:[post.id longValue]];
         
@@ -453,8 +453,16 @@
 
 #pragma mark - Networker Access - Posts
 
+- (NSNumber *)postImageToServer:(UIImage *)image
+{
+    
+    // TODO: post image to server and get image_id from response
+    
+    return nil;
+}
 - (BOOL)createPostWithMessage:(NSString *)message
                 withCollegeId:(long)collegeId
+                    withImage:(UIImage *)image
 {
         // ToDo: Commented out post timing restriction for demo
     
@@ -517,9 +525,11 @@
     @try
     {
         NSString *udid = [UIDevice currentDevice].identifierForVendor.UUIDString;
+        NSNumber *imageID = [self postImageToServer:image];
         Post *post = [[Post alloc] initWithMessage:message
                                      withCollegeId:[NSNumber numberWithLong:collegeId]
-                                     withUserToken:udid];
+                                     withUserToken:udid
+                                       withImageId:imageID];
         
         NSData *result = [Networker POSTPostData:[post toJSON] WithCollegeId:[post.college_id longValue]];
         

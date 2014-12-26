@@ -333,7 +333,8 @@
         [self.createController dismiss:self];
 
         BOOL success = [self.dataController createPostWithMessage:message
-                                                    withCollegeId:collegeId];
+                                                    withCollegeId:collegeId
+                                                        withImage:image];
         
         if (success)
         {

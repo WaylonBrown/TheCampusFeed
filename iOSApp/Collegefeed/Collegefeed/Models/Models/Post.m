@@ -16,6 +16,7 @@
 - (id)initWithMessage:(NSString *)newMessage
         withCollegeId:(NSNumber *)collegeId
         withUserToken:(NSString *)userToken
+          withImageId:(NSNumber *)imageId
 {   // NOTE: This constructor to be used when sending to server
     // initializer to create a new post
     
@@ -25,6 +26,7 @@
         [self setText:newMessage];
         [self setCollege_id:collegeId];
         [self setUserToken:userToken];
+        [self setImage_id:imageId];
         return self;
     }
     return nil;

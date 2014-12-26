@@ -93,9 +93,8 @@ withDataController:(DataController *)controller
     [self.delegate submitPostCommentCreationWithMessage:message
                                           withCollegeId:self.collegeForPost.collegeID
                                           withUserToken:@"EMPTY_TOKEN"
-                                              withImage:nil];
-
-//    [self dismiss:nil];
+                                              withImage:self.imageView.image];
+    
 }
 
 - (IBAction)dismiss:(id)sender
@@ -283,10 +282,9 @@ withDataController:(DataController *)controller
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     self.imageView.image = chosenImage;
     self.imageViewHeight.constant = 200;
-
+    
     [self fixDialogPositionAndUpdateConstraints];
     [picker dismissViewControllerAnimated:YES completion:NULL];
-    
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {

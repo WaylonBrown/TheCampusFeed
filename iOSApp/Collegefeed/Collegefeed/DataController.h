@@ -162,8 +162,11 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (BOOL)flagPost:(long)postId;
 
 // Posts
+- (NSNumber *)postImageToServer:(UIImage *)image;
+
 - (BOOL)createPostWithMessage:(NSString *)message
-                withCollegeId:(long)collegeId;
+                withCollegeId:(long)collegeId
+                    withImage:(UIImage *)image;
 
 - (void)fetchTopPostsForAllColleges;
 - (void)fetchTopPostsForSingleCollege;

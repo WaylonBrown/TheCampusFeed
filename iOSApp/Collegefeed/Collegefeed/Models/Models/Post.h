@@ -42,7 +42,8 @@
 
 - (id)initWithMessage:(NSString *)newMessage
         withCollegeId:(NSNumber *)collegeId
-        withUserToken:(NSString *)userToken;
+        withUserToken:(NSString *)userToken
+          withImageId:(NSNumber *)imageId;
 
 - (id)initWithPostID:(NSNumber *)newPostID
            withScore:(NSNumber *)newScore
