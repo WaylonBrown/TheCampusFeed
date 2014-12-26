@@ -522,6 +522,7 @@
                                      withUserToken:udid];
         
         NSData *result = [Networker POSTPostData:[post toJSON] WithCollegeId:[post.college_id longValue]];
+        
         if (result)
         {
             NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result

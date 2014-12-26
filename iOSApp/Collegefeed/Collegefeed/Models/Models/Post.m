@@ -139,8 +139,12 @@
 }
 - (NSData*)toJSON
 {   // Returns an NSData representation of this Post in JSON
-    
     NSString *postString = [NSString stringWithFormat:@"{\"text\":\"%@\", \"user_token\":\"%@\"}", self.text, self.userToken];
+
+    if (self.image_id != nil)
+    {
+        postString = [NSString stringWithFormat:@"{\"text\":\"%@\", \"user_token\":\"%@\", \"image_id\":\"%@\"}", self.text, self.userToken, self.image_id];
+    }
     
     NSData *postData = [postString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     return postData;
