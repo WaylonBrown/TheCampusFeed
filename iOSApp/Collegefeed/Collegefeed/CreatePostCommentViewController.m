@@ -103,7 +103,8 @@ withDataController:(DataController *)controller
 
 - (IBAction)cameraButtonPressed:(id)sender
 {
-    [self selectPicture];
+    [self takePicture];
+//    [self selectPicture];
 }
 
 
@@ -192,8 +193,8 @@ withDataController:(DataController *)controller
     CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
     // Given size may not account for screen rotation
-    self.keyboardHeight = MIN(keyboardSize.height,keyboardSize.width);
-    self.keyboardWidth = MAX(keyboardSize.height,keyboardSize.width);
+    self.keyboardHeight = MIN(keyboardSize.height, keyboardSize.width);
+    self.keyboardWidth = MAX(keyboardSize.height, keyboardSize.width);
     
     [self fixDialogPositionAndUpdateConstraints];
 }

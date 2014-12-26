@@ -43,6 +43,7 @@
 @property (strong, nonatomic) IBOutlet UITextView *messageTextView;
 @property (strong, nonatomic) IBOutlet UITextView *tagTextView;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
+@property (strong, nonatomic) IBOutlet UIButton *cameraButton;
 
 @property (strong, nonatomic) ToastController *toastController;
 
