@@ -257,8 +257,7 @@
                         College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
                         if (college != nil)
                         {
-//                            float labelHeight = [Shared getSmallCellMessageHeight:college.name WithFont:CF_FONT_LIGHT(18) withWidth:265];
-                            [cell assignCollege:college withRankNumberOrNil:nil];// withMessageHeight:labelHeight];
+                            [cell assignCollege:college withRankNumberOrNil:nil];
                             return cell;
                         }
                     }
@@ -283,8 +282,7 @@
         College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
         if (college != nil)
         {
-//            float labelHeight = [Shared getSmallCellMessageHeight:college.name WithFont:CF_FONT_LIGHT(18) withWidth:265];
-            [cell assignCollege:college withRankNumberOrNil:nil]; // withMessageHeight:labelHeight];
+            [cell assignCollege:college withRankNumberOrNil:nil];
             return cell;
         }
     }
@@ -327,10 +325,9 @@
         case ONLY_NEARBY_COLLEGES:
         {   // When user is selecting which of nearby colleges to post to
             
-            [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
-                College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
-                [self.postingDelegate submitSelectionForPostWithCollege:college];
-            }];
+            College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
+            [self.postingDelegate submitSelectionForPostWithCollege:college];
+            
             break;
         }
         default: break;

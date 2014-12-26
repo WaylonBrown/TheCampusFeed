@@ -404,6 +404,8 @@
 
 - (void)submitSelectionForPostWithCollege:(College *)college
 {
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+    
     [self showCreationDialogForCollege:college];
 }
 
