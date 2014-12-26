@@ -89,8 +89,9 @@ withDataController:(DataController *)controller
     message = [message stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     [self.delegate submitPostCommentCreationWithMessage:message
-                                         withCollegeId:self.collegeForPost.collegeID
-                                         withUserToken:@"EMPTY_TOKEN"];
+                                          withCollegeId:self.collegeForPost.collegeID
+                                          withUserToken:@"EMPTY_TOKEN"
+                                              withImage:nil];
 
 //    [self dismiss:nil];
 }

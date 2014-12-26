@@ -42,7 +42,10 @@ typedef NS_ENUM(NSInteger, FeedSelectorType)
 @property (strong, nonatomic) id<CollegeForPostingSelectionProtocol> postingDelegate;
 @property (strong, nonatomic) DataController *dataController;
 @property (nonatomic, strong) NSMutableArray *searchResult;
+
 @property (nonatomic, strong) UISearchDisplayController *searchDisplay;
+//@property (strong, nonatomic) UISearchController *searchController;
+
 @property (strong, nonatomic) IBOutlet UISearchBar *mySearchBar;
 
 @property (weak,nonatomic) IBOutlet NSLayoutConstraint *tableHeightConstraint;

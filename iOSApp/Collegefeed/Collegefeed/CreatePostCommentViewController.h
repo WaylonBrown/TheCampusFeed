@@ -19,7 +19,9 @@
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
                                withCollegeId:(long)collegeId
-                               withUserToken:(NSString *)userToken;
+                               withUserToken:(NSString *)userToken
+                                   withImage:(UIImage *)image;
+
 //- (void)commentingTooFrequently;
 
 @end
@@ -49,6 +51,7 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *messageTextViewHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *dialogVerticalPosition;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *tagTextViewHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imageViewHeight;
 
 - (id)initWithType:(ModelType)type
        withCollege:(College *)college

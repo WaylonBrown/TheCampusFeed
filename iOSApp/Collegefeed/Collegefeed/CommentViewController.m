@@ -355,6 +355,7 @@
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
                                withCollegeId:(long)collegeId
                                withUserToken:(NSString *)userToken
+                                   withImage:(UIImage *)image
 {
 //    if ([self.dataController isAbleToComment])
     if (true)

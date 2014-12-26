@@ -321,6 +321,7 @@
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
                                withCollegeId:(long)collegeId
                                withUserToken:(NSString *)userToken
+                                   withImage:(UIImage *)image
 {
 //    NSNumber *minutesUntilCanPost = [NSNumber new];
 //    if ([self.dataController isAbleToPost:minutesUntilCanPost])
