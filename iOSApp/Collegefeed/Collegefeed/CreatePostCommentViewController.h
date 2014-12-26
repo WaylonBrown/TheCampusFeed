@@ -27,7 +27,7 @@
 @end
 
 @interface CreatePostCommentViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate,
-    UITextViewDelegate>
+    UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic) CGRect previousMessageRect;
 @property (nonatomic) CGRect previousTagRect;
@@ -42,6 +42,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *createButton;
 @property (strong, nonatomic) IBOutlet UITextView *messageTextView;
 @property (strong, nonatomic) IBOutlet UITextView *tagTextView;
+@property (strong, nonatomic) IBOutlet UIImageView *imageView;
 
 @property (strong, nonatomic) ToastController *toastController;
 
@@ -59,6 +60,7 @@ withDataController:(DataController *)controller;
 
 - (IBAction)submit:(id)sender;
 - (IBAction)dismiss:(id)sender;
+- (IBAction)cameraButtonPressed:(id)sender;
 
 @end
 

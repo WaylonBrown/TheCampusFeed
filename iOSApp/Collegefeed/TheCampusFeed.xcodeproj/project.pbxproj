@@ -86,6 +86,7 @@
 		CD5887591A21501100D864FD /* NSMutableArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */; };
 		CD76C1CD1A3BC176002F0C9F /* CommentTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD76C1CC1A3BC176002F0C9F /* CommentTableCell.m */; };
 		CDF14D921A3B6D24006D8F2C /* PostTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF14D8E1A3B6D24006D8F2C /* PostTableCell.m */; };
+		CDF35CB21A4DEDD900917CC5 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = CDF35CB11A4DEDD900917CC5 /* camera.png */; };
 		CDF66BEB1A36CEBD008C62DD /* bad_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = CDF66BEA1A36CEBD008C62DD /* bad_words.txt */; };
 		CDFD68271A488A1100B6F4DA /* CollegeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFD68261A488A1100B6F4DA /* CollegeViewController.m */; };
 /* End PBXBuildFile section */
@@ -253,6 +254,7 @@
 		CDF14D8D1A3B6D24006D8F2C /* PostTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostTableCell.h; path = Collegefeed/PostTableCell.h; sourceTree = "<group>"; };
 		CDF14D8E1A3B6D24006D8F2C /* PostTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostTableCell.m; path = Collegefeed/PostTableCell.m; sourceTree = "<group>"; };
 		CDF1FA8C1A30B160003D421F /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = ../../../../../../../System/Library/Frameworks/Python.framework; sourceTree = "<group>"; };
+		CDF35CB11A4DEDD900917CC5 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		CDF66BEA1A36CEBD008C62DD /* bad_words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bad_words.txt; sourceTree = "<group>"; };
 		CDFD68251A488A1100B6F4DA /* CollegeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollegeViewController.h; sourceTree = "<group>"; };
 		CDFD68261A488A1100B6F4DA /* CollegeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollegeViewController.m; sourceTree = "<group>"; };
@@ -428,6 +430,7 @@
 		5390A9131914B76800ACD082 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CDF35CB11A4DEDD900917CC5 /* camera.png */,
 				5311F85D19C961250053D3CC /* ok_button_small.png */,
 				5311F85E19C961250053D3CC /* second_small.png */,
 				5311F85F19C961250053D3CC /* first_small.png */,
@@ -755,6 +758,7 @@
 				5350558019529FCA009C1911 /* FeedSelectViewController.xib in Resources */,
 				5347EEB6197E9EC7001B2214 /* MenuViewController.xib in Resources */,
 				53AB57BC194AAFF8001D1B7B /* mplus-2c-bold.ttf in Resources */,
+				CDF35CB21A4DEDD900917CC5 /* camera.png in Resources */,
 				5390A9201914B76800ACD082 /* arrowupblue.png in Resources */,
 				53FF2D06195BCE430040E872 /* UserPosts.txt in Resources */,
 				5311F86219C961250053D3CC /* first_small.png in Resources */,

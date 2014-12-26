@@ -101,6 +101,31 @@ withDataController:(DataController *)controller
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)cameraButtonPressed:(id)sender
+{
+    [self selectPicture];
+}
+
+
+- (void)selectPicture
+{
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+}
+
+- (void)takePicture
+{
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+}
 - (void)receivedNotification:(NSNotification *) notification
 {
     NSDictionary *dictionary = [notification userInfo];
@@ -244,6 +269,23 @@ withDataController:(DataController *)controller
     if (textView != self.messageTextView) return YES;
 
     return textView.text.length + (text.length - range.length) <= 140;
+}
+
+#pragma mark - UIImagePickerControllerDelegate Methods
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    self.imageView.image = chosenImage;
+    self.imageViewHeight.constant = 200;
+
+    [self fixDialogPositionAndUpdateConstraints];
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
 #pragma mark - Transitioning Protocol Methods
