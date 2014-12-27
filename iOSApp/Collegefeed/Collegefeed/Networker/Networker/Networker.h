@@ -16,7 +16,7 @@
 + (NSData *)getIOSAppVersionFromServer;
 
 // Images
-+ (NSNumber *)POSTImage:(UIImage *)image;
++ (NSNumber *)POSTImage:(UIImage *)image fromFilePath:(NSString *)pathToOurFile;
 
 // Colleges
 + (NSData *)GETAllColleges;

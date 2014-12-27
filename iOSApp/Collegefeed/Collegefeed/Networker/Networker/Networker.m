@@ -110,9 +110,84 @@
 
 #pragma mark - Images
 
-+ (NSNumber *)POSTImage:(UIImage *)image
++ (NSNumber *)POSTImage:(UIImage *)image fromFilePath:(NSString *)pathToOurFile
 {
+    
+//    NSData *imageData = UIImagePNGRepresentation(image);
+//    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[imageData length]];
+//    
+//    // Init the URLRequest
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+//    [request setHTTPMethod:@"POST"];
+//    [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/images", API_URL, API_VERSION]]];
+//    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+//    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+//    [request setHTTPBody:imageData];
+//    
+//    NSHTTPURLResponse *response;
+//    NSError     *error;
+//
+//    NSData      *POSTReply = [NSURLConnection sendSynchronousRequest:request
+//                                                   returningResponse:&response
+//                                                               error:&error];
+//    NSString    *stringReply = [[NSString alloc] initWithBytes:[POSTReply bytes]
+//                                                        length:[POSTReply length]
+//                                                      encoding: NSASCIIStringEncoding];
+//
+//    NSLog(@"%@", stringReply);
+//    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+//    if (connection) {
+//        
+//        NSLog(@"CONNECTION DATA: %@", connection);
+//        // response data of the request
+//    }
+    
+    
+    
+    
     // TODO: post image to server and return image_id
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.2);     //change Image to NSData
+    
+    if (imageData != nil)
+    {
+        NSString *filenames = [NSString stringWithFormat:@"TESTFileNameString"];      //set name here
+        NSString *urlString = [NSString stringWithFormat:@"%@/%@/images", API_URL, API_VERSION];
+        
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        [request setURL:[NSURL URLWithString:urlString]];
+        [request setHTTPMethod:@"POST"];
+        
+        NSString *boundary = @"*****";      // @"---------------------------14737809831466499882746641449";
+        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
+        [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
+        
+        NSMutableData *body = [NSMutableData data];
+        
+        [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"image[upload]\";filename=\"%@\"\r\n", pathToOurFile] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"filenames\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+//        [body appendData:[filenames dataUsingEncoding:NSUTF8StringEncoding]];
+        
+//        [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [body appendData:[@"Content-Disposition: form-data; name=\"userfile\"; filename=\".jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+
+        NSString *bodyString = [NSString stringWithUTF8String:[body bytes]];
+        NSLog(@"BODY BEFORE IMAGE DATA:\n%@", bodyString);
+//        [body appendData:[[NSString stringWithString:@"Content-Type: application/octet-stream\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[NSData dataWithData:imageData]];
+        [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+
+        // setting the body of the post to the reqeust
+        [request setHTTPBody:body];
+        // now lets make the connection to the web
+        NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+        NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+        NSLog(@"%@", returnString);
+        NSLog(@"finish");
+    }
+    
     
     return nil;
 }

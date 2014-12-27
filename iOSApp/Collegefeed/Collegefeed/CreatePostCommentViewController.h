@@ -10,7 +10,6 @@
 #import "CFModelProtocol.h"
 #import "Constants.h"
 
-
 @class College;
 @class DataController;
 @class ToastController;

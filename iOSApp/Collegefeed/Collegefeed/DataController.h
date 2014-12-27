@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
 #import "Constants.h"
 
@@ -162,7 +163,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (BOOL)flagPost:(long)postId;
 
 // Posts
-- (NSNumber *)postImageToServer:(UIImage *)image;
+- (NSNumber *)postImageToServer:(UIImage *)image fromFilePath:(NSString *)filePath;
 
 - (BOOL)createPostWithMessage:(NSString *)message
                 withCollegeId:(long)collegeId

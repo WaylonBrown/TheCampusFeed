@@ -453,16 +453,33 @@
 
 #pragma mark - Networker Access - Posts
 
-- (NSNumber *)postImageToServer:(UIImage *)image
+- (NSNumber *)postImageToServer:(UIImage *)image fromFilePath:(NSString *)filePath
 {
-    return [Networker POSTImage:image];
+    __block NSString *imageURL = nil;
+    __block NSNumber *imageId = nil;
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    // Request to save the image to camera roll
+    [library writeImageToSavedPhotosAlbum:[image CGImage]
+                              orientation:(ALAssetOrientation)[image imageOrientation]
+                          completionBlock:^(NSURL *assetURL, NSError *error){
+        if (error) {
+            NSLog(@"Error saving image in [DataController postImageToServer]");
+        } else {
+            NSLog(@"Saved image url: %@", assetURL);
+            imageURL = [NSString stringWithFormat:@"%@",assetURL];
+            imageId = [Networker POSTImage:image fromFilePath:imageURL];
+        }
+    }];
+
+    return nil;
+//    return [Networker POSTImage:image fromFilePath:imageURL];
 }
 - (BOOL)createPostWithMessage:(NSString *)message
                 withCollegeId:(long)collegeId
                     withImage:(UIImage *)image
 {
         // ToDo: Commented out post timing restriction for demo
-    
+
     
 //    NSNumber *minutesUntilCanPost = [NSNumber new];
 //    if (![self isAbleToPost:minutesUntilCanPost])
@@ -522,7 +539,7 @@
     @try
     {
         NSString *udid = [UIDevice currentDevice].identifierForVendor.UUIDString;
-        NSNumber *imageID = [self postImageToServer:image];
+        NSNumber *imageID = [self postImageToServer:image fromFilePath:nil];
         Post *post = [[Post alloc] initWithMessage:message
                                      withCollegeId:[NSNumber numberWithLong:collegeId]
                                      withUserToken:udid

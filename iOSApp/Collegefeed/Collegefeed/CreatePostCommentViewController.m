@@ -283,8 +283,9 @@ withDataController:(DataController *)controller
     self.imageView.image = chosenImage;
     self.imageViewHeight.constant = 200;
     
-    [self fixDialogPositionAndUpdateConstraints];
     [picker dismissViewControllerAnimated:YES completion:NULL];
+
+    [self fixDialogPositionAndUpdateConstraints];
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
