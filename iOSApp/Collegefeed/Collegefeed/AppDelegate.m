@@ -37,9 +37,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {   // Set up ViewControllers and DataControllers
-
-    
-    
     
     self.dataController = [DataController new];
     [self.dataController incrementLaunchNumber];
@@ -126,29 +123,29 @@
     self.trendingCollegesController     = [[TrendingCollegesViewController alloc]
                                            initWithDataController:self.dataController];
     
-//    self.userPostsController            = [[UserPostsViewController alloc] initWithDataController:self.dataController];
-//    
-//    
-//    
-//    self.userCommentsController         = [[UserCommentsViewController alloc]
-//                                           initAsType:USER_COMMENTS
+    self.userPostsController            = [[UserPostsViewController alloc] initWithDataController:self.dataController];
+    
+    
+    
+    self.userCommentsController         = [[UserCommentsViewController alloc] initWithDataController:self.dataController];
+//                                                   initAsType:USER_COMMENTS
 //                                           withDataController:self.dataController];
-//    
-//    self.tutorialController             = [[TutorialViewController alloc] init];
-//    
-//    self.helpController                 = [[CF_DialogViewController alloc] initWithDialogType:HELP];
-//    
-//    self.timeCrunchController           = [[TimeCrunchViewController alloc] init];
+    
+    self.tutorialController             = [[TutorialViewController alloc] init];
+    
+    self.helpController                 = [[CF_DialogViewController alloc] initWithDialogType:HELP];
+    
+    self.timeCrunchController           = [[TimeCrunchViewController alloc] init];
 
     NSArray *viewControllers            = [NSArray arrayWithObjects:
                                            self.topPostsController,
                                            self.recentPostsController,
                                            self.tagController,
                                            self.trendingCollegesController,
-//                                           self.userPostsController,
-//                                           self.userCommentsController,
-//                                           self.timeCrunchController,
-//                                           self.helpController,
+                                           self.userPostsController,
+                                           self.userCommentsController,
+                                           self.timeCrunchController,
+                                           self.helpController,
                                            //                                           self.tutorialController,
                                            nil];
     

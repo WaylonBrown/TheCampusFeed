@@ -455,6 +455,10 @@
 
 - (NSNumber *)postImageToServer:(UIImage *)image fromFilePath:(NSString *)filePath
 {
+    
+    return [Networker POSTImage:image fromFilePath:nil];
+    
+    
     __block NSString *imageURL = nil;
     __block NSNumber *imageId = nil;
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
