@@ -70,12 +70,9 @@
 // Local Actions
 - (IBAction)changeFeed;
 - (void)create;
-//- (void)refresh;
 
 // Helper Methods
 - (void)setCorrectList;
-
-// TODO: remove these two
 - (void)placeLoadingIndicatorInToolbar;
 - (void)placeCreatePost;
 

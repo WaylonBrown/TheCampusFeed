@@ -20,7 +20,6 @@
 #import "SimpleTableCell.h"
 #import "ToastController.h"
 #import "Comment.h"
-#import "LoadingCell.h"
 
 @class Post;
 @class CommentViewController;

@@ -61,6 +61,10 @@
 
 #pragma mark - Table View
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [super.tableView numberOfRowsInSection:section];
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
     // this specifies the prototype (PostTableCell) and assigns the labels
@@ -89,7 +93,7 @@
     Post *post = [self.list objectAtIndex:indexPath.row];
     
     if([self.dataController.nearbyColleges containsObject:post.college])
-    {   // TODO: make this assignment done automatically somewhere when Post model is being built
+    {
         post.isNearCollege = YES;
     }
     [cell assignWithPost:post withCollegeLabel:self.dataController.showingAllColleges];
@@ -182,7 +186,7 @@
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
 {
-    BOOL success = [self.dataController createPostWithMessage:message
+    [self.dataController createPostWithMessage:message
                                  withCollegeId:self.dataController.collegeInFocus.collegeID withImage:nil];
     
 //    if (!success)

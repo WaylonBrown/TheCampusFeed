@@ -15,7 +15,6 @@
 #import "Shared.h"
 #import "SimpleTableCell.h"
 #import "ToastController.h"
-#import "LoadingCell.h"
 
 @implementation TagViewController
 
@@ -34,7 +33,7 @@
     [searchBar setText:@"#"];
     [searchBar setDelegate:self];
     
-    // ToDo: change to UISearchController
+    // TODO: change to UISearchController
     self.searchDisplay = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
     
     self.searchDisplay.delegate = self;

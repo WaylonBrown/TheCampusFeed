@@ -161,7 +161,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (NSNumber *)postImageToServer:(UIImage *)image fromFilePath:(NSString *)filePath;
 
 // Posts
-
 - (BOOL)createPostWithMessage:(NSString *)message
                 withCollegeId:(long)collegeId
                     withImage:(UIImage *)image;
@@ -176,10 +175,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (void)fetchPostsWithTagForSingleCollege:(NSString*)tagMessage;
 
 
-- (BOOL)fetchMorePostsWithTagMessage:(NSString*)tagMessage;
-
-- (void)fetchUserPostsWithIdArray:(NSArray *)postIds;
-
 - (Post *)fetchPostWithId:(long)postId;
 - (Post *)fetchParentPostOfComment:(Comment *)comment;
 
@@ -187,8 +182,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (void)fetchTrendingTagsForAllColleges;
 - (void)fetchTrendingTagsForSingleCollege;
 
-//- (void)fetchTagsWithReset:(BOOL)reset;
-//- (BOOL)fetchTagsWithCollegeId:(long)collegeId;
 
 // Votes
 - (BOOL)createVote:(Vote *)vote;
