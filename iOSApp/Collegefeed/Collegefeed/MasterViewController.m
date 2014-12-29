@@ -323,12 +323,8 @@
                                withUserToken:(NSString *)userToken
                                    withImage:(UIImage *)image
 {
-//    NSNumber *minutesUntilCanPost = [NSNumber new];
-//    if ([self.dataController isAbleToPost:minutesUntilCanPost])
-    
-    // ToDo: Commented out post timing restriction for demo
-
-    if (true)
+    NSNumber *minutesUntilCanPost = [NSNumber new];
+    if ([self.dataController isAbleToPost:minutesUntilCanPost])
     {
         [self.createController dismiss:self];
 
@@ -342,16 +338,16 @@
             
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.list.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         }
-//        else
-//        {
-//            [self.toastController toastPostFailed];
-//        }
+        else
+        {
+            [self.toastController toastPostFailed];
+        }
 //        [self refresh];
     }
-//    else
-//    {
-//        [self.toastController toastPostingTooSoon:minutesUntilCanPost];
-//    }
+    else
+    {
+        [self.toastController toastPostingTooSoon:minutesUntilCanPost];
+    }
 }
 - (void)commentingTooFrequently
 {

@@ -112,8 +112,7 @@
 
 + (NSNumber *)POSTImage:(UIImage *)image fromFilePath:(NSString *)pathToOurFile
 {
-    // TODO: post image to server and return image_id
-    NSData *imageData = UIImageJPEGRepresentation(image, 0.2);     //change Image to NSData
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.2);
     
     if (imageData != nil)
     {
@@ -224,7 +223,6 @@
         return nil;
     }
     
-    //TODO: change this url if endpoint parameters get fixed
     NSString *idString = @"";
     for (int i = 0; i < Ids.count; i++)
     {

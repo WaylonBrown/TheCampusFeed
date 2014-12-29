@@ -232,10 +232,14 @@
         NSLog(@"Too many status entities");
     }
     NSManagedObject *status = [fetchedStatus firstObject];
-    long collegeIdForFeed = [[status valueForKey:KEY_CURRENT_COLLEGE_FEED] longValue];
-    self.collegeInFocus = [self getCollegeById:collegeIdForFeed];
+    NSNumber *collegeID = [status valueForKey:KEY_CURRENT_COLLEGE_FEED];
+    if (collegeID != nil)
+    {
+        long collegeIdForFeed = [collegeID longValue];
+        self.collegeInFocus = [self getCollegeById:collegeIdForFeed];
+    }
     
-    self.showingAllColleges = self.collegeInFocus == nil;
+    self.showingAllColleges = collegeID == nil;
     self.showingSingleCollege = !self.showingAllColleges;
 }
 - (NSMutableArray *)getCurrentTagList
@@ -374,13 +378,12 @@
 {
     @try
     {
-        // ToDo: Commented out post timing restriction for demo
 
-//        if (![self isAbleToComment])
-//        {
-//            [self.toaster toastCommentingTooSoon];
-//            return NO;
-//        }
+        if (![self isAbleToComment])
+        {
+            [self.toaster toastCommentingTooSoon];
+            return NO;
+        }
         Comment *comment = [[Comment alloc] initWithMessage:message withCollegeId:post.college_id withUserToken:@"EMPTY_TOKEN" withImageId:nil];
         
         NSData *result = [Networker POSTCommentData:[comment toJSON] WithPostId:[post.id longValue]];
@@ -455,44 +458,21 @@
 
 - (NSNumber *)postImageToServer:(UIImage *)image fromFilePath:(NSString *)filePath
 {
-    
     return [Networker POSTImage:image fromFilePath:nil];
-    
-    
-    __block NSString *imageURL = nil;
-    __block NSNumber *imageId = nil;
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    // Request to save the image to camera roll
-    [library writeImageToSavedPhotosAlbum:[image CGImage]
-                              orientation:(ALAssetOrientation)[image imageOrientation]
-                          completionBlock:^(NSURL *assetURL, NSError *error){
-        if (error) {
-            NSLog(@"Error saving image in [DataController postImageToServer]");
-        } else {
-            NSLog(@"Saved image url: %@", assetURL);
-            imageURL = [NSString stringWithFormat:@"%@",assetURL];
-            imageId = [Networker POSTImage:image fromFilePath:imageURL];
-        }
-    }];
-
-    return nil;
-//    return [Networker POSTImage:image fromFilePath:imageURL];
 }
 - (BOOL)createPostWithMessage:(NSString *)message
                 withCollegeId:(long)collegeId
                     withImage:(UIImage *)image
 {
-        // ToDo: Commented out post timing restriction for demo
-
     
-//    NSNumber *minutesUntilCanPost = [NSNumber new];
-//    if (![self isAbleToPost:minutesUntilCanPost])
-//    {
-//        [self.toaster toastPostingTooSoon:minutesUntilCanPost];
-//        return NO;
-//    }
+    NSNumber *minutesUntilCanPost = [NSNumber new];
+    if (![self isAbleToPost:minutesUntilCanPost])
+    {
+        [self.toaster toastPostingTooSoon:minutesUntilCanPost];
+        return NO;
+    }
     
-//    [self.toaster toastCommentingTooSoon];
+    [self.toaster toastCommentingTooSoon];
 
     NSMutableDictionary* resultDict = [NSMutableDictionary new];
 //    BOOL validMessage = [self.myWatchDog shouldSubmitMessage:message
