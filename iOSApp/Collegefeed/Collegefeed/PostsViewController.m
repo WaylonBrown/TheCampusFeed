@@ -134,11 +134,6 @@
 - (void)finishedFetchRequest:(NSNotification *)notification
 {
     [super finishedFetchRequest:notification];
-    
-    if (self.list.count == 0)
-    {
-
-    }
 }
 
 #pragma mark - Local Actions

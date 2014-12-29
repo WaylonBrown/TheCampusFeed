@@ -20,27 +20,31 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
-//    [self.tableView reloadData];
     [self addScoreFooter];
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - Network Actions
+
+- (void)fetchContent
+{   // Fetches new content for this view
+    
+    [super fetchContent];
+    
+    [self.dataController retrieveUserComments];
+}
+- (void)finishedFetchRequest:(NSNotification *)notification
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [super finishedFetchRequest:notification];
 }
 
-- (void)refresh
+#pragma mark - Helper Methods
+
+- (void)setCorrectList
 {
-    [self.tableView reloadData];
-    [self.refreshControl endRefreshing];
+    [self setList:self.dataController.userComments];
+    
+    [super setCorrectList];
 }
-
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return [super tableView:tableView heightForRowAtIndexPath:indexPath] - 20;
-//}
-
 - (void)addScoreFooter
 {
     [self.feedToolbar removeFromSuperview];

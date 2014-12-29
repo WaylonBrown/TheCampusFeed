@@ -72,11 +72,6 @@
 - (void)finishedFetchRequest:(NSNotification *)notification
 {
     [super finishedFetchRequest:notification];
-    
-    if (self.list.count == 0)
-    {
-        // TODO: Show "No Posts to display" or something
-    }
 }
 
 @end

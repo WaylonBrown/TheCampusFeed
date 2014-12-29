@@ -591,12 +591,6 @@
                return [Networker GETCommentsWithPostId:[post.id longValue]];
            }];
 }
-- (void)fetchUserCommentsWithIdArray:(NSArray *)commentIds
-{
-    [self setUserComments:[NSMutableArray new]];
-    NSData *data = [Networker GETCommentsWithIdArray:commentIds];
-    [self parseData:data asClass:[Comment class] intoList:self.userComments];
-}
 
 #pragma mark - Flags
 
@@ -991,23 +985,30 @@
 }
 - (void)retrieveUserComments
 {
-    // Retrieve Comments
-    NSMutableArray *commentIds = [[NSMutableArray alloc] init];
-    
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:COMMENT_ENTITY inManagedObjectContext:context];
-    
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedComments = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    for (NSManagedObject *comment in fetchedComments)
-    {
-        NSNumber *commentId = [comment valueForKey:KEY_COMMENT_ID];
-        [commentIds addObject:commentId];
-    }
-    [self fetchUserCommentsWithIdArray:commentIds];
+    [self fetchObjectsOfType:COMMENT
+                   IntoArray:self.userComments
+          WithFeedIdentifier:@"userComments"
+           WithFetchFunction:^{
+               
+               // Retrieve Comments
+               NSMutableArray *commentIds = [[NSMutableArray alloc] init];
+               
+               NSError *error;
+               NSManagedObjectContext *context = [self managedObjectContext];
+               NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+               NSEntityDescription *entity = [NSEntityDescription
+                                              entityForName:COMMENT_ENTITY inManagedObjectContext:context];
+               
+               [fetchRequest setEntity:entity];
+               NSArray *fetchedComments = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+               for (NSManagedObject *comment in fetchedComments)
+               {
+                   NSNumber *commentId = [comment valueForKey:KEY_COMMENT_ID];
+                   [commentIds addObject:commentId];
+               }
+               
+               return [Networker GETCommentsWithIdArray:commentIds];
+           }];
 }
 - (void)saveVote:(Vote *)vote
 {

@@ -21,7 +21,7 @@
     [self addScoreFooter];
 }
 
-#pragma mark - Local Actions
+#pragma mark - Network Actions
 
 - (void)fetchContent
 {   // Fetches new content for this view

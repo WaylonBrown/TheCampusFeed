@@ -158,11 +158,6 @@
         NSLog(@"Finished fetching Trending Tags");
         [super finishedFetchRequest:notification];
     }
-    
-    if (self.list.count == 0)
-    {
-        // TODO: Show "No Tags to display" etc.
-    }
 }
 
 #pragma mark - Local Actions
