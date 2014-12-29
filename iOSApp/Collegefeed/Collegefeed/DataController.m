@@ -834,7 +834,7 @@
                    [postIds addObject:(NSNumber *)[post valueForKey:KEY_POST_ID]];
                }
                
-               return [Networker GETPostsWithIdArray:postIds];
+               return [Networker GETPostsWithIdArray:[[postIds reverseObjectEnumerator] allObjects]];
            }];
 }
 - (Post *)fetchPostWithId:(long)postId
@@ -1011,7 +1011,7 @@
                    [commentIds addObject:commentId];
                }
                
-               return [Networker GETCommentsWithIdArray:commentIds];
+               return [Networker GETCommentsWithIdArray:[[commentIds reverseObjectEnumerator] allObjects]];
            }];
 }
 - (void)saveVote:(Vote *)vote
