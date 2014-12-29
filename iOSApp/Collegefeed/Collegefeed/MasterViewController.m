@@ -148,9 +148,28 @@
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    if (self.list.count == 0)
+    {
+        UILabel *label = [[UILabel alloc] init];
+        [label setTextAlignment:NSTextAlignmentCenter];
+        [label setText:@"No Content to display"];
+        [label setFont:CF_FONT_LIGHT(16)];
+        [label setTextColor:[UIColor blackColor]];
+        
+        return label;
+    }
+    
     return [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (self.list.count == 0)
+    {
+        return 100;
+    }
+    
+    return 0;
+}
 #pragma mark - Network Actions
 
 - (void)locationWasUpdated

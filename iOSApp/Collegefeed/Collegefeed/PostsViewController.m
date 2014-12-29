@@ -124,10 +124,6 @@
     
     return DEFAULT_CELL_HEIGHT;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 0;
-}
 
 #pragma mark - Network Actions
 
@@ -141,7 +137,7 @@
     
     if (self.list.count == 0)
     {
-        // TODO: Show "No Posts to display" or something
+
     }
 }
 
