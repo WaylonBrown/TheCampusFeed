@@ -88,6 +88,10 @@
 		CDF14D921A3B6D24006D8F2C /* PostTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF14D8E1A3B6D24006D8F2C /* PostTableCell.m */; };
 		CDF35CB21A4DEDD900917CC5 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = CDF35CB11A4DEDD900917CC5 /* camera.png */; };
 		CDF66BEB1A36CEBD008C62DD /* bad_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = CDF66BEA1A36CEBD008C62DD /* bad_words.txt */; };
+		CDF6B9C21A51DB58005F4555 /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDF6B9C11A51DB58005F4555 /* Achievement.swift */; };
+		CDF6B9C41A51DB88005F4555 /* PostAchievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDF6B9C31A51DB88005F4555 /* PostAchievement.swift */; };
+		CDF6B9C61A51DB96005F4555 /* ScoreAchievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDF6B9C51A51DB96005F4555 /* ScoreAchievement.swift */; };
+		CDF6B9C81A51DBC7005F4555 /* SpecialAchievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDF6B9C71A51DBC7005F4555 /* SpecialAchievement.swift */; };
 		CDFD68271A488A1100B6F4DA /* CollegeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFD68261A488A1100B6F4DA /* CollegeViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -256,6 +260,10 @@
 		CDF1FA8C1A30B160003D421F /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = ../../../../../../../System/Library/Frameworks/Python.framework; sourceTree = "<group>"; };
 		CDF35CB11A4DEDD900917CC5 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		CDF66BEA1A36CEBD008C62DD /* bad_words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bad_words.txt; sourceTree = "<group>"; };
+		CDF6B9C11A51DB58005F4555 /* Achievement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
+		CDF6B9C31A51DB88005F4555 /* PostAchievement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostAchievement.swift; sourceTree = "<group>"; };
+		CDF6B9C51A51DB96005F4555 /* ScoreAchievement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreAchievement.swift; sourceTree = "<group>"; };
+		CDF6B9C71A51DBC7005F4555 /* SpecialAchievement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialAchievement.swift; sourceTree = "<group>"; };
 		CDFD68251A488A1100B6F4DA /* CollegeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollegeViewController.h; sourceTree = "<group>"; };
 		CDFD68261A488A1100B6F4DA /* CollegeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollegeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -443,6 +451,7 @@
 		53AB57B7194AAFB3001D1B7B /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				CDF6B9C01A51DB2F005F4555 /* Achievements */,
 				53129431196517A000CF13DB /* Toasts */,
 				53FA791219381A4F00EF246E /* ChildCellDelegate.h */,
 				5308D2BB193552C600D70C1A /* Shared.h */,
@@ -627,6 +636,17 @@
 			name = "Comment View";
 			sourceTree = "<group>";
 		};
+		CDF6B9C01A51DB2F005F4555 /* Achievements */ = {
+			isa = PBXGroup;
+			children = (
+				CDF6B9C11A51DB58005F4555 /* Achievement.swift */,
+				CDF6B9C31A51DB88005F4555 /* PostAchievement.swift */,
+				CDF6B9C51A51DB96005F4555 /* ScoreAchievement.swift */,
+				CDF6B9C71A51DBC7005F4555 /* SpecialAchievement.swift */,
+			);
+			name = Achievements;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -782,6 +802,7 @@
 				CDF14D921A3B6D24006D8F2C /* PostTableCell.m in Sources */,
 				CDF0D7FB1A518BC600FBA892 /* Watchdog.m in Sources */,
 				5347EE9D197DC7CC001B2214 /* UserPostsViewController.m in Sources */,
+				CDF6B9C41A51DB88005F4555 /* PostAchievement.swift in Sources */,
 				538E7C8419CFF34000AD5719 /* TutorialViewController.m in Sources */,
 				CD539DD31A2CCE7D004A794E /* TopPostsViewController.m in Sources */,
 				53DE347719AD00AE004CB5A0 /* IIViewDeckController.m in Sources */,
@@ -791,9 +812,11 @@
 				53DE347F19AD01FF004CB5A0 /* IISideController.m in Sources */,
 				5352B5A2195F5C3100FEB2BF /* UIView+Toast.m in Sources */,
 				CD539DDC1A2CE488004A794E /* TagPostsViewController.m in Sources */,
+				CDF6B9C21A51DB58005F4555 /* Achievement.swift in Sources */,
 				CDFD68271A488A1100B6F4DA /* CollegeViewController.m in Sources */,
 				5347EEAA197DD407001B2214 /* TrendingCollegesViewController.m in Sources */,
 				53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */,
+				CDF6B9C81A51DBC7005F4555 /* SpecialAchievement.swift in Sources */,
 				53AE73C71928354F00BE6B02 /* DataController.m in Sources */,
 				53CF33A0194E7A7A008BB733 /* Shared.m in Sources */,
 				CD3614131A4B3951006AE87E /* CollegeSearchViewController.swift in Sources */,
@@ -806,6 +829,7 @@
 				53F8789D19133F60002A578B /* main.m in Sources */,
 				53D51E391949625300A8BA81 /* SimpleTableCell.m in Sources */,
 				5312942E196504CD00CF13DB /* ToastController.m in Sources */,
+				CDF6B9C61A51DB96005F4555 /* ScoreAchievement.swift in Sources */,
 				533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */,
 				5347EEA6197DCE9F001B2214 /* UserCommentsViewController.m in Sources */,
 				CD5887591A21501100D864FD /* NSMutableArrayExtensions.swift in Sources */,
