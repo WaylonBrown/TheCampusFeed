@@ -16,7 +16,15 @@
 
 - (id)initWithDataController:(DataController *)controller
 {
-    return [self initWithDataController:controller WithTagMessage:nil];
+    self = [super initWithDataController:controller];
+    if (self)
+    {
+        self.tag = self.dataController.tagInFocus;
+        self.tagMessage = (self.tag == nil) ? @"" : self.tag.name;
+
+    }
+    
+    return self;
 }
 - (id)initWithDataController:(DataController *)controller WithTagMessage:(NSString *)text
 {
@@ -24,17 +32,15 @@
     if (self)
     {
         self.tagMessage = (text == nil) ? @"" : text;
-        
-        // Back button
-        self.backButton = [[UIBarButtonItem alloc] initWithTitle:@""
-                                                           style:UIBarButtonItemStylePlain
-                                                          target:nil
-                                                          action:nil];
     }
     
     return self;
 }
 
+- (void)loadView
+{
+    [super loadView];
+}
 #pragma mark - Table View
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

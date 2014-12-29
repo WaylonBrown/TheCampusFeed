@@ -116,19 +116,17 @@
     {
         [self.dataController setTagInFocus:[self.dataController.trendingTagsAllColleges objectAtIndex:indexPath.row]];
     }
+    TagPostsViewController *controller = [[TagPostsViewController alloc] initWithDataController:self.dataController];
     
-//    PostsViewController* controller = [[PostsViewController alloc] initAsType:TAG_VIEW
-//                                                           withDataController:self.dataController];
-// TODO: show new PostsViewController
     UIBarButtonItem *backButton =
     [[UIBarButtonItem alloc] initWithTitle:@""
-                                     style:UIBarButtonItemStyleBordered
+                                     style:UIBarButtonItemStylePlain
                                     target:nil
                                     action:nil];
     
     [[self navigationItem] setBackBarButtonItem:backButton];
-//    [self.navigationController pushViewController:controller
-//                                         animated:YES];
+    [self.navigationController pushViewController:controller
+                                         animated:YES];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

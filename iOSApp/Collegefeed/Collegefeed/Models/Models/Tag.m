@@ -29,27 +29,6 @@
     }
     return nil;
 }
-- (id)initDummy
-{
-    self = [super init];
-    if (self)
-    {
-        [self setTagID:arc4random() % 999];
-        [self setScore:arc4random() % 99];
-        
-        switch (self.tagID % 3)
-        {
-            case 0: [self setName:@"#FlamingKittens"]; break;
-            case 1: [self setName:@"#drankt"]; break;
-            default: [self setName:@"#america"]; break;
-        }
-        
-        [self validate];
-
-        return self;
-    }
-    return nil;
-}
 
 #pragma mark - CFModelProtocol Methods
 

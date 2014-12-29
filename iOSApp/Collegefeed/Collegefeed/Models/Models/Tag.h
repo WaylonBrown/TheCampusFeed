@@ -20,7 +20,7 @@
 - (id)initWithTagID:(NSInteger)tID
           withScore:(BOOL)tScore
            withName:(NSString*)name;
-- (id)initDummy;
 - (id)initFromJSON:(NSDictionary *)jsonObject;
 + (BOOL)withMessageIsValid:(NSString*)tagMessage;
+
 @end
