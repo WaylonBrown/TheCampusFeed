@@ -486,6 +486,16 @@
     {
         [self setShowingAllColleges:NO];
         [self setShowingSingleCollege:YES];
+        
+        [self.topPostsSingleCollege removeAllObjects];
+        [self.recentPostsSingleCollege removeAllObjects];
+        [self.postsWithTagSingleCollege removeAllObjects];
+        [self.trendingTagsSingleCollege removeAllObjects];
+        
+        self.pageForTopPostsSingleCollege = 0;
+        self.pageForNewPostsSingleCollege = 0;
+        self.pageForTaggedPostsSingleCollege = 0;
+        self.pageForTrendingTagsSingleCollege = 0;
     }
 }
 - (BOOL)isNearCollege
@@ -736,7 +746,7 @@
            WithFetchFunction:^{
                
                return [Networker GetTopPostsAtPageNum:self.pageForTopPostsSingleCollege
-                                             WithCollegeId:self.collegeInFocus.collegeID];
+                                        WithCollegeId:self.collegeInFocus.collegeID];
            }];
 }
 - (void)fetchNewPostsForAllColleges

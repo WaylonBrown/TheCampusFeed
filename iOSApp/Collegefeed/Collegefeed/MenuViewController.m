@@ -13,6 +13,8 @@
 #import "TutorialViewController.h"
 #import "CF_DialogViewController.h"
 #import "PostsViewController.h"
+#import "TopPostsViewController.h"
+#import "NewPostsViewController.h"
 
 @interface MenuViewController ()
 
@@ -46,7 +48,7 @@
 }
 - (void)switchToNewPosts
 {
-    PostsViewController *viewController = self.viewControllers[NEW_POSTS_INDEX];
+    NewPostsViewController *viewController = self.viewControllers[NEW_POSTS_INDEX];
     
     [self.viewDeckController closeLeftView];
     
@@ -56,13 +58,13 @@
 }
 - (void)switchToTopPosts
 {
-    PostsViewController *viewController = self.viewControllers[TOP_POSTS_INDEX];
+    TopPostsViewController *viewController = self.viewControllers[TOP_POSTS_INDEX];
     
     [self.viewDeckController closeLeftView];
     
     self.selectedIndex = TOP_POSTS_INDEX;
     [self.viewDeckController setCenterController:viewController];
-//    [viewController refresh];
+
     [viewController.tableView scrollRectToVisible:CGRectMake(0,0,1,1) animated:YES];
 }
 
