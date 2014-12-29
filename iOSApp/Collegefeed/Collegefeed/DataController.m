@@ -16,16 +16,11 @@
 #import "Networker.h"
 #import "CF_DialogViewController.h"
 #import "ToastController.h"
-
-
-// TODO: Include Watchdog from its own static library
-//#import "Watchdog.h"
+#import "Watchdog.h"
 
 #import "TheCampusFeed-Swift.h"
 
 @interface DataController()
-
-//@property (strong, nonatomic) Watchdog *myWatchDog;
 
 @end
 
@@ -60,28 +55,12 @@
         // Get the user's location
         [self findUserLocation];
         
-        // Watchdog for automated content moderation
-        [self watchdogTester];
-
-        
+        // For restricting phone numbers and email addresses
+        [self createWatchdog];
     }
     return self;
 }
 
-- (void)watchdogTester
-{
-    NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys:
-                             [NSNumber numberWithInt:10], @"minLength",
-                             [NSNumber numberWithInt:140], @"maxLength",
-                             [NSNumber numberWithBool:YES], @"blockPhone",
-                             [NSNumber numberWithBool:YES], @"blockEmail",
-                             [NSNumber numberWithBool:YES], @"blockVulgar",
-//                             [NSNumber numberWithBool:YES], @"blockSexual",
-                             nil];
-    
-//    self.myWatchDog = [[Watchdog alloc] initWithOptions:options];
-    NSLog(@"Finished creating Watchdog");
-}
 - (void)initArrays
 {
     // Initialize arrays
@@ -110,6 +89,19 @@
     self.userCommentVotes       = [[NSMutableArray alloc] init];
 }
 
+- (void)createWatchdog
+{
+    NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys:
+                             [NSNumber numberWithInt:10], @"minLength",
+                             [NSNumber numberWithInt:140], @"maxLength",
+                             [NSNumber numberWithBool:YES], @"blockPhone",
+                             [NSNumber numberWithBool:YES], @"blockEmail",
+                             [NSNumber numberWithBool:NO], @"blockVulgar",
+                             nil];
+    
+    self.watchDog = [[Watchdog alloc] initWithOptions:options];
+    NSLog(@"Finished creating Watchdog");
+}
 
 - (void)checkAppVersionNumber
 {
@@ -608,72 +600,19 @@
     return NO;
 }
 
-#pragma mark - Posts
+#pragma mark - Images
 
 - (NSNumber *)postImageToServer:(UIImage *)image fromFilePath:(NSString *)filePath
 {
     return [Networker POSTImage:image fromFilePath:nil];
 }
+
+#pragma mark - Posts
+
 - (BOOL)createPostWithMessage:(NSString *)message
                 withCollegeId:(long)collegeId
                     withImage:(UIImage *)image
 {
-    
-    NSNumber *minutesUntilCanPost = [NSNumber new];
-    if (![self isAbleToPost:minutesUntilCanPost])
-    {
-        [self.toaster toastPostingTooSoon:minutesUntilCanPost];
-        return NO;
-    }
-    
-    [self.toaster toastCommentingTooSoon];
-
-    NSMutableDictionary* resultDict = [NSMutableDictionary new];
-//    BOOL validMessage = [self.myWatchDog shouldSubmitMessage:message
-//                                                 WithResults:resultDict];
-    
-    BOOL validMessage = true;
-    
-    if (!validMessage)
-    {
-        NSString *errorToastMessage = @"Sorry, your message was rejected. Please try again. Reason:";
-        
-        NSMutableArray *errorReasons = [NSMutableArray new];
-        if (![[resultDict valueForKey:@"isValidLength"] boolValue])
-        {
-            [errorReasons addObject:@"Invalid length"];
-            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Invalid length,"];
-        }
-        if ([[resultDict valueForKey:@"shouldBlockForNumber"] boolValue])
-        {
-            [errorReasons addObject:@"Phone numbers not allowed"];
-            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Phone numbers not allowed,"];
-        }
-        if ([[resultDict valueForKey:@"shouldBlockForEmail"] boolValue])
-        {
-            [errorReasons addObject:@"Email addresses not allowed"];
-            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Email addresses not allowed,"];
-        }
-        if ([[resultDict valueForKey:@"shouldBlockForVulgar"] boolValue])
-        {
-            [errorReasons addObject:@"Vulgarity not allowed"];
-            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Vulgarity not allowed,"];
-        }
-        
-        errorToastMessage = [errorToastMessage substringToIndex:[errorToastMessage length] - 1];
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Rejected!"
-                                                        message:errorToastMessage
-                                                       delegate:self
-                                              cancelButtonTitle:@"Ok"
-                                              otherButtonTitles:nil];
-        [alert show];
-        
-//        [self.toaster toastCustomMessage:errorToastMessage];
-
-        return NO;
-    }
-    
     @try
     {
         NSString *udid = [UIDevice currentDevice].identifierForVendor.UUIDString;
@@ -682,6 +621,11 @@
                                      withCollegeId:[NSNumber numberWithLong:collegeId]
                                      withUserToken:udid
                                        withImageId:imageID];
+        
+        if (![self shouldPostToServer:post])
+        {
+            return NO;
+        }
         
         NSData *result = [Networker POSTPostData:[post toJSON] WithCollegeId:[post.college_id longValue]];
         
@@ -717,7 +661,7 @@
         }
         else
         {
-//            [self.toaster toastPostFailed];
+            [self.toaster toastPostFailed];
         }
     }
     @catch (NSException *exception)
@@ -726,7 +670,50 @@
     }
     return NO;
 }
-
+- (BOOL)shouldPostToServer:(Post *)post
+{
+    // Check for posting too frequently
+    NSNumber *minutesUntilCanPost = [NSNumber new];
+    if (![self isAbleToPost:minutesUntilCanPost])
+    {
+        [self.toaster toastPostingTooSoon:minutesUntilCanPost];
+        return NO;
+    }
+    
+    NSMutableDictionary* resultDict = [NSMutableDictionary new];
+    
+    BOOL validMessage = [self.watchDog shouldSubmitMessage:post.text WithResults:resultDict];
+    
+    if (!validMessage)
+    {
+        NSString *errorToastMessage = @"Sorry, your message was rejected. Please try again. Reason:";
+        
+        NSMutableArray *errorReasons = [NSMutableArray new];
+        if (![[resultDict valueForKey:@"isValidLength"] boolValue])
+        {
+            [errorReasons addObject:@"Invalid length"];
+            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Invalid length,"];
+        }
+        if ([[resultDict valueForKey:@"shouldBlockForNumber"] boolValue])
+        {
+            [errorReasons addObject:@"Phone numbers not allowed"];
+            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Phone numbers not allowed,"];
+        }
+        if ([[resultDict valueForKey:@"shouldBlockForEmail"] boolValue])
+        {
+            [errorReasons addObject:@"Email addresses not allowed"];
+            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Email addresses not allowed,"];
+        }
+        
+        errorToastMessage = [errorToastMessage substringToIndex:[errorToastMessage length] - 1];
+        
+        [self.toaster toastCustomMessage:errorToastMessage];
+        
+        return NO;
+    }
+    
+    return YES;
+}
 - (void)fetchTopPostsForAllColleges
 {
     self.pageForTopPostsAllColleges++;

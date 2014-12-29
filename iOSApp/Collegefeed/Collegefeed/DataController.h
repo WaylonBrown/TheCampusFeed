@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (strong, nonatomic) ToastController *toaster;
-@property (strong, nonatomic) Watchdog *myWatchDog;
+@property (strong, nonatomic) Watchdog *watchDog;
 
 // Status Information
 @property (strong, nonatomic) College   *collegeInFocus;
