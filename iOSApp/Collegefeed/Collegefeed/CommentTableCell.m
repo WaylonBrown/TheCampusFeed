@@ -22,6 +22,7 @@
     if ([super assignmentSuccessWith:comment])
     {
         [self setObject:comment];
+        self.isNearCollege = comment.isNearCollege;
         
         [super shouldShowCollegeLabel:NO];
         [self.commentCountLabel setHidden:YES];

@@ -38,6 +38,7 @@
     {
         [self setObject:post];
         
+        self.isNearCollege = post.isNearCollege;
         [self.gpsIconImageView setHidden:post.isNearCollege];
         self.messageHeight.constant = [self getMessageHeight];;
         
@@ -53,7 +54,6 @@
   
         if ([post hasImage])
         {
-            
             [self populateImageViewFromUrl:[post getImage_url]];
             self.pictureHeight.constant = POST_CELL_PICTURE_HEIGHT_CROPPED;
         }
