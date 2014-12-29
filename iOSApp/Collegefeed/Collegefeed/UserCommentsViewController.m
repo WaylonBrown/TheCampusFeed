@@ -19,8 +19,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
-    [self addScoreFooter];
 }
 
 #pragma mark - Network Actions
@@ -35,6 +33,8 @@
 - (void)finishedFetchRequest:(NSNotification *)notification
 {
     [super finishedFetchRequest:notification];
+    
+    [self addScoreFooter];
 }
 
 #pragma mark - Helper Methods

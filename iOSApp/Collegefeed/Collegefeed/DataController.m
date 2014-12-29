@@ -1089,7 +1089,7 @@
     long totalScore = 0;
     for (Post* post in self.userPosts)
     {
-        totalScore += [post.score longValue];;
+        totalScore += [[post getScore] longValue];
     }
     return totalScore;
 }
@@ -1098,7 +1098,7 @@
     long totalScore = 0;
     for (Comment* comment in self.userComments)
     {
-        totalScore += [comment.score longValue];
+        totalScore += [[comment getScore] longValue];
     }
     return totalScore;
 }
