@@ -582,21 +582,14 @@
 }
 - (void)fetchCommentsForPost:(Post *)post
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
-                   ^{
-                        if (post != nil)
-                        {
-                            NSData *commentData = [Networker GETCommentsWithPostId:[post.id longValue]];
-                            NSArray *fetchedComments = [self parseData:commentData asModelType:COMMENT];
-                            [self.commentList insertObjectsWithUniqueIds:fetchedComments];
-                            
-                            [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
-                        }
-                        dispatch_async(dispatch_get_main_queue(), ^
-                        {
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self];
-                        });
-                    });
+    
+    [self fetchObjectsOfType:COMMENT
+                   IntoArray:self.commentList
+          WithFeedIdentifier:@"commentsForPost"
+           WithFetchFunction:^{
+               
+               return [Networker GETCommentsWithPostId:[post.id longValue]];
+           }];
 }
 - (void)fetchUserCommentsWithIdArray:(NSArray *)commentIds
 {

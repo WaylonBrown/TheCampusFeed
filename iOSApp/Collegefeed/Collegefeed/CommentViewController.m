@@ -231,7 +231,7 @@
     
     [super fetchContent];
     
-    [self.contentLoadingIndicator startAnimating];
+//    [self.contentLoadingIndicator startAnimating];
     
     // Spawn separate thread for network access
     [self.dataController fetchCommentsForPost:self.dataController.postInFocus];
