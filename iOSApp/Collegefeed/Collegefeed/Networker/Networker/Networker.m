@@ -156,6 +156,14 @@
     
     return nil;
 }
++ (NSData *)GETImageData:(long)imageID
+{
+    NSURL *url = [[NSURL alloc] initWithString:
+                  [NSString stringWithFormat:@"%@/%@/images/%ld",
+                   API_URL, API_VERSION, imageID]];
+    
+    return [self GET:url];
+}
 
 #pragma mark - Colleges
 
@@ -347,7 +355,7 @@
 }
 + (NSData *)GETPostsWithIdArray:(NSArray *)Ids
 {
-    if (Ids.count == 0 || Ids == nil)
+    if (Ids == nil || Ids.count == 0)
     {
         return nil;
     }

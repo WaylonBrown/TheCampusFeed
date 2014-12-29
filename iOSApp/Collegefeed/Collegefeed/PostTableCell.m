@@ -53,6 +53,7 @@
   
         if ([post hasImage])
         {
+            
             [self populateImageViewFromUrl:[post getImage_url]];
             self.pictureHeight.constant = POST_CELL_PICTURE_HEIGHT_CROPPED;
         }

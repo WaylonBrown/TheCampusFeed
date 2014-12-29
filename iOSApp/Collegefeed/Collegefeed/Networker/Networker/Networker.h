@@ -17,6 +17,7 @@
 
 // Images
 + (NSNumber *)POSTImage:(UIImage *)image fromFilePath:(NSString *)pathToOurFile;
++ (NSData *)GETImageData:(long)imageID;
 
 // Colleges
 + (NSData *)GETAllColleges;

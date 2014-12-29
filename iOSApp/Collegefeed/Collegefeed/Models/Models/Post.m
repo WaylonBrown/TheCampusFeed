@@ -205,7 +205,7 @@
 }
 - (BOOL)hasImage
 {
-    return (self.image_url != nil) || (self.image_uri != nil);
+    return (self.image_url != nil) || (self.image_uri != nil) || (self.image_id != nil);
 }
 
 @end

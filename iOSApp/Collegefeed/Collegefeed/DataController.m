@@ -616,6 +616,14 @@
 {
     return [Networker POSTImage:image fromFilePath:nil];
 }
+- (NSString *)getImageUrlFromId:(NSNumber *)imageID
+{
+    NSData *data = [Networker GETImageData:[imageID longValue]];
+    NSDictionary *jsonObject = (NSDictionary *)(NSArray *)[NSJSONSerialization JSONObjectWithData:data
+                                                                                          options:0
+                                                                                            error:nil];
+    return [jsonObject valueForKey:@"uri"];
+}
 
 #pragma mark - Posts
 
@@ -833,8 +841,7 @@
 {
     NSArray *singleton = @[[NSString stringWithFormat:@"%ld", postId]];
     NSData *data = [Networker GETPostsWithIdArray:singleton];
-    NSMutableArray *singlePostArray = [NSMutableArray new];
-    [self parseData:data asClass:[Post class] intoList:singlePostArray];
+    NSArray *singlePostArray = [self parseData:data asModelType:POST];
     return singlePostArray.count ? [singlePostArray firstObject] : nil;
 }
 - (Post *)fetchParentPostOfComment:(Comment *)comment
@@ -1117,8 +1124,6 @@
 
 - (NSArray *)parseData:(NSData *)data asModelType:(ModelType)type
 {
-    // VERSION 3
-    
     NSMutableArray *arr = [NSMutableArray new];
     
     if (data != nil)
@@ -1136,6 +1141,10 @@
                         {
                             Post *post = [[Post alloc] initFromJSON:jsonObject];
                             //long collegeID = [post getCollegeID];
+                            if ([post hasImage] && [post getImage_url] == nil && post.image_id != nil)
+                            {
+                                [post setImage_uri:[self getImageUrlFromId:post.image_id]];
+                            }
                             College *college = [self getCollegeById:[[post getCollege_id] longValue]];
                             [post setCollege:college];
                             long postID = [[post getID] longValue];
@@ -1189,146 +1198,6 @@
     }
     
     return arr;
-}
--(NSArray *)parseData:(NSData *)data asClass:(Class)class
-{
-    
-    // VERSION 2
-    NSMutableArray *arr = [NSMutableArray new];
-    
-    if (data != nil)
-    {
-        NSArray *jsonArray = (NSArray*)[NSJSONSerialization JSONObjectWithData:data
-                                                                       options:0
-                                                                         error:nil];
-        if (jsonArray && jsonArray.count)
-        {
-            //            for (int i = 0; i < jsonArray.count; i++)
-            for (NSDictionary *jsonObject in jsonArray)
-            {
-                // Individual JSON object
-                //                NSDictionary *jsonObject = (NSDictionary *) [jsonArray objectAtIndex:i];
-                
-                if ([Post class] == class)
-                {
-                    Post *post = [[Post alloc] initFromJSON:jsonObject];
-                    //                    long collegeID = [post getCollegeID];
-                    College *college = [self getCollegeById:[[post getCollege_id] longValue]];
-                    [post setCollege:college];
-                    long postID = [[post getID] longValue];
-                    for (Vote *vote in self.userPostVotes)
-                    {
-                        if (vote.parentID == postID)
-                        {
-                            [post setVote:vote];
-                            break;
-                        }
-                    }
-                    
-                    [arr addObject:post];
-                }
-                else if ([Comment class] == class)
-                {
-                    Comment *comment = [[Comment alloc] initFromJSON:jsonObject];
-                    long commentID = [[comment getID] longValue];
-                    for (Vote *vote in self.userCommentVotes)
-                    {
-                        if (vote.parentID == commentID)
-                        {
-                            [comment setVote:vote];
-                            break;
-                        }
-                    }
-                    
-                    [arr addObject:comment];
-                }
-                else
-                {   // college or tag
-                    [arr addObject:[[class alloc] initFromJSON:jsonObject]];
-                }
-            }
-        }
-        
-    }
-    
-    return arr;
-    
-    
-}
--(BOOL)parseData:(NSData *)data asClass:(Class)class intoList:(NSMutableArray *)array
-{
-    // VERSION 1
-    
-    if (data == nil)
-    {
-        return NO;
-    }
-    if (array == nil)
-    {
-        array = [[NSMutableArray alloc] init];
-    }
-    NSArray *jsonArray = (NSArray*)[NSJSONSerialization JSONObjectWithData:data
-                                                                   options:0
-                                                                     error:nil];
-    if (jsonArray != nil)
-    {
-        if (jsonArray.count == 0)
-        {
-            return NO;
-        }
-        for (int i = 0; i < jsonArray.count; i++)
-        {
-            // Individual JSON object
-            NSDictionary *jsonObject = (NSDictionary *) [jsonArray objectAtIndex:i];
-            NSObject *object;
-            
-            if ([Post class] == class)
-            {
-                Post *post = [[Post alloc] initFromJSON:jsonObject];
-                long postID = [[post getID] longValue];
-                long collegeID = [[post getCollege_id] longValue];
-                College *college = [self getCollegeById:collegeID];
-                [post setCollege:college];
-//                [post setCollegeName:college.name];
-                object = post;
-                for (Vote *vote in self.userPostVotes)
-                {
-                    if (vote.parentID == postID)
-                    {
-                        [post setVote:vote];
-                        break;
-                    }
-                }
-            }
-            else if ([Comment class] == class)
-            {
-                Comment *comment = [[Comment alloc] initFromJSON:jsonObject];
-                long commentID = [[comment getID] longValue];
-                object = comment;
-                for (Vote *vote in self.userCommentVotes)
-                {
-                    if (vote.parentID == commentID)
-                    {
-                        [comment setVote:vote];
-                        break;
-                    }
-                }
-            }
-            else
-            {   // college or tag
-                object = [[class alloc] initFromJSON:jsonObject];
-            }
-            
-            
-            if (object != nil && ![array containsObject:object])
-            {
-                [array addObject:object];
-            }
-            
-        }
-        return YES;
-    }
-    return NO;
 }
 - (void)findNearbyColleges
 {   // Populate the nearbyColleges array appropriately using current location

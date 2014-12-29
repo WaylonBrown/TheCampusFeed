@@ -26,7 +26,7 @@
 {   // Fetches new content for this view
     
     [super fetchContent];
-    
+
     [self.dataController retrieveUserPosts];
 }
 - (void)finishedFetchRequest:(NSNotification *)notification
@@ -40,7 +40,6 @@
 - (void)setCorrectList
 {
     [self setList:self.dataController.userPosts];
-    
     [super setCorrectList];
 }
 
