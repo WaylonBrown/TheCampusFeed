@@ -114,14 +114,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 /****************************/
 /***** Local Data Access ****/
 /****************************/
-- (NSString *)getCollegeNameById:(long)Id;
-- (College *)getCollegeById:(long)Id;
-- (void)getHardCodedCollegeList;
-- (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon;
-
-- (void)switchedToSpecificCollegeOrNil:(College *)college;
-- (BOOL)isNearCollege;
-- (BOOL)isNearCollegeWithId:(long)collegeId;
 
 - (NSMutableArray *)getCurrentTagList;
 
@@ -148,9 +140,12 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 // Colleges
 - (void)fetchTopColleges;
 - (void)fetchAllColleges;
-
-- (void)getNetworkCollegeList;
-- (BOOL)needsNewCollegeList;
+- (NSString *)getCollegeNameById:(long)Id;
+- (College *)getCollegeById:(long)Id;
+- (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon;
+- (void)switchedToSpecificCollegeOrNil:(College *)college;
+- (BOOL)isNearCollege;
+- (BOOL)isNearCollegeWithId:(long)collegeId;
 
 // Comments
 - (BOOL)createCommentWithMessage:(NSString *)message

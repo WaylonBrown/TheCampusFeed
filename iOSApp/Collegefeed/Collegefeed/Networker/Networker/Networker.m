@@ -147,7 +147,7 @@
         [f setNumberStyle:NSNumberFormatterDecimalStyle];
         
         NSNumber *photoID = [f numberFromString:idString];
-        NSLog(@"Photo ID = %@", photoID);
+        NSLog(@"Posted photo with ID = %@", photoID);
 
         return photoID;
 

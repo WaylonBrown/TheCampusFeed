@@ -49,16 +49,8 @@
         
         [self initArrays];
         
-        // Check endpoint to see if locally-stored college list is up to date
-        // TODO: on a separate thread
-        if ([self needsNewCollegeList])
-        {
-            [self getNetworkCollegeList];
-        }
-        else
-        {
-            [self getHardCodedCollegeList];
-        }
+
+        [self populateCollegeList];
         
         [self restoreSavedFeed];
         
@@ -271,7 +263,7 @@
                        NSArray *fetchedObjects = [self parseData:data asModelType:type];
                        
                        NSNumber *newObjectsCount = [NSNumber numberWithLong:[array insertObjectsWithUniqueIds:fetchedObjects]];
-                       NSLog(@"Fetched %@ new objects", newObjectsCount);
+                       NSLog(@"Fetched %@ new objects for %@", newObjectsCount, feedName);
                        [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
                        
                        dispatch_async(dispatch_get_main_queue(), ^
@@ -284,8 +276,46 @@
                    });
 }
 
-#pragma mark - Networker Access - Colleges
+#pragma mark - Colleges
 
+- (void)populateCollegeList
+{
+    if ([self needsNewCollegeList])
+    {
+        NSLog(@"Needs new college list, calling network fetch method");
+        [self getNetworkCollegeList];
+    }
+    else
+    {
+        NSLog(@"College list is up to date, calling core data fetch method");
+        [self getCoreDataCollegeList];
+    }
+}
+- (BOOL)needsNewCollegeList
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:STATUS_ENTITY
+                                              inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
+    {
+        NSLog(@"Too many status entities");
+    }
+    NSManagedObject *status = [fetchedStatus firstObject];
+    
+    if (status == nil)
+    {
+        return YES;
+    }
+    
+    long newVersion = [self getNetworkCollegeListVersion];
+    long currVersion = [[status valueForKeyPath:KEY_COLLEGE_LIST_VERSION] longValue];
+    
+    return (currVersion == newVersion) ? NO : YES;
+}
 - (void)fetchTopColleges
 {
     self.pageForTopColleges++;
@@ -321,16 +351,11 @@
                return [Networker GETAllColleges];
            }];
     
-    
-//    self.collegeList = [[NSMutableArray alloc] init];
-//    NSData *data = [Networker GETAllColleges];
-//    [self parseData:data asClass:[College class] intoList:self.collegeList];
     [self writeCollegestoCoreData];
     
     long version = [self getNetworkCollegeListVersion];
     [self updateCollegeListVersion:version];
 }
-
 - (long)getNetworkCollegeListVersion
 {
     NSData *data = [Networker GETCollegeListVersion];
@@ -345,13 +370,148 @@
     }
     else return -1;
 }
-- (BOOL)needsNewCollegeList
+- (void)writeCollegestoCoreData
+{
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSError *error;
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:COLLEGE_ENTITY
+                                              inManagedObjectContext:context];
+    
+    
+    [fetchRequest setEntity:entity];
+    
+    // Erase all old colleges from core data
+    NSArray *myObjectsToDelete = [context executeFetchRequest:fetchRequest error:nil];
+    for (NSManagedObject *oldCollege in myObjectsToDelete)
+    {
+        [context deleteObject:oldCollege];
+    }
+    
+    // Write new list of colleges to core data
+    for (College *collegeModel in self.collegeList)
+    {
+        NSManagedObject *college = [NSEntityDescription insertNewObjectForEntityForName:COLLEGE_ENTITY
+                                                                 inManagedObjectContext:context];
+        [college setValue:[NSNumber numberWithLong:collegeModel.collegeID] forKeyPath:KEY_COLLEGE_ID];
+        [college setValue:[NSNumber numberWithFloat:collegeModel.lat] forKeyPath:KEY_LAT];
+        [college setValue:[NSNumber numberWithFloat:collegeModel.lon] forKeyPath:KEY_LON];
+        [college setValue:collegeModel.name forKeyPath:KEY_NAME];
+        [college setValue:collegeModel.shortName forKeyPath:KEY_SHORT_NAME];
+    }
+    if (![_managedObjectContext save:&error])
+    {
+        NSLog(@"Failed to save colleges to core data: %@",
+              [error localizedDescription]);
+    }
+}
+- (NSString *)getCollegeNameById:(long)Id
+{
+    College *college = [self getCollegeById:Id];
+    return college == nil ? @"" : college.name;
+}
+- (College *)getCollegeById:(long)Id
+{
+    if (Id == 0) return nil;
+    
+    for (College *college in self.collegeList)
+    {
+        if (college.collegeID == Id)
+        {
+            return college;
+        }
+    }
+    
+    NSData *collegeData = [Networker GETCollegeWithId:Id];
+    if (collegeData == nil)
+    {
+        return nil;
+    }
+    NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:collegeData
+                                                               options:0
+                                                                 error:nil];
+    
+    College *college = [[College alloc] initFromJSON:jsonObject];
+    [self.collegeList addObject:college];
+    
+    return college;
+}
+- (void)getCoreDataCollegeList
+{   // Populate the college list with a recent
+    // list of colleges instead of accessing the network
+    
+    NSError *error;
+    // Retrieve Colleges
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:COLLEGE_ENTITY inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedColleges = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedColleges.count < 50)
+    {
+        [self getNetworkCollegeList];
+        return;
+    }
+    for (NSManagedObject *college in fetchedColleges)
+    {
+        long collegeId = [[college valueForKey:KEY_COLLEGE_ID] longValue];
+        float lon = [[college valueForKey:KEY_LON] floatValue];
+        float lat = [[college valueForKey:KEY_LAT] floatValue];
+        NSString *name = [college valueForKey:KEY_NAME];
+        //        NSString *shortName = [vote valueForKey:KEY_SHORT_NAME];
+        
+        College *collegeModel = [[College alloc] initWithCollegeID:collegeId withName:name withLat:lat withLon:lon];
+        [self.collegeList addObject:collegeModel];
+    }
+}
+- (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon
+{
+    NSMutableArray *colleges = [[NSMutableArray alloc] init];
+    
+    for (College *college in self.collegeList)
+    {
+        double milesAway = [self numberMilesAwayFromLat:userLat fromLon:userLon AtLat:college.lat atLon:college.lon];
+        
+        if (milesAway <= MILES_FOR_PERMISSION)
+        {
+            [colleges addObject:college];
+        }
+    }
+    return colleges;
+}
+- (void)switchedToSpecificCollegeOrNil:(College *)college
+{
+    [self setCollegeInFocus:college];
+    
+    if (college == nil)
+    {
+        [self setShowingAllColleges:YES];
+        [self setShowingSingleCollege:NO];
+    }
+    else
+    {
+        [self setShowingAllColleges:NO];
+        [self setShowingSingleCollege:YES];
+    }
+}
+- (BOOL)isNearCollege
+{
+    return self.nearbyColleges.count > 0;
+}
+- (BOOL)isNearCollegeWithId:(long)collegeId
+{
+    College *college = [self getCollegeById:collegeId];
+    return [self.nearbyColleges containsObject:college];
+}
+- (void)updateCollegeListVersion:(long)listVersion
 {
     NSError *error;
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:STATUS_ENTITY
-                                              inManagedObjectContext:context];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
     if (fetchedStatus.count > 1)
@@ -359,19 +519,26 @@
         NSLog(@"Too many status entities");
     }
     NSManagedObject *status = [fetchedStatus firstObject];
-    long newVersion = [self getNetworkCollegeListVersion];
-
+    
     if (status == nil)
     {
-        return YES;
+        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
+                                               inManagedObjectContext:context];
+    }
+    [status setValue:[NSNumber numberWithLong:listVersion] forKeyPath:KEY_COLLEGE_LIST_VERSION];
+    if (![_managedObjectContext save:&error])
+    {
+        NSLog(@"Failed to save college list version: %@",
+              [error localizedDescription]);
+    }
+    else
+    {
+        NSLog(@"Saved college list version %ld", listVersion);
     }
     
-    long currVersion = [[status valueForKeyPath:KEY_COLLEGE_LIST_VERSION] longValue];
-    
-    return (currVersion == newVersion) ? NO : YES;
 }
 
-#pragma mark - Networker Access - Comments
+#pragma mark - Comments
 
 - (BOOL)createCommentWithMessage:(NSString *)message
                         withPost:(Post*)post
@@ -438,7 +605,7 @@
     [self parseData:data asClass:[Comment class] intoList:self.userComments];
 }
 
-#pragma mark - Networker Access - Flags
+#pragma mark - Flags
 
 - (BOOL)flagPost:(long)postId
 {
@@ -454,7 +621,7 @@
     return NO;
 }
 
-#pragma mark - Networker Access - Posts
+#pragma mark - Posts
 
 - (NSNumber *)postImageToServer:(UIImage *)image fromFilePath:(NSString *)filePath
 {
@@ -572,9 +739,6 @@
     }
     return NO;
 }
-
-
-#pragma mark - Post Fetching
 
 - (void)fetchTopPostsForAllColleges
 {
@@ -804,141 +968,6 @@
 
 #pragma mark - Local Data Access
 
-- (void)writeCollegestoCoreData
-{
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSError *error;
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:COLLEGE_ENTITY
-                                              inManagedObjectContext:context];
-    
-    
-    [fetchRequest setEntity:entity];
-    
-    // Erase all old colleges from core data
-    NSArray *myObjectsToDelete = [context executeFetchRequest:fetchRequest error:nil];
-    for (NSManagedObject *oldCollege in myObjectsToDelete)
-    {
-        [context deleteObject:oldCollege];
-    }
-    
-    // Write new list of colleges to core data
-    for (College *collegeModel in self.collegeList)
-    {
-        NSManagedObject *college = [NSEntityDescription insertNewObjectForEntityForName:COLLEGE_ENTITY
-                                                              inManagedObjectContext:context];
-        [college setValue:[NSNumber numberWithLong:collegeModel.collegeID] forKeyPath:KEY_COLLEGE_ID];
-        [college setValue:[NSNumber numberWithFloat:collegeModel.lat] forKeyPath:KEY_LAT];
-        [college setValue:[NSNumber numberWithFloat:collegeModel.lon] forKeyPath:KEY_LON];
-        [college setValue:collegeModel.name forKeyPath:KEY_NAME];
-        [college setValue:collegeModel.shortName forKeyPath:KEY_SHORT_NAME];
-    }
-    if (![_managedObjectContext save:&error])
-    {
-        NSLog(@"Failed to save colleges to core data: %@",
-              [error localizedDescription]);
-    }
-}
-- (NSString *)getCollegeNameById:(long)Id
-{
-    College *college = [self getCollegeById:Id];
-    return college == nil ? @"" : college.name;
-}
-- (College *)getCollegeById:(long)Id
-{
-    if (Id == 0) return nil;
-    
-    for (College *college in self.collegeList)
-    {
-        if (college.collegeID == Id)
-        {
-            return college;
-        }
-    }
-    
-    NSData *collegeData = [Networker GETCollegeWithId:Id];
-    if (collegeData == nil)
-    {
-        return nil;
-    }
-    NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:collegeData
-                                                               options:0
-                                                                 error:nil];
-    
-    College *college = [[College alloc] initFromJSON:jsonObject];
-    [self.collegeList addObject:college];
-    
-    return college;
-}
-- (void)getHardCodedCollegeList
-{   // Populate the college list with a recent
-    // list of colleges instead of accessing the network
-    
-    NSError *error;
-    // Retrieve Colleges
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:COLLEGE_ENTITY inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedColleges = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedColleges.count < 50)
-    {
-        [self getNetworkCollegeList];
-        return;
-    }
-    for (NSManagedObject *college in fetchedColleges)
-    {
-        long collegeId = [[college valueForKey:KEY_COLLEGE_ID] longValue];
-        float lon = [[college valueForKey:KEY_LON] floatValue];
-        float lat = [[college valueForKey:KEY_LAT] floatValue];
-        NSString *name = [college valueForKey:KEY_NAME];
-//        NSString *shortName = [vote valueForKey:KEY_SHORT_NAME];
-        
-        College *collegeModel = [[College alloc] initWithCollegeID:collegeId withName:name withLat:lat withLon:lon];
-        [self.collegeList addObject:collegeModel];
-    }
-}
-- (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon
-{
-    NSMutableArray *colleges = [[NSMutableArray alloc] init];
-    
-    for (College *college in self.collegeList)
-    {
-        double milesAway = [self numberMilesAwayFromLat:userLat fromLon:userLon AtLat:college.lat atLon:college.lon];
-        
-        if (milesAway <= MILES_FOR_PERMISSION)
-        {
-            [colleges addObject:college];
-        }
-    }
-    return colleges;
-}
-- (void)switchedToSpecificCollegeOrNil:(College *)college
-{
-    [self setCollegeInFocus:college];
-    
-    if (college == nil)
-    {
-        [self setShowingAllColleges:YES];
-        [self setShowingSingleCollege:NO];
-    }
-    else
-    {
-        [self setShowingAllColleges:NO];
-        [self setShowingSingleCollege:YES];
-    }
-}
-- (BOOL)isNearCollege
-{
-    return self.nearbyColleges.count > 0;
-}
-- (BOOL)isNearCollegeWithId:(long)collegeId
-{
-    College *college = [self getCollegeById:collegeId];
-    return [self.nearbyColleges containsObject:college];
-}
 - (void)savePost:(Post *)post
 {
     NSManagedObjectContext *context = [self managedObjectContext];
@@ -1390,33 +1419,7 @@
     
     return YES;
 }
-- (void)updateCollegeListVersion:(long)listVersion
-{
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
-    {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    
-    if (status == nil)
-    {
-        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
-                                                   inManagedObjectContext:context];
-    }
-    [status setValue:[NSNumber numberWithLong:listVersion] forKeyPath:KEY_COLLEGE_LIST_VERSION];
-    if (![_managedObjectContext save:&error])
-    {
-        NSLog(@"Failed to save college list version: %@",
-              [error localizedDescription]);
-    }
-}
+
 - (void)updateLastPostTime:(NSDate *)postTime
 {
     NSError *error;
