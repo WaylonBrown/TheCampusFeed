@@ -34,4 +34,26 @@ class Achievement: NSObject {
         hasAchieved = achieved
         type = achievementType
     }
+    
+    func toString() -> String {
+        if type == VALUE_POST_ACHIEVEMENT {
+            var posts = amountRequired == 1 ? "Post" : "Posts"
+            return "\(amountRequired) \(posts) (\(hoursForReward) hours)"
+        }
+        else if type == VALUE_SCORE_ACHIEVEMENT {
+            return "\(amountRequired) Points (\(hoursForReward) hours)"
+        }
+        else if type == VALUE_VIEW_ACHIEVEMENT {
+            return "View your Achievements List (\(hoursForReward) hours)"
+        }
+        else if type == VALUE_SHORT_POST_ACHIEVEMENT {
+            return "100 points for a post that's 3 words or less (\(hoursForReward) hours)"
+        }
+        else if type == VALUE_MANY_HOURS_ACHIEVEMENT {
+            return "Have 2,000+ Time Crunch hours (\(hoursForReward) hours)"
+        }
+        else {
+            return "<Achievement String>"
+        }
+    }
 }
