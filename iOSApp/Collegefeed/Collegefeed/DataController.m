@@ -57,18 +57,22 @@
         // For restricting phone numbers and email addresses
         [self createWatchdog];
         
-        [self initializeAchievements];
+//        [self initializeAchievements];
     }
     return self;
 }
 
 - (void)initArrays
 {
-    // Initialize arrays
+    // Achievements
+    self.achievementList = [[NSMutableArray alloc] init];
+ 
+    // Colleges
     self.collegeList            = [[NSMutableArray alloc] init];
     self.nearbyColleges         = [[NSMutableArray alloc] init];
     self.trendingColleges       = [[NSMutableArray alloc] init];
     
+    // Comments
     self.commentList            = [[NSMutableArray alloc] init];
     self.userComments           = [[NSMutableArray alloc] init];
     
@@ -81,11 +85,11 @@
     self.postsWithTagSingleCollege      = [[NSMutableArray alloc] init];
     self.userPosts                  = [[NSMutableArray alloc] init];
     
-    
-    
+    // Tags
     self.trendingTagsAllColleges                = [[NSMutableArray alloc] init];
     self.trendingTagsSingleCollege       = [[NSMutableArray alloc] init];
     
+    // Votes
     self.userPostVotes          = [[NSMutableArray alloc] init];
     self.userCommentVotes       = [[NSMutableArray alloc] init];
 }
@@ -271,10 +275,7 @@
 
 - (void)fetchAchievements
 {
-    if (self.achievementList == nil)
-    {
-        self.achievementList = [[NSMutableArray alloc] init];
-    }
+    self.achievementList = [[NSMutableArray alloc] init];
     
     NSError *error;
     NSManagedObjectContext *context = [self managedObjectContext];
@@ -298,6 +299,12 @@
         [self.achievementList addObject:achievement];
     }
     
+    
+    if (self.achievementList.count == 0)
+    {
+        [self initializeAchievements];
+    }
+    
     NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
                               @"achievements", @"feedName", nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:userInfo];
@@ -305,10 +312,10 @@
 }
 - (void)addAchievement:(Achievement *)achievement
 {
-    if (self.achievementList == nil)
-    {
-        [self fetchAchievements];
-    }
+//    if (self.achievementList == nil)
+//    {
+//        [self fetchAchievements];
+//    }
     NSLog(@"Adding achievement: %@", achievement.toString);
     [self.achievementList addObject:achievement];
     
@@ -356,12 +363,11 @@
 }
 - (void)initializeAchievements
 {
-    [self fetchAchievements];
+//    self.achievementList = [[NSMutableArray alloc] init];
     if (self.achievementList.count != 0)
-    {   // Achievements already in core data
+    {
         return;
     }
-    
     // For number of posts
     NSArray *postNumbers = @[[NSNumber numberWithInt:1],
                              [NSNumber numberWithInt:3],
@@ -566,6 +572,8 @@
 {
     if (Id == 0) return nil;
     
+    // TODO: exception here '... mutated while being enumerated',
+    // probably getting called while fetching college lists
     for (College *college in self.collegeList)
     {
         if (college.collegeID == Id)

@@ -55,7 +55,9 @@ class AchievementViewController: MasterViewController, UITableViewDataSource, UI
     // MARK: Table View
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var count = self.list.count
+        
+        self.setCorrectList()
+        
         return self.list.count
     }
     
@@ -70,8 +72,13 @@ class AchievementViewController: MasterViewController, UITableViewDataSource, UI
             cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier:cellId)
         }
         
-        var data = self.list[indexPath.row] as Achievement
-        cell!.textLabel?.text = data.toString()
+        if var label = cell?.textLabel {
+            var data = self.list[indexPath.row] as Achievement
+            label.text = data.toString()
+            label.numberOfLines = 0
+            label.textAlignment = NSTextAlignment.Center
+
+        }
         
         return cell!
     }
