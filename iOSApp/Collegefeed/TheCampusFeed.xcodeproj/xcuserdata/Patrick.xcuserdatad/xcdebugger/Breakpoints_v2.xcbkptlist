@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Collegefeed/DataController.m"
-            timestampString = "441570480.677582"
+            timestampString = "441668783.0904"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1109"
-            endingLineNumber = "1109"
+            startingLineNumber = "1260"
+            endingLineNumber = "1260"
             landmarkName = "-getUserPostScore"
             landmarkType = "5">
          </BreakpointContent>

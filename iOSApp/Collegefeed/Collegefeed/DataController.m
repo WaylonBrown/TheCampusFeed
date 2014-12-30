@@ -44,7 +44,6 @@
         
         [self initArrays];
         
-
         [self populateCollegeList];
         
         [self restoreSavedFeed];
@@ -217,13 +216,11 @@
     }
     NSManagedObject *status = [fetchedStatus firstObject];
     NSNumber *collegeID = [status valueForKey:KEY_CURRENT_COLLEGE_FEED];
-    if (collegeID != nil)
-    {
-        long collegeIdForFeed = [collegeID longValue];
-        self.collegeInFocus = [self getCollegeById:collegeIdForFeed];
-    }
+    long collegeIdForFeed = [collegeID longValue];
+
+    self.collegeInFocus = [self getCollegeById:collegeIdForFeed];
     
-    self.showingAllColleges = collegeID == nil;
+    self.showingAllColleges = self.collegeInFocus == nil;
     self.showingSingleCollege = !self.showingAllColleges;
 }
 - (NSMutableArray *)getCurrentTagList
