@@ -1509,7 +1509,7 @@
         [self failedLocationFinding];
     }
     
-    else if (secs >= 10)
+    else if (secs >= 30)
     {
         NSLog(@"Location update timeout expired");
         [self failedLocationFinding];
