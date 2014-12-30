@@ -268,6 +268,160 @@
                    });
 }
 
+#pragma mark - Achievements
+
+- (void)fetchAchievements
+{
+    if (self.achievementList == nil)
+    {
+        self.achievementList = [[NSMutableArray alloc] init];
+    }
+    
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:ACHIEVEMENT_ENTITY
+                                              inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    
+    NSArray *achievements = [_managedObjectContext executeFetchRequest:fetchRequest
+                                                                 error:&error];
+    for (NSManagedObject *a in achievements)
+    {
+        Achievement *achievement = [[Achievement alloc]
+                                    initWithCurrAmount:[[a valueForKey:KEY_AMOUNT_CURRENTLY] longValue]
+                                    reqAmt:[[a valueForKey:KEY_AMOUNT_REQUIRED] longValue]
+                                    rewardHours:[[a valueForKey:KEY_HOURS_REWARD] longValue]
+                                    achieved:[[a valueForKey:KEY_HAS_ACHIEVED] boolValue]
+                                    achievementType:[a valueForKey:KEY_TYPE]];
+        
+        [self.achievementList addObject:achievement];
+    }
+}
+- (void)addAchievement:(Achievement *)achievement
+{
+    if (self.achievementList == nil)
+    {
+        [self fetchAchievements];
+    }
+    [self.achievementList addObject:achievement];
+    
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSError *error;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:ACHIEVEMENT_ENTITY
+                                              inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSPredicate *p1 = [NSPredicate predicateWithFormat:@"%@ == %@", KEY_AMOUNT_REQUIRED, achievement.amountRequired];
+    NSPredicate *p2 = [NSPredicate predicateWithFormat:@"%@ == %@", KEY_HOURS_REWARD, achievement.hoursForReward];
+    NSPredicate *p3 = [NSPredicate predicateWithFormat:@"%@ == %@", KEY_TYPE, achievement.type];
+    [fetchRequest setPredicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[p1, p2, p3]]];
+    
+
+    NSArray *achievements = [_managedObjectContext executeFetchRequest:fetchRequest
+                                                                 error:&error];
+
+    if (achievements.count == 0)
+    {
+        // Add this one to core data
+        NSManagedObject *mgdAchievement = [NSEntityDescription insertNewObjectForEntityForName:ACHIEVEMENT_ENTITY
+                                                                        inManagedObjectContext:context];
+        
+        [mgdAchievement setValue:[NSNumber numberWithLong:achievement.amountCurrently] forKey:KEY_AMOUNT_CURRENTLY];
+        [mgdAchievement setValue:[NSNumber numberWithLong:achievement.amountRequired] forKey:KEY_AMOUNT_REQUIRED];
+        [mgdAchievement setValue:[NSNumber numberWithLong:achievement.hoursForReward] forKey:KEY_HOURS_REWARD];
+        [mgdAchievement setValue:[NSNumber numberWithBool:achievement.hasAchieved] forKey:KEY_HAS_ACHIEVED];
+        [mgdAchievement setValue:achievement.type forKey:KEY_TYPE];
+    }
+    else
+    {
+        for (Achievement *a in achievements)
+        {
+            [a setValue:[NSNumber numberWithLong:achievement.amountCurrently] forKey:KEY_AMOUNT_CURRENTLY];
+            [a setValue:[NSNumber numberWithBool:achievement.hasAchieved] forKey:KEY_HAS_ACHIEVED];
+        }
+    }
+    
+    if (![_managedObjectContext save:&error])
+    {
+        NSLog(@"Failed to save achievement: %@",
+              [error localizedDescription]);
+    }
+}
+- (void)initializeAchievements
+{
+    [self fetchAchievements];
+    if (self.achievementList.count != 0)
+    {   // Achievements already in core data
+        return;
+    }
+    
+    // For number of posts
+    NSArray *postNumbers = @[[NSNumber numberWithInt:1],
+                             [NSNumber numberWithInt:3],
+                             [NSNumber numberWithInt:10],
+                             [NSNumber numberWithInt:50],
+                             [NSNumber numberWithInt:200],
+                             [NSNumber numberWithInt:1000]];
+    
+    for (NSNumber *num in postNumbers)
+    {
+        long hours = [num longValue] * 10;
+        Achievement *a = [[Achievement alloc] initWithCurrAmount:0
+                                                          reqAmt:[num longValue]
+                                                     rewardHours:hours
+                                                        achieved:NO
+                                                 achievementType:VALUE_POST_ACHIEVEMENT];
+        
+        [self addAchievement:a];
+    }
+    
+    // For total points of posts
+    NSArray *postPoints = @[[NSNumber numberWithInt:5],
+                            [NSNumber numberWithInt:10],
+                            [NSNumber numberWithInt:20],
+                            [NSNumber numberWithInt:40],
+                            [NSNumber numberWithInt:80],
+                            [NSNumber numberWithInt:150],
+                            [NSNumber numberWithInt:300],
+                            [NSNumber numberWithInt:800]];
+    
+    for (NSNumber *num in postPoints)
+    {
+        long hours = [num longValue] * 10;
+        Achievement *a = [[Achievement alloc] initWithCurrAmount:0
+                                                          reqAmt:[num longValue]
+                                                     rewardHours:hours
+                                                        achieved:NO
+                                                 achievementType:VALUE_SCORE_ACHIEVEMENT];
+        
+        [self addAchievement:a];
+    }
+    
+    // Special
+    Achievement *s1 = [[Achievement alloc] initWithCurrAmount:0
+                                                      reqAmt:1
+                                                 rewardHours:10
+                                                    achieved:NO
+                                             achievementType:VALUE_VIEW_ACHIEVEMENT];
+    [self addAchievement:s1];
+    
+    Achievement *s2 = [[Achievement alloc] initWithCurrAmount:0
+                                                      reqAmt:1
+                                                 rewardHours:2000
+                                                    achieved:NO
+                                             achievementType:VALUE_SHORT_POST_ACHIEVEMENT];
+    [self addAchievement:s2];
+    
+    Achievement *s3 = [[Achievement alloc] initWithCurrAmount:0
+                                                      reqAmt:2000
+                                                 rewardHours:2000
+                                                    achieved:NO
+                                             achievementType:VALUE_MANY_HOURS_ACHIEVEMENT];
+    [self addAchievement:s3];
+}
+
 #pragma mark - Colleges
 
 - (void)populateCollegeList

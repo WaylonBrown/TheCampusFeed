@@ -128,8 +128,6 @@
     
     
     self.userCommentsController         = [[UserCommentsViewController alloc] initWithDataController:self.dataController];
-//                                                   initAsType:USER_COMMENTS
-//                                           withDataController:self.dataController];
     
     self.tutorialController             = [[TutorialViewController alloc] init];
     
@@ -137,6 +135,7 @@
     
     self.timeCrunchController           = [[TimeCrunchViewController alloc] init];
 
+    self.achievementController          = [[AchievementViewController alloc] initWithDataController:self.dataController];
     NSArray *viewControllers            = [NSArray arrayWithObjects:
                                            self.topPostsController,
                                            self.recentPostsController,
@@ -144,6 +143,7 @@
                                            self.trendingCollegesController,
                                            self.userPostsController,
                                            self.userCommentsController,
+                                           self.achievementController,
                                            self.timeCrunchController,
                                            self.helpController,
                                            //                                           self.tutorialController,

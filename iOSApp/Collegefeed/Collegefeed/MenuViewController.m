@@ -78,6 +78,7 @@
              @"Most Active Colleges",
              @"My Posts",
              @"My Comments",
+             @"Achievements",
              @"Time Crunch",
              @"Help",
              @"Give Feedback"];
@@ -99,7 +100,7 @@
     }
     else if (section == 1)
     {
-        return 5;
+        return 6;
     }
     return 0;
 }

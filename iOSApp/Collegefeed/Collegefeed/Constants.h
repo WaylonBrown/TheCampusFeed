@@ -102,6 +102,17 @@
 #define KEY_LAUNCH_COUNT            @"launchCount"
 #define KEY_CURRENT_COLLEGE_FEED    @"currentFeed"
 
+#define ACHIEVEMENT_ENTITY      @"Achivement"
+#define KEY_AMOUNT_CURRENTLY    @"amountCurrently"
+#define KEY_AMOUNT_REQUIRED     @"amountRequired"
+#define KEY_HOURS_REWARD        @"hoursForReward"
+#define KEY_HAS_ACHIEVED        @"hasAchieved"
+#define VALUE_POST_ACHIEVEMENT      @"PostAchievement"
+#define VALUE_SCORE_ACHIEVEMENT     @"ScoreAchievement"
+#define VALUE_VIEW_ACHIEVEMENT   @"ViewAchievement"
+#define VALUE_SHORT_POST_ACHIEVEMENT   @"ShortPostAchievement"
+#define VALUE_MANY_HOURS_ACHIEVEMENT   @"ManyHoursAchievement"
+
 #define POST_ENTITY             @"Post"
 #define KEY_POST_ID             @"postId"
 

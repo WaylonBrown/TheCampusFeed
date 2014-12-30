@@ -25,6 +25,7 @@
 @class TutorialViewController;
 @class CF_DialogViewController;
 @class TimeCrunchViewController;
+@class AchievementViewController;
 @class MenuViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
@@ -45,6 +46,7 @@
 @property (strong, nonatomic) TutorialViewController *tutorialController;
 @property (strong, nonatomic) CF_DialogViewController *helpController;
 @property (strong, nonatomic) TimeCrunchViewController *timeCrunchController;
+@property (strong, nonatomic) AchievementViewController *achievementController;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6244" systemVersion="13F34" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Achievement" syncable="YES">
+        <attribute name="amountCurrently" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="amountRequired" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="hasAchieved" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hoursForReward" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="College" syncable="YES">
         <attribute name="collegeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="lat" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -31,8 +38,9 @@
     <elements>
         <element name="College" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Comment" positionX="0" positionY="0" width="128" height="60"/>
-        <element name="Status" positionX="0" positionY="0" width="128" height="135"/>
         <element name="Post" positionX="0" positionY="0" width="128" height="60"/>
+        <element name="Status" positionX="0" positionY="0" width="128" height="135"/>
         <element name="Vote" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="Achievement" positionX="0" positionY="45" width="128" height="118"/>
     </elements>
 </model>

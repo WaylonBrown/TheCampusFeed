@@ -14,6 +14,7 @@
 
 #import "Constants.h"
 
+@class Achievement;
 @class Comment;
 @class College;
 @class Post;
@@ -65,6 +66,9 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic) CLLocationDegrees         lon;
 @property LocationStatus                        locStatus;
 @property (nonatomic) NSInteger     locationUpdateAttempts;
+
+// Achievement Arrays
+@property (strong, nonatomic) NSMutableArray *achievementList;
 
 // College Arrays
 @property (strong, nonatomic) NSMutableArray *collegeList;
@@ -136,6 +140,10 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 /*************************/
 
 - (void)findUserLocation;
+
+// Achievements
+- (void)fetchAchievements;
+- (void)addAchievement:(Achievement *)achievement;
 
 // Colleges
 - (void)fetchTopColleges;

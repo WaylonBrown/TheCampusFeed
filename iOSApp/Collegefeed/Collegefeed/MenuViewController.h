@@ -12,8 +12,8 @@
 #define MENU_CELL_HEIGHT 60
 #define TOP_POSTS_INDEX 0
 #define NEW_POSTS_INDEX 1
-#define HELP_INDEX 7
-#define FEEDBACK_INDEX 8
+#define HELP_INDEX 8
+#define FEEDBACK_INDEX 9
 
 @interface MenuViewController : UIViewController<UITableViewDataSource, MFMailComposeViewControllerDelegate>
 
