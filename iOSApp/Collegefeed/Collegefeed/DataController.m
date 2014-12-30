@@ -56,6 +56,8 @@
         
         // For restricting phone numbers and email addresses
         [self createWatchdog];
+        
+        [self initializeAchievements];
     }
     return self;
 }
@@ -295,6 +297,11 @@
         
         [self.achievementList addObject:achievement];
     }
+    
+    NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
+                              @"achievements", @"feedName", nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:userInfo];
+
 }
 - (void)addAchievement:(Achievement *)achievement
 {
@@ -302,6 +309,7 @@
     {
         [self fetchAchievements];
     }
+    NSLog(@"Adding achievement: %@", achievement.toString);
     [self.achievementList addObject:achievement];
     
     NSManagedObjectContext *context = [self managedObjectContext];
@@ -310,8 +318,8 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:ACHIEVEMENT_ENTITY
                                               inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    NSPredicate *p1 = [NSPredicate predicateWithFormat:@"%@ == %@", KEY_AMOUNT_REQUIRED, achievement.amountRequired];
-    NSPredicate *p2 = [NSPredicate predicateWithFormat:@"%@ == %@", KEY_HOURS_REWARD, achievement.hoursForReward];
+    NSPredicate *p1 = [NSPredicate predicateWithFormat:@"%@ == %ld", KEY_AMOUNT_REQUIRED, (long)achievement.amountRequired];
+    NSPredicate *p2 = [NSPredicate predicateWithFormat:@"%@ == %ld", KEY_HOURS_REWARD, (long)achievement.hoursForReward];
     NSPredicate *p3 = [NSPredicate predicateWithFormat:@"%@ == %@", KEY_TYPE, achievement.type];
     [fetchRequest setPredicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[p1, p2, p3]]];
     

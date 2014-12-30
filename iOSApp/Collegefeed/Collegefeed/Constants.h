@@ -102,7 +102,7 @@
 #define KEY_LAUNCH_COUNT            @"launchCount"
 #define KEY_CURRENT_COLLEGE_FEED    @"currentFeed"
 
-#define ACHIEVEMENT_ENTITY      @"Achivement"
+#define ACHIEVEMENT_ENTITY      @"Achievement"
 #define KEY_AMOUNT_CURRENTLY    @"amountCurrently"
 #define KEY_AMOUNT_REQUIRED     @"amountRequired"
 #define KEY_HOURS_REWARD        @"hoursForReward"

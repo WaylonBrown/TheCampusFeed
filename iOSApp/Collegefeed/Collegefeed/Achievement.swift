@@ -9,21 +9,21 @@
 import UIKit
 
 class Achievement: NSObject {
-    var amountCurrently : Int
-    var amountRequired : Int
-    var hoursForReward : Int
-    var hasAchieved : Bool
-    var type : String
+    var amountCurrently : Int = 0
+    var amountRequired : Int = 0
+    var hoursForReward : Int = 0
+    var hasAchieved : Bool = false
+    var type : String = "Achievement"
     
-    override init() {
-        amountCurrently = 0
-        amountRequired = 0
-        hoursForReward = 0
-        hasAchieved = false
-        type = "Achievement"
-        
-        super.init()
-    }
+//    override init() {
+//        amountCurrently = 0
+//        amountRequired = 0
+//        hoursForReward = 0
+//        hasAchieved = false
+//        type = "Achievement"
+//        
+//        super.init()
+//    }
     
     convenience init(currAmount: Int, reqAmt: Int, rewardHours: Int, achieved: Bool, achievementType: String) {
         self.init()

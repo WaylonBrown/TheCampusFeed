@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AchievementViewController: MasterViewController {
+class AchievementViewController: MasterViewController, UITableViewDataSource, UITableViewDelegate {
 
     override init!(dataController controller: DataController!) {
         super.init(dataController: controller)
@@ -22,12 +22,61 @@ class AchievementViewController: MasterViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK: Network Actions
+    
+    override func fetchContent() {
+        super.fetchContent()
+        
+        self.dataController.fetchAchievements()
+    }
+    
+    override func finishedFetchRequest(notification: NSNotification!) {
+        
+        if let info = notification.userInfo as? Dictionary<String,String> {
+            if let feed = info["feedName"] {
+                if feed == "achievements" {
+                    NSLog("Finished fetching achievements")
+                    super.finishedFetchRequest(notification)
+                }
+            }
+        }
+    }
+    
+    // MARK: Table View
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var count = self.list.count
+        return self.list.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        
+        // Configure the cell...
+        let cellId: NSString = "Cell"
+        var cell = tableView.dequeueReusableCellWithIdentifier(cellId) as? UITableViewCell
+        
+        if cell == nil {
+            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier:cellId)
+        }
+        
+        var data = self.list[indexPath.row] as Achievement
+        cell!.textLabel?.text = data.toString()
+        
+        return cell!
+    }
+    
+    // MARK: Helper Methods
     
     override func setCorrectList() {
         self.list = self.dataController.achievementList

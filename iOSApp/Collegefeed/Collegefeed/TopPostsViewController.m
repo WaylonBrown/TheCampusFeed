@@ -36,6 +36,7 @@
         [super finishedFetchRequest:notification];
     }
 }
+
 #pragma mark - Local Actions
 
 - (void)changeFeed
