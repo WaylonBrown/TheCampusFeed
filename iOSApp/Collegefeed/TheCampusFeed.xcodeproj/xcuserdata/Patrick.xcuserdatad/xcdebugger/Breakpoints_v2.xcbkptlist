@@ -38,38 +38,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Collegefeed/MasterViewController.m"
-            timestampString = "441744093.251206"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
-            landmarkName = "-fetchContent"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Collegefeed/MasterViewController.m"
-            timestampString = "441744093.251206"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "214"
-            endingLineNumber = "214"
-            landmarkName = "-finishedFetchRequest:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -106,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Collegefeed/MasterViewController.m"
-            timestampString = "441744093.251206"
+            timestampString = "441762186.902533"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "352"
-            endingLineNumber = "352"
+            startingLineNumber = "357"
+            endingLineNumber = "357"
             landmarkName = "-submitPostCommentCreationWithMessage:withCollegeId:withUserToken:withImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -122,12 +90,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Collegefeed/DataController.m"
-            timestampString = "441747314.447937"
+            timestampString = "441762637.166311"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1390"
-            endingLineNumber = "1390"
-            landmarkName = "-getUserPostScore"
+            startingLineNumber = "1399"
+            endingLineNumber = "1399"
+            landmarkName = "-deleteVote:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -138,28 +106,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Collegefeed/DataController.m"
-            timestampString = "441747314.447937"
+            timestampString = "441762637.166311"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1625"
-            endingLineNumber = "1625"
-            landmarkName = "-locationManager:didUpdateToLocation:fromLocation:"
+            startingLineNumber = "1634"
+            endingLineNumber = "1634"
+            landmarkName = "-updateLastPostTime:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Collegefeed/MasterViewController.m"
-            timestampString = "441744114.359942"
+            filePath = "Collegefeed/DataController.m"
+            timestampString = "441761782.358841"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "210"
-            endingLineNumber = "210"
-            landmarkName = "-fetchedCollegeList"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
+            landmarkName = "-fetchObjectsOfType:IntoArray:WithFeedIdentifier:WithFetchFunction:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Collegefeed/DataController.m"
+            timestampString = "441761837.215501"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "261"
+            endingLineNumber = "261"
+            landmarkName = "-fetchObjectsOfType:IntoArray:WithFeedIdentifier:WithFetchFunction:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Collegefeed/DataController.m"
+            timestampString = "441762188.5314"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "260"
+            endingLineNumber = "260"
+            landmarkName = "-fetchObjectsOfType:IntoArray:WithFeedIdentifier:WithFetchFunction:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

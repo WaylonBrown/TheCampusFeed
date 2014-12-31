@@ -217,7 +217,6 @@
         self.hasFetchedAllContent = YES;
         [self.contentLoadingIndicator stopAnimating];
     }
-    
     self.hasFinishedFetchRequest = YES;
     [self.tableView reloadData];
 }

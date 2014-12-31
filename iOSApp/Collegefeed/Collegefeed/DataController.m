@@ -262,6 +262,10 @@
                        
                        dispatch_async(dispatch_get_main_queue(), ^
                                       {
+                                          if (type == COLLEGE)
+                                          {
+                                              [[NSNotificationCenter defaultCenter] postNotificationName:@"FetchedColleges" object:nil];
+                                          }
                                           NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
                                                                     newObjectsCount, @"newObjectsCount",
                                                                     feedName, @"feedName", nil];
@@ -591,9 +595,11 @@
     }
     else
     {
-        NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                  @"allColleges", @"feedName", nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:userInfo];
+//        NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
+//                                  @"allColleges", @"feedName", nil];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:userInfo];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FetchedColleges" object:nil];
     }
 }
 - (void)getNetworkCollegeList
@@ -723,7 +729,10 @@
         [self.collegeList addObject:collegeModel];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"FetchedColleges" object:self];
+    
+    NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
+                              @"allColleges", @"feedName", nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:userInfo];
 }
 - (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon
 {
