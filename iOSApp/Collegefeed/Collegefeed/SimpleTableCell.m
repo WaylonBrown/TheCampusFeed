@@ -42,8 +42,6 @@
 
 - (void)assignTag:(Tag *)tag
 {
-    self.labelHeight.constant = TABLE_CELL_HEIGHT;
-
     [self.messageLabel setFont:CF_FONT_LIGHT(22)];
     [self.messageLabel setNumberOfLines:1];
     [self.messageLabel setLineBreakMode:NSLineBreakByTruncatingTail];
@@ -56,13 +54,9 @@
     {
         [self.messageLabel setText:@""];
     }
-    
-    [self setNeedsUpdateConstraints];
-
 }
 - (void)assignCollege:(College *)college withRankNumberOrNil:(NSNumber *)rankNo
 {
-    self.labelHeight.constant = [SimpleTableCell getMessageHeight:college.name];
     [self.messageLabel setFont:CF_FONT_LIGHT(18)];
     [self.messageLabel setLineBreakMode:NSLineBreakByWordWrapping];
 
@@ -83,13 +77,9 @@
     {
         [self.messageLabel setText:@""];
     }
-    
-    [self setNeedsUpdateConstraints];
-
 }
 - (void)assignAchievement:(Achievement *)achievement
 {
-//    self.labelHeight.constant = [SimpleTableCell getMessageHeight:[achievement toString]];
     [self.messageLabel setFont:CF_FONT_LIGHT(18)];
     [self.messageLabel setTextAlignment:NSTextAlignmentCenter];
     [self.messageLabel setNumberOfLines:0];
@@ -98,13 +88,20 @@
     if (achievement != nil)
     {
         [self.messageLabel setText:[achievement toString]];
+        if (achievement.hasAchieved)
+        {
+            NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[achievement toString]];
+            [attributeString addAttribute:NSStrikethroughStyleAttributeName
+                                    value:@2
+                                    range:NSMakeRange(0, [attributeString length])];
+            
+            [self.messageLabel setAttributedText:attributeString];
+        }
     }
     else
     {
         [self.messageLabel setText:@""];
     }
-    
-//    [self setNeedsUpdateConstraints];
 
 }
 - (void)showLoadingIndicator
