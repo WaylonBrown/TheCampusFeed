@@ -10,6 +10,7 @@
 #import "Tag.h"
 #import "College.h"
 #import "Shared.h"
+#import "TheCampusFeed-Swift.h"
 
 @implementation SimpleTableCell
 
@@ -84,6 +85,25 @@
     }
     
     [self setNeedsUpdateConstraints];
+
+}
+- (void)assignAchievement:(Achievement *)achievement
+{
+//    self.labelHeight.constant = [SimpleTableCell getMessageHeight:[achievement toString]];
+    [self.messageLabel setFont:CF_FONT_LIGHT(18)];
+    [self.messageLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.messageLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    
+    if (achievement != nil)
+    {
+        [self.messageLabel setText:[achievement toString]];
+    }
+    else
+    {
+        [self.messageLabel setText:@""];
+    }
+    
+//    [self setNeedsUpdateConstraints];
 
 }
 - (void)showLoadingIndicator

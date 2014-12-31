@@ -12,6 +12,7 @@
 
 @class Tag;
 @class College;
+@class Achievement;
 
 @interface SimpleTableCell : UITableViewCell <TableCellProtocol>
 
@@ -21,7 +22,9 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *labelHeight;
 
 - (void)assignTag:(Tag *)tag;
-- (void)assignCollege:(College *)college withRankNumberOrNil:(NSNumber *)rankNo;// withMessageHeight:(float)height;
+- (void)assignCollege:(College *)college withRankNumberOrNil:(NSNumber *)rankNo;
+- (void)assignAchievement:(Achievement *)achievement;
+
 - (void)assignSimpleText:(NSString *)text;
 - (void)showLoadingIndicator;
 - (void)hideLoadingIndicator;

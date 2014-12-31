@@ -25,6 +25,8 @@ class AchievementViewController: MasterViewController, UITableViewDataSource, UI
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        self.tableView.estimatedRowHeight = 44.0
+        self.tableView.rowHeight = UITableViewAutomaticDimension
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,22 +65,14 @@ class AchievementViewController: MasterViewController, UITableViewDataSource, UI
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        
-        // Configure the cell...
-        let cellId: NSString = "Cell"
-        var cell = tableView.dequeueReusableCellWithIdentifier(cellId) as? UITableViewCell
+        let cellId: NSString = "SimpleTableCell"
+        var cell = tableView.dequeueReusableCellWithIdentifier(cellId) as? SimpleTableCell
         
         if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier:cellId)
+            cell = NSBundle.mainBundle().loadNibNamed(cellId, owner: self, options: nil)[0] as? SimpleTableCell
         }
         
-        if var label = cell?.textLabel {
-            var data = self.list[indexPath.row] as Achievement
-            label.text = data.toString()
-            label.numberOfLines = 0
-            label.textAlignment = NSTextAlignment.Center
-
-        }
+        cell?.assignAchievement(self.list[indexPath.row] as Achievement)
         
         return cell!
     }
