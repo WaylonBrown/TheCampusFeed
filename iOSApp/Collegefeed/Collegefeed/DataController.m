@@ -57,7 +57,6 @@
         // For restricting phone numbers and email addresses
         [self createWatchdog];
         
-//        [self initializeAchievements];
     }
     return self;
 }
@@ -312,10 +311,6 @@
 }
 - (void)addAchievement:(Achievement *)achievement
 {
-//    if (self.achievementList == nil)
-//    {
-//        [self fetchAchievements];
-//    }
     NSLog(@"Adding achievement: %@", achievement.toString);
     [self.achievementList addObject:achievement];
     
@@ -361,6 +356,103 @@
               [error localizedDescription]);
     }
 }
+- (long)getNumUserPosts
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
+    {
+        NSLog(@"Too many status entities");
+    }
+    NSManagedObject *status = [fetchedStatus firstObject];
+    NSNumber *count = [status valueForKey:KEY_NUM_POSTS];
+    
+    return [count longValue];
+}
+- (long)getNumUserPoints
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
+    {
+        NSLog(@"Too many status entities");
+    }
+    NSManagedObject *status = [fetchedStatus firstObject];
+    NSNumber *count = [status valueForKey:KEY_NUM_POINTS];
+    
+    return [count longValue];
+}
+- (long)getNumTimeCrunchHours
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
+    {
+        NSLog(@"Too many status entities");
+    }
+    NSManagedObject *status = [fetchedStatus firstObject];
+    NSNumber *count = [status valueForKey:KEY_NUM_HOURS];
+    
+    return [count longValue];
+}
+- (BOOL)hasViewedAchievements
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
+    {
+        NSLog(@"Too many status entities");
+    }
+    NSManagedObject *status = [fetchedStatus firstObject];
+    return [[status valueForKey:KEY_HAS_VIEWED_ACHIEVEMENTS] boolValue];
+}
+- (void)assignDidViewAchievementList
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
+    {
+        NSLog(@"Too many status entities");
+    }
+    NSManagedObject *status = [fetchedStatus firstObject];
+    [status setValue:[NSNumber numberWithBool:YES] forKey:KEY_HAS_VIEWED_ACHIEVEMENTS];
+    
+    if (![context save:&error])
+    {
+        NSLog(@"Failed to assign has viewed achievements: %@",
+              [error localizedDescription]);
+    }
+}
 - (void)initializeAchievements
 {
 //    self.achievementList = [[NSMutableArray alloc] init];
@@ -376,13 +468,14 @@
                              [NSNumber numberWithInt:200],
                              [NSNumber numberWithInt:1000]];
     
+    long numPosts = [self getNumUserPosts];
     for (NSNumber *num in postNumbers)
     {
         long hours = [num longValue] * 10;
-        Achievement *a = [[Achievement alloc] initWithCurrAmount:0
+        Achievement *a = [[Achievement alloc] initWithCurrAmount:numPosts
                                                           reqAmt:[num longValue]
                                                      rewardHours:hours
-                                                        achieved:NO
+                                                        achieved:(numPosts >= [num longValue])
                                                  achievementType:VALUE_POST_ACHIEVEMENT];
         
         [self addAchievement:a];
@@ -398,38 +491,43 @@
                             [NSNumber numberWithInt:300],
                             [NSNumber numberWithInt:800]];
     
+    long numPoints = [self getNumUserPoints];
     for (NSNumber *num in postPoints)
     {
         long hours = [num longValue] * 10;
-        Achievement *a = [[Achievement alloc] initWithCurrAmount:0
+        Achievement *a = [[Achievement alloc] initWithCurrAmount:numPoints
                                                           reqAmt:[num longValue]
                                                      rewardHours:hours
-                                                        achieved:NO
+                                                        achieved:(numPoints >= [num longValue])
                                                  achievementType:VALUE_SCORE_ACHIEVEMENT];
         
         [self addAchievement:a];
     }
     
     // Special
-    Achievement *s1 = [[Achievement alloc] initWithCurrAmount:0
-                                                      reqAmt:1
-                                                 rewardHours:10
-                                                    achieved:NO
-                                             achievementType:VALUE_VIEW_ACHIEVEMENT];
+    
+    BOOL hasViewed = [self hasViewedAchievements];
+    Achievement *s1 = [[Achievement alloc] initWithCurrAmount:hasViewed
+                                                       reqAmt:1
+                                                  rewardHours:10
+                                                     achieved:hasViewed
+                                              achievementType:VALUE_VIEW_ACHIEVEMENT];
     [self addAchievement:s1];
     
+
     Achievement *s2 = [[Achievement alloc] initWithCurrAmount:0
-                                                      reqAmt:1
-                                                 rewardHours:2000
-                                                    achieved:NO
-                                             achievementType:VALUE_SHORT_POST_ACHIEVEMENT];
+                                                       reqAmt:1
+                                                  rewardHours:2000
+                                                     achieved:NO
+                                              achievementType:VALUE_SHORT_POST_ACHIEVEMENT];
     [self addAchievement:s2];
     
-    Achievement *s3 = [[Achievement alloc] initWithCurrAmount:0
-                                                      reqAmt:2000
-                                                 rewardHours:2000
-                                                    achieved:NO
-                                             achievementType:VALUE_MANY_HOURS_ACHIEVEMENT];
+    long numTimeCrunchHours = [self getNumTimeCrunchHours];
+    Achievement *s3 = [[Achievement alloc] initWithCurrAmount:numTimeCrunchHours
+                                                       reqAmt:2000
+                                                  rewardHours:2000
+                                                     achieved:(numTimeCrunchHours >= 2000)
+                                              achievementType:VALUE_MANY_HOURS_ACHIEVEMENT];
     [self addAchievement:s3];
 }
 
@@ -1196,6 +1294,10 @@
               [error localizedDescription]);
     }
 }
+- (void)checkAchievements
+{
+    
+}
 - (void)savePost:(Post *)post
 {
     NSManagedObjectContext *context = [self managedObjectContext];
@@ -1345,6 +1447,9 @@
     {
         totalScore += [[post getScore] longValue];
     }
+    
+    [self assignPointCountInCoreData:[NSNumber numberWithLong:totalScore]];
+    
     return totalScore;
 }
 - (long)getUserCommentScore

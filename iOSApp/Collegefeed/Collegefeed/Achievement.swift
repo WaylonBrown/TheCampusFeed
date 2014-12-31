@@ -15,16 +15,6 @@ class Achievement: NSObject {
     var hasAchieved : Bool = false
     var type : String = "Achievement"
     
-//    override init() {
-//        amountCurrently = 0
-//        amountRequired = 0
-//        hoursForReward = 0
-//        hasAchieved = false
-//        type = "Achievement"
-//        
-//        super.init()
-//    }
-    
     convenience init(currAmount: Int, reqAmt: Int, rewardHours: Int, achieved: Bool, achievementType: String) {
         self.init()
         

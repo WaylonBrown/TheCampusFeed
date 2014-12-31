@@ -134,6 +134,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (void)saveCurrentFeed;
 - (void)restoreSavedFeed;
 - (void)assignPointCountInCoreData:(NSNumber *)points;
+- (void)assignDidViewAchievementList;
 
 - (NSURL *)applicationDocumentsDirectory;
 /*************************/

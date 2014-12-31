@@ -31,6 +31,7 @@ class AchievementViewController: MasterViewController, UITableViewDataSource, UI
 
     override func viewDidAppear(animated: Bool) {
         tableView.reloadData()
+        self.dataController.assignDidViewAchievementList()
     }
     
     // MARK: Network Actions
