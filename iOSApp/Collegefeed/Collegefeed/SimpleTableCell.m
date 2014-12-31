@@ -92,6 +92,7 @@
 //    self.labelHeight.constant = [SimpleTableCell getMessageHeight:[achievement toString]];
     [self.messageLabel setFont:CF_FONT_LIGHT(18)];
     [self.messageLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.messageLabel setNumberOfLines:0];
     [self.messageLabel setLineBreakMode:NSLineBreakByWordWrapping];
     
     if (achievement != nil)
