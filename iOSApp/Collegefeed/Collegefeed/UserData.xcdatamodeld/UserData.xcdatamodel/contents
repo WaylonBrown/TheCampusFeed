@@ -27,6 +27,9 @@
         <attribute name="lastPostTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="launchCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="listVersion" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="numPoints" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="numPosts" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="numTimeCrunchHours" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="Vote" syncable="YES">
         <attribute name="parentId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -39,7 +42,7 @@
         <element name="College" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Comment" positionX="0" positionY="0" width="128" height="60"/>
         <element name="Post" positionX="0" positionY="0" width="128" height="60"/>
-        <element name="Status" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="Status" positionX="0" positionY="0" width="128" height="180"/>
         <element name="Vote" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Achievement" positionX="0" positionY="45" width="128" height="118"/>
     </elements>

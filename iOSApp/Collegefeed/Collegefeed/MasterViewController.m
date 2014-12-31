@@ -50,7 +50,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialFinished) name:@"TutorialFinished" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialStarted) name:@"TutorialStarted" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationWasUpdated) name:@"LocationUpdated" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishedFetchRequest: ) name:@"FinishedFetching" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishedFetchRequest:) name:@"FinishedFetching" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchedCollegeList) name:@"FetchedColleges" object:nil];
 }
 
 #pragma mark - View Loading
@@ -202,6 +203,11 @@
     [self.contentLoadingIndicator startAnimating];
     [self setHasFinishedFetchRequest:NO];
     [self setCorrectList];
+}
+- (void)fetchedCollegeList
+{
+    [self.dataController findNearbyColleges];
+    [self locationWasUpdated];
 }
 - (void)finishedFetchRequest:(NSNotification *)notification
 {

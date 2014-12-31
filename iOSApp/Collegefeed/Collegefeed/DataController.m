@@ -624,6 +624,8 @@
         College *collegeModel = [[College alloc] initWithCollegeID:collegeId withName:name withLat:lat withLon:lon];
         [self.collegeList addObject:collegeModel];
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FetchedColleges" object:self];
 }
 - (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon
 {
@@ -1126,6 +1128,74 @@
 
 #pragma mark - Local Data Access
 
+- (void)incrementPostCountInCoreData
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
+    {
+        NSLog(@"Too many status entities");
+    }
+    NSManagedObject *status = [fetchedStatus firstObject];
+    
+    if (status == nil)
+    {
+        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
+                                               inManagedObjectContext:context];
+
+        [status setValue:[NSNumber numberWithInt:0] forKeyPath:KEY_NUM_POSTS];
+    }
+    else
+    {
+        NSNumber *currNum = [status valueForKey:KEY_NUM_POSTS];
+        NSNumber *newNum = [NSNumber numberWithLong:[currNum longValue] + 1];
+        
+        NSLog(@"Incrementing number of user posts from %@ to %@", currNum, newNum);
+        [status setValue:newNum forKey:KEY_NUM_POSTS];
+    }
+    
+    if (![_managedObjectContext save:&error])
+    {
+        NSLog(@"Failed to increment post count: %@",
+              [error localizedDescription]);
+    }
+}
+- (void)assignPointCountInCoreData:(NSNumber *)points
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
+    {
+        NSLog(@"Too many status entities");
+    }
+    NSManagedObject *status = [fetchedStatus firstObject];
+    
+    if (status == nil)
+    {
+        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
+                                               inManagedObjectContext:context];
+    }
+    
+    [status setValue:points forKeyPath:KEY_NUM_POINTS];
+    
+    NSLog(@"Setting user's number of points to %@", points);
+    
+    if (![_managedObjectContext save:&error])
+    {
+        NSLog(@"Failed to save user point score: %@",
+              [error localizedDescription]);
+    }
+}
 - (void)savePost:(Post *)post
 {
     NSManagedObjectContext *context = [self managedObjectContext];
@@ -1133,7 +1203,7 @@
     NSManagedObject *mgdPost = [NSEntityDescription insertNewObjectForEntityForName:POST_ENTITY
                                                                 inManagedObjectContext:context];
     [mgdPost setValue:[NSNumber numberWithLong:[post.id longValue]] forKeyPath:KEY_POST_ID];
-    
+    [self incrementPostCountInCoreData];
     if (![_managedObjectContext save:&error])
     {
         NSLog(@"Failed to save user post: %@",

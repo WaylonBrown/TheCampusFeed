@@ -101,6 +101,9 @@
 #define KEY_COLLEGE_LIST_VERSION    @"listVersion"
 #define KEY_LAUNCH_COUNT            @"launchCount"
 #define KEY_CURRENT_COLLEGE_FEED    @"currentFeed"
+#define KEY_NUM_POINTS              @"numPoints"
+#define KEY_NUM_POSTS               @"numPosts"
+#define KEY_NUM_HOURS               @"numTimeCrunchHours"
 
 #define ACHIEVEMENT_ENTITY      @"Achievement"
 #define KEY_AMOUNT_CURRENTLY    @"amountCurrently"

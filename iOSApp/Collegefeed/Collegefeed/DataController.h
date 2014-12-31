@@ -133,6 +133,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (void)incrementLaunchNumber;
 - (void)saveCurrentFeed;
 - (void)restoreSavedFeed;
+- (void)assignPointCountInCoreData:(NSNumber *)points;
 
 - (NSURL *)applicationDocumentsDirectory;
 /*************************/
@@ -154,6 +155,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (void)switchedToSpecificCollegeOrNil:(College *)college;
 - (BOOL)isNearCollege;
 - (BOOL)isNearCollegeWithId:(long)collegeId;
+- (void)findNearbyColleges;
 
 // Comments
 - (BOOL)createCommentWithMessage:(NSString *)message
