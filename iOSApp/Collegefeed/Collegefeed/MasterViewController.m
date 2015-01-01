@@ -211,6 +211,7 @@
 }
 - (void)finishedFetchRequest:(NSNotification *)notification
 {
+    [self setCorrectList];
     [self.refreshControl endRefreshing];
     if ([[[notification userInfo] valueForKey:@"newObjectsCount"] longValue] < PAGINATION_NUM)
     {   // fetched all content for the current feed

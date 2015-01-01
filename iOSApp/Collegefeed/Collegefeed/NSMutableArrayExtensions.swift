@@ -21,7 +21,7 @@ extension NSMutableArray
                     if existingObj.respondsToSelector("getID") {
                         var newID = existingObj.getID() as NSNumber
                         
-                        if newID.isEqualToNumber(existingID) {
+                        if newID.isEqualToNumber(existingID) && !newID.isEqualToNumber(0) {
                             alreadyExists = true
                         }
                     }
