@@ -8,7 +8,6 @@
 
 #import "PostTableCell.h"
 
-// Represents the most basic cell for Posts (no images or college names)
 @implementation PostTableCell
 
 - (void)awakeFromNib

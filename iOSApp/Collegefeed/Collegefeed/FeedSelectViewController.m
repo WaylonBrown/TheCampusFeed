@@ -69,6 +69,10 @@
         self.searchDisplay.delegate = self;
         self.searchDisplay.searchResultsDataSource = self;
         self.searchDisplay.searchResultsDelegate = self;
+        
+        
+        self.tableView.estimatedRowHeight = TABLE_CELL_HEIGHT;
+        self.tableView.rowHeight = UITableViewAutomaticDimension;
     }
 }
 - (void)viewWillAppear:(BOOL)animated
@@ -86,77 +90,42 @@
 }
 - (void)fixHeights
 {
-    NSUInteger numNearbyColleges = self.dataController.nearbyColleges.count;
-    
-    float tableViewHeight = 0;
-//    switch (self.type)
+//    if (self.type == ALL_COLLEGES_WITH_SEARCH)
 //    {
-//        case ALL_COLLEGES_WITH_SEARCH:
-//            return;
-//            break;
-//        case ALL_NEARBY_OTHER:
-//            {
-//                BOOL collegesNearby = [self.dataController isNearCollege];
-//                // Handle two default cells that are always present
-//                tableViewHeight += 3 * TABLE_HEADER_HEIGHT;
-//                tableViewHeight += 2 * TABLE_CELL_HEIGHT;
-//                if (collegesNearby)
-//                {
-//                    for (int i = 0; i < numNearbyColleges; i++)
-//                    {
-//                        float collegeCellHeight = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
-//                        tableViewHeight += collegeCellHeight;
-//                    }
-//                }
-//                else
-//                {
-//                    tableViewHeight += TABLE_CELL_HEIGHT;
-//                }
-//
-//            }
-//            break;
-//        case ONLY_NEARBY_COLLEGES:
-//            
-//            break;
-//        default:
-//            break;
+//        return;
 //    }
-    
-    
-    
-    if (self.type == ALL_COLLEGES_WITH_SEARCH)
-    {
-        return;
-    }
-    
-    BOOL collegesNearby = [self.dataController isNearCollege];
-    
-    if (self.type == ALL_NEARBY_OTHER)
-    {
-        // Handle two default cells that are always present
-        tableViewHeight += 3 * TABLE_HEADER_HEIGHT;
-        tableViewHeight += 2 * TABLE_CELL_HEIGHT;
-    }
-    if (collegesNearby)
-    {
-        for (int i = 0; i < numNearbyColleges; i++)
-        {
-            float collegeCellHeight = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
-            tableViewHeight += collegeCellHeight;
-        }
-    }
-    else
-    {
-        tableViewHeight += TABLE_CELL_HEIGHT;
-    }
-    self.tableHeightConstraint.constant = tableViewHeight;
-    [self.view setNeedsUpdateConstraints];
+//    
+//    NSUInteger numNearbyColleges = self.dataController.nearbyColleges.count;
+//    float tableViewHeight = 0;
+//    BOOL collegesNearby = [self.dataController isNearCollege];
+//    
+//    if (self.type == ALL_NEARBY_OTHER)
+//    {
+//        // Handle two default cells that are always present
+//        tableViewHeight += 3 * TABLE_HEADER_HEIGHT;
+//        tableViewHeight += 2 * TABLE_CELL_HEIGHT;
+//    }
+//    
+//    if (collegesNearby)
+//    {
+//        for (int i = 0; i < numNearbyColleges; i++)
+//        {
+//            float collegeCellHeight = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
+//            tableViewHeight += collegeCellHeight;
+//        }
+//    }
+//    else
+//    {
+//        tableViewHeight += TABLE_CELL_HEIGHT;
+//    }
+//    
+//    self.tableHeightConstraint.constant = tableViewHeight;
+//    [self.view setNeedsUpdateConstraints];
 }
 - (void)updateLocation
 {
     [self.tableView reloadData];
     [self fixHeights];
-    
 }
 
 #pragma mark - Table View Protocol Methods
@@ -389,25 +358,25 @@
     
     return TABLE_HEADER_HEIGHT;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (self.type == ALL_NEARBY_OTHER
-        && (indexPath.section == 1 || indexPath.section == 2))
-    {
-        return TABLE_CELL_HEIGHT;
-    }
-    else
-    {
-        College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
-        if (college != nil)
-        {
-            NSString *text = college.name;
-            return [Shared getSmallCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(18) withWidth:self.tableView.frame.size.width];
-        }
-    }
-    
-    return TABLE_CELL_HEIGHT;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (self.type == ALL_NEARBY_OTHER
+//        && (indexPath.section == 1 || indexPath.section == 2))
+//    {
+//        return TABLE_CELL_HEIGHT;
+//    }
+//    else
+//    {
+//        College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
+//        if (college != nil)
+//        {
+//            NSString *text = college.name;
+//            return [Shared getSmallCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(18) withWidth:self.tableView.frame.size.width];
+//        }
+//    }
+//    
+//    return TABLE_CELL_HEIGHT;
+//}
 
 #pragma mark - Transitioning Protocol Methods
 
