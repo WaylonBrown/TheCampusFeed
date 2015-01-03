@@ -15,46 +15,55 @@
 
 @implementation FeedSelectViewController
 
-- (id)initWithType:(FeedSelectorType)type WithDataController:(DataController *)controller WithFeedDelegate:(id<FeedSelectionProtocol>) delegate
+- (id)initWithDataController:(DataController *)controller
 {
-    self = [super init];
+    self = [super initWithNibName:@"FeedSelectViewController" bundle:nil];
     if (self)
     {
-        [self setType:type];
         [self setModalPresentationStyle:UIModalPresentationCustom];
         [self setTransitioningDelegate:self];
         [self setDataController:controller];
+    }
+    return self;
+}
+
+- (id)initWithType:(FeedSelectorType)type WithDataController:(DataController *)controller WithFeedDelegate:(id<FeedSelectionProtocol>) delegate
+{
+    self = [self initWithDataController:controller];
+    if (self)
+    {
+        [self setType:type];
         [self setFeedDelegate:delegate];
     }
     return self;
     
 }
-- (id)initWithType:(FeedSelectorType)type WithDataController:(DataController *)controller WithPostingDelegate:(id<CollegeForPostingSelectionProtocol>) delegate
-{
-    self = [super init];
-    if (self)
-    {
-        [self setType:type];
-        [self setModalPresentationStyle:UIModalPresentationCustom];
-        [self setTransitioningDelegate:self];
-        [self setDataController:controller];
-        [self setPostingDelegate:delegate];
-    }
-    return self;
-}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Dim the background view
+    [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
+    
+    // Main alert view
     self.alertView.layer.borderWidth = 2;
     self.alertView.layer.cornerRadius = 5;
-    [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
-
+    
+    // Table View
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
+    self.tableView.estimatedRowHeight = TABLE_CELL_HEIGHT;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
     // Set fonts
     [self.titleLabel setFont:CF_FONT_LIGHT(30)];
-    [self.mySearchBar setHidden:YES];
     
+    // Search bar
+    self.mySearchBar.hidden = YES;
+    self.mySearchBar.layer.borderWidth = 2;
+    self.mySearchBar.layer.cornerRadius = 5;
+    
+    // Search Display
     if (self.type == ALL_COLLEGES_WITH_SEARCH)
     {
         self.searchResult = [NSMutableArray arrayWithCapacity:[self.dataController.collegeList count]];
@@ -69,10 +78,6 @@
         self.searchDisplay.delegate = self;
         self.searchDisplay.searchResultsDataSource = self;
         self.searchDisplay.searchResultsDelegate = self;
-        
-        
-        self.tableView.estimatedRowHeight = TABLE_CELL_HEIGHT;
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
     }
 }
 - (void)viewWillAppear:(BOOL)animated
@@ -90,37 +95,38 @@
 }
 - (void)fixHeights
 {
-//    if (self.type == ALL_COLLEGES_WITH_SEARCH)
-//    {
-//        return;
-//    }
-//    
-//    NSUInteger numNearbyColleges = self.dataController.nearbyColleges.count;
-//    float tableViewHeight = 0;
-//    BOOL collegesNearby = [self.dataController isNearCollege];
-//    
-//    if (self.type == ALL_NEARBY_OTHER)
-//    {
-//        // Handle two default cells that are always present
-//        tableViewHeight += 3 * TABLE_HEADER_HEIGHT;
-//        tableViewHeight += 2 * TABLE_CELL_HEIGHT;
-//    }
-//    
-//    if (collegesNearby)
-//    {
-//        for (int i = 0; i < numNearbyColleges; i++)
-//        {
+    if (self.type == ALL_COLLEGES_WITH_SEARCH)
+    {
+        return;
+    }
+    
+    NSUInteger numNearbyColleges = self.dataController.nearbyColleges.count;
+    float tableViewHeight = 0;
+    BOOL collegesNearby = [self.dataController isNearCollege];
+    
+    if (self.type == ALL_NEARBY_OTHER)
+    {
+        // Handle two default cells that are always present
+        tableViewHeight += 3 * TABLE_HEADER_HEIGHT;
+        tableViewHeight += 2 * TABLE_CELL_HEIGHT;
+    }
+    
+    if (collegesNearby)
+    {
+        for (int i = 0; i < numNearbyColleges; i++)
+        {
 //            float collegeCellHeight = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
 //            tableViewHeight += collegeCellHeight;
-//        }
-//    }
-//    else
-//    {
-//        tableViewHeight += TABLE_CELL_HEIGHT;
-//    }
-//    
-//    self.tableHeightConstraint.constant = tableViewHeight;
-//    [self.view setNeedsUpdateConstraints];
+            tableViewHeight += TABLE_CELL_HEIGHT;
+        }
+    }
+    else
+    {
+        tableViewHeight += TABLE_CELL_HEIGHT;
+    }
+    
+    self.tableHeightConstraint.constant = tableViewHeight;
+    [self.view setNeedsUpdateConstraints];
 }
 - (void)updateLocation
 {
@@ -160,9 +166,6 @@
             {
                 return self.dataController.collegeList.count;
             }
-            break;
-        case ONLY_NEARBY_COLLEGES:
-            return numNearby;
             break;
         default:
             break;
@@ -291,14 +294,6 @@
             
             break;
         }
-        case ONLY_NEARBY_COLLEGES:
-        {   // When user is selecting which of nearby colleges to post to
-            
-            College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
-            [self.postingDelegate submitSelectionForPostWithCollege:college];
-            
-            break;
-        }
         default: break;
     }
 }
@@ -351,32 +346,13 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (self.type == ALL_COLLEGES_WITH_SEARCH || self.type == ONLY_NEARBY_COLLEGES)
+    if (self.type == ALL_COLLEGES_WITH_SEARCH)// || self.type == ONLY_NEARBY_COLLEGES)
     {
         return 0;
     }
     
     return TABLE_HEADER_HEIGHT;
 }
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if (self.type == ALL_NEARBY_OTHER
-//        && (indexPath.section == 1 || indexPath.section == 2))
-//    {
-//        return TABLE_CELL_HEIGHT;
-//    }
-//    else
-//    {
-//        College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
-//        if (college != nil)
-//        {
-//            NSString *text = college.name;
-//            return [Shared getSmallCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(18) withWidth:self.tableView.frame.size.width];
-//        }
-//    }
-//    
-//    return TABLE_CELL_HEIGHT;
-//}
 
 #pragma mark - Transitioning Protocol Methods
 
@@ -457,11 +433,6 @@
             {
                 return [self.dataController.collegeList objectAtIndex:row];
             }
-            break;
-        }
-        case ONLY_NEARBY_COLLEGES:
-        {   // When user is selecting which of nearby colleges to post to
-            return [self.dataController.nearbyColleges objectAtIndex:row];
             break;
         }
         default: break;

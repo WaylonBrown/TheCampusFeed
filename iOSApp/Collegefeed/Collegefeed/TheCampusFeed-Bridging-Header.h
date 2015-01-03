@@ -15,5 +15,7 @@
 #import "CollegeViewController.h"
 #import "Constants.h"
 #import "MasterViewController.h"
+#import "FeedSelectViewController.h"
+#import "SimpleTableCell.h"
 
 #endif

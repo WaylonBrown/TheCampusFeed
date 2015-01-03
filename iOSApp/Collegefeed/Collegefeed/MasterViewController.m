@@ -250,7 +250,8 @@
     }
     else
     {   // Multiple colleges are nearby
-        FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ONLY_NEARBY_COLLEGES WithDataController:self.dataController WithPostingDelegate:self];
+        NearbyFeedViewController *controller = [[NearbyFeedViewController alloc] initWithDataController:self.dataController postingDelegate:self];
+//        FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ONLY_NEARBY_COLLEGES WithDataController:self.dataController WithPostingDelegate:self];
         [self.navigationController presentViewController:controller animated:YES completion:nil];
     }
 }

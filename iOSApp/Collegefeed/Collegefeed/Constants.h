@@ -80,7 +80,7 @@
 
 // Numerics
 
-#define MILES_FOR_PERMISSION                15
+#define MILES_FOR_PERMISSION                60
 #define PI_VALUE                            3.14159
 #define EARTH_RADIUS_MILES                  3959
 #define LOCATION_MANAGER_TIMEOUT            10

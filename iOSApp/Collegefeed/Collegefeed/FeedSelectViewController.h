@@ -57,6 +57,8 @@ typedef NS_ENUM(NSInteger, FeedSelectorType)
 
 @property (nonatomic) FeedSelectorType type;
 
+- (id)initWithDataController:(DataController *)controller;
+
 - (id)initWithType:(FeedSelectorType)type WithDataController:(DataController *)controller WithFeedDelegate:(id<FeedSelectionProtocol>) delegate;
 
 - (id)initWithType:(FeedSelectorType)type WithDataController:(DataController *)controller WithPostingDelegate:(id<CollegeForPostingSelectionProtocol>) delegate;
