@@ -12,7 +12,7 @@ import QuartzCore
 
 class TimeCrunchViewController: UIViewController {
     
-    var dataController : DataController!
+    var myDataController: DataController?
     
     @IBOutlet var aboutButtonLabel : UILabel!
     @IBOutlet var aboutButton: UIView!
@@ -36,9 +36,9 @@ class TimeCrunchViewController: UIViewController {
     }
     
     init(dataController controller: DataController){
-        self.dataController = controller
-        
         super.init()
+        
+        myDataController = controller
     }
     
     override func viewDidLoad() {
@@ -62,6 +62,10 @@ class TimeCrunchViewController: UIViewController {
         onOffLabel.font = Shared.getFontLight(20)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        self.updateLabels()
+    }
+    
     override func didReceiveMemoryWarning() {
         
     }
@@ -69,7 +73,7 @@ class TimeCrunchViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func activateTimeCrunch() {
-        self.dataController.activateTimeCrunch()
+        myDataController!.activateTimeCrunch()
     }
     
     @IBAction func showCrunchDialog() {
@@ -81,14 +85,23 @@ class TimeCrunchViewController: UIViewController {
     // MARK: - Helper Methods
     
     func updateLabels() {
-        var model = dataController.getTimeCrunchModel()
-        var hours: Int = model.getHoursRemaining()
-        var days: Double = Double(hours) / 24.0
+        var model = myDataController!.getTimeCrunchModel()
         
-        var hasTimeCrunch: Bool = model != nil && hours > 0
+        if model == nil {
+            hoursLabel.text = "0 hrs"
+            daysLabel.text = "Start posting to get time!"
+            schoolLabel.text = ""
+        }
+        else {
+            var hours: Int = model!.getHoursRemaining()
+            var days: Double = Double(hours) / 24.0
+            hoursLabel.text = NSString(format: "%d hrs", hours)
+            daysLabel.text = NSString(format: "(%f.1 days)", days)
+            schoolLabel.text = model!.college.name
+        }
+
         
-        hoursLabel.text = NSString(format: "%d hrs", hours)
-        daysLabel.text = hasTimeCrunch ? NSString(format: "(%f.1 days)", days) : "Start posting to get time!"
-        schoolLabel.text = hasTimeCrunch ? model.college.name : ""
+        
+        
     }
 }
