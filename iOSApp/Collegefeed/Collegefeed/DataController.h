@@ -20,6 +20,7 @@
 @class Post;
 @class Tag;
 @class Vote;
+@class TimeCrunchModel;
 @class ToastController;
 @class Watchdog;
 
@@ -59,6 +60,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic) BOOL              isFirstLaunch;
 @property (nonatomic) BOOL              needsUpdate;
 @property (nonatomic) NSInteger         launchCount;
+@property (nonatomic, strong) College   *homeCollege;
 
 // Location Information
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -143,10 +145,14 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 
 - (void)findUserLocation;
 
+// Status
+- (void)restoreStatusFromCoreData;
+
 // Achievements
 - (void)fetchAchievements;
 - (void)addAchievement:(Achievement *)achievement;
 - (void)activateTimeCrunch;
+- (TimeCrunchModel *)getTimeCrunchModel;
 
 // Colleges
 - (void)fetchTopColleges;

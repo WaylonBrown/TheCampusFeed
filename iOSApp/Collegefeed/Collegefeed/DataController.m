@@ -276,6 +276,12 @@
 
 #pragma mark - Achievements
 
+- (TimeCrunchModel *)getTimeCrunchModel
+{
+    // TODO
+    return nil;
+}
+
 - (void)activateTimeCrunch
 {
     // TODO

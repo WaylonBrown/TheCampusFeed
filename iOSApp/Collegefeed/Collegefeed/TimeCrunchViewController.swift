@@ -77,6 +77,8 @@ class TimeCrunchViewController: UIViewController {
     // MARK: - Helper Methods
     
     func updateLabels() {
+        var model = dataController.getTimeCrunchModel()
         
+
     }
 }

@@ -8,9 +8,9 @@
 
 class TimeCrunchModel: NSObject {
     
-    let college: College
-    let hoursEarned: Int = 0
-    let timeWasActivatedAt: NSDate?
+    var college: College
+    var hoursEarned: Int = 0
+    var timeWasActivatedAt: NSDate? = nil
     
     init(college: College) {
         self.college = college
@@ -18,7 +18,7 @@ class TimeCrunchModel: NSObject {
     }
     
     func activateTime(date: NSDate) {
-        let timeWasActivatedAt = date
+        timeWasActivatedAt = date
     }
     
     func getHoursRemaining() -> Int {
@@ -27,20 +27,18 @@ class TimeCrunchModel: NSObject {
         }
         
         // interval will be difference in seconds
-        let now = NSDate()
-        var interval:Int = Int(now.timeIntervalSinceDate(timeWasActivatedAt!))
+        var interval:Int = Int(NSDate().timeIntervalSinceDate(timeWasActivatedAt!))
         var hours = Int(max((interval / 60) / 60, 0))
         
         if hours == 0 {
-            let timeWasActivatedAt = nil
+            timeWasActivatedAt = nil
         }
         
         return hours
     }
     
-    func earnedHours(newHours: Int) {
-        var oldHours = hoursEarned
-        let hoursEarned = oldHours + newHours
+    func earnedHours(newHours: Int) {        
+        hoursEarned += newHours
     }
 
 }
