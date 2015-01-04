@@ -140,14 +140,14 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 
 - (long)getUserPostScore;
 - (long)getUserCommentScore;
-- (NSInteger)getLaunchNumber;
+//- (NSInteger)getLaunchNumber;
 - (BOOL)isAbleToPost:(NSNumber *)minutesRemaining;
 - (BOOL)isAbleToComment;
-- (void)incrementLaunchNumber;
+//- (void)incrementLaunchNumber;
 - (void)saveCurrentFeed;
-- (void)restoreSavedFeed;
-- (void)assignPointCountInCoreData:(NSNumber *)points;
-- (void)assignDidViewAchievementList;
+//- (void)restoreSavedFeed;
+//- (void)assignPointCountInCoreData:(NSNumber *)points;
+//- (void)assignDidViewAchievementList;
 
 - (NSURL *)applicationDocumentsDirectory;
 /*************************/

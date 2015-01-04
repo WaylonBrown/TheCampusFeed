@@ -45,16 +45,10 @@
         [self initArrays];
         
         [self restoreStatusFromCoreData];
-        
-        
-        // TODO: get rid of most of these below, should be handled in restoreStatusFromCoreData
-        
-        
-        
         [self populateCollegeList];
         
-        [self restoreSavedFeed];
-        
+        self.launchCount++;
+
         // Populate arrays from both network and core (local) data
         [self retrieveUserVotes];
         
@@ -137,55 +131,58 @@
         }
     }
 }
-- (void)incrementLaunchNumber
-{
-    // Retrieve Launch Count
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
-    {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    NSNumber *currCount = [status valueForKey:KEY_LAUNCH_COUNT];
-    
-    NSNumber *newCount = [NSNumber numberWithInt:([currCount intValue] + 1)];
-    
-    [status setValue:newCount forKey:KEY_LAUNCH_COUNT];
-    
-    if (![context save:&error])
-    {
-        NSLog(@"Failed to save user's vote: %@",
-              [error localizedDescription]);
-    }
-
-}
-- (NSInteger)getLaunchNumber
-{
-    // Retrieve Launch Count
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
-    {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    NSNumber *count = [status valueForKey:KEY_LAUNCH_COUNT];
-    
-    return [count integerValue];
-}
+//- (void)incrementLaunchNumber
+//{
+//    // Retrieve Launch Count
+//    NSError *error;
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription
+//                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+//    
+//    [fetchRequest setEntity:entity];
+//    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    if (fetchedStatus.count > 1)
+//    {
+//        NSLog(@"Too many status entities");
+//    }
+//    NSManagedObject *status = [fetchedStatus firstObject];
+//    NSNumber *currCount = [status valueForKey:KEY_LAUNCH_COUNT];
+//    
+//    NSNumber *newCount = [NSNumber numberWithInt:([currCount intValue] + 1)];
+//    
+//    [status setValue:newCount forKey:KEY_LAUNCH_COUNT];
+//    
+//    if (![context save:&error])
+//    {
+//        NSLog(@"Failed to save user's vote: %@",
+//              [error localizedDescription]);
+//    }
+//    
+//    
+//    self.launchCount++;
+//
+//}
+//- (NSInteger)getLaunchNumber
+//{
+//    // Retrieve Launch Count
+//    NSError *error;
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription
+//                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+//    
+//    [fetchRequest setEntity:entity];
+//    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    if (fetchedStatus.count > 1)
+//    {
+//        NSLog(@"Too many status entities");
+//    }
+//    NSManagedObject *status = [fetchedStatus firstObject];
+//    NSNumber *count = [status valueForKey:KEY_LAUNCH_COUNT];
+//    
+//    return [count integerValue];
+//}
 - (void)saveCurrentFeed
 {
     NSError *error;
@@ -211,31 +208,31 @@
               [error localizedDescription]);
     }
 }
-- (void)restoreSavedFeed
-{
-    // Retrieve last saved/visited feed
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
-    {
-        NSLog(@"Too many status entities");
-    }
-
-    NSManagedObject *status = [fetchedStatus firstObject];
-    NSNumber *collegeID = [status valueForKey:KEY_CURRENT_COLLEGE_FEED];
-    long collegeIdForFeed = [collegeID longValue];
-
-    self.collegeInFocus = [self getCollegeById:collegeIdForFeed];
-    
-    self.showingAllColleges = self.collegeInFocus == nil;
-    self.showingSingleCollege = !self.showingAllColleges;
-}
+//- (void)restoreSavedFeed
+//{
+//    // Retrieve last saved/visited feed
+//    NSError *error;
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription
+//                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+//    
+//    [fetchRequest setEntity:entity];
+//    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    if (fetchedStatus.count > 1)
+//    {
+//        NSLog(@"Too many status entities");
+//    }
+//
+//    NSManagedObject *status = [fetchedStatus firstObject];
+//    NSNumber *collegeID = [status valueForKey:KEY_CURRENT_COLLEGE_FEED];
+//    long collegeIdForFeed = [collegeID longValue];
+//
+//    self.collegeInFocus = [self getCollegeById:collegeIdForFeed];
+//    
+//    self.showingAllColleges = self.collegeInFocus == nil;
+//    self.showingSingleCollege = !self.showingAllColleges;
+//}
 - (NSMutableArray *)getCurrentTagList
 {
     if (self.showingSingleCollege)
@@ -320,6 +317,7 @@
     self.isBanned = [[status valueForKey:KEY_POST_TIME] boolValue];
     
     // Other
+    self.collegeListVersion = [[status valueForKey:KEY_COLLEGE_LIST_VERSION] longValue];
     self.launchCount = [[status valueForKey:KEY_LAUNCH_COUNT] longValue];
     self.homeCollegeId = [[status valueForKey:KEY_HOME_COLLEGE] longValue];
 }
@@ -424,103 +422,104 @@
               [error localizedDescription]);
     }
 }
-- (long)getNumUserPosts
-{
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
-    {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    NSNumber *count = [status valueForKey:KEY_NUM_POSTS];
-    
-    return [count longValue];
-}
-- (long)getNumUserPoints
-{
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
-    {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    NSNumber *count = [status valueForKey:KEY_NUM_POINTS];
-    
-    return [count longValue];
-}
-- (long)getNumTimeCrunchHours
-{
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
-    {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    NSNumber *count = [status valueForKey:KEY_NUM_HOURS];
-    
-    return [count longValue];
-}
-- (BOOL)hasViewedAchievements
-{
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
-    {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    return [[status valueForKey:KEY_HAS_VIEWED_ACHIEVEMENTS] boolValue];
-}
-- (void)assignDidViewAchievementList
-{
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
-    {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    [status setValue:[NSNumber numberWithBool:YES] forKey:KEY_HAS_VIEWED_ACHIEVEMENTS];
-    
-    if (![context save:&error])
-    {
-        NSLog(@"Failed to assign has viewed achievements: %@",
-              [error localizedDescription]);
-    }
-}
+//- (long)getNumUserPosts
+//{
+//    NSError *error;
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription
+//                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+//    
+//    [fetchRequest setEntity:entity];
+//    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    if (fetchedStatus.count > 1)
+//    {
+//        NSLog(@"Too many status entities");
+//    }
+//    NSManagedObject *status = [fetchedStatus firstObject];
+//    NSNumber *count = [status valueForKey:KEY_NUM_POSTS];
+//    
+//    return [count longValue];
+//}
+//- (long)getNumUserPoints
+//{
+//    NSError *error;
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription
+//                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+//    
+//    [fetchRequest setEntity:entity];
+//    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    if (fetchedStatus.count > 1)
+//    {
+//        NSLog(@"Too many status entities");
+//    }
+//    NSManagedObject *status = [fetchedStatus firstObject];
+//    NSNumber *count = [status valueForKey:KEY_NUM_POINTS];
+//    
+//    return [count longValue];
+//}
+//- (long)getNumTimeCrunchHours
+//{
+//    NSError *error;
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription
+//                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+//    
+//    [fetchRequest setEntity:entity];
+//    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    if (fetchedStatus.count > 1)
+//    {
+//        NSLog(@"Too many status entities");
+//    }
+//    NSManagedObject *status = [fetchedStatus firstObject];
+//    NSNumber *count = [status valueForKey:KEY_NUM_HOURS];
+//    
+//    return [count longValue];
+//}
+//- (BOOL)hasViewedAchievements
+//{
+//    NSError *error;
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription
+//                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+//    
+//    [fetchRequest setEntity:entity];
+//    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    if (fetchedStatus.count > 1)
+//    {
+//        NSLog(@"Too many status entities");
+//    }
+//    NSManagedObject *status = [fetchedStatus firstObject];
+//    return [[status valueForKey:KEY_HAS_VIEWED_ACHIEVEMENTS] boolValue];
+//}
+//- (void)assignDidViewAchievementList
+//{
+//    
+//    NSError *error;
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription
+//                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+//    
+//    [fetchRequest setEntity:entity];
+//    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    if (fetchedStatus.count > 1)
+//    {
+//        NSLog(@"Too many status entities");
+//    }
+//    NSManagedObject *status = [fetchedStatus firstObject];
+//    [status setValue:[NSNumber numberWithBool:YES] forKey:KEY_HAS_VIEWED_ACHIEVEMENTS];
+//    
+//    if (![context save:&error])
+//    {
+//        NSLog(@"Failed to assign has viewed achievements: %@",
+//              [error localizedDescription]);
+//    }
+//}
 - (void)initializeAchievements
 {
 //    self.achievementList = [[NSMutableArray alloc] init];
@@ -611,26 +610,8 @@
 }
 - (BOOL)needsNewCollegeList
 {
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:STATUS_ENTITY
-                                              inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
-    {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    
-    if (status == nil)
-    {
-        return YES;
-    }
-    
     long newVersion = [self getNetworkCollegeListVersion];
-    long currVersion = [[status valueForKeyPath:KEY_COLLEGE_LIST_VERSION] longValue];
+    long currVersion = self.collegeListVersion;
     
     return (currVersion == newVersion) ? NO : YES;
 }
@@ -673,8 +654,7 @@
     
     [self writeCollegestoCoreData];
     
-    long version = [self getNetworkCollegeListVersion];
-    [self updateCollegeListVersion:version];
+    self.collegeListVersion = [self getNetworkCollegeListVersion];
 }
 - (long)getNetworkCollegeListVersion
 {
@@ -842,38 +822,38 @@
     College *college = [self getCollegeById:collegeId];
     return [self.nearbyColleges containsObject:college];
 }
-- (void)updateCollegeListVersion:(long)listVersion
-{
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
-    {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    
-    if (status == nil)
-    {
-        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
-                                               inManagedObjectContext:context];
-    }
-    [status setValue:[NSNumber numberWithLong:listVersion] forKeyPath:KEY_COLLEGE_LIST_VERSION];
-    if (![_managedObjectContext save:&error])
-    {
-        NSLog(@"Failed to save college list version: %@",
-              [error localizedDescription]);
-    }
-    else
-    {
-        NSLog(@"Saved college list version %ld", listVersion);
-    }
-    
-}
+//- (void)updateCollegeListVersion:(long)listVersion
+//{
+//    NSError *error;
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription
+//                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+//    [fetchRequest setEntity:entity];
+//    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    if (fetchedStatus.count > 1)
+//    {
+//        NSLog(@"Too many status entities");
+//    }
+//    NSManagedObject *status = [fetchedStatus firstObject];
+//    
+//    if (status == nil)
+//    {
+//        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
+//                                               inManagedObjectContext:context];
+//    }
+//    [status setValue:[NSNumber numberWithLong:listVersion] forKeyPath:KEY_COLLEGE_LIST_VERSION];
+//    if (![_managedObjectContext save:&error])
+//    {
+//        NSLog(@"Failed to save college list version: %@",
+//              [error localizedDescription]);
+//    }
+//    else
+//    {
+//        NSLog(@"Saved college list version %ld", listVersion);
+//    }
+//    
+//}
 
 #pragma mark - Comments
 
@@ -899,8 +879,8 @@
                                                                          error:nil];
             Comment *networkComment = [[Comment alloc] initFromJSON:jsonObject];
 
-            NSDate *commentTime = [networkComment getCreated_at];
-            [self updateLastCommentTime:commentTime];
+            self.lastCommentTime = [networkComment getCreated_at];
+
             [self.commentList insertObject:networkComment atIndex:self.commentList.count];
             [self.userComments insertObject:networkComment atIndex:self.userComments.count];
             [self saveComment:networkComment];
@@ -994,8 +974,7 @@
             }
             College *college = [self getCollegeById:collegeId];
             [networkPost setCollege:college];
-            NSDate *postTime = [networkPost getCreated_at];
-            [self updateLastPostTime:postTime];
+            self.lastPostTime = [networkPost getCreated_at];
             
             [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
             [self.recentPostsSingleCollege insertObject:networkPost atIndex:0];
@@ -1294,74 +1273,74 @@
 
 #pragma mark - Local Data Access
 
-- (void)incrementPostCountInCoreData
-{
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
-    {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    
-    if (status == nil)
-    {
-        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
-                                               inManagedObjectContext:context];
-
-        [status setValue:[NSNumber numberWithInt:0] forKeyPath:KEY_NUM_POSTS];
-    }
-    else
-    {
-        NSNumber *currNum = [status valueForKey:KEY_NUM_POSTS];
-        NSNumber *newNum = [NSNumber numberWithLong:[currNum longValue] + 1];
-        
-        NSLog(@"Incrementing number of user posts from %@ to %@", currNum, newNum);
-        [status setValue:newNum forKey:KEY_NUM_POSTS];
-    }
-    
-    if (![_managedObjectContext save:&error])
-    {
-        NSLog(@"Failed to increment post count: %@",
-              [error localizedDescription]);
-    }
-}
-- (void)assignPointCountInCoreData:(NSNumber *)points
-{
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
-    {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    
-    if (status == nil)
-    {
-        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
-                                               inManagedObjectContext:context];
-    }
-    
-    [status setValue:points forKeyPath:KEY_NUM_POINTS];
-    
-    NSLog(@"Setting user's number of points to %@", points);
-    
-    if (![_managedObjectContext save:&error])
-    {
-        NSLog(@"Failed to save user point score: %@",
-              [error localizedDescription]);
-    }
-}
+//- (void)incrementPostCountInCoreData
+//{
+//    NSError *error;
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription
+//                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+//    [fetchRequest setEntity:entity];
+//    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    if (fetchedStatus.count > 1)
+//    {
+//        NSLog(@"Too many status entities");
+//    }
+//    NSManagedObject *status = [fetchedStatus firstObject];
+//    
+//    if (status == nil)
+//    {
+//        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
+//                                               inManagedObjectContext:context];
+//
+//        [status setValue:[NSNumber numberWithInt:0] forKeyPath:KEY_NUM_POSTS];
+//    }
+//    else
+//    {
+//        NSNumber *currNum = [status valueForKey:KEY_NUM_POSTS];
+//        NSNumber *newNum = [NSNumber numberWithLong:[currNum longValue] + 1];
+//        
+//        NSLog(@"Incrementing number of user posts from %@ to %@", currNum, newNum);
+//        [status setValue:newNum forKey:KEY_NUM_POSTS];
+//    }
+//    
+//    if (![_managedObjectContext save:&error])
+//    {
+//        NSLog(@"Failed to increment post count: %@",
+//              [error localizedDescription]);
+//    }
+//}
+//- (void)assignPointCountInCoreData:(NSNumber *)points
+//{
+//    NSError *error;
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription
+//                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+//    [fetchRequest setEntity:entity];
+//    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    if (fetchedStatus.count > 1)
+//    {
+//        NSLog(@"Too many status entities");
+//    }
+//    NSManagedObject *status = [fetchedStatus firstObject];
+//    
+//    if (status == nil)
+//    {
+//        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
+//                                               inManagedObjectContext:context];
+//    }
+//    
+//    [status setValue:points forKeyPath:KEY_NUM_POINTS];
+//    
+//    NSLog(@"Setting user's number of points to %@", points);
+//    
+//    if (![_managedObjectContext save:&error])
+//    {
+//        NSLog(@"Failed to save user point score: %@",
+//              [error localizedDescription]);
+//    }
+//}
 - (void)checkAchievements
 {
     
@@ -1373,7 +1352,7 @@
     NSManagedObject *mgdPost = [NSEntityDescription insertNewObjectForEntityForName:POST_ENTITY
                                                                 inManagedObjectContext:context];
     [mgdPost setValue:[NSNumber numberWithLong:[post.id longValue]] forKeyPath:KEY_POST_ID];
-    [self incrementPostCountInCoreData];
+    self.numPosts++;
     if (![_managedObjectContext save:&error])
     {
         NSLog(@"Failed to save user post: %@",
@@ -1516,9 +1495,8 @@
         totalScore += [[post getScore] longValue];
     }
     
-    [self assignPointCountInCoreData:[NSNumber numberWithLong:totalScore]];
-    
-    return totalScore;
+    self.numPoints = totalScore;
+    return self.numPoints;
 }
 - (long)getUserCommentScore
 {
@@ -1636,22 +1614,9 @@
 }
 - (BOOL)isAbleToPost:(NSNumber *)minutesRemaining
 {
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
+    if (self.lastPostTime != nil)
     {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    NSDate *lastPost = [status valueForKey:KEY_POST_TIME];
-    if (lastPost != nil)
-    {
-        NSTimeInterval diff = [lastPost timeIntervalSinceNow];
+        NSTimeInterval diff = [self.lastPostTime timeIntervalSinceNow];
         minutesRemaining = [NSNumber numberWithInt:(abs(diff) / 60)];
         float minSeconds = MINIMUM_POSTING_INTERVAL_MINUTES * 60;
         if (abs(diff) < minSeconds)
@@ -1664,22 +1629,9 @@
 }
 - (BOOL)isAbleToComment
 {
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
+    if (self.lastCommentTime != nil)
     {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    NSDate *lastComment = [status valueForKey:KEY_COMMENT_TIME];
-    if (lastComment != nil)
-    {
-        NSTimeInterval diff = [lastComment timeIntervalSinceNow];
+        NSTimeInterval diff = [self.lastCommentTime timeIntervalSinceNow];
         float minSeconds = MINIMUM_COMMENTING_INTERVAL_MINUTES * 60;
         if (abs(diff) < minSeconds)
         {
@@ -1690,59 +1642,59 @@
     return YES;
 }
 
-- (void)updateLastPostTime:(NSDate *)postTime
-{
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
-    {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    
-    if (status == nil)
-    {
-        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
-                                                   inManagedObjectContext:context];
-    }
-    [status setValue:postTime forKeyPath:KEY_POST_TIME];
-    if (![_managedObjectContext save:&error])
-    {
-        NSLog(@"Failed to save user's post time: %@",
-              [error localizedDescription]);
-    }
-}
-- (void)updateLastCommentTime:(NSDate *)commentTime
-{
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
-    {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    if (status == nil)
-    {
-        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
-                                                   inManagedObjectContext:context];
-    }
-    [status setValue:commentTime forKeyPath:KEY_COMMENT_TIME];
-    if (![_managedObjectContext save:&error])
-    {
-        NSLog(@"Failed to save user's comment time: %@",
-              [error localizedDescription]);
-    }
-}
+//- (void)updateLastPostTime:(NSDate *)postTime
+//{
+//    NSError *error;
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription
+//                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+//    [fetchRequest setEntity:entity];
+//    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    if (fetchedStatus.count > 1)
+//    {
+//        NSLog(@"Too many status entities");
+//    }
+//    NSManagedObject *status = [fetchedStatus firstObject];
+//    
+//    if (status == nil)
+//    {
+//        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
+//                                                   inManagedObjectContext:context];
+//    }
+//    [status setValue:postTime forKeyPath:KEY_POST_TIME];
+//    if (![_managedObjectContext save:&error])
+//    {
+//        NSLog(@"Failed to save user's post time: %@",
+//              [error localizedDescription]);
+//    }
+//}
+//- (void)updateLastCommentTime:(NSDate *)commentTime
+//{
+//    NSError *error;
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription
+//                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+//    [fetchRequest setEntity:entity];
+//    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    if (fetchedStatus.count > 1)
+//    {
+//        NSLog(@"Too many status entities");
+//    }
+//    NSManagedObject *status = [fetchedStatus firstObject];
+//    if (status == nil)
+//    {
+//        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
+//                                                   inManagedObjectContext:context];
+//    }
+//    [status setValue:commentTime forKeyPath:KEY_COMMENT_TIME];
+//    if (![_managedObjectContext save:&error])
+//    {
+//        NSLog(@"Failed to save user's comment time: %@",
+//              [error localizedDescription]);
+//    }
+//}
 
 #pragma mark - CLLocationManager Functions
 

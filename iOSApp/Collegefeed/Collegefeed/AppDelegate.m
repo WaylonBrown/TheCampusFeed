@@ -38,9 +38,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {   // Set up ViewControllers and DataControllers
     
-    self.dataController = [DataController new];
-    [self.dataController incrementLaunchNumber];
-    
+    self.dataController = [DataController new];    
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
@@ -51,7 +49,7 @@
     [self.window makeKeyAndVisible];
     
     
-    switch ([self.dataController getLaunchNumber])
+    switch (self.dataController.launchCount)
     {
         case 1:
         {
