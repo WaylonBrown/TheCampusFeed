@@ -59,8 +59,19 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (strong, nonatomic) NSDate    *locationSearchStart;
 @property (nonatomic) BOOL              isFirstLaunch;
 @property (nonatomic) BOOL              needsUpdate;
-@property (nonatomic) NSInteger         launchCount;
+
 @property (nonatomic, strong) College   *homeCollege;
+
+// In STATUS_ENTITY
+@property (nonatomic) BOOL hasViewedAchievements;
+@property (nonatomic) BOOL isBanned;
+@property (nonatomic) long homeCollegeId;
+@property (nonatomic) long launchCount;
+@property (nonatomic) long numPosts;
+@property (nonatomic) long numPoints;
+@property (nonatomic) long numTimeCrunchHours;
+@property (nonatomic, strong) NSDate *lastCommentTime;
+@property (nonatomic, strong) NSDate *lastPostTime;
 
 // Location Information
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -147,6 +158,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 
 // Status
 - (void)restoreStatusFromCoreData;
+- (void)saveStatusToCoreData;
 
 // Achievements
 - (void)fetchAchievements;

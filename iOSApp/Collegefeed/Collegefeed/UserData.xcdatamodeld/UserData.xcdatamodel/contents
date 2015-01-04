@@ -23,6 +23,7 @@
     <entity name="Status" syncable="YES">
         <attribute name="currentFeed" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="hasViewedAchievements" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="homeCollegeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="isBanned" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="lastCommentTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="lastPostTime" optional="YES" attributeType="Date" syncable="YES"/>
@@ -40,11 +41,11 @@
         <attribute name="voteId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Achievement" positionX="0" positionY="45" width="128" height="118"/>
         <element name="College" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Comment" positionX="0" positionY="0" width="128" height="60"/>
         <element name="Post" positionX="0" positionY="0" width="128" height="60"/>
-        <element name="Status" positionX="0" positionY="0" width="128" height="195"/>
+        <element name="Status" positionX="0" positionY="0" width="128" height="210"/>
         <element name="Vote" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Achievement" positionX="0" positionY="45" width="128" height="118"/>
     </elements>
 </model>

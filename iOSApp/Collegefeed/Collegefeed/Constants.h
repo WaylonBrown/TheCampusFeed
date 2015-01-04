@@ -105,6 +105,7 @@
 #define KEY_NUM_POSTS               @"numPosts"
 #define KEY_NUM_HOURS               @"numTimeCrunchHours"
 #define KEY_HAS_VIEWED_ACHIEVEMENTS @"hasViewedAchievements"
+#define KEY_HOME_COLLEGE            @"homeCollegeId"
 
 #define ACHIEVEMENT_ENTITY      @"Achievement"
 #define KEY_AMOUNT_CURRENTLY    @"amountCurrently"

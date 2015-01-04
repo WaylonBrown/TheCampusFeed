@@ -44,6 +44,13 @@
         
         [self initArrays];
         
+        [self restoreStatusFromCoreData];
+        
+        
+        // TODO: get rid of most of these below, should be handled in restoreStatusFromCoreData
+        
+        
+        
         [self populateCollegeList];
         
         [self restoreSavedFeed];
@@ -219,6 +226,7 @@
     {
         NSLog(@"Too many status entities");
     }
+
     NSManagedObject *status = [fetchedStatus firstObject];
     NSNumber *collegeID = [status valueForKey:KEY_CURRENT_COLLEGE_FEED];
     long collegeIdForFeed = [collegeID longValue];
@@ -272,6 +280,52 @@
                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:userInfo];
                                       });
                    });
+}
+
+
+#pragma mark - Status
+
+- (void)restoreStatusFromCoreData
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
+    {
+        NSLog(@"Too many status entities");
+    }
+    NSManagedObject *status = [fetchedStatus firstObject];
+    
+    // Current feed
+    NSNumber *collegeID = [status valueForKey:KEY_CURRENT_COLLEGE_FEED];
+    long collegeIdForFeed = [collegeID longValue];
+    self.collegeInFocus = [self getCollegeById:collegeIdForFeed];
+    self.showingAllColleges = self.collegeInFocus == nil;
+    self.showingSingleCollege = !self.showingAllColleges;
+
+    // Achievements
+    self.hasViewedAchievements = [[status valueForKey:KEY_HAS_VIEWED_ACHIEVEMENTS] boolValue];
+    self.numPosts = [[status valueForKey:KEY_NUM_POSTS] longValue];
+    self.numPoints = [[status valueForKey:KEY_NUM_POINTS] longValue];
+    self.numTimeCrunchHours = [[status valueForKey:KEY_NUM_HOURS] longValue];
+    
+    // Restrictions
+    self.lastCommentTime = [status valueForKey:KEY_COMMENT_TIME];
+    self.lastPostTime = [status valueForKey:KEY_POST_TIME];
+    self.isBanned = [[status valueForKey:KEY_POST_TIME] boolValue];
+    
+    // Other
+    self.launchCount = [[status valueForKey:KEY_LAUNCH_COUNT] longValue];
+    self.homeCollegeId = [[status valueForKey:KEY_HOME_COLLEGE] longValue];
+}
+- (void)saveStatusToCoreData
+{
+    
 }
 
 #pragma mark - Achievements
@@ -482,14 +536,13 @@
                              [NSNumber numberWithInt:200],
                              [NSNumber numberWithInt:1000]];
     
-    long numPosts = [self getNumUserPosts];
     for (NSNumber *num in postNumbers)
     {
         long hours = [num longValue] * 10;
-        Achievement *a = [[Achievement alloc] initWithCurrAmount:numPosts
+        Achievement *a = [[Achievement alloc] initWithCurrAmount:self.numPosts
                                                           reqAmt:[num longValue]
                                                      rewardHours:hours
-                                                        achieved:(numPosts >= [num longValue])
+                                                        achieved:(self.numPosts >= [num longValue])
                                                  achievementType:VALUE_POST_ACHIEVEMENT];
         
         [self addAchievement:a];
@@ -505,26 +558,23 @@
                             [NSNumber numberWithInt:300],
                             [NSNumber numberWithInt:800]];
     
-    long numPoints = [self getNumUserPoints];
     for (NSNumber *num in postPoints)
     {
         long hours = [num longValue] * 10;
-        Achievement *a = [[Achievement alloc] initWithCurrAmount:numPoints
+        Achievement *a = [[Achievement alloc] initWithCurrAmount:self.numPoints
                                                           reqAmt:[num longValue]
                                                      rewardHours:hours
-                                                        achieved:(numPoints >= [num longValue])
+                                                        achieved:(self.numPoints >= [num longValue])
                                                  achievementType:VALUE_SCORE_ACHIEVEMENT];
         
         [self addAchievement:a];
     }
     
     // Special
-    
-    BOOL hasViewed = [self hasViewedAchievements];
-    Achievement *s1 = [[Achievement alloc] initWithCurrAmount:hasViewed
+    Achievement *s1 = [[Achievement alloc] initWithCurrAmount:self.hasViewedAchievements
                                                        reqAmt:1
                                                   rewardHours:10
-                                                     achieved:hasViewed
+                                                     achieved:self.hasViewedAchievements
                                               achievementType:VALUE_VIEW_ACHIEVEMENT];
     [self addAchievement:s1];
     
@@ -536,11 +586,10 @@
                                               achievementType:VALUE_SHORT_POST_ACHIEVEMENT];
     [self addAchievement:s2];
     
-    long numTimeCrunchHours = [self getNumTimeCrunchHours];
-    Achievement *s3 = [[Achievement alloc] initWithCurrAmount:numTimeCrunchHours
+    Achievement *s3 = [[Achievement alloc] initWithCurrAmount:self.numTimeCrunchHours
                                                        reqAmt:2000
                                                   rewardHours:2000
-                                                     achieved:(numTimeCrunchHours >= 2000)
+                                                     achieved:(self.numTimeCrunchHours >= 2000)
                                               achievementType:VALUE_MANY_HOURS_ACHIEVEMENT];
     [self addAchievement:s3];
 }
