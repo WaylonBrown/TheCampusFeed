@@ -10,10 +10,12 @@ import UIKit
 
 class NearbyFeedViewController: FeedSelectViewController, UITableViewDataSource, UITableViewDelegate {
 
-    init!(dataController controller: DataController!, postingDelegate pDelegate: CollegeForPostingSelectionProtocol) {
-        
-        super.init(dataController: controller)
+    let postingDelegate: PostingSelectionProtocol
+    
+    init!(dataController controller: DataController!, postingDelegate pDelegate: PostingSelectionProtocol) {
         self.postingDelegate = pDelegate
+
+        super.init(dataController: controller)
     }
 
     required init(coder aDecoder: NSCoder) {

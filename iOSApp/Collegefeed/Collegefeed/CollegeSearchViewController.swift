@@ -8,15 +8,18 @@
 
 import UIKit
 
-class CollegeSearchViewController: CollegeViewController, UISearchBarDelegate, UISearchDisplayDelegate {
+class CollegeSearchViewController: CollegeViewController, UISearchBarDelegate, UISearchDisplayDelegate{
     
     var searchController = UISearchDisplayController()
+    let feedDelegate : FeedSelectionProtocol?
     
-    override init!(dataController controller: DataController!) {
+    init!(dataController controller: DataController!, feedDelegate fDelegate: FeedSelectionProtocol) {
+        feedDelegate = fDelegate
         super.init(dataController: controller)
     }
     
     required init(coder aDecoder: NSCoder) {
+
         super.init(coder: aDecoder)
     }
     
@@ -30,7 +33,6 @@ class CollegeSearchViewController: CollegeViewController, UISearchBarDelegate, U
         // Do any additional setup after loading the view.
         self.tableView.estimatedRowHeight = 44.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        
         
         
         var searchBar = UISearchBar(frame: CGRectMake(0, 0, 0, 38))

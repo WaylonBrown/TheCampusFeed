@@ -251,7 +251,6 @@
     else
     {   // Multiple colleges are nearby
         NearbyFeedViewController *controller = [[NearbyFeedViewController alloc] initWithDataController:self.dataController postingDelegate:self];
-//        FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ONLY_NEARBY_COLLEGES WithDataController:self.dataController WithPostingDelegate:self];
         [self.navigationController presentViewController:controller animated:YES completion:nil];
     }
 }
@@ -412,17 +411,12 @@
 - (void)showDialogForAllColleges
 {
     [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
-//    CollegeSearchViewController *controller = [[CollegeSearchViewController alloc] initWithDataController:self.dataController];
     
-    
-    FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_COLLEGES_WITH_SEARCH
-                                                                       WithDataController:self.dataController
-                                                                         WithFeedDelegate:self];
-
+    CollegeSearchViewController *controller = [[CollegeSearchViewController alloc] initWithDataController:self.dataController feedDelegate:self];
     [self.navigationController presentViewController:controller animated:YES completion:nil];
 }
 
-/* CollegeForPostingSelectionProtocolDelegate */
+/* PostingSelectionProtocolDelegate */
 
 - (void)submitSelectionForPostWithCollege:(College *)college
 {

@@ -7,22 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FeedSelectionProtocol.h"
 
 @class College;
 @class DataController;
-
-@protocol FeedSelectionProtocol <NSObject>
-
-- (void)switchToFeedForCollegeOrNil:(College *)college;
-- (void)showDialogForAllColleges;
-
-@end
-
-@protocol CollegeForPostingSelectionProtocol <NSObject>
-
-- (void)submitSelectionForPostWithCollege:(College *)college;
-
-@end
 
 typedef NS_ENUM(NSInteger, FeedSelectorType)
 {
@@ -30,16 +18,12 @@ typedef NS_ENUM(NSInteger, FeedSelectorType)
     ALL_NEARBY_OTHER,
     
     // When looking through all possible colleges
-    ALL_COLLEGES_WITH_SEARCH,
-    
-    // When deciding which college to post to
-    ONLY_NEARBY_COLLEGES,
+    ALL_COLLEGES_WITH_SEARCH
 };
 
 @interface FeedSelectViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
 
 @property (strong, nonatomic) id<FeedSelectionProtocol> feedDelegate;
-@property (strong, nonatomic) id<CollegeForPostingSelectionProtocol> postingDelegate;
 @property (strong, nonatomic) DataController *dataController;
 @property (nonatomic, strong) NSMutableArray *searchResult;
 
@@ -60,8 +44,6 @@ typedef NS_ENUM(NSInteger, FeedSelectorType)
 - (id)initWithDataController:(DataController *)controller;
 
 - (id)initWithType:(FeedSelectorType)type WithDataController:(DataController *)controller WithFeedDelegate:(id<FeedSelectionProtocol>) delegate;
-
-- (id)initWithType:(FeedSelectorType)type WithDataController:(DataController *)controller WithPostingDelegate:(id<CollegeForPostingSelectionProtocol>) delegate;
 
 
 - (IBAction)dismiss;

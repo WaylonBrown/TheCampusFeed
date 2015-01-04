@@ -17,5 +17,7 @@
 #import "MasterViewController.h"
 #import "FeedSelectViewController.h"
 #import "SimpleTableCell.h"
+#import "FeedSelectionProtocol.h"
+#import "PostingSelectionProtocol.h"
 
 #endif

@@ -13,11 +13,12 @@
 #import "FeedSelectViewController.h"
 #import "DataController.h"
 #import "CreatePostCommentViewController.h"
+#import "PostingSelectionProtocol.h"
+#import "FeedSelectionProtocol.h"
 
 @class ToastController;
-@protocol FeedSelectionProtocol;
 
-@interface MasterViewController : UIViewController <ChildCellDelegate, CreationViewProtocol, FeedSelectionProtocol, CollegeForPostingSelectionProtocol>
+@interface MasterViewController : UIViewController <ChildCellDelegate, CreationViewProtocol, FeedSelectionProtocol, PostingSelectionProtocol>
 
 #pragma mark - Variables
 

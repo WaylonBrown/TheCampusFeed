@@ -240,6 +240,8 @@
 		53FF2D09195BCE7D0040E872 /* UserComments.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserComments.txt; sourceTree = "<group>"; };
 		53FF2D0B195BCE850040E872 /* UserVotes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserVotes.txt; sourceTree = "<group>"; };
 		CD04FE751A58AC120016C107 /* NearbyFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyFeedViewController.swift; sourceTree = "<group>"; };
+		CD04FE791A58C3BF0016C107 /* FeedSelectionProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedSelectionProtocol.h; sourceTree = "<group>"; };
+		CD04FE7A1A58C4170016C107 /* PostingSelectionProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostingSelectionProtocol.h; sourceTree = "<group>"; };
 		CD1B77481A3AD8B300686579 /* TableCellProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TableCellProtocol.h; path = Collegefeed/TableCellProtocol.h; sourceTree = "<group>"; };
 		CD3614121A4B3951006AE87E /* CollegeSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollegeSearchViewController.swift; sourceTree = "<group>"; };
 		CD539DD11A2CCE7D004A794E /* TopPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPostsViewController.h; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 			children = (
 				CDFD68251A488A1100B6F4DA /* CollegeViewController.h */,
 				CDFD68261A488A1100B6F4DA /* CollegeViewController.m */,
+				CD3614121A4B3951006AE87E /* CollegeSearchViewController.swift */,
 				5347EEA8197DD407001B2214 /* TrendingCollegesViewController.h */,
 				5347EEA9197DD407001B2214 /* TrendingCollegesViewController.m */,
 			);
@@ -362,7 +365,8 @@
 		5350558119529FD5009C1911 /* Select College */ = {
 			isa = PBXGroup;
 			children = (
-				CD3614121A4B3951006AE87E /* CollegeSearchViewController.swift */,
+				CD04FE791A58C3BF0016C107 /* FeedSelectionProtocol.h */,
+				CD04FE7A1A58C4170016C107 /* PostingSelectionProtocol.h */,
 				5350557C19529FCA009C1911 /* FeedSelectViewController.h */,
 				5350557D19529FCA009C1911 /* FeedSelectViewController.m */,
 				5350557E19529FCA009C1911 /* FeedSelectViewController.xib */,

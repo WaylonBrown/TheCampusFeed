@@ -346,7 +346,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (self.type == ALL_COLLEGES_WITH_SEARCH)// || self.type == ONLY_NEARBY_COLLEGES)
+    if (self.type == ALL_COLLEGES_WITH_SEARCH)
     {
         return 0;
     }
