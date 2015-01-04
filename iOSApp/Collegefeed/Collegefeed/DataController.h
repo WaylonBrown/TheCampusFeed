@@ -38,34 +38,29 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 
 @interface DataController : NSObject<CLLocationManagerDelegate, UIAlertViewDelegate>
 
-
-#pragma mark - Member Variables
-/****************************/
-/***** MEMBER VARIABLES *****/
-/****************************/
+// Core data storage
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (strong, nonatomic) ToastController *toaster;
-@property (strong, nonatomic) Watchdog *watchDog;
 
-// Status Information
-@property (strong, nonatomic) College   *collegeInFocus;
-@property (strong, nonatomic) Post      *postInFocus;
-@property (strong, nonatomic) Tag       *tagInFocus;
+// Helper objects
+@property (nonatomic, strong) ToastController *toaster;
+@property (nonatomic, strong) Watchdog *watchDog;
+
+// Runtime status information
+@property (nonatomic, strong) College   *collegeInFocus;
+@property (nonatomic, strong) Post      *postInFocus;
+@property (nonatomic, strong) Tag       *tagInFocus;
+@property (nonatomic, strong) College   *homeCollege;
 @property (nonatomic) BOOL              showingAllColleges;
 @property (nonatomic) BOOL              showingSingleCollege;
-@property (nonatomic) long              collegeListVersion;
-@property (strong, nonatomic) NSDate    *locationSearchStart;
-@property (nonatomic) BOOL              isFirstLaunch;
-@property (nonatomic) BOOL              needsUpdate;
 
-@property (nonatomic, strong) College   *homeCollege;
-
-// In STATUS_ENTITY
+// Persistent status information
 @property (nonatomic) BOOL hasViewedAchievements;
 @property (nonatomic) BOOL isBanned;
+@property (nonatomic) long currentCollegeFeedId;
 @property (nonatomic) long homeCollegeId;
+@property (nonatomic) long collegeListVersion;
 @property (nonatomic) long launchCount;
 @property (nonatomic) long numPosts;
 @property (nonatomic) long numPoints;
@@ -73,20 +68,21 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic, strong) NSDate *lastCommentTime;
 @property (nonatomic, strong) NSDate *lastPostTime;
 
-// Location Information
-@property (strong, nonatomic) CLLocationManager *locationManager;
-@property (nonatomic) CLLocationDegrees         lat;
-@property (nonatomic) CLLocationDegrees         lon;
-@property LocationStatus                        locStatus;
-@property (nonatomic) NSInteger     locationUpdateAttempts;
+// Location information
+@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) NSDate *locationSearchStart;
+@property (nonatomic) CLLocationDegrees lat;
+@property (nonatomic) CLLocationDegrees lon;
+@property (nonatomic) LocationStatus locStatus;
+@property (nonatomic) long locationUpdateAttempts;
 
 // Achievement Arrays
-@property (strong, nonatomic) NSMutableArray *achievementList;
+@property (nonatomic, strong) NSMutableArray *achievementList;
 
 // College Arrays
-@property (strong, nonatomic) NSMutableArray *collegeList;
-@property (strong, nonatomic) NSMutableArray *nearbyColleges;
-@property (strong, nonatomic) NSMutableArray *trendingColleges;
+@property (nonatomic, strong) NSMutableArray *collegeList;
+@property (nonatomic, strong) NSMutableArray *nearbyColleges;
+@property (nonatomic, strong) NSMutableArray *trendingColleges;
 
 // Comment Array
 @property (nonatomic, strong) NSMutableArray *commentList;
@@ -109,52 +105,17 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic, strong) NSMutableArray *userPostVotes;
 @property (nonatomic, strong) NSMutableArray *userCommentVotes;
 
-// Lazy Loading Counters
+// Page counters for lazy loading
 @property (nonatomic) long pageForTopPostsAllColleges;
 @property (nonatomic) long pageForTopPostsSingleCollege;
 @property (nonatomic) long pageForNewPostsAllColleges;
 @property (nonatomic) long pageForNewPostsSingleCollege;
 @property (nonatomic) long pageForTaggedPostsAllColleges;
 @property (nonatomic) long pageForTaggedPostsSingleCollege;
-
 @property (nonatomic) long pageForTrendingTagsAllColleges;
 @property (nonatomic) long pageForTrendingTagsSingleCollege;
-
 @property (nonatomic) long pageForTopColleges;
 
-
-#pragma mark - Public Functions
-/****************************/
-/***** PUBLIC FUNCTIONS *****/
-/****************************/
-
-/****************************/
-/***** Local Data Access ****/
-/****************************/
-
-- (NSMutableArray *)getCurrentTagList;
-
-- (void)retrieveUserPosts;
-- (void)retrieveUserComments;
-- (void)retrieveUserData;
-
-- (long)getUserPostScore;
-- (long)getUserCommentScore;
-//- (NSInteger)getLaunchNumber;
-- (BOOL)isAbleToPost:(NSNumber *)minutesRemaining;
-- (BOOL)isAbleToComment;
-//- (void)incrementLaunchNumber;
-- (void)saveCurrentFeed;
-//- (void)restoreSavedFeed;
-//- (void)assignPointCountInCoreData:(NSNumber *)points;
-//- (void)assignDidViewAchievementList;
-
-- (NSURL *)applicationDocumentsDirectory;
-/*************************/
-/***** Network Access ****/
-/*************************/
-
-- (void)findUserLocation;
 
 // Status
 - (void)restoreStatusFromCoreData;
@@ -180,7 +141,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 // Comments
 - (BOOL)createCommentWithMessage:(NSString *)message
                         withPost:(Post*)post;
-
 - (void)fetchCommentsForPost:(Post *)post;
 
 // Flags
@@ -212,6 +172,15 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (void)fetchTrendingTagsForAllColleges;
 - (void)fetchTrendingTagsForSingleCollege;
 
+// User data
+- (void)retrieveUserPosts;
+- (void)retrieveUserComments;
+- (long)getUserPostScore;
+- (long)getUserCommentScore;
+- (BOOL)isAbleToPost:(NSNumber *)minutesRemaining;
+- (BOOL)isAbleToComment;
+- (void)findUserLocation;
+- (NSURL *)applicationDocumentsDirectory;
 
 // Votes
 - (BOOL)createVote:(Vote *)vote;

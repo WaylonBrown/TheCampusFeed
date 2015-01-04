@@ -31,6 +31,10 @@ class TimeCrunchViewController: UIViewController {
         super.init(nibName: "TimeCrunchViewController", bundle: nil)
     }
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: "TimeCrunchViewController", bundle: nil)
+    }
+    
     init(dataController controller: DataController){
         self.dataController = controller
         

@@ -215,7 +215,6 @@
     else if (scrollDiff < 0 && (frame.origin.y + size > scrollHeight))
     {   // flick down / scroll up / show bar
         self.toolBarSpaceFromBottom.constant += 4;
-        [self setList:[self.dataController getCurrentTagList]];
     }
     
     self.toolBarSpaceFromBottom.constant = MIN(self.toolBarSpaceFromBottom.constant, 50);
