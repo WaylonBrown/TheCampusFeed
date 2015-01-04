@@ -12,10 +12,14 @@ import QuartzCore
 
 class TimeCrunchViewController: UIViewController {
     
+    @IBOutlet var aboutButtonLabel : UILabel!
+    @IBOutlet var aboutButton: UIView!
+    @IBOutlet var hoursLabel: UILabel!
+    @IBOutlet var daysLabel: UILabel!
+    @IBOutlet var schoolLabel: UILabel!
+    @IBOutlet var activateButton: UIView!
+    @IBOutlet var activateButtonLabel: UILabel!
     @IBOutlet var onOffLabel: UILabel!
-    @IBOutlet var comingSoonLabel: UILabel!
-    @IBOutlet var buttonLabel : UILabel!
-    @IBOutlet var buttonView: UIView!
     
     required init(coder aDecoder: NSCoder){
         super.init(coder: aDecoder)
@@ -27,18 +31,31 @@ class TimeCrunchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.buttonView.layer.shadowColor = UIColor.blackColor().CGColor
-        self.buttonView.layer.shadowOpacity = 0.8
-        self.buttonView.layer.shadowRadius = 2.0
-        self.buttonView.layer.shadowOffset = CGSizeMake(2.0, 2.0)
         
-        self.buttonLabel.font = Shared.getFontLight(22)
-        self.comingSoonLabel.font = Shared.getFontLight(20)
-        self.onOffLabel.font = Shared.getFontLight(20)
+        aboutButton.layer.shadowColor = UIColor.blackColor().CGColor
+        aboutButton.layer.shadowOpacity = 0.8
+        aboutButton.layer.shadowRadius = 2.0
+        aboutButton.layer.shadowOffset = CGSizeMake(2.0, 2.0)
+        aboutButtonLabel.font = Shared.getFontLight(22)
+
+        activateButton.layer.shadowColor = UIColor.blackColor().CGColor
+        activateButton.layer.shadowOpacity = 0.8
+        activateButton.layer.shadowRadius = 2.0
+        activateButton.layer.shadowOffset = CGSizeMake(2.0, 2.0)
+        activateButtonLabel.font = Shared.getFontLight(22)
+        
+        hoursLabel.font = Shared.getFontItalic(36)
+        daysLabel.font = Shared.getFontItalic(14)
+        schoolLabel.font = Shared.getFontItalic(16)
+        onOffLabel.font = Shared.getFontLight(20)
     }
     
     override func didReceiveMemoryWarning() {
         
+    }
+    
+    @IBAction func activateTimeCrunch() {
+        NSLog("Activated time crunch")
     }
     
     @IBAction func showCrunchDialog() {

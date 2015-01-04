@@ -55,11 +55,11 @@ class CollegeSearchViewController: CollegeViewController, UITableViewDataSource,
     }
     override func viewWillAppear(animated: Bool) {
         navigationItem.backBarButtonItem?.title = ""
-
     }
     override func viewDidAppear(animated: Bool) {
 //        tableView.reloadData()
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -77,7 +77,7 @@ class CollegeSearchViewController: CollegeViewController, UITableViewDataSource,
         var words = split(searchController.searchBar.text) {$0 == " "}
         for word in words {
             NSLog("Searching with word: %@", word)
-            var predicate = NSPredicate(format: "SELF.name CONTAINS[c] %@", word)
+            var predicate = NSPredicate(format: "SELF.name contains[c] %@", word)
             subPredicates.addObject(predicate!)
         }
         
@@ -109,6 +109,7 @@ class CollegeSearchViewController: CollegeViewController, UITableViewDataSource,
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 10;
     }
+    
     // MARK: - Network Actions
     
     override func fetchContent() {

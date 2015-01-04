@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Roboto-Light.ttf">
+            <string>Roboto-Light</string>
+        </mutableArray>
+        <mutableArray key="Roboto-LightItalic.ttf">
+            <string>Roboto-LightItalic</string>
+            <string>Roboto-LightItalic</string>
+        </mutableArray>
+    </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TimeCrunchViewController" customModule="Collegefeed" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TimeCrunchViewController" customModule="TheCampusFeed" customModuleProvider="target">
             <connections>
-                <outlet property="buttonLabel" destination="h7O-ti-Zvt" id="mQx-5O-CkQ"/>
-                <outlet property="buttonView" destination="tMi-Rb-YXc" id="QVd-ne-3iG"/>
-                <outlet property="comingSoonLabel" destination="wCe-ei-smg" id="egC-Iz-FnK"/>
+                <outlet property="aboutButton" destination="tMi-Rb-YXc" id="3AW-CM-Vme"/>
+                <outlet property="aboutButtonLabel" destination="h7O-ti-Zvt" id="22C-do-M9d"/>
+                <outlet property="activateButton" destination="Uon-d0-l0k" id="620-4e-X0R"/>
+                <outlet property="activateButtonLabel" destination="gYO-1J-sEx" id="eLo-xL-xLz"/>
+                <outlet property="daysLabel" destination="dNg-tx-u6p" id="f28-dw-aco"/>
+                <outlet property="hoursLabel" destination="SL5-t1-DkM" id="6l6-kf-IhK"/>
                 <outlet property="onOffLabel" destination="UoC-vR-TKH" id="ETM-OT-3tA"/>
+                <outlet property="schoolLabel" destination="4wF-61-r4F" id="Uhd-uc-9KK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -51,16 +64,7 @@
                         <constraint firstAttribute="bottom" secondItem="UoC-vR-TKH" secondAttribute="bottom" id="gg6-XZ-gC3"/>
                     </constraints>
                 </view>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming soon in the next update!" textAlignment="center" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="246" translatesAutoresizingMaskIntoConstraints="NO" id="wCe-ei-smg">
-                    <rect key="frame" x="37" y="265" width="246" height="86"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="86" id="YZV-aX-QgP"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.26666668057441711" green="0.26666668057441711" blue="0.26666668057441711" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tMi-Rb-YXc" userLabel="Button View">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tMi-Rb-YXc" userLabel="About Button">
                     <rect key="frame" x="37" y="29" width="246" height="63"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What is Time Crunch?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h7O-ti-Zvt">
@@ -84,23 +88,76 @@
                         <outletCollection property="gestureRecognizers" destination="hXp-Qa-7tY" appends="YES" id="Keh-BC-uFn"/>
                     </connections>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uon-d0-l0k" userLabel="Activate Button">
+                    <rect key="frame" x="37" y="405" width="246" height="63"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Activate Time Crunch" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gYO-1J-sEx">
+                            <rect key="frame" x="0.0" y="0.0" width="246" height="63"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.33169716282894735" green="0.86705900493421051" blue="0.1098375822368421" alpha="1" colorSpace="deviceRGB"/>
+                    <gestureRecognizers/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="gYO-1J-sEx" secondAttribute="trailing" id="24M-lR-uAl"/>
+                        <constraint firstItem="gYO-1J-sEx" firstAttribute="top" secondItem="Uon-d0-l0k" secondAttribute="top" id="5ye-29-e9F"/>
+                        <constraint firstAttribute="bottom" secondItem="gYO-1J-sEx" secondAttribute="bottom" id="FYX-UF-Jwj"/>
+                        <constraint firstItem="gYO-1J-sEx" firstAttribute="leading" secondItem="Uon-d0-l0k" secondAttribute="leading" id="TTr-Pi-70q"/>
+                        <constraint firstAttribute="width" constant="246" id="h6E-ii-aS5"/>
+                        <constraint firstAttribute="height" constant="63" id="vOo-g1-f5p"/>
+                    </constraints>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="yMn-kJ-5Se" appends="YES" id="jGT-eP-AsI"/>
+                    </connections>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(1.0 days)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNg-tx-u6p">
+                    <rect key="frame" x="130" y="228" width="60" height="17"/>
+                    <fontDescription key="fontDescription" name="Roboto-LightItalic" family="Roboto" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24 hrs" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SL5-t1-DkM">
+                    <rect key="frame" x="111" y="177" width="99" height="43"/>
+                    <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="36"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Texas A&amp;M University" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4wF-61-r4F">
+                    <rect key="frame" x="95" y="253" width="130" height="17"/>
+                    <fontDescription key="fontDescription" name="Roboto-LightItalic" family="Roboto" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="tMi-Rb-YXc" secondAttribute="centerX" id="65R-Yl-DPh"/>
+                <constraint firstAttribute="centerX" secondItem="dNg-tx-u6p" secondAttribute="centerX" id="7Dd-03-AuH"/>
+                <constraint firstItem="SL5-t1-DkM" firstAttribute="top" secondItem="tMi-Rb-YXc" secondAttribute="bottom" constant="85" id="7wv-Op-wCL"/>
                 <constraint firstItem="tMi-Rb-YXc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="29" id="AWW-GS-jjT"/>
-                <constraint firstAttribute="trailing" secondItem="wCe-ei-smg" secondAttribute="trailing" constant="37" id="BhI-dL-6Ht"/>
                 <constraint firstItem="et2-PD-smK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="HWl-ik-5Ah"/>
-                <constraint firstAttribute="centerY" secondItem="wCe-ei-smg" secondAttribute="centerY" constant="-24" id="chE-Ly-Qbs"/>
+                <constraint firstAttribute="centerX" secondItem="4wF-61-r4F" secondAttribute="centerX" id="PzR-q6-CuD"/>
+                <constraint firstItem="dNg-tx-u6p" firstAttribute="top" secondItem="SL5-t1-DkM" secondAttribute="bottom" constant="8" id="V3v-2X-vFw"/>
+                <constraint firstAttribute="centerX" secondItem="SL5-t1-DkM" secondAttribute="centerX" id="dWj-0X-ops"/>
+                <constraint firstItem="et2-PD-smK" firstAttribute="top" secondItem="Uon-d0-l0k" secondAttribute="bottom" constant="50" id="eVE-37-xv8"/>
+                <constraint firstAttribute="centerX" secondItem="Uon-d0-l0k" secondAttribute="centerX" id="kPG-Tg-I9G"/>
                 <constraint firstAttribute="bottom" secondItem="et2-PD-smK" secondAttribute="bottom" id="mvM-Fe-VlS"/>
                 <constraint firstAttribute="trailing" secondItem="et2-PD-smK" secondAttribute="trailing" id="omk-8J-fZn"/>
-                <constraint firstItem="wCe-ei-smg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="37" id="riG-B8-TDp"/>
+                <constraint firstItem="4wF-61-r4F" firstAttribute="top" secondItem="dNg-tx-u6p" secondAttribute="bottom" constant="8" id="sbO-QL-RhW"/>
             </constraints>
         </view>
         <tapGestureRecognizer id="hXp-Qa-7tY">
             <connections>
                 <action selector="showCrunchDialog" destination="-1" id="XKp-EB-QoL"/>
                 <outlet property="delegate" destination="-1" id="gDH-Am-PzJ"/>
+            </connections>
+        </tapGestureRecognizer>
+        <tapGestureRecognizer id="yMn-kJ-5Se">
+            <connections>
+                <action selector="activateTimeCrunch" destination="-1" id="E6A-L8-XwQ"/>
+                <outlet property="delegate" destination="-1" id="GE9-Le-wWx"/>
             </connections>
         </tapGestureRecognizer>
     </objects>
