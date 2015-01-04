@@ -2,12 +2,15 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FeedSelectViewController">
             <connections>
                 <outlet property="alertView" destination="llI-Ec-hur" id="NLf-tT-nQj"/>
                 <outlet property="dialogVerticalAlignment" destination="Koh-5O-X2L" id="sFE-Tj-lSp"/>
+                <outlet property="nearYouHeaderView" destination="8MO-uI-G8r" id="ibT-uT-2pr"/>
+                <outlet property="nearYouLabel" destination="a8o-k0-1xD" id="2jP-V0-wq7"/>
                 <outlet property="tableHeightConstraint" destination="ckm-SW-6Dk" id="j0A-zn-UVM"/>
                 <outlet property="tableView" destination="5P2-ay-ia0" id="QE2-N8-PGn"/>
                 <outlet property="titleLabel" destination="SyC-9r-LzP" id="RZ9-AD-aSl"/>
@@ -82,7 +85,36 @@
                 <constraint firstItem="5nr-Vv-dnb" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="xvi-zQ-qAu"/>
             </constraints>
         </view>
+        <view contentMode="scaleToFill" id="8MO-uI-G8r" userLabel="Near You Header View">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Near You" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a8o-k0-1xD">
+                    <rect key="frame" x="61" y="0.0" width="204" height="568"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gps.png" translatesAutoresizingMaskIntoConstraints="NO" id="DRh-Nc-ROx">
+                    <rect key="frame" x="292" y="274" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="gVw-cI-Vdy"/>
+                        <constraint firstAttribute="width" constant="20" id="xar-9w-bHK"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="centerY" secondItem="DRh-Nc-ROx" secondAttribute="centerY" id="BML-qP-xK5"/>
+                <constraint firstAttribute="centerY" secondItem="a8o-k0-1xD" secondAttribute="centerY" id="UDW-St-Bnk"/>
+                <constraint firstItem="DRh-Nc-ROx" firstAttribute="trailing" secondItem="8MO-uI-G8r" secondAttribute="trailingMargin" id="pmv-ko-kgA"/>
+                <constraint firstAttribute="centerX" secondItem="a8o-k0-1xD" secondAttribute="centerX" id="rpm-ji-gtk"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <point key="canvasLocation" x="144" y="328"/>
+        </view>
     </objects>
+    <resources>
+        <image name="gps.png" width="32" height="32"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

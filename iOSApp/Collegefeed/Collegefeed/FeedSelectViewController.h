@@ -12,17 +12,13 @@
 @class College;
 @class DataController;
 
-typedef NS_ENUM(NSInteger, FeedSelectorType)
-{
-    // When selecting a feed to view
-    ALL_NEARBY_OTHER
-};
-
 @interface FeedSelectViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
 
 @property (strong, nonatomic) id<FeedSelectionProtocol> feedDelegate;
 @property (strong, nonatomic) DataController *dataController;
 @property (nonatomic, strong) NSMutableArray *searchResult;
+@property (strong, nonatomic) IBOutlet UIView *nearYouHeaderView;
+@property (strong, nonatomic) IBOutlet UILabel *nearYouLabel;
 
 @property (strong, nonatomic) IBOutlet UISearchBar *mySearchBar;
 
@@ -33,12 +29,9 @@ typedef NS_ENUM(NSInteger, FeedSelectorType)
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (nonatomic) FeedSelectorType type;
-
 - (id)initWithDataController:(DataController *)controller;
 
-- (id)initWithType:(FeedSelectorType)type WithDataController:(DataController *)controller WithFeedDelegate:(id<FeedSelectionProtocol>) delegate;
-
+- (id)initWithDataController:(DataController *)controller WithFeedDelegate:(id<FeedSelectionProtocol>) delegate;
 
 - (IBAction)dismiss;
 - (void)fixHeights;

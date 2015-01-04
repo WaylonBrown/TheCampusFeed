@@ -234,7 +234,7 @@
     
     if (!self.isShowingTutorial)
     {
-        FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithType:ALL_NEARBY_OTHER WithDataController:self.dataController WithFeedDelegate:self];
+        FeedSelectViewController *controller = [[FeedSelectViewController alloc] initWithDataController:self.dataController WithFeedDelegate:self];
         [self.navigationController presentViewController:controller animated:YES completion:nil];
     }
 }
