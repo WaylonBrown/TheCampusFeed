@@ -183,31 +183,31 @@
 //    
 //    return [count integerValue];
 //}
-- (void)saveCurrentFeed
-{
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
-    {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    NSNumber *collegeIdForFeed = self.showingSingleCollege ? [NSNumber numberWithLong:self.collegeInFocus.collegeID] : nil;
-    
-    [status setValue:collegeIdForFeed forKey:KEY_CURRENT_COLLEGE_FEED];
-    
-    if (![context save:&error])
-    {
-        NSLog(@"Failed to save current feed: %@",
-              [error localizedDescription]);
-    }
-}
+//- (void)saveCurrentFeed
+//{
+//    NSError *error;
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription
+//                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+//    
+//    [fetchRequest setEntity:entity];
+//    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    if (fetchedStatus.count > 1)
+//    {
+//        NSLog(@"Too many status entities");
+//    }
+//    NSManagedObject *status = [fetchedStatus firstObject];
+//    NSNumber *collegeIdForFeed = self.showingSingleCollege ? [NSNumber numberWithLong:self.collegeInFocus.collegeID] : nil;
+//    
+//    [status setValue:collegeIdForFeed forKey:KEY_CURRENT_COLLEGE_FEED];
+//    
+//    if (![context save:&error])
+//    {
+//        NSLog(@"Failed to save current feed: %@",
+//              [error localizedDescription]);
+//    }
+//}
 //- (void)restoreSavedFeed
 //{
 //    // Retrieve last saved/visited feed
@@ -314,7 +314,7 @@
     // Restrictions
     self.lastCommentTime = [status valueForKey:KEY_COMMENT_TIME];
     self.lastPostTime = [status valueForKey:KEY_POST_TIME];
-    self.isBanned = [[status valueForKey:KEY_POST_TIME] boolValue];
+    self.isBanned = [[status valueForKey:KEY_IS_BANNED] boolValue];
     
     // Other
     self.collegeListVersion = [[status valueForKey:KEY_COLLEGE_LIST_VERSION] longValue];
@@ -323,7 +323,50 @@
 }
 - (void)saveStatusToCoreData
 {
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
+    {
+        NSLog(@"Too many status entities");
+    }
+    NSManagedObject *status = [fetchedStatus firstObject];
+    if (status == nil)
+    {
+        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
+                                                   inManagedObjectContext:context];
+    }
     
+    // Current feed
+    NSNumber *collegeIdForFeed = self.showingSingleCollege ? [NSNumber numberWithLong:self.collegeInFocus.collegeID] : nil;
+    [status setValue:collegeIdForFeed forKey:KEY_CURRENT_COLLEGE_FEED];
+    
+    // Achievements
+    [status setValue:[NSNumber numberWithBool:self.hasViewedAchievements] forKey:KEY_HAS_VIEWED_ACHIEVEMENTS];
+    [status setValue:[NSNumber numberWithLong:self.numPosts] forKey:KEY_NUM_POSTS];
+    [status setValue:[NSNumber numberWithLong:self.numPoints] forKey:KEY_NUM_POINTS];
+    [status setValue:[NSNumber numberWithLong:self.numTimeCrunchHours] forKey:KEY_NUM_HOURS];
+    
+    
+    // Restrictions
+    [status setValue:self.lastPostTime forKey:KEY_POST_TIME];
+    [status setValue:self.lastCommentTime forKey:KEY_COMMENT_TIME];
+    [status setValue:[NSNumber numberWithBool:self.isBanned] forKey:KEY_IS_BANNED];
+    
+    // Other
+    [status setValue:[NSNumber numberWithLong:self.collegeListVersion] forKey:KEY_COLLEGE_LIST_VERSION];
+    [status setValue:[NSNumber numberWithLong:self.launchCount] forKey:KEY_LAUNCH_COUNT];
+    [status setValue:[NSNumber numberWithLong:self.homeCollegeId] forKey:KEY_HOME_COLLEGE];
+
+    if (![_managedObjectContext save:&error])
+    {
+        NSLog(@"Failed to save status to core data: %@",
+              [error localizedDescription]);
+    }
 }
 
 #pragma mark - Achievements
