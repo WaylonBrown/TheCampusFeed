@@ -82,7 +82,13 @@ class TimeCrunchViewController: UIViewController {
     
     func updateLabels() {
         var model = dataController.getTimeCrunchModel()
+        var hours: Int = model.getHoursRemaining()
+        var days: Double = Double(hours) / 24.0
         
-
+        var hasTimeCrunch: Bool = model != nil && hours > 0
+        
+        hoursLabel.text = NSString(format: "%d hrs", hours)
+        daysLabel.text = hasTimeCrunch ? NSString(format: "(%f.1 days)", days) : "Start posting to get time!"
+        schoolLabel.text = hasTimeCrunch ? model.college.name : ""
     }
 }

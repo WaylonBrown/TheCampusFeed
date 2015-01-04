@@ -33,6 +33,11 @@
         <attribute name="numPosts" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="numTimeCrunchHours" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="TimeCrunch" syncable="YES">
+        <attribute name="collegeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="hoursEarned" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="timeActivatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
     <entity name="Vote" syncable="YES">
         <attribute name="parentId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="postId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -47,5 +52,6 @@
         <element name="Post" positionX="0" positionY="0" width="128" height="60"/>
         <element name="Status" positionX="0" positionY="0" width="128" height="210"/>
         <element name="Vote" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="TimeCrunch" positionX="0" positionY="81" width="128" height="90"/>
     </elements>
 </model>

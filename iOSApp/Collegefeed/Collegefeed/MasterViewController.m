@@ -372,7 +372,6 @@
         {
             [self.toastController toastPostFailed];
         }
-//        [self refresh];
     }
     else
     {
@@ -381,15 +380,14 @@
 }
 - (void)commentingTooFrequently
 {
-//    [self.toastController toastCommentingTooSoon];
+    [self.toastController toastCommentingTooSoon];
 }
 
 /* FeedSelectionProtocolDelegate */
 
 - (void)switchToFeedForCollegeOrNil:(College *)college
 {
-//    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
-    [self.navigationController popViewControllerAnimated:NO];
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
     
     [self.dataController switchedToSpecificCollegeOrNil:college];
     [self setCorrectList];

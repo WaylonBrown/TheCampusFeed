@@ -502,8 +502,8 @@
 				53C343B519E26D3900C26745 /* TheCampusFeed-Bridging-Header.h */,
 				CDF6B9C11A51DB58005F4555 /* Achievement.swift */,
 				CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */,
-				53AB57B7194AAFB3001D1B7B /* Other */,
 				CD04FE7E1A59D0FF0016C107 /* TimeCrunchModel.swift */,
+				53AB57B7194AAFB3001D1B7B /* Other */,
 			);
 			name = "Source Code";
 			sourceTree = "<group>";

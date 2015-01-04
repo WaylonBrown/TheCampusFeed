@@ -199,7 +199,30 @@
 
 - (TimeCrunchModel *)getTimeCrunchModel
 {
-    // TODO
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:TIME_CRUNCH_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedTimeCrunches = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    for (NSManagedObject *t in fetchedTimeCrunches)
+    {
+        long collegeId = [[t valueForKey:KEY_COLLEGE_ID] longValue];
+        if (collegeId == self.homeCollegeId)
+        {
+            College *college = [self getCollegeById:collegeId];
+            long hours = [[t valueForKey:KEY_HOURS_EARNED] longValue];
+            NSDate *date = [t valueForKey:KEY_TIME_ACTIVATED_AT];
+            
+            return [[TimeCrunchModel alloc] initWithCollege:college
+                                                      hours:hours
+                                             activationTime:date];
+        }
+    }
+    
     return nil;
 }
 - (void)activateTimeCrunch

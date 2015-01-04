@@ -12,8 +12,11 @@ class TimeCrunchModel: NSObject {
     var hoursEarned: Int = 0
     var timeWasActivatedAt: NSDate? = nil
     
-    init(college: College) {
+    init(college: College, hours: Int, activationTime: NSDate?) {
         self.college = college
+        self.hoursEarned = hours
+        self.timeWasActivatedAt = activationTime
+        
         super.init()
     }
     

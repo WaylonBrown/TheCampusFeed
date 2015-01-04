@@ -210,7 +210,7 @@
     else if (section == 1)
     {
         headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
-        [headerLabel setText:@"Combines All into Same Feed"];
+        [headerLabel setText:@"Combines All Into One Feed"];
     }
     else if (section == 2)
     {   // section of all colleges

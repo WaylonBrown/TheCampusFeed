@@ -131,6 +131,10 @@
 #define KEY_NAME                @"name"
 #define KEY_SHORT_NAME          @"shortName"
 
+#define TIME_CRUNCH_ENTITY      @"TimeCrunch"
+#define KEY_HOURS_EARNED        @"hoursEarned"
+#define KEY_TIME_ACTIVATED_AT   @"timeActivatedAt"
+
 #define VOTE_ENTITY             @"Vote"
 #define KEY_PARENT_ID           @"parentId"
 #define KEY_VOTE_ID             @"voteId"
