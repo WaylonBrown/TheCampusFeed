@@ -27,6 +27,29 @@ class CollegeSearchViewController: CollegeViewController, UISearchBarDelegate, U
         super.init(coder: aDecoder)
     }
     
+    override func loadView() {
+        super.loadView()
+        
+        var searchBar = UISearchBar(frame: CGRectMake(0, 0, 0, 38))
+        searchBar.sizeToFit()
+        searchBar.delegate = self
+        self.searchController = UISearchDisplayController(searchBar: searchBar, contentsController: self)
+        
+        self.searchController.searchResultsDelegate = self;
+        self.searchController.searchResultsDataSource = self;
+        self.searchController.delegate = self;
+        
+        self.tableView.tableHeaderView = self.searchDisplayController?.searchBar
+        
+//        self.tableView.reloadData()
+
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
+    }
     
     override func viewDidAppear(animated: Bool) {
 //        tableView.reloadData()

@@ -287,13 +287,13 @@
             }
             break;
         }
-        case ALL_COLLEGES_WITH_SEARCH:
-        {   // When user wants to see all colleges and be able to search through them
-            College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
-            [self.feedDelegate switchToFeedForCollegeOrNil:college];
-            
-            break;
-        }
+//        case ALL_COLLEGES_WITH_SEARCH:
+//        {   // When user wants to see all colleges and be able to search through them
+//            College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
+//            [self.feedDelegate switchToFeedForCollegeOrNil:college];
+//            
+//            break;
+//        }
         default: break;
     }
 }

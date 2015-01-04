@@ -388,7 +388,8 @@
 
 - (void)switchToFeedForCollegeOrNil:(College *)college
 {
-    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+//    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:NO];
     
     [self.dataController switchedToSpecificCollegeOrNil:college];
     [self setCorrectList];

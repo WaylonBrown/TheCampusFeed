@@ -33,6 +33,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.tableView.estimatedRowHeight = TABLE_CELL_HEIGHT;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
