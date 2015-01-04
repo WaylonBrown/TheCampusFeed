@@ -329,21 +329,13 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		5347EEA7197DD3C3001B2214 /* College View */ = {
+		5347EEA7197DD3C3001B2214 /* Colleges */ = {
 			isa = PBXGroup;
 			children = (
-				CDFD68251A488A1100B6F4DA /* CollegeViewController.h */,
-				CDFD68261A488A1100B6F4DA /* CollegeViewController.m */,
-				CD04FE7B1A58D04E0016C107 /* Protocols */,
-				5350557C19529FCA009C1911 /* FeedSelectViewController.h */,
-				5350557D19529FCA009C1911 /* FeedSelectViewController.m */,
-				5350557E19529FCA009C1911 /* FeedSelectViewController.xib */,
-				CD04FE751A58AC120016C107 /* NearbyFeedViewController.swift */,
-				CD3614121A4B3951006AE87E /* CollegeSearchViewController.swift */,
-				5347EEA8197DD407001B2214 /* TrendingCollegesViewController.h */,
-				5347EEA9197DD407001B2214 /* TrendingCollegesViewController.m */,
+				CD04FE7C1A58FD4C0016C107 /* Simple College View */,
+				CD04FE7D1A58FD670016C107 /* Feed Selection View */,
 			);
-			name = "College View";
+			name = Colleges;
 			sourceTree = "<group>";
 		};
 		5347EEAF197E9E9E001B2214 /* Menu Navigation View */ = {
@@ -365,13 +357,6 @@
 				5350557619514587009C1911 /* CreatePostCommentViewController.xib */,
 			);
 			name = "Create Post/Comment";
-			sourceTree = "<group>";
-		};
-		5350558119529FD5009C1911 /* Select College */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Select College";
 			sourceTree = "<group>";
 		};
 		535055881953B067009C1911 /* Post View */ = {
@@ -491,8 +476,7 @@
 				535055881953B067009C1911 /* Post View */,
 				CD539DD61A2CDE5D004A794E /* Comment View */,
 				535055891953B07A009C1911 /* Tag View */,
-				5347EEA7197DD3C3001B2214 /* College View */,
-				5350558119529FD5009C1911 /* Select College */,
+				5347EEA7197DD3C3001B2214 /* Colleges */,
 				538E7CA219D4B67800AD5719 /* Time Crunch */,
 				5311F85C19C960A90053D3CC /* Tutorial View */,
 				5347EEAF197E9E9E001B2214 /* Menu Navigation View */,
@@ -627,13 +611,29 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		CD04FE7B1A58D04E0016C107 /* Protocols */ = {
+		CD04FE7C1A58FD4C0016C107 /* Simple College View */ = {
+			isa = PBXGroup;
+			children = (
+				CDFD68251A488A1100B6F4DA /* CollegeViewController.h */,
+				CDFD68261A488A1100B6F4DA /* CollegeViewController.m */,
+				5347EEA8197DD407001B2214 /* TrendingCollegesViewController.h */,
+				5347EEA9197DD407001B2214 /* TrendingCollegesViewController.m */,
+				CD3614121A4B3951006AE87E /* CollegeSearchViewController.swift */,
+			);
+			name = "Simple College View";
+			sourceTree = "<group>";
+		};
+		CD04FE7D1A58FD670016C107 /* Feed Selection View */ = {
 			isa = PBXGroup;
 			children = (
 				CD04FE791A58C3BF0016C107 /* FeedSelectionProtocol.h */,
 				CD04FE7A1A58C4170016C107 /* PostingSelectionProtocol.h */,
+				5350557C19529FCA009C1911 /* FeedSelectViewController.h */,
+				5350557D19529FCA009C1911 /* FeedSelectViewController.m */,
+				5350557E19529FCA009C1911 /* FeedSelectViewController.xib */,
+				CD04FE751A58AC120016C107 /* NearbyFeedViewController.swift */,
 			);
-			name = Protocols;
+			name = "Feed Selection View";
 			sourceTree = "<group>";
 		};
 		CD539DD61A2CDE5D004A794E /* Comment View */ = {

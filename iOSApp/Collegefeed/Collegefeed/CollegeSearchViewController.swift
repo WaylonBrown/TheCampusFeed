@@ -8,13 +8,18 @@
 
 import UIKit
 
-class CollegeSearchViewController: CollegeViewController, UISearchBarDelegate, UISearchDisplayDelegate, UITableViewDataSource, UITableViewDelegate{
+class CollegeSearchViewController: CollegeViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
     
-    var searchController = UISearchDisplayController()
-    let feedDelegate : FeedSelectionProtocol?
+    let feedDelegate: FeedSelectionProtocol?
+    
+    var searchController: UISearchController?
+    var searchBar: UISearchBar?
+    
+    let filteredList = NSMutableArray()
     
     init!(dataController controller: DataController!, feedDelegate fDelegate: FeedSelectionProtocol) {
         feedDelegate = fDelegate
+        
         super.init(dataController: controller)
     }
     
@@ -30,18 +35,16 @@ class CollegeSearchViewController: CollegeViewController, UISearchBarDelegate, U
     override func loadView() {
         super.loadView()
         
-        var searchBar = UISearchBar(frame: CGRectMake(0, 0, 0, 38))
-        searchBar.sizeToFit()
-        searchBar.delegate = self
-        self.searchController = UISearchDisplayController(searchBar: searchBar, contentsController: self)
-        
-        self.searchController.searchResultsDelegate = self;
-        self.searchController.searchResultsDataSource = self;
-        self.searchController.delegate = self;
-        
-        self.tableView.tableHeaderView = self.searchDisplayController?.searchBar
-        
-//        self.tableView.reloadData()
+        self.searchController = ({
+            let controller = UISearchController(searchResultsController: nil)
+            controller.searchResultsUpdater = self
+            controller.hidesNavigationBarDuringPresentation = false
+            controller.dimsBackgroundDuringPresentation = false
+            controller.searchBar.sizeToFit()
+            self.tableView.tableHeaderView = controller.searchBar
+            
+            return controller
+        })()
 
     }
 
@@ -50,7 +53,10 @@ class CollegeSearchViewController: CollegeViewController, UISearchBarDelegate, U
 
         // Do any additional setup after loading the view.
     }
-    
+    override func viewWillAppear(animated: Bool) {
+        navigationItem.backBarButtonItem?.title = ""
+
+    }
     override func viewDidAppear(animated: Bool) {
 //        tableView.reloadData()
     }
@@ -59,6 +65,33 @@ class CollegeSearchViewController: CollegeViewController, UISearchBarDelegate, U
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - Seach Bar
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController)
+    {
+        filteredList.removeAllObjects()
+        
+//        var subPredicates = NSMutableArray()
+        
+//        var words = split(searchController.searchBar.text) {$0 == " "}
+//        for word in words {
+//            NSLog("Searching with word: %@", word)
+//            var predicate = NSPredicate(format: "SELF.name CONTAINS[c] %@", word)
+//            subPredicates.addObject(predicate!)
+//        }
+        
+//        let searchPredicate = NSCompoundPredicate.andPredicateWithSubpredicates(subPredicates)
+
+        var text = searchController.searchBar.text
+        let searchPredicate = NSPredicate(format: "SELF.name contains[c] %@", text)
+        let array = (self.dataController.collegeList as NSArray).filteredArrayUsingPredicate(searchPredicate!)
+        filteredList.addObjectsFromArray(array)
+
+        self.list = filteredList
+        self.tableView.reloadData()
+        self.contentLoadingIndicator.stopAnimating()
+    }
+
     
     // MARK: - Table View
     

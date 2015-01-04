@@ -280,29 +280,6 @@
 
 #pragma mark - Search Bar
 
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
-{
-    NSLog(@"end editing");
-}
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
-{
-    NSLog(@"begin editing");
-    // Adjust views when search starts
-    float windowHeight = self.view.frame.size.height;
-    float dialogHeight = self.alertView.frame.size.height;
-    
-    self.dialogVerticalAlignment.constant = (windowHeight / 2) - (dialogHeight / 2) - 55;
-    [self.view setNeedsUpdateConstraints];
-}
-
--(void)searchDisplayController:(UISearchDisplayController *)controller didShowSearchResultsTableView:(UITableView *)tableView
-{
-    CGRect frame = self.tableView.frame;
-    frame.origin.x += self.alertView.frame.origin.x;
-    frame.origin.y -= 18;
-    [tableView setFrame:frame];
-}
-
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
     NSLog(@"START: filter content for search text");
@@ -323,14 +300,6 @@
     
     return YES;
 }
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
-    self.dialogVerticalAlignment.constant = 0;
-    [self.view setNeedsUpdateConstraints];
-}
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
 
-}
 
 @end
