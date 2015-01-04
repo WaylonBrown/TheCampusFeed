@@ -216,14 +216,32 @@
             College *college = [self getCollegeById:collegeId];
             long hours = [[t valueForKey:KEY_HOURS_EARNED] longValue];
             NSDate *date = [t valueForKey:KEY_TIME_ACTIVATED_AT];
-            
-            return [[TimeCrunchModel alloc] initWithCollege:college
-                                                      hours:hours
-                                             activationTime:date];
+            self.timeCrunch = [[TimeCrunchModel alloc] initWithCollege:college
+                                                                 hours:hours
+                                                        activationTime:date];
+
+            return self.timeCrunch;
         }
     }
     
     return nil;
+}
+- (void)saveTimeCrunchModelToCoreData:(TimeCrunchModel *)timeCrunch
+{
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSError *error;
+    NSManagedObject *mgdModel = [NSEntityDescription insertNewObjectForEntityForName:TIME_CRUNCH_ENTITY
+                                                             inManagedObjectContext:context];
+    
+    [mgdModel setValue:[timeCrunch.college getID] forKey:KEY_COLLEGE_ID];
+    [mgdModel setValue:timeCrunch.timeWasActivatedAt forKey:KEY_TIME_ACTIVATED_AT];
+    [mgdModel setValue:[NSNumber numberWithLong:timeCrunch.hoursEarned] forKey:KEY_HOURS_EARNED];
+    
+    if (![_managedObjectContext save:&error])
+    {
+        NSLog(@"Failed to save Time Crunch to core data: %@",
+              [error localizedDescription]);
+    }
 }
 - (void)activateTimeCrunch
 {

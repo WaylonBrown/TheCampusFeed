@@ -48,12 +48,13 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic, strong) Watchdog *watchDog;
 
 // Runtime status information
-@property (nonatomic, strong) College   *collegeInFocus;
-@property (nonatomic, strong) Post      *postInFocus;
-@property (nonatomic, strong) Tag       *tagInFocus;
-@property (nonatomic, strong) College   *homeCollege;
-@property (nonatomic) BOOL              showingAllColleges;
-@property (nonatomic) BOOL              showingSingleCollege;
+@property (nonatomic, strong) College *collegeInFocus;
+@property (nonatomic, strong) Post *postInFocus;
+@property (nonatomic, strong) Tag *tagInFocus;
+@property (nonatomic, strong) College *homeCollege;
+@property (nonatomic, strong) TimeCrunchModel *timeCrunch;
+@property (nonatomic) BOOL showingAllColleges;
+@property (nonatomic) BOOL showingSingleCollege;
 
 // Persistent status information
 @property (nonatomic) BOOL hasViewedAchievements;
