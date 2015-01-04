@@ -146,6 +146,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 // Achievements
 - (void)fetchAchievements;
 - (void)addAchievement:(Achievement *)achievement;
+- (void)activateTimeCrunch;
 
 // Colleges
 - (void)fetchTopColleges;

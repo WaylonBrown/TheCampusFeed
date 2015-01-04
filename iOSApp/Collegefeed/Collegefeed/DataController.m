@@ -276,6 +276,10 @@
 
 #pragma mark - Achievements
 
+- (void)activateTimeCrunch
+{
+    // TODO
+}
 - (void)fetchAchievements
 {
     self.achievementList = [[NSMutableArray alloc] init];

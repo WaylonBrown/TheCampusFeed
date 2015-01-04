@@ -133,7 +133,7 @@
     
     self.helpController                 = [[CF_DialogViewController alloc] initWithDialogType:HELP];
     
-    self.timeCrunchController           = [[TimeCrunchViewController alloc] init];
+    self.timeCrunchController           = [[TimeCrunchViewController alloc] initWithDataController:self.dataController];
 
     self.achievementController          = [[AchievementViewController alloc] initWithDataController:self.dataController];
     NSArray *viewControllers            = [NSArray arrayWithObjects:

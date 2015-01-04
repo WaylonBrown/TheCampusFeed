@@ -12,6 +12,8 @@ import QuartzCore
 
 class TimeCrunchViewController: UIViewController {
     
+    var dataController : DataController!
+    
     @IBOutlet var aboutButtonLabel : UILabel!
     @IBOutlet var aboutButton: UIView!
     @IBOutlet var hoursLabel: UILabel!
@@ -29,6 +31,12 @@ class TimeCrunchViewController: UIViewController {
         super.init(nibName: "TimeCrunchViewController", bundle: nil)
     }
     
+    init(dataController controller: DataController){
+        self.dataController = controller
+        
+        super.init()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,9 +52,9 @@ class TimeCrunchViewController: UIViewController {
         activateButton.layer.shadowOffset = CGSizeMake(2.0, 2.0)
         activateButtonLabel.font = Shared.getFontLight(22)
         
-        hoursLabel.font = Shared.getFontItalic(36)
-        daysLabel.font = Shared.getFontItalic(14)
-        schoolLabel.font = Shared.getFontItalic(16)
+        hoursLabel.font = Shared.getFontItalic(40)
+        daysLabel.font = Shared.getFontItalic(18)
+        schoolLabel.font = Shared.getFontItalic(20)
         onOffLabel.font = Shared.getFontLight(20)
     }
     
@@ -54,13 +62,21 @@ class TimeCrunchViewController: UIViewController {
         
     }
     
+    // MARK: - Actions
+    
     @IBAction func activateTimeCrunch() {
-        NSLog("Activated time crunch")
+        self.dataController.activateTimeCrunch()
     }
     
     @IBAction func showCrunchDialog() {
         let controller = CF_DialogViewController()
         controller.setAsTimeCrunchInfo()
         self.navigationController?.presentViewController(controller, animated: true, completion: nil)
+    }
+    
+    // MARK: - Helper Methods
+    
+    func updateLabels() {
+        
     }
 }
