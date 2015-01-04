@@ -41,9 +41,14 @@
     if (self)
     {
         [self setDataController:controller];
+        [self setCorrectList];
         self.activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     }
     return self;
+}
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    return [super initWithNibName:@"MasterView" bundle:nil];
 }
 - (void)setNotificationObservers
 {
@@ -413,7 +418,7 @@
     [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
     
     CollegeSearchViewController *controller = [[CollegeSearchViewController alloc] initWithDataController:self.dataController feedDelegate:self];
-    [self.navigationController presentViewController:controller animated:YES completion:nil];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 /* PostingSelectionProtocolDelegate */

@@ -16,6 +16,10 @@
 {
     return [super initWithDataController:controller];
 }
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    return [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+}
 - (void)loadView
 {
     [super loadView];

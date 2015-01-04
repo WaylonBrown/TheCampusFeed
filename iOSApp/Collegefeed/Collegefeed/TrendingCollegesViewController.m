@@ -15,12 +15,7 @@
 
 - (id)initWithDataController:(DataController *)controller
 {
-    self = [super initWithDataController:controller];
-    if (self)
-    {
-        [self setList:self.dataController.trendingColleges];
-    }
-    return self;
+    return [super initWithDataController:controller];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -74,6 +69,13 @@
         NSLog(@"Finished fetching Top Colleges");
         [super finishedFetchRequest:notification];
     }
+}
+
+#pragma mark - Helper Methods
+
+- (void)setCorrectList
+{
+    [self setList:self.dataController.trendingColleges];
 }
 
 @end

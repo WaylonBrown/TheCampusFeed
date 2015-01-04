@@ -334,6 +334,11 @@
 			children = (
 				CDFD68251A488A1100B6F4DA /* CollegeViewController.h */,
 				CDFD68261A488A1100B6F4DA /* CollegeViewController.m */,
+				CD04FE7B1A58D04E0016C107 /* Protocols */,
+				5350557C19529FCA009C1911 /* FeedSelectViewController.h */,
+				5350557D19529FCA009C1911 /* FeedSelectViewController.m */,
+				5350557E19529FCA009C1911 /* FeedSelectViewController.xib */,
+				CD04FE751A58AC120016C107 /* NearbyFeedViewController.swift */,
 				CD3614121A4B3951006AE87E /* CollegeSearchViewController.swift */,
 				5347EEA8197DD407001B2214 /* TrendingCollegesViewController.h */,
 				5347EEA9197DD407001B2214 /* TrendingCollegesViewController.m */,
@@ -365,12 +370,6 @@
 		5350558119529FD5009C1911 /* Select College */ = {
 			isa = PBXGroup;
 			children = (
-				CD04FE791A58C3BF0016C107 /* FeedSelectionProtocol.h */,
-				CD04FE7A1A58C4170016C107 /* PostingSelectionProtocol.h */,
-				5350557C19529FCA009C1911 /* FeedSelectViewController.h */,
-				5350557D19529FCA009C1911 /* FeedSelectViewController.m */,
-				5350557E19529FCA009C1911 /* FeedSelectViewController.xib */,
-				CD04FE751A58AC120016C107 /* NearbyFeedViewController.swift */,
 			);
 			name = "Select College";
 			sourceTree = "<group>";
@@ -626,6 +625,15 @@
 				CD539DDD1A2CF54C004A794E /* Constants.h */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CD04FE7B1A58D04E0016C107 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				CD04FE791A58C3BF0016C107 /* FeedSelectionProtocol.h */,
+				CD04FE7A1A58C4170016C107 /* PostingSelectionProtocol.h */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 		CD539DD61A2CDE5D004A794E /* Comment View */ = {
