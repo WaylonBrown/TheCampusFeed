@@ -59,6 +59,7 @@ class CollegeSearchViewController: CollegeViewController, UISearchBarDelegate, U
         // Dispose of any resources that can be recreated.
     }
     
+    
     // MARK: - Table View
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

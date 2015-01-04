@@ -57,7 +57,7 @@
 
 #define TEXT_VIEW_LINE_HEIGHT 17
 #define TABLE_HEADER_HEIGHT 25
-#define TABLE_CELL_HEIGHT 44
+#define TABLE_CELL_HEIGHT 50
 
 // Custom Fonts
 

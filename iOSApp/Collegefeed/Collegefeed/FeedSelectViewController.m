@@ -88,7 +88,7 @@
         tableViewHeight += self.tableView.estimatedRowHeight;
     }
     
-    self.tableHeightConstraint.constant = tableViewHeight;
+    self.tableHeightConstraint.constant = tableViewHeight - 5;
     [self.view setNeedsUpdateConstraints];
 }
 - (void)updateLocation
@@ -134,7 +134,7 @@
     
     if (section == 1)
     {
-        [cell assignSimpleText:@"All Colleges Feed"];
+        [cell assignSimpleText:@"All Colleges"];
     }
     else if (section == 2)
     {
@@ -210,7 +210,7 @@
     else if (section == 1)
     {
         headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, headerWidth, TABLE_HEADER_HEIGHT)];
-        [headerLabel setText:@"Combines All Colleges into 1 Feed"];
+        [headerLabel setText:@"Combines All into Same Feed"];
     }
     else if (section == 2)
     {   // section of all colleges

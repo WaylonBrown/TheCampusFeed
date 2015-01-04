@@ -33,6 +33,19 @@ class NearbyFeedViewController: FeedSelectViewController, UITableViewDataSource,
         // Dispose of any resources that can be recreated.
     }
     
+    override func fixHeights() {
+        var tableViewHeight: CGFloat = 0
+        var numNearbyColleges = dataController.nearbyColleges.count;
+        
+        // Each nearby college
+        for (var i = 0; i < max(1, numNearbyColleges); i++) {
+            tableViewHeight += tableView.estimatedRowHeight
+        }
+        
+        self.tableHeightConstraint.constant = tableViewHeight
+        self.view.setNeedsUpdateConstraints()
+    }
+    
     // MARK: - Table View
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
