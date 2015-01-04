@@ -73,7 +73,9 @@ class CollegeSearchViewController: CollegeViewController, UISearchBarDelegate, U
         self.feedDelegate?.switchToFeedForCollegeOrNil(self.list.objectAtIndex(indexPath.row) as College)
     }
     
-    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 10;
+    }
     // MARK: - Network Actions
     
     override func fetchContent() {

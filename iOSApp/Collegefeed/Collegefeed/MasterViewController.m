@@ -417,7 +417,7 @@
 - (void)showDialogForAllColleges
 {
     [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
-    
+    [self.view setNeedsDisplay];
     CollegeSearchViewController *controller = [[CollegeSearchViewController alloc] initWithDataController:self.dataController feedDelegate:self];
     [self.navigationController pushViewController:controller animated:YES];
 }

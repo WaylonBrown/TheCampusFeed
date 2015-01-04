@@ -8,7 +8,6 @@
             <connections>
                 <outlet property="alertView" destination="llI-Ec-hur" id="NLf-tT-nQj"/>
                 <outlet property="dialogVerticalAlignment" destination="Koh-5O-X2L" id="sFE-Tj-lSp"/>
-                <outlet property="mySearchBar" destination="81F-yl-02v" id="92D-aV-UdB"/>
                 <outlet property="tableHeightConstraint" destination="ckm-SW-6Dk" id="j0A-zn-UVM"/>
                 <outlet property="tableView" destination="5P2-ay-ia0" id="QE2-N8-PGn"/>
                 <outlet property="titleLabel" destination="SyC-9r-LzP" id="RZ9-AD-aSl"/>
@@ -30,11 +29,6 @@
                         <action selector="dismiss" destination="-1" eventType="touchUpInside" id="gQr-qM-8yv"/>
                     </connections>
                 </button>
-                <searchBar contentMode="redraw" searchBarStyle="prominent" translatesAutoresizingMaskIntoConstraints="NO" id="81F-yl-02v">
-                    <rect key="frame" x="20" y="60" width="280" height="43"/>
-                    <color key="barTintColor" red="0.87450987099999999" green="0.87450987099999999" blue="0.87450987099999999" alpha="1" colorSpace="deviceRGB"/>
-                    <textInputTraits key="textInputTraits"/>
-                </searchBar>
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="llI-Ec-hur">
                     <rect key="frame" x="20" y="128" width="280" height="312"/>
                     <subviews>
@@ -79,18 +73,12 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="81F-yl-02v" firstAttribute="trailing" secondItem="llI-Ec-hur" secondAttribute="trailing" id="2Xv-K2-sK1"/>
                 <constraint firstAttribute="centerX" secondItem="llI-Ec-hur" secondAttribute="centerX" id="2gl-ry-VMr"/>
                 <constraint firstItem="5nr-Vv-dnb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3LK-wa-PMv"/>
                 <constraint firstAttribute="trailing" secondItem="5nr-Vv-dnb" secondAttribute="trailing" id="7Ln-n3-wca"/>
                 <constraint firstAttribute="bottom" secondItem="5nr-Vv-dnb" secondAttribute="bottom" id="850-cR-J5o"/>
-                <constraint firstItem="81F-yl-02v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="8lY-rk-DLA"/>
                 <constraint firstAttribute="centerY" secondItem="llI-Ec-hur" secondAttribute="centerY" id="Koh-5O-X2L"/>
-                <constraint firstAttribute="trailing" secondItem="81F-yl-02v" secondAttribute="trailing" constant="20" id="MQ2-tu-daq"/>
-                <constraint firstItem="llI-Ec-hur" firstAttribute="top" secondItem="81F-yl-02v" secondAttribute="bottom" constant="25" id="NxP-oX-7qB"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="llI-Ec-hur" secondAttribute="bottom" constant="60" id="QUm-oz-dTa"/>
-                <constraint firstItem="81F-yl-02v" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="60" id="fWa-zc-iup"/>
-                <constraint firstItem="81F-yl-02v" firstAttribute="leading" secondItem="llI-Ec-hur" secondAttribute="leading" id="h4g-hO-0AN"/>
                 <constraint firstItem="5nr-Vv-dnb" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="xvi-zQ-qAu"/>
             </constraints>
         </view>

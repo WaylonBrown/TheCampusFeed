@@ -58,27 +58,6 @@
     // Set fonts
     [self.titleLabel setFont:CF_FONT_LIGHT(30)];
     
-    // Search bar
-    self.mySearchBar.hidden = YES;
-    self.mySearchBar.layer.borderWidth = 2;
-    self.mySearchBar.layer.cornerRadius = 5;
-    
-    // Search Display
-    if (self.type == ALL_COLLEGES_WITH_SEARCH)
-    {
-        self.searchResult = [NSMutableArray arrayWithCapacity:[self.dataController.collegeList count]];
-        [self.mySearchBar setHidden:NO];
-        [self.mySearchBar setPlaceholder:@"Type a college's name"];
-        [self.mySearchBar setKeyboardType:UIKeyboardTypeAlphabet];
-        [self.mySearchBar setDelegate:self];
-        
-        self.searchDisplay = [[UISearchDisplayController alloc] initWithSearchBar:self.mySearchBar contentsController:self];
-        
-        self.searchDisplay.searchResultsTableView.frame = self.tableView.frame;
-        self.searchDisplay.delegate = self;
-        self.searchDisplay.searchResultsDataSource = self;
-        self.searchDisplay.searchResultsDelegate = self;
-    }
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -95,10 +74,6 @@
 }
 - (void)fixHeights
 {
-    if (self.type == ALL_COLLEGES_WITH_SEARCH)
-    {
-        return;
-    }
     
     NSUInteger numNearbyColleges = self.dataController.nearbyColleges.count;
     float tableViewHeight = 0;
@@ -157,16 +132,6 @@
                 return numNearby;
             }
             break;
-        case ALL_COLLEGES_WITH_SEARCH:
-            if (tableView == self.searchDisplay.searchResultsTableView)
-            {
-                return [self.searchResult count];
-            }
-            else
-            {
-                return self.dataController.collegeList.count;
-            }
-            break;
         default:
             break;
     }
@@ -213,7 +178,7 @@
                     cellLabel = @"All Colleges";
                     break;
                 case 2:
-                    cellLabel = @"Choose a College";
+                    cellLabel = @"Search for a College";
                     break;
                 default:
                     break;
@@ -249,15 +214,6 @@
             }
         }
     }
-    else
-    {
-        College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
-        if (college != nil)
-        {
-            [cell assignCollege:college withRankNumberOrNil:nil];
-            return cell;
-        }
-    }
     
     [cell assignSimpleText:cellLabel];
     return cell;
@@ -287,13 +243,6 @@
             }
             break;
         }
-//        case ALL_COLLEGES_WITH_SEARCH:
-//        {   // When user wants to see all colleges and be able to search through them
-//            College *college = [self getCollegeForIndexPath:indexPath inTableView:tableView];
-//            [self.feedDelegate switchToFeedForCollegeOrNil:college];
-//            
-//            break;
-//        }
         default: break;
     }
 }
@@ -346,11 +295,6 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (self.type == ALL_COLLEGES_WITH_SEARCH)
-    {
-        return 0;
-    }
-    
     return TABLE_HEADER_HEIGHT;
 }
 
@@ -420,18 +364,6 @@
             if (section == 0 && numNearbyColleges > row)
             {
                 return [self.dataController.nearbyColleges objectAtIndex:row];
-            }
-            break;
-        }
-        case ALL_COLLEGES_WITH_SEARCH:
-        {   // When user wants to see all colleges and be able to search through them
-            if (tableView == self.searchDisplay.searchResultsTableView)
-            {
-                return [self.searchResult objectAtIndex:row];
-            }
-            else
-            {
-                return [self.dataController.collegeList objectAtIndex:row];
             }
             break;
         }

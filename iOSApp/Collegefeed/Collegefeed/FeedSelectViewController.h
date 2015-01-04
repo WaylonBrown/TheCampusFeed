@@ -15,10 +15,7 @@
 typedef NS_ENUM(NSInteger, FeedSelectorType)
 {
     // When selecting a feed to view
-    ALL_NEARBY_OTHER,
-    
-    // When looking through all possible colleges
-    ALL_COLLEGES_WITH_SEARCH
+    ALL_NEARBY_OTHER
 };
 
 @interface FeedSelectViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
@@ -26,9 +23,6 @@ typedef NS_ENUM(NSInteger, FeedSelectorType)
 @property (strong, nonatomic) id<FeedSelectionProtocol> feedDelegate;
 @property (strong, nonatomic) DataController *dataController;
 @property (nonatomic, strong) NSMutableArray *searchResult;
-
-@property (nonatomic, strong) UISearchDisplayController *searchDisplay;
-//@property (strong, nonatomic) UISearchController *searchController;
 
 @property (strong, nonatomic) IBOutlet UISearchBar *mySearchBar;
 
