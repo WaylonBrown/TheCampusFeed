@@ -70,21 +70,20 @@ class CollegeSearchViewController: CollegeViewController, UITableViewDataSource,
     func updateSearchResultsForSearchController(searchController: UISearchController)
     {
         filteredList.removeAllObjects()
-        
-//        var subPredicates = NSMutableArray()
-        
-//        var words = split(searchController.searchBar.text) {$0 == " "}
-//        for word in words {
-//            NSLog("Searching with word: %@", word)
-//            var predicate = NSPredicate(format: "SELF.name CONTAINS[c] %@", word)
-//            subPredicates.addObject(predicate!)
-//        }
-        
-//        let searchPredicate = NSCompoundPredicate.andPredicateWithSubpredicates(subPredicates)
-
         var text = searchController.searchBar.text
-        let searchPredicate = NSPredicate(format: "SELF.name contains[c] %@", text)
-        let array = (self.dataController.collegeList as NSArray).filteredArrayUsingPredicate(searchPredicate!)
+
+        var subPredicates = NSMutableArray()
+        
+        var words = split(searchController.searchBar.text) {$0 == " "}
+        for word in words {
+            NSLog("Searching with word: %@", word)
+            var predicate = NSPredicate(format: "SELF.name CONTAINS[c] %@", word)
+            subPredicates.addObject(predicate!)
+        }
+        
+        let searchPredicate = NSCompoundPredicate.andPredicateWithSubpredicates(subPredicates)
+
+        let array = (self.dataController.collegeList as NSArray).filteredArrayUsingPredicate(searchPredicate)
         filteredList.addObjectsFromArray(array)
 
         self.list = filteredList
