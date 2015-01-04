@@ -78,6 +78,7 @@
 		53FF2D0A195BCE7D0040E872 /* UserComments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D09195BCE7D0040E872 /* UserComments.txt */; };
 		53FF2D0C195BCE850040E872 /* UserVotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53FF2D0B195BCE850040E872 /* UserVotes.txt */; };
 		CD04FE761A58AC120016C107 /* NearbyFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04FE751A58AC120016C107 /* NearbyFeedViewController.swift */; };
+		CD04FE7F1A59D0FF0016C107 /* TimeCrunchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04FE7E1A59D0FF0016C107 /* TimeCrunchModel.swift */; };
 		CD3614131A4B3951006AE87E /* CollegeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3614121A4B3951006AE87E /* CollegeSearchViewController.swift */; };
 		CD539DD31A2CCE7D004A794E /* TopPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD21A2CCE7D004A794E /* TopPostsViewController.m */; };
 		CD539DD91A2CDE99004A794E /* NewPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD81A2CDE99004A794E /* NewPostsViewController.m */; };
@@ -242,6 +243,7 @@
 		CD04FE751A58AC120016C107 /* NearbyFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyFeedViewController.swift; sourceTree = "<group>"; };
 		CD04FE791A58C3BF0016C107 /* FeedSelectionProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedSelectionProtocol.h; sourceTree = "<group>"; };
 		CD04FE7A1A58C4170016C107 /* PostingSelectionProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostingSelectionProtocol.h; sourceTree = "<group>"; };
+		CD04FE7E1A59D0FF0016C107 /* TimeCrunchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeCrunchModel.swift; sourceTree = "<group>"; };
 		CD1B77481A3AD8B300686579 /* TableCellProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TableCellProtocol.h; path = Collegefeed/TableCellProtocol.h; sourceTree = "<group>"; };
 		CD3614121A4B3951006AE87E /* CollegeSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollegeSearchViewController.swift; sourceTree = "<group>"; };
 		CD539DD11A2CCE7D004A794E /* TopPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPostsViewController.h; sourceTree = "<group>"; };
@@ -501,6 +503,7 @@
 				CDF6B9C11A51DB58005F4555 /* Achievement.swift */,
 				CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */,
 				53AB57B7194AAFB3001D1B7B /* Other */,
+				CD04FE7E1A59D0FF0016C107 /* TimeCrunchModel.swift */,
 			);
 			name = "Source Code";
 			sourceTree = "<group>";
@@ -822,6 +825,7 @@
 				5352B5A2195F5C3100FEB2BF /* UIView+Toast.m in Sources */,
 				CD539DDC1A2CE488004A794E /* TagPostsViewController.m in Sources */,
 				CDF6B9C21A51DB58005F4555 /* Achievement.swift in Sources */,
+				CD04FE7F1A59D0FF0016C107 /* TimeCrunchModel.swift in Sources */,
 				CDFD68271A488A1100B6F4DA /* CollegeViewController.m in Sources */,
 				5347EEAA197DD407001B2214 /* TrendingCollegesViewController.m in Sources */,
 				53B1FE0019254E8F00905E49 /* MasterViewController.m in Sources */,
