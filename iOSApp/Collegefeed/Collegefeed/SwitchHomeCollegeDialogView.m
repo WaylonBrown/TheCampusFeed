@@ -41,6 +41,8 @@
     [self.button2 setTitle:@"Yes" forState:UIControlStateNormal];
     
     [self.button1 addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
+    [self.button1 addTarget:^{ NSLog(@"Did not change home college"); } action:@selector(invoke) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.button2 addTarget:self.acceptanceBlock action:@selector(invoke) forControlEvents:UIControlEventTouchUpInside];
     [self.button2 addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
     

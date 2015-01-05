@@ -56,7 +56,7 @@
     [self.viewDeckController setCenterController:viewController];
     
     [viewController.tableView reloadData];
-    [viewController.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    [viewController.tableView scrollRectToVisible:CGRectMake(0,0,1,1) animated:YES];
 }
 - (void)switchToTopPosts
 {

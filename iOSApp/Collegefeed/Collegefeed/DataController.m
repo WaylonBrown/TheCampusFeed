@@ -1009,35 +1009,6 @@
     {
         blockUpdateTimeCrunch();
     }
-    
-//    if (self.timeCrunch == nil)
-//    {
-//        // This block will initialize timeCrunch
-//        blockUpdateTimeCrunch();
-//    }
-//    else // self.timeCrunch exists already
-//    {
-//        College *crunchCollege = self.timeCrunch.college;
-//        
-//        if (crunchCollege == nil)
-//        {
-//            NSLog(@"Time Crunch model exists, but did not have a college assigned. Assigning %@", post.college);
-//            blockUpdateTimeCrunch();
-//        }
-//        else if (crunchCollege != postCollege)  // both are non-nil
-//        {
-//            // Trying to post to a different home college
-//            NSLog(@"Time Crunch home college is different than the one for this post. Displaying prompt dialog to user");
-//            SwitchHomeCollegeDialogView *dialog = [[SwitchHomeCollegeDialogView alloc] initWithAcceptanceBlock:blockUpdateTimeCrunch];
-//
-//            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
-//        }
-//        else
-//        {
-//            // Posting to home college normally
-//            blockUpdateTimeCrunch();
-//        }
-//    }
 }
 - (TimeCrunchModel *)getTimeCrunchModel
 {
