@@ -84,6 +84,11 @@
     NSString *message = @"A search for a tag cannot include the symbols !, $, %, ^, &, *, +, or .";
     [self addToQueue:message];
 }
+- (void)toastErrorFindingTimeCrunchCollege
+{
+    NSString *message = @"Error retrieving Time Crunch college. Make a post to set your home college";
+    [self addToQueue:message];
+}
 - (void)toastPostFailed
 {
     NSString *message = @"Failed to post, please try again later.";

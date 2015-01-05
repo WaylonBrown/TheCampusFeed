@@ -948,31 +948,18 @@
 
 - (void)attemptActivateTimeCrunch
 {
-    if (self.timeCrunch == nil)
+    if (self.timeCrunch == nil || self.timeCrunch.college == nil)
     {
-        return;
-    }
-    
-    College *college = self.timeCrunch.college;
-    if (college == nil)
-    {
-        // Toast "Error retrieving Time Crunch college. Make a post to set your home college"
+        [self.toaster toastErrorFindingTimeCrunchCollege];
     }
     else
     {
         if ([self.timeCrunch getHoursRemaining] > 0)
         {
             NSDate *now = [NSDate date];
-                NSLog(@"AAA Time Crunch activation time: %@", self.timeCrunch.timeWasActivatedAt);
-//            self.timeCrunch.timeWasActivatedAt = now;
             [self.timeCrunch activateAtTime:now];
-                NSLog(@"BBB Time Crunch activation time: %@", self.timeCrunch.timeWasActivatedAt);
         }
     }
-    
-    NSLog(@"Time Crunch activation time: %@", self.timeCrunch.timeWasActivatedAt);
-    NSLog(@"Time Crunch college: %@", self.timeCrunch.college.name);
-    
 }
 - (void)updateTimeCrunchWithNewPost:(Post *)post
 {
@@ -1017,7 +1004,7 @@
     }
     
     // Update stats in core data
-    [self saveTimeCrunchModelToCoreData:self.timeCrunch];
+    [self saveTimeCrunchModelToCoreData:self.timeCrunch allowMultiple:NO];
     [self saveStatusToCoreData];
 
 }
@@ -1054,7 +1041,7 @@
     
     return nil;
 }
-- (void)saveTimeCrunchModelToCoreData:(TimeCrunchModel *)timeCrunch
+- (void)saveTimeCrunchModelToCoreData:(TimeCrunchModel *)timeCrunch allowMultiple:(BOOL)canSaveMany
 {
     NSError *error;
     NSManagedObjectContext *context = [self managedObjectContext];
@@ -1067,16 +1054,24 @@
     
     bool foundMatch = NO;
     
-    // Find the matching college
     for (NSManagedObject *t in fetchedTimeCrunches)
     {
-        if (timeCrunch.college.collegeID == [[t valueForKey:KEY_COLLEGE_ID] longValue]
-            && timeCrunch.college.collegeID != 0)
+        if (canSaveMany)
         {
-            foundMatch = YES;
-            
-            [t setValue:[NSNumber numberWithLong:[timeCrunch getHoursEarned]] forKey:KEY_HOURS_EARNED];
-            [t setValue:timeCrunch.timeWasActivatedAt forKey:KEY_TIME_ACTIVATED_AT];
+            // Update matching college
+            if (timeCrunch.college.collegeID == [[t valueForKey:KEY_COLLEGE_ID] longValue]
+                && timeCrunch.college.collegeID != 0)
+            {
+                foundMatch = YES;
+                
+                [t setValue:[NSNumber numberWithLong:[timeCrunch getHoursEarned]] forKey:KEY_HOURS_EARNED];
+                [t setValue:timeCrunch.timeWasActivatedAt forKey:KEY_TIME_ACTIVATED_AT];
+            }
+        }
+        else
+        {
+            // Cannot save multiple, delete existing ones
+            [context deleteObject:t];
         }
     }
     
@@ -1090,7 +1085,6 @@
         [mgdModel setValue:timeCrunch.timeWasActivatedAt forKey:KEY_TIME_ACTIVATED_AT];
         [mgdModel setValue:[NSNumber numberWithLong:[timeCrunch getHoursEarned]] forKey:KEY_HOURS_EARNED];
     }
-    
     
     if (![_managedObjectContext save:&error])
     {

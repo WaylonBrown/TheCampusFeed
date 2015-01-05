@@ -24,7 +24,6 @@
 
 - (void)toastCustomMessage:(NSString *)message;
 
-
 // Validation Error
 - (void)toastInvalidDownvote;
 - (void)toastCommentTooShortWithLength:(int)minLength;
@@ -32,6 +31,7 @@
 - (void)toastTagSearchTooShortWithLength:(int)minLength;
 - (void)toastTagNeedsHash;
 - (void)toastInvalidTagSearch;
+- (void)toastErrorFindingTimeCrunchCollege;
 
 // Network Error
 - (void)toastLocationConnectionError;
