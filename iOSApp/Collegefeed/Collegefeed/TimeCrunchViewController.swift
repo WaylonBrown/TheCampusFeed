@@ -61,8 +61,7 @@ class TimeCrunchViewController: UIViewController {
         schoolLabel.font = Shared.getFontItalic(20)
         onOffLabel.font = Shared.getFontLight(20)
     }
-    
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         self.updateLabels()
     }
     
@@ -73,7 +72,9 @@ class TimeCrunchViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func activateTimeCrunch() {
-        myDataController!.activateTimeCrunch()
+        myDataController!.attemptActivateTimeCrunch()
+        
+        updateLabels()
     }
     
     @IBAction func showCrunchDialog() {
@@ -85,19 +86,21 @@ class TimeCrunchViewController: UIViewController {
     // MARK: - Helper Methods
     
     func updateLabels() {
-        var model = myDataController!.getTimeCrunchModel()
-        
-        if model == nil {
+        if let model = myDataController!.getTimeCrunchModel() {
+            
+            var hours: Int = model.getHoursRemaining() as Int
+            var days: Double = Double(hours) / 24.0 as Double
+            
+            hoursLabel.text = NSString(format: "%d hrs", hours)
+            daysLabel.text = NSString(format: "(%.1f days)", days)
+            schoolLabel.text = model.college!.name
+            onOffLabel.text = (model.timeWasActivatedAt != nil) ? "Time Crunch is on." : "Time Crunch is off."
+        }
+        else {
             hoursLabel.text = "0 hrs"
             daysLabel.text = "Start posting to get time!"
             schoolLabel.text = ""
-        }
-        else {
-            var hours: Int = model!.getHoursRemaining()
-            var days: Double = Double(hours) / 24.0
-            hoursLabel.text = NSString(format: "%d hrs", hours)
-            daysLabel.text = NSString(format: "(%.1f days)", days)
-            schoolLabel.text = model!.college.name
+            onOffLabel.text = "Time Crunch is off."
         }
     }
 }

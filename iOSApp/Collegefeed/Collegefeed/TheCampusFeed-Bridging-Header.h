@@ -20,5 +20,6 @@
 #import "SimpleTableCell.h"
 #import "FeedSelectionProtocol.h"
 #import "PostingSelectionProtocol.h"
+#import "DataController.h"
 
 #endif

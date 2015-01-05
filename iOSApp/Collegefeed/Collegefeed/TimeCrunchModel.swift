@@ -8,40 +8,47 @@
 
 class TimeCrunchModel: NSObject {
     
-    var college: College
-    var hoursEarned: Int = 0
-    var timeWasActivatedAt: NSDate? = nil
+    var college: College?
+    var hoursEarned: Int? = 0
+    var timeWasActivatedAt: NSDate?
     
-    init(college: College, hours: Int, activationTime: NSDate?) {
+    init(college: College, hours: Int, activationTime: NSDate) {
+        super.init()
+
         self.college = college
         self.hoursEarned = hours
-        self.timeWasActivatedAt = activationTime
-        
-        super.init()
+        self.timeWasActivatedAt = activationTime.copy() as? NSDate
     }
     
-    func activateTime(date: NSDate) {
-        timeWasActivatedAt = date
+    func activateAtTime(date: NSDate) {
+        
+        self.timeWasActivatedAt = date.copy() as? NSDate
+    }
+    
+    func getHoursEarned() -> Int {
+        return Int(hoursEarned!)
     }
     
     func getHoursRemaining() -> Int {
-        if timeWasActivatedAt == nil {
-            return hoursEarned
+        if let oldTime = self.timeWasActivatedAt {
+            
+            var now: NSDate = NSDate()
+            var interval = Int(now.timeIntervalSinceDate(oldTime))
+            var hoursUsed = Int((interval / 60) / 60)
+            var hoursRemain = hoursEarned! - hoursUsed
+            
+            if hoursRemain == 0 {
+                reset()
+            }
+            
+            return hoursRemain
         }
-        
-        // interval will be difference in seconds
-        var interval:Int = Int(NSDate().timeIntervalSinceDate(timeWasActivatedAt!))
-        var hours = Int(max((interval / 60) / 60, 0))
-        
-        if hours == 0 {
-            timeWasActivatedAt = nil
-        }
-        
-        return hours
+
+        return hoursEarned!
     }
     
     func addHours(newHours: Int) {
-        hoursEarned += newHours
+        hoursEarned = hoursEarned?.advancedBy(newHours)
     }
     
     func reset() {

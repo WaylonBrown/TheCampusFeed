@@ -171,8 +171,8 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (void)fetchTrendingTagsForSingleCollege;
 
 // Time Crunch
-- (void)activateTimeCrunch;
 - (TimeCrunchModel *)getTimeCrunchModel;
+- (void)attemptActivateTimeCrunch;
 
 // User data
 - (void)retrieveUserPosts;

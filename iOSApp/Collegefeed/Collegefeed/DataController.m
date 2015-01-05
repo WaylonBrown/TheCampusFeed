@@ -946,6 +946,34 @@
 
 #pragma mark - Time Crunch
 
+- (void)attemptActivateTimeCrunch
+{
+    if (self.timeCrunch == nil)
+    {
+        return;
+    }
+    
+    College *college = self.timeCrunch.college;
+    if (college == nil)
+    {
+        // Toast "Error retrieving Time Crunch college. Make a post to set your home college"
+    }
+    else
+    {
+        if ([self.timeCrunch getHoursRemaining] > 0)
+        {
+            NSDate *now = [NSDate date];
+                NSLog(@"AAA Time Crunch activation time: %@", self.timeCrunch.timeWasActivatedAt);
+//            self.timeCrunch.timeWasActivatedAt = now;
+            [self.timeCrunch activateAtTime:now];
+                NSLog(@"BBB Time Crunch activation time: %@", self.timeCrunch.timeWasActivatedAt);
+        }
+    }
+    
+    NSLog(@"Time Crunch activation time: %@", self.timeCrunch.timeWasActivatedAt);
+    NSLog(@"Time Crunch college: %@", self.timeCrunch.college.name);
+    
+}
 - (void)updateTimeCrunchWithNewPost:(Post *)post
 {
     if (self.timeCrunch == nil)
@@ -969,16 +997,16 @@
             
             // TODO: prompt if user wants to switch home college
 
-            if (false) // agrees to change
+            if (true) // agrees to change
             {
-                [self.timeCrunch resetForNewCollege:post.college];
+//                [self.timeCrunch resetForNewCollege:post.college];
                 
-                self.homeCollegeForTimeCrunch = post.college;
-                self.homeCollegeId = post.college.collegeID;
+//                self.homeCollegeForTimeCrunch = post.college;
+//                self.homeCollegeId = post.college.collegeID;
             }
             else    // refuses to change
             {
-                return;
+//                return;
             }
         }
         else
@@ -1047,7 +1075,7 @@
         {
             foundMatch = YES;
             
-            [t setValue:[NSNumber numberWithLong:timeCrunch.hoursEarned] forKey:KEY_HOURS_EARNED];
+            [t setValue:[NSNumber numberWithLong:[timeCrunch getHoursEarned]] forKey:KEY_HOURS_EARNED];
             [t setValue:timeCrunch.timeWasActivatedAt forKey:KEY_TIME_ACTIVATED_AT];
         }
     }
@@ -1060,7 +1088,7 @@
         
         [mgdModel setValue:[timeCrunch.college getID] forKey:KEY_COLLEGE_ID];
         [mgdModel setValue:timeCrunch.timeWasActivatedAt forKey:KEY_TIME_ACTIVATED_AT];
-        [mgdModel setValue:[NSNumber numberWithLong:timeCrunch.hoursEarned] forKey:KEY_HOURS_EARNED];
+        [mgdModel setValue:[NSNumber numberWithLong:[timeCrunch getHoursEarned]] forKey:KEY_HOURS_EARNED];
     }
     
     
@@ -1070,13 +1098,8 @@
               [error localizedDescription]);
     }
 }
-- (void)activateTimeCrunch
-{
-    // TODO
-}
 
 #pragma mark - User data
-
 
 - (void)retrieveUserComments
 {
