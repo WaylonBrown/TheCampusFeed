@@ -74,7 +74,7 @@ class TimeCrunchModel: NSObject {
             }
         }
         
-        println("TimeCrunchModel changed college to \(newCollege)")
+        println("TimeCrunchModel changed college to \(newCollege.name)")
         self.college = newCollege
         reset()
     }

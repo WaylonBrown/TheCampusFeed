@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+// TODO: make subclasses instead of using these
 typedef NS_ENUM(NSInteger, DialogType)
 {
     HELP,
     TIME_CRUNCH,
     UPDATE,
     TWITTER,
-    WEBSITE
+    WEBSITE,
+    CUSTOM
 };
 
 @interface CF_DialogViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
@@ -42,8 +44,8 @@ typedef NS_ENUM(NSInteger, DialogType)
 - (void)setAsRequiredUpdate;
 - (void)setAsTwitterReminder;
 - (void)setAsWebsiteReminder;
-- (void)setAsTimeCrunchSwitchCollegePrompt;
 
 - (IBAction)dismiss:(id)sender;
+- (void)fixHeights;
 
 @end

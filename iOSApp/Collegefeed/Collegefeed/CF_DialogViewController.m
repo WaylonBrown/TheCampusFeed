@@ -38,19 +38,23 @@
     self = [super initWithNibName:@"CF_DialogViewController" bundle:nil];
     if (self)
     {
+        [self setDialogType:CUSTOM];
         [self setModalPresentationStyle:UIModalPresentationCustom];
         [self setTransitioningDelegate:self];
         self.buttonCount = 1;
     }
     return self;
 }
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
     [self.contentView scrollRectToVisible:CGRectMake(0,0,1,1) animated:NO];
+    
+    [self.titleTextView setFont:CF_FONT_LIGHT(20)];
+    [self.contentView setFont:CF_FONT_LIGHT(15)];
+    [self.titleTextView setTextColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -76,11 +80,6 @@
         default:
             break;
     }
-    
-    [self.titleTextView setFont:CF_FONT_LIGHT(20)];
-    [self.contentView setFont:CF_FONT_LIGHT(15)];
-    [self.titleTextView setTextColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
-    
 
     [self fixHeights];
 }
@@ -95,6 +94,10 @@
 }
 - (void)fixHeights
 {
+    [self.titleTextView setFont:CF_FONT_LIGHT(20)];
+    [self.contentView setFont:CF_FONT_LIGHT(15)];
+    [self.titleTextView setTextColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
+    
     float currTextHeight    = self.contentView.frame.size.height;
     float currTitleHeight   = self.titleTextView.frame.size.height;
     
@@ -160,25 +163,9 @@
     [self.titleTextView setText:@"Don't forget TheCampusFeed is also on the web!"];
     [self.contentView setText:@"Want to check out posts while you're on your computer? Be sure to check out www.TheCampusFeed.com!"];
 }
-//- (void)setAsTimeCrunchSwitchCollegePrompt
-//{
-//    self.dialogType = TIME_CRUNCH_SWITCH_COLLEGE;
-//    [self.titleTextView setText:@"Change home college for Time Crunch?"];
-//    [self.contentView setText:@"You posted to a college that isn't your Time Crunch college, meaning no hours were added to your Time Crunch. Want to switch your college to this one? All current Time Crunch hours will be wiped."];
-//    
-//    [self.button1 setTitle:@"No" forState:UIControlStateNormal];
-//    [self.button2 setTitle:@"Yes" forState:UIControlStateNormal];
-//    [self.button2 addTarget:self action:@selector(switchCollege) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    self.buttonCount = 2;
-//}
 
 #pragma mark - Helpers for Specific Screens
 
-//- (void)switchCollege
-//{
-//    [self.delegate didRespond:YES fromDialogType:TIME_CRUNCH_SWITCH_COLLEGE];
-//}
 - (void)followOnTwitter
 {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/intent/user?screen_name=The_Campus_Feed"]];

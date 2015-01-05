@@ -58,7 +58,7 @@ class TimeCrunchViewController: UIViewController {
         
         hoursLabel.font = Shared.getFontItalic(40)
         daysLabel.font = Shared.getFontItalic(18)
-        schoolLabel.font = Shared.getFontItalic(20)
+        schoolLabel.font = Shared.getFontItalic(18)
         onOffLabel.font = Shared.getFontLight(20)
     }
     override func viewWillAppear(animated: Bool) {
