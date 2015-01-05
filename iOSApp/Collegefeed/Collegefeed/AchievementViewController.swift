@@ -30,28 +30,39 @@ class AchievementViewController: MasterViewController, UITableViewDataSource, UI
     }
 
     override func viewDidAppear(animated: Bool) {
-        tableView.reloadData()
         self.dataController.hasViewedAchievements = true
+        self.dataController.fetchAchievements()
+        tableView.reloadData()
     }
     
     // MARK: Network Actions
     
     override func fetchContent() {
         super.fetchContent()
-        
+        self.dataController.retrieveUserPosts()
         self.dataController.fetchAchievements()
     }
     
     override func finishedFetchRequest(notification: NSNotification!) {
         
         if let info = notification.userInfo as? Dictionary<String,String> {
-            if let feed = info["feedName"] {
+            if let feed : String = info["feedName"] {
                 if feed == "achievements" {
                     NSLog("Finished fetching achievements")
                     super.finishedFetchRequest(notification)
                 }
+//                if feed == "userPosts" {
+//                    NSLog("Finished fetching userPosts in AchievementViewController")
+//                    self.dataController.checkAchievements()
+//                    self.tableView.reloadData()
+//                    super.finishedFetchRequest(notification)
+//                }
             }
         }
+        
+        self.dataController.checkAchievements()
+        self.tableView.reloadData()
+        
     }
     
     // MARK: Table View

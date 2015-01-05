@@ -97,6 +97,7 @@ class TimeCrunchViewController: UIViewController {
             onOffLabel.text = (model.timeWasActivatedAt != nil) ? "Time Crunch is on." : "Time Crunch is off."
         }
         else {
+
             hoursLabel.text = "0 hrs"
             daysLabel.text = "Start posting to get time!"
             schoolLabel.text = ""

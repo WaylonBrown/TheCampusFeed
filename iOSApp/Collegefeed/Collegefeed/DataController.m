@@ -135,7 +135,6 @@
     self.hasViewedAchievements = [[status valueForKey:KEY_HAS_VIEWED_ACHIEVEMENTS] boolValue];
     self.numPosts = [[status valueForKey:KEY_NUM_POSTS] longValue];
     self.numPoints = [[status valueForKey:KEY_NUM_POINTS] longValue];
-    self.numTimeCrunchHours = [[status valueForKey:KEY_NUM_HOURS] longValue];
     
     // Restrictions
     self.lastCommentTime = [status valueForKey:KEY_COMMENT_TIME];
@@ -178,9 +177,7 @@
     // Achievements
     [status setValue:[NSNumber numberWithBool:self.hasViewedAchievements] forKey:KEY_HAS_VIEWED_ACHIEVEMENTS];
     [status setValue:[NSNumber numberWithLong:self.numPosts] forKey:KEY_NUM_POSTS];
-    [status setValue:[NSNumber numberWithLong:self.numPoints] forKey:KEY_NUM_POINTS];
-    [status setValue:[NSNumber numberWithLong:self.numTimeCrunchHours] forKey:KEY_NUM_HOURS];
-    
+    [status setValue:[NSNumber numberWithLong:self.numPoints] forKey:KEY_NUM_POINTS];    
     
     // Restrictions
     [status setValue:self.lastPostTime forKey:KEY_POST_TIME];
@@ -201,6 +198,27 @@
 
 #pragma mark - Achievements
 
+- (BOOL)getHasAchievedShortPostAchievement
+{
+    BOOL foundAtLeastOne = NO;
+    
+    NSLog(@"Checking if has achieved the short post achievement. Needs to earn 100 points on a post with <= 3 words");
+    for (Post *post in self.userPosts)
+    {
+        long score = [[post getScore] longValue];
+        if ([[post.text componentsSeparatedByString:@" "] count] <= 3 && score >= 100)
+        {
+            NSLog(@"Short post achievement has been achieved. \"%@\" has %ld points", post.text, score);
+            foundAtLeastOne = YES;
+        }
+        else
+        {
+            NSLog(@"Post did not qualify: \"%@\" has %ld points", post.text, score);
+        }
+    }
+    
+    return foundAtLeastOne;
+}
 - (void)fetchAchievements
 {
     self.achievementList = [[NSMutableArray alloc] init];
@@ -221,17 +239,18 @@
                                     initWithCurrAmount:[[a valueForKey:KEY_AMOUNT_CURRENTLY] longValue]
                                     reqAmt:[[a valueForKey:KEY_AMOUNT_REQUIRED] longValue]
                                     rewardHours:[[a valueForKey:KEY_HOURS_REWARD] longValue]
-                                    achieved:[[a valueForKey:KEY_HAS_ACHIEVED] boolValue]
                                     achievementType:[a valueForKey:KEY_TYPE]];
         
         [self.achievementList addObject:achievement];
     }
     
-    
     if (self.achievementList.count == 0)
     {
         [self initializeAchievements];
     }
+    
+    [self checkAchievements];
+    
     
     NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
                               @"achievements", @"feedName", nil];
@@ -287,7 +306,6 @@
 }
 - (void)initializeAchievements
 {
-//    self.achievementList = [[NSMutableArray alloc] init];
     if (self.achievementList.count != 0)
     {
         return;
@@ -306,7 +324,6 @@
         Achievement *a = [[Achievement alloc] initWithCurrAmount:self.numPosts
                                                           reqAmt:[num longValue]
                                                      rewardHours:hours
-                                                        achieved:(self.numPosts >= [num longValue])
                                                  achievementType:VALUE_POST_ACHIEVEMENT];
         
         [self addAchievement:a];
@@ -328,7 +345,6 @@
         Achievement *a = [[Achievement alloc] initWithCurrAmount:self.numPoints
                                                           reqAmt:[num longValue]
                                                      rewardHours:hours
-                                                        achieved:(self.numPoints >= [num longValue])
                                                  achievementType:VALUE_SCORE_ACHIEVEMENT];
         
         [self addAchievement:a];
@@ -338,22 +354,19 @@
     Achievement *s1 = [[Achievement alloc] initWithCurrAmount:self.hasViewedAchievements
                                                        reqAmt:1
                                                   rewardHours:10
-                                                     achieved:self.hasViewedAchievements
                                               achievementType:VALUE_VIEW_ACHIEVEMENT];
     [self addAchievement:s1];
     
 
-    Achievement *s2 = [[Achievement alloc] initWithCurrAmount:0
+    Achievement *s2 = [[Achievement alloc] initWithCurrAmount:[self getHasAchievedShortPostAchievement]
                                                        reqAmt:1
                                                   rewardHours:2000
-                                                     achieved:NO
                                               achievementType:VALUE_SHORT_POST_ACHIEVEMENT];
     [self addAchievement:s2];
     
-    Achievement *s3 = [[Achievement alloc] initWithCurrAmount:self.numTimeCrunchHours
+    Achievement *s3 = [[Achievement alloc] initWithCurrAmount:[self getTimeCrunchHours]
                                                        reqAmt:2000
                                                   rewardHours:2000
-                                                     achieved:(self.numTimeCrunchHours >= 2000)
                                               achievementType:VALUE_MANY_HOURS_ACHIEVEMENT];
     [self addAchievement:s3];
 }
@@ -725,6 +738,7 @@
             [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
             [self.recentPostsSingleCollege insertObject:networkPost atIndex:0];
             [self.userPosts insertObject:networkPost atIndex:0];
+            
             [self savePost:networkPost];
             
             Vote *actualVote = networkPost.vote;
@@ -945,6 +959,15 @@
 
 #pragma mark - Time Crunch
 
+- (long)getTimeCrunchHours
+{
+    if (self.timeCrunch == nil)
+    {
+        return 0;
+    }
+
+    return [self.timeCrunch getHoursRemaining];
+}
 - (void)attemptActivateTimeCrunch
 {
     NSLog(@"Attempt to activate Time Crunch in DataController");
@@ -1258,7 +1281,41 @@
 
 - (void)checkAchievements
 {
+    NSLog(@"Checking for achievement completion. Updating progress based on user's posts");
+    long postCount = self.userPosts.count;
+    long scoreCount = [self getUserPostScore];
     
+    NSLog(@"Found %ld submitted posts with a total of %ld points", postCount, scoreCount);
+    
+    for (Achievement *a in self.achievementList)
+    {
+        if ([a.type isEqualToString:VALUE_POST_ACHIEVEMENT])
+        {
+            a.amountCurrently = postCount;
+        }
+        else if ([a.type isEqualToString:VALUE_SCORE_ACHIEVEMENT])
+        {
+            a.amountCurrently = scoreCount;
+        }
+        else if ([a.type isEqualToString:VALUE_VIEW_ACHIEVEMENT])
+        {
+            a.amountCurrently = self.hasViewedAchievements;
+        }
+        else if ([a.type isEqualToString:VALUE_MANY_HOURS_ACHIEVEMENT])
+        {
+            a.amountCurrently = [self getTimeCrunchHours];
+        }
+        else if ([a.type isEqualToString:VALUE_SHORT_POST_ACHIEVEMENT])
+        {
+            if (![a hasAchieved])
+            {
+                // If not achieved yet, check to see if qualified now
+                a.amountCurrently = [self getHasAchievedShortPostAchievement];
+            }
+        }
+        
+        NSLog(@"Achievement: %@\nHas finished: %@\nAmount currently: %ld\nAmount needed: %ld", [a toString], [a hasAchieved] ? @"YES" : @"NO", (long)a.amountCurrently, (long)a.amountRequired);
+    }
 }
 - (void)savePost:(Post *)post
 {

@@ -61,7 +61,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic) long launchCount;
 @property (nonatomic) long numPosts;
 @property (nonatomic) long numPoints;
-@property (nonatomic) long numTimeCrunchHours;
 @property (nonatomic, strong) NSDate *lastCommentTime;
 @property (nonatomic, strong) NSDate *lastPostTime;
 
@@ -120,6 +119,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 
 // Achievements
 - (void)fetchAchievements;
+- (void)checkAchievements;
 - (void)addAchievement:(Achievement *)achievement;
 
 // Colleges

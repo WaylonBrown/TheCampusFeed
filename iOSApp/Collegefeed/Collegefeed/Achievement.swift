@@ -12,16 +12,19 @@ class Achievement: NSObject {
     var amountCurrently : Int = 0
     var amountRequired : Int = 0
     var hoursForReward : Int = 0
-    var hasAchieved : Bool = false
+    var hasAchieved : Bool {
+        get {
+            return self.amountCurrently > 0 && self.amountCurrently >= self.amountRequired
+        }
+    }
     var type : String = "Achievement"
     
-    convenience init(currAmount: Int, reqAmt: Int, rewardHours: Int, achieved: Bool, achievementType: String) {
+    convenience init(currAmount: Int, reqAmt: Int, rewardHours: Int, achievementType: String) {
         self.init()
         
         amountCurrently = currAmount
         amountRequired = reqAmt
         hoursForReward = rewardHours
-        hasAchieved = achieved
         type = achievementType
     }
     
