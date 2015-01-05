@@ -13,6 +13,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 
 #import "Constants.h"
+#import "CF_DialogViewController.h"
 
 @class Achievement;
 @class Comment;
@@ -23,11 +24,6 @@
 @class TimeCrunchModel;
 @class ToastController;
 @class Watchdog;
-
-#pragma mark - Protocol Definitions
-/********************************/
-/***** PROTOCOL DEFINITIONS *****/
-/********************************/
 
 typedef NS_ENUM(NSInteger, LocationStatus)
 {

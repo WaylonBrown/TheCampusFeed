@@ -54,6 +54,8 @@
     
     self.selectedIndex = NEW_POSTS_INDEX;
     [self.viewDeckController setCenterController:viewController];
+    
+    [viewController.tableView reloadData];
     [viewController.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 - (void)switchToTopPosts

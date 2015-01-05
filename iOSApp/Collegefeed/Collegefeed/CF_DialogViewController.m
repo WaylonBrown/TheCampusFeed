@@ -160,9 +160,25 @@
     [self.titleTextView setText:@"Don't forget TheCampusFeed is also on the web!"];
     [self.contentView setText:@"Want to check out posts while you're on your computer? Be sure to check out www.TheCampusFeed.com!"];
 }
+//- (void)setAsTimeCrunchSwitchCollegePrompt
+//{
+//    self.dialogType = TIME_CRUNCH_SWITCH_COLLEGE;
+//    [self.titleTextView setText:@"Change home college for Time Crunch?"];
+//    [self.contentView setText:@"You posted to a college that isn't your Time Crunch college, meaning no hours were added to your Time Crunch. Want to switch your college to this one? All current Time Crunch hours will be wiped."];
+//    
+//    [self.button1 setTitle:@"No" forState:UIControlStateNormal];
+//    [self.button2 setTitle:@"Yes" forState:UIControlStateNormal];
+//    [self.button2 addTarget:self action:@selector(switchCollege) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    self.buttonCount = 2;
+//}
 
 #pragma mark - Helpers for Specific Screens
 
+//- (void)switchCollege
+//{
+//    [self.delegate didRespond:YES fromDialogType:TIME_CRUNCH_SWITCH_COLLEGE];
+//}
 - (void)followOnTwitter
 {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/intent/user?screen_name=The_Campus_Feed"]];

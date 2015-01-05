@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CF_DialogViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
-
 typedef NS_ENUM(NSInteger, DialogType)
 {
     HELP,
@@ -19,8 +17,9 @@ typedef NS_ENUM(NSInteger, DialogType)
     WEBSITE
 };
 
-@property DialogType dialogType;
+@interface CF_DialogViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
 
+@property DialogType dialogType;
 
 @property (strong, nonatomic) IBOutlet UIView *dialogView;
 @property (strong, nonatomic) IBOutlet UITextView *titleTextView;
@@ -43,6 +42,7 @@ typedef NS_ENUM(NSInteger, DialogType)
 - (void)setAsRequiredUpdate;
 - (void)setAsTwitterReminder;
 - (void)setAsWebsiteReminder;
+- (void)setAsTimeCrunchSwitchCollegePrompt;
 
 - (IBAction)dismiss:(id)sender;
 

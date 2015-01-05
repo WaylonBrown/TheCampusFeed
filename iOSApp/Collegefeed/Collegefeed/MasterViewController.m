@@ -364,9 +364,9 @@
         
         if (success)
         {
-//            [self refresh];
+            NSLog(@"MasterViewController successfully created post");
             
-            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.list.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         }
         else
         {
@@ -425,7 +425,8 @@
 - (void)submitSelectionForPostWithCollege:(College *)college
 {
     [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
-    
+    [self.view setNeedsDisplay];
+
     [self showCreationDialogForCollege:college];
 }
 

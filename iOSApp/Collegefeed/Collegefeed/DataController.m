@@ -14,7 +14,7 @@
 #import "Tag.h"
 #import "Vote.h"
 #import "Networker.h"
-#import "CF_DialogViewController.h"
+#import "SwitchHomeCollegeDialogView.h"
 #import "ToastController.h"
 #import "Watchdog.h"
 
@@ -146,7 +146,6 @@
     self.collegeListVersion = [[status valueForKey:KEY_COLLEGE_LIST_VERSION] longValue];
     self.launchCount = [[status valueForKey:KEY_LAUNCH_COUNT] longValue];
     
-    NSNumber *tempNum = [status valueForKey:KEY_HOME_COLLEGE];
     self.homeCollegeId = [[status valueForKey:KEY_HOME_COLLEGE] longValue];
     
     // Time Crunch
@@ -948,65 +947,97 @@
 
 - (void)attemptActivateTimeCrunch
 {
+    NSLog(@"Attempt to activate Time Crunch in DataController");
+    
     if (self.timeCrunch == nil || self.timeCrunch.college == nil)
     {
+        NSLog(@"Activating Time Crunch failed");
         [self.toaster toastErrorFindingTimeCrunchCollege];
     }
-    else
+    else if ([self.timeCrunch getHoursRemaining] > 0)
     {
-        if ([self.timeCrunch getHoursRemaining] > 0)
-        {
-            NSDate *now = [NSDate date];
-            [self.timeCrunch activateAtTime:now];
-        }
+        NSDate *now = [NSDate date];
+        NSLog(@"Activating Time Crunch at %@", now);
+        [self.timeCrunch activateAtTime:now];
     }
 }
 - (void)updateTimeCrunchWithNewPost:(Post *)post
 {
-    if (self.timeCrunch == nil)
+    NSLog(@"Updating Time Crunch with new Post");
+    
+    College *postCollege = post.college;
+    
+    if (postCollege == nil)
     {
-        // Make new TimeCrunchModel. Save it core data
-        self.homeCollegeId = post.college.collegeID;
-        self.timeCrunch = [[TimeCrunchModel alloc] initWithCollege:post.college hours:24 activationTime:nil];
+        NSLog(@"ERROR in updateTimeCrunchWithNewPost. New post does not have a college assigned to it");
+        return;
+    }
+    
+    void (^blockUpdateTimeCrunch)(void) = ^{
+        // This block will be executed if user agrees to change home colleges
+        
+        NSLog(@"ChangeHomeCollegeBlock invoked");
+        if (self.timeCrunch == nil)
+        {
+            // Make new TimeCrunchModel
+            NSLog(@"DataController.timeCrunch is nil. Making new TimeCrunchModel");
+            self.timeCrunch = [[TimeCrunchModel alloc] init];
+        }
+        
+        self.homeCollegeForTimeCrunch = postCollege;
+        self.homeCollegeId = postCollege.collegeID;
+        
+        [self.timeCrunch changeCollege:postCollege];
+        [self.timeCrunch addHours:TIME_CRUNCH_HOURS_FOR_POST];
+        
+        NSLog(@"DataController changed home college to %@", self.homeCollegeForTimeCrunch.name);
+        
+        [self saveTimeCrunchModelToCoreData:self.timeCrunch allowMultiple:NO];
+        [self saveStatusToCoreData];
+        
+    };
+    
+    if (self.timeCrunch != nil && self.timeCrunch.college != nil && self.timeCrunch.college.collegeID != postCollege.collegeID)
+    {
+        // TimeCrunchModel exists. Trying to post to a different home college
+        NSLog(@"Time Crunch home college is different than the one for this post. Displaying prompt dialog to user");
+        SwitchHomeCollegeDialogView *dialog = [[SwitchHomeCollegeDialogView alloc] initWithAcceptanceBlock:blockUpdateTimeCrunch];
+        
+        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
     }
     else
     {
-        if (self.homeCollegeForTimeCrunch == nil)
-        {
-            // Make this post's college the one
-            self.homeCollegeId = post.college.collegeID;
-            self.homeCollegeForTimeCrunch = post.college;
-            self.timeCrunch.college = post.college;
-        }
-        else if (self.homeCollegeForTimeCrunch != post.college)
-        {
-            // Betraying for another college
-            
-            // TODO: prompt if user wants to switch home college
-
-            if (true) // agrees to change
-            {
-//                [self.timeCrunch resetForNewCollege:post.college];
-                
-//                self.homeCollegeForTimeCrunch = post.college;
-//                self.homeCollegeId = post.college.collegeID;
-            }
-            else    // refuses to change
-            {
-//                return;
-            }
-        }
-        else
-        {
-            // Award the hours deserved for a post
-            [self.timeCrunch addHours:TIME_CRUNCH_HOURS_FOR_POST];
-        }
+        blockUpdateTimeCrunch();
     }
     
-    // Update stats in core data
-    [self saveTimeCrunchModelToCoreData:self.timeCrunch allowMultiple:NO];
-    [self saveStatusToCoreData];
-
+//    if (self.timeCrunch == nil)
+//    {
+//        // This block will initialize timeCrunch
+//        blockUpdateTimeCrunch();
+//    }
+//    else // self.timeCrunch exists already
+//    {
+//        College *crunchCollege = self.timeCrunch.college;
+//        
+//        if (crunchCollege == nil)
+//        {
+//            NSLog(@"Time Crunch model exists, but did not have a college assigned. Assigning %@", post.college);
+//            blockUpdateTimeCrunch();
+//        }
+//        else if (crunchCollege != postCollege)  // both are non-nil
+//        {
+//            // Trying to post to a different home college
+//            NSLog(@"Time Crunch home college is different than the one for this post. Displaying prompt dialog to user");
+//            SwitchHomeCollegeDialogView *dialog = [[SwitchHomeCollegeDialogView alloc] initWithAcceptanceBlock:blockUpdateTimeCrunch];
+//
+//            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
+//        }
+//        else
+//        {
+//            // Posting to home college normally
+//            blockUpdateTimeCrunch();
+//        }
+//    }
 }
 - (TimeCrunchModel *)getTimeCrunchModel
 {

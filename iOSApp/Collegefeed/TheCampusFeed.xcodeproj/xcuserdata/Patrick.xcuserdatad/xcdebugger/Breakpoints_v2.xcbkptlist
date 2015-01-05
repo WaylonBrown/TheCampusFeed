@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Collegefeed/DataController.m"
-            timestampString = "442172622.985381"
+            timestampString = "442180804.019397"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "960"
-            endingLineNumber = "960"
-            landmarkName = "-attemptActivateTimeCrunch"
+            startingLineNumber = "970"
+            endingLineNumber = "970"
+            landmarkName = "-updateTimeCrunchWithNewPost:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

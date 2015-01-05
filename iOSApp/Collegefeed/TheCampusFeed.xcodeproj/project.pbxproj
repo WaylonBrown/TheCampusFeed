@@ -93,6 +93,7 @@
 		CDF66BEB1A36CEBD008C62DD /* bad_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = CDF66BEA1A36CEBD008C62DD /* bad_words.txt */; };
 		CDF6B9C21A51DB58005F4555 /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDF6B9C11A51DB58005F4555 /* Achievement.swift */; };
 		CDFD68271A488A1100B6F4DA /* CollegeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFD68261A488A1100B6F4DA /* CollegeViewController.m */; };
+		CDFE57D01A5B155D00C4B55F /* SwitchHomeCollegeDialogView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFE57CF1A5B155D00C4B55F /* SwitchHomeCollegeDialogView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -268,6 +269,8 @@
 		CDF6B9C11A51DB58005F4555 /* Achievement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
 		CDFD68251A488A1100B6F4DA /* CollegeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollegeViewController.h; sourceTree = "<group>"; };
 		CDFD68261A488A1100B6F4DA /* CollegeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollegeViewController.m; sourceTree = "<group>"; };
+		CDFE57CE1A5B155D00C4B55F /* SwitchHomeCollegeDialogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchHomeCollegeDialogView.h; sourceTree = "<group>"; };
+		CDFE57CF1A5B155D00C4B55F /* SwitchHomeCollegeDialogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchHomeCollegeDialogView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -402,6 +405,8 @@
 				538E7C8F19D030C000AD5719 /* CF_DialogViewController.h */,
 				538E7C9019D030C000AD5719 /* CF_DialogViewController.m */,
 				538E7C9119D030C000AD5719 /* CF_DialogViewController.xib */,
+				CDFE57CE1A5B155D00C4B55F /* SwitchHomeCollegeDialogView.h */,
+				CDFE57CF1A5B155D00C4B55F /* SwitchHomeCollegeDialogView.m */,
 			);
 			name = CF_DialogView;
 			sourceTree = "<group>";
@@ -837,6 +842,7 @@
 				5350557719514587009C1911 /* CreatePostCommentViewController.m in Sources */,
 				533475A41923344100E84CC8 /* TableCell.m in Sources */,
 				CD539DD91A2CDE99004A794E /* NewPostsViewController.m in Sources */,
+				CDFE57D01A5B155D00C4B55F /* SwitchHomeCollegeDialogView.m in Sources */,
 				53963DE71916E5F50084E646 /* PostsViewController.m in Sources */,
 				53F8789D19133F60002A578B /* main.m in Sources */,
 				53D51E391949625300A8BA81 /* SimpleTableCell.m in Sources */,
