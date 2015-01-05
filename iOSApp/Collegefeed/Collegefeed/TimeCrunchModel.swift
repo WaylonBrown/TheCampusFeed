@@ -40,8 +40,17 @@ class TimeCrunchModel: NSObject {
         return hours
     }
     
-    func earnedHours(newHours: Int) {        
+    func addHours(newHours: Int) {
         hoursEarned += newHours
     }
+    
+    func reset() {
+        hoursEarned = 0
+        timeWasActivatedAt = nil
+    }
 
+    func reset(forNewCollege newCollege: College) {
+        reset()
+        college = newCollege
+    }
 }

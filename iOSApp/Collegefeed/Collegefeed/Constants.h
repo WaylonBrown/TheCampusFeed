@@ -146,3 +146,6 @@
 #define KEY_DOWNVOTED_COMMENTS  @"DownvotedComments"
 #define VALUE_POST              @"Post"
 #define VALUE_COMMENT           @"Comment"
+
+// Time Crunch
+#define TIME_CRUNCH_HOURS_FOR_POST 24

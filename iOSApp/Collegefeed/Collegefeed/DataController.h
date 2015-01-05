@@ -51,7 +51,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic, strong) College *collegeInFocus;
 @property (nonatomic, strong) Post *postInFocus;
 @property (nonatomic, strong) Tag *tagInFocus;
-@property (nonatomic, strong) College *homeCollege;
+@property (nonatomic, strong) College *homeCollegeForTimeCrunch;
 @property (nonatomic, strong) TimeCrunchModel *timeCrunch;
 @property (nonatomic) BOOL showingAllColleges;
 @property (nonatomic) BOOL showingSingleCollege;
@@ -125,8 +125,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 // Achievements
 - (void)fetchAchievements;
 - (void)addAchievement:(Achievement *)achievement;
-- (void)activateTimeCrunch;
-- (TimeCrunchModel *)getTimeCrunchModel;
 
 // Colleges
 - (void)fetchTopColleges;
@@ -165,13 +163,16 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (void)fetchPostsWithTagForAllColleges:(NSString*)tagMessage;
 - (void)fetchPostsWithTagForSingleCollege:(NSString*)tagMessage;
 
-
 - (Post *)fetchPostWithId:(long)postId;
 - (Post *)fetchParentPostOfComment:(Comment *)comment;
 
 // Tags
 - (void)fetchTrendingTagsForAllColleges;
 - (void)fetchTrendingTagsForSingleCollege;
+
+// Time Crunch
+- (void)activateTimeCrunch;
+- (TimeCrunchModel *)getTimeCrunchModel;
 
 // User data
 - (void)retrieveUserPosts;

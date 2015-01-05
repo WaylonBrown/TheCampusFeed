@@ -96,12 +96,8 @@ class TimeCrunchViewController: UIViewController {
             var hours: Int = model!.getHoursRemaining()
             var days: Double = Double(hours) / 24.0
             hoursLabel.text = NSString(format: "%d hrs", hours)
-            daysLabel.text = NSString(format: "(%f.1 days)", days)
+            daysLabel.text = NSString(format: "(%.1f days)", days)
             schoolLabel.text = model!.college.name
         }
-
-        
-        
-        
     }
 }

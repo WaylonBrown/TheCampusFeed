@@ -145,7 +145,12 @@
     // Other
     self.collegeListVersion = [[status valueForKey:KEY_COLLEGE_LIST_VERSION] longValue];
     self.launchCount = [[status valueForKey:KEY_LAUNCH_COUNT] longValue];
+    
+    NSNumber *tempNum = [status valueForKey:KEY_HOME_COLLEGE];
     self.homeCollegeId = [[status valueForKey:KEY_HOME_COLLEGE] longValue];
+    
+    // Time Crunch
+    self.timeCrunch = [self getTimeCrunchModel];
 }
 - (void)saveStatusToCoreData
 {
@@ -197,56 +202,6 @@
 
 #pragma mark - Achievements
 
-- (TimeCrunchModel *)getTimeCrunchModel
-{
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:TIME_CRUNCH_ENTITY inManagedObjectContext:context];
-    
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedTimeCrunches = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    
-    for (NSManagedObject *t in fetchedTimeCrunches)
-    {
-        long collegeId = [[t valueForKey:KEY_COLLEGE_ID] longValue];
-        if (collegeId == self.homeCollegeId)
-        {
-            College *college = [self getCollegeById:collegeId];
-            long hours = [[t valueForKey:KEY_HOURS_EARNED] longValue];
-            NSDate *date = [t valueForKey:KEY_TIME_ACTIVATED_AT];
-            self.timeCrunch = [[TimeCrunchModel alloc] initWithCollege:college
-                                                                 hours:hours
-                                                        activationTime:date];
-
-            return self.timeCrunch;
-        }
-    }
-    
-    return nil;
-}
-- (void)saveTimeCrunchModelToCoreData:(TimeCrunchModel *)timeCrunch
-{
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSError *error;
-    NSManagedObject *mgdModel = [NSEntityDescription insertNewObjectForEntityForName:TIME_CRUNCH_ENTITY
-                                                             inManagedObjectContext:context];
-    
-    [mgdModel setValue:[timeCrunch.college getID] forKey:KEY_COLLEGE_ID];
-    [mgdModel setValue:timeCrunch.timeWasActivatedAt forKey:KEY_TIME_ACTIVATED_AT];
-    [mgdModel setValue:[NSNumber numberWithLong:timeCrunch.hoursEarned] forKey:KEY_HOURS_EARNED];
-    
-    if (![_managedObjectContext save:&error])
-    {
-        NSLog(@"Failed to save Time Crunch to core data: %@",
-              [error localizedDescription]);
-    }
-}
-- (void)activateTimeCrunch
-{
-    // TODO
-}
 - (void)fetchAchievements
 {
     self.achievementList = [[NSMutableArray alloc] init];
@@ -406,6 +361,12 @@
 
 #pragma mark - Colleges
 
+- (long)getIdForHomeCollege
+{
+    NSLog(@"Retrieving ID for Home college. ID = %ld", self.homeCollegeId);
+    
+    return self.homeCollegeId;
+}
 - (void)populateCollegeList
 {
     if ([self needsNewCollegeList])
@@ -983,6 +944,137 @@
            }];
 }
 
+#pragma mark - Time Crunch
+
+- (void)updateTimeCrunchWithNewPost:(Post *)post
+{
+    if (self.timeCrunch == nil)
+    {
+        // Make new TimeCrunchModel. Save it core data
+        self.homeCollegeId = post.college.collegeID;
+        self.timeCrunch = [[TimeCrunchModel alloc] initWithCollege:post.college hours:24 activationTime:nil];
+    }
+    else
+    {
+        if (self.homeCollegeForTimeCrunch == nil)
+        {
+            // Make this post's college the one
+            self.homeCollegeId = post.college.collegeID;
+            self.homeCollegeForTimeCrunch = post.college;
+            self.timeCrunch.college = post.college;
+        }
+        else if (self.homeCollegeForTimeCrunch != post.college)
+        {
+            // Betraying for another college
+            
+            // TODO: prompt if user wants to switch home college
+
+            if (false) // agrees to change
+            {
+                [self.timeCrunch resetForNewCollege:post.college];
+                
+                self.homeCollegeForTimeCrunch = post.college;
+                self.homeCollegeId = post.college.collegeID;
+            }
+            else    // refuses to change
+            {
+                return;
+            }
+        }
+        else
+        {
+            // Award the hours deserved for a post
+            [self.timeCrunch addHours:TIME_CRUNCH_HOURS_FOR_POST];
+        }
+    }
+    
+    // Update stats in core data
+    [self saveTimeCrunchModelToCoreData:self.timeCrunch];
+    [self saveStatusToCoreData];
+
+}
+- (TimeCrunchModel *)getTimeCrunchModel
+{
+    if (self.timeCrunch != nil)
+    {
+        return self.timeCrunch;
+    }
+    
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:TIME_CRUNCH_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedTimeCrunches = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    for (NSManagedObject *t in fetchedTimeCrunches)
+    {
+        long collegeId = [[t valueForKey:KEY_COLLEGE_ID] longValue];
+        if (collegeId == [self getIdForHomeCollege])
+        {
+            College *college = [self getCollegeById:collegeId];
+            long hours = [[t valueForKey:KEY_HOURS_EARNED] longValue];
+            NSDate *date = [t valueForKey:KEY_TIME_ACTIVATED_AT];
+            return [[TimeCrunchModel alloc] initWithCollege:college
+                                                      hours:hours
+                                             activationTime:date];
+            
+        }
+    }
+    
+    return nil;
+}
+- (void)saveTimeCrunchModelToCoreData:(TimeCrunchModel *)timeCrunch
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:TIME_CRUNCH_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedTimeCrunches = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    bool foundMatch = NO;
+    
+    // Find the matching college
+    for (NSManagedObject *t in fetchedTimeCrunches)
+    {
+        if (timeCrunch.college.collegeID == [[t valueForKey:KEY_COLLEGE_ID] longValue]
+            && timeCrunch.college.collegeID != 0)
+        {
+            foundMatch = YES;
+            
+            [t setValue:[NSNumber numberWithLong:timeCrunch.hoursEarned] forKey:KEY_HOURS_EARNED];
+            [t setValue:timeCrunch.timeWasActivatedAt forKey:KEY_TIME_ACTIVATED_AT];
+        }
+    }
+    
+    if (!foundMatch)
+    {
+        // If no match, create a new TimeCrunch object
+        NSManagedObject *mgdModel = [NSEntityDescription insertNewObjectForEntityForName:TIME_CRUNCH_ENTITY
+                                                                  inManagedObjectContext:context];
+        
+        [mgdModel setValue:[timeCrunch.college getID] forKey:KEY_COLLEGE_ID];
+        [mgdModel setValue:timeCrunch.timeWasActivatedAt forKey:KEY_TIME_ACTIVATED_AT];
+        [mgdModel setValue:[NSNumber numberWithLong:timeCrunch.hoursEarned] forKey:KEY_HOURS_EARNED];
+    }
+    
+    
+    if (![_managedObjectContext save:&error])
+    {
+        NSLog(@"Failed to save Time Crunch to core data: %@",
+              [error localizedDescription]);
+    }
+}
+- (void)activateTimeCrunch
+{
+    // TODO
+}
+
 #pragma mark - User data
 
 
@@ -1156,12 +1248,17 @@
     NSManagedObject *mgdPost = [NSEntityDescription insertNewObjectForEntityForName:POST_ENTITY
                                                                 inManagedObjectContext:context];
     [mgdPost setValue:[NSNumber numberWithLong:[post.id longValue]] forKeyPath:KEY_POST_ID];
+    
     self.numPosts++;
+    
     if (![_managedObjectContext save:&error])
     {
         NSLog(@"Failed to save user post: %@",
               [error localizedDescription]);
     }
+    
+    [self updateTimeCrunchWithNewPost:post];
+    
 }
 - (void)saveComment:(Comment *)comment
 {
