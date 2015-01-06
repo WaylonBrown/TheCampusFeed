@@ -39,8 +39,11 @@
     {
         [self checkAppVersionNumber];
         [self initArrays];
-        [self restoreStatusFromCoreData];
-        [self populateCollegeList];
+        
+        [self restoreAllCoreData];
+        
+//        [self restoreStatusFromCoreData];
+//        [self populateCollegeList];
 
         
 //        [self setShowingAllColleges:YES];
@@ -91,6 +94,20 @@
     self.userPostVotes = [[NSMutableArray alloc] init];
     self.userCommentVotes = [[NSMutableArray alloc] init];
 }
+
+- (void)restoreAllCoreData
+{
+    [self restoreStatusFromCoreData];
+    [self restoreAchievementsFromCoreData];
+    [self restoreCollegesFromCoreData];
+    [self restoreCommentsFromCoreData];
+    [self restorePostsFromCoreData];
+    [self restoreTimeCrunchFromCoreData];
+    [self restoreVotesFromCoreData];
+}
+
+#pragma mark - Watchdog
+
 - (void)createWatchdog
 {
     NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys:
@@ -198,6 +215,154 @@
 
 #pragma mark - Achievements
 
+- (void)restoreAchievementsFromCoreData
+{
+    NSLog(@"Restoring Achievements from core data");
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:ACHIEVEMENT_ENTITY
+                                   inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    
+    NSArray *arrayMgdAchievements = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (arrayMgdAchievements.count == 0)
+    {
+        NSLog(@"No Achievements found in core data. Creating the default empty list");
+        [self initializeDefaultAchievements];
+        return;
+    }
+    else
+    {
+        int numCompleted = 0;
+        for (NSManagedObject *a in arrayMgdAchievements)
+        {
+            Achievement *achievement = [[Achievement alloc]
+                                        initWithCurrAmount:[[a valueForKey:KEY_AMOUNT_CURRENTLY] longValue]
+                                        reqAmt:[[a valueForKey:KEY_AMOUNT_REQUIRED] longValue]
+                                        rewardHours:[[a valueForKey:KEY_HOURS_REWARD] longValue]
+                                        achievementType:[a valueForKey:KEY_TYPE]
+                                        didAchieve:[[a valueForKey:KEY_HAS_ACHIEVED] boolValue]];
+            
+            if (achievement.hasAchieved) numCompleted++;
+            
+            [self.achievementList addObject:achievement];
+        }
+        NSLog(@"Finished restoring achievements from core data. Achievement List now has a total size of %ld. User has completed %d", self.achievementList.count, numCompleted);
+    }
+    
+}
+- (void)saveAchievementsToCoreData
+{
+    NSLog(@"Saving achievements to core data");
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:ACHIEVEMENT_ENTITY
+                                   inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    NSArray *arrayMgdAchievements = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    if (self.achievementList == nil || self.achievementList.count == 0)
+    {
+        NSLog(@"No achievements found to save to core data. Not saving or deleting anything");
+        return;
+    }
+    else
+    {
+        // Delete old copy of achievements
+        for (NSManagedObject *oldMgdAchievement in arrayMgdAchievements)
+        {
+            [context deleteObject:oldMgdAchievement];
+        }
+        
+        NSLog(@"Creating core data models for all %ld achievements", self.achievementList.count);
+        for (Achievement *newAchievement in self.achievementList)
+        {
+            NSManagedObject *newMgdAchievement = [NSEntityDescription
+                                                  insertNewObjectForEntityForName:ACHIEVEMENT_ENTITY
+                                                  inManagedObjectContext:context];
+            
+            [newMgdAchievement setValue:[NSNumber numberWithLong:newAchievement.amountCurrently]
+                                 forKey:KEY_AMOUNT_CURRENTLY];
+            [newMgdAchievement setValue:[NSNumber numberWithLong:newAchievement.amountRequired]
+                                 forKey:KEY_AMOUNT_REQUIRED];
+            [newMgdAchievement setValue:[NSNumber numberWithBool:newAchievement.hasAchieved]
+                                 forKey:KEY_HAS_ACHIEVED];
+            [newMgdAchievement setValue:[NSNumber numberWithLong:newAchievement.hoursForReward]
+                                 forKey:KEY_HOURS_REWARD];
+            [newMgdAchievement setValue:newAchievement.type
+                                 forKey:KEY_TYPE];
+        }
+    }
+    
+    if (![_managedObjectContext save:&error])
+    {
+        NSLog(@"Failed to save achievements to core data %@",
+              [error localizedDescription]);
+    }
+}
+
+- (BOOL)checkForEarnedNewAchievementFromNewPost
+{
+    NSUInteger numPosts = self.userPosts.count;
+    BOOL earnedNewAchievement = NO;
+    int hoursEarned = 0;
+    for (Achievement *a in self.achievementList)
+    {
+        if ([a.type isEqualToString:VALUE_POST_ACHIEVEMENT] && a.amountRequired == numPosts)
+        {
+            hoursEarned += a.hoursForReward;
+            earnedNewAchievement = YES;
+        }
+    }
+    
+    return earnedNewAchievement;
+}
+- (void)checkAchievements
+{
+    // TODO: assign Time Crunch hours earned for achievements
+    
+    NSLog(@"Checking for achievement completion. Updating progress based on user's posts");
+    long postCount = self.userPosts.count;
+    long scoreCount = [self getUserPostScore];
+    
+    NSLog(@"Found %ld submitted posts with a total of %ld points", postCount, scoreCount);
+    
+    for (Achievement *a in self.achievementList)
+    {
+        if ([a.type isEqualToString:VALUE_POST_ACHIEVEMENT])
+        {
+            a.amountCurrently = postCount;
+        }
+        else if ([a.type isEqualToString:VALUE_SCORE_ACHIEVEMENT])
+        {
+            a.amountCurrently = scoreCount;
+        }
+        else if ([a.type isEqualToString:VALUE_VIEW_ACHIEVEMENT])
+        {
+            a.amountCurrently = self.hasViewedAchievements;
+        }
+        else if ([a.type isEqualToString:VALUE_MANY_HOURS_ACHIEVEMENT])
+        {
+            a.amountCurrently = [self getTimeCrunchHours];
+        }
+        else if ([a.type isEqualToString:VALUE_SHORT_POST_ACHIEVEMENT])
+        {
+            if (![a hasAchieved])
+            {
+                // If not achieved yet, check to see if qualified now
+                a.amountCurrently = [self getHasAchievedShortPostAchievement];
+            }
+        }
+        
+        NSLog(@"Achievement: %@\nHas finished: %@\nAmount currently: %ld\nAmount needed: %ld", [a toString], [a hasAchieved] ? @"YES" : @"NO", (long)a.amountCurrently, (long)a.amountRequired);
+    }
+}
 - (BOOL)getHasAchievedShortPostAchievement
 {
     BOOL foundAtLeastOne = NO;
@@ -219,44 +384,44 @@
     
     return foundAtLeastOne;
 }
-- (void)fetchAchievements
-{
-    self.achievementList = [[NSMutableArray alloc] init];
-    
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:ACHIEVEMENT_ENTITY
-                                              inManagedObjectContext:context];
-    
-    [fetchRequest setEntity:entity];
-    
-    NSArray *achievements = [_managedObjectContext executeFetchRequest:fetchRequest
-                                                                 error:&error];
-    for (NSManagedObject *a in achievements)
-    {
-        Achievement *achievement = [[Achievement alloc]
-                                    initWithCurrAmount:[[a valueForKey:KEY_AMOUNT_CURRENTLY] longValue]
-                                    reqAmt:[[a valueForKey:KEY_AMOUNT_REQUIRED] longValue]
-                                    rewardHours:[[a valueForKey:KEY_HOURS_REWARD] longValue]
-                                    achievementType:[a valueForKey:KEY_TYPE]];
-        
-        [self.achievementList addObject:achievement];
-    }
-    
-    if (self.achievementList.count == 0)
-    {
-        [self initializeAchievements];
-    }
-    
-    [self checkAchievements];
-    
-    
-    NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              @"achievements", @"feedName", nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:userInfo];
-
-}
+//- (void)fetchAchievements
+//{
+//    self.achievementList = [[NSMutableArray alloc] init];
+//    
+//    NSError *error;
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription entityForName:ACHIEVEMENT_ENTITY
+//                                              inManagedObjectContext:context];
+//    
+//    [fetchRequest setEntity:entity];
+//    
+//    NSArray *achievements = [_managedObjectContext executeFetchRequest:fetchRequest
+//                                                                 error:&error];
+//    for (NSManagedObject *a in achievements)
+//    {
+//        Achievement *achievement = [[Achievement alloc]
+//                                    initWithCurrAmount:[[a valueForKey:KEY_AMOUNT_CURRENTLY] longValue]
+//                                    reqAmt:[[a valueForKey:KEY_AMOUNT_REQUIRED] longValue]
+//                                    rewardHours:[[a valueForKey:KEY_HOURS_REWARD] longValue]
+//                                    achievementType:[a valueForKey:KEY_TYPE]];
+//        
+//        [self.achievementList addObject:achievement];
+//    }
+//    
+//    if (self.achievementList.count == 0)
+//    {
+//        [self initializeAchievements];
+//    }
+//    
+//    [self checkAchievements];
+//    
+//    
+//    NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
+//                              @"achievements", @"feedName", nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:userInfo];
+//
+//}
 - (void)addAchievement:(Achievement *)achievement
 {
     NSLog(@"Adding achievement: %@", achievement.toString);
@@ -304,50 +469,50 @@
               [error localizedDescription]);
     }
 }
-- (void)initializeAchievements
+- (void)initializeDefaultAchievements
 {
-    if (self.achievementList.count != 0)
-    {
-        return;
-    }
+//    if (self.achievementList.count != 0)
+//    {
+//        return;
+//    }
     // For number of posts
-    NSArray *postNumbers = @[[NSNumber numberWithInt:1],
-                             [NSNumber numberWithInt:3],
-                             [NSNumber numberWithInt:10],
-                             [NSNumber numberWithInt:50],
-                             [NSNumber numberWithInt:200],
-                             [NSNumber numberWithInt:1000]];
+    NSArray *arrayPostCounts = @[[NSNumber numberWithInt:1],
+                                 [NSNumber numberWithInt:3],
+                                 [NSNumber numberWithInt:10],
+                                 [NSNumber numberWithInt:50],
+                                 [NSNumber numberWithInt:200],
+                                 [NSNumber numberWithInt:1000]];
     
-    for (NSNumber *num in postNumbers)
+    for (NSNumber *reqPostCount in arrayPostCounts)
     {
-        long hours = [num longValue] * 10;
-        Achievement *a = [[Achievement alloc] initWithCurrAmount:self.numPosts
-                                                          reqAmt:[num longValue]
-                                                     rewardHours:hours
+        long hrsReward = [reqPostCount longValue] * 10;
+        Achievement *a = [[Achievement alloc] initWithCurrAmount:0
+                                                          reqAmt:[reqPostCount longValue]
+                                                     rewardHours:hrsReward
                                                  achievementType:VALUE_POST_ACHIEVEMENT];
-        
-        [self addAchievement:a];
+        [self.achievementList addObject:a];
+//        [self addAchievement:a];
     }
     
     // For total points of posts
-    NSArray *postPoints = @[[NSNumber numberWithInt:5],
-                            [NSNumber numberWithInt:10],
-                            [NSNumber numberWithInt:20],
-                            [NSNumber numberWithInt:40],
-                            [NSNumber numberWithInt:80],
-                            [NSNumber numberWithInt:150],
-                            [NSNumber numberWithInt:300],
-                            [NSNumber numberWithInt:800]];
+    NSArray *arrayPostPoints = @[[NSNumber numberWithInt:5],
+                                [NSNumber numberWithInt:10],
+                                [NSNumber numberWithInt:20],
+                                [NSNumber numberWithInt:40],
+                                [NSNumber numberWithInt:80],
+                                [NSNumber numberWithInt:150],
+                                [NSNumber numberWithInt:300],
+                                [NSNumber numberWithInt:800]];
     
-    for (NSNumber *num in postPoints)
+    for (NSNumber *reqPostPoints in arrayPostPoints)
     {
-        long hours = [num longValue] * 10;
-        Achievement *a = [[Achievement alloc] initWithCurrAmount:self.numPoints
-                                                          reqAmt:[num longValue]
-                                                     rewardHours:hours
+        long hrsReward = [reqPostPoints longValue] * 10;
+        Achievement *a = [[Achievement alloc] initWithCurrAmount:0
+                                                          reqAmt:[reqPostPoints longValue]
+                                                     rewardHours:hrsReward
                                                  achievementType:VALUE_SCORE_ACHIEVEMENT];
-        
-        [self addAchievement:a];
+        [self.achievementList addObject:a];
+//        [self addAchievement:a];
     }
     
     // Special
@@ -355,24 +520,66 @@
                                                        reqAmt:1
                                                   rewardHours:10
                                               achievementType:VALUE_VIEW_ACHIEVEMENT];
-    [self addAchievement:s1];
+    [self.achievementList addObject:s1];
+
+//    [self addAchievement:s1];
     
 
     Achievement *s2 = [[Achievement alloc] initWithCurrAmount:[self getHasAchievedShortPostAchievement]
                                                        reqAmt:1
                                                   rewardHours:2000
                                               achievementType:VALUE_SHORT_POST_ACHIEVEMENT];
-    [self addAchievement:s2];
+    [self.achievementList addObject:s2];
+
+//    [self addAchievement:s2];
     
     Achievement *s3 = [[Achievement alloc] initWithCurrAmount:[self getTimeCrunchHours]
                                                        reqAmt:2000
                                                   rewardHours:2000
                                               achievementType:VALUE_MANY_HOURS_ACHIEVEMENT];
-    [self addAchievement:s3];
+
+    [self.achievementList addObject:s3];
+
+//    [self addAchievement:s3];
 }
 
 #pragma mark - Colleges
 
+- (void)restoreCollegesFromCoreData
+{
+    NSLog(@"Restoring Colleges from core data");
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:COLLEGE_ENTITY
+                                   inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    
+    NSArray *arrayMgdColleges = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (arrayMgdColleges.count == 0)
+    {
+        NSLog(@"No Colleges found in core data. Getting network college list");
+        [self getNetworkCollegeList];
+        return;
+    }
+    else
+    {
+        for (NSManagedObject *mdgCollege in arrayMgdColleges)
+        {
+            long collegeId = [[mdgCollege valueForKey:KEY_COLLEGE_ID] longValue];
+            float lon = [[mdgCollege valueForKey:KEY_LON] floatValue];
+            float lat = [[mdgCollege valueForKey:KEY_LAT] floatValue];
+            NSString *name = [mdgCollege valueForKey:KEY_NAME];
+            
+            College *college = [[College alloc] initWithCollegeID:collegeId withName:name withLat:lat withLon:lon];
+            [self.collegeList addObject:college];
+        }
+        
+        NSLog(@"Finished restoring colleges from core data. College List now has a total size of %ld.", self.collegeList.count);
+    }
+}
 - (long)getIdForHomeCollege
 {
     NSLog(@"Retrieving ID for Home college. ID = %ld", self.homeCollegeId);
@@ -1277,46 +1484,24 @@
     return false;
 }
 
+#pragma mark - Watchdog
+
+- (void)createWatchdog
+{
+    NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys:
+                             [NSNumber numberWithInt:10], @"minLength",
+                             [NSNumber numberWithInt:140], @"maxLength",
+                             [NSNumber numberWithBool:YES], @"blockPhone",
+                             [NSNumber numberWithBool:YES], @"blockEmail",
+                             [NSNumber numberWithBool:NO], @"blockVulgar",
+                             nil];
+    
+    self.watchDog = [[Watchdog alloc] initWithOptions:options];
+    NSLog(@"Finished creating Watchdog");
+}
+
 #pragma mark - Local Data Access
 
-- (void)checkAchievements
-{
-    NSLog(@"Checking for achievement completion. Updating progress based on user's posts");
-    long postCount = self.userPosts.count;
-    long scoreCount = [self getUserPostScore];
-    
-    NSLog(@"Found %ld submitted posts with a total of %ld points", postCount, scoreCount);
-    
-    for (Achievement *a in self.achievementList)
-    {
-        if ([a.type isEqualToString:VALUE_POST_ACHIEVEMENT])
-        {
-            a.amountCurrently = postCount;
-        }
-        else if ([a.type isEqualToString:VALUE_SCORE_ACHIEVEMENT])
-        {
-            a.amountCurrently = scoreCount;
-        }
-        else if ([a.type isEqualToString:VALUE_VIEW_ACHIEVEMENT])
-        {
-            a.amountCurrently = self.hasViewedAchievements;
-        }
-        else if ([a.type isEqualToString:VALUE_MANY_HOURS_ACHIEVEMENT])
-        {
-            a.amountCurrently = [self getTimeCrunchHours];
-        }
-        else if ([a.type isEqualToString:VALUE_SHORT_POST_ACHIEVEMENT])
-        {
-            if (![a hasAchieved])
-            {
-                // If not achieved yet, check to see if qualified now
-                a.amountCurrently = [self getHasAchievedShortPostAchievement];
-            }
-        }
-        
-        NSLog(@"Achievement: %@\nHas finished: %@\nAmount currently: %ld\nAmount needed: %ld", [a toString], [a hasAchieved] ? @"YES" : @"NO", (long)a.amountCurrently, (long)a.amountRequired);
-    }
-}
 - (void)savePost:(Post *)post
 {
     NSManagedObjectContext *context = [self managedObjectContext];
@@ -1334,7 +1519,7 @@
     }
     
     [self updateTimeCrunchWithNewPost:post];
-    
+    BOOL newAchievementEarned = [self checkForEarnedNewAchievementFromNewPost];
 }
 - (void)saveComment:(Comment *)comment
 {

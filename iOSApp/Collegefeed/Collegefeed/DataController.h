@@ -113,9 +113,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic) long pageForTopColleges;
 
 
-// Status
-- (void)restoreStatusFromCoreData;
-- (void)saveStatusToCoreData;
+- (void)restoreAllCoreData;
 
 // Achievements
 - (void)fetchAchievements;

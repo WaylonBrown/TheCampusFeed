@@ -29,7 +29,7 @@
 
 // UI outlet properties
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) UIActivityIndicatorView *locationSearchingIndicator;
 @property (weak, nonatomic) IBOutlet UIView *feedToolbar;
 @property (strong, nonatomic) IBOutlet UIView *scoreToolbar;
 @property (strong, nonatomic) IBOutlet UILabel *scoreLabel;

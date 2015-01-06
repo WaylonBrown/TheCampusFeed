@@ -60,6 +60,11 @@ class TimeCrunchViewController: UIViewController {
         daysLabel.font = Shared.getFontItalic(18)
         schoolLabel.font = Shared.getFontItalic(18)
         onOffLabel.font = Shared.getFontLight(20)
+        
+        if (self.myDataController!.isNearCollege())
+        {
+            self.placeCreatePostButton()
+        }
     }
     override func viewWillAppear(animated: Bool) {
         self.updateLabels()
@@ -67,6 +72,16 @@ class TimeCrunchViewController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         
+    }
+    
+    func placeCreatePostButton() {
+        var createButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Compose, target: self, action: "createPost")
+        self.navigationItem.setRightBarButtonItem(createButton, animated: false)
+    }
+    
+    func createPost() {
+        // TODO
+        println("Need to tell someone to show the post dialog")
     }
     
     // MARK: - Actions

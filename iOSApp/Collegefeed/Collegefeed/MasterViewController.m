@@ -42,7 +42,7 @@
     {
         [self setDataController:controller];
         [self setCorrectList];
-        self.activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        self.locationSearchingIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     }
     return self;
 }
@@ -57,6 +57,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationWasUpdated) name:@"LocationUpdated" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishedFetchRequest:) name:@"FinishedFetching" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchedCollegeList) name:@"FetchedColleges" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(create) name:@"CreatePost" object:nil];
 }
 
 #pragma mark - View Loading
@@ -67,7 +68,10 @@
 }
 - (void)makeToolbarButtons
 {   // Assigns correct icons and buttons to the upper toolbar
-    
+    if ([self.dataController isNearCollege])
+    {
+        [self placeCreatePost];
+    }
 }
 - (void)loadView
 {   // called when this view is initially loaded
@@ -90,14 +94,12 @@
     [view setBackgroundColor:[Shared getCustomUIColor:CF_EXTRALIGHTGRAY]];
     self.tableView.tableHeaderView = view;
     
-    
     self.contentLoadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     
     [self.contentLoadingIndicator setColor:[Shared getCustomUIColor:CF_BLUE]];
     [self.contentLoadingIndicator startAnimating];
     self.contentLoadingIndicator.frame = CGRectMake(0, 0, 320, 44);
     self.tableView.tableFooterView = self.contentLoadingIndicator;
-    
     
     // Assign fonts
     [self.currentFeedLabel  setFont:CF_FONT_LIGHT(22)];
@@ -111,7 +113,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
     [super viewWillAppear:animated];
-
+    
     if (self.list.count == 0)
     {
         [self fetchContent];
@@ -124,15 +126,15 @@
 }
 - (void)placeLoadingIndicatorInToolbar
 {   // Place the loading indicator in the navigation bar (instead of create post button)
-    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.locationSearchingIndicator];
     
     [self.navigationItem setRightBarButtonItem:button];
     
-    [self.activityIndicator startAnimating];
+    [self.locationSearchingIndicator startAnimating];
 }
 - (void)placeCreatePost
 {   // Place the create post button in the navigation bar (instead of loading indicator)
-    [self.activityIndicator stopAnimating];
+    [self.locationSearchingIndicator stopAnimating];
     UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
                                                                                   target:self action:@selector(create)];
     [self.navigationItem setRightBarButtonItem:createButton];
@@ -180,8 +182,6 @@
 
 - (void)locationWasUpdated
 {
-    [self.activityIndicator stopAnimating];
-    
     if ([self.dataController isNearCollege])
     {
         [self placeCreatePost];
@@ -189,7 +189,7 @@
     }
     else
     {
-        [self.navigationItem setRightBarButtonItem:nil];
+        [self.locationSearchingIndicator stopAnimating];
     }
     
     UIViewController *presented = [self presentedViewController];
@@ -275,7 +275,6 @@
     }
 
     [self fetchContent];
-
 }
 
 #pragma mark - Helper Methods
