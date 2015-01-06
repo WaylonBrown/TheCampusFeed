@@ -76,6 +76,7 @@
 - (void)setCorrectList;
 - (void)placeLoadingIndicatorInToolbar;
 - (void)placeCreatePost;
+- (UIBarButtonItem *)blankBackButton;
 
 @end
 

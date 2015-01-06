@@ -10,16 +10,17 @@
 
 @implementation CommentTableCell
 
-- (BOOL)assignmentSuccessWith:(NSObject *)obj
-{
-    if ([obj class] != [Comment class])
-        return NO;
-    
-    return [self assignWithComment:(Comment *)obj];
-}
+//- (BOOL)assignmentSuccessWith:(NSObject *)obj
+//{
+//    if ([obj class] != [Comment class])
+//        return NO;
+//    
+//    return [self assignWithComment:(Comment *)obj];
+//}
 - (BOOL)assignWithComment:(Comment *)comment
 {
-    if ([super assignmentSuccessWith:comment])
+//    if ([super assignmentSuccessWith:comment])
+    if (comment != nil)
     {
         [self setObject:comment];
         self.isNearCollege = comment.isNearCollege;
@@ -31,9 +32,9 @@
         self.messageHeight.constant = [self getMessageHeight];;
         
         self.messageLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentTop;
-        [self.messageLabel      setText:[comment getText]];
+        [self.messageLabel setText:[comment getText]];
 
-        [self.ageLabel          setText:[self getAgeLabelString:[comment getCreated_at]]];
+        [self.ageLabel setText:[self getAgeLabelString:[comment getCreated_at]]];
         
         [self findHashTags];
         [self updateVoteButtons];

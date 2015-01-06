@@ -46,7 +46,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 // Runtime status information
 @property (nonatomic, strong) College *collegeInFocus;
 @property (nonatomic, strong) Post *postInFocus;
-@property (nonatomic, strong) Tag *tagInFocus;
+//@property (nonatomic, strong) Tag *tagInFocus;
 @property (nonatomic, strong) College *homeCollegeForTimeCrunch;
 @property (nonatomic, strong) TimeCrunchModel *timeCrunch;
 @property (nonatomic) BOOL showingAllColleges;

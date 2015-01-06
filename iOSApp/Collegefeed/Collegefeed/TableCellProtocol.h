@@ -10,7 +10,7 @@
 
 @protocol TableCellProtocol <NSObject>
 
-- (BOOL)assignmentSuccessWith:(NSObject *)obj;
+//- (BOOL)assignmentSuccessWith:(NSObject *)obj;
 
 - (CGFloat)getMessageHeight;
 - (CGFloat)getCellHeight;

@@ -312,10 +312,16 @@
     self.dataController.toaster.holdingNotifications = YES;
     self.isShowingTutorial = YES;
 }
+- (UIBarButtonItem *)blankBackButton
+{
+    return [[UIBarButtonItem alloc]
+            initWithTitle:@""
+            style:UIBarButtonItemStylePlain
+            target:nil
+            action:nil];
+}
 
-#pragma mark - Delegate Methods
-
-/* ChildCellDelegate */
+#pragma mark - ChildCellDelegate
 
 - (void)displayCannotVote
 {    // users cannot cast downvotes to a distant school
@@ -349,14 +355,39 @@
 }
 - (void)didSelectTag:(NSString *)tagMessage
 {
-    TagPostsViewController *controller = [[TagPostsViewController alloc] initWithDataController:self.dataController WithTagMessage:tagMessage];
+    NSLog(@"Calling MasterViewController's didSelectTag(). If valid, will display a TagPostsViewController");
     
-    [self.navigationController pushViewController:controller
-                                         animated:YES];
-    [[self navigationItem] setBackBarButtonItem:controller.backButton];
+    if ([Tag withMessageIsValid:tagMessage])
+    {
+        NSLog(@"Tag message is valid. Initializing TagPostsViewController with tagMessage = %@", tagMessage);
+        TagPostsViewController *controller = [[TagPostsViewController alloc]
+                                              initWithDataController:self.dataController
+                                              WithTagMessage:tagMessage];
+        [[self navigationItem] setBackBarButtonItem:[self blankBackButton]];
+        [self.navigationController pushViewController:controller
+                                             animated:YES];
+    }
+    else
+    {
+        NSLog(@"ERROR. Attempted tag search with message = %@ was invalid", tagMessage);
+        [self.dataController.toaster toastInvalidTagSearch];
+    }
+
+//    TagPostsViewController *controller = [[TagPostsViewController alloc] initWithDataController:self.dataController WithTagMessage:tagMessage];
+//    
+//    [[self navigationItem] setBackBarButtonItem:[self blankBackButton]];
+//    [self.navigationController pushViewController:controller
+//                                         animated:YES];
+    
+    
+    
+//    TagPostsViewController *controller = [[TagPostsViewController alloc] initWithDataController:self.dataController WithTagMessage:tagMessage];
+//    [self.navigationController pushViewController:controller
+//                                         animated:YES];
+//    [[self navigationItem] setBackBarButtonItem:controller.backButton];
 }
 
-/* CreationViewProtocolDelegate */
+#pragma mark - CreationViewProtocolDelegate
 
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
                                withCollegeId:(long)collegeId
@@ -427,9 +458,14 @@
 - (void)showDialogForAllColleges
 {
     [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
-    [self.view setNeedsDisplay];
-    CollegeSearchViewController *controller = [[CollegeSearchViewController alloc] initWithDataController:self.dataController feedDelegate:self];
-    [self.navigationController pushViewController:controller animated:YES];
+//    [self.view setNeedsDisplay];
+    CollegeSearchViewController *controller = [[CollegeSearchViewController alloc]
+                                               initWithDataController:self.dataController
+                                               feedDelegate:self];
+    
+    [[self navigationItem] setBackBarButtonItem:[self blankBackButton]];
+    [self.navigationController pushViewController:controller
+                                         animated:YES];
 }
 
 /* PostingSelectionProtocolDelegate */

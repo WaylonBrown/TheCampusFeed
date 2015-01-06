@@ -25,15 +25,16 @@
     // Configure the view for the selected state
 }
 
-- (BOOL)assignmentSuccessWith:(NSObject *)obj
-{
-    if ([obj class] != [Post class])
-        return NO;
-    return [self assignWithPost:(Post *)obj withCollegeLabel:NO];
-}
+//- (BOOL)assignmentSuccessWith:(NSObject *)obj
+//{
+//    if ([obj class] != [Post class])
+//        return NO;
+//    return [self assignWithPost:(Post *)obj withCollegeLabel:NO];
+//}
 - (BOOL)assignWithPost:(Post *)post withCollegeLabel:(BOOL)showLabel
 {
-    if ([super assignmentSuccessWith:post])
+//    if ([super assignmentSuccessWith:post])
+    if (post != nil)
     {
         [self setObject:post];
         

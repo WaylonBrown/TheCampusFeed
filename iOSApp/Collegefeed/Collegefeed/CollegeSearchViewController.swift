@@ -59,14 +59,8 @@ class CollegeSearchViewController: CollegeViewController, UITableViewDataSource,
         self.definesPresentationContext = true
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        self.hideSearchBar()
-    }
-//    override func viewWillDisappear(animated: Bool) {
-//        println("College search view will disappear, setting active = false")
-//        self.searchController?.active = false;
+//    override func viewDidAppear(animated: Bool) {
+//        super.viewDidAppear(animated)
 //    }
     
     override func didReceiveMemoryWarning() {
@@ -134,7 +128,7 @@ class CollegeSearchViewController: CollegeViewController, UITableViewDataSource,
         self.feedDelegate?.switchToFeedForCollegeOrNil(college)
     }
     
-    // MARK: - Seach Bar
+    // MARK: - Search Bar
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if self.searchController?.searchBar.text.lengthOfBytesUsingEncoding(NSUTF32StringEncoding) > 0 {
@@ -170,7 +164,7 @@ class CollegeSearchViewController: CollegeViewController, UITableViewDataSource,
         UIView.animateKeyframesWithDuration(0.5,
             delay: 0,
             options: UIViewKeyframeAnimationOptions.BeginFromCurrentState,
-            animations: { () -> Void in self.hideSearchBar() },
+            animations: { },
             completion: nil)
     }
     
@@ -200,9 +194,4 @@ class CollegeSearchViewController: CollegeViewController, UITableViewDataSource,
         list = dataController.collegeList
     }
     
-    func hideSearchBar() {
-//        let yOffset = self.navigationController!.navigationBar.bounds.height + UIApplication.sharedApplication().statusBarFrame.height
-//        var y = self.searchController!.searchBar.bounds.height - yOffset
-//        self.tableView.contentOffset = CGPointMake(0, y)
-    }
 }
