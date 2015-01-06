@@ -878,7 +878,7 @@
                                                                          error:nil];
             Post *networkPost = [[Post alloc] initFromJSON:jsonObject];
 
-            networkPost.college = [self getCollegeById:[networkPost.college_id longValue]];
+            networkPost.college = [self getCollegeById:collegeId];
 
             NSLog(@"Successfully submitted Post to network. Text = %@. College = %@.", networkPost.text, networkPost.college.name);
             
