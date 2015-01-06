@@ -103,7 +103,6 @@
     
     if (parentPost != nil)
     {
-//        College *college = [self.dataController getCollegeById:[parentPost.college_id longValue]];
         if ([self.dataController.nearbyColleges containsObject:parentPost.college])
         {
             self.navigationItem.rightBarButtonItems = @[self.composeButton,

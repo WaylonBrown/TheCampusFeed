@@ -187,7 +187,8 @@
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
 {
     [self.dataController createPostWithMessage:message
-                                 withCollegeId:self.dataController.collegeInFocus.collegeID withImage:nil];
+                                 withCollegeId:self.dataController.currentCollegeFeedId
+                                     withImage:nil];
     
 //    if (!success)
 //    {

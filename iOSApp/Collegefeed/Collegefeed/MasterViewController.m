@@ -281,14 +281,8 @@
 
 - (void)refreshFeedLabel
 {
-    if (self.dataController.collegeInFocus == nil)
-    {
-        [self.currentFeedLabel setText:@"All Colleges"];
-    }
-    else
-    {
-        [self.currentFeedLabel setText:self.dataController.collegeInFocus.name];
-    }
+   [self.currentFeedLabel setText:[self.dataController getCurrentFeedName]];
+    
     self.toolBarSpaceFromBottom.constant = 50;
     [self.feedToolbar updateConstraintsIfNeeded];
 }

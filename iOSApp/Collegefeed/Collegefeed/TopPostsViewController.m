@@ -24,7 +24,7 @@
     }
     else
     {
-        NSLog(@"Fetching Top Posts in %@", self.dataController.collegeInFocus.name);
+        NSLog(@"Fetching Top Posts in college ID = %ld", self.dataController.currentCollegeFeedId);
         [self.dataController fetchTopPostsForSingleCollege];
     }
 }

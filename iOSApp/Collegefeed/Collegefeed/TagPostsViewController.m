@@ -63,10 +63,11 @@
     CGRect frame = CGRectMake(0, 0, tableView.frame.size.width, 50);
     
     UILabel *header = [[UILabel alloc] init];
-    if (self.dataController.showingSingleCollege && self.dataController.collegeInFocus.name != nil)
+    if (self.dataController.showingSingleCollege && self.dataController.currentCollegeFeedId > 0)
     {
-        NSString *collegeSubHeader = [NSString stringWithFormat:@"in feed: %@", self.dataController.collegeInFocus.name];
-        basicText = [NSString stringWithFormat:@"%@\n%@", basicText, collegeSubHeader];
+        NSString *collegeName = [self.dataController getCurrentFeedName];
+        NSString *subHeader = [NSString stringWithFormat:@"in feed: %@", collegeName];
+        basicText = [NSString stringWithFormat:@"%@\n%@", basicText, subHeader];
         [header setNumberOfLines:2];
     }
     

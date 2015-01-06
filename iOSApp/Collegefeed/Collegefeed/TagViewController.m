@@ -144,7 +144,7 @@
     }
     else
     {
-        NSLog(@"Fetching Trending Tags in %@", self.dataController.collegeInFocus.name);
+        NSLog(@"Fetching Trending Tags in college ID = %ld", self.dataController.currentCollegeFeedId);
         [self.dataController fetchTrendingTagsForSingleCollege];
     }
 }

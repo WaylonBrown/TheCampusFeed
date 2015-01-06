@@ -121,6 +121,7 @@
 
 - (void)restoreStatusFromCoreData
 {
+    NSLog(@"Restoring status from core data");
     NSError *error;
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -137,11 +138,8 @@
     
     // Current feed
     self.currentCollegeFeedId = [[status valueForKey:KEY_CURRENT_COLLEGE_FEED] longValue];
-    NSNumber *collegeID = [status valueForKey:KEY_CURRENT_COLLEGE_FEED];
-    long collegeIdForFeed = [collegeID longValue];
-    self.collegeInFocus = [self getCollegeById:collegeIdForFeed];
-    self.showingAllColleges = self.collegeInFocus == nil;
-    self.showingSingleCollege = !self.showingAllColleges;
+    self.showingSingleCollege = self.currentCollegeFeedId > 0;
+    self.showingAllColleges = !self.showingSingleCollege;
 
     // Achievements
     self.hasViewedAchievements = [[status valueForKey:KEY_HAS_VIEWED_ACHIEVEMENTS] boolValue];
@@ -183,8 +181,9 @@
     }
     
     // Current feed
-    NSNumber *collegeIdForFeed = self.showingSingleCollege ? [NSNumber numberWithLong:self.collegeInFocus.collegeID] : nil;
-    [status setValue:collegeIdForFeed forKey:KEY_CURRENT_COLLEGE_FEED];
+//    NSNumber *feedNumber = self.showingSingleCollege ? [NSNumber numberWithLong:self.currentCollegeFeedId] : nil;
+    NSNumber *feedNumber = (self.currentCollegeFeedId <= 0) ? nil : [NSNumber numberWithLong:self.currentCollegeFeedId];
+    [status setValue:feedNumber forKey:KEY_CURRENT_COLLEGE_FEED];
     
     // Achievements
     [status setValue:[NSNumber numberWithBool:self.hasViewedAchievements] forKey:KEY_HAS_VIEWED_ACHIEVEMENTS];
@@ -540,6 +539,32 @@
 
 #pragma mark - Colleges
 
+- (College *)getCollegeInFocus
+{
+//    College *newFocus = nil;
+    NSLog(@"Called DataController.getCollegeInFocus. Original one assigned was: %@", self.collegeInFocus);
+    
+    if (self.currentCollegeFeedId > 0)
+    {
+        if (self.collegeList != nil)
+        {
+            for (College *c in self.collegeList)
+            {
+                if (self.currentCollegeFeedId == c.collegeID
+                    && self.currentCollegeFeedId != 0)
+                {
+                    NSLog(@"DataController.getCollegeInFocus found the correct college according to currentCollegeFeedId: %@", c);
+//                    NSLog(@"Assigning it to be the new collegeInFocus");
+
+                    return c;
+                }
+            }
+        }
+    }
+    
+    return nil;
+}
+
 - (void)retrieveColleges
 {
     NSLog(@"Restoring Colleges from core data");
@@ -570,6 +595,14 @@
             
             College *college = [[College alloc] initWithCollegeID:collegeId withName:name withLat:lat withLon:lon];
             [self.collegeList addObject:college];
+            
+            if (self.collegeInFocus == nil
+                && self.currentCollegeFeedId == collegeId
+                && self.currentCollegeFeedId != 0)
+            {
+                NSLog(@"Assigning collegeInFocus from RetrieveColleges because it was not set, and the correct college was found when reading from core data");
+                self.collegeInFocus = college;
+            }
         }
         
         NSLog(@"Finished restoring colleges from core data. College List now has a total size of %ld.", self.collegeList.count);
@@ -738,15 +771,18 @@
 }
 - (void)switchedToSpecificCollegeOrNil:(College *)college
 {
-    [self setCollegeInFocus:college];
-    
     if (college == nil)
     {
+        self.currentCollegeFeedId = 0;
+        self.collegeInFocus = nil;
         [self setShowingAllColleges:YES];
         [self setShowingSingleCollege:NO];
     }
     else
     {
+        self.currentCollegeFeedId = college.collegeID;
+        self.collegeInFocus = college;
+        
         [self setShowingAllColleges:NO];
         [self setShowingSingleCollege:YES];
         
@@ -776,6 +812,24 @@
     [self setNearbyColleges:[self findNearbyCollegesWithLat:self.lat
                                                     withLon:self.lon]];
     
+}
+- (NSString *)getCurrentFeedName
+{
+    if (self.showingSingleCollege)
+    {
+        if (self.collegeInFocus != nil)
+        {
+            return self.collegeInFocus.name;
+        }
+
+        College *college = [self getCollegeInFocus];
+        if (college != nil)
+        {
+            return college.name;
+        }
+    }
+    
+    return @"All Colleges";
 }
 
 #pragma mark - Comments
@@ -992,7 +1046,7 @@
            WithFetchFunction:^{
                
                return [Networker GetTopPostsAtPageNum:self.pageForTopPostsSingleCollege
-                                        WithCollegeId:self.collegeInFocus.collegeID];
+                                        WithCollegeId:self.currentCollegeFeedId];
            }];
 }
 - (void)fetchNewPostsForAllColleges
@@ -1017,7 +1071,7 @@
            WithFetchFunction:^{
                
                return [Networker GetNewPostsAtPageNum:self.pageForNewPostsSingleCollege
-                                           WithCollegeId:self.collegeInFocus.collegeID];
+                                           WithCollegeId:self.currentCollegeFeedId];
            }];
 }
 - (void)fetchPostsWithTagForAllColleges:(NSString*)tagMessage
@@ -1044,7 +1098,7 @@
                
                return [Networker GetPostsWithTag:tagMessage
                                        AtPageNum:self.pageForTaggedPostsSingleCollege
-                                   WithCollegeId:self.collegeInFocus.collegeID];
+                                   WithCollegeId:self.currentCollegeFeedId];
            }];
 }
 - (void)retrieveUserPosts
@@ -1117,7 +1171,7 @@
            WithFetchFunction:^{
                
                return [Networker GetTrendingTagsAtPageNum:self.pageForTrendingTagsSingleCollege
-                                            WithCollegeId:self.collegeInFocus.collegeID];
+                                            WithCollegeId:self.currentCollegeFeedId];
            }];
 }
 
@@ -1682,7 +1736,16 @@
                         }
                     case COLLEGE:
                         {
-                            [arr addObject:[[College alloc] initFromJSON:jsonObject]];
+                            College *college = [[College alloc] initFromJSON:jsonObject];
+                            if (self.collegeInFocus == nil
+                                && self.currentCollegeFeedId == college.collegeID
+                                && self.currentCollegeFeedId != 0)
+                            {
+                                NSLog(@"Assigning collegeInFocus from parseData because it was not set, and the correct college was found when parsing from network data");
+                                self.collegeInFocus = college;
+                            }
+                            
+                            [arr addObject:college];
                             break;
                         }
                     case VOTE:
