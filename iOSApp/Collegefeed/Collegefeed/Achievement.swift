@@ -9,35 +9,29 @@
 import UIKit
 
 class Achievement: NSObject {
+    var achievementId : Int = 0
     var amountCurrently : Int = 0
     var amountRequired : Int = 0
     var hoursForReward : Int = 0
     var hasAchieved : Bool = false
-    var type : String = "Achievement"
+    var type: String = "Achievement"
     
-    convenience init(currAmount: Int, reqAmt: Int, rewardHours: Int, achievementType: String) {
+    
+    
+    convenience init(id: Int, currAmount: Int, reqAmt: Int, rewardHours: Int, achievementType: String, didAchieve: Bool) {
         self.init()
         
+        achievementId = id
         amountCurrently = currAmount
         amountRequired = reqAmt
         hoursForReward = rewardHours
         type = achievementType
-    }
-    
-    convenience init(currAmount: Int, reqAmt: Int, rewardHours: Int, achievementType: String, didAchieve: Bool) {
-        self.init()
-        
-        amountCurrently = currAmount
-        amountRequired = reqAmt
-        hoursForReward = rewardHours
         hasAchieved = didAchieve
-        type = achievementType
     }
     
     func isEqualTo(other: Achievement) -> Bool {
-        return self.amountRequired == other.amountRequired
-            && self.hoursForReward == other.hoursForReward
-            && self.type == other.type
+        return self.achievementId != 0
+            && self.achievementId == other.achievementId
     }
     
     func toString() -> String {

@@ -90,6 +90,48 @@
 
 #pragma mark - Achievements
 
+- (void)didViewAchievements
+{
+    bool hasFoundExistingMatch = NO;
+    bool shouldAssignTimeCrunchHours = NO;
+    
+    if (self.achievementList == nil || self.achievementList.count == 0)
+    {
+        [self restoreAchievementsFromCoreData];
+    }
+    
+    for (Achievement *a in self.achievementList)
+    {
+        if (!hasFoundExistingMatch && [a.type isEqualToString:VALUE_VIEW_ACHIEVEMENT])
+        {
+            hasFoundExistingMatch = true;
+            if (!a.hasAchieved)
+            {
+                NSLog(@"Setting existing view achievement to be completed");
+                a.hasAchieved = YES;
+                shouldAssignTimeCrunchHours = YES;
+            }
+            else
+            {
+                NSLog(@"View achievement found and has already been completed");
+            }
+            
+            break;
+        }
+    }
+    
+    if (!hasFoundExistingMatch)
+    {
+        NSLog(@"Did not find existing view achievement. Adding a new one");
+        
+        Achievement *achievement = [[Achievement alloc] initWithId:VIEW_ACHIEVEMENT_ID currAmount:1 reqAmt:1 rewardHours:HOURS_FOR_VIEW_ACHIEVEMENT achievementType:VALUE_VIEW_ACHIEVEMENT didAchieve:YES];
+        [self.achievementList addObject:achievement];
+    }
+    
+    [self saveAchievementsToCoreData];
+    NSLog(@"Finished saving achievement");
+    
+}
 - (void)restoreAchievementsFromCoreData
 {
     NSLog(@"Restoring Achievements from core data");
@@ -115,7 +157,8 @@
         for (NSManagedObject *a in arrayMgdAchievements)
         {
             Achievement *achievement = [[Achievement alloc]
-                                        initWithCurrAmount:[[a valueForKey:KEY_AMOUNT_CURRENTLY] longValue]
+                                        initWithId:[[a valueForKey:ACHIEVEMENT_ID] longValue]
+                                        currAmount:[[a valueForKey:KEY_AMOUNT_CURRENTLY] longValue]
                                         reqAmt:[[a valueForKey:KEY_AMOUNT_REQUIRED] longValue]
                                         rewardHours:[[a valueForKey:KEY_HOURS_REWARD] longValue]
                                         achievementType:[a valueForKey:KEY_TYPE]
@@ -162,6 +205,8 @@
                                                   insertNewObjectForEntityForName:ACHIEVEMENT_ENTITY
                                                   inManagedObjectContext:context];
             
+            [newMgdAchievement setValue:[NSNumber numberWithLong:newAchievement.achievementId]
+                                 forKey:ACHIEVEMENT_ID];
             [newMgdAchievement setValue:[NSNumber numberWithLong:newAchievement.amountCurrently]
                                  forKey:KEY_AMOUNT_CURRENTLY];
             [newMgdAchievement setValue:[NSNumber numberWithLong:newAchievement.amountRequired]
@@ -181,39 +226,38 @@
               [error localizedDescription]);
     }
 }
-- (void)didAchieve:(Achievement *)achievement
-{
-    NSLog(@"User earned achievement! \"%@\"", [achievement toString]);
-    
-    if (!achievement.hasAchieved)
-    {
-        NSLog(@"ERROR. Called didAchieve with an unachieved achievement. Doing nothing");
-        return;
-    }
-
-    
-    BOOL hasFoundExistingMatch = false;
-    for (Achievement *a in self.achievementList)
-    {
-        if ([a isEqualTo:achievement] && !hasFoundExistingMatch)
-        {
-            hasFoundExistingMatch = true;
-            a.hasAchieved = YES;
-            NSLog(@"Setting an existing achievement to be completed");
-            break;
-        }
-    }
-    
-    if (!hasFoundExistingMatch)
-    {
-        NSLog(@"Did not find existing achievement to set. Adding this as a new one");
-        [self.achievementList addObject:achievement];
-    }
-    
-    [self saveAchievementsToCoreData];
-    NSLog(@"Finished saving achievement");
-    
-    }
+//- (void)didAchieve:(Achievement *)achievement
+//{
+//    NSLog(@"User earned achievement! \"%@\"", [achievement toString]);
+//    
+//    if (!achievement.hasAchieved)
+//    {
+//        NSLog(@"ERROR. Called didAchieve with an unachieved achievement. Doing nothing");
+//        return;
+//    }
+//
+//    BOOL hasFoundExistingMatch = false;
+//    for (Achievement *a in self.achievementList)
+//    {
+//        if ([a isEqualTo:achievement] && !hasFoundExistingMatch)
+//        {
+//            hasFoundExistingMatch = true;
+//            a.hasAchieved = YES;
+//            NSLog(@"Setting an existing achievement to be completed");
+//            break;
+//        }
+//    }
+//    
+//    if (!hasFoundExistingMatch)
+//    {
+//        NSLog(@"Did not find existing achievement to set. Adding this as a new one");
+//        [self.achievementList addObject:achievement];
+//    }
+//    
+//    [self saveAchievementsToCoreData];
+//    NSLog(@"Finished saving achievement");
+//    
+//}
 - (void)initializeDefaultAchievements
 {
     // For number of posts
@@ -224,13 +268,17 @@
                                  [NSNumber numberWithInt:200],
                                  [NSNumber numberWithInt:1000]];
     
+    int incrementalId = 0;
+    
     for (NSNumber *reqPostCount in arrayPostCounts)
     {
-        long hrsReward = [reqPostCount longValue] * 10;
-        Achievement *a = [[Achievement alloc] initWithCurrAmount:0
-                                                          reqAmt:[reqPostCount longValue]
-                                                     rewardHours:hrsReward
-                                                 achievementType:VALUE_POST_ACHIEVEMENT];
+        long hrsReward = [reqPostCount longValue] * POST_COUNT_TO_HOURS_MULTIPLIER;
+        Achievement *a = [[Achievement alloc] initWithId:(POST_COUNT_ACHIEVEMENT_ID + incrementalId++)
+                                              currAmount:0
+                                                  reqAmt:[reqPostCount longValue]
+                                             rewardHours:hrsReward
+                                         achievementType:VALUE_POST_ACHIEVEMENT
+                                              didAchieve:NO];
         [self.achievementList addObject:a];
     }
     
@@ -244,42 +292,54 @@
                                 [NSNumber numberWithInt:300],
                                 [NSNumber numberWithInt:800]];
     
+    incrementalId = 0;
+    
     for (NSNumber *reqPostPoints in arrayPostPoints)
     {
-        long hrsReward = [reqPostPoints longValue] * 10;
-        Achievement *a = [[Achievement alloc] initWithCurrAmount:0
-                                                          reqAmt:[reqPostPoints longValue]
-                                                     rewardHours:hrsReward
-                                                 achievementType:VALUE_SCORE_ACHIEVEMENT];
+        long hrsReward = [reqPostPoints longValue] * POST_POINTS_TO_HOURS_MULTIPLIER;
+        Achievement *a = [[Achievement alloc] initWithId:(POST_POINTS_ACHIEVEMENT_ID + incrementalId++)
+                                              currAmount:0
+                                                  reqAmt:[reqPostPoints longValue]
+                                             rewardHours:hrsReward
+                                         achievementType:VALUE_SCORE_ACHIEVEMENT
+                                              didAchieve:NO];
+        
         [self.achievementList addObject:a];
     }
     
     // Special
-    Achievement *s1 = [[Achievement alloc] initWithCurrAmount:0//self.hasViewedAchievements
-                                                       reqAmt:1
-                                                  rewardHours:HOURS_FOR_VIEW_ACHIEVEMENT
-                                              achievementType:VALUE_VIEW_ACHIEVEMENT];
+    Achievement *s1 = [[Achievement alloc] initWithId:VIEW_ACHIEVEMENT_ID
+                                           currAmount:0
+                                               reqAmt:1
+                                          rewardHours:HOURS_FOR_VIEW_ACHIEVEMENT
+                                      achievementType:VALUE_VIEW_ACHIEVEMENT
+                                           didAchieve:NO];
     
-    Achievement *s2 = [[Achievement alloc] initWithCurrAmount:0//[self getHasAchievedShortPostAchievement]
-                                                       reqAmt:1
-                                                  rewardHours:HOURS_FOR_SHORT_POST_ACHIEVEMENT
-                                              achievementType:VALUE_SHORT_POST_ACHIEVEMENT];
+    Achievement *s2 = [[Achievement alloc] initWithId:SHORT_POST_ACHIEVEMENT_ID
+                                           currAmount:0
+                                               reqAmt:1
+                                          rewardHours:HOURS_FOR_SHORT_POST_ACHIEVEMENT
+                                      achievementType:VALUE_SHORT_POST_ACHIEVEMENT
+                                           didAchieve:NO];
 
-    Achievement *s3 = [[Achievement alloc] initWithCurrAmount:0//[self getTimeCrunchHours]
-                                                       reqAmt:REQUIRED_NUMBER_OF_CRUNCH_HOURS_FOR_MANY_HOURS_ACHIEVEMENT
-                                                  rewardHours:HOURS_FOR_EARN_MANY_HOURS_ACHIEVEMENT
-                                              achievementType:VALUE_MANY_HOURS_ACHIEVEMENT];
-
+    Achievement *s3 = [[Achievement alloc] initWithId:MANY_HOURS_ACHIEVEMENT_ID
+                                           currAmount:0
+                                               reqAmt:REQUIRED_NUMBER_OF_CRUNCH_HOURS_FOR_MANY_HOURS_ACHIEVEMENT
+                                          rewardHours:HOURS_FOR_EARN_MANY_HOURS_ACHIEVEMENT
+                                      achievementType:VALUE_MANY_HOURS_ACHIEVEMENT
+                                           didAchieve:NO];
+    
     [self.achievementList addObject:s1];
     [self.achievementList addObject:s2];
     [self.achievementList addObject:s3];
+    
+    [self saveAchievementsToCoreData];
 }
 
 #pragma mark - Colleges
 
 - (College *)getCollegeInFocus
 {
-//    College *newFocus = nil;
     NSLog(@"Called DataController.getCollegeInFocus. Original one assigned was: %@", self.collegeInFocus);
     
     if (self.currentCollegeFeedId > 0)

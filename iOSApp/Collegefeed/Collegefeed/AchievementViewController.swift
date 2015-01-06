@@ -30,9 +30,7 @@ class AchievementViewController: MasterViewController, UITableViewDataSource, UI
     }
 
     override func viewDidAppear(animated: Bool) {
-        var achievement = Achievement(currAmount: 1, reqAmt: 1, rewardHours: Int(HOURS_FOR_VIEW_ACHIEVEMENT), achievementType: String(VALUE_VIEW_ACHIEVEMENT), didAchieve: true)
-        
-        self.dataController.didAchieve(achievement)
+        self.dataController.didViewAchievements()
         tableView.reloadData()
     }
     
@@ -45,31 +43,11 @@ class AchievementViewController: MasterViewController, UITableViewDataSource, UI
     override func finishedFetchRequest(notification: NSNotification!) {
             
         super.finishedFetchRequest(notification)
-//
-//        if let info = notification.userInfo as? Dictionary<String,String> {
-//            if let feed : String = info["feedName"] {
-//                if feed == "achievements" {
-//                    NSLog("Finished fetching achievements")
-//                    super.finishedFetchRequest(notification)
-//                }
-////                if feed == "userPosts" {
-////                    NSLog("Finished fetching userPosts in AchievementViewController")
-////                    self.dataController.checkAchievements()
-////                    self.tableView.reloadData()
-////                    super.finishedFetchRequest(notification)
-////                }
-//            }
-//        }
-//
-//        self.dataController.checkAchievements()
-//        self.tableView.reloadData()
-//        
     }
     
     // MARK: Table View
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        self.setCorrectList()
         return self.list.count
     }
     

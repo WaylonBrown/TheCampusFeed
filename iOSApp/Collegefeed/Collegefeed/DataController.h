@@ -116,7 +116,8 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (void)restoreAllCoreData;
 
 // Achievements
-- (void)didAchieve:(Achievement *)achievement;
+//- (void)didAchieve:(Achievement *)achievement;
+- (void)didViewAchievements;
 
 // Colleges
 - (College *)getCollegeInFocus;

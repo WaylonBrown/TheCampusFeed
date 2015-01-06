@@ -96,7 +96,13 @@
 #define KEY_HOME_COLLEGE            @"homeCollegeId"
 
 // Achievements
+#define POST_COUNT_ACHIEVEMENT_ID 100
+#define POST_POINTS_ACHIEVEMENT_ID 200
+#define VIEW_ACHIEVEMENT_ID 300
+#define SHORT_POST_ACHIEVEMENT_ID 400
+#define MANY_HOURS_ACHIEVEMENT_ID 500
 
+#define ACHIEVEMENT_ID      @"AchievementId"
 #define ACHIEVEMENT_ENTITY      @"Achievement"
 #define KEY_AMOUNT_CURRENTLY    @"amountCurrently"
 #define KEY_AMOUNT_REQUIRED     @"amountRequired"
@@ -107,6 +113,9 @@
 #define VALUE_VIEW_ACHIEVEMENT   @"ViewAchievement"
 #define VALUE_SHORT_POST_ACHIEVEMENT   @"ShortPostAchievement"
 #define VALUE_MANY_HOURS_ACHIEVEMENT   @"ManyHoursAchievement"
+
+#define POST_COUNT_TO_HOURS_MULTIPLIER 10
+#define POST_POINTS_TO_HOURS_MULTIPLIER 10
 #define HOURS_FOR_VIEW_ACHIEVEMENT 10
 #define HOURS_FOR_SHORT_POST_ACHIEVEMENT 2000
 #define HOURS_FOR_EARN_MANY_HOURS_ACHIEVEMENT 2000

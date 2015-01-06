@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Achievement" syncable="YES">
+        <attribute name="achievementId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="amountCurrently" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="amountRequired" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="hasAchieved" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -46,12 +47,12 @@
         <attribute name="voteId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Achievement" positionX="0" positionY="45" width="128" height="118"/>
+        <element name="Achievement" positionX="0" positionY="45" width="128" height="135"/>
         <element name="College" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Comment" positionX="0" positionY="0" width="128" height="60"/>
         <element name="Post" positionX="0" positionY="0" width="128" height="60"/>
         <element name="Status" positionX="0" positionY="0" width="128" height="210"/>
-        <element name="Vote" positionX="0" positionY="0" width="128" height="120"/>
         <element name="TimeCrunch" positionX="0" positionY="81" width="128" height="90"/>
+        <element name="Vote" positionX="0" positionY="0" width="128" height="120"/>
     </elements>
 </model>
