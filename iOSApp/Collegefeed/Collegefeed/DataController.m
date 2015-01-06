@@ -980,11 +980,6 @@
     }
     
     [self updateTimeCrunchWithNewPost:post];
-    
-//    int numUserPosts = [self getNumUserPosts];
-    // TODO: assign hours here
-    
-    //    BOOL newAchievementEarned = [self checkForEarnedNewAchievementFromNewPost];
 }
 - (BOOL)shouldPostToServer:(Post *)post
 {

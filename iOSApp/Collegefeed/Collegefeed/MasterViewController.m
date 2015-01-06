@@ -397,7 +397,9 @@
 
 - (void)switchToFeedForCollegeOrNil:(College *)college
 {
-    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+    NSLog(@"Switched to feed for college = %@", college.name);
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:NO];
     
     [self.dataController switchedToSpecificCollegeOrNil:college];
     [self setCorrectList];
