@@ -231,6 +231,8 @@
     }
     
     self.hasFinishedFetchRequest = YES;
+    
+    NSLog(@"MasterViewController finished fetch request about to reload table data");
     [self.tableView reloadData];
 }
 
