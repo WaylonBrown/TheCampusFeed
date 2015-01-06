@@ -12,7 +12,7 @@
 #define DELAY_FOR_SLOW_NETWORK 0.5
 #define DEMONSTRATION_MODE YES
 
-// Length Requirements
+// Restrictions
 
 #define MIN_TAG_LENGTH      4
 #define MAX_TAG_LENGTH      140
@@ -20,6 +20,10 @@
 #define MAX_POST_LENGTH     140
 #define MIN_COMMENT_LENGTH  10
 #define MAX_COMMENT_LENGTH  140
+#define MINIMUM_POSTING_INTERVAL_MINUTES    5
+#define MINIMUM_COMMENTING_INTERVAL_MINUTES 1
+#define MILES_FOR_PERMISSION                60
+#define LOCATION_MANAGER_TIMEOUT            10
 
 // Custom Colors
 
@@ -30,13 +34,6 @@
 #define CF_LIGHTBLUE   0x33B5E5 // 51, 181, 229
 #define CF_BLUE        0x0099CC
 #define CF_WHITE       0xFFFFFF
-
-// TableCell Identifiers
-#define POST_TABLE_CELL                         @"PostTableCell"
-#define POST_TABLE_CELL_WITH_COLLEGE            @"PostTableCellWithCollege"
-#define POST_TABLE_CELL_WITH_IMAGE              @"PostTableCellWithImage"
-#define POST_TABLE_CELL_WITH_COLLEGE_AND_IMAGE  @"PostTableCellWithCollegeAndImage"
-
 
 // TableCell Height Estimates
 #define POST_CELL_PICTURE_HEIGHT_CROPPED     125
@@ -80,17 +77,8 @@
 
 // Numerics
 
-#define MILES_FOR_PERMISSION                60
 #define PI_VALUE                            3.14159
 #define EARTH_RADIUS_MILES                  3959
-#define LOCATION_MANAGER_TIMEOUT            10
-#define MINIMUM_POSTING_INTERVAL_MINUTES    5
-#define MINIMUM_COMMENTING_INTERVAL_MINUTES 1
-
-// File Names
-
-#define USER_POST_IDS_FILE          @"UserPostIds.txt"
-#define USER_COMMENT_IDS_FILE       @"UserCommentIds.txt"
 
 // Core Data Storage
 
@@ -107,6 +95,8 @@
 #define KEY_HAS_VIEWED_ACHIEVEMENTS @"hasViewedAchievements"
 #define KEY_HOME_COLLEGE            @"homeCollegeId"
 
+// Achievements
+
 #define ACHIEVEMENT_ENTITY      @"Achievement"
 #define KEY_AMOUNT_CURRENTLY    @"amountCurrently"
 #define KEY_AMOUNT_REQUIRED     @"amountRequired"
@@ -117,6 +107,11 @@
 #define VALUE_VIEW_ACHIEVEMENT   @"ViewAchievement"
 #define VALUE_SHORT_POST_ACHIEVEMENT   @"ShortPostAchievement"
 #define VALUE_MANY_HOURS_ACHIEVEMENT   @"ManyHoursAchievement"
+#define HOURS_FOR_VIEW_ACHIEVEMENT 10
+#define HOURS_FOR_SHORT_POST_ACHIEVEMENT 2000
+#define HOURS_FOR_EARN_MANY_HOURS_ACHIEVEMENT 2000
+#define REQUIRED_NUMBER_OF_CRUNCH_HOURS_FOR_MANY_HOURS_ACHIEVEMENT 2000
+
 
 #define POST_ENTITY             @"Post"
 #define KEY_POST_ID             @"postId"

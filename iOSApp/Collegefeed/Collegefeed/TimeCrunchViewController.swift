@@ -66,7 +66,8 @@ class TimeCrunchViewController: UIViewController {
             self.placeCreatePostButton()
         }
     }
-    override func viewWillAppear(animated: Bool) {
+    
+    override func viewDidAppear(animated: Bool) {
         self.updateLabels()
     }
     
@@ -108,8 +109,11 @@ class TimeCrunchViewController: UIViewController {
             
             hoursLabel.text = NSString(format: "%d hrs", hours)
             daysLabel.text = NSString(format: "(%.1f days)", days)
-            schoolLabel.text = model.college!.name
             onOffLabel.text = (model.timeWasActivatedAt != nil) ? "Time Crunch is on." : "Time Crunch is off."
+
+            if let mySchool = myDataController!.getCollegeById(model.collegeId) {
+                schoolLabel.text = mySchool.name
+            }
         }
         else {
 

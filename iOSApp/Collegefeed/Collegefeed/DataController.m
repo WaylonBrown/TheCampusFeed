@@ -50,9 +50,6 @@
 //        TODO:
 //        [self incrementLaunchCountInCoreData];
         self.launchCount++;
-
-        // Populate arrays from both network and core (local) data
-//        [self retrieveUserVotes];
         
         // Get the user's location
         [self findUserLocation];
@@ -89,117 +86,6 @@
     // Votes
     self.userPostVotes = [[NSMutableArray alloc] init];
     self.userCommentVotes = [[NSMutableArray alloc] init];
-}
-
-- (void)restoreAllCoreData
-{
-    NSLog(@"Restoring all information from Core Data");
-    
-    [self restoreStatusFromCoreData];
-    [self retrieveColleges];
-    [self retrieveUserPosts];
-    [self retrieveUserComments];
-    [self retrieveUserVotes];
-    [self restoreAchievementsFromCoreData];
-    [self restoreTimeCrunchFromCoreData];
-}
-
-- (void)saveAllCoreData
-{
-//    [self saveAchievementsToCoreData];
-    
-    // Posts should be every time user posts (comments, votes, etc.)
-    
-    // Achievements every time one is earned (through NEW POSTING or TOTALLING POST SCORE or ACHIEVEMENTS VIEWED
-    
-    // TimeCrunch every time achievement earned
-}
-
-#pragma mark - Status
-
-- (void)restoreStatusFromCoreData
-{
-    NSLog(@"Restoring status from core data");
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
-    {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    
-    // Current feed
-    self.currentCollegeFeedId = [[status valueForKey:KEY_CURRENT_COLLEGE_FEED] longValue];
-    self.showingSingleCollege = self.currentCollegeFeedId > 0;
-    self.showingAllColleges = !self.showingSingleCollege;
-
-    // Achievements
-    self.hasViewedAchievements = [[status valueForKey:KEY_HAS_VIEWED_ACHIEVEMENTS] boolValue];
-    self.numPosts = [[status valueForKey:KEY_NUM_POSTS] longValue];
-    self.numPoints = [[status valueForKey:KEY_NUM_POINTS] longValue];
-    
-    // Restrictions
-    self.lastCommentTime = [status valueForKey:KEY_COMMENT_TIME];
-    self.lastPostTime = [status valueForKey:KEY_POST_TIME];
-    self.isBanned = [[status valueForKey:KEY_IS_BANNED] boolValue];
-    
-    // Other
-    self.collegeListVersion = [[status valueForKey:KEY_COLLEGE_LIST_VERSION] longValue];
-    self.launchCount = [[status valueForKey:KEY_LAUNCH_COUNT] longValue];
-    self.homeCollegeId = [[status valueForKey:KEY_HOME_COLLEGE] longValue];
-    
-}
-- (void)saveStatusToCoreData
-{
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedStatus.count > 1)
-    {
-        NSLog(@"Too many status entities");
-    }
-    NSManagedObject *status = [fetchedStatus firstObject];
-    if (status == nil)
-    {
-        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
-                                                   inManagedObjectContext:context];
-    }
-    
-    // Current feed
-//    NSNumber *feedNumber = self.showingSingleCollege ? [NSNumber numberWithLong:self.currentCollegeFeedId] : nil;
-    NSNumber *feedNumber = (self.currentCollegeFeedId <= 0) ? nil : [NSNumber numberWithLong:self.currentCollegeFeedId];
-    [status setValue:feedNumber forKey:KEY_CURRENT_COLLEGE_FEED];
-    
-    // Achievements
-    [status setValue:[NSNumber numberWithBool:self.hasViewedAchievements] forKey:KEY_HAS_VIEWED_ACHIEVEMENTS];
-    [status setValue:[NSNumber numberWithLong:self.numPosts] forKey:KEY_NUM_POSTS];
-    [status setValue:[NSNumber numberWithLong:self.numPoints] forKey:KEY_NUM_POINTS];    
-    
-    // Restrictions
-    [status setValue:self.lastPostTime forKey:KEY_POST_TIME];
-    [status setValue:self.lastCommentTime forKey:KEY_COMMENT_TIME];
-    [status setValue:[NSNumber numberWithBool:self.isBanned] forKey:KEY_IS_BANNED];
-    
-    // Other
-    [status setValue:[NSNumber numberWithLong:self.collegeListVersion] forKey:KEY_COLLEGE_LIST_VERSION];
-    [status setValue:[NSNumber numberWithLong:self.launchCount] forKey:KEY_LAUNCH_COUNT];
-    [status setValue:[NSNumber numberWithLong:self.homeCollegeId] forKey:KEY_HOME_COLLEGE];
-
-    if (![_managedObjectContext save:&error])
-    {
-        NSLog(@"Failed to save status to core data: %@",
-              [error localizedDescription]);
-    }
 }
 
 #pragma mark - Achievements
@@ -269,7 +155,7 @@
             [context deleteObject:oldMgdAchievement];
         }
         
-        NSLog(@"Creating core data models for all %ld achievements", self.achievementList.count);
+        NSLog(@"Creating core data models for all %ld achievements", (unsigned long)self.achievementList.count);
         for (Achievement *newAchievement in self.achievementList)
         {
             NSManagedObject *newMgdAchievement = [NSEntityDescription
@@ -295,175 +181,41 @@
               [error localizedDescription]);
     }
 }
-
-- (BOOL)checkForEarnedNewAchievementFromNewPost
+- (void)didAchieve:(Achievement *)achievement
 {
-    NSUInteger numPosts = self.userPosts.count;
-    BOOL earnedNewAchievement = NO;
-    int hoursEarned = 0;
+    NSLog(@"User earned achievement! \"%@\"", [achievement toString]);
+    
+    if (!achievement.hasAchieved)
+    {
+        NSLog(@"ERROR. Called didAchieve with an unachieved achievement. Doing nothing");
+        return;
+    }
+
+    
+    BOOL hasFoundExistingMatch = false;
     for (Achievement *a in self.achievementList)
     {
-        if ([a.type isEqualToString:VALUE_POST_ACHIEVEMENT] && a.amountRequired == numPosts)
+        if ([a isEqualTo:achievement] && !hasFoundExistingMatch)
         {
-            hoursEarned += a.hoursForReward;
-            earnedNewAchievement = YES;
+            hasFoundExistingMatch = true;
+            a.hasAchieved = YES;
+            NSLog(@"Setting an existing achievement to be completed");
+            break;
         }
     }
     
-    return earnedNewAchievement;
-}
-- (void)checkAchievements
-{
-    // TODO: assign Time Crunch hours earned for achievements
-    
-    NSLog(@"Checking for achievement completion. Updating progress based on user's posts");
-    long postCount = self.userPosts.count;
-    long scoreCount = [self getUserPostScore];
-    
-    NSLog(@"Found %ld submitted posts with a total of %ld points", postCount, scoreCount);
-    
-    for (Achievement *a in self.achievementList)
+    if (!hasFoundExistingMatch)
     {
-        if ([a.type isEqualToString:VALUE_POST_ACHIEVEMENT])
-        {
-            a.amountCurrently = postCount;
-        }
-        else if ([a.type isEqualToString:VALUE_SCORE_ACHIEVEMENT])
-        {
-            a.amountCurrently = scoreCount;
-        }
-        else if ([a.type isEqualToString:VALUE_VIEW_ACHIEVEMENT])
-        {
-            a.amountCurrently = self.hasViewedAchievements;
-        }
-        else if ([a.type isEqualToString:VALUE_MANY_HOURS_ACHIEVEMENT])
-        {
-            a.amountCurrently = [self getTimeCrunchHours];
-        }
-        else if ([a.type isEqualToString:VALUE_SHORT_POST_ACHIEVEMENT])
-        {
-            if (![a hasAchieved])
-            {
-                // If not achieved yet, check to see if qualified now
-                a.amountCurrently = [self getHasAchievedShortPostAchievement];
-            }
-        }
-        
-        NSLog(@"Achievement: %@\nHas finished: %@\nAmount currently: %ld\nAmount needed: %ld", [a toString], [a hasAchieved] ? @"YES" : @"NO", (long)a.amountCurrently, (long)a.amountRequired);
-    }
-}
-- (BOOL)getHasAchievedShortPostAchievement
-{
-    BOOL foundAtLeastOne = NO;
-    
-    NSLog(@"Checking if has achieved the short post achievement. Needs to earn 100 points on a post with <= 3 words");
-    for (Post *post in self.userPosts)
-    {
-        long score = [[post getScore] longValue];
-        if ([[post.text componentsSeparatedByString:@" "] count] <= 3 && score >= 100)
-        {
-            NSLog(@"Short post achievement has been achieved. \"%@\" has %ld points", post.text, score);
-            foundAtLeastOne = YES;
-        }
-        else
-        {
-            NSLog(@"Post did not qualify: \"%@\" has %ld points", post.text, score);
-        }
+        NSLog(@"Did not find existing achievement to set. Adding this as a new one");
+        [self.achievementList addObject:achievement];
     }
     
-    return foundAtLeastOne;
-}
-//- (void)fetchAchievements
-//{
-//    self.achievementList = [[NSMutableArray alloc] init];
-//    
-//    NSError *error;
-//    NSManagedObjectContext *context = [self managedObjectContext];
-//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-//    NSEntityDescription *entity = [NSEntityDescription entityForName:ACHIEVEMENT_ENTITY
-//                                              inManagedObjectContext:context];
-//    
-//    [fetchRequest setEntity:entity];
-//    
-//    NSArray *achievements = [_managedObjectContext executeFetchRequest:fetchRequest
-//                                                                 error:&error];
-//    for (NSManagedObject *a in achievements)
-//    {
-//        Achievement *achievement = [[Achievement alloc]
-//                                    initWithCurrAmount:[[a valueForKey:KEY_AMOUNT_CURRENTLY] longValue]
-//                                    reqAmt:[[a valueForKey:KEY_AMOUNT_REQUIRED] longValue]
-//                                    rewardHours:[[a valueForKey:KEY_HOURS_REWARD] longValue]
-//                                    achievementType:[a valueForKey:KEY_TYPE]];
-//        
-//        [self.achievementList addObject:achievement];
-//    }
-//    
-//    if (self.achievementList.count == 0)
-//    {
-//        [self initializeAchievements];
-//    }
-//    
-//    [self checkAchievements];
-//    
-//    
-//    NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
-//                              @"achievements", @"feedName", nil];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:userInfo];
-//
-//}
-- (void)addAchievement:(Achievement *)achievement
-{
-    NSLog(@"Adding achievement: %@", achievement.toString);
-    [self.achievementList addObject:achievement];
+    [self saveAchievementsToCoreData];
+    NSLog(@"Finished saving achievement");
     
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSError *error;
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:ACHIEVEMENT_ENTITY
-                                              inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    NSPredicate *p1 = [NSPredicate predicateWithFormat:@"%@ == %ld", KEY_AMOUNT_REQUIRED, (long)achievement.amountRequired];
-    NSPredicate *p2 = [NSPredicate predicateWithFormat:@"%@ == %ld", KEY_HOURS_REWARD, (long)achievement.hoursForReward];
-    NSPredicate *p3 = [NSPredicate predicateWithFormat:@"%@ == %@", KEY_TYPE, achievement.type];
-    [fetchRequest setPredicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[p1, p2, p3]]];
-    
-
-    NSArray *achievements = [_managedObjectContext executeFetchRequest:fetchRequest
-                                                                 error:&error];
-
-    if (achievements.count == 0)
-    {
-        // Add this one to core data
-        NSManagedObject *mgdAchievement = [NSEntityDescription insertNewObjectForEntityForName:ACHIEVEMENT_ENTITY
-                                                                        inManagedObjectContext:context];
-        
-        [mgdAchievement setValue:[NSNumber numberWithLong:achievement.amountCurrently] forKey:KEY_AMOUNT_CURRENTLY];
-        [mgdAchievement setValue:[NSNumber numberWithLong:achievement.amountRequired] forKey:KEY_AMOUNT_REQUIRED];
-        [mgdAchievement setValue:[NSNumber numberWithLong:achievement.hoursForReward] forKey:KEY_HOURS_REWARD];
-        [mgdAchievement setValue:[NSNumber numberWithBool:achievement.hasAchieved] forKey:KEY_HAS_ACHIEVED];
-        [mgdAchievement setValue:achievement.type forKey:KEY_TYPE];
     }
-    else
-    {
-        for (Achievement *a in achievements)
-        {
-            [a setValue:[NSNumber numberWithLong:achievement.amountCurrently] forKey:KEY_AMOUNT_CURRENTLY];
-            [a setValue:[NSNumber numberWithBool:achievement.hasAchieved] forKey:KEY_HAS_ACHIEVED];
-        }
-    }
-    
-    if (![_managedObjectContext save:&error])
-    {
-        NSLog(@"Failed to save achievement: %@",
-              [error localizedDescription]);
-    }
-}
 - (void)initializeDefaultAchievements
 {
-//    if (self.achievementList.count != 0)
-//    {
-//        return;
-//    }
     // For number of posts
     NSArray *arrayPostCounts = @[[NSNumber numberWithInt:1],
                                  [NSNumber numberWithInt:3],
@@ -480,7 +232,6 @@
                                                      rewardHours:hrsReward
                                                  achievementType:VALUE_POST_ACHIEVEMENT];
         [self.achievementList addObject:a];
-//        [self addAchievement:a];
     }
     
     // For total points of posts
@@ -501,35 +252,27 @@
                                                      rewardHours:hrsReward
                                                  achievementType:VALUE_SCORE_ACHIEVEMENT];
         [self.achievementList addObject:a];
-//        [self addAchievement:a];
     }
     
     // Special
-    Achievement *s1 = [[Achievement alloc] initWithCurrAmount:self.hasViewedAchievements
+    Achievement *s1 = [[Achievement alloc] initWithCurrAmount:0//self.hasViewedAchievements
                                                        reqAmt:1
-                                                  rewardHours:10
+                                                  rewardHours:HOURS_FOR_VIEW_ACHIEVEMENT
                                               achievementType:VALUE_VIEW_ACHIEVEMENT];
-    [self.achievementList addObject:s1];
-
-//    [self addAchievement:s1];
     
-
-    Achievement *s2 = [[Achievement alloc] initWithCurrAmount:[self getHasAchievedShortPostAchievement]
+    Achievement *s2 = [[Achievement alloc] initWithCurrAmount:0//[self getHasAchievedShortPostAchievement]
                                                        reqAmt:1
-                                                  rewardHours:2000
+                                                  rewardHours:HOURS_FOR_SHORT_POST_ACHIEVEMENT
                                               achievementType:VALUE_SHORT_POST_ACHIEVEMENT];
-    [self.achievementList addObject:s2];
 
-//    [self addAchievement:s2];
-    
-    Achievement *s3 = [[Achievement alloc] initWithCurrAmount:[self getTimeCrunchHours]
-                                                       reqAmt:2000
-                                                  rewardHours:2000
+    Achievement *s3 = [[Achievement alloc] initWithCurrAmount:0//[self getTimeCrunchHours]
+                                                       reqAmt:REQUIRED_NUMBER_OF_CRUNCH_HOURS_FOR_MANY_HOURS_ACHIEVEMENT
+                                                  rewardHours:HOURS_FOR_EARN_MANY_HOURS_ACHIEVEMENT
                                               achievementType:VALUE_MANY_HOURS_ACHIEVEMENT];
 
+    [self.achievementList addObject:s1];
+    [self.achievementList addObject:s2];
     [self.achievementList addObject:s3];
-
-//    [self addAchievement:s3];
 }
 
 #pragma mark - Colleges
@@ -558,7 +301,6 @@
     
     return nil;
 }
-
 - (void)retrieveColleges
 {
     NSLog(@"Restoring Colleges from core data");
@@ -613,7 +355,6 @@
     
     return self.homeCollegeId;
 }
-
 - (BOOL)needsNewCollegeList
 {
     long newVersion = [self getNetworkCollegeListVersion];
@@ -641,10 +382,6 @@
     }
     else
     {
-//        NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
-//                                  @"allColleges", @"feedName", nil];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:userInfo];
-        
         [[NSNotificationCenter defaultCenter] postNotificationName:@"FetchedColleges" object:nil];
     }
 }
@@ -658,9 +395,6 @@
 
                return [Networker GETAllColleges];
            }];
-    
-    
-//    [self writeCollegestoCoreData];
     
     self.collegeListVersion = [self getNetworkCollegeListVersion];
 }
@@ -795,7 +529,6 @@
     [self findNearbyColleges];
     [self writeCollegestoCoreData];
 }
-
 - (void)findNearbyColleges
 {   // Populate the nearbyColleges array appropriately using current location
 
@@ -875,6 +608,132 @@
                
                return [Networker GETCommentsWithPostId:[post.id longValue]];
            }];
+}
+- (void)saveComment:(Comment *)comment
+{
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSError *error;
+    NSManagedObject *mgdComment = [NSEntityDescription insertNewObjectForEntityForName:COMMENT_ENTITY
+                                                                inManagedObjectContext:context];
+    [mgdComment setValue:[NSNumber numberWithLong:[comment.id longValue]] forKeyPath:KEY_COMMENT_ID];
+    
+    if (![_managedObjectContext save:&error])
+    {
+        NSLog(@"Failed to save user comment: %@",
+              [error localizedDescription]);
+    }
+}
+
+#pragma mark - Core Data
+
+- (void)restoreAllCoreData
+{
+    NSLog(@"Restoring all information from Core Data");
+    
+    [self restoreStatusFromCoreData];
+    [self retrieveColleges];
+    [self retrieveUserPosts];
+    [self retrieveUserComments];
+    [self retrieveUserVotes];
+    [self restoreAchievementsFromCoreData];
+    [self restoreTimeCrunchFromCoreData];
+}
+- (void)saveAllCoreData
+{
+    //    [self saveAchievementsToCoreData];
+    
+    // Posts should be every time user posts (comments, votes, etc.)
+    
+    // Achievements every time one is earned (through NEW POSTING or TOTALLING POST SCORE or ACHIEVEMENTS VIEWED
+    
+    // TimeCrunch every time achievement earned
+}
+- (NSManagedObjectContext *)managedObjectContext
+{
+    // Returns the managed object context for the application.
+    // If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
+    
+    if (_managedObjectContext != nil) {
+        return _managedObjectContext;
+    }
+    
+    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    if (coordinator != nil) {
+        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+    }
+    return _managedObjectContext;
+}
+- (NSManagedObjectModel *)managedObjectModel
+{
+    // Returns the managed object model for the application.
+    // If the model doesn't already exist, it is created from the application's model.
+    
+    if (_managedObjectModel != nil) {
+        return _managedObjectModel;
+    }
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"UserData" withExtension:@"momd"];
+    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    return _managedObjectModel;
+}
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
+{
+    // Returns the persistent store coordinator for the application.
+    // If the coordinator doesn't already exist, it is created and the application's store added to it.
+    
+    if (_persistentStoreCoordinator != nil) {
+        return _persistentStoreCoordinator;
+    }
+    
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"UserData.sqlite"];
+    
+    NSError *error = nil;
+    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+        /*
+         Replace this implementation with code to handle the error appropriately.
+         
+         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+         
+         Typical reasons for an error here include:
+         * The persistent store is not accessible;
+         * The schema for the persistent store is incompatible with current managed object model.
+         Check the error message to determine what the actual problem was.
+         
+         
+         If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
+         
+         If you encounter schema incompatibility errors during development, you can reduce their frequency by:
+         * Simply deleting the existing store:
+         [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil]
+         
+         * Performing automatic lightweight migration by passing the following dictionary as the options parameter:
+         @{NSMigratePersistentStoresAutomaticallyOption:@YES, NSInferMappingModelAutomaticallyOption:@YES}
+         
+         Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
+         
+         */
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    return _persistentStoreCoordinator;
+}
+- (void) deleteAllObjects
+{
+    NSArray *stores = [_persistentStoreCoordinator persistentStores];
+    
+    for(NSPersistentStore *store in stores)
+    {
+        [_persistentStoreCoordinator removePersistentStore:store error:nil];
+        [[NSFileManager defaultManager] removeItemAtPath:store.URL.path error:nil];
+    }
+}
+- (NSURL *)applicationDocumentsDirectory
+{
+    // Returns the URL to the application's Documents directory.
+    
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
 #pragma mark - Flags
@@ -969,6 +828,27 @@
         NSLog(@"%@", exception.reason);
     }
     return NO;
+}
+- (void)savePost:(Post *)post
+{
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSError *error;
+    NSManagedObject *mgdPost = [NSEntityDescription insertNewObjectForEntityForName:POST_ENTITY
+                                                             inManagedObjectContext:context];
+    [mgdPost setValue:[NSNumber numberWithLong:[post.id longValue]] forKeyPath:KEY_POST_ID];
+    
+    self.numPosts++;
+    
+    if (![_managedObjectContext save:&error])
+    {
+        NSLog(@"Failed to save user post: %@",
+              [error localizedDescription]);
+    }
+    
+    [self updateTimeCrunchWithNewPost:post];
+    // TODO: assign hours here
+    
+    //    BOOL newAchievementEarned = [self checkForEarnedNewAchievementFromNewPost];
 }
 - (BOOL)shouldPostToServer:(Post *)post
 {
@@ -1137,6 +1017,92 @@
     return nil;
 }
 
+#pragma mark - Status
+
+- (void)restoreStatusFromCoreData
+{
+    NSLog(@"Restoring status from core data");
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
+    {
+        NSLog(@"Too many status entities");
+    }
+    NSManagedObject *status = [fetchedStatus firstObject];
+    
+    // Current feed
+    self.currentCollegeFeedId = [[status valueForKey:KEY_CURRENT_COLLEGE_FEED] longValue];
+    self.showingSingleCollege = self.currentCollegeFeedId > 0;
+    self.showingAllColleges = !self.showingSingleCollege;
+    
+    // Achievements
+    self.hasViewedAchievements = [[status valueForKey:KEY_HAS_VIEWED_ACHIEVEMENTS] boolValue];
+    self.numPosts = [[status valueForKey:KEY_NUM_POSTS] longValue];
+    self.numPoints = [[status valueForKey:KEY_NUM_POINTS] longValue];
+    
+    // Restrictions
+    self.lastCommentTime = [status valueForKey:KEY_COMMENT_TIME];
+    self.lastPostTime = [status valueForKey:KEY_POST_TIME];
+    self.isBanned = [[status valueForKey:KEY_IS_BANNED] boolValue];
+    
+    // Other
+    self.collegeListVersion = [[status valueForKey:KEY_COLLEGE_LIST_VERSION] longValue];
+    self.launchCount = [[status valueForKey:KEY_LAUNCH_COUNT] longValue];
+    self.homeCollegeId = [[status valueForKey:KEY_HOME_COLLEGE] longValue];
+    
+}
+- (void)saveStatusToCoreData
+{
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:STATUS_ENTITY inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedStatus = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedStatus.count > 1)
+    {
+        NSLog(@"Too many status entities");
+    }
+    NSManagedObject *status = [fetchedStatus firstObject];
+    if (status == nil)
+    {
+        status = [NSEntityDescription insertNewObjectForEntityForName:STATUS_ENTITY
+                                               inManagedObjectContext:context];
+    }
+    
+    // Current feed
+    NSNumber *feedNumber = (self.currentCollegeFeedId <= 0) ? nil : [NSNumber numberWithLong:self.currentCollegeFeedId];
+    [status setValue:feedNumber forKey:KEY_CURRENT_COLLEGE_FEED];
+    
+    // Achievements
+    [status setValue:[NSNumber numberWithBool:self.hasViewedAchievements] forKey:KEY_HAS_VIEWED_ACHIEVEMENTS];
+    [status setValue:[NSNumber numberWithLong:self.numPosts] forKey:KEY_NUM_POSTS];
+    [status setValue:[NSNumber numberWithLong:self.numPoints] forKey:KEY_NUM_POINTS];
+    
+    // Restrictions
+    [status setValue:self.lastPostTime forKey:KEY_POST_TIME];
+    [status setValue:self.lastCommentTime forKey:KEY_COMMENT_TIME];
+    [status setValue:[NSNumber numberWithBool:self.isBanned] forKey:KEY_IS_BANNED];
+    
+    // Other
+    [status setValue:[NSNumber numberWithLong:self.collegeListVersion] forKey:KEY_COLLEGE_LIST_VERSION];
+    [status setValue:[NSNumber numberWithLong:self.launchCount] forKey:KEY_LAUNCH_COUNT];
+    [status setValue:[NSNumber numberWithLong:self.homeCollegeId] forKey:KEY_HOME_COLLEGE];
+    
+    if (![_managedObjectContext save:&error])
+    {
+        NSLog(@"Failed to save status to core data: %@",
+              [error localizedDescription]);
+    }
+}
+
 #pragma mark - Tags
 
 - (void)fetchTrendingTagsForAllColleges
@@ -1180,7 +1146,7 @@
 {
     NSLog(@"Attempt to activate Time Crunch in DataController");
     
-    if (self.timeCrunch == nil || self.timeCrunch.college == nil)
+    if (self.timeCrunch == nil || self.timeCrunch.collegeId == 0)
     {
         NSLog(@"Activating Time Crunch failed");
         [self.toaster toastErrorFindingTimeCrunchCollege];
@@ -1218,7 +1184,7 @@
         self.homeCollegeForTimeCrunch = postCollege;
         self.homeCollegeId = postCollege.collegeID;
         
-        [self.timeCrunch changeCollege:postCollege];
+        [self.timeCrunch changeCollegeId:self.homeCollegeId];
         [self.timeCrunch addHours:TIME_CRUNCH_HOURS_FOR_POST];
         
         NSLog(@"DataController changed home college to %@", self.homeCollegeForTimeCrunch.name);
@@ -1228,7 +1194,7 @@
         
     };
     
-    if (self.timeCrunch != nil && self.timeCrunch.college != nil && self.timeCrunch.college.collegeID != postCollege.collegeID)
+    if (self.timeCrunch != nil && self.timeCrunch.collegeId != 0 && self.timeCrunch.collegeId != postCollege.collegeID)
     {
         // TimeCrunchModel exists. Trying to post to a different home college
         NSLog(@"Time Crunch home college is different than the one for this post. Displaying prompt dialog to user");
@@ -1286,8 +1252,8 @@
         if (canSaveMany)
         {
             // Update matching college
-            if (timeCrunch.college.collegeID == [[t valueForKey:KEY_COLLEGE_ID] longValue]
-                && timeCrunch.college.collegeID != 0)
+            if (timeCrunch.collegeId == [[t valueForKey:KEY_COLLEGE_ID] longValue]
+                && timeCrunch.collegeId != 0)
             {
                 foundMatch = YES;
                 
@@ -1305,11 +1271,12 @@
     if (!foundMatch)
     {
         // If no match, create a new TimeCrunch object
-        NSManagedObject *mgdModel = [NSEntityDescription insertNewObjectForEntityForName:TIME_CRUNCH_ENTITY
-                                                                  inManagedObjectContext:context];
-        
-        [mgdModel setValue:[timeCrunch.college getID] forKey:KEY_COLLEGE_ID];
+        NSManagedObject *mgdModel = [NSEntityDescription
+                                     insertNewObjectForEntityForName:TIME_CRUNCH_ENTITY
+                                     inManagedObjectContext:context];
+
         [mgdModel setValue:timeCrunch.timeWasActivatedAt forKey:KEY_TIME_ACTIVATED_AT];
+        [mgdModel setValue:[NSNumber numberWithLong:timeCrunch.collegeId] forKey:KEY_COLLEGE_ID];
         [mgdModel setValue:[NSNumber numberWithLong:[timeCrunch getHoursEarned]] forKey:KEY_HOURS_EARNED];
     }
     
@@ -1478,64 +1445,12 @@
     
     return false;
 }
-
-#pragma mark - Watchdog
-
-- (void)createWatchdog
-{
-    NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys:
-                             [NSNumber numberWithInt:10], @"minLength",
-                             [NSNumber numberWithInt:140], @"maxLength",
-                             [NSNumber numberWithBool:YES], @"blockPhone",
-                             [NSNumber numberWithBool:YES], @"blockEmail",
-                             [NSNumber numberWithBool:NO], @"blockVulgar",
-                             nil];
-    
-    self.watchDog = [[Watchdog alloc] initWithOptions:options];
-    NSLog(@"Finished creating Watchdog");
-}
-
-#pragma mark - Local Data Access
-
-- (void)savePost:(Post *)post
-{
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSError *error;
-    NSManagedObject *mgdPost = [NSEntityDescription insertNewObjectForEntityForName:POST_ENTITY
-                                                                inManagedObjectContext:context];
-    [mgdPost setValue:[NSNumber numberWithLong:[post.id longValue]] forKeyPath:KEY_POST_ID];
-    
-    self.numPosts++;
-    
-    if (![_managedObjectContext save:&error])
-    {
-        NSLog(@"Failed to save user post: %@",
-              [error localizedDescription]);
-    }
-    
-    [self updateTimeCrunchWithNewPost:post];
-    BOOL newAchievementEarned = [self checkForEarnedNewAchievementFromNewPost];
-}
-- (void)saveComment:(Comment *)comment
-{
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSError *error;
-    NSManagedObject *mgdComment = [NSEntityDescription insertNewObjectForEntityForName:COMMENT_ENTITY
-                                                             inManagedObjectContext:context];
-    [mgdComment setValue:[NSNumber numberWithLong:[comment.id longValue]] forKeyPath:KEY_COMMENT_ID];
-
-    if (![_managedObjectContext save:&error])
-    {
-        NSLog(@"Failed to save user comment: %@",
-              [error localizedDescription]);
-    }
-}
 - (void)saveVote:(Vote *)vote
 {
     NSManagedObjectContext *context = [self managedObjectContext];
     NSError *error;
     NSManagedObject *mgdVote = [NSEntityDescription insertNewObjectForEntityForName:VOTE_ENTITY
-                                                          inManagedObjectContext:context];
+                                                             inManagedObjectContext:context];
     [mgdVote setValue:[NSNumber numberWithLong:vote.parentID] forKeyPath:KEY_PARENT_ID];
     [mgdVote setValue:[NSNumber numberWithLong:vote.voteID] forKeyPath:KEY_VOTE_ID];
     [mgdVote setValue:[NSNumber numberWithBool:vote.upvote] forKeyPath:KEY_UPVOTE];
@@ -1573,6 +1488,22 @@
             return;
         }
     }
+}
+
+#pragma mark - Watchdog
+
+- (void)createWatchdog
+{
+    NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys:
+                             [NSNumber numberWithInt:10], @"minLength",
+                             [NSNumber numberWithInt:140], @"maxLength",
+                             [NSNumber numberWithBool:YES], @"blockPhone",
+                             [NSNumber numberWithBool:YES], @"blockEmail",
+                             [NSNumber numberWithBool:NO], @"blockVulgar",
+                             nil];
+    
+    self.watchDog = [[Watchdog alloc] initWithOptions:options];
+    NSLog(@"Finished creating Watchdog");
 }
 
 #pragma mark - Helper Methods
@@ -1847,95 +1778,6 @@
     }
 }
 
-#pragma mark - Core Data stack
 
-// Returns the managed object context for the application.
-// If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
-- (NSManagedObjectContext *)managedObjectContext
-{
-    if (_managedObjectContext != nil) {
-        return _managedObjectContext;
-    }
-    
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
-    return _managedObjectContext;
-}
-
-// Returns the managed object model for the application.
-// If the model doesn't already exist, it is created from the application's model.
-- (NSManagedObjectModel *)managedObjectModel
-{
-    if (_managedObjectModel != nil) {
-        return _managedObjectModel;
-    }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"UserData" withExtension:@"momd"];
-    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    return _managedObjectModel;
-}
-
-// Returns the persistent store coordinator for the application.
-// If the coordinator doesn't already exist, it is created and the application's store added to it.
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
-{
-    if (_persistentStoreCoordinator != nil) {
-        return _persistentStoreCoordinator;
-    }
-    
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"UserData.sqlite"];
-    
-    NSError *error = nil;
-    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-        /*
-         Replace this implementation with code to handle the error appropriately.
-         
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-         
-         Typical reasons for an error here include:
-         * The persistent store is not accessible;
-         * The schema for the persistent store is incompatible with current managed object model.
-         Check the error message to determine what the actual problem was.
-         
-         
-         If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
-         
-         If you encounter schema incompatibility errors during development, you can reduce their frequency by:
-         * Simply deleting the existing store:
-         [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil]
-         
-         * Performing automatic lightweight migration by passing the following dictionary as the options parameter:
-         @{NSMigratePersistentStoresAutomaticallyOption:@YES, NSInferMappingModelAutomaticallyOption:@YES}
-         
-         Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
-         
-         */
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    
-    return _persistentStoreCoordinator;
-}
-- (void) deleteAllObjects
-{
-    NSArray *stores = [_persistentStoreCoordinator persistentStores];
-    
-    for(NSPersistentStore *store in stores)
-    {
-        [_persistentStoreCoordinator removePersistentStore:store error:nil];
-        [[NSFileManager defaultManager] removeItemAtPath:store.URL.path error:nil];
-    }
-}
-
-#pragma mark - Application's Documents directory
-
-// Returns the URL to the application's Documents directory.
-- (NSURL *)applicationDocumentsDirectory
-{
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-}
 
 @end

@@ -24,13 +24,20 @@ class Achievement: NSObject {
         type = achievementType
     }
     
-    convenience init(currAmount: Int, reqAmt: Int, rewardHours: Int, achievementType: String, didAchieve: Bool = false) {
+    convenience init(currAmount: Int, reqAmt: Int, rewardHours: Int, achievementType: String, didAchieve: Bool) {
         self.init()
         
         amountCurrently = currAmount
         amountRequired = reqAmt
         hoursForReward = rewardHours
+        hasAchieved = didAchieve
         type = achievementType
+    }
+    
+    func isEqualTo(other: Achievement) -> Bool {
+        return self.amountRequired == other.amountRequired
+            && self.hoursForReward == other.hoursForReward
+            && self.type == other.type
     }
     
     func toString() -> String {

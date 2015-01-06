@@ -8,9 +8,8 @@
 
 class TimeCrunchModel: NSObject {
     
-    var hoursEarned: Int? = 0
-    var college: College?
-    var collegeId: Int?
+    var hoursEarned: Int = 0
+    var collegeId: Int = 0
     var timeWasActivatedAt: NSDate?
     
     init(collegeId: Int, hours: Int, activationTime: NSDate) {
@@ -26,7 +25,7 @@ class TimeCrunchModel: NSObject {
     }
     
     func getHoursEarned() -> Int {
-        return Int(hoursEarned!)
+        return hoursEarned
     }
     
     func getHoursRemaining() -> Int {
@@ -35,7 +34,7 @@ class TimeCrunchModel: NSObject {
             var now: NSDate = NSDate()
             var interval = Int(now.timeIntervalSinceDate(oldTime))
             var hoursUsed = Int((interval / 60) / 60)
-            var hoursRemain = hoursEarned! - hoursUsed
+            var hoursRemain = max(0, hoursEarned - hoursUsed)
             
             if hoursRemain == 0 {
                 reset()
@@ -44,13 +43,14 @@ class TimeCrunchModel: NSObject {
             return hoursRemain
         }
 
-        return hoursEarned!
+        println("GetHoursRemaining found a nil activation time. Returning hoursEarned = \(hoursEarned)")
+        return hoursEarned
     }
     
     func addHours(newHours: Int) {
-        println("Adding Time Crunch hours to college with ID = \(self.collegeId). Old count = \(hoursEarned!). Adding \(newHours).")
+        println("Adding Time Crunch hours to college with ID = \(self.collegeId). Old count = \(hoursEarned). Adding \(newHours).")
         
-        hoursEarned = hoursEarned?.advancedBy(newHours)
+        hoursEarned += newHours
         println("New count = \(hoursEarned).")
     }
     
@@ -58,20 +58,20 @@ class TimeCrunchModel: NSObject {
         hoursEarned = 0
         timeWasActivatedAt = nil
         
-        println("Finished resetting Time Crunch with college = \(self.college!.name)")
+        println("Finished resetting Time Crunch with college ID = \(self.collegeId)")
     }
 
-    func changeCollege(newCollege: College) {
-        if let oldCollege = self.college {
-            if newCollege.collegeID == oldCollege.collegeID {
-                println("TimeCrunchModel.changeCollege to same college, do nothing")
-                return
-            }
-        }
+    func changeCollegeId(newCollegeId: Int) {
         
-        println("TimeCrunchModel changed college to \(newCollege.name)")
-        self.college = newCollege
-        reset()
+        if newCollegeId == self.collegeId {
+            println("TimeCrunchModel.changeCollegeId to same college, do nothing")
+            return
+        }
+        else {
+            self.collegeId = newCollegeId
+            println("TimeCrunchModel changed college ID to \(newCollegeId)")
+            reset()
+        }
     }
     
 }

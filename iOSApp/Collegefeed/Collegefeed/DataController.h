@@ -116,12 +116,11 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (void)restoreAllCoreData;
 
 // Achievements
-- (void)fetchAchievements;
-- (void)checkAchievements;
-- (void)addAchievement:(Achievement *)achievement;
+- (void)didAchieve:(Achievement *)achievement;
 
 // Colleges
 - (College *)getCollegeInFocus;
+- (College *)getCollegeById:(long)collegeId;
 - (void)fetchTopColleges;
 - (void)fetchAllColleges;
 - (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon;
@@ -136,6 +135,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (BOOL)createCommentWithMessage:(NSString *)message
                         withPost:(Post*)post;
 - (void)fetchCommentsForPost:(Post *)post;
+- (void)retrieveUserComments;
 
 // Flags
 - (BOOL)flagPost:(long)postId;
@@ -160,24 +160,21 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 
 - (Post *)fetchPostWithId:(long)postId;
 - (Post *)fetchParentPostOfComment:(Comment *)comment;
+- (void)retrieveUserPosts;
 
 // Tags
 - (void)fetchTrendingTagsForAllColleges;
 - (void)fetchTrendingTagsForSingleCollege;
 
 // Time Crunch
-//- (TimeCrunchModel *)getTimeCrunchModel;
 - (void)attemptActivateTimeCrunch;
 
 // User data
-- (void)retrieveUserPosts;
-- (void)retrieveUserComments;
 - (long)getUserPostScore;
 - (long)getUserCommentScore;
 - (BOOL)isAbleToPost:(NSNumber *)minutesRemaining;
 - (BOOL)isAbleToComment;
 - (void)findUserLocation;
-- (NSURL *)applicationDocumentsDirectory;
 
 // Votes
 - (BOOL)createVote:(Vote *)vote;
