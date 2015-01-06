@@ -72,8 +72,8 @@ withDataController:(DataController *)controller
     [self.messageTextView setDelegate:self];
     [self.tagTextView setDelegate:self];
     
-    [self.takeNewPhotoButton.titleLabel setFont:CF_FONT_LIGHT(18)];
-    [self.existingPhotoButton.titleLabel setFont:CF_FONT_LIGHT(18)];
+//    [self.takeNewPhotoButton.titleLabel setFont:CF_FONT_LIGHT(18)];
+//    [self.existingPhotoButton.titleLabel setFont:CF_FONT_LIGHT(18)];
     [self.messageTextView becomeFirstResponder];
 }
 

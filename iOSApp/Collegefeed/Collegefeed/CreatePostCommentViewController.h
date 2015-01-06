@@ -44,8 +44,8 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIButton *cameraButton;
 @property (strong, nonatomic) IBOutlet UIView *cameraSourceSelectorView;
-@property (strong, nonatomic) IBOutlet UIButton *takeNewPhotoButton;
-@property (strong, nonatomic) IBOutlet UIButton *existingPhotoButton;
+//@property (strong, nonatomic) IBOutlet UIView *takeNewPhotoButton;
+//@property (strong, nonatomic) IBOutlet UIView *chooseExistingPhotoButton;
 
 @property (strong, nonatomic) ToastController *toastController;
 

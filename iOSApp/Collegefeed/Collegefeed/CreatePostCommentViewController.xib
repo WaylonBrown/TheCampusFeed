@@ -2,7 +2,14 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Roboto-Light.ttf">
+            <string>Roboto-Light</string>
+            <string>Roboto-Light</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreatePostCommentViewController">
             <connections>
@@ -11,7 +18,6 @@
                 <outlet property="cameraSourceSelectorView" destination="dOn-8B-smG" id="Nvg-Ex-W9I"/>
                 <outlet property="createButton" destination="gDU-GL-keo" id="NRz-6S-jZB"/>
                 <outlet property="dialogVerticalPosition" destination="StA-cJ-MLs" id="sjp-1W-lZG"/>
-                <outlet property="existingPhotoButton" destination="h5x-4y-oRM" id="9Bd-Sl-Pf7"/>
                 <outlet property="imageView" destination="flr-ec-CbO" id="SVg-6v-u92"/>
                 <outlet property="imageViewHeight" destination="KIP-bj-Y3X" id="HwC-8p-hde"/>
                 <outlet property="messageTextView" destination="IWc-2Q-15k" id="zNN-jf-Zpl"/>
@@ -19,7 +25,6 @@
                 <outlet property="subtitleLabel" destination="SFZ-hG-FDM" id="Vqf-6P-Cmy"/>
                 <outlet property="tagTextView" destination="AVU-9b-sN0" id="re6-Ue-GcL"/>
                 <outlet property="tagTextViewHeight" destination="pO9-gj-FDx" id="Equ-PJ-nSX"/>
-                <outlet property="takeNewPhotoButton" destination="7Xi-T3-eic" id="SUy-Ym-Tk8"/>
                 <outlet property="titleLabel" destination="QD5-9l-3Ds" id="N1F-TX-JKh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -143,44 +148,65 @@
                         <constraint firstItem="gDU-GL-keo" firstAttribute="leading" secondItem="gj6-SA-745" secondAttribute="leading" id="ziI-Ls-Jaz"/>
                     </constraints>
                 </view>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dOn-8B-smG">
-                    <rect key="frame" x="0.0" y="484" width="320" height="84"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dOn-8B-smG">
+                    <rect key="frame" x="0.0" y="450" width="320" height="118"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Xi-T3-eic" userLabel="Top Button">
-                            <rect key="frame" x="8" y="8" width="304" height="30"/>
-                            <state key="normal" title="Take New Photo">
-                                <color key="titleColor" red="0.065502189099788666" green="0.52649492025375366" blue="0.75456458330154419" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="takeNewPhoto:" destination="-1" eventType="touchUpInside" id="EuP-F7-jVx"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h5x-4y-oRM" userLabel="Bottom Button">
-                            <rect key="frame" x="8" y="46" width="304" height="30"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G6X-qc-BPw" userLabel="ButtonView - Take New">
+                            <rect key="frame" x="8" y="20" width="304" height="35"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take New Photo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k3K-H7-n5d" userLabel="Take New Photo">
+                                    <rect key="frame" x="0.0" y="0.0" width="304" height="35"/>
+                                    <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="17"/>
+                                    <color key="textColor" red="0.17456929390000001" green="0.64931327100000003" blue="0.87216091159999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" red="0.86847764250000004" green="0.86845165489999998" blue="0.86846637729999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <gestureRecognizers/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="30" id="pmM-PU-0sA"/>
+                                <constraint firstAttribute="trailing" secondItem="k3K-H7-n5d" secondAttribute="trailing" id="ALo-y0-nOe"/>
+                                <constraint firstItem="k3K-H7-n5d" firstAttribute="leading" secondItem="G6X-qc-BPw" secondAttribute="leading" id="Fc2-PD-hUU"/>
+                                <constraint firstAttribute="height" constant="35" id="Mni-8R-fZ1"/>
+                                <constraint firstItem="k3K-H7-n5d" firstAttribute="top" secondItem="G6X-qc-BPw" secondAttribute="top" id="iDa-6k-ocY"/>
+                                <constraint firstAttribute="bottom" secondItem="k3K-H7-n5d" secondAttribute="bottom" id="vga-wg-kPV"/>
                             </constraints>
-                            <state key="normal" title="Use Existing">
-                                <color key="titleColor" red="0.065502189099999997" green="0.5264949203" blue="0.75456458329999998" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
                             <connections>
-                                <action selector="useExistingPhoto:" destination="-1" eventType="touchUpInside" id="VWK-w4-JqR"/>
+                                <outletCollection property="gestureRecognizers" destination="wIv-vK-fdf" appends="YES" id="2mR-5Y-USN"/>
                             </connections>
-                        </button>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="83n-Cp-pum" userLabel="ButtonView - Choose Existing">
+                            <rect key="frame" x="8" y="63" width="304" height="35"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose Existing" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YlH-iI-mmV">
+                                    <rect key="frame" x="0.0" y="0.0" width="304" height="35"/>
+                                    <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="17"/>
+                                    <color key="textColor" red="0.17456929390000001" green="0.64931327100000003" blue="0.87216091159999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" red="0.86847764250000004" green="0.86845165489999998" blue="0.86846637729999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <gestureRecognizers/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="YlH-iI-mmV" secondAttribute="bottom" id="DKM-pq-uO5"/>
+                                <constraint firstItem="YlH-iI-mmV" firstAttribute="leading" secondItem="83n-Cp-pum" secondAttribute="leading" id="HqN-nT-xF0"/>
+                                <constraint firstAttribute="height" constant="35" id="Kv6-Lv-mg6"/>
+                                <constraint firstItem="YlH-iI-mmV" firstAttribute="top" secondItem="83n-Cp-pum" secondAttribute="top" id="Vl5-ia-8WK"/>
+                                <constraint firstAttribute="trailing" secondItem="YlH-iI-mmV" secondAttribute="trailing" id="vxa-zp-ltt"/>
+                            </constraints>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="jtA-p3-cLN" appends="YES" id="rjX-Iy-dUt"/>
+                            </connections>
+                        </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.86847764253616333" green="0.86845165491104126" blue="0.86846637725830078" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="7Xi-T3-eic" firstAttribute="leading" secondItem="h5x-4y-oRM" secondAttribute="leading" id="1dd-rt-v3c"/>
-                        <constraint firstItem="h5x-4y-oRM" firstAttribute="leading" secondItem="dOn-8B-smG" secondAttribute="leading" constant="8" id="2mk-4u-t8k"/>
-                        <constraint firstItem="7Xi-T3-eic" firstAttribute="width" secondItem="h5x-4y-oRM" secondAttribute="width" id="aR8-Zv-F4V"/>
-                        <constraint firstAttribute="bottom" secondItem="h5x-4y-oRM" secondAttribute="bottom" constant="8" id="drZ-xk-fJn"/>
-                        <constraint firstItem="7Xi-T3-eic" firstAttribute="top" secondItem="dOn-8B-smG" secondAttribute="top" constant="8" id="nSM-tF-thl"/>
-                        <constraint firstAttribute="height" constant="84" id="qgG-Nd-fd1"/>
-                        <constraint firstAttribute="trailing" secondItem="h5x-4y-oRM" secondAttribute="trailing" constant="8" id="rDl-n9-poM"/>
-                        <constraint firstItem="h5x-4y-oRM" firstAttribute="top" secondItem="7Xi-T3-eic" secondAttribute="bottom" constant="8" id="xXD-Nr-gXD"/>
-                        <constraint firstItem="7Xi-T3-eic" firstAttribute="height" secondItem="h5x-4y-oRM" secondAttribute="height" id="zig-Bq-QHK"/>
+                        <constraint firstItem="83n-Cp-pum" firstAttribute="leading" secondItem="G6X-qc-BPw" secondAttribute="leading" id="BNQ-fj-vrh"/>
+                        <constraint firstItem="83n-Cp-pum" firstAttribute="trailing" secondItem="dOn-8B-smG" secondAttribute="trailingMargin" id="EBk-pE-uMl"/>
+                        <constraint firstAttribute="bottom" secondItem="83n-Cp-pum" secondAttribute="bottom" constant="20" id="OxY-SV-nSw"/>
+                        <constraint firstItem="83n-Cp-pum" firstAttribute="trailing" secondItem="G6X-qc-BPw" secondAttribute="trailing" id="X3a-Ft-ZDK"/>
+                        <constraint firstItem="G6X-qc-BPw" firstAttribute="top" secondItem="dOn-8B-smG" secondAttribute="top" constant="20" id="bln-rf-atM"/>
+                        <constraint firstItem="83n-Cp-pum" firstAttribute="leading" secondItem="dOn-8B-smG" secondAttribute="leadingMargin" id="sgZ-v4-qaZ"/>
+                        <constraint firstItem="83n-Cp-pum" firstAttribute="top" secondItem="G6X-qc-BPw" secondAttribute="bottom" constant="8" id="ypH-ZE-KPa"/>
                     </constraints>
                 </view>
             </subviews>
@@ -196,6 +222,18 @@
                 <constraint firstItem="dOn-8B-smG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="yPD-bS-HMg"/>
             </constraints>
         </view>
+        <tapGestureRecognizer id="wIv-vK-fdf">
+            <connections>
+                <action selector="takeNewPhoto:" destination="-1" id="wf4-bx-Gho"/>
+                <outlet property="delegate" destination="-1" id="4jC-8m-lSO"/>
+            </connections>
+        </tapGestureRecognizer>
+        <tapGestureRecognizer id="jtA-p3-cLN">
+            <connections>
+                <action selector="useExistingPhoto:" destination="-1" id="PhL-ZI-jT2"/>
+                <outlet property="delegate" destination="-1" id="3rf-07-K3h"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="camera.png" width="82" height="80"/>
