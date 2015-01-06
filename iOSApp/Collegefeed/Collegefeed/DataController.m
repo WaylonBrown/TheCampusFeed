@@ -158,7 +158,7 @@
     self.homeCollegeId = [[status valueForKey:KEY_HOME_COLLEGE] longValue];
     
     // Time Crunch
-    self.timeCrunch = [self getTimeCrunchModel];
+//    self.timeCrunch = [self getTimeCrunchModel];
 }
 - (void)saveStatusToCoreData
 {
@@ -719,40 +719,21 @@
               [error localizedDescription]);
     }
 }
-- (NSString *)getCollegeNameById:(long)Id
+- (College *)getCollegeById:(long)collegeId
 {
-    College *college = [self getCollegeById:Id];
-    return college == nil ? @"" : college.name;
-}
-- (College *)getCollegeById:(long)Id
-{
-    // TODO: remove references to this function, find a better way
-    // save objects with the collegeID as a reference instead of a complicated College* object
-    if (Id == 0) return nil;
-    
-    // TODO: exception here '... mutated while being enumerated',
-    // probably getting called while fetching college lists
-    for (College *college in self.collegeList)
+    if (collegeId > 0 && self.collegeList != nil)
     {
-        if (college.collegeID == Id)
+        for (College *college in self.collegeList)
         {
-            return college;
+            if (college.collegeID == collegeId)
+            {
+                return college;
+            }
         }
     }
     
-    NSData *collegeData = [Networker GETCollegeWithId:Id];
-    if (collegeData == nil)
-    {
-        return nil;
-    }
-    NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:collegeData
-                                                               options:0
-                                                                 error:nil];
-    
-    College *college = [[College alloc] initFromJSON:jsonObject];
-    [self.collegeList addObject:college];
-    
-    return college;
+    NSLog(@"Called getCollegeById with ID = %ld. An error occurred while trying to find it", collegeId);
+    return nil;
 }
 - (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon
 {
@@ -762,7 +743,7 @@
     {
         double milesAway = [self numberMilesAwayFromLat:userLat fromLon:userLon AtLat:college.lat atLon:college.lon];
         
-        if (milesAway <= MILES_FOR_PERMISSION)
+        if (milesAway <= MILES_FOR_PERMISSION && ![colleges containsObject:college])
         {
             [colleges addObject:college];
         }
@@ -803,8 +784,15 @@
 }
 - (BOOL)isNearCollegeWithId:(long)collegeId
 {
-    College *college = [self getCollegeById:collegeId];
-    return [self.nearbyColleges containsObject:college];
+    for (College *college in self.nearbyColleges)
+    {
+        if (college.collegeID == collegeId && collegeId != 0)
+        {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 - (void)findNearbyColleges
 {   // Populate the nearbyColleges array appropriately using current location
@@ -945,12 +933,11 @@
                                                                        options:0
                                                                          error:nil];
             Post *networkPost = [[Post alloc] initFromJSON:jsonObject];
-            if (networkPost.college_id == 0)
-            {
-                [networkPost setCollege_id:[NSNumber numberWithLong:collegeId]];
-            }
-            College *college = [self getCollegeById:collegeId];
-            [networkPost setCollege:college];
+            
+            NSLog(@"Successfully submitted Post to network. Text = %@. Post ID = %ld. College ID = %ld.", networkPost.text, [networkPost.post_id longValue], [networkPost.college_id longValue]);
+            
+            networkPost.college = [self getCollegeById:[networkPost.college_id longValue]];
+            
             self.lastPostTime = [networkPost getCreated_at];
             
             [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
@@ -1251,39 +1238,6 @@
         blockUpdateTimeCrunch();
     }
 }
-- (TimeCrunchModel *)getTimeCrunchModel
-{
-    if (self.timeCrunch != nil)
-    {
-        return self.timeCrunch;
-    }
-    
-    NSError *error;
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:TIME_CRUNCH_ENTITY inManagedObjectContext:context];
-    
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedTimeCrunches = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    
-    for (NSManagedObject *t in fetchedTimeCrunches)
-    {
-        long collegeId = [[t valueForKey:KEY_COLLEGE_ID] longValue];
-        if (collegeId == [self getIdForHomeCollege])
-        {
-            College *college = [self getCollegeById:collegeId];
-            long hours = [[t valueForKey:KEY_HOURS_EARNED] longValue];
-            NSDate *date = [t valueForKey:KEY_TIME_ACTIVATED_AT];
-            return [[TimeCrunchModel alloc] initWithCollege:college
-                                                      hours:hours
-                                             activationTime:date];
-            
-        }
-    }
-    
-    return nil;
-}
 - (void)restoreTimeCrunchFromCoreData
 {
     NSLog(@"Restoring Time Crunch from core data");
@@ -1303,14 +1257,13 @@
     NSManagedObject *mgdCrunch = [arrayTimeCrunches firstObject];
     
     long collegeId = [[mgdCrunch valueForKey:KEY_COLLEGE_ID] longValue];
-    College *college = [self getCollegeById:collegeId];
     long hours = [[mgdCrunch valueForKey:KEY_HOURS_EARNED] longValue];
     NSDate *date = [mgdCrunch valueForKey:KEY_TIME_ACTIVATED_AT];
     
     NSLog(@"Restored info for, and am assigning new TimeCrunchModel with collegeID = %ld, hours earned = %ld, and activation date = %@", collegeId, hours, date);
-    self.timeCrunch = [[TimeCrunchModel alloc] initWithCollege:college
-                                                         hours:hours
-                                                activationTime:date];
+    self.timeCrunch = [[TimeCrunchModel alloc] initWithCollegeId:collegeId
+                                                           hours:hours
+                                                  activationTime:date];
 }
 - (void)saveTimeCrunchModelToCoreData:(TimeCrunchModel *)timeCrunch allowMultiple:(BOOL)canSaveMany
 {
@@ -1643,14 +1596,17 @@
                        
                        dispatch_async(dispatch_get_main_queue(), ^
                                       {
-                                          if (type == COLLEGE)
-                                          {
-                                              [[NSNotificationCenter defaultCenter] postNotificationName:@"FetchedColleges" object:nil];
-                                          }
                                           NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
                                                                     newObjectsCount, @"newObjectsCount",
                                                                     feedName, @"feedName", nil];
-                                          [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:userInfo];
+                                          if (type == COLLEGE)
+                                          {
+                                              [[NSNotificationCenter defaultCenter] postNotificationName:@"FetchedColleges" object:userInfo];
+                                          }
+                                          else
+                                          {
+                                              [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:userInfo];
+                                          }
                                       });
                    });
 }

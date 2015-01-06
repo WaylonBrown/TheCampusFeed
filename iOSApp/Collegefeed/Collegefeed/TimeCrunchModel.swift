@@ -10,18 +10,19 @@ class TimeCrunchModel: NSObject {
     
     var hoursEarned: Int? = 0
     var college: College?
+    var collegeId: Int?
     var timeWasActivatedAt: NSDate?
     
-    init(college: College) {
+//    init(college: College) {
+//        super.init()
+//        
+//        self.college = college
+//    }
+    
+    init(collegeId: Int, hours: Int, activationTime: NSDate) {
         super.init()
         
-        self.college = college
-    }
-    
-    init(college: College, hours: Int, activationTime: NSDate) {
-        super.init()
-
-        self.college = college
+        self.collegeId = collegeId
         self.hoursEarned = hours
         self.timeWasActivatedAt = activationTime.copy() as? NSDate
     }
@@ -53,7 +54,7 @@ class TimeCrunchModel: NSObject {
     }
     
     func addHours(newHours: Int) {
-        println("Adding Time Crunch hours to college = \(self.college!.name). Old count = \(hoursEarned!). Adding \(newHours).")
+        println("Adding Time Crunch hours to college with ID = \(self.collegeId). Old count = \(hoursEarned!). Adding \(newHours).")
         
         hoursEarned = hoursEarned?.advancedBy(newHours)
         println("New count = \(hoursEarned).")

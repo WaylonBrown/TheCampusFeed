@@ -124,7 +124,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (College *)getCollegeInFocus;
 - (void)fetchTopColleges;
 - (void)fetchAllColleges;
-- (NSString *)getCollegeNameById:(long)Id;
+//- (NSString *)getCollegeNameById:(long)Id;
 - (College *)getCollegeById:(long)Id;
 - (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon;
 - (void)switchedToSpecificCollegeOrNil:(College *)college;
@@ -167,7 +167,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (void)fetchTrendingTagsForSingleCollege;
 
 // Time Crunch
-- (TimeCrunchModel *)getTimeCrunchModel;
+//- (TimeCrunchModel *)getTimeCrunchModel;
 - (void)attemptActivateTimeCrunch;
 
 // User data

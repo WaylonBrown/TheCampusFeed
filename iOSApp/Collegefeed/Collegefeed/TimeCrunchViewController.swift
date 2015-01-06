@@ -101,7 +101,7 @@ class TimeCrunchViewController: UIViewController {
     // MARK: - Helper Methods
     
     func updateLabels() {
-        if let model = myDataController!.getTimeCrunchModel() {
+        if let model = myDataController!.timeCrunch {
             
             var hours: Int = model.getHoursRemaining() as Int
             var days: Double = Double(hours) / 24.0 as Double
