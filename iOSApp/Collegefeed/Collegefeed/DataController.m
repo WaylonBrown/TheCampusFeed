@@ -96,19 +96,17 @@
     NSLog(@"Restoring all information from Core Data");
     
     [self restoreStatusFromCoreData];
-    [self restoreAchievementsFromCoreData];
     [self retrieveColleges];
     [self retrieveUserPosts];
     [self retrieveUserComments];
     [self retrieveUserVotes];
+    [self restoreAchievementsFromCoreData];
     [self restoreTimeCrunchFromCoreData];
 }
 
 - (void)saveAllCoreData
 {
 //    [self saveAchievementsToCoreData];
-    
-    // Colleges should be after fetched
     
     // Posts should be every time user posts (comments, votes, etc.)
     
@@ -154,11 +152,8 @@
     // Other
     self.collegeListVersion = [[status valueForKey:KEY_COLLEGE_LIST_VERSION] longValue];
     self.launchCount = [[status valueForKey:KEY_LAUNCH_COUNT] longValue];
-    
     self.homeCollegeId = [[status valueForKey:KEY_HOME_COLLEGE] longValue];
     
-    // Time Crunch
-//    self.timeCrunch = [self getTimeCrunchModel];
 }
 - (void)saveStatusToCoreData
 {
@@ -554,8 +549,7 @@
                     && self.currentCollegeFeedId != 0)
                 {
                     NSLog(@"DataController.getCollegeInFocus found the correct college according to currentCollegeFeedId: %@", c);
-//                    NSLog(@"Assigning it to be the new collegeInFocus");
-
+                    
                     return c;
                 }
             }
@@ -578,14 +572,15 @@
     [fetchRequest setEntity:entity];
     
     NSArray *arrayMgdColleges = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (arrayMgdColleges.count == 0)
+    if (arrayMgdColleges.count < MIN_NUM_COLLEGES_IN_CORE_DATA_BEFORE_FETCH_FROM_NETWORK)
     {
-        NSLog(@"No Colleges found in core data. Getting network college list");
+        NSLog(@"Not enough Colleges found in core data. Getting network college list");
         [self getNetworkCollegeList];
         NSLog(@"Finished fetching network colleges, list count is now %ld.", self.collegeList.count);
     }
     else
     {
+        NSLog(@"Retrieving colleges from Core Data");
         for (NSManagedObject *mdgCollege in arrayMgdColleges)
         {
             long collegeId = [[mdgCollege valueForKey:KEY_COLLEGE_ID] longValue];
@@ -655,6 +650,7 @@
 }
 - (void)getNetworkCollegeList
 {
+    NSLog(@"Fetching network college list");
     [self fetchObjectsOfType:COLLEGE
                    IntoArray:self.collegeList
           WithFeedIdentifier:@"allColleges"
@@ -664,7 +660,7 @@
            }];
     
     
-    [self writeCollegestoCoreData];
+//    [self writeCollegestoCoreData];
     
     self.collegeListVersion = [self getNetworkCollegeListVersion];
 }
@@ -794,11 +790,18 @@
     
     return NO;
 }
+- (void)finishedFetchingCollegeList
+{
+    [self findNearbyColleges];
+    [self writeCollegestoCoreData];
+}
+
 - (void)findNearbyColleges
 {   // Populate the nearbyColleges array appropriately using current location
-    self.nearbyColleges = [NSMutableArray new];
-    [self setNearbyColleges:[self findNearbyCollegesWithLat:self.lat
-                                                    withLon:self.lon]];
+
+    self.nearbyColleges = [[NSMutableArray alloc] initWithArray:
+                           [self findNearbyCollegesWithLat:self.lat
+                                                   withLon:self.lon]];
     
 }
 - (NSString *)getCurrentFeedName

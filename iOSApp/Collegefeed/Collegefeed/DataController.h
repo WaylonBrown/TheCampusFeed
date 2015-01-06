@@ -124,14 +124,13 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (College *)getCollegeInFocus;
 - (void)fetchTopColleges;
 - (void)fetchAllColleges;
-//- (NSString *)getCollegeNameById:(long)Id;
-- (College *)getCollegeById:(long)Id;
 - (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon;
 - (void)switchedToSpecificCollegeOrNil:(College *)college;
 - (BOOL)isNearCollege;
 - (BOOL)isNearCollegeWithId:(long)collegeId;
 - (void)findNearbyColleges;
 - (NSString *)getCurrentFeedName;
+- (void)finishedFetchingCollegeList;
 
 // Comments
 - (BOOL)createCommentWithMessage:(NSString *)message

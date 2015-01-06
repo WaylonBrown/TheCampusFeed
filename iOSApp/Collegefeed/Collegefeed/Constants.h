@@ -147,6 +147,8 @@
 #define VALUE_POST              @"Post"
 #define VALUE_COMMENT           @"Comment"
 
+#define MIN_NUM_COLLEGES_IN_CORE_DATA_BEFORE_FETCH_FROM_NETWORK 25
+
 // Time Crunch
 #define TIME_CRUNCH_HOURS_FOR_POST 24
 #define NUMBER_TIME_CRUNCHES_ALLOWED 1

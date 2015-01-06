@@ -211,7 +211,7 @@
 }
 - (void)fetchedCollegeList
 {
-    [self.dataController findNearbyColleges];
+    [self.dataController finishedFetchingCollegeList];
     [self locationWasUpdated];
 }
 - (void)finishedFetchRequest:(NSNotification *)notification

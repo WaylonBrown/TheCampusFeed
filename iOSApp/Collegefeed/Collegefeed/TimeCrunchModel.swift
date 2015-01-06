@@ -13,12 +13,6 @@ class TimeCrunchModel: NSObject {
     var collegeId: Int?
     var timeWasActivatedAt: NSDate?
     
-//    init(college: College) {
-//        super.init()
-//        
-//        self.college = college
-//    }
-    
     init(collegeId: Int, hours: Int, activationTime: NSDate) {
         super.init()
         
