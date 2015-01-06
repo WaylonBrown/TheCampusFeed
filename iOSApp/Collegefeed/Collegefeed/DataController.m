@@ -123,13 +123,25 @@
     if (!hasFoundExistingMatch)
     {
         NSLog(@"Did not find existing view achievement. Adding a new one");
-        
-        Achievement *achievement = [[Achievement alloc] initWithId:VIEW_ACHIEVEMENT_ID currAmount:1 reqAmt:1 rewardHours:HOURS_FOR_VIEW_ACHIEVEMENT achievementType:VALUE_VIEW_ACHIEVEMENT didAchieve:YES];
+
+        Achievement *achievement = [[Achievement alloc] initWithId:VIEW_ACHIEVEMENT_ID
+                                                        currAmount:1
+                                                            reqAmt:1
+                                                       rewardHours:HOURS_FOR_VIEW_ACHIEVEMENT
+                                                   achievementType:VALUE_VIEW_ACHIEVEMENT
+                                                        didAchieve:YES];
         [self.achievementList addObject:achievement];
+        
+        shouldAssignTimeCrunchHours = YES;
     }
     
     [self saveAchievementsToCoreData];
-    NSLog(@"Finished saving achievement");
+    NSLog(@"Finished saving View achievement");
+    
+    if (shouldAssignTimeCrunchHours)
+    {
+        [self addTimeCrunchHours:HOURS_FOR_VIEW_ACHIEVEMENT];
+    }
     
 }
 - (void)tryAchievementScoreCountWithScore:(long)score
@@ -171,7 +183,7 @@
         [self saveAchievementsToCoreData];
     }
 }
-- (void)tryAchievementShortSuccess
+- (void)tryAchievementShortAndSweet
 {
     NSLog(@"Checking if user has any posts with <= 3 words AND >= 100 points)");
     for (Post *post in self.userPosts)
@@ -182,6 +194,24 @@
         {
             NSLog(@"Found Post = \"%@\". Score = %@ and only %ld words!", post.text, post.score, words.count);
             
+        }
+    }
+}
+- (void)tryAchievementManyCrunchHours:(long)numHours
+{
+    NSLog(@"Checking if user has passed threshold for achievement of having many crunch time hours");
+    for (Achievement *achievement in self.achievementList)
+    {
+        if ([achievement.type isEqualToString:TYPE_MANY_HOURS_ACHIEVEMENT]
+            && achievement.hasAchieved == NO
+            && achievement.amountRequired <= numHours)
+        {
+            achievement.hasAchieved = YES;
+            NSLog(@"Earned 'Many Hours' achievement! Writing to core data");
+            [self saveAchievementsToCoreData];
+            
+            NSLog(@"Adding time crunch hours for Earned 'Many Hours' achievement");
+            [self addTimeCrunchHours:HOURS_FOR_EARN_MANY_HOURS_ACHIEVEMENT];
         }
     }
 }
@@ -302,38 +332,6 @@
               [error localizedDescription]);
     }
 }
-//- (void)didAchieve:(Achievement *)achievement
-//{
-//    NSLog(@"User earned achievement! \"%@\"", [achievement toString]);
-//    
-//    if (!achievement.hasAchieved)
-//    {
-//        NSLog(@"ERROR. Called didAchieve with an unachieved achievement. Doing nothing");
-//        return;
-//    }
-//
-//    BOOL hasFoundExistingMatch = false;
-//    for (Achievement *a in self.achievementList)
-//    {
-//        if ([a isEqualTo:achievement] && !hasFoundExistingMatch)
-//        {
-//            hasFoundExistingMatch = true;
-//            a.hasAchieved = YES;
-//            NSLog(@"Setting an existing achievement to be completed");
-//            break;
-//        }
-//    }
-//    
-//    if (!hasFoundExistingMatch)
-//    {
-//        NSLog(@"Did not find existing achievement to set. Adding this as a new one");
-//        [self.achievementList addObject:achievement];
-//    }
-//    
-//    [self saveAchievementsToCoreData];
-//    NSLog(@"Finished saving achievement");
-//    
-//}
 - (void)initializeDefaultAchievements
 {
     // For number of posts
@@ -402,7 +400,7 @@
                                            currAmount:0
                                                reqAmt:REQUIRED_NUMBER_OF_CRUNCH_HOURS_FOR_MANY_HOURS_ACHIEVEMENT
                                           rewardHours:HOURS_FOR_EARN_MANY_HOURS_ACHIEVEMENT
-                                      achievementType:VALUE_MANY_HOURS_ACHIEVEMENT
+                                      achievementType:TYPE_MANY_HOURS_ACHIEVEMENT
                                            didAchieve:NO];
     
     [self.achievementList addObject:s1];
@@ -776,13 +774,7 @@
 }
 - (void)saveAllCoreData
 {
-    //    [self saveAchievementsToCoreData];
-    
     // Posts should be every time user posts (comments, votes, etc.)
-    
-    // Achievements every time one is earned (through NEW POSTING or TOTALLING POST SCORE or ACHIEVEMENTS VIEWED
-    
-    // TimeCrunch every time achievement earned
 }
 - (NSManagedObjectContext *)managedObjectContext
 {
@@ -1146,7 +1138,7 @@
 - (void)didFinishFetchingUserPosts
 {
     [self tryAchievementScoreCountWithScore:[self getUserPostScore]];
-    [self tryAchievementShortSuccess];
+    [self tryAchievementShortAndSweet];
 }
 - (Post *)fetchPostWithId:(long)postId
 {
@@ -1287,7 +1279,26 @@
 {
     NSLog(@"Adding %ld Time Crunch Hours", hours);
     
-    // TODO
+    if (self.timeCrunch == nil)
+    {
+        NSLog(@"timeCrunch was nil, calling restoreTimeCrunchFromCoreData");
+        [self restoreTimeCrunchFromCoreData];
+    }
+    if (self.timeCrunch == nil)
+    {
+        NSLog(@"timeCrunch still nil, initializing a new one without a college assigned");
+        self.timeCrunch = [[TimeCrunchModel alloc] initWithCollegeId:0 hours:0 activationTime:nil];
+    }
+    
+    NSLog(@"TimeCrunchModel.hours *before* = %ld", self.timeCrunch.hoursEarned);
+    [self.timeCrunch addHours:hours];
+    NSLog(@"TimeCrunchModel.hours *after*  = %ld", self.timeCrunch.hoursEarned);
+    
+    NSLog(@"Checking if newly added time crunch hours earn the 'many hours' achievement");
+    
+    [self tryAchievementManyCrunchHours:hours];
+    
+    [self saveTimeCrunchToCoreData:CAN_ALLOW_MULTIPLE_TIME_CRUNCH_IN_CORE_DATA];
 }
 - (long)getTimeCrunchHours
 {
@@ -1345,7 +1356,7 @@
         
         NSLog(@"DataController changed home college to %@", self.homeCollegeForTimeCrunch.name);
         
-        [self saveTimeCrunchModelToCoreData:self.timeCrunch allowMultiple:NO];
+        [self saveTimeCrunchToCoreData:CAN_ALLOW_MULTIPLE_TIME_CRUNCH_IN_CORE_DATA];
         [self saveStatusToCoreData];
         
     };
@@ -1390,8 +1401,16 @@
                                                            hours:hours
                                                   activationTime:date];
 }
-- (void)saveTimeCrunchModelToCoreData:(TimeCrunchModel *)timeCrunch allowMultiple:(BOOL)canSaveMany
+- (void)saveTimeCrunchToCoreData:(BOOL)canSaveMany
 {
+    NSLog(@"Saving self.timeCrunch to Core Data. %@ save multiple", canSaveMany ? @"Can" : @"Cannot");
+    
+    if (self.timeCrunch == nil)
+    {
+        NSLog(@"self.timeCrunch is nil, not saving anything to core data");
+        return;
+    }
+    
     NSError *error;
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -1407,33 +1426,34 @@
     {
         if (canSaveMany)
         {
-            // Update matching college
-            if (timeCrunch.collegeId == [[t valueForKey:KEY_COLLEGE_ID] longValue]
-                && timeCrunch.collegeId != 0)
+            NSLog(@"Multiple Time Crunches allowed, updating a matching one");
+            if (self.timeCrunch.collegeId == [[t valueForKey:KEY_COLLEGE_ID] longValue]
+                && self.timeCrunch.collegeId != 0)
             {
                 foundMatch = YES;
                 
-                [t setValue:[NSNumber numberWithLong:[timeCrunch getHoursEarned]] forKey:KEY_HOURS_EARNED];
-                [t setValue:timeCrunch.timeWasActivatedAt forKey:KEY_TIME_ACTIVATED_AT];
+                [t setValue:[NSNumber numberWithLong:[self.timeCrunch getHoursEarned]] forKey:KEY_HOURS_EARNED];
+                [t setValue:self.timeCrunch.timeWasActivatedAt forKey:KEY_TIME_ACTIVATED_AT];
             }
         }
         else
         {
-            // Cannot save multiple, delete existing ones
+            NSLog(@"Cannot save multiple colleges, delete existing ones");
             [context deleteObject:t];
         }
     }
     
     if (!foundMatch)
     {
-        // If no match, create a new TimeCrunch object
+        NSLog(@"Inserting Time Crunch into Core Data.");
+        
         NSManagedObject *mgdModel = [NSEntityDescription
                                      insertNewObjectForEntityForName:TIME_CRUNCH_ENTITY
                                      inManagedObjectContext:context];
 
-        [mgdModel setValue:timeCrunch.timeWasActivatedAt forKey:KEY_TIME_ACTIVATED_AT];
-        [mgdModel setValue:[NSNumber numberWithLong:timeCrunch.collegeId] forKey:KEY_COLLEGE_ID];
-        [mgdModel setValue:[NSNumber numberWithLong:[timeCrunch getHoursEarned]] forKey:KEY_HOURS_EARNED];
+        [mgdModel setValue:self.timeCrunch.timeWasActivatedAt forKey:KEY_TIME_ACTIVATED_AT];
+        [mgdModel setValue:[NSNumber numberWithLong:self.timeCrunch.collegeId] forKey:KEY_COLLEGE_ID];
+        [mgdModel setValue:[NSNumber numberWithLong:[self.timeCrunch getHoursEarned]] forKey:KEY_HOURS_EARNED];
     }
     
     if (![_managedObjectContext save:&error])

@@ -93,6 +93,8 @@
 #define KEY_HAS_VIEWED_ACHIEVEMENTS @"hasViewedAchievements"
 #define KEY_HOME_COLLEGE            @"homeCollegeId"
 
+#define CAN_ALLOW_MULTIPLE_TIME_CRUNCH_IN_CORE_DATA NO
+
 // Achievements
 #define POST_COUNT_ACHIEVEMENT_ID 100
 #define POST_POINTS_ACHIEVEMENT_ID 200
@@ -114,7 +116,7 @@
 #define POST_POINTS_TO_HOURS_MULTIPLIER 10
 
 #define VALUE_VIEW_ACHIEVEMENT   @"ViewAchievement"
-#define VALUE_MANY_HOURS_ACHIEVEMENT   @"ManyHoursAchievement"
+#define TYPE_MANY_HOURS_ACHIEVEMENT   @"ManyHoursAchievement"
 
 #define TYPE_SHORT_AND_SWEET_ACHIEVEMENT   @"ShortAndSweetAchievement"
 #define WORDS_FOR_SHORT_AND_SWEET_ACHIEVEMENT 3

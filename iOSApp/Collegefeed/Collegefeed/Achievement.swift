@@ -48,7 +48,7 @@ class Achievement: NSObject {
         else if type == TYPE_SHORT_AND_SWEET_ACHIEVEMENT {
             return "100 points for a post that's 3 words or less (\(hoursForReward) hours)"
         }
-        else if type == VALUE_MANY_HOURS_ACHIEVEMENT {
+        else if type == TYPE_MANY_HOURS_ACHIEVEMENT {
             return "Have 2,000+ Time Crunch hours (\(hoursForReward) hours)"
         }
         else {
