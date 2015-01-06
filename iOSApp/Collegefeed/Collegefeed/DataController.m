@@ -132,12 +132,66 @@
     NSLog(@"Finished saving achievement");
     
 }
+- (void)tryAchievementScoreCountWithScore:(long)score
+{
+    NSLog(@"Checking if total score count of %ld earns any new achievements", score);
+    for (Achievement *achievement in self.achievementList)
+    {
+        if (achievement.hasAchieved == NO
+            && [achievement.type isEqualToString:VALUE_SCORE_ACHIEVEMENT]
+            && achievement.amountRequired <= score)
+        {
+            NSLog(@"Found and awarding an unachieved score count Achievement");
+            achievement.hasAchieved = YES;
+            
+            [self addTimeCrunchHours:achievement.hoursForReward];
+        }
+    }
+    
+    [self saveAchievementsToCoreData];
+}
+- (void)tryAchievementPostCountWithOldCount:(long)oldCount toNewCount:(long)newCount
+{
+    NSLog(@"Checking if new achievement gained for new Post count of %ld", newCount);
+    if (newCount - oldCount == 1) // Should have only incremented by one
+    {
+        for (Achievement *achievement in self.achievementList)
+        {
+            if (achievement.hasAchieved == NO
+                && [achievement.type isEqualToString:VALUE_POST_ACHIEVEMENT]
+                && achievement.amountRequired <= newCount)
+            {
+                NSLog(@"Found and awarding an unachieved post count Achievement");
+                achievement.hasAchieved = YES;
+                
+                [self addTimeCrunchHours:achievement.hoursForReward];
+            }
+        }
+        
+        [self saveAchievementsToCoreData];
+    }
+}
+- (void)tryAchievementShortSuccess
+{
+    NSLog(@"Checking if user has any posts with <= 3 words AND >= 100 points)");
+    for (Post *post in self.userPosts)
+    {
+        NSArray *words = [post.text componentsSeparatedByString:@" "];
+        if (words.count <= WORDS_FOR_SHORT_AND_SWEET_ACHIEVEMENT
+            && [post.score longValue] >= POINTS_FOR_SHORT_AND_SWEET_ACHIEVEMENT)
+        {
+            NSLog(@"Found Post = \"%@\". Score = %@ and only %ld words!", post.text, post.score, words.count);
+            
+        }
+    }
+}
 - (void)sortAchievementList
 {
     long size = self.achievementList.count;
-    for (long i = 1; i < size - 1; i++)
+    for (long i = 1; i < size; i++)
     {
         Achievement *key = [self.achievementList objectAtIndex:i];
+        
         long j = i;
         
         while (j > 0 && ((Achievement *)[self.achievementList objectAtIndex:(j - 1)]).achievementId > key.achievementId)
@@ -337,11 +391,11 @@
                                       achievementType:VALUE_VIEW_ACHIEVEMENT
                                            didAchieve:NO];
     
-    Achievement *s2 = [[Achievement alloc] initWithId:SHORT_POST_ACHIEVEMENT_ID
+    Achievement *s2 = [[Achievement alloc] initWithId:SHORT_AND_SWEET_ACHIEVEMENT_ID
                                            currAmount:0
                                                reqAmt:1
-                                          rewardHours:HOURS_FOR_SHORT_POST_ACHIEVEMENT
-                                      achievementType:VALUE_SHORT_POST_ACHIEVEMENT
+                                          rewardHours:HOURS_FOR_SHORT_AND_SWEET_ACHIEVEMENT
+                                      achievementType:TYPE_SHORT_AND_SWEET_ACHIEVEMENT
                                            didAchieve:NO];
 
     Achievement *s3 = [[Achievement alloc] initWithId:MANY_HOURS_ACHIEVEMENT_ID
@@ -886,9 +940,17 @@
             
             [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
             [self.recentPostsSingleCollege insertObject:networkPost atIndex:0];
+            
+            
+            long oldCount = self.userPosts.count;
+            
             [self.userPosts insertObject:networkPost atIndex:0];
             
+            long newCount = self.userPosts.count;
+            
             [self savePost:networkPost];
+            
+            [self tryAchievementPostCountWithOldCount:oldCount toNewCount:newCount];
             
             Vote *actualVote = networkPost.vote;
             if (actualVote != nil && actualVote.voteID > 0)
@@ -918,9 +980,7 @@
     NSManagedObject *mgdPost = [NSEntityDescription insertNewObjectForEntityForName:POST_ENTITY
                                                              inManagedObjectContext:context];
     [mgdPost setValue:[NSNumber numberWithLong:[post.id longValue]] forKeyPath:KEY_POST_ID];
-    
-    self.numPosts++;
-    
+        
     if (![_managedObjectContext save:&error])
     {
         NSLog(@"Failed to save user post: %@",
@@ -928,6 +988,8 @@
     }
     
     [self updateTimeCrunchWithNewPost:post];
+    
+//    int numUserPosts = [self getNumUserPosts];
     // TODO: assign hours here
     
     //    BOOL newAchievementEarned = [self checkForEarnedNewAchievementFromNewPost];
@@ -1055,6 +1117,7 @@
 }
 - (void)retrieveUserPosts
 {
+    self.userPosts = [[NSMutableArray alloc] init];
     [self fetchObjectsOfType:POST
                    IntoArray:self.userPosts
           WithFeedIdentifier:@"userPosts"
@@ -1079,6 +1142,11 @@
                
                return [Networker GETPostsWithIdArray:[[postIds reverseObjectEnumerator] allObjects]];
            }];
+}
+- (void)didFinishFetchingUserPosts
+{
+    [self tryAchievementScoreCountWithScore:[self getUserPostScore]];
+    [self tryAchievementShortSuccess];
 }
 - (Post *)fetchPostWithId:(long)postId
 {
@@ -1125,8 +1193,8 @@
     
     // Achievements
     self.hasViewedAchievements = [[status valueForKey:KEY_HAS_VIEWED_ACHIEVEMENTS] boolValue];
-    self.numPosts = [[status valueForKey:KEY_NUM_POSTS] longValue];
-    self.numPoints = [[status valueForKey:KEY_NUM_POINTS] longValue];
+//    self.numPosts = [[status valueForKey:KEY_NUM_POSTS] longValue];
+//    self.numPoints = [[status valueForKey:KEY_NUM_POINTS] longValue];
     
     // Restrictions
     self.lastCommentTime = [status valueForKey:KEY_COMMENT_TIME];
@@ -1165,8 +1233,8 @@
     
     // Achievements
     [status setValue:[NSNumber numberWithBool:self.hasViewedAchievements] forKey:KEY_HAS_VIEWED_ACHIEVEMENTS];
-    [status setValue:[NSNumber numberWithLong:self.numPosts] forKey:KEY_NUM_POSTS];
-    [status setValue:[NSNumber numberWithLong:self.numPoints] forKey:KEY_NUM_POINTS];
+//    [status setValue:[NSNumber numberWithLong:self.numPosts] forKey:KEY_NUM_POSTS];
+//    [status setValue:[NSNumber numberWithLong:self.numPoints] forKey:KEY_NUM_POINTS];
     
     // Restrictions
     [status setValue:self.lastPostTime forKey:KEY_POST_TIME];
@@ -1215,6 +1283,12 @@
 
 #pragma mark - Time Crunch
 
+- (void)addTimeCrunchHours:(long)hours
+{
+    NSLog(@"Adding %ld Time Crunch Hours", hours);
+    
+    // TODO
+}
 - (long)getTimeCrunchHours
 {
     if (self.timeCrunch == nil)
@@ -1371,6 +1445,16 @@
 
 #pragma mark - User data
 
+- (long)getNumUserPosts
+{
+    if (self.userPosts == nil)
+    {
+        [self retrieveUserPosts];
+        return 0;
+    }
+    
+    return self.userPosts.count;
+}
 - (void)retrieveUserComments
 {
     [self fetchObjectsOfType:COMMENT
@@ -1443,8 +1527,7 @@
         totalScore += [[post getScore] longValue];
     }
     
-    self.numPoints = totalScore;
-    return self.numPoints;
+    return totalScore;
 }
 - (long)getUserCommentScore
 {

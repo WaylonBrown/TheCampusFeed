@@ -89,8 +89,6 @@
 #define KEY_COLLEGE_LIST_VERSION    @"listVersion"
 #define KEY_LAUNCH_COUNT            @"launchCount"
 #define KEY_CURRENT_COLLEGE_FEED    @"currentFeed"
-#define KEY_NUM_POINTS              @"numPoints"
-#define KEY_NUM_POSTS               @"numPosts"
 #define KEY_NUM_HOURS               @"numTimeCrunchHours"
 #define KEY_HAS_VIEWED_ACHIEVEMENTS @"hasViewedAchievements"
 #define KEY_HOME_COLLEGE            @"homeCollegeId"
@@ -99,7 +97,7 @@
 #define POST_COUNT_ACHIEVEMENT_ID 100
 #define POST_POINTS_ACHIEVEMENT_ID 200
 #define VIEW_ACHIEVEMENT_ID 300
-#define SHORT_POST_ACHIEVEMENT_ID 400
+#define SHORT_AND_SWEET_ACHIEVEMENT_ID 400
 #define MANY_HOURS_ACHIEVEMENT_ID 500
 
 #define ACHIEVEMENT_ID      @"AchievementId"
@@ -108,19 +106,25 @@
 #define KEY_AMOUNT_REQUIRED     @"amountRequired"
 #define KEY_HOURS_REWARD        @"hoursForReward"
 #define KEY_HAS_ACHIEVED        @"hasAchieved"
+
 #define VALUE_POST_ACHIEVEMENT      @"PostAchievement"
+#define POST_COUNT_TO_HOURS_MULTIPLIER 10
+
 #define VALUE_SCORE_ACHIEVEMENT     @"ScoreAchievement"
+#define POST_POINTS_TO_HOURS_MULTIPLIER 10
+
 #define VALUE_VIEW_ACHIEVEMENT   @"ViewAchievement"
-#define VALUE_SHORT_POST_ACHIEVEMENT   @"ShortPostAchievement"
 #define VALUE_MANY_HOURS_ACHIEVEMENT   @"ManyHoursAchievement"
 
-#define POST_COUNT_TO_HOURS_MULTIPLIER 10
-#define POST_POINTS_TO_HOURS_MULTIPLIER 10
+#define TYPE_SHORT_AND_SWEET_ACHIEVEMENT   @"ShortAndSweetAchievement"
+#define WORDS_FOR_SHORT_AND_SWEET_ACHIEVEMENT 3
+#define POINTS_FOR_SHORT_AND_SWEET_ACHIEVEMENT 100
+#define HOURS_FOR_SHORT_AND_SWEET_ACHIEVEMENT 2000
+
 #define HOURS_FOR_VIEW_ACHIEVEMENT 10
-#define HOURS_FOR_SHORT_POST_ACHIEVEMENT 2000
+
 #define HOURS_FOR_EARN_MANY_HOURS_ACHIEVEMENT 2000
 #define REQUIRED_NUMBER_OF_CRUNCH_HOURS_FOR_MANY_HOURS_ACHIEVEMENT 2000
-
 
 #define POST_ENTITY             @"Post"
 #define KEY_POST_ID             @"postId"

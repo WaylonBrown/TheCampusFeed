@@ -45,7 +45,7 @@ class Achievement: NSObject {
         else if type == VALUE_VIEW_ACHIEVEMENT {
             return "View your Achievements List (\(hoursForReward) hours)"
         }
-        else if type == VALUE_SHORT_POST_ACHIEVEMENT {
+        else if type == TYPE_SHORT_AND_SWEET_ACHIEVEMENT {
             return "100 points for a post that's 3 words or less (\(hoursForReward) hours)"
         }
         else if type == VALUE_MANY_HOURS_ACHIEVEMENT {

@@ -59,8 +59,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic) long homeCollegeId;
 @property (nonatomic) long collegeListVersion;
 @property (nonatomic) long launchCount;
-@property (nonatomic) long numPosts;
-@property (nonatomic) long numPoints;
 @property (nonatomic, strong) NSDate *lastCommentTime;
 @property (nonatomic, strong) NSDate *lastPostTime;
 
@@ -116,7 +114,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (void)restoreAllCoreData;
 
 // Achievements
-//- (void)didAchieve:(Achievement *)achievement;
 - (void)didViewAchievements;
 
 // Colleges
@@ -161,7 +158,9 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 
 - (Post *)fetchPostWithId:(long)postId;
 - (Post *)fetchParentPostOfComment:(Comment *)comment;
+
 - (void)retrieveUserPosts;
+- (void)didFinishFetchingUserPosts;
 
 // Tags
 - (void)fetchTrendingTagsForAllColleges;

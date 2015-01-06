@@ -218,11 +218,18 @@
 {
     [self setCorrectList];
     [self.refreshControl endRefreshing];
+
     if ([[[notification userInfo] valueForKey:@"newObjectsCount"] longValue] < PAGINATION_NUM)
     {   // fetched all content for the current feed
         self.hasFetchedAllContent = YES;
         [self.contentLoadingIndicator stopAnimating];
     }
+    
+    if ([[[notification userInfo] valueForKey:@"feedName"] isEqualToString:@"userPosts"])
+    {
+        [self.dataController didFinishFetchingUserPosts];
+    }
+    
     self.hasFinishedFetchRequest = YES;
     [self.tableView reloadData];
 }
