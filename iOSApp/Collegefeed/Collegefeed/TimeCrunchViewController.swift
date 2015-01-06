@@ -102,25 +102,30 @@ class TimeCrunchViewController: UIViewController {
     // MARK: - Helper Methods
     
     func updateLabels() {
+        
+        // default values
+        hoursLabel.text = "0 hrs"
+        daysLabel.text = ""
+        schoolLabel.text = "Start posting to get time!"
+        onOffLabel.text = "Time Crunch is off."
+        
         if let model = myDataController!.timeCrunch {
             
             var hours: Int = model.getHoursRemaining() as Int
-            var days: Double = Double(hours) / 24.0 as Double
             
             hoursLabel.text = NSString(format: "%d hrs", hours)
-            daysLabel.text = NSString(format: "(%.1f days)", days)
-            onOffLabel.text = (model.timeWasActivatedAt != nil) ? "Time Crunch is on." : "Time Crunch is off."
-
+            if hours > 0 {
+                daysLabel.text = NSString(format: "(%.1f days)", Double(hours) / 24.0)
+            }
+            if model.timeWasActivatedAt != nil {
+                onOffLabel.text = "Time Crunch is on."
+            }
             if let mySchool = myDataController!.getCollegeById(model.collegeId) {
                 schoolLabel.text = mySchool.name
             }
-        }
-        else {
-
-            hoursLabel.text = "0 hrs"
-            daysLabel.text = "Start posting to get time!"
-            schoolLabel.text = ""
-            onOffLabel.text = "Time Crunch is off."
+            else {
+                schoolLabel.text = "Start posting to get time!"
+            }
         }
     }
 }

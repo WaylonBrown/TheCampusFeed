@@ -132,6 +132,26 @@
     NSLog(@"Finished saving achievement");
     
 }
+- (void)sortAchievementList
+{
+    long size = self.achievementList.count;
+    for (long i = 1; i < size - 1; i++)
+    {
+        Achievement *key = [self.achievementList objectAtIndex:i];
+        long j = i;
+        
+        while (j > 0 && ((Achievement *)[self.achievementList objectAtIndex:(j - 1)]).achievementId > key.achievementId)
+        {
+            [self.achievementList replaceObjectAtIndex:j withObject:[self.achievementList objectAtIndex:(j - 1)]];
+            
+            j--;
+        }
+        
+        [self.achievementList replaceObjectAtIndex:j withObject:key];
+    }
+    
+    NSLog(@"Finished sorting achievements");
+}
 - (void)restoreAchievementsFromCoreData
 {
     NSLog(@"Restoring Achievements from core data");
@@ -168,9 +188,11 @@
             
             [self.achievementList addObject:achievement];
         }
+        
+        [self sortAchievementList];
+        
         NSLog(@"Finished restoring achievements from core data. Achievement List now has a total size of %ld. User has completed %d", self.achievementList.count, numCompleted);
     }
-    
 }
 - (void)saveAchievementsToCoreData
 {
@@ -855,10 +877,10 @@
                                                                        options:0
                                                                          error:nil];
             Post *networkPost = [[Post alloc] initFromJSON:jsonObject];
-            
-            NSLog(@"Successfully submitted Post to network. Text = %@. Post ID = %ld. College ID = %ld.", networkPost.text, [networkPost.post_id longValue], [networkPost.college_id longValue]);
-            
+
             networkPost.college = [self getCollegeById:[networkPost.college_id longValue]];
+
+            NSLog(@"Successfully submitted Post to network. Text = %@. College = %@.", networkPost.text, networkPost.college.name);
             
             self.lastPostTime = [networkPost getCreated_at];
             
@@ -1648,7 +1670,7 @@
                             {
                                 [post setImage_uri:[self getImageUrlFromId:post.image_id]];
                             }
-                            College *college = [self getCollegeById:[[post getCollege_id] longValue]];
+                            College *college = [self getCollegeById:[post.college_id longValue]];
                             [post setCollege:college];
                             long postID = [[post getID] longValue];
                             for (Vote *vote in self.userPostVotes)

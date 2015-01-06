@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Collegefeed/DataController.m"
-            timestampString = "442214261.115171"
+            timestampString = "442216837.950319"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1576"
-            endingLineNumber = "1576"
+            startingLineNumber = "1598"
+            endingLineNumber = "1598"
             landmarkName = "-fetchObjectsOfType:IntoArray:WithFeedIdentifier:WithFetchFunction:"
             landmarkType = "5">
          </BreakpointContent>
