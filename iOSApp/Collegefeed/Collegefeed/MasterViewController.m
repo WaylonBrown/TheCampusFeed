@@ -322,14 +322,24 @@
 }
 - (BOOL)castVote:(Vote *)vote
 {   // vote was cast in a table cell
-    College *college = [self.dataController getCollegeById:vote.collegeId];
-    if ((college != nil && [self.dataController.nearbyColleges containsObject:college])
-        || vote.upvote == YES)
+    
+    if (vote.upvote)
     {
+        NSLog(@"Casting upvote");
         return [self.dataController createVote:vote];
     }
-
-    // users cannot cast downvotes to a distant school
+    
+    for (College *college in self.dataController.nearbyColleges)
+    {
+        if (college.collegeID == vote.collegeId
+            && college.collegeID != 0)
+        {
+            NSLog(@"Downvote was confirmed to be in the college's proximity");
+            return [self.dataController createVote:vote];
+        }
+    }
+    
+    NSLog(@"Failed to cast vote");
     return NO;
 }
 - (BOOL)cancelVote:(Vote *)vote

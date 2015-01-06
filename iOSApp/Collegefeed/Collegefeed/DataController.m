@@ -42,21 +42,17 @@
         
         [self restoreAllCoreData];
         
-//        [self restoreStatusFromCoreData];
-//        [self populateCollegeList];
-
-        
-//        [self setShowingAllColleges:YES];
-//        [self setShowingSingleCollege:NO];
-        
         self.toaster = [ToastController new];
+        
         // For restricting phone numbers and email addresses
         [self createWatchdog];
         
+//        TODO:
+//        [self incrementLaunchCountInCoreData];
         self.launchCount++;
 
         // Populate arrays from both network and core (local) data
-        [self retrieveUserVotes];
+//        [self retrieveUserVotes];
         
         // Get the user's location
         [self findUserLocation];
@@ -97,29 +93,28 @@
 
 - (void)restoreAllCoreData
 {
+    NSLog(@"Restoring all information from Core Data");
+    
     [self restoreStatusFromCoreData];
     [self restoreAchievementsFromCoreData];
-    [self restoreCollegesFromCoreData];
-    [self restoreCommentsFromCoreData];
-    [self restorePostsFromCoreData];
+    [self retrieveColleges];
+    [self retrieveUserPosts];
+    [self retrieveUserComments];
+    [self retrieveUserVotes];
     [self restoreTimeCrunchFromCoreData];
-    [self restoreVotesFromCoreData];
 }
 
-#pragma mark - Watchdog
-
-- (void)createWatchdog
+- (void)saveAllCoreData
 {
-    NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys:
-                             [NSNumber numberWithInt:10], @"minLength",
-                             [NSNumber numberWithInt:140], @"maxLength",
-                             [NSNumber numberWithBool:YES], @"blockPhone",
-                             [NSNumber numberWithBool:YES], @"blockEmail",
-                             [NSNumber numberWithBool:NO], @"blockVulgar",
-                             nil];
+//    [self saveAchievementsToCoreData];
     
-    self.watchDog = [[Watchdog alloc] initWithOptions:options];
-    NSLog(@"Finished creating Watchdog");
+    // Colleges should be after fetched
+    
+    // Posts should be every time user posts (comments, votes, etc.)
+    
+    // Achievements every time one is earned (through NEW POSTING or TOTALLING POST SCORE or ACHIEVEMENTS VIEWED
+    
+    // TimeCrunch every time achievement earned
 }
 
 #pragma mark - Status
@@ -545,7 +540,7 @@
 
 #pragma mark - Colleges
 
-- (void)restoreCollegesFromCoreData
+- (void)retrieveColleges
 {
     NSLog(@"Restoring Colleges from core data");
     NSError *error;
@@ -562,7 +557,7 @@
     {
         NSLog(@"No Colleges found in core data. Getting network college list");
         [self getNetworkCollegeList];
-        return;
+        NSLog(@"Finished fetching network colleges, list count is now %ld.", self.collegeList.count);
     }
     else
     {
@@ -579,6 +574,10 @@
         
         NSLog(@"Finished restoring colleges from core data. College List now has a total size of %ld.", self.collegeList.count);
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FetchedColleges" object:self userInfo:nil];
+//    NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys: @"allColleges", @"feedName", nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:info];
 }
 - (long)getIdForHomeCollege
 {
@@ -586,19 +585,7 @@
     
     return self.homeCollegeId;
 }
-- (void)populateCollegeList
-{
-    if ([self needsNewCollegeList])
-    {
-        NSLog(@"Needs new college list, calling network fetch method");
-        [self getNetworkCollegeList];
-    }
-    else
-    {
-        NSLog(@"College list is up to date, calling core data fetch method");
-        [self getCoreDataCollegeList];
-    }
-}
+
 - (BOOL)needsNewCollegeList
 {
     long newVersion = [self getNetworkCollegeListVersion];
@@ -643,6 +630,7 @@
                return [Networker GETAllColleges];
            }];
     
+    
     [self writeCollegestoCoreData];
     
     self.collegeListVersion = [self getNetworkCollegeListVersion];
@@ -663,13 +651,14 @@
 }
 - (void)writeCollegestoCoreData
 {
+    NSLog(@"Writing colleges to core data. Total of %ld in list", self.collegeList.count);
     NSManagedObjectContext *context = [self managedObjectContext];
     NSError *error;
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:COLLEGE_ENTITY
-                                              inManagedObjectContext:context];
-    
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:COLLEGE_ENTITY
+                                   inManagedObjectContext:context];
     
     [fetchRequest setEntity:entity];
     
@@ -704,6 +693,8 @@
 }
 - (College *)getCollegeById:(long)Id
 {
+    // TODO: remove references to this function, find a better way
+    // save objects with the collegeID as a reference instead of a complicated College* object
     if (Id == 0) return nil;
     
     // TODO: exception here '... mutated while being enumerated',
@@ -729,40 +720,6 @@
     [self.collegeList addObject:college];
     
     return college;
-}
-- (void)getCoreDataCollegeList
-{   // Populate the college list with a recent
-    // list of colleges instead of accessing the network
-    
-    NSError *error;
-    // Retrieve Colleges
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:COLLEGE_ENTITY inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedColleges = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedColleges.count < 50)
-    {
-        [self getNetworkCollegeList];
-        return;
-    }
-    for (NSManagedObject *college in fetchedColleges)
-    {
-        long collegeId = [[college valueForKey:KEY_COLLEGE_ID] longValue];
-        float lon = [[college valueForKey:KEY_LON] floatValue];
-        float lat = [[college valueForKey:KEY_LAT] floatValue];
-        NSString *name = [college valueForKey:KEY_NAME];
-        //        NSString *shortName = [vote valueForKey:KEY_SHORT_NAME];
-        
-        College *collegeModel = [[College alloc] initWithCollegeID:collegeId withName:name withLat:lat withLon:lon];
-        [self.collegeList addObject:collegeModel];
-    }
-    
-    
-    NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              @"allColleges", @"feedName", nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:userInfo];
 }
 - (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon
 {
@@ -1272,6 +1229,34 @@
     }
     
     return nil;
+}
+- (void)restoreTimeCrunchFromCoreData
+{
+    NSLog(@"Restoring Time Crunch from core data");
+    NSError *error;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:TIME_CRUNCH_ENTITY
+                                   inManagedObjectContext:context];
+    
+    [fetchRequest setEntity:entity];
+    NSLog(@"Currently allowing %d Time Crunch object(s) to exist", NUMBER_TIME_CRUNCHES_ALLOWED);
+    NSArray *arrayTimeCrunches = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    NSLog(@"Found %lu Time Crunch object(s) in core data", (unsigned long)arrayTimeCrunches.count);
+    
+    NSLog(@"Using the first Time Crunch core data object as the member variable");
+    NSManagedObject *mgdCrunch = [arrayTimeCrunches firstObject];
+    
+    long collegeId = [[mgdCrunch valueForKey:KEY_COLLEGE_ID] longValue];
+    College *college = [self getCollegeById:collegeId];
+    long hours = [[mgdCrunch valueForKey:KEY_HOURS_EARNED] longValue];
+    NSDate *date = [mgdCrunch valueForKey:KEY_TIME_ACTIVATED_AT];
+    
+    NSLog(@"Restored info for, and am assigning new TimeCrunchModel with collegeID = %ld, hours earned = %ld, and activation date = %@", collegeId, hours, date);
+    self.timeCrunch = [[TimeCrunchModel alloc] initWithCollege:college
+                                                         hours:hours
+                                                activationTime:date];
 }
 - (void)saveTimeCrunchModelToCoreData:(TimeCrunchModel *)timeCrunch allowMultiple:(BOOL)canSaveMany
 {
