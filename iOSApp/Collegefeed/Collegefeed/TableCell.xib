@@ -98,6 +98,7 @@
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="csb-Z3-LkW" userLabel="Picture Image View">
                         <rect key="frame" x="50" y="50" width="249" height="100"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="height" constant="100" id="7w7-yd-PE2"/>
                         </constraints>

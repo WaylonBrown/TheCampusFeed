@@ -40,6 +40,8 @@
 @property (nonatomic, strong) NSURL *POSTurl;
 @property (nonatomic) BOOL isNearCollege;
 
+@property (nonatomic, weak) id image;
+
 - (id)initWithMessage:(NSString *)newMessage
         withCollegeId:(NSNumber *)collegeId
         withUserToken:(NSString *)userToken

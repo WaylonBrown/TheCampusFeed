@@ -142,6 +142,31 @@
         }
     }
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.postTableView == tableView
+        && self.parentPost != nil
+        && self.parentPost.image != nil)
+    {
+        float width = self.view.frame.size.width;
+        float height = self.view.frame.size.height;
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+        imageView.backgroundColor = [UIColor blackColor];
+        imageView.image = self.parentPost.image;
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        imageView.userInteractionEnabled = YES;
+        
+        [self.view addSubview:imageView];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                       initWithTarget:imageView
+                                       action:@selector(removeFromSuperview)];
+        tap.numberOfTapsRequired = 1;
+        tap.numberOfTouchesRequired = 1;
+        [imageView addGestureRecognizer:tap];
+    }
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Get the table view cell for the given row
     // This method handles two table views: one for the post and another for it's comments

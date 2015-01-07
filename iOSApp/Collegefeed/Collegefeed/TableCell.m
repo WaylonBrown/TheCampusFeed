@@ -129,7 +129,7 @@
         
         if ([post hasImage])
         {
-            [self populateImageViewFromUrl:[post getImage_url]];
+            [self populateImageForPost:post];
             self.pictureHeight.constant = POST_CELL_PICTURE_HEIGHT_CROPPED;
         }
         else
@@ -151,12 +151,20 @@
 {
     [self setIsNearCollege:YES];
 }
-- (void)populateImageViewFromUrl:(NSString *)imgURL
+- (void)populateImageForPost:(Post *)post
 {
+    if (post.image != nil && [post.image isKindOfClass:[UIImage class]])
+    {
+        self.pictureView.image = post.image;
+        
+        return;
+    }
+    
     self.pictureView.image = nil;
     [self.pictureActivityIndicator startAnimating];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *imgURL = [post getImage_url];
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
         
         [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
@@ -164,9 +172,11 @@
         // set image on main thread.
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.pictureView setImage:[UIImage imageWithData:data]];
+            post.image = self.pictureView.image;
             [self.pictureActivityIndicator stopAnimating];
         });
     });
+    
 }
 - (BOOL)assignWithComment:(Comment *)comment
 {
