@@ -58,19 +58,15 @@
 }
 - (void)initArrays
 {
-    // Achievements
     self.achievementList = [[NSMutableArray alloc] init];
  
-    // Colleges
     self.collegeList = [[NSMutableArray alloc] init];
     self.nearbyColleges = [[NSMutableArray alloc] init];
     self.trendingColleges = [[NSMutableArray alloc] init];
     
-    // Comments
     self.commentList = [[NSMutableArray alloc] init];
     self.userComments = [[NSMutableArray alloc] init];
     
-    // Posts
     self.topPostsAllColleges = [[NSMutableArray alloc] init];
     self.recentPostsAllColleges = [[NSMutableArray alloc] init];
     self.postsWithTagAllColleges = [[NSMutableArray alloc] init];
@@ -79,11 +75,9 @@
     self.postsWithTagSingleCollege = [[NSMutableArray alloc] init];
     self.userPosts = [[NSMutableArray alloc] init];
     
-    // Tags
     self.trendingTagsAllColleges = [[NSMutableArray alloc] init];
     self.trendingTagsSingleCollege = [[NSMutableArray alloc] init];
     
-    // Votes
     self.userPostVotes = [[NSMutableArray alloc] init];
     self.userCommentVotes = [[NSMutableArray alloc] init];
 }
@@ -1307,7 +1301,7 @@
     
     [self tryAchievementManyCrunchHours:hours];
     
-    [self saveTimeCrunchToCoreData:CAN_ALLOW_MULTIPLE_TIME_CRUNCH_IN_CORE_DATA];
+    [self saveTimeCrunchToCoreData];
 }
 - (long)getTimeCrunchHours
 {
@@ -1327,12 +1321,21 @@
         NSLog(@"Activating Time Crunch failed");
         [self.toaster toastErrorFindingTimeCrunchCollege];
     }
-    else if ([self.timeCrunch getHoursRemaining] > 0)
+    else if (self.timeCrunch.timeWasActivatedAt == nil)
     {
-        NSDate *now = [NSDate date];
-        NSLog(@"Activating Time Crunch at %@", now);
-        [self.timeCrunch activateAtTime:now];
+        if (self.timeCrunch.hoursEarned == 0)
+        {
+            NSLog(@"Time crunch staying unactivated because no hours earned yet");
+        }
+        else
+        {
+            NSDate *now = [NSDate date];
+            NSLog(@"Time Crunch activated NOW: %@", now);
+            [self.timeCrunch activateAtTime:now];
+        }
     }
+    
+    [self saveTimeCrunchToCoreData];
 }
 - (void)updateTimeCrunchWithNewPost:(Post *)post
 {
@@ -1365,7 +1368,7 @@
         
         NSLog(@"DataController changed home college to %@", self.homeCollegeForTimeCrunch.name);
         
-        [self saveTimeCrunchToCoreData:CAN_ALLOW_MULTIPLE_TIME_CRUNCH_IN_CORE_DATA];
+        [self saveTimeCrunchToCoreData];
         [self saveStatusToCoreData];
         
     };
@@ -1410,9 +1413,9 @@
                                                            hours:hours
                                                   activationTime:date];
 }
-- (void)saveTimeCrunchToCoreData:(BOOL)canSaveMany
+- (void)saveTimeCrunchToCoreData
 {
-    NSLog(@"Saving self.timeCrunch to Core Data. %@ save multiple", canSaveMany ? @"Can" : @"Cannot");
+    NSLog(@"Saving self.timeCrunch to Core Data");
     
     if (self.timeCrunch == nil)
     {
@@ -1433,7 +1436,7 @@
     
     for (NSManagedObject *t in fetchedTimeCrunches)
     {
-        if (canSaveMany)
+        if (CAN_ALLOW_MULTIPLE_TIME_CRUNCH_IN_CORE_DATA)
         {
             NSLog(@"Multiple Time Crunches allowed, updating a matching one");
             if (self.timeCrunch.collegeId == [[t valueForKey:KEY_COLLEGE_ID] longValue]

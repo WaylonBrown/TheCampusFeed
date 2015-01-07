@@ -27,6 +27,7 @@ class AchievementViewController: MasterViewController, UITableViewDataSource, UI
         tableView.delegate = self
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.tableFooterView = nil
     }
 
     override func viewDidAppear(animated: Bool) {

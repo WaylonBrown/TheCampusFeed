@@ -144,6 +144,7 @@ class TimeCrunchViewController: UIViewController {
                 
                 if timeRunning {
                     // Time is running right now!
+                    hoursLabel.tintColor = UIColor.redColor()
                     onOffLabel.text = "Time is Crunching!"
                     activateButton.hidden = true
                     activateButtonLabel.hidden = true
