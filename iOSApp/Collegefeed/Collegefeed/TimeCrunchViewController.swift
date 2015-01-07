@@ -68,7 +68,7 @@ class TimeCrunchViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        self.updateLabels()
+        self.updateViewOutlets()
     }
     
     override func didReceiveMemoryWarning() {
@@ -100,7 +100,7 @@ class TimeCrunchViewController: UIViewController {
     @IBAction func activateTimeCrunch() {
         myDataController!.attemptActivateTimeCrunch()
         
-        updateLabels()
+        updateViewOutlets()
     }
     
     @IBAction func showCrunchDialog() {
@@ -111,30 +111,47 @@ class TimeCrunchViewController: UIViewController {
     
     // MARK: - Helper Methods
     
-    func updateLabels() {
+    func updateViewOutlets() {
         
         // default values
         hoursLabel.text = "0 hrs"
         daysLabel.text = ""
         schoolLabel.text = "Start posting to get time!"
         onOffLabel.text = "Time Crunch is off."
+        activateButton.hidden = true
+        activateButtonLabel.hidden = true
         
         if let model = myDataController!.timeCrunch {
             
             var hours: Int = model.getHoursRemaining() as Int
+            var timeRunning = false
             
             hoursLabel.text = NSString(format: "%d hrs", hours)
             if hours > 0 {
+                // Has some hours in the bank
                 daysLabel.text = NSString(format: "(%.1f days)", Double(hours) / 24.0)
-            }
-            if model.timeWasActivatedAt != nil {
-                onOffLabel.text = "Time Crunch is on."
-            }
-            if let mySchool = myDataController!.getCollegeById(model.collegeId) {
-                schoolLabel.text = mySchool.name
-            }
-            else {
+                
+                if model.timeWasActivatedAt != nil {
+                    timeRunning = true
+                }
+            } else {
+                // Hasn't any hours at all
                 schoolLabel.text = "Start posting to get time!"
+            }
+            
+            if let mySchool = myDataController!.getCollegeById(model.collegeId) {
+                schoolLabel.text = mySchool.name!
+                
+                if timeRunning {
+                    // Time is running right now!
+                    onOffLabel.text = "Time is Crunching!"
+                    activateButton.hidden = true
+                    activateButtonLabel.hidden = true
+                }
+                else {
+                    activateButton.hidden = false
+                    activateButtonLabel.hidden = false
+                }
             }
         }
     }
