@@ -10,16 +10,8 @@
 
 @implementation CommentTableCell
 
-//- (BOOL)assignmentSuccessWith:(NSObject *)obj
-//{
-//    if ([obj class] != [Comment class])
-//        return NO;
-//    
-//    return [self assignWithComment:(Comment *)obj];
-//}
 - (BOOL)assignWithComment:(Comment *)comment
 {
-//    if ([super assignmentSuccessWith:comment])
     if (comment != nil)
     {
         [self setObject:comment];
