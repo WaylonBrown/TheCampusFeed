@@ -9,7 +9,7 @@
 #import "PostTableCell.h"
 #import "Comment.h"
 
-@interface CommentTableCell : PostTableCell<TableCellProtocol>
+@interface CommentTableCell : PostTableCell
 
 @property (nonatomic, strong) Comment* object;
 

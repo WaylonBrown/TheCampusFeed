@@ -8,13 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "TableCellProtocol.h"
-
 @class Tag;
 @class College;
 @class Achievement;
 
-@interface SimpleTableCell : UITableViewCell <TableCellProtocol>
+@interface SimpleTableCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;

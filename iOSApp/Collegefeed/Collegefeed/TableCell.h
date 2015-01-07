@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "TTTAttributedLabel.h"
-#import "TableCellProtocol.h"
 #import "ChildCellDelegate.h"
 
 #define DEFAULT_COLLEGE_LABEL_HEIGHT 33
@@ -22,7 +21,7 @@
 @protocol PostAndCommentProtocol;
 @protocol CFModelProtocol;
 
-@interface TableCell : UITableViewCell <TableCellProtocol, TTTAttributedLabelDelegate>
+@interface TableCell : UITableViewCell <TTTAttributedLabelDelegate>
 
 @property (nonatomic, strong) NSObject<PostAndCommentProtocol, CFModelProtocol> *object;
 @property (nonatomic, strong) id<ChildCellDelegate> delegate;
@@ -37,7 +36,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *upVoteButton;
 @property (weak, nonatomic) IBOutlet UIButton *downVoteButton;
 @property (weak, nonatomic) IBOutlet UIImageView *gpsIconImageView;
-//@property (weak, nonatomic) IBOutlet UIView *dividerView;
+@property (weak, nonatomic) IBOutlet UIView *dividerView;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *pictureView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *pictureActivityIndicator;

@@ -39,7 +39,7 @@
             self.pictureHeight.constant = 0;
         }
         
-        [self attemptDisplayCollegeView:showLabel];
+        [self setWillDisplayCollege:showLabel];
         
         [self setNeedsLayout];
         [self layoutIfNeeded];
@@ -48,14 +48,6 @@
     }
     
     return NO;
-}
-- (CGFloat)getMessageHeight
-{
-    return [PostTableCell getMessageHeight:[self.object getText]];
-}
-+ (CGFloat)getCellHeightWithObject:(Post *)obj withCollege:(BOOL)withCollege
-{
-    return [self getMessageHeight:[obj getText]] + LARGE_CELL_TOP_TO_LABEL + LARGE_CELL_LABEL_TO_BOTTOM + ([obj hasImage] ? POST_CELL_PICTURE_HEIGHT_CROPPED : 0) + (withCollege ? DEFAULT_COLLEGE_LABEL_HEIGHT : 0);
 }
 - (void)setNearCollege
 {
@@ -78,10 +70,12 @@
         });
     });
 }
-- (void)attemptDisplayCollegeView:(BOOL)showLabel
+- (void)setWillDisplayCollege:(BOOL)showLabel
 {
-    [self.collegeLabel setHidden:!showLabel];
-    [self.gpsIconImageView setHidden:!showLabel];
+    self.collegeLabel.hidden = !showLabel;
+    self.gpsIconImageView.hidden = !showLabel;
+    self.dividerView.hidden = !showLabel;
+    
     self.collegeLabelViewHeight.constant = showLabel ? POST_CELL_COLLEGE_LABEL_VIEW_HEIGHT : 0;
 }
 

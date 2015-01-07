@@ -217,46 +217,4 @@
     [self.scoreLabel setText:[NSString stringWithFormat:@"%ld", [[self.object getScore] longValue]]];
 }
 
-#pragma mark - Protocol Methods
-
-- (CGFloat)getMessageHeight
-{
-    return LARGE_CELL_MIN_LABEL_HEIGHT;
-}
-- (CGFloat)getCellHeight
-{
-    return DEFAULT_CELL_HEIGHT;
-}
-+ (CGFloat)getMessageHeight:(NSString *)text
-{
-    float height = LARGE_CELL_MIN_LABEL_HEIGHT;
-    if (text != nil && ![text isEqualToString:@""])
-    {
-        
-        NSStringDrawingContext *ctx = [NSStringDrawingContext new];
-        NSAttributedString *aString = [[NSAttributedString alloc] initWithString:text];
-        UITextView *calculationView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, LARGE_CELL_LABEL_WIDTH, 2000.0f)];
-        [calculationView setAttributedText:aString];
-        
-        
-        CGRect textRect = [calculationView.text
-                           boundingRectWithSize:calculationView.frame.size
-                           options:NSStringDrawingUsesLineFragmentOrigin
-                           attributes:@{NSFontAttributeName:CF_FONT_LIGHT(16)}
-                           context:ctx];
-        
-        height = textRect.size.height + MESSAGE_HEIGHT_TOP_CUSHION;
-    }
-    
-    return MAX(height, LARGE_CELL_MIN_LABEL_HEIGHT);
-}
-+ (CGFloat)getCellHeight:(NSObject *)obj
-{
-    return DEFAULT_CELL_HEIGHT;
-}
-- (void)displayCannotVote
-{
-    
-}
-
 @end

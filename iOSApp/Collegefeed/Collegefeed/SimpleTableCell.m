@@ -113,41 +113,4 @@
     [self.activityIndicator stopAnimating];
 }
 
-#pragma mark - Protocol Methods
-
-- (CGFloat)getMessageHeight
-{
-    return SMALL_CELL_MIN_LABEL_HEIGHT;
-}
-- (CGFloat)getCellHeight
-{
-    return DEFAULT_CELL_HEIGHT;
-}
-+ (CGFloat)getMessageHeight:(NSString *)text
-{
-    float height = SMALL_CELL_MIN_LABEL_HEIGHT;
-    if (text != nil && ![text isEqualToString:@""])
-    {
-        NSStringDrawingContext *ctx = [NSStringDrawingContext new];
-        NSAttributedString *aString = [[NSAttributedString alloc] initWithString:text];
-        UITextView *calculationView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, SMALL_CELL_LABEL_WIDTH, 2000.0f)];
-        [calculationView setAttributedText:aString];
-        
-        
-        CGRect textRect = [calculationView.text
-                           boundingRectWithSize:calculationView.frame.size
-                           options:NSStringDrawingUsesLineFragmentOrigin
-                           attributes:@{NSFontAttributeName:CF_FONT_LIGHT(18)}
-                           context:ctx];
-        
-        height = textRect.size.height + MESSAGE_HEIGHT_TOP_CUSHION;
-    }
-    
-    return MAX(height, SMALL_CELL_MIN_LABEL_HEIGHT);
-}
-+ (CGFloat)getCellHeight:(NSObject *)obj
-{
-    return DEFAULT_CELL_HEIGHT;
-}
-
 @end

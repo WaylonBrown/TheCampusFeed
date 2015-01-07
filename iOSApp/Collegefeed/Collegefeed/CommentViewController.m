@@ -120,29 +120,6 @@
 
 #pragma mark - Table View
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *cellText = @"";
-    
-    if (tableView == self.postTableView)
-    {
-        Post *post = self.dataController.postInFocus;
-        if (post != nil)
-            cellText = post.text;
-        
-        return [PostTableCell getCellHeight:post];
-    }
-    else
-    {
-        Comment *comment = [self.list objectAtIndex:[indexPath row]];
-        if (comment != nil)
-            cellText = comment.text;
-        
-        return [CommentTableCell getCellHeight:comment];
-    }
-    
-    return 0;
-}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Get the table view cell for the given row
     // This method handles two table views: one for the post and another for it's comments

@@ -17,7 +17,7 @@
         [self setObject:comment];
         self.isNearCollege = comment.isNearCollege;
         
-        [super attemptDisplayCollegeView:NO];
+        [super setWillDisplayCollege:NO];
         [self.commentCountLabel setHidden:YES];
         
         self.pictureHeight.constant = 0;
@@ -37,22 +37,4 @@
     
     return NO;
 }
-- (CGFloat)getMessageHeight
-{
-    return [super getMessageHeight];
-}
-- (CGFloat)getCellHeight
-{
-    return [super getCellHeight];
-}
-
-+ (CGFloat)getCellHeight:(Comment *)obj
-{
-    return [super getCellHeight:obj];
-}
-+ (CGFloat)getMessageHeight:(NSString *)text
-{
-    return [super getMessageHeight:text];
-}
-
 @end

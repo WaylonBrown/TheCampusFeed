@@ -12,15 +12,12 @@
 #import "Shared.h"
 #import "ChildCellDelegate.h"
 
-@interface PostTableCell : TableCell<TableCellProtocol>
+@interface PostTableCell : TableCell
 
 @property (nonatomic, strong) Post* object;
 
 - (BOOL)assignWithPost:(Post *)post withCollegeLabel:(BOOL)showLabel;
 - (void)setNearCollege;
-- (void)attemptDisplayCollegeView:(BOOL)showLabel;
-
-//- (CGFloat)getCellHeightWithCollege:(BOOL)withCollege;
-+ (CGFloat)getCellHeightWithObject:(Post *)obj withCollege:(BOOL)withCollege;
+- (void)setWillDisplayCollege:(BOOL)showLabel;
 
 @end

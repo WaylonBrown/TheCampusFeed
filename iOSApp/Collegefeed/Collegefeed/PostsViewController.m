@@ -125,18 +125,6 @@
                                          animated:YES];
     [[self navigationItem] setBackBarButtonItem:self.commentViewController.backButton];
 }
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    NSUInteger row = indexPath.row;
-//    
-//    if (row < [self.list count])
-//    {
-//        Post *post = [self.list objectAtIndex:row];
-//        return [PostTableCell getCellHeightWithObject:post withCollege:self.dataController.showingAllColleges];
-//    }
-//    
-//    return DEFAULT_CELL_HEIGHT;
-//}
 
 #pragma mark - Network Actions
 
