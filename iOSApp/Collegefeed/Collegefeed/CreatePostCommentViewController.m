@@ -62,19 +62,20 @@ withDataController:(DataController *)controller
     {
         [self.titleLabel setText:@"New Post"];
         [self.subtitleLabel setText:[NSString stringWithFormat:@"Posting to %@", self.collegeForPost.name]];
-        [self.createButton.titleLabel setText:@"Post"];
+//        [self.createButton.titleLabel setText:@"Post"];
     }
     else if (self.modelType == COMMENT)
     {
         [self.titleLabel setText:@"New Comment"];
         [self.subtitleLabel setText:@""];
-        [self.createButton.titleLabel setText:@"Comment"];
+//        [self.createButton.titleLabel setText:@"Comment"];
     }
     
     // Set fonts
     [self.titleLabel setFont:CF_FONT_LIGHT(30)];
     [self.subtitleLabel setFont:CF_FONT_ITALIC(14)];
     [self.createButton.titleLabel setFont:CF_FONT_LIGHT(16)];
+    [self.cancelButton.titleLabel setFont:CF_FONT_LIGHT(16)];
     [self.messageTextView setFont:CF_FONT_LIGHT(16)];
     [self.messageTextView setTintColor:[Shared getCustomUIColor:CF_DARKGRAY]];
     
@@ -103,19 +104,23 @@ withDataController:(DataController *)controller
                                               withImage:self.imageView.image];
     
 }
-
 - (IBAction)dismiss:(id)sender
 {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    if ([self.messageTextView isFirstResponder])
+    {
+        [self.messageTextView resignFirstResponder];
+    }
+    else
+    {
+        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    }
 }
-
 - (IBAction)cameraButtonPressed:(id)sender
 {
     [self.messageTextView resignFirstResponder];
     self.takeNewPhotoButton.hidden = NO;
     self.chooseExistingPhotoButton.hidden = NO;
 }
-
 - (IBAction)takeNewPhoto:(id)sender
 {
     self.takeNewPhotoButton.hidden = YES;
@@ -127,7 +132,6 @@ withDataController:(DataController *)controller
     
     [self presentViewController:picker animated:YES completion:NULL];
 }
-
 - (IBAction)useExistingPhoto:(id)sender
 {
     self.takeNewPhotoButton.hidden = YES;
@@ -140,12 +144,12 @@ withDataController:(DataController *)controller
     
     [self presentViewController:picker animated:YES completion:NULL];
 }
-
 - (void)receivedNotification:(NSNotification *) notification
 {
     NSDictionary *dictionary = [notification userInfo];
     NSString *toast = [dictionary objectForKey:@"message"];
-    
+
+    NSLog(@"CreatePostCommentViewController received notification: %@", notification.userInfo);
     [self.view makeToast:toast
                 duration:2.0
                 position:@"top"];
@@ -155,19 +159,19 @@ withDataController:(DataController *)controller
 
 - (void)fixDialogPositionAndUpdateConstraints
 {
-    float dialogHeight = self.alertView.frame.size.height;
-    float visibleHeight = self.view.frame.size.height - self.keyboardHeight;
-    
-    float blankSpace = visibleHeight - dialogHeight;
-    float newConstant = blankSpace / 2;
-    float oldConstant = self.dialogVerticalPosition.constant;
-    
-    if (oldConstant != newConstant && newConstant >= 20)
-    {
-        self.dialogVerticalPosition.constant = newConstant;
-    }
-    
-    [self.view setNeedsUpdateConstraints];
+//    float dialogHeight = self.alertView.frame.size.height;
+//    float visibleHeight = self.view.frame.size.height - self.keyboardHeight;
+//    
+//    float blankSpace = visibleHeight - dialogHeight;
+//    float newConstant = blankSpace / 2;
+//    float oldConstant = self.dialogVerticalPosition.constant;
+//    
+//    if (oldConstant != newConstant && newConstant >= 20)
+//    {
+//        self.dialogVerticalPosition.constant = newConstant;
+//    }
+//    
+//    [self.view setNeedsUpdateConstraints];
     
 }
 - (void)updateTagTextView
@@ -197,6 +201,8 @@ withDataController:(DataController *)controller
     [string addAttribute:NSForegroundColorAttributeName value:[Shared getCustomUIColor:CF_BLUE] range:range];
     [self.tagTextView setAttributedText:string];
     [self.tagTextView setFont:CF_FONT_LIGHT(16)];
+    
+    [self.view setNeedsUpdateConstraints];
 }
 
 #pragma mark - Keyboard
@@ -262,23 +268,27 @@ withDataController:(DataController *)controller
         {
             [self.tagTextView setText:filteredMessage];
             [self updateTagTextView];
-            [self fixDialogPositionAndUpdateConstraints];
         }
         else
         {
             [self.tagTextView setText:@""];
             self.tagTextViewHeight.constant = 0;
+            [self.view setNeedsUpdateConstraints];
         }
     }
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    if ([text isEqualToString:@"\n"]) {
-        // Be sure to test for equality using the "isEqualToString" message
+    if ([text isEqualToString:@"@"])
+    {   // TODO: put all disallowed symbols here
+        
+        return NO;
+    }
+    if ([text isEqualToString:@"\n"])
+    {
         [textView resignFirstResponder];
         [self fixDialogPositionAndUpdateConstraints];
-        // Return FALSE so that the final '\n' character doesn't get added
-        return FALSE;
+        return NO;
     }
     
     if (textView != self.messageTextView) return YES;
