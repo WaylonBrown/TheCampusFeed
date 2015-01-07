@@ -45,6 +45,9 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+
+    self.postTableView.dataSource = self;
+    self.postTableView.delegate = self;
     
     NSLog(@"Setting tableview to be automatic in %@", [self class]);
     self.tableView.estimatedRowHeight = POST_CELL_HEIGHT_ESTIMATE;
@@ -175,11 +178,12 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {   // Number of rows in table views
     if (tableView == self.postTableView)
+    {
         return 1;
-    else
-        return [self.list count];
- 
-    return 0;
+    }
+
+    return [self.list count];
+    
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {   // return the header title for the 'Comments' section

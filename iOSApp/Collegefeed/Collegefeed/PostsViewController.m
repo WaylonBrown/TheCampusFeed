@@ -124,7 +124,7 @@
     self.commentViewController.parentPost = post;
     [self.navigationController pushViewController:self.commentViewController
                                          animated:YES];
-//    [[self navigationItem] setBackBarButtonItem:self.commentViewController.backButton];
+    [[self navigationItem] setBackBarButtonItem:self.commentViewController.backButton];
 }
 
 #pragma mark - Network Actions
