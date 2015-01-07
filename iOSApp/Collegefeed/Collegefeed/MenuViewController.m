@@ -16,6 +16,8 @@
 #import "TopPostsViewController.h"
 #import "NewPostsViewController.h"
 
+#import "TheCampusFeed-Swift.h"
+
 @interface MenuViewController ()
 
 @end
@@ -30,6 +32,7 @@
         self.viewControllers = viewControllers;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchToNewPosts) name:@"CreatedPost" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchToTopPosts) name:@"SwitchToTopPosts" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchToAchievements) name:@"SwitchToAchievements" object:nil];
         
     }
     return self;
@@ -45,6 +48,17 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.tableView reloadData];
+}
+- (void)switchToAchievements
+{
+    AchievementViewController *viewController = self.viewControllers[ACHIEVEMENT_INDEX];
+    
+    [self.viewDeckController closeLeftView];
+    self.selectedIndex = ACHIEVEMENT_INDEX;
+    [self.viewDeckController setCenterController:viewController];
+    
+    [viewController.tableView reloadData];
+    [viewController.tableView scrollRectToVisible:CGRectMake(0,0,1,1) animated:YES];
 }
 - (void)switchToNewPosts
 {

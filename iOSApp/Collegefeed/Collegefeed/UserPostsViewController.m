@@ -9,8 +9,8 @@
 #import "UserPostsViewController.h"
 #import "Shared.h"
 
-#define BUTTON_MARGIN 15
-#define BUTTON_HEIGHT 75
+#define BUTTON_MARGIN 10
+#define BUTTON_HEIGHT 60
 
 @implementation UserPostsViewController
 
@@ -20,7 +20,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
 }
 
 #pragma mark - Table View
@@ -32,11 +31,27 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    float buttonWidth = tableView.frame.size.width - (2 * BUTTON_MARGIN);
+    float width = self.view.frame.size.width;
+    float height = self.view.frame.size.height;
+    
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+    
+    // Build button view
+    float buttonWidth = width - (2 * BUTTON_MARGIN);
     UIView *achievementButton = [[UIView alloc] initWithFrame:CGRectMake(BUTTON_MARGIN, BUTTON_MARGIN, buttonWidth, BUTTON_HEIGHT)];
     achievementButton.backgroundColor = [Shared getCustomUIColor:CF_GREEN];
     
-    return achievementButton;
+    [headerView addSubview:achievementButton];
+    
+    // Tap gesture recognizer
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:^{ [[NSNotificationCenter defaultCenter] postNotificationName:@"SwitchToAchievements" object:nil]; }
+                                   action:@selector(invoke)];
+    tap.numberOfTapsRequired = 1;
+    tap.numberOfTouchesRequired = 1;
+    [achievementButton addGestureRecognizer:tap];
+    
+    return headerView;
 }
 
 #pragma mark - Network Actions
