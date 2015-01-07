@@ -1734,10 +1734,7 @@
                                           {
                                               [[NSNotificationCenter defaultCenter] postNotificationName:@"FetchedColleges" object:userInfo];
                                           }
-                                          else
-                                          {
-                                              [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:userInfo];
-                                          }
+                                          [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:userInfo];
                                       });
                    });
 }
