@@ -27,6 +27,18 @@ withDataController:(DataController *)controller
         [self setTransitioningDelegate:self];
         [self setModelType:type];
         [self setCollegeForPost:college];
+        
+//        if (type == POST)
+//        {
+//            self.cameraButtonWidth.constant = 40;
+//        }
+//        if (type == COMMENT)
+//        {
+//            self.cameraButtonWidth.constant = 0;
+//        }
+//
+//        [self.view setNeedsLayout];
+//        [self.view layoutIfNeeded];
     }
     return self;
 }
@@ -62,14 +74,20 @@ withDataController:(DataController *)controller
     {
         [self.titleLabel setText:@"New Post"];
         [self.subtitleLabel setText:[NSString stringWithFormat:@"Posting to %@", self.collegeForPost.name]];
-//        [self.createButton.titleLabel setText:@"Post"];
+        self.cameraButtonWidth.constant = 40;
+        self.cameraButton.hidden = NO;
     }
     else if (self.modelType == COMMENT)
     {
         [self.titleLabel setText:@"New Comment"];
         [self.subtitleLabel setText:@""];
-//        [self.createButton.titleLabel setText:@"Comment"];
+        self.cameraButtonWidth.constant = 0;
+        self.cameraButton.hidden = YES;
     }
+    
+    [self.view setNeedsLayout];
+    [self.view layoutIfNeeded];
+    
     
     // Set fonts
     [self.titleLabel setFont:CF_FONT_LIGHT(30)];

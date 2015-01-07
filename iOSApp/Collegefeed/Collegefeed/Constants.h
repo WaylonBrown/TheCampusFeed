@@ -22,7 +22,7 @@
 #define MAX_COMMENT_LENGTH  140
 #define MINIMUM_POSTING_INTERVAL_MINUTES    5
 #define MINIMUM_COMMENTING_INTERVAL_MINUTES 1
-#define MILES_FOR_PERMISSION                60
+#define MILES_FOR_PERMISSION                15
 #define LOCATION_MANAGER_TIMEOUT            10
 
 // Custom Colors

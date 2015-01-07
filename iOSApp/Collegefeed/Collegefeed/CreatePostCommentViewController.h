@@ -56,6 +56,7 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *messageTextViewHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *dialogVerticalPosition;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *tagTextViewHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *cameraButtonWidth;
 
 - (id)initWithType:(ModelType)type
        withCollege:(College *)college
