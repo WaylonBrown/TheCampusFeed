@@ -85,6 +85,16 @@ class TimeCrunchViewController: UIViewController {
         println("Need to tell someone to show the post dialog")
     }
     
+    // MARK: - Orientation
+    
+    override func shouldAutorotate() -> Bool {
+        return false
+    }
+    
+    override func supportedInterfaceOrientations() -> Int {
+        return Int(UIInterfaceOrientationMask.Portrait.rawValue)
+    }
+    
     // MARK: - Actions
     
     @IBAction func activateTimeCrunch() {

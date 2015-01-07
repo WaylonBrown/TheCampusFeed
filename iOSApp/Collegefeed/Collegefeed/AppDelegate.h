@@ -11,45 +11,11 @@
 
 #import "DataController.h"
 
-@class College;
-
-@class TopPostsViewController;
-@class NewPostsViewController;
-@class PostsViewController;
-
-@class TagViewController;
-@class CollegePickerViewController;
-@class UserPostsViewController;
-@class UserCommentsViewController;
-@class TrendingCollegesViewController;
-@class TutorialViewController;
-@class CF_DialogViewController;
-@class TimeCrunchViewController;
-@class AchievementViewController;
-@class MenuViewController;
+@class CFNavigationController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow              *window;
-@property (strong, nonatomic) UITabBarController    *tabBarController;
-
-@property (strong, nonatomic) DataController *dataController;
-
-@property (strong, nonatomic) MenuViewController *menuViewController;
-@property (strong, nonatomic) TopPostsViewController *topPostsController;
-@property (strong, nonatomic) NewPostsViewController *recentPostsController;
-@property (strong, nonatomic) TagViewController *tagController;
-@property (strong, nonatomic) CollegePickerViewController *collegeController;
-@property (strong, nonatomic) UserPostsViewController* userPostsController;
-@property (strong, nonatomic) UserCommentsViewController *userCommentsController;
-@property (strong, nonatomic) TrendingCollegesViewController*trendingCollegesController;
-@property (strong, nonatomic) TutorialViewController *tutorialController;
-@property (strong, nonatomic) CF_DialogViewController *helpController;
-@property (strong, nonatomic) TimeCrunchViewController *timeCrunchController;
-@property (strong, nonatomic) AchievementViewController *achievementController;
-
-@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) CFNavigationController *navController;
 
 @end

@@ -84,6 +84,7 @@
 		CD539DD91A2CDE99004A794E /* NewPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD81A2CDE99004A794E /* NewPostsViewController.m */; };
 		CD539DDC1A2CE488004A794E /* TagPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DDB1A2CE488004A794E /* TagPostsViewController.m */; };
 		CD5887591A21501100D864FD /* NSMutableArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */; };
+		CD6991331A5D0A8900C7E099 /* CFNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD6991321A5D0A8900C7E099 /* CFNavigationController.m */; };
 		CDDB142F1A5337FF005813AF /* AchievementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDB142E1A5337FF005813AF /* AchievementViewController.swift */; };
 		CDF0D7DA1A4F3DFE00FBA892 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDF0D7D91A4F3DFE00FBA892 /* AssetsLibrary.framework */; };
 		CDF0D7FB1A518BC600FBA892 /* Watchdog.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF0D7FA1A518BC600FBA892 /* Watchdog.m */; };
@@ -252,6 +253,8 @@
 		CD539DDB1A2CE488004A794E /* TagPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagPostsViewController.m; sourceTree = "<group>"; };
 		CD539DDD1A2CF54C004A794E /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMutableArrayExtensions.swift; sourceTree = "<group>"; };
+		CD6991311A5D0A8900C7E099 /* CFNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFNavigationController.h; sourceTree = "<group>"; };
+		CD6991321A5D0A8900C7E099 /* CFNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFNavigationController.m; sourceTree = "<group>"; };
 		CDDB142E1A5337FF005813AF /* AchievementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementViewController.swift; sourceTree = "<group>"; };
 		CDF0D7D91A4F3DFE00FBA892 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		CDF0D7F91A518BC600FBA892 /* Watchdog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Watchdog.h; sourceTree = "<group>"; };
@@ -497,6 +500,8 @@
 				CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */,
 				CD04FE7E1A59D0FF0016C107 /* TimeCrunchModel.swift */,
 				53AB57B7194AAFB3001D1B7B /* Other */,
+				CD6991311A5D0A8900C7E099 /* CFNavigationController.h */,
+				CD6991321A5D0A8900C7E099 /* CFNavigationController.m */,
 			);
 			name = "Source Code";
 			sourceTree = "<group>";
@@ -810,6 +815,7 @@
 				CD539DD31A2CCE7D004A794E /* TopPostsViewController.m in Sources */,
 				53DE347719AD00AE004CB5A0 /* IIViewDeckController.m in Sources */,
 				5350557F19529FCA009C1911 /* FeedSelectViewController.m in Sources */,
+				CD6991331A5D0A8900C7E099 /* CFNavigationController.m in Sources */,
 				5347EEB5197E9EC7001B2214 /* MenuViewController.m in Sources */,
 				53F878A119133F60002A578B /* AppDelegate.m in Sources */,
 				53DE347F19AD01FF004CB5A0 /* IISideController.m in Sources */,
