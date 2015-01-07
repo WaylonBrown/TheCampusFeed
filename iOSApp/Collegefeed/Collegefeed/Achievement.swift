@@ -16,8 +16,6 @@ class Achievement: NSObject {
     var hasAchieved : Bool = false
     var type: String = "Achievement"
     
-    
-    
     convenience init(id: Int, currAmount: Int, reqAmt: Int, rewardHours: Int, achievementType: String, didAchieve: Bool) {
         self.init()
         

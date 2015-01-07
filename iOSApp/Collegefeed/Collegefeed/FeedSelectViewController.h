@@ -19,19 +19,16 @@
 @property (nonatomic, strong) NSMutableArray *searchResult;
 @property (strong, nonatomic) IBOutlet UIView *nearYouHeaderView;
 @property (strong, nonatomic) IBOutlet UILabel *nearYouLabel;
-
-@property (strong, nonatomic) IBOutlet UISearchBar *mySearchBar;
-
-@property (weak,nonatomic) IBOutlet NSLayoutConstraint *tableHeightConstraint;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *dialogVerticalAlignment;
-
 @property (weak, nonatomic) IBOutlet UIView *alertView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak,nonatomic) IBOutlet NSLayoutConstraint *tableHeightConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *dialogVerticalAlignment;
 
 - (id)initWithDataController:(DataController *)controller;
 
-- (id)initWithDataController:(DataController *)controller WithFeedDelegate:(id<FeedSelectionProtocol>) delegate;
+- (id)initWithDataController:(DataController *)controller
+            WithFeedDelegate:(id<FeedSelectionProtocol>) delegate;
 
 - (IBAction)dismiss;
 - (void)fixHeights;

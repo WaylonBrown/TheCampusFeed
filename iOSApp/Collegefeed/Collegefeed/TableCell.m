@@ -108,7 +108,6 @@
     NSString *tagMessage = [url absoluteString];
     [self.delegate didSelectTag:tagMessage];
 }
-
 - (BOOL)assignWithPost:(Post *)post withCollegeLabel:(BOOL)showLabel
 {
     if (post != nil)
@@ -196,19 +195,9 @@
     
     return NO;
 }
+
 #pragma mark - Helper Methods
 
-//- (void)populateImageViewFromUrl:(NSString *)imgURL
-//{
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
-//        
-//        //set your image on main thread.
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [self.pictureView setImage:[UIImage imageWithData:data]];
-//        });    
-//    });
-//}
 - (NSString *)getAgeLabelString:(NSDate *)creationDate
 {   // return string indicating how long ago the post was created
     

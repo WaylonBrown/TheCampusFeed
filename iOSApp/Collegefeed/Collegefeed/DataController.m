@@ -47,12 +47,12 @@
         // For restricting phone numbers and email addresses
         [self createWatchdog];
         
-//        TODO:
-//        [self incrementLaunchCountInCoreData];
-        self.launchCount++;
+        NSLog(@"Updating launch count from %ld to %ld", self.launchCount++, self.launchCount);
         
         // Get the user's location
         [self findUserLocation];
+        
+        [self saveStatusToCoreData];
     }
     return self;
 }
@@ -186,6 +186,7 @@
 - (void)tryAchievementShortAndSweet
 {
     NSLog(@"Checking if user has any posts with <= 3 words AND >= 100 points)");
+    
     for (Post *post in self.userPosts)
     {
         NSArray *words = [post.text componentsSeparatedByString:@" "];
@@ -194,8 +195,21 @@
         {
             NSLog(@"Found Post = \"%@\". Score = %@ and only %ld words!", post.text, post.score, words.count);
             
+            for (Achievement *achievement in self.achievementList)
+            {
+                if ([achievement.type isEqualToString:TYPE_SHORT_AND_SWEET_ACHIEVEMENT]
+                    && achievement.hasAchieved == NO)
+                {
+                    NSLog(@"Found and awarding the short and sweet achievement");
+                    achievement.hasAchieved = YES;
+                    
+                    [self addTimeCrunchHours:achievement.hoursForReward];
+                    [self saveAchievementsToCoreData];
+
+                }
+            }
         }
-    }
+    }    
 }
 - (void)tryAchievementManyCrunchHours:(long)numHours
 {

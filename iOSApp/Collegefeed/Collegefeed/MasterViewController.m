@@ -215,6 +215,7 @@
 {
     [self.dataController finishedFetchingCollegeList];
     [self locationWasUpdated];
+    [self.tableView reloadData];
 }
 - (void)finishedFetchRequest:(NSNotification *)notification
 {
