@@ -10,6 +10,4 @@
 
 @interface CFNavigationController : UINavigationController
 
-- (void)createButtonPressed;
-
 @end

@@ -27,18 +27,6 @@ withDataController:(DataController *)controller
         [self setTransitioningDelegate:self];
         [self setModelType:type];
         [self setCollegeForPost:college];
-        
-//        if (type == POST)
-//        {
-//            self.cameraButtonWidth.constant = 40;
-//        }
-//        if (type == COMMENT)
-//        {
-//            self.cameraButtonWidth.constant = 0;
-//        }
-//
-//        [self.view setNeedsLayout];
-//        [self.view layoutIfNeeded];
     }
     return self;
 }
@@ -124,14 +112,8 @@ withDataController:(DataController *)controller
 }
 - (IBAction)dismiss:(id)sender
 {
-    if ([self.messageTextView isFirstResponder])
-    {
-        [self.messageTextView resignFirstResponder];
-    }
-    else
-    {
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    }
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+
 }
 - (IBAction)cameraButtonPressed:(id)sender
 {
@@ -175,23 +157,6 @@ withDataController:(DataController *)controller
 
 #pragma mark - View Adjustments
 
-- (void)fixDialogPositionAndUpdateConstraints
-{
-//    float dialogHeight = self.alertView.frame.size.height;
-//    float visibleHeight = self.view.frame.size.height - self.keyboardHeight;
-//    
-//    float blankSpace = visibleHeight - dialogHeight;
-//    float newConstant = blankSpace / 2;
-//    float oldConstant = self.dialogVerticalPosition.constant;
-//    
-//    if (oldConstant != newConstant && newConstant >= 20)
-//    {
-//        self.dialogVerticalPosition.constant = newConstant;
-//    }
-//    
-//    [self.view setNeedsUpdateConstraints];
-    
-}
 - (void)updateTagTextView
 {
     UITextPosition* pos = self.tagTextView.endOfDocument;
@@ -233,16 +198,12 @@ withDataController:(DataController *)controller
     // Given size may not account for screen rotation
     self.keyboardHeight = MIN(keyboardSize.height, keyboardSize.width);
     self.keyboardWidth = MAX(keyboardSize.height, keyboardSize.width);
-    
-    [self fixDialogPositionAndUpdateConstraints];
 }
 - (void)keyboardWasHidden:(NSNotification *)notification
 {
     // Given size may not account for screen rotation
     self.keyboardHeight = 0;
     self.keyboardWidth = 0;
-    
-    [self fixDialogPositionAndUpdateConstraints];
 }
 
 #pragma mark - TextView
@@ -263,9 +224,6 @@ withDataController:(DataController *)controller
         }
         
         self.previousMessageRect = currentRect;
-        
-        [self fixDialogPositionAndUpdateConstraints];
-
         
         // Check for tags
         NSString *message = self.messageTextView.text;
@@ -305,7 +263,6 @@ withDataController:(DataController *)controller
     if ([text isEqualToString:@"\n"])
     {
         [textView resignFirstResponder];
-        [self fixDialogPositionAndUpdateConstraints];
         return NO;
     }
     
@@ -330,8 +287,6 @@ withDataController:(DataController *)controller
 //    self.cameraButton.hidden = YES;
     
     [picker dismissViewControllerAnimated:YES completion:NULL];
-
-    [self fixDialogPositionAndUpdateConstraints];
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {

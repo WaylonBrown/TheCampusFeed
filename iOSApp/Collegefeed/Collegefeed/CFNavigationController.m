@@ -93,10 +93,6 @@
         [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
     }
 }
-- (void)createButtonPressed
-{
-    
-}
 - (void)initViewControllersWithDataController:(DataController *)data
 {
     if (data == nil)

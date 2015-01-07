@@ -60,11 +60,6 @@ class TimeCrunchViewController: UIViewController {
         daysLabel.font = Shared.getFontItalic(18)
         schoolLabel.font = Shared.getFontItalic(18)
         onOffLabel.font = Shared.getFontLight(20)
-        
-        if (self.myDataController!.isNearCollege())
-        {
-            self.placeCreatePostButton()
-        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -75,25 +70,25 @@ class TimeCrunchViewController: UIViewController {
         
     }
     
-    func placeCreatePostButton() {
-        var createButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Compose, target: self, action: "createPost")
-        self.navigationItem.setRightBarButtonItem(createButton, animated: false)
-    }
+//    func placeCreatePostButton() {
+//        var createButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Compose, target: self, action: "createPost")
+//        self.navigationItem.setRightBarButtonItem(createButton, animated: false)
+//    }
     
-    func createPost() {
-        // TODO
-        println("Need to tell someone to show the post dialog")
-    }
+//    func createPost() {
+//        // TODO
+//        println("Need to tell someone to show the post dialog")
+//    }
     
     // MARK: - Orientation
     
-    override func shouldAutorotate() -> Bool {
-        return false
-    }
+//    override func shouldAutorotate() -> Bool {
+//        return false
+//    }
     
-    override func supportedInterfaceOrientations() -> Int {
-        return Int(UIInterfaceOrientationMask.Portrait.rawValue)
-    }
+//    override func supportedInterfaceOrientations() -> Int {
+//        return Int(UIInterfaceOrientationMask.Portrait.rawValue)
+//    }
     
     // MARK: - Actions
     

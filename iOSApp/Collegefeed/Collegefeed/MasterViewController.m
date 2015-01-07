@@ -23,6 +23,7 @@
 #import "UIView+Toast.h"
 
 // Universal app information
+#import "CFNavigationController.h"
 #import "DataController.h"
 #import "Shared.h"
 #import "AppDelegate.h"
@@ -46,10 +47,6 @@
     }
     return self;
 }
-//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-//{
-//    return [super initWithNibName:@"MasterView" bundle:nil];
-//}
 - (void)setNotificationObservers
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialFinished) name:@"TutorialFinished" object:nil];
@@ -68,9 +65,14 @@
 }
 - (void)makeToolbarButtons
 {   // Assigns correct icons and buttons to the upper toolbar
+    
     if ([self.dataController isNearCollege])
     {
         [self placeCreatePost];
+    }
+    else
+    {
+        [self placeLoadingIndicatorInToolbar];
     }
 }
 - (void)loadView
@@ -126,17 +128,17 @@
 }
 - (void)placeLoadingIndicatorInToolbar
 {   // Place the loading indicator in the navigation bar (instead of create post button)
-    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.locationSearchingIndicator];
-    
-    [self.navigationItem setRightBarButtonItem:button];
-    
+
     [self.locationSearchingIndicator startAnimating];
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.locationSearchingIndicator];
+    [self.navigationItem setRightBarButtonItem:button];
 }
 - (void)placeCreatePost
 {   // Place the create post button in the navigation bar (instead of loading indicator)
     [self.locationSearchingIndicator stopAnimating];
-    UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-                                                                                  target:self action:@selector(create)];
+    UIBarButtonItem *createButton = [[UIBarButtonItem alloc]
+                                     initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                                     target:self action:@selector(create)];
     [self.navigationItem setRightBarButtonItem:createButton];
 }
 

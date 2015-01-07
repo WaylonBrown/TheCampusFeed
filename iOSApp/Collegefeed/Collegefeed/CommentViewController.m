@@ -9,7 +9,7 @@
 #import <Social/Social.h>
 
 #import "TableCell.h"
-
+#import "CFNavigationController.h"
 #import "PostsViewController.h"
 #import "Post.h"
 #import "PostsViewController.h"
@@ -72,7 +72,7 @@
     
 }
 - (void)initializeViewElements
-{
+{    
     // Back button
     self.backButton = [super blankBackButton];
     
@@ -229,10 +229,6 @@
     
     [super fetchContent];
     
-//    [self.contentLoadingIndicator startAnimating];
-    
-    // Spawn separate thread for network access
-//    [self.dataController fetchCommentsForPost:self.dataController.postInFocus];
     [self.dataController fetchCommentsForPost:self.parentPost];
 }
 - (void)finishedFetchRequest:(NSNotification *)notification
@@ -240,7 +236,7 @@
     
     [super finishedFetchRequest:notification];
     
-//    [self.commentTableView reloadData];
+    [self.postTableView reloadData];
 }
 - (void)shareOnFacebook
 {
