@@ -20,7 +20,7 @@
 - (void)setNearCollege;
 - (void)attemptDisplayCollegeView:(BOOL)showLabel;
 
-- (CGFloat)getCellHeightWithCollege:(BOOL)withCollege;
+//- (CGFloat)getCellHeightWithCollege:(BOOL)withCollege;
 + (CGFloat)getCellHeightWithObject:(Post *)obj withCollege:(BOOL)withCollege;
 
 @end

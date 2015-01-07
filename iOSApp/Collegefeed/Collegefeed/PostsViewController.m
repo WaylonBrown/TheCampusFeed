@@ -35,6 +35,11 @@
     
     [super viewWillAppear:animated];
 }
+- (void)viewDidAppear:(BOOL)animated
+{
+    NSLog(@"%@ viewDidAppear, reloading table view data", [self class]);
+    [self.tableView reloadData];
+}
 - (void)makeToolbarButtons
 {   // Assigns correct icons and buttons to the upper toolbar
     
@@ -52,11 +57,15 @@
 }
 - (void)viewDidLoad
 {
-    [self.tableView setDataSource:self];
-    [self.tableView setDelegate:self];
-
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    
+    NSLog(@"Setting tableview to be automatic in %@", [self class]);
+    self.tableView.estimatedRowHeight = POST_CELL_HEIGHT_ESTIMATE;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 #pragma mark - Table View
@@ -116,18 +125,18 @@
                                          animated:YES];
     [[self navigationItem] setBackBarButtonItem:self.commentViewController.backButton];
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSUInteger row = indexPath.row;
-    
-    if (row < [self.list count])
-    {
-        Post *post = [self.list objectAtIndex:row];
-        return [PostTableCell getCellHeightWithObject:post withCollege:self.dataController.showingAllColleges];
-    }
-    
-    return DEFAULT_CELL_HEIGHT;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    NSUInteger row = indexPath.row;
+//    
+//    if (row < [self.list count])
+//    {
+//        Post *post = [self.list objectAtIndex:row];
+//        return [PostTableCell getCellHeightWithObject:post withCollege:self.dataController.showingAllColleges];
+//    }
+//    
+//    return DEFAULT_CELL_HEIGHT;
+//}
 
 #pragma mark - Network Actions
 

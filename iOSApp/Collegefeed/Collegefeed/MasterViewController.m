@@ -156,7 +156,9 @@
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if (self.list.count == 0 && self.hasFetchedAllContent)
+    if (!self.contentLoadingIndicator.isAnimating
+        && self.list.count == 0
+        && self.hasFetchedAllContent)
     {
         UILabel *label = [[UILabel alloc] init];
         [label setTextAlignment:NSTextAlignmentCenter];
