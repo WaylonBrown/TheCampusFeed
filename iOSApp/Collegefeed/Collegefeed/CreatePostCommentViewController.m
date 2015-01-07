@@ -27,7 +27,6 @@ withDataController:(DataController *)controller
         [self setTransitioningDelegate:self];
         [self setModelType:type];
         [self setCollegeForPost:college];
-//        self.toastController = [[ToastController alloc] init];
     }
     return self;
 }
@@ -39,14 +38,24 @@ withDataController:(DataController *)controller
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
 
+    // TODO: get rid of manual resizing in this class
     [self.messageTextView setDelegate:self];
     [self.tagTextView setDelegate:self];
     UITextPosition* pos = self.messageTextView.endOfDocument;
     self.previousMessageRect = [self.messageTextView caretRectForPosition:pos];
     self.previousTagRect = CGRectZero;
     
+    // Rounded borders
     self.alertView.layer.borderWidth = 2;
     self.alertView.layer.cornerRadius = 5;
+    
+    self.takeNewPhotoButton.layer.borderWidth = 2;
+    self.takeNewPhotoButton.layer.cornerRadius = 5;
+    
+    self.chooseExistingPhotoButton.layer.borderWidth = 2;
+    self.chooseExistingPhotoButton.layer.cornerRadius = 5;
+    
+    // Faded background
     [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
     
     if (self.modelType == POST)
@@ -72,8 +81,6 @@ withDataController:(DataController *)controller
     [self.messageTextView setDelegate:self];
     [self.tagTextView setDelegate:self];
     
-//    [self.takeNewPhotoButton.titleLabel setFont:CF_FONT_LIGHT(18)];
-//    [self.existingPhotoButton.titleLabel setFont:CF_FONT_LIGHT(18)];
     [self.messageTextView becomeFirstResponder];
 }
 
@@ -105,12 +112,14 @@ withDataController:(DataController *)controller
 - (IBAction)cameraButtonPressed:(id)sender
 {
     [self.messageTextView resignFirstResponder];
-    [self.cameraSourceSelectorView setHidden:NO];
+    self.takeNewPhotoButton.hidden = NO;
+    self.chooseExistingPhotoButton.hidden = NO;
 }
 
 - (IBAction)takeNewPhoto:(id)sender
 {
-    [self.cameraSourceSelectorView setHidden:YES];
+    self.takeNewPhotoButton.hidden = YES;
+    self.chooseExistingPhotoButton.hidden = YES;
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.allowsEditing = YES;
@@ -121,7 +130,9 @@ withDataController:(DataController *)controller
 
 - (IBAction)useExistingPhoto:(id)sender
 {
-    [self.cameraSourceSelectorView setHidden:YES];
+    self.takeNewPhotoButton.hidden = YES;
+    self.chooseExistingPhotoButton.hidden = YES;
+    
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.allowsEditing = YES;
@@ -280,8 +291,15 @@ withDataController:(DataController *)controller
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+
+    if (chosenImage == nil)
+    {
+        return;
+    }
+    
     self.imageView.image = chosenImage;
-    self.imageViewHeight.constant = 200;
+    self.imageView.hidden = NO;
+//    self.cameraButton.hidden = YES;
     
     [picker dismissViewControllerAnimated:YES completion:NULL];
 
