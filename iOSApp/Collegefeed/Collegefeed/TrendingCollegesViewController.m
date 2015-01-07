@@ -18,6 +18,19 @@
     return [super initWithDataController:controller];
 }
 
+#pragma mark - View life cycle
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    NSLog(@"Setting tableview to be automatic in %@", [self class]);
+    self.tableView.estimatedRowHeight = COLLEGE_CELL_HEIGHT_ESTIMATE;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+}
+
+#pragma mark - Table View
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
     
@@ -46,11 +59,6 @@
     College *college = (College *)[self.list objectAtIndex:row];
     [self.dataController switchedToSpecificCollegeOrNil:college];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"SwitchToTopPosts" object:nil];
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *text = [[self.list objectAtIndex:indexPath.row] name];
-    return [Shared getSmallCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(18)];
 }
 
 #pragma mark - Network Actions

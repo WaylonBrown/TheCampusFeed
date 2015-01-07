@@ -9,6 +9,9 @@
 #import "UserPostsViewController.h"
 #import "Shared.h"
 
+#define BUTTON_MARGIN 15
+#define BUTTON_HEIGHT 75
+
 @implementation UserPostsViewController
 
 #pragma mark - View Loading
@@ -18,6 +21,22 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+}
+
+#pragma mark - Table View
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return BUTTON_HEIGHT + 2 * BUTTON_MARGIN;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    float buttonWidth = tableView.frame.size.width - (2 * BUTTON_MARGIN);
+    UIView *achievementButton = [[UIView alloc] initWithFrame:CGRectMake(BUTTON_MARGIN, BUTTON_MARGIN, buttonWidth, BUTTON_HEIGHT)];
+    achievementButton.backgroundColor = [Shared getCustomUIColor:CF_GREEN];
+    
+    return achievementButton;
 }
 
 #pragma mark - Network Actions

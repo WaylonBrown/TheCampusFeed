@@ -21,11 +21,5 @@
 + (UIFont*)getFontBold:(float)size;
 + (UIFont*)getFontItalic:(float)size;
 + (UIColor*)getCustomUIColor:(int)hexValue;
-+ (float)getSmallCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font;
-+ (float)getSmallCellHeightEstimateWithText:(NSString *)text WithFont:(UIFont *)font withWidth:(float)width;
-
-+ (float)getSmallCellMessageHeight:(NSString *)text WithFont:(UIFont *)font;
-+ (float)getSmallCellMessageHeight:(NSString *)text WithFont:(UIFont *)font withWidth:(float)width;
-
 
 @end
