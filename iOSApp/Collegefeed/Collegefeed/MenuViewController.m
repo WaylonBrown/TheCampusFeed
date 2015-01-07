@@ -175,23 +175,24 @@
 {
     
     NSUInteger index = (indexPath.section * 4) + indexPath.row;
-    [self.viewDeckController closeLeftView];
+
 
     if (index == FEEDBACK_INDEX)
-    {   // 'Give feedback'
+    {   // Show 'Give feedback' email prompt
         [self openMail];
     }
     else if (index < self.viewControllers.count)
     {
         UIViewController *viewController = self.viewControllers[index];
 
-        [self.viewDeckController closeLeftView];
         if (index == HELP_INDEX)
         {   // 'Help' selection just displays dialog over currently selected view
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
             [self.navigationController presentViewController:viewController animated:YES completion:nil];
         }
         else
         {
+            [self.viewDeckController closeLeftView];
             self.selectedIndex = index;
             [self.viewDeckController setCenterController:viewController];
         }
@@ -211,12 +212,12 @@
         
         mailer.mailComposeDelegate = self;
         
-        [mailer setSubject:@"iOS App Feedback"];
+        [mailer setSubject:@"CampusFeed feedback for iOS App"];
         
         NSArray *toRecipients = [NSArray arrayWithObjects:@"feedback@thecampusfeed.com", nil];
         [mailer setToRecipients:toRecipients];
         
-        NSString *emailBody = @"Please enter your feedback here:";
+        NSString *emailBody = @"Thank you for taking the time to contact us. We'll get back to you as soon as possible.\n\n";
         [mailer setMessageBody:emailBody isHTML:NO];
         
         [self.navigationController presentViewController:mailer animated:YES completion:nil];
