@@ -31,7 +31,6 @@
     {
         [self setDataController:controller];
         [self initializeViewElements];
-        
     }
     return self;
 }
@@ -68,23 +67,9 @@
 
     [self setCorrectList];
     
-//    if (self.dataController.postInFocus != nil)
-    if (self.parentPost != nil)
-    {
-        NSLog(@"CommentViewController will appear with non-nil parentPost");
-        float postCellHeight = POST_CELL_HEIGHT_ESTIMATE;
-        
-//        float postCellHeight = [self tableView:self.postTableView heightForRowAtIndexPath:
-//                                [NSIndexPath indexPathForRow:0 inSection:0]];
-        
-        self.postTableHeightConstraint.constant = postCellHeight;
-        
-        [self.view setNeedsLayout];
-        [self.view layoutIfNeeded];
-    }
-    
     [self.postTableView reloadData];
     [self.tableView reloadData];
+    
 }
 - (void)initializeViewElements
 {
@@ -143,6 +128,20 @@
 
 #pragma mark - Table View
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView == self.postTableView)
+    {
+        CGFloat postCellHeight = cell.frame.size.height;
+        if (postCellHeight > 0)
+        {
+            NSLog(@"postCellHeight = %f in CommentView.willDisplayCell. Adjusting PostTable height", postCellHeight);
+            
+            self.postTableHeightConstraint.constant = postCellHeight;
+            [self.view setNeedsLayout];
+        }
+    }
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Get the table view cell for the given row
     // This method handles two table views: one for the post and another for it's comments
