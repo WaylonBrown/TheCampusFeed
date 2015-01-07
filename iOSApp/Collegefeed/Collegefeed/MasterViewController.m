@@ -47,6 +47,17 @@
     }
     return self;
 }
+- (id)initWithDataController:(DataController *)controller withNibName:(NSString *)nib bundle:(NSBundle *)bundle
+{
+    self = [super initWithNibName:nib bundle:bundle];
+    if (self)
+    {
+        [self setDataController:controller];
+        [self setCorrectList];
+        self.locationSearchingIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    }
+    return self;
+}
 - (void)setNotificationObservers
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialFinished) name:@"TutorialFinished" object:nil];

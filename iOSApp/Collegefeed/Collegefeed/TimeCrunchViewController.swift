@@ -10,9 +10,7 @@ import Foundation
 import UIKit
 import QuartzCore
 
-class TimeCrunchViewController: UIViewController {
-    
-    var myDataController: DataController?
+class TimeCrunchViewController: MasterViewController {
     
     @IBOutlet var aboutButtonLabel : UILabel!
     @IBOutlet var aboutButton: UIView!
@@ -35,10 +33,8 @@ class TimeCrunchViewController: UIViewController {
         super.init(nibName: "TimeCrunchViewController", bundle: nil)
     }
     
-    init(dataController controller: DataController){
-        super.init()
-        
-        myDataController = controller
+    override init(dataController controller: DataController){
+        super.init(dataController: controller, withNibName: "TimeCrunchViewController", bundle: nil)
     }
     
     override func viewDidLoad() {
@@ -66,35 +62,15 @@ class TimeCrunchViewController: UIViewController {
         self.updateViewOutlets()
     }
     
+    
     override func didReceiveMemoryWarning() {
         
     }
     
-//    func placeCreatePostButton() {
-//        var createButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Compose, target: self, action: "createPost")
-//        self.navigationItem.setRightBarButtonItem(createButton, animated: false)
-//    }
-    
-//    func createPost() {
-//        // TODO
-//        println("Need to tell someone to show the post dialog")
-//    }
-    
-    // MARK: - Orientation
-    
-//    override func shouldAutorotate() -> Bool {
-//        return false
-//    }
-    
-//    override func supportedInterfaceOrientations() -> Int {
-//        return Int(UIInterfaceOrientationMask.Portrait.rawValue)
-//    }
-    
     // MARK: - Actions
     
     @IBAction func activateTimeCrunch() {
-        myDataController!.attemptActivateTimeCrunch()
-        
+        dataController!.attemptActivateTimeCrunch()
         updateViewOutlets()
     }
     
@@ -116,7 +92,7 @@ class TimeCrunchViewController: UIViewController {
         activateButton.hidden = true
         activateButtonLabel.hidden = true
         
-        if let model = myDataController!.timeCrunch {
+        if let model = dataController!.timeCrunch {
             
             var hours: Int = model.getHoursRemaining() as Int
             var timeRunning = false
@@ -134,7 +110,7 @@ class TimeCrunchViewController: UIViewController {
                 schoolLabel.text = "Start posting to get time!"
             }
             
-            if let mySchool = myDataController!.getCollegeById(model.collegeId) {
+            if let mySchool = dataController!.getCollegeById(model.collegeId) {
                 schoolLabel.text = mySchool.name!
                 
                 if timeRunning {

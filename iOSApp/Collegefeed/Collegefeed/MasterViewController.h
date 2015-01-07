@@ -57,6 +57,7 @@
 
 // Initialization
 - (id)initWithDataController:(DataController *)controller;
+- (id)initWithDataController:(DataController *)controller withNibName:(NSString *)nib bundle:(NSBundle *)bundle;
 - (void)setNotificationObservers;
 
 // View Loading
