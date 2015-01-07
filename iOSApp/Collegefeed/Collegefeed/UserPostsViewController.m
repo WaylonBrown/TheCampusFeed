@@ -8,6 +8,7 @@
 
 #import "UserPostsViewController.h"
 #import "Shared.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define BUTTON_MARGIN 10
 #define BUTTON_HEIGHT 60
@@ -20,6 +21,37 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+
+    // Build button view
+    float buttonWidth = self.view.frame.size.width - (2 * BUTTON_MARGIN);
+    self.achievementButtonView = [[UIView alloc] initWithFrame:CGRectMake(BUTTON_MARGIN, BUTTON_MARGIN, buttonWidth, BUTTON_HEIGHT)];
+    self.achievementButtonView.backgroundColor = [Shared getCustomUIColor:CF_BLUE];
+
+    // Add shadow
+    CALayer *layer = self.achievementButtonView.layer;
+    layer.cornerRadius = 5;
+    layer.shadowOffset = CGSizeMake(2, 2);
+    layer.shadowColor = [[UIColor blackColor] CGColor];
+    layer.shadowRadius = 2.0f;
+    layer.shadowOpacity = 0.80f;
+    layer.shadowPath = [[UIBezierPath bezierPathWithRect:layer.bounds] CGPath];
+    
+    // Tropy image
+    UIImageView *trophy = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"trophy_small"]];
+    trophy.contentMode = UIViewContentModeScaleAspectFit;
+    CGRect frame = trophy.frame;
+    frame.size.height = BUTTON_HEIGHT - 2 * BUTTON_MARGIN;
+    [trophy setFrame:frame];
+    [trophy setCenter:CGPointMake(buttonWidth / 2, BUTTON_HEIGHT / 2)];
+    [self.achievementButtonView addSubview:trophy];
+    
+    // Tap gesture recognizer
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:^{ [[NSNotificationCenter defaultCenter] postNotificationName:@"SwitchToAchievements" object:nil]; }
+                                   action:@selector(invoke)];
+    tap.numberOfTapsRequired = 1;
+    tap.numberOfTouchesRequired = 1;
+    [self.achievementButtonView addGestureRecognizer:tap];
 }
 
 #pragma mark - Table View
@@ -33,24 +65,8 @@
 {
     float width = self.view.frame.size.width;
     float height = self.view.frame.size.height;
-    
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
-    
-    // Build button view
-    float buttonWidth = width - (2 * BUTTON_MARGIN);
-    UIView *achievementButton = [[UIView alloc] initWithFrame:CGRectMake(BUTTON_MARGIN, BUTTON_MARGIN, buttonWidth, BUTTON_HEIGHT)];
-    achievementButton.backgroundColor = [Shared getCustomUIColor:CF_GREEN];
-    
-    [headerView addSubview:achievementButton];
-    
-    // Tap gesture recognizer
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
-                                   initWithTarget:^{ [[NSNotificationCenter defaultCenter] postNotificationName:@"SwitchToAchievements" object:nil]; }
-                                   action:@selector(invoke)];
-    tap.numberOfTapsRequired = 1;
-    tap.numberOfTouchesRequired = 1;
-    [achievementButton addGestureRecognizer:tap];
-    
+    [headerView addSubview:self.achievementButtonView];
     return headerView;
 }
 

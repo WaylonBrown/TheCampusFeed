@@ -10,4 +10,6 @@
 
 @interface UserPostsViewController : PostsViewController
 
+@property (strong, nonatomic) UIView *achievementButtonView;
+
 @end

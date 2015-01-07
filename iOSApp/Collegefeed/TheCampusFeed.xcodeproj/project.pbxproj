@@ -85,6 +85,7 @@
 		CD539DDC1A2CE488004A794E /* TagPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DDB1A2CE488004A794E /* TagPostsViewController.m */; };
 		CD5887591A21501100D864FD /* NSMutableArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */; };
 		CD6991331A5D0A8900C7E099 /* CFNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD6991321A5D0A8900C7E099 /* CFNavigationController.m */; };
+		CD6991351A5DE15A00C7E099 /* trophy_small.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6991341A5DE15A00C7E099 /* trophy_small.png */; };
 		CDDB142F1A5337FF005813AF /* AchievementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDB142E1A5337FF005813AF /* AchievementViewController.swift */; };
 		CDF0D7DA1A4F3DFE00FBA892 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDF0D7D91A4F3DFE00FBA892 /* AssetsLibrary.framework */; };
 		CDF0D7FB1A518BC600FBA892 /* Watchdog.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF0D7FA1A518BC600FBA892 /* Watchdog.m */; };
@@ -255,6 +256,7 @@
 		CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMutableArrayExtensions.swift; sourceTree = "<group>"; };
 		CD6991311A5D0A8900C7E099 /* CFNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFNavigationController.h; sourceTree = "<group>"; };
 		CD6991321A5D0A8900C7E099 /* CFNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFNavigationController.m; sourceTree = "<group>"; };
+		CD6991341A5DE15A00C7E099 /* trophy_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trophy_small.png; sourceTree = "<group>"; };
 		CDDB142E1A5337FF005813AF /* AchievementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementViewController.swift; sourceTree = "<group>"; };
 		CDF0D7D91A4F3DFE00FBA892 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		CDF0D7F91A518BC600FBA892 /* Watchdog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Watchdog.h; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 		5390A9131914B76800ACD082 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CD6991341A5DE15A00C7E099 /* trophy_small.png */,
 				CDF35CB11A4DEDD900917CC5 /* camera.png */,
 				5311F85D19C961250053D3CC /* ok_button_small.png */,
 				5311F85E19C961250053D3CC /* second_small.png */,
@@ -762,6 +765,7 @@
 				5390A91D1914B76800ACD082 /* arrowdown.png in Resources */,
 				53B1FDFD19254E4700905E49 /* MasterView.xib in Resources */,
 				538E7CA119D4B67400AD5719 /* TimeCrunchViewController.xib in Resources */,
+				CD6991351A5DE15A00C7E099 /* trophy_small.png in Resources */,
 				531EAAEF1988300C00C1E1AA /* icon_light_small.png in Resources */,
 				531EAAF01988300C00C1E1AA /* icon.png in Resources */,
 				CDF66BEB1A36CEBD008C62DD /* bad_words.txt in Resources */,
