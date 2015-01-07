@@ -17,11 +17,10 @@
         [self setObject:comment];
         self.isNearCollege = comment.isNearCollege;
         
-        [super shouldShowCollegeLabel:NO];
+        [super attemptDisplayCollegeView:NO];
         [self.commentCountLabel setHidden:YES];
         
         self.pictureHeight.constant = 0;
-        self.messageHeight.constant = [self getMessageHeight];;
         
         self.messageLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentTop;
         [self.messageLabel setText:[comment getText]];

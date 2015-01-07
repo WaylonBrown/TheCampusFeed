@@ -10,20 +10,6 @@
 
 @implementation PostTableCell
 
-- (void)awakeFromNib
-{
-    [super awakeFromNib];
-}
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-}
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-    
-    // Configure the view for the selected state
-}
 - (BOOL)assignWithPost:(Post *)post withCollegeLabel:(BOOL)showLabel
 {
     if (post != nil)
@@ -32,7 +18,6 @@
         
         self.isNearCollege = post.isNearCollege;
         [self.gpsIconImageView setHidden:post.isNearCollege];
-        self.messageHeight.constant = [self getMessageHeight];;
         
         // assign cell's plain text labels
         self.messageLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentTop;
@@ -54,9 +39,10 @@
             self.pictureHeight.constant = 0;
         }
         
-        [self shouldShowCollegeLabel:showLabel];
+        [self attemptDisplayCollegeView:showLabel];
         
-        [self setNeedsDisplay];
+        [self setNeedsLayout];
+        [self layoutIfNeeded];
         
         return YES;
     }
@@ -96,13 +82,11 @@
         });
     });
 }
-
-- (void)shouldShowCollegeLabel:(BOOL)showLabel
+- (void)attemptDisplayCollegeView:(BOOL)showLabel
 {
     [self.collegeLabel setHidden:!showLabel];
-    self.collegeLabelViewHeight.constant = showLabel ? 30 : 0;
     [self.gpsIconImageView setHidden:!showLabel];
-    [self setNeedsDisplay];
+    self.collegeLabelViewHeight.constant = showLabel ? POST_CELL_COLLEGE_LABEL_VIEW_HEIGHT : 0;
 }
 
 @end

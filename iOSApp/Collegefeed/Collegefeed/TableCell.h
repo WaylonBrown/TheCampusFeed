@@ -27,6 +27,8 @@
 @property (nonatomic, strong) NSObject<PostAndCommentProtocol, CFModelProtocol> *object;
 @property (nonatomic, strong) id<ChildCellDelegate> delegate;
 @property (nonatomic) BOOL isNearCollege;
+
+// UI properties
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
@@ -35,12 +37,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *upVoteButton;
 @property (weak, nonatomic) IBOutlet UIButton *downVoteButton;
 @property (weak, nonatomic) IBOutlet UIImageView *gpsIconImageView;
-@property (weak, nonatomic) IBOutlet UIView *dividerView;
+//@property (weak, nonatomic) IBOutlet UIView *dividerView;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *pictureView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *pictureActivityIndicator;
+
+// Constraints
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *pictureHeight;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *messageHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelViewHeight;
 
 

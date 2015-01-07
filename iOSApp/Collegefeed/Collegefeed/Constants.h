@@ -36,6 +36,7 @@
 #define CF_WHITE       0xFFFFFF
 
 // TableCell Height Estimates
+#define POST_CELL_COLLEGE_LABEL_VIEW_HEIGHT 25
 #define POST_CELL_PICTURE_HEIGHT_CROPPED     125
 #define LARGE_CELL_TOP_TO_LABEL       11
 #define LARGE_CELL_LABEL_TO_BOTTOM    31
