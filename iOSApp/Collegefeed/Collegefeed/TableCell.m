@@ -109,19 +109,106 @@
     [self.delegate didSelectTag:tagMessage];
 }
 
-#pragma mark - Helper Methods
-
+- (BOOL)assignWithPost:(Post *)post withCollegeLabel:(BOOL)showLabel
+{
+    if (post != nil)
+    {
+        [self setObject:post];
+        
+        self.isNearCollege = post.isNearCollege;
+        [self.gpsIconImageView setHidden:post.isNearCollege];
+        
+        // assign cell's plain text labels
+        self.messageLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentTop;
+        [self.messageLabel      setText:[post getText]];
+        [self.collegeLabel      setText:[post getCollegeName]];
+        [self.commentCountLabel setText:[self getCommentLabelString]];
+        [self.ageLabel          setText:[self getAgeLabelString:[post getCreated_at]]];
+        
+        [self findHashTags];
+        [self updateVoteButtons];
+        
+        if ([post hasImage])
+        {
+            [self populateImageViewFromUrl:[post getImage_url]];
+            self.pictureHeight.constant = POST_CELL_PICTURE_HEIGHT_CROPPED;
+        }
+        else
+        {
+            self.pictureHeight.constant = 0;
+        }
+        
+        [self setWillDisplayCollege:showLabel];
+        
+        [self setNeedsLayout];
+        [self layoutIfNeeded];
+        
+        return YES;
+    }
+    
+    return NO;
+}
+- (void)setNearCollege
+{
+    [self setIsNearCollege:YES];
+}
 - (void)populateImageViewFromUrl:(NSString *)imgURL
 {
+    self.pictureView.image = nil;
+    [self.pictureActivityIndicator startAnimating];
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
         
-        //set your image on main thread.
+        [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
+        
+        // set image on main thread.
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.pictureView setImage:[UIImage imageWithData:data]];
-        });    
+            [self.pictureActivityIndicator stopAnimating];
+        });
     });
 }
+- (BOOL)assignWithComment:(Comment *)comment
+{
+    if (comment != nil)
+    {
+        [self setObject:comment];
+        self.isNearCollege = comment.isNearCollege;
+        
+        [self setWillDisplayCollege:NO];
+        [self.commentCountLabel setHidden:YES];
+        
+        self.pictureHeight.constant = 0;
+        
+        self.messageLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentTop;
+        [self.messageLabel setText:[comment getText]];
+        
+        [self.ageLabel setText:[self getAgeLabelString:[comment getCreated_at]]];
+        
+        [self findHashTags];
+        [self updateVoteButtons];
+        
+        [self setNeedsDisplay];
+        
+        return YES;
+    }
+    
+    return NO;
+}
+#pragma mark - Helper Methods
+
+//- (void)populateImageViewFromUrl:(NSString *)imgURL
+//{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
+//        
+//        //set your image on main thread.
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.pictureView setImage:[UIImage imageWithData:data]];
+//        });    
+//    });
+//}
 - (NSString *)getAgeLabelString:(NSDate *)creationDate
 {   // return string indicating how long ago the post was created
     
@@ -215,6 +302,14 @@
     }
 
     [self.scoreLabel setText:[NSString stringWithFormat:@"%ld", [[self.object getScore] longValue]]];
+}
+- (void)setWillDisplayCollege:(BOOL)showLabel
+{
+    self.collegeLabel.hidden = !showLabel;
+    self.gpsIconImageView.hidden = !showLabel;
+    self.dividerView.hidden = !showLabel;
+    
+    self.collegeLabelViewHeight.constant = showLabel ? POST_CELL_COLLEGE_LABEL_VIEW_HEIGHT : 0;
 }
 
 @end

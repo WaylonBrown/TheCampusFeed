@@ -14,6 +14,7 @@
 
 @class Model;
 @class Post;
+@class Comment;
 @class Vote;
 
 @protocol SubViewDelegate;
@@ -26,6 +27,9 @@
 @property (nonatomic, strong) NSObject<PostAndCommentProtocol, CFModelProtocol> *object;
 @property (nonatomic, strong) id<ChildCellDelegate> delegate;
 @property (nonatomic) BOOL isNearCollege;
+
+@property (nonatomic, strong) Post* post;
+@property (nonatomic, strong) Comment* comment;
 
 // UI properties
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *messageLabel;
@@ -45,12 +49,16 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *pictureHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelViewHeight;
 
-
 - (NSString *)getCommentLabelString;
 - (NSString *)getAgeLabelString:(NSDate *)creationDate;
 - (void)findHashTags;
 - (void)updateVoteButtons;
 - (IBAction) upVotePressed:(id)sender;
 - (IBAction) downVotePresed:(id)sender;
+- (BOOL)assignWithComment:(Comment *)comment;
+
+- (BOOL)assignWithPost:(Post *)post withCollegeLabel:(BOOL)showLabel;
+- (void)setNearCollege;
+- (void)setWillDisplayCollege:(BOOL)showLabel;
 
 @end

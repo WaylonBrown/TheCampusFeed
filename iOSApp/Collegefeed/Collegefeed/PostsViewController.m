@@ -37,7 +37,6 @@
 }
 - (void)viewDidAppear:(BOOL)animated
 {
-    NSLog(@"%@ viewDidAppear, reloading table view data", [self class]);
     [self.tableView reloadData];
 }
 - (void)makeToolbarButtons
@@ -72,7 +71,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
-    // this specifies the prototype (PostTableCell) and assigns the labels
+    // this specifies the prototype (TableCell) and assigns the labels
     
     NSUInteger rowNum = indexPath.row;
     NSUInteger listcount = self.list.count;
@@ -85,12 +84,14 @@
     
     // Build a TableCell for Posts
     static NSString *CellIdentifier = @"TableCell";
-    PostTableCell *cell = (PostTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil)
     {
-        cell = (PostTableCell *)[[[NSBundle mainBundle] loadNibNamed:CellIdentifier
-                                                               owner:self options:nil] objectAtIndex:0];
+        cell = (TableCell *)[[[NSBundle mainBundle]
+                              loadNibNamed:CellIdentifier
+                              owner:self
+                              options:nil] objectAtIndex:0];
     }
     cell.delegate = self;
 
@@ -118,12 +119,12 @@
         return;
     }
     
-    Post *selectedPost = [self.list objectAtIndex:indexPath.row];
-    [self.dataController setPostInFocus:selectedPost];
-    
+    Post *post = [self.list objectAtIndex:indexPath.row];
+    [self.dataController setPostInFocus:post];
+    self.commentViewController.parentPost = post;
     [self.navigationController pushViewController:self.commentViewController
                                          animated:YES];
-    [[self navigationItem] setBackBarButtonItem:self.commentViewController.backButton];
+//    [[self navigationItem] setBackBarButtonItem:self.commentViewController.backButton];
 }
 
 #pragma mark - Network Actions

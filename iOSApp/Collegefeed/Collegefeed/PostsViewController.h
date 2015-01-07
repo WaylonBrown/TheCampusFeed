@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 #import "AppDelegate.h"
-#import "PostTableCell.h"
 #import "MasterViewController.h"
 #import "Post.h"
 #import "Vote.h"
@@ -19,6 +18,7 @@
 #import "College.h"
 #import "SimpleTableCell.h"
 #import "ToastController.h"
+#import "TableCell.h"
 #import "Comment.h"
 
 @class Post;

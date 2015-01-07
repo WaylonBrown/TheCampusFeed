@@ -15,9 +15,10 @@
 
 @interface CommentViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate, CreationViewProtocol>
 
+@property (strong, nonatomic) Post *parentPost;
+
 // View properties
 @property (strong, nonatomic) IBOutlet UITableView *postTableView;
-//@property (strong, nonatomic) IBOutlet UITableView *commentTableView;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *postTableHeightConstraint;
 
 @property (strong, nonatomic) UIBarButtonItem *facebookButton;

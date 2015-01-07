@@ -84,11 +84,9 @@
 		CD539DD91A2CDE99004A794E /* NewPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD81A2CDE99004A794E /* NewPostsViewController.m */; };
 		CD539DDC1A2CE488004A794E /* TagPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DDB1A2CE488004A794E /* TagPostsViewController.m */; };
 		CD5887591A21501100D864FD /* NSMutableArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */; };
-		CD76C1CD1A3BC176002F0C9F /* CommentTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD76C1CC1A3BC176002F0C9F /* CommentTableCell.m */; };
 		CDDB142F1A5337FF005813AF /* AchievementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDB142E1A5337FF005813AF /* AchievementViewController.swift */; };
 		CDF0D7DA1A4F3DFE00FBA892 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDF0D7D91A4F3DFE00FBA892 /* AssetsLibrary.framework */; };
 		CDF0D7FB1A518BC600FBA892 /* Watchdog.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF0D7FA1A518BC600FBA892 /* Watchdog.m */; };
-		CDF14D921A3B6D24006D8F2C /* PostTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF14D8E1A3B6D24006D8F2C /* PostTableCell.m */; };
 		CDF35CB21A4DEDD900917CC5 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = CDF35CB11A4DEDD900917CC5 /* camera.png */; };
 		CDF66BEB1A36CEBD008C62DD /* bad_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = CDF66BEA1A36CEBD008C62DD /* bad_words.txt */; };
 		CDF6B9C21A51DB58005F4555 /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDF6B9C11A51DB58005F4555 /* Achievement.swift */; };
@@ -254,14 +252,10 @@
 		CD539DDB1A2CE488004A794E /* TagPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagPostsViewController.m; sourceTree = "<group>"; };
 		CD539DDD1A2CF54C004A794E /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMutableArrayExtensions.swift; sourceTree = "<group>"; };
-		CD76C1CB1A3BC176002F0C9F /* CommentTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentTableCell.h; path = Collegefeed/CommentTableCell.h; sourceTree = "<group>"; };
-		CD76C1CC1A3BC176002F0C9F /* CommentTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentTableCell.m; path = Collegefeed/CommentTableCell.m; sourceTree = "<group>"; };
 		CDDB142E1A5337FF005813AF /* AchievementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementViewController.swift; sourceTree = "<group>"; };
 		CDF0D7D91A4F3DFE00FBA892 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		CDF0D7F91A518BC600FBA892 /* Watchdog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Watchdog.h; sourceTree = "<group>"; };
 		CDF0D7FA1A518BC600FBA892 /* Watchdog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Watchdog.m; sourceTree = "<group>"; };
-		CDF14D8D1A3B6D24006D8F2C /* PostTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostTableCell.h; path = Collegefeed/PostTableCell.h; sourceTree = "<group>"; };
-		CDF14D8E1A3B6D24006D8F2C /* PostTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostTableCell.m; path = Collegefeed/PostTableCell.m; sourceTree = "<group>"; };
 		CDF1FA8C1A30B160003D421F /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = ../../../../../../../System/Library/Frameworks/Python.framework; sourceTree = "<group>"; };
 		CDF35CB11A4DEDD900917CC5 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		CDF66BEA1A36CEBD008C62DD /* bad_words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bad_words.txt; sourceTree = "<group>"; };
@@ -320,10 +314,6 @@
 				533475A31923344100E84CC8 /* TableCell.xib */,
 				533475A11923344100E84CC8 /* TableCell.h */,
 				533475A21923344100E84CC8 /* TableCell.m */,
-				CDF14D8D1A3B6D24006D8F2C /* PostTableCell.h */,
-				CDF14D8E1A3B6D24006D8F2C /* PostTableCell.m */,
-				CD76C1CB1A3BC176002F0C9F /* CommentTableCell.h */,
-				CD76C1CC1A3BC176002F0C9F /* CommentTableCell.m */,
 				53D51E381949625300A8BA81 /* SimpleTableCell.xib */,
 				53D51E361949625300A8BA81 /* SimpleTableCell.h */,
 				53D51E371949625300A8BA81 /* SimpleTableCell.m */,
@@ -811,10 +801,8 @@
 			files = (
 				53DE348019AD01FF004CB5A0 /* IIWrapController.m in Sources */,
 				5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */,
-				CD76C1CD1A3BC176002F0C9F /* CommentTableCell.m in Sources */,
 				5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */,
 				538E7C9219D030C000AD5719 /* CF_DialogViewController.m in Sources */,
-				CDF14D921A3B6D24006D8F2C /* PostTableCell.m in Sources */,
 				CDF0D7FB1A518BC600FBA892 /* Watchdog.m in Sources */,
 				5347EE9D197DC7CC001B2214 /* UserPostsViewController.m in Sources */,
 				538E7C8419CFF34000AD5719 /* TutorialViewController.m in Sources */,

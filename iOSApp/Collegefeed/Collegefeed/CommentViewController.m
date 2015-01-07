@@ -9,8 +9,6 @@
 #import <Social/Social.h>
 
 #import "TableCell.h"
-#import "PostTableCell.h"
-#import "CommentTableCell.h"
 
 #import "PostsViewController.h"
 #import "Post.h"
@@ -26,7 +24,6 @@
 
 @implementation CommentViewController
 
-
 - (id)initWithDataController:(DataController *)controller
 {
     self = [super initWithNibName:@"CommentView" bundle:nil];
@@ -41,6 +38,22 @@
 
 #pragma mark - View Loading
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    
+    NSLog(@"Setting tableview to be automatic in %@", [self class]);
+    self.tableView.estimatedRowHeight = POST_CELL_HEIGHT_ESTIMATE;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+
+    self.postTableView.estimatedRowHeight = POST_CELL_HEIGHT_ESTIMATE;
+    self.postTableView.rowHeight = UITableViewAutomaticDimension;
+    
+}
 - (void)loadView
 {   // called when the comment view is initially loaded
   
@@ -48,27 +61,33 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {   // View is about to appear after being inactive
-    
+    [super viewWillAppear:animated];
+
     [self setCorrectList];
     
-    if (self.dataController.postInFocus != nil)
+//    if (self.dataController.postInFocus != nil)
+    if (self.parentPost != nil)
     {
-        float postCellHeight = [self tableView:self.postTableView heightForRowAtIndexPath:
-                                [NSIndexPath indexPathForRow:0 inSection:0]];
+        NSLog(@"CommentViewController will appear with non-nil parentPost");
+        float postCellHeight = POST_CELL_HEIGHT_ESTIMATE;
+        
+//        float postCellHeight = [self tableView:self.postTableView heightForRowAtIndexPath:
+//                                [NSIndexPath indexPathForRow:0 inSection:0]];
         
         self.postTableHeightConstraint.constant = postCellHeight;
-        [self.view setNeedsUpdateConstraints];
+        
+        [self.view setNeedsLayout];
+        [self.view layoutIfNeeded];
     }
     
-    [super viewWillAppear:animated];
+    [self.postTableView reloadData];
+    [self.tableView reloadData];
 }
 - (void)initializeViewElements
 {
     // Back button
-    self.backButton = [[UIBarButtonItem alloc] initWithTitle:@""
-                                                       style:UIBarButtonItemStylePlain
-                                                      target:nil
-                                                      action:nil];
+    self.backButton = [super blankBackButton];
+    
     // Compose button
     self.composeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
                                                                        target:self
@@ -97,13 +116,14 @@
 - (void)makeToolbarButtons
 {   // Assigns correct icons and buttons to the upper toolbar
     
-    Post* parentPost = self.dataController.postInFocus;
+//    Post* parentPost = self.dataController.postInFocus;
     
     [self initializeViewElements];
     
-    if (parentPost != nil)
+    if (self.parentPost != nil || self.parentPost.college == nil)
     {
-        if ([self.dataController.nearbyColleges containsObject:parentPost.college])
+        if ([self.dataController isNearCollegeWithId:self.parentPost.college.collegeID])
+//        if ([self.dataController.nearbyColleges containsObject:self.parentPost.college])
         {
             self.navigationItem.rightBarButtonItems = @[self.composeButton,
                                                         self.flagButton,
@@ -125,7 +145,7 @@
     // This method handles two table views: one for the post and another for it's comments
     
     static NSString *CellIdentifier = @"TableCell";
-    PostTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    TableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil)
     {
@@ -136,14 +156,13 @@
     
     if (tableView == self.postTableView)
     {   // PostView table; get the original post to display in this table
-        
-        [cell assignWithPost:self.dataController.postInFocus withCollegeLabel:NO];
+        [cell assignWithPost:self.parentPost withCollegeLabel:NO];
     }
     else
     {   // CommentView table; get the comments to be displayed
         
         Comment *comment = [self.list objectAtIndex:indexPath.row];
-        [cell assignWithPost:comment withCollegeLabel:NO];
+        [cell assignWithComment:comment];
         cell.delegate = self;
     }
     
@@ -210,7 +229,8 @@
 //    [self.contentLoadingIndicator startAnimating];
     
     // Spawn separate thread for network access
-    [self.dataController fetchCommentsForPost:self.dataController.postInFocus];
+//    [self.dataController fetchCommentsForPost:self.dataController.postInFocus];
+    [self.dataController fetchCommentsForPost:self.parentPost];
 }
 - (void)finishedFetchRequest:(NSNotification *)notification
 {   // A fetch request was completed, make necessary updates
@@ -279,9 +299,9 @@
 {
     if (buttonIndex == 1)
     {   // attempt to flag a post as inappropriate
-        Post *parentPost = self.dataController.postInFocus;
+//        Post *parentPost = self.dataController.postInFocus;
 
-        if ((parentPost != nil) && [self.dataController flagPost:[parentPost.post_id longValue]])
+        if ((self.parentPost != nil) && [self.dataController flagPost:[[self.parentPost getID] longValue]])
         {
             [self.dataController.toaster toastFlagSuccess];
         }
@@ -316,10 +336,10 @@
 }
 - (BOOL)castVote:(Vote *)vote
 {
-    Post *parentPost = self.dataController.postInFocus;
-    if (parentPost != nil)
+//    Post *parentPost = self.dataController.postInFocus;
+    if (self.parentPost != nil)
     {
-        [vote setGrandparentID:[parentPost.post_id longValue]];
+        [vote setGrandparentID:[[self.parentPost getID] longValue]];
         return [super castVote:vote];
     }
     
@@ -338,10 +358,10 @@
     {
         [self.createController dismiss:self];
 
-        Post *parentPost = self.dataController.postInFocus;
-        if (parentPost != nil)
+//        Post *parentPost = self.dataController.postInFocus;
+        if (self.parentPost != nil)
         {
-            BOOL success = [self.dataController createCommentWithMessage:message withPost:parentPost];
+            BOOL success = [self.dataController createCommentWithMessage:message withPost:self.parentPost];
             if (success)
             {
                 [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataController.commentList.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
