@@ -11,7 +11,7 @@
 
 @class Tag;
 
-@interface TagViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate>
+@interface TagViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating , UISearchControllerDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) Tag* selectedTag;
 @property (nonatomic, strong) NSMutableArray *filteredList;

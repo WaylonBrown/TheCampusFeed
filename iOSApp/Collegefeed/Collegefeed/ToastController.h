@@ -37,7 +37,7 @@
 // Formatting
 - (void)toastCommentTooShort; // TODO: uses toastPostTooShort
 - (void)toastPostTooShort;
-- (void)toastTagTooShort;
+- (void)toastInvalidTagSearch;
 
 // Network Error
 - (void)toastNoInternetConnection;
@@ -54,10 +54,5 @@
 - (void)toastSwitchedToCollegeNearby:(NSString *)collegeName;
 - (void)toastSwitchedToCollegeDistant:(NSString *)collegeName;
 
-
-
-/////////
-- (void)toastTagNeedsHash;
-- (void)toastInvalidTagSearch;
 
 @end

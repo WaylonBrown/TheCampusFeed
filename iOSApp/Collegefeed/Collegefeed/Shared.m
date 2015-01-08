@@ -41,5 +41,19 @@
                                                         object:self
                                                       userInfo:info];
 }
++ (BOOL)onlyContainsAlphaNumberic:(NSString *)string
+{
+    NSCharacterSet *s = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"];
+    s = [s invertedSet];
+    
+    NSRange r = [string rangeOfCharacterFromSet:s];
+    if (r.location != NSNotFound)
+    {
+        return NO;
+        NSLog(@"the string contains non alpha numeric characters");
+    }
+
+    return YES;
+}
 
 @end

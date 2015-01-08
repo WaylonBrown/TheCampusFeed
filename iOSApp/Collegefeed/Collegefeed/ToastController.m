@@ -134,9 +134,9 @@
     NSString *message = [NSString stringWithFormat:@"Post must be at least %d characters long", MIN_POST_LENGTH];
     [self addToQueue:message];
 }
-- (void)toastTagTooShort
+- (void)toastInvalidTagSearch
 {
-    NSString *message = [NSString stringWithFormat:@"Must be at least %d characters long", MIN_TAG_LENGTH];
+    NSString *message = [NSString stringWithFormat:@"A valid #hashtag must be at least %d characters and not include any symbols besides the first #", MIN_TAG_LENGTH];
     [self addToQueue:message];
 }
 
@@ -217,20 +217,6 @@
 - (void)toastSwitchedToCollegeDistant:(NSString *)collegeName
 {
     NSString *message = [NSString stringWithFormat:@"Since you aren't near %@, you can only upvote", collegeName];
-    [self addToQueue:message];
-}
-
-
-#pragma mark -
-
-- (void)toastTagNeedsHash
-{
-    NSString *message = @"Must start with #";
-    [self addToQueue:message];
-}
-- (void)toastInvalidTagSearch
-{
-    NSString *message = @"A search for a tag cannot include the symbols !, $, %, ^, &, *, +, or .";
     [self addToQueue:message];
 }
 

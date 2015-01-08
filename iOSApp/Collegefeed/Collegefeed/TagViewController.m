@@ -39,6 +39,7 @@
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchResultsController];
     self.searchController.searchResultsUpdater = self;
     self.searchController.delegate = self;
+    [self.searchController.searchBar setText:@"#"];
     [self.searchController.searchBar setReturnKeyType:UIReturnKeySearch];
     [self.searchController.searchBar sizeToFit]; // bar size
     [self.searchController.searchBar setKeyboardType:UIKeyboardTypeTwitter];
@@ -122,23 +123,25 @@
 
 #pragma mark - Search Bar
 
+
+- (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    NSString *resultString = [searchBar.text stringByReplacingCharactersInRange:range withString:text];
+
+    return [resultString characterAtIndex:0] == '#' && [Shared onlyContainsAlphaNumberic:[resultString substringFromIndex:1]];
+}
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    if ([self.searchController.searchBar.text lengthOfBytesUsingEncoding:NSUTF32StringEncoding] > 0)
+    if ([Tag withMessageIsValid:searchBar.text])
     {
-        NSString *text = self.searchController.searchBar.text;
-
-        if ([text characterAtIndex:0] != '#')
-        {
-            text = [NSString stringWithFormat:@"#%@", text];
-        }
-        
-        NSLog(@"TagViewController to perform network tag search with: \"%@\"", text);
-        
-        [super didSelectTag:text];
+        NSLog(@"TagViewController to perform network tag search with: \"%@\"", searchBar.text);
+        [super didSelectTag:searchBar.text];
+    }
+    else
+    {
+        [Shared queueToastWithSelector:@selector(toastInvalidTagSearch)];
     }
 }
-
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
     if ([self.searchController.searchBar.text lengthOfBytesUsingEncoding:NSUTF32StringEncoding] > 0)
