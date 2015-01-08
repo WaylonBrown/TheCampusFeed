@@ -24,8 +24,8 @@
 
 // Permissions
 - (void)toastInvalidDownvote;
-- (void)toastCommentingTooSoon:(int)minutesLeft;
-- (void)toastPostingTooSoon:(int)minutesLeft;
+- (void)toastCommentingTooSoon;
+- (void)toastPostingTooSoon;
 - (void)toastErrorFindingTimeCrunchCollege;
 - (void)toastTwitterUnavailable;
 - (void)toastFacebookUnavailable;
@@ -40,7 +40,7 @@
 - (void)toastInvalidTagSearch;
 
 // Network Error
-- (void)toastNoInternetConnection;
+//- (void)toastNoInternetConnection;
 - (void)toastPostFailed;
 - (void)toastCommentFailed;
 - (void)toastFlagFailed;

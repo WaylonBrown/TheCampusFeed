@@ -55,5 +55,9 @@
 
     return YES;
 }
++ (NSString *)getUniqueDeviceIdentifier
+{
+    return [UIDevice currentDevice].identifierForVendor.UUIDString;
+}
 
 @end

@@ -83,14 +83,14 @@
     NSString *message = @"You need to be near the college to downvote";
     [self addToQueue:message];
 }
-- (void)toastPostingTooSoon:(int)minutesLeft
+- (void)toastPostingTooSoon
 {
-    NSString *message = [NSString stringWithFormat:@"You're doing that too quickly, try again in %d minute%@", minutesLeft, (minutesLeft == 1) ? @"" : @"s"];
+    NSString *message = [NSString stringWithFormat:@"You're doing that too quickly. Try posting again in a few minutes"];
     [self addToQueue:message];
 }
-- (void)toastCommentingTooSoon:(int)minutesLeft
+- (void)toastCommentingTooSoon
 {
-    NSString *message = [NSString stringWithFormat:@"You're doing that too quickly, try again in %d minute%@", minutesLeft, (minutesLeft == 1) ? @"" : @"s"];
+    NSString *message = [NSString stringWithFormat:@"You're doing that too quickly. Try again in a minute"];
     [self addToQueue:message];
 }
 - (void)toastErrorFindingTimeCrunchCollege

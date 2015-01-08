@@ -260,7 +260,7 @@
 }
 - (void)showCreationDialogForCollege:(College *) college
 {
-    self.createController = [[CreatePostCommentViewController alloc] initWithType:POST
+    self.createController = [[CreateViewController alloc] initWithType:POST
                                                                       withCollege:college
                                                                withDataController:self.dataController];
     [self.createController setDelegate:self];
@@ -397,6 +397,7 @@
     {
         [self.createController dismiss:self];
 
+        // Called from Creation View delegate...
         BOOL success = [self.dataController createPostWithMessage:message
                                                     withCollegeId:collegeId
                                                         withImage:image];
@@ -414,13 +415,12 @@
     }
     else
     {
-        [self.dataController.toastController toastPostingTooSoon:minutesUntilCanPost];
+        [Shared queueToastWithSelector:@selector(toastPostingTooSoon)];
     }
 }
 - (void)commentingTooFrequently
 {
-    // TODO
-//    [self.toastController toastCommentingTooSoon];
+    [Shared queueToastWithSelector:@selector(toastCommentingTooSoon)];
 }
 
 #pragma mark - FeedSelectionProtocolDelegate

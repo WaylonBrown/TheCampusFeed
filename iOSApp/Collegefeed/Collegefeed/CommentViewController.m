@@ -304,7 +304,7 @@
 - (void)create
 {   // Display popup to let user type a new comment
     
-    CreatePostCommentViewController *alert = [[CreatePostCommentViewController alloc] initWithType:COMMENT
+    CreateViewController *alert = [[CreateViewController alloc] initWithType:COMMENT
                                                                                        withCollege:nil
                                                                                 withDataController:self.dataController];
     [alert setDelegate:self];

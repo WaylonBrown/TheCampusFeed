@@ -24,8 +24,8 @@
 		5347EEAA197DD407001B2214 /* TrendingCollegesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5347EEA9197DD407001B2214 /* TrendingCollegesViewController.m */; };
 		5347EEB5197E9EC7001B2214 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5347EEB3197E9EC7001B2214 /* MenuViewController.m */; };
 		5347EEB6197E9EC7001B2214 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5347EEB4197E9EC7001B2214 /* MenuViewController.xib */; };
-		5350557719514587009C1911 /* CreatePostCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5350557519514587009C1911 /* CreatePostCommentViewController.m */; };
-		5350557819514587009C1911 /* CreatePostCommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5350557619514587009C1911 /* CreatePostCommentViewController.xib */; };
+		5350557719514587009C1911 /* CreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5350557519514587009C1911 /* CreateViewController.m */; };
+		5350557819514587009C1911 /* CreateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5350557619514587009C1911 /* CreateViewController.xib */; };
 		5350557F19529FCA009C1911 /* FeedSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5350557D19529FCA009C1911 /* FeedSelectViewController.m */; };
 		5350558019529FCA009C1911 /* FeedSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5350557E19529FCA009C1911 /* FeedSelectViewController.xib */; };
 		5350558F1953C75C009C1911 /* gps.png in Resources */ = {isa = PBXBuildFile; fileRef = 5350558E1953C75C009C1911 /* gps.png */; };
@@ -74,6 +74,8 @@
 		CD04FE7F1A59D0FF0016C107 /* TimeCrunchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04FE7E1A59D0FF0016C107 /* TimeCrunchModel.swift */; };
 		CD3614131A4B3951006AE87E /* CollegeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3614121A4B3951006AE87E /* CollegeSearchViewController.swift */; };
 		CD4CCF511A5E857000377050 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CD4CCF501A5E857000377050 /* Default-568h@2x.png */; };
+		CD4CCF531A5EC60B00377050 /* PostCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4CCF521A5EC60B00377050 /* PostCreateViewController.swift */; };
+		CD4CCF551A5EC63100377050 /* CommentCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4CCF541A5EC63100377050 /* CommentCreateViewController.swift */; };
 		CD539DD31A2CCE7D004A794E /* TopPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD21A2CCE7D004A794E /* TopPostsViewController.m */; };
 		CD539DD91A2CDE99004A794E /* NewPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD81A2CDE99004A794E /* NewPostsViewController.m */; };
 		CD539DDC1A2CE488004A794E /* TagPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DDB1A2CE488004A794E /* TagPostsViewController.m */; };
@@ -162,9 +164,9 @@
 		5347EEB2197E9EC7001B2214 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		5347EEB3197E9EC7001B2214 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		5347EEB4197E9EC7001B2214 /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
-		5350557419514587009C1911 /* CreatePostCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatePostCommentViewController.h; sourceTree = "<group>"; };
-		5350557519514587009C1911 /* CreatePostCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatePostCommentViewController.m; sourceTree = "<group>"; };
-		5350557619514587009C1911 /* CreatePostCommentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreatePostCommentViewController.xib; sourceTree = "<group>"; };
+		5350557419514587009C1911 /* CreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateViewController.h; sourceTree = "<group>"; };
+		5350557519514587009C1911 /* CreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateViewController.m; sourceTree = "<group>"; };
+		5350557619514587009C1911 /* CreateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateViewController.xib; sourceTree = "<group>"; };
 		5350557C19529FCA009C1911 /* FeedSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedSelectViewController.h; sourceTree = "<group>"; };
 		5350557D19529FCA009C1911 /* FeedSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedSelectViewController.m; sourceTree = "<group>"; };
 		5350557E19529FCA009C1911 /* FeedSelectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedSelectViewController.xib; sourceTree = "<group>"; };
@@ -232,6 +234,8 @@
 		CD04FE7E1A59D0FF0016C107 /* TimeCrunchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeCrunchModel.swift; sourceTree = "<group>"; };
 		CD3614121A4B3951006AE87E /* CollegeSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollegeSearchViewController.swift; sourceTree = "<group>"; };
 		CD4CCF501A5E857000377050 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../Default-568h@2x.png"; sourceTree = "<group>"; };
+		CD4CCF521A5EC60B00377050 /* PostCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCreateViewController.swift; sourceTree = "<group>"; };
+		CD4CCF541A5EC63100377050 /* CommentCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCreateViewController.swift; sourceTree = "<group>"; };
 		CD539DD11A2CCE7D004A794E /* TopPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPostsViewController.h; sourceTree = "<group>"; };
 		CD539DD21A2CCE7D004A794E /* TopPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPostsViewController.m; sourceTree = "<group>"; };
 		CD539DD71A2CDE99004A794E /* NewPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPostsViewController.h; sourceTree = "<group>"; };
@@ -323,14 +327,16 @@
 			name = "Menu Navigation View";
 			sourceTree = "<group>";
 		};
-		5350557B1951458B009C1911 /* Create Post/Comment */ = {
+		5350557B1951458B009C1911 /* Create View */ = {
 			isa = PBXGroup;
 			children = (
-				5350557419514587009C1911 /* CreatePostCommentViewController.h */,
-				5350557519514587009C1911 /* CreatePostCommentViewController.m */,
-				5350557619514587009C1911 /* CreatePostCommentViewController.xib */,
+				5350557419514587009C1911 /* CreateViewController.h */,
+				5350557519514587009C1911 /* CreateViewController.m */,
+				5350557619514587009C1911 /* CreateViewController.xib */,
+				CD4CCF521A5EC60B00377050 /* PostCreateViewController.swift */,
+				CD4CCF541A5EC63100377050 /* CommentCreateViewController.swift */,
 			);
-			name = "Create Post/Comment";
+			name = "Create View";
 			sourceTree = "<group>";
 		};
 		535055881953B067009C1911 /* Post View */ = {
@@ -436,7 +442,7 @@
 				538E7CA219D4B67800AD5719 /* Time Crunch */,
 				5311F85C19C960A90053D3CC /* Tutorial View */,
 				5347EEAF197E9E9E001B2214 /* Menu Navigation View */,
-				5350557B1951458B009C1911 /* Create Post/Comment */,
+				5350557B1951458B009C1911 /* Create View */,
 				533475A019232A4A00E84CC8 /* TableCell */,
 				538E7C9619D030C400AD5719 /* CF_DialogView */,
 				CD4CCF481A5E51A800377050 /* Toast View */,
@@ -777,7 +783,7 @@
 				53DE348419AD517C004CB5A0 /* card_without_9patch.png in Resources */,
 				538E7C9319D030C000AD5719 /* CF_DialogViewController.xib in Resources */,
 				5350558F1953C75C009C1911 /* gps.png in Resources */,
-				5350557819514587009C1911 /* CreatePostCommentViewController.xib in Resources */,
+				5350557819514587009C1911 /* CreateViewController.xib in Resources */,
 				CD4CCF511A5E857000377050 /* Default-568h@2x.png in Resources */,
 				53AB57BF194AAFF8001D1B7B /* Roboto-LightItalic.ttf in Resources */,
 				53F878AF19133F60002A578B /* Images.xcassets in Resources */,
@@ -808,6 +814,7 @@
 				CD04FE761A58AC120016C107 /* NearbyFeedViewController.swift in Sources */,
 				CD539DD31A2CCE7D004A794E /* TopPostsViewController.m in Sources */,
 				53DE347719AD00AE004CB5A0 /* IIViewDeckController.m in Sources */,
+				CD4CCF531A5EC60B00377050 /* PostCreateViewController.swift in Sources */,
 				5350557F19529FCA009C1911 /* FeedSelectViewController.m in Sources */,
 				CD6991331A5D0A8900C7E099 /* CFNavigationController.m in Sources */,
 				5347EEB5197E9EC7001B2214 /* MenuViewController.m in Sources */,
@@ -825,7 +832,7 @@
 				CD3614131A4B3951006AE87E /* CollegeSearchViewController.swift in Sources */,
 				53C343B219E2685B00C26745 /* TimeCrunchViewController.swift in Sources */,
 				531EAB431988533500C1E1AA /* UserData.xcdatamodeld in Sources */,
-				5350557719514587009C1911 /* CreatePostCommentViewController.m in Sources */,
+				5350557719514587009C1911 /* CreateViewController.m in Sources */,
 				533475A41923344100E84CC8 /* TableCell.m in Sources */,
 				CD539DD91A2CDE99004A794E /* NewPostsViewController.m in Sources */,
 				CDFE57D01A5B155D00C4B55F /* SwitchHomeCollegeDialogView.m in Sources */,
@@ -835,6 +842,7 @@
 				CDDB142F1A5337FF005813AF /* AchievementViewController.swift in Sources */,
 				5312942E196504CD00CF13DB /* ToastController.m in Sources */,
 				533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */,
+				CD4CCF551A5EC63100377050 /* CommentCreateViewController.swift in Sources */,
 				5347EEA6197DCE9F001B2214 /* UserCommentsViewController.m in Sources */,
 				CD5887591A21501100D864FD /* NSMutableArrayExtensions.swift in Sources */,
 			);

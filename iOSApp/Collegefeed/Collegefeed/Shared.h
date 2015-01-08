@@ -17,5 +17,6 @@
 + (UIColor*)getCustomUIColor:(int)hexValue;
 + (void)queueToastWithSelector:(SEL)selector;
 + (BOOL)onlyContainsAlphaNumberic:(NSString *)string;
++ (NSString *)getUniqueDeviceIdentifier;
 
 @end

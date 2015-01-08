@@ -9,7 +9,7 @@
 #import "CFNavigationController.h"
 
 #import "CommentViewController.h"
-#import "CreatePostCommentViewController.h"
+#import "CreateViewController.h"
 #import "DataController.h"
 #import "IIViewDeckController.h"
 #import "MenuViewController.h"
@@ -120,7 +120,7 @@
     }
     
     if ([currentViewController isKindOfClass:[TimeCrunchViewController class]]
-        || [currentViewController isKindOfClass:[CreatePostCommentViewController class]])
+        || [currentViewController isKindOfClass:[CreateViewController class]])
         
         return NO;
     

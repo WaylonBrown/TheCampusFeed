@@ -140,9 +140,9 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (NSNumber *)postImageToServer:(UIImage *)image fromFilePath:(NSString *)filePath;
 
 // Posts
-- (BOOL)createPostWithMessage:(NSString *)message
-                withCollegeId:(long)collegeId
-                    withImage:(UIImage *)image;
+- (Post *)submitPostToNetworkWithMessage:(NSString *)message
+                           withCollegeId:(long)collegeId
+                               withImage:(UIImage *)image;
 
 - (void)fetchTopPostsForAllColleges;
 - (void)fetchTopPostsForSingleCollege;

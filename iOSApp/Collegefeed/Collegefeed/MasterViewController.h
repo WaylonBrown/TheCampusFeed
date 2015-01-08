@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 
 #import "ChildCellDelegate.h"
-#import "CreatePostCommentViewController.h"
+#import "CreateViewController.h"
 #import "FeedSelectViewController.h"
 #import "DataController.h"
-#import "CreatePostCommentViewController.h"
+#import "CreateViewController.h"
 #import "PostingSelectionProtocol.h"
 #import "FeedSelectionProtocol.h"
 
@@ -52,7 +52,7 @@
 @property (nonatomic) BOOL hasFetchedAllContent;
 
 // Child Views
-@property (nonatomic) CreatePostCommentViewController *createController;
+@property (nonatomic) CreateViewController *createController;
 
 #pragma mark - Public Functions
 

@@ -172,13 +172,6 @@
     [self.dataController createPostWithMessage:message
                                  withCollegeId:self.dataController.currentCollegeFeedId
                                      withImage:nil];
-    
-//    if (!success)
-//    {
-//        [self.toastController toastPostFailed];
-//    }
-//    if (success)
-//        [self refresh];
 }
 
 @end

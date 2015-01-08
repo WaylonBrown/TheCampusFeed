@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
-#import "CreatePostCommentViewController.h"
+#import "CreateViewController.h"
 #import "Shared.h"
 #import "College.h"
 #import "ToastController.h"
@@ -14,7 +14,7 @@
 #import "Tag.h"
 #import "DataController.h"
 
-@implementation CreatePostCommentViewController
+@implementation CreateViewController
 
 - (id)initWithType:(ModelType)type
        withCollege:(College *)college

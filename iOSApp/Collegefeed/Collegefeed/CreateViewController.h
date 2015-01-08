@@ -16,6 +16,7 @@
 
 @protocol CreationViewProtocol <NSObject>
 
+
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
                                withCollegeId:(long)collegeId
                                withUserToken:(NSString *)userToken
@@ -25,7 +26,7 @@
 
 @end
 
-@interface CreatePostCommentViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate,
+@interface CreateViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate,
     UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic) CGRect previousMessageRect;

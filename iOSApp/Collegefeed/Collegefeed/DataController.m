@@ -751,7 +751,7 @@
         }
         else
         {
-            [self queueToastWithSelector:@selector(toastPostFailed)];
+            [self queueToastWithSelector:@selector(toastCommentFailed)];
         }
     }
     @catch (NSException *exception)
@@ -930,13 +930,14 @@
 
 #pragma mark - Posts
 
-- (BOOL)createPostWithMessage:(NSString *)message
-                withCollegeId:(long)collegeId
-                    withImage:(UIImage *)image
+- (Post *)submitPostToNetworkWithMessage:(NSString *)message
+                           withCollegeId:(long)collegeId
+                               withImage:(UIImage *)image
 {
     @try
     {
-        NSString *udid = [UIDevice currentDevice].identifierForVendor.UUIDString;
+        NSString *udid = [Shared getUniqueDeviceIdentifier];
+        
         NSNumber *imageID = [self postImageToServer:image fromFilePath:nil];
         Post *post = [[Post alloc] initWithMessage:message
                                      withCollegeId:[NSNumber numberWithLong:collegeId]
