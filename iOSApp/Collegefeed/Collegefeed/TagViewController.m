@@ -41,8 +41,8 @@
     self.searchController.delegate = self;
     [self.searchController.searchBar setText:@"#"];
     [self.searchController.searchBar setReturnKeyType:UIReturnKeySearch];
-    [self.searchController.searchBar sizeToFit]; // bar size
-    [self.searchController.searchBar setKeyboardType:UIKeyboardTypeTwitter];
+    [self.searchController.searchBar sizeToFit];
+    [self.searchController.searchBar setKeyboardType:UIKeyboardTypeDefault];
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.searchBar.delegate = self;
     
@@ -127,8 +127,9 @@
 - (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     NSString *resultString = [searchBar.text stringByReplacingCharactersInRange:range withString:text];
-
-    return [resultString characterAtIndex:0] == '#' && [Shared onlyContainsAlphaNumberic:[resultString substringFromIndex:1]];
+    
+    NSString *withFiller = [NSString stringWithFormat:@"%@fillertext", resultString];
+    return [Tag withMessageIsValid:withFiller];
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
