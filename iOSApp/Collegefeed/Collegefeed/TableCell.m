@@ -37,16 +37,8 @@
         [self findHashTags];
         [self updateVoteButtons];
         
-//        if ([post hasImage])
-//        {
-            [self populateImageForPost:post];
-//            self.pictureHeight.constant = POST_CELL_PICTURE_HEIGHT_CROPPED;
-//        }
-//        else
-//        {
-//            self.pictureHeight.constant = 0;
-//        }
-//        
+        [self populateImageForPost:post];
+  
         [self setWillDisplayCollege:showLabel];
         
         [self setNeedsLayout];
@@ -80,14 +72,16 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (data == nil)
                 {
-                    self.pictureHeight = 0;
+                    NSLog(@"TableCell unsuccessful at fetching image");
+                    self.pictureHeight.constant = 0;
                     [self setNeedsLayout];
                     [self layoutIfNeeded];
                 }
                 else
                 {
+                    NSLog(@"TableCell successfully fetched image");
                     [self.pictureView setImage:[UIImage imageWithData:data]];
-                    post.image = [UIImage imageWithData:data];
+                    [post setImage:[UIImage imageWithData:data]];
                 }
                 
                 [self.pictureActivityIndicator stopAnimating];

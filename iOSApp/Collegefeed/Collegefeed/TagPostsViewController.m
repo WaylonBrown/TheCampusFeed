@@ -39,6 +39,7 @@
     
     return NO;
 }
+
 #pragma mark - Table View
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
