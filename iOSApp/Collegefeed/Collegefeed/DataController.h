@@ -130,8 +130,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (Comment *)submitCommentToNetworkWithMessage:(NSString *)message
                                     withPostId:(long)postId;
 
-//- (BOOL)createCommentWithMessage:(NSString *)message
-//                        withPost:(Post*)post;
 - (void)fetchCommentsForPost:(Post *)post;
 - (void)retrieveUserComments;
 
@@ -169,15 +167,9 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 // Time Crunch
 - (void)attemptActivateTimeCrunch;
 
-// Toasts
-- (void)queueToastWithSelector:(SEL)selector;
-- (ToastController *)getMyToastController;
-
 // User data
 - (long)getUserPostScore;
 - (long)getUserCommentScore;
-//- (BOOL)isAbleToPost:(NSNumber *)minutesRemaining;
-- (BOOL)isAbleToComment;
 
 // Votes
 - (BOOL)createVote:(Vote *)vote;

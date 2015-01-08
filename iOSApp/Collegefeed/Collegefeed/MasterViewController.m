@@ -411,37 +411,37 @@
 
 #pragma mark - CreationViewProtocolDelegate
 
-- (void)submitPostCommentCreationWithMessage:(NSString *)message
-                               withCollegeId:(long)collegeId
-                               withUserToken:(NSString *)userToken
-                                   withImage:(UIImage *)image
-{
-    NSNumber *minutesUntilCanPost = [NSNumber new];
-    if ([self.dataController isAbleToPost:minutesUntilCanPost])
-    {
-        [self.createController dismiss:self];
-
-        // Called from Creation View delegate...
-        BOOL success = [self.dataController createPostWithMessage:message
-                                                    withCollegeId:collegeId
-                                                        withImage:image];
-        
-        if (success)
-        {
-            NSLog(@"MasterViewController successfully created post");
-            
-            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        }
-        else
-        {
-            [Shared queueToastWithSelector:@selector(toastPostFailed)];
-        }
-    }
-    else
-    {
-        [Shared queueToastWithSelector:@selector(toastPostingTooSoon)];
-    }
-}
+//- (void)submitPostCommentCreationWithMessage:(NSString *)message
+//                               withCollegeId:(long)collegeId
+//                               withUserToken:(NSString *)userToken
+//                                   withImage:(UIImage *)image
+//{
+//    NSNumber *minutesUntilCanPost = [NSNumber new];
+//    if ([self.dataController isAbleToPost:minutesUntilCanPost])
+//    {
+//        [self.createController dismiss:self];
+//
+//        // Called from Creation View delegate...
+//        BOOL success = [self.dataController createPostWithMessage:message
+//                                                    withCollegeId:collegeId
+//                                                        withImage:image];
+//        
+//        if (success)
+//        {
+//            NSLog(@"MasterViewController successfully created post");
+//            
+//            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//        }
+//        else
+//        {
+//            [Shared queueToastWithSelector:@selector(toastPostFailed)];
+//        }
+//    }
+//    else
+//    {
+//        [Shared queueToastWithSelector:@selector(toastPostingTooSoon)];
+//    }
+//}
 - (void)commentingTooFrequently
 {
     [Shared queueToastWithSelector:@selector(toastCommentingTooSoon)];

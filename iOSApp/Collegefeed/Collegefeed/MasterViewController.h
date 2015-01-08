@@ -16,7 +16,7 @@
 #import "FeedSelectionProtocol.h"
 
 
-@interface MasterViewController : UIViewController <ChildCellDelegate, CreationViewProtocol, FeedSelectionProtocol, PostingSelectionProtocol>
+@interface MasterViewController : UIViewController <ChildCellDelegate, FeedSelectionProtocol, PostingSelectionProtocol>
 
 #pragma mark - Variables
 

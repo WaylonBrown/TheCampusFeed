@@ -167,11 +167,11 @@
 
 #pragma mark - CreationViewProtocol Delegate Methods
 
-- (void)submitPostCommentCreationWithMessage:(NSString *)message
-{
-    [self.dataController createPostWithMessage:message
-                                 withCollegeId:self.dataController.currentCollegeFeedId
-                                     withImage:nil];
-}
+//- (void)submitPostCommentCreationWithMessage:(NSString *)message
+//{
+//    [self.dataController createPostWithMessage:message
+//                                 withCollegeId:self.dataController.currentCollegeFeedId
+//                                     withImage:nil];
+//}
 
 @end

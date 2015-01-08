@@ -11,6 +11,18 @@
 
 @implementation Comment
 
+- (id)initWithMessage:(NSString *)message withPostId:(long)postId
+{
+    self = [super init];
+    if (self)
+    {
+        [self setText:message];
+        [self setPost_id:[NSNumber numberWithLong:postId]];
+        return self;
+    }
+    return nil;
+}
+
 + (NSArray *)getListFromJsonData:(NSData *)jsonData error:(NSError **)error;
 {
     NSError *localError = nil;

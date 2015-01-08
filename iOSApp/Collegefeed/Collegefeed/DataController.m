@@ -719,47 +719,37 @@
 
 #pragma mark - Comments
 
-- (BOOL)createCommentWithMessage:(NSString *)message
-                        withPost:(Post*)post
+- (Comment *)submitCommentToNetworkWithMessage:(NSString *)message
+                                    withPostId:(long)postId
 {
-    @try
-    {
+    Comment *comment = [[Comment alloc] initWithMessage:message withPostId:postId];
 
-        if (![self isAbleToComment])
+    if ([self hasCommentingTimeIntervalElapsed] && [self isApprovedByWatchDog:comment.text])
+    {
+        NSData *networkResult = [Networker POSTCommentData:[comment toJSON] WithPostId:postId];
+        if (networkResult)
         {
-            
-            // TODO
-//            [self.toaster toastCommentingTooSoon];
-            return NO;
-        }
-        Comment *comment = [[Comment alloc] initWithMessage:message withCollegeId:post.college_id withUserToken:@"EMPTY_TOKEN" withImageId:nil];
-        
-        NSData *result = [Networker POSTCommentData:[comment toJSON] WithPostId:[post.id longValue]];
-        
-        if (result)
-        {
-            NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
+            NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:networkResult
                                                                        options:0
                                                                          error:nil];
             Comment *networkComment = [[Comment alloc] initFromJSON:jsonObject];
-
+            
             self.lastCommentTime = [networkComment getCreated_at];
-
+            
             [self.commentList insertObject:networkComment atIndex:self.commentList.count];
             [self.userComments insertObject:networkComment atIndex:self.userComments.count];
             [self saveComment:networkComment];
-            return YES;
-        }
-        else
-        {
-            [Shared queueToastWithSelector:@selector(toastCommentFailed)];
+            [self saveStatusToCoreData];
+
+            return networkComment;
         }
     }
-    @catch (NSException *exception)
+    else
     {
-        NSLog(@"%@", exception.reason);
+        [Shared queueToastWithSelector:@selector(toastCommentFailed)];
     }
-    return NO;
+    
+    return nil;
 }
 - (void)fetchCommentsForPost:(Post *)post
 {
@@ -971,9 +961,9 @@
             
             long newCount = self.userPosts.count;
             
-            [self savePost:networkPost];
-            
+            [self savePostToCoreData:networkPost];
             [self tryAchievementPostCountWithOldCount:oldCount toNewCount:newCount];
+            [self saveStatusToCoreData];
             
             Vote *actualVote = networkPost.vote;
             if (actualVote != nil && actualVote.voteID > 0)
@@ -993,52 +983,8 @@
     }
     
     return nil;
-    
-//    if (result)
-//    {
-//        NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
-//                                                                   options:0
-//                                                                     error:nil];
-//        Post *networkPost = [[Post alloc] initFromJSON:jsonObject];
-//
-//        networkPost.college = [self getCollegeById:collegeId];
-//
-//        NSLog(@"Successfully submitted Post to network. Text = %@. College = %@.", networkPost.text, networkPost.college.name);
-//        
-//        self.lastPostTime = [networkPost getCreated_at];
-//        
-//        [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
-//        [self.recentPostsSingleCollege insertObject:networkPost atIndex:0];
-//        
-//        
-//        long oldCount = self.userPosts.count;
-//        
-//        [self.userPosts insertObject:networkPost atIndex:0];
-//        
-//        long newCount = self.userPosts.count;
-//        
-//        [self savePost:networkPost];
-//        
-//        [self tryAchievementPostCountWithOldCount:oldCount toNewCount:newCount];
-//        
-//        Vote *actualVote = networkPost.vote;
-//        if (actualVote != nil && actualVote.voteID > 0)
-//        {
-//            [self.userPostVotes addObject:actualVote];
-//            [self saveVote:actualVote];
-//        }
-//        
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"CreatedPost" object:self];
-//        
-//    }
-//    else
-//    {
-//        [self.toastController toastPostFailed];
-//    }
-    
-//    return nil;
 }
-- (void)savePost:(Post *)post
+- (void)savePostToCoreData:(Post *)post
 {
     NSManagedObjectContext *context = [self managedObjectContext];
     NSError *error;
@@ -1053,22 +999,6 @@
     }
     
     [self updateTimeCrunchWithNewPost:post];
-}
-- (BOOL)shouldPostToServer:(Post *)post
-{
-    // Check for posting too frequently
-    
-    if ([self hasPostingTimeIntervalElapsed])
-    {
-        
-    }
-    
-    if ([self isApprovedByWatchDog:post.text])
-    {
-        
-    }
-    
-    return YES;
 }
 - (void)fetchTopPostsForAllColleges
 {
@@ -1311,19 +1241,6 @@
                                             WithCollegeId:self.currentCollegeFeedId];
            }];
 }
-
-#pragma mark - Toasts
-
-//- (void)queueToastWithSelector:(SEL)selector
-//{
-//    NSLog(@"Posting notification with @selector(%@)", NSStringFromSelector(selector));
-//    NSDictionary *info = [NSDictionary dictionaryWithObject:NSStringFromSelector(selector)
-//                                                     forKey:@"selector"];
-//    
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"ToastMessage"
-//                                                        object:self
-//                                                      userInfo:info];
-//}
 
 #pragma mark - Time Crunch
 
@@ -1783,7 +1700,8 @@
         
         return NO;
     }
-
+    
+    return YES;
 }
 
 #pragma mark - Helper Methods
@@ -1962,7 +1880,7 @@
     
     return YES;
 }
-- (BOOL)isAbleToComment
+- (BOOL)hasCommentingTimeIntervalElapsed
 {
     if (self.lastCommentTime != nil)
     {
@@ -1970,77 +1888,12 @@
         float secondsElapsed = abs(diff);
         if (secondsElapsed < MINIMUM_COMMENTING_INTERVAL_MINUTES * 60)
         {
+            [Shared queueToastWithSelector:@selector(toastCommentingTooSoon)];
             return NO;
         }
     }
     
     return YES;
 }
-
-//#pragma mark - Locations
-
-//- (void)getNewLocation
-//{
-//    [self.locationManager startUpdatingLocation];
-//    NSLog(@"Old location was: %f, %f",
-//          self.lastLocation.coordinate.latitude,
-//          self.lastLocation.coordinate.longitude);
-//}
-
-
-//    if (self.locStatus == LOCATION_FOUND)
-//        return;
-//    
-//    NSDate *currentTime = [NSDate date];
-//    NSTimeInterval secs = [currentTime timeIntervalSinceDate:self.locationSearchStart];
-//    
-//    
-//    NSLog(@"DidUpdateToLocation attempt number: %ld", (long)++self.locationUpdateAttempts);
-    
-//    if (![CLLocationManager locationServicesEnabled])
-//    {
-//        NSLog(@"Location Services not enabled");
-//        [self failedLocationFinding];
-//    }
-//    else if (self.locationUpdateAttempts >= 4)
-//    {
-//        NSLog(@"Reached limit of location update attempts");
-//        [self failedLocationFinding];
-//    }
-//    
-//    else if (false) // (secs >= 30)
-//    {
-//        NSLog(@"Location update timeout expired");
-//        [self failedLocationFinding];
-//    }
-//    else
-//    {
-//        NSLog(@"Successfully found location");
-//        [self setLat:newLocation.coordinate.latitude];
-//        [self setLon:newLocation.coordinate.longitude];
-//        [self.locationManager stopUpdatingLocation];
-//        
-//        [self findNearbyColleges];
-//        [self setLocStatus:LOCATION_FOUND];
-//        [self.toastController toastNearbyColleges:self.nearbyColleges];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationUpdated" object:self];
-//    }
-//}
-//- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-//{
-//    NSLog(@"Failed Location Finding");
-//    [self setLocStatus:LOCATION_NOT_FOUND];
-//    [self.locationManager stopUpdatingLocation];
-    
-
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationUpdated" object:self];
-
-//}
-//- (void)createLocationManager
-//{
-
-//}
-
-
 
 @end

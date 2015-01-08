@@ -41,6 +41,8 @@ class PostCreateViewController: CreateViewController {
                     println("College ID needed but not found for Post submission")
                     Shared.queueToastWithSelector(Selector("toastPostFailed"))
                 }
+                
+                self.dismiss(self)
             }
             else
             {

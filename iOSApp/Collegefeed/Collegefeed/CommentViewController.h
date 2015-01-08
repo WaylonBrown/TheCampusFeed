@@ -13,7 +13,7 @@
 @class Post;
 
 
-@interface CommentViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate, CreationViewProtocol>
+@interface CommentViewController : MasterViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) Post *parentPost;
 

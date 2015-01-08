@@ -46,6 +46,8 @@ class CommentCreateViewController: CreateViewController {
                     println("Post ID needed but not found for Comment submission")
                     Shared.queueToastWithSelector(Selector("toastCommentFailed"))
                 }
+                
+                self.dismiss(self)
             }
             else
             {

@@ -10,4 +10,6 @@
 
 @interface Comment : Post
 
+- (id)initWithMessage:(NSString *)message withPostId:(long)postId;
+
 @end
