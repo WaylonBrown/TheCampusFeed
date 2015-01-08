@@ -11,6 +11,7 @@
 
 #import "Shared.h"
 #import "CF_DialogViewController.h"
+#import "CreateViewController.h"
 #import "CFModelProtocol.h"
 #import "College.h"
 #import "Comment.h"

@@ -14,18 +14,6 @@
 @class DataController;
 @class ToastController;
 
-@protocol CreationViewProtocol <NSObject>
-
-
-- (void)submitPostCommentCreationWithMessage:(NSString *)message
-                               withCollegeId:(long)collegeId
-                               withUserToken:(NSString *)userToken
-                                   withImage:(UIImage *)image;
-
-- (void)commentingTooFrequently;
-
-@end
-
 @interface CreateViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate,
     UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -33,8 +21,6 @@
 @property (nonatomic) CGRect previousTagRect;
 @property (nonatomic) CGFloat keyboardHeight;
 @property (nonatomic) CGFloat keyboardWidth;
-
-@property (strong, nonatomic) id<CreationViewProtocol> delegate;
 
 @property (weak, nonatomic) IBOutlet UIView *alertView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -45,14 +31,11 @@
 @property (strong, nonatomic) IBOutlet UITextView *tagTextView;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIButton *cameraButton;
-
 @property (strong, nonatomic) IBOutlet UIView *takeNewPhotoButton;
 @property (strong, nonatomic) IBOutlet UIView *chooseExistingPhotoButton;
+
 @property (strong, nonatomic) DataController *dataController;
 @property (strong, nonatomic) ToastController *toastController;
-
-@property (strong, nonatomic) College *collegeForPost;
-@property (nonatomic) ModelType modelType;
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *messageTextViewHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *dialogVerticalPosition;
@@ -61,9 +44,9 @@
 
 - (id)initWithDataController:(DataController *)controller;
 
-- (id)initWithType:(ModelType)type
-       withCollege:(College *)college
-withDataController:(DataController *)controller;
+//- (id)initWithType:(ModelType)type
+//       withCollege:(College *)college
+//withDataController:(DataController *)controller;
 
 - (IBAction)submit:(id)sender;
 - (IBAction)dismiss:(id)sender;

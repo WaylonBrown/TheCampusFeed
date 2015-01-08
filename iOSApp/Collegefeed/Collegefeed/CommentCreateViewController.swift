@@ -12,12 +12,9 @@ class CommentCreateViewController: CreateViewController {
 
     var post: Post?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        self.titleLabel.text = "New Comment"
-        self.subtitleLabel.text = ""
+    override func viewWillAppear(animated: Bool) {
+        self.titleLabel!.text = "New Comment"
+        self.subtitleLabel!.text = ""
         self.cameraButtonWidth.constant = 0;
         
         self.view.setNeedsLayout()

@@ -12,10 +12,32 @@ class PostCreateViewController: CreateViewController {
 
     var college: College?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.titleLabel.text = "New Post"
-        self.cameraButtonWidth.constant = 40;
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//    }
+
+    override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear(animated)
+            self.subtitleLabel!.text = "NOTHING!!"
+// TODO CRASH HERE
+//        if var school = self.college?.name {
+//            self.subtitleLabel!.text = "Posting to \(school)"
+//
+//        }
+        
+//        if let school = self.college as College? {
+//            if let name = school.name {
+//                self.subtitleLabel!.text = "Posting to \(name)"
+//            }
+//        }
+
+//        if let name = self.college!.name as String? {
+//            self.subtitleLabel.text = "Posting to \(name)"
+//        }
+        
+        self.titleLabel!.text = "New Post"
+        self.cameraButtonWidth!.constant = 40;
         
         self.view.setNeedsLayout()
         self.view.layoutIfNeeded()
@@ -23,7 +45,6 @@ class PostCreateViewController: CreateViewController {
     
     func assign(newCollege: College) {
         if let c = newCollege as College? {
-            self.subtitleLabel.text = "Posting to \(c.name)"
             self.college = c
         }
     }

@@ -27,28 +27,27 @@
     }
     return self;
 }
-- (id)initWithType:(ModelType)type
-       withCollege:(College *)college
-withDataController:(DataController *)controller
+//- (id)initWithType:(ModelType)type
+//       withCollege:(College *)college
+//withDataController:(DataController *)controller
+//{
+//    self = [super init];
+//    if (self)
+//    {
+//        [self setModalPresentationStyle:UIModalPresentationCustom];
+//        [self setTransitioningDelegate:self];
+//        [self setModelType:type];
+//        [self setCollegeForPost:college];
+//    }
+//    return self;
+//}
+- (void)loadView
 {
-    self = [super init];
-    if (self)
-    {
-        [self setModalPresentationStyle:UIModalPresentationCustom];
-        [self setTransitioningDelegate:self];
-        [self setModelType:type];
-        [self setCollegeForPost:college];
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+    [super loadView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
-
+    
     // TODO: get rid of manual resizing in this class
     [self.messageTextView setDelegate:self];
     [self.tagTextView setDelegate:self];
@@ -69,25 +68,6 @@ withDataController:(DataController *)controller
     // Faded background
     [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
     
-    if (self.modelType == POST)
-    {
-        [self.titleLabel setText:@"New Post"];
-        [self.subtitleLabel setText:[NSString stringWithFormat:@"Posting to %@", self.collegeForPost.name]];
-        self.cameraButtonWidth.constant = 40;
-        self.cameraButton.hidden = NO;
-    }
-    else if (self.modelType == COMMENT)
-    {
-        [self.titleLabel setText:@"New Comment"];
-        [self.subtitleLabel setText:@""];
-        self.cameraButtonWidth.constant = 0;
-        self.cameraButton.hidden = YES;
-    }
-    
-    [self.view setNeedsLayout];
-    [self.view layoutIfNeeded];
-    
-    
     // Set fonts
     [self.titleLabel setFont:CF_FONT_LIGHT(30)];
     [self.subtitleLabel setFont:CF_FONT_ITALIC(14)];
@@ -100,6 +80,32 @@ withDataController:(DataController *)controller
     [self.tagTextView setDelegate:self];
     
     [self.messageTextView becomeFirstResponder];
+
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    
+//    if (self.modelType == POST)
+//    {
+//        [self.titleLabel setText:@"New Post"];
+//        [self.subtitleLabel setText:[NSString stringWithFormat:@"Posting to %@", self.collegeForPost.name]];
+//        self.cameraButtonWidth.constant = 40;
+//        self.cameraButton.hidden = NO;
+//    }
+//    else if (self.modelType == COMMENT)
+//    {
+//        [self.titleLabel setText:@"New Comment"];
+//        [self.subtitleLabel setText:@""];
+//        self.cameraButtonWidth.constant = 0;
+//        self.cameraButton.hidden = YES;
+//    }
+//    
+//    [self.view setNeedsLayout];
+//    [self.view layoutIfNeeded];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning

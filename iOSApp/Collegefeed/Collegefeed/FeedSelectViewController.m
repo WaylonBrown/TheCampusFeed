@@ -162,7 +162,6 @@
         if (status == LOCATION_FOUND)
         {
             NSInteger numCollegesNearby = self.dataController.nearbyColleges.count;
-            
             if (numCollegesNearby > 0)
             {
                 College *college = [self.dataController.nearbyColleges objectAtIndex:row];
@@ -171,6 +170,10 @@
                     [cell assignCollege:college withRankNumberOrNil:nil];
                     return cell;
                 }
+            }
+            else
+            {
+                [cell assignSimpleText:@"(None)"];
             }
         }
         else if (status == LOCATION_SEARCHING)
