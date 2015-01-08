@@ -54,5 +54,17 @@
 {
     return COMMENT;
 }
++ (BOOL)withMessageIsValid:(NSString*)message
+{
+    if (message.length < MIN_COMMENT_LENGTH
+        || message.length > MAX_COMMENT_LENGTH)
+        
+    {
+        return false;
+    }
+    
+    // TODO more checking for comment is valid
+    return true;
+}
 
 @end

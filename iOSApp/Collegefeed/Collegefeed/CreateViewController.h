@@ -48,7 +48,7 @@
 
 @property (strong, nonatomic) IBOutlet UIView *takeNewPhotoButton;
 @property (strong, nonatomic) IBOutlet UIView *chooseExistingPhotoButton;
-
+@property (strong, nonatomic) DataController *dataController;
 @property (strong, nonatomic) ToastController *toastController;
 
 @property (strong, nonatomic) College *collegeForPost;
@@ -58,6 +58,8 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *dialogVerticalPosition;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *tagTextViewHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *cameraButtonWidth;
+
+- (id)initWithDataController:(DataController *)controller;
 
 - (id)initWithType:(ModelType)type
        withCollege:(College *)college

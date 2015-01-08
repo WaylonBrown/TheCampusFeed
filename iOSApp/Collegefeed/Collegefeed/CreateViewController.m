@@ -16,6 +16,17 @@
 
 @implementation CreateViewController
 
+- (id)initWithDataController:(DataController *)controller
+{
+    self = [super init];
+    if (self)
+    {
+        self.dataController = controller;
+        [self setModalPresentationStyle:UIModalPresentationCustom];
+        [self setTransitioningDelegate:self];
+    }
+    return self;
+}
 - (id)initWithType:(ModelType)type
        withCollege:(College *)college
 withDataController:(DataController *)controller
@@ -101,21 +112,23 @@ withDataController:(DataController *)controller
 
 - (IBAction)submit:(id)sender
 {
-    NSString *message = self.messageTextView.text;
-    message = [message stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    
-    if ([message length] < MIN_POST_LENGTH)
-    {
-        NSLog(@"Blocking post submission attempt. Too short");
-        [Shared queueToastWithSelector:@selector(toastPostTooShort)];
-    }
-    else
-    {
-        [self.delegate submitPostCommentCreationWithMessage:message
-                                              withCollegeId:self.collegeForPost.collegeID
-                                              withUserToken:@"EMPTY_TOKEN"
-                                                  withImage:self.imageView.image];
-    }
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+
+//    NSString *message = self.messageTextView.text;
+//    message = [message stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//    
+//    if ([message length] < MIN_POST_LENGTH)
+//    {
+//        NSLog(@"Blocking post submission attempt. Too short");
+//        [Shared queueToastWithSelector:@selector(toastPostTooShort)];
+//    }
+//    else
+//    {
+//        [self.delegate submitPostCommentCreationWithMessage:message
+//                                              withCollegeId:self.collegeForPost.collegeID
+//                                              withUserToken:@"EMPTY_TOKEN"
+//                                                  withImage:self.imageView.image];
+//    }
 }
 - (IBAction)dismiss:(id)sender
 {

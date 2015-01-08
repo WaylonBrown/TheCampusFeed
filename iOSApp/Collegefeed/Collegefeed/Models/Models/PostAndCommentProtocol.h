@@ -28,5 +28,6 @@
 - (void)setCollegeName:(NSString *)name;
 - (NSString *)getImage_url;
 - (BOOL)hasImage;
++ (BOOL)withMessageIsValid:(NSString*)message;
 
 @end

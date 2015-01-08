@@ -207,5 +207,17 @@
 {
     return (self.image_url != nil) || (self.image_uri != nil) || (self.image_id != nil);
 }
++ (BOOL)withMessageIsValid:(NSString*)message
+{
+    if (message.length < MIN_POST_LENGTH
+        || message.length > MAX_POST_LENGTH)
+
+    {
+        return false;
+    }
+    
+    // TODO more checking for post is valid
+    return true;
+}
 
 @end
