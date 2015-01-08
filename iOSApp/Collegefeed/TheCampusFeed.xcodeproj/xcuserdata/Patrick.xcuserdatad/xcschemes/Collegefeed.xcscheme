@@ -105,6 +105,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "TheCampusFeed"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

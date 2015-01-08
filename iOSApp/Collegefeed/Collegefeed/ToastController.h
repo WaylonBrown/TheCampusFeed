@@ -17,37 +17,48 @@
 @property (nonatomic) BOOL holdingNotifications;
 
 - (id)init;
-
 - (void)dequeueToast;
 - (void)toastHidden;
 - (void)releaseBlockedToasts;
-
 - (void)toastCustomMessage:(NSString *)message;
 
-// Validation Error
-- (void)toastInvalidDownvote;
-- (void)toastCommentTooShortWithLength:(int)minLength;
-- (void)toastPostTooShortWithLength:(int)minLength;
-- (void)toastTagSearchTooShortWithLength:(int)minLength;
-- (void)toastTagNeedsHash;
-- (void)toastInvalidTagSearch;
-- (void)toastErrorFindingTimeCrunchCollege;
 
-// Network Error
-- (void)toastLocationConnectionError;
-- (void)toastPostFailed;
-- (void)toastFlagFailed;
-- (void)toastFlagSuccess;
-- (void)toastErrorFetchingCollegeList;
+// Permissions
+- (void)toastInvalidDownvote;
+- (void)toastCommentingTooSoon:(int)minutesLeft;
+- (void)toastPostingTooSoon:(int)minutesLeft;
+- (void)toastErrorFindingTimeCrunchCollege;
 - (void)toastTwitterUnavailable;
 - (void)toastFacebookUnavailable;
-- (void)toastPostingTooSoon:(NSNumber *)minutesRemaining;
-- (void)toastCommentingTooSoon;
 
-// Navigation Notification
-- (void)toastFeedSwitchedToNearbyCollege:(NSString *)collegeName;
-- (void)toastFeedSwitchedToDistantCollege:(NSString *)collegeName;
+// Location
 - (void)toastLocationFoundNotNearCollege;
-- (void)toastNearbyColleges:(NSArray *)colleges;
+- (void)toastLocationServicesDisabled;
+
+// Formatting
+- (void)toastCommentTooShort;
+- (void)toastPostTooShort;
+- (void)toastTagTooShort;
+
+// Network Error
+- (void)toastNoInternetConnection;
+- (void)toastPostFailed;
+- (void)toastCommentFailed;
+- (void)toastFlagFailed;
+- (void)toastErrorFetchingCollegeList;
+
+// Network Success
+- (void)toastFlagSuccess;
+- (void)toastFoundNearbyColleges:(NSArray *)colleges;
+
+// Navigation
+- (void)toastSwitchedToCollegeNearby:(NSString *)collegeName;
+- (void)toastSwitchedToCollegeDistant:(NSString *)collegeName;
+
+
+
+/////////
+- (void)toastTagNeedsHash;
+- (void)toastInvalidTagSearch;
 
 @end
