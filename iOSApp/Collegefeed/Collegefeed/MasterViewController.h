@@ -16,7 +16,6 @@
 #import "PostingSelectionProtocol.h"
 #import "FeedSelectionProtocol.h"
 
-@class ToastController;
 
 @interface MasterViewController : UIViewController <ChildCellDelegate, CreationViewProtocol, FeedSelectionProtocol, PostingSelectionProtocol>
 
@@ -24,7 +23,6 @@
 
 // Member variables
 @property (strong, nonatomic) NSMutableArray *list;
-//@property (strong, nonatomic) ToastController *toastController;
 @property (strong, nonatomic) DataController *dataController;
 
 // UI outlet properties
@@ -50,9 +48,6 @@
 @property (nonatomic) BOOL isShowingTutorial;
 @property (nonatomic) BOOL hasFinishedFetchRequest;
 @property (nonatomic) BOOL hasFetchedAllContent;
-
-// Child Views
-@property (nonatomic) CreateViewController *createController;
 
 #pragma mark - Public Functions
 

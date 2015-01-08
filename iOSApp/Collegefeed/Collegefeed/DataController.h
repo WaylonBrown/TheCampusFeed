@@ -127,8 +127,11 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (void)finishedFetchingCollegeList;
 
 // Comments
-- (BOOL)createCommentWithMessage:(NSString *)message
-                        withPost:(Post*)post;
+- (Comment *)submitCommentToNetworkWithMessage:(NSString *)message
+                                    withPostId:(long)postId;
+
+//- (BOOL)createCommentWithMessage:(NSString *)message
+//                        withPost:(Post*)post;
 - (void)fetchCommentsForPost:(Post *)post;
 - (void)retrieveUserComments;
 

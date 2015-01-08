@@ -32,6 +32,12 @@
 
 #import "TheCampusFeed-Swift.h"
 
+@interface MasterViewController()
+
+@property (weak, nonatomic) PostCreateViewController *postCreateController;
+
+@end
+
 @implementation MasterViewController
 
 #pragma mark - Initialization
@@ -260,11 +266,14 @@
 }
 - (void)showCreationDialogForCollege:(College *) college
 {
-    self.createController = [[CreateViewController alloc] initWithType:POST
-                                                                      withCollege:college
-                                                               withDataController:self.dataController];
-    [self.createController setDelegate:self];
-    [self presentViewController:self.createController animated:YES completion:nil];
+    PostCreateViewController *controller = [self getMyPostCreateController];
+    [controller assign:college];
+    
+//    self.createController = [[CreateViewController alloc] initWithType:POST
+//                                                                      withCollege:college
+//                                                               withDataController:self.dataController];
+//    [self.createController setDelegate:self];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 - (void)pullToRefresh
 {
@@ -323,6 +332,15 @@
             style:UIBarButtonItemStylePlain
             target:nil
             action:nil];
+}
+- (PostCreateViewController *)getMyPostCreateController
+{
+    if (self.postCreateController == nil)
+    {
+        self.postCreateController = [[PostCreateViewController alloc] initWithDataController:self.dataController];
+    }
+    
+    return self.postCreateController;
 }
 
 #pragma mark - ChildCellDelegate

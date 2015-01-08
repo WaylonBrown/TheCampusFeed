@@ -29,22 +29,24 @@ class PostCreateViewController: CreateViewController {
     }
     
     override func submit(sender: AnyObject!) {
-        
         if let message = self.messageTextView.text {
             if Post.withMessageIsValid(message) {
                 println("Post message is valid")
                 if let collegeId = self.college!.collegeID as Int?{
+                    println("Post's collegeID is valid")
                     self.dataController.submitPostToNetworkWithMessage(message, withCollegeId:collegeId, withImage:self.imageView!.image)
                 }
                 else
                 {
                     println("College ID needed but not found for Post submission")
-                    Shared.queueToastWithSelector(Selector("toastPostTooShort"))
+                    Shared.queueToastWithSelector(Selector("toastPostFailed"))
                 }
             }
             else
             {
                 println("Post message is invalid")
+                Shared.queueToastWithSelector(Selector("toastPostInvalid"))
+
             }
         }
     }

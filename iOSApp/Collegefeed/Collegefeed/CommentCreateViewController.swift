@@ -14,22 +14,44 @@ class CommentCreateViewController: CreateViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        self.titleLabel.text = "New Comment"
+        self.subtitleLabel.text = ""
+        self.cameraButtonWidth.constant = 0;
+        
+        self.view.setNeedsLayout()
+        self.view.layoutIfNeeded()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func assign(newCollege: College) {
+        if let c = newCollege as College? {
+            self.subtitleLabel.text = "Posting to \(c.name)"
+            self.college = c
+        }
     }
-    */
+    
+    override func submit(sender: AnyObject!) {
+        
+        if let message = self.messageTextView.text {
+            if Comment.withMessageIsValid(message) {
+                println("Comment message is valid")
+                
+                if let postId = self.post!.postId as Int?{
+                    println("Comment's postID is valid")
+                    self.dataController.submitCommentToNetworkWithMessage(message, withPostId:postId)
+                    self.dismiss(self)
+                }
+                else
+                {
+                    println("Post ID needed but not found for Comment submission")
+                    Shared.queueToastWithSelector(Selector("toastCommentFailed"))
+                }
+            }
+            else
+            {
+                println("Comment message is invalid")
+                Shared.queueToastWithSelector(Selector("toastCommentInvalid"))
+            }
+        }
+    }
 
 }

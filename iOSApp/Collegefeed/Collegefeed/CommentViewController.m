@@ -21,6 +21,13 @@
 #import "Vote.h"
 #import "UIView+Toast.h"
 
+#import "TheCampusFeed-Swift.h"
+
+@interface CommentViewController()
+
+@property (strong, nonatomic) CommentCreateViewController *commentCreateController;
+
+@end
 
 @implementation CommentViewController
 
@@ -30,7 +37,6 @@
     if (self)
     {
         [self setDataController:controller];
-//        [self initializeViewElements];
     }
     return self;
 }
@@ -335,6 +341,15 @@
 
 #pragma mark - Helper Methods
 
+- (CommentCreateViewController *)getMyCommentCreateController
+{
+    if (self.commentCreateController == nil)
+    {
+        self.commentCreateController = [[CommentCreateViewController alloc] initWithDataController:self.dataController];
+    }
+    
+    return self.commentCreateController;
+}
 - (void)setCorrectList
 {
     [self setList:self.dataController.commentList];

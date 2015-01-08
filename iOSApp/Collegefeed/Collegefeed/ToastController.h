@@ -35,8 +35,14 @@
 - (void)toastLocationSearchFailed;
 
 // Formatting
-- (void)toastCommentTooShort; // TODO: uses toastPostTooShort
-- (void)toastPostTooShort;
+//- (void)toastCommentInvalid; // TODO: uses toastPostTooShort
+//- (void)toastPostTooShort;
+
+// TODO:
+- (void)toastInvalidPost;
+- (void)toastInvalidComment;
+// *****
+
 - (void)toastInvalidTagSearch;
 
 // Network Error
