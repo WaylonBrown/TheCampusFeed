@@ -53,6 +53,11 @@
     
     self.definesPresentationContext = YES;
 }
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+}
 
 #pragma mark - Table View
 
@@ -92,7 +97,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Post view of all posts with the selected tag
     NSLog(@"TagViewController called selected a tag. If valid, will display the TagPostsViewController");
-
+    
     Tag *tag = (tableView == self.searchResultsController.tableView) ? [self.filteredList objectAtIndex:indexPath.row] : [self.list objectAtIndex:indexPath.row];
     
     if (tag != nil)
@@ -104,9 +109,12 @@
             
             if ([self.navigationController isKindOfClass:[CFNavigationController class]])
             {
+                // Dismiss the results tableview
+                [self dismissViewControllerAnimated:NO completion:nil];
+                
+                NSLog(@"Invoking CFNavController.didSelectTag()");
                 [((CFNavigationController *)self.navigationController) didSelectTag:tagMessage];
             }
-            
             else
             {
                 NSLog(@"Could not invoke CFNavController.didSelectTag()");;
@@ -126,22 +134,49 @@
 
 - (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    if ([text isEqualToString:@"\n"])
+    {
+        [searchBar resignFirstResponder];
+        return NO;
+    }
+
     NSString *resultString = [searchBar.text stringByReplacingCharactersInRange:range withString:text];
+    
+    if (resultString.length == 0)
+    {
+        searchBar.text = @"#";
+        return NO;
+    }
+    
+    if (resultString.length == 1 && ![resultString isEqualToString:@"#"])
+    {
+        searchBar.text = [NSString stringWithFormat:@"#%@", resultString];
+        return NO;
+    }
+    
+    if ([resultString characterAtIndex:0] != '#')
+    {
+        searchBar.text = @"#";
+        return NO;
+    }
     
     NSString *withFiller = [NSString stringWithFormat:@"%@fillertext", resultString];
     return [Tag withMessageIsValid:withFiller];
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    if ([Tag withMessageIsValid:searchBar.text])
-    {
-        NSLog(@"TagViewController to perform network tag search with: \"%@\"", searchBar.text);
-        [super didSelectTag:searchBar.text];
-    }
-    else
-    {
-        [Shared queueToastWithSelector:@selector(toastInvalidTagSearch)];
-    }
+    NSLog(@"Search button clicked, no searching being done in TagView");
+    // TODO
+//    if ([Tag withMessageIsValid:searchBar.text])
+//    {
+//        NSLog(@"TagViewController to perform network tag search with: \"%@\"", searchBar.text);
+//
+////        [super didSelectTag:searchBar.text];
+//    }
+//    else
+//    {
+//        [Shared queueToastWithSelector:@selector(toastInvalidTagSearch)];
+//    }
 }
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {

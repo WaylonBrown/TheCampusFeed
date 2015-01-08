@@ -268,7 +268,8 @@
 {
     if (college != nil)
     {
-        PostCreateViewController *controller = [self getMyPostCreateController];
+//        PostCreateViewController *controller = [self getMyPostCreateController];
+        PostCreateViewController *controller = [[PostCreateViewController alloc] initWithDataController:self.dataController];
         [controller assign:college];
         [self presentViewController:controller animated:YES completion:nil];
     }

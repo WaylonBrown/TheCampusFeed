@@ -9,8 +9,7 @@
 
 // Testing
 
-#define DELAY_FOR_SLOW_NETWORK 0.5
-#define DEMONSTRATION_MODE YES
+#define DELAY_FOR_SLOW_NETWORK 0
 
 // Restrictions
 

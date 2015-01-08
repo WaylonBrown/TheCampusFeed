@@ -188,8 +188,8 @@
     
     if ([self.taggedPostsController assignTagMessage:tagMessage])
     {
-        [[self navigationItem] setBackBarButtonItem:[self getBlankBackButton]];
         [self pushViewController:self.taggedPostsController animated:YES];
+        [[self navigationItem] setBackBarButtonItem:[self getBlankBackButton]];
     }
 }
 
