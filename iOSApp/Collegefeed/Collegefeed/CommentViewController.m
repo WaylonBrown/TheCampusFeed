@@ -148,7 +148,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // TODO
+    // TODO full size image
     if (self.postTableView == tableView
         && self.parentPost != nil
         && self.parentPost.image != nil)

@@ -131,7 +131,6 @@
 
 #pragma mark - Search Bar
 
-
 - (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     if ([text isEqualToString:@"\n"])

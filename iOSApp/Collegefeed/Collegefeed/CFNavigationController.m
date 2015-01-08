@@ -311,13 +311,16 @@
     NSLog(@"Location manager updated location");
     self.dataController.locationStatus = LOCATION_FOUND;
     
-    if (!self.myLocation)
-    {
-        self.myLocation = newLocation;
-    }
+//    if (!self.myLocation)
+//    {
+//        self.myLocation = newLocation;
+//        [self.locationManager stopUpdatingLocation];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationSearchingDidEnd" object:nil];
+//    }
     
-    if (newLocation.coordinate.latitude != self.myLocation.coordinate.latitude &&
-        newLocation.coordinate.longitude != self.myLocation.coordinate.longitude)
+    if (!self.myLocation
+        || (newLocation.coordinate.latitude != self.myLocation.coordinate.latitude
+            && newLocation.coordinate.longitude != self.myLocation.coordinate.longitude))
     {
         self.myLocation = newLocation;
         NSLog(@"New location found: %f, %f",
@@ -325,13 +328,11 @@
               self.myLocation.coordinate.longitude);
         [self.locationManager stopUpdatingLocation];
         [self.dataController setFoundUserLocationWithLat:self.myLocation.coordinate.latitude
-                                              withLon:self.myLocation.coordinate.longitude];
+                                                 withLon:self.myLocation.coordinate.longitude];
+        [self.locationManager stopUpdatingLocation];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationSearchingDidEnd" object:nil];
     }
-    
-    [self.locationManager stopUpdatingLocation];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationSearchingDidEnd" object:nil];
-
 }
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
