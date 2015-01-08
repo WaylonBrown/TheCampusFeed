@@ -21,6 +21,7 @@
 // Minor views and dialogs
 #import "TableCell.h"
 #import "UIView+Toast.h"
+#import "PostCreateViewController.h"
 
 // Universal app information
 #import "CFNavigationController.h"

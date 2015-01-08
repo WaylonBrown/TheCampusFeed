@@ -74,12 +74,12 @@
 		CD04FE7F1A59D0FF0016C107 /* TimeCrunchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04FE7E1A59D0FF0016C107 /* TimeCrunchModel.swift */; };
 		CD3614131A4B3951006AE87E /* CollegeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3614121A4B3951006AE87E /* CollegeSearchViewController.swift */; };
 		CD4CCF511A5E857000377050 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CD4CCF501A5E857000377050 /* Default-568h@2x.png */; };
-		CD4CCF531A5EC60B00377050 /* PostCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4CCF521A5EC60B00377050 /* PostCreateViewController.swift */; };
 		CD4CCF551A5EC63100377050 /* CommentCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4CCF541A5EC63100377050 /* CommentCreateViewController.swift */; };
 		CD539DD31A2CCE7D004A794E /* TopPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD21A2CCE7D004A794E /* TopPostsViewController.m */; };
 		CD539DD91A2CDE99004A794E /* NewPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD81A2CDE99004A794E /* NewPostsViewController.m */; };
 		CD539DDC1A2CE488004A794E /* TagPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DDB1A2CE488004A794E /* TagPostsViewController.m */; };
 		CD5887591A21501100D864FD /* NSMutableArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */; };
+		CD5D8A081A5F406200B1819D /* PostCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5D8A071A5F406200B1819D /* PostCreateViewController.m */; };
 		CD6991331A5D0A8900C7E099 /* CFNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD6991321A5D0A8900C7E099 /* CFNavigationController.m */; };
 		CD6991351A5DE15A00C7E099 /* trophy_small.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6991341A5DE15A00C7E099 /* trophy_small.png */; };
 		CDDB142F1A5337FF005813AF /* AchievementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDB142E1A5337FF005813AF /* AchievementViewController.swift */; };
@@ -234,7 +234,6 @@
 		CD04FE7E1A59D0FF0016C107 /* TimeCrunchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeCrunchModel.swift; sourceTree = "<group>"; };
 		CD3614121A4B3951006AE87E /* CollegeSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollegeSearchViewController.swift; sourceTree = "<group>"; };
 		CD4CCF501A5E857000377050 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../Default-568h@2x.png"; sourceTree = "<group>"; };
-		CD4CCF521A5EC60B00377050 /* PostCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCreateViewController.swift; sourceTree = "<group>"; };
 		CD4CCF541A5EC63100377050 /* CommentCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCreateViewController.swift; sourceTree = "<group>"; };
 		CD539DD11A2CCE7D004A794E /* TopPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPostsViewController.h; sourceTree = "<group>"; };
 		CD539DD21A2CCE7D004A794E /* TopPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPostsViewController.m; sourceTree = "<group>"; };
@@ -244,6 +243,8 @@
 		CD539DDB1A2CE488004A794E /* TagPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagPostsViewController.m; sourceTree = "<group>"; };
 		CD539DDD1A2CF54C004A794E /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMutableArrayExtensions.swift; sourceTree = "<group>"; };
+		CD5D8A061A5F406200B1819D /* PostCreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostCreateViewController.h; sourceTree = "<group>"; };
+		CD5D8A071A5F406200B1819D /* PostCreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostCreateViewController.m; sourceTree = "<group>"; };
 		CD6991311A5D0A8900C7E099 /* CFNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFNavigationController.h; sourceTree = "<group>"; };
 		CD6991321A5D0A8900C7E099 /* CFNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFNavigationController.m; sourceTree = "<group>"; };
 		CD6991341A5DE15A00C7E099 /* trophy_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trophy_small.png; sourceTree = "<group>"; };
@@ -333,8 +334,9 @@
 				5350557419514587009C1911 /* CreateViewController.h */,
 				5350557519514587009C1911 /* CreateViewController.m */,
 				5350557619514587009C1911 /* CreateViewController.xib */,
-				CD4CCF521A5EC60B00377050 /* PostCreateViewController.swift */,
 				CD4CCF541A5EC63100377050 /* CommentCreateViewController.swift */,
+				CD5D8A061A5F406200B1819D /* PostCreateViewController.h */,
+				CD5D8A071A5F406200B1819D /* PostCreateViewController.m */,
 			);
 			name = "Create View";
 			sourceTree = "<group>";
@@ -806,6 +808,7 @@
 			files = (
 				53DE348019AD01FF004CB5A0 /* IIWrapController.m in Sources */,
 				5390A93B191552AE00ACD082 /* CommentViewController.m in Sources */,
+				CD5D8A081A5F406200B1819D /* PostCreateViewController.m in Sources */,
 				5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */,
 				538E7C9219D030C000AD5719 /* CF_DialogViewController.m in Sources */,
 				CDF0D7FB1A518BC600FBA892 /* Watchdog.m in Sources */,
@@ -814,7 +817,6 @@
 				CD04FE761A58AC120016C107 /* NearbyFeedViewController.swift in Sources */,
 				CD539DD31A2CCE7D004A794E /* TopPostsViewController.m in Sources */,
 				53DE347719AD00AE004CB5A0 /* IIViewDeckController.m in Sources */,
-				CD4CCF531A5EC60B00377050 /* PostCreateViewController.swift in Sources */,
 				5350557F19529FCA009C1911 /* FeedSelectViewController.m in Sources */,
 				CD6991331A5D0A8900C7E099 /* CFNavigationController.m in Sources */,
 				5347EEB5197E9EC7001B2214 /* MenuViewController.m in Sources */,
