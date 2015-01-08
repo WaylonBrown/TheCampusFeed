@@ -3,11 +3,23 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/2/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+
+#import "AppDelegate.h"
 #import "MasterViewController.h"
+#import "Post.h"
+#import "Vote.h"
+#import "Tag.h"
+#import "CommentViewController.h"
+#import "Shared.h"
+#import "College.h"
+#import "SimpleTableCell.h"
+#import "ToastController.h"
+#import "TableCell.h"
+#import "Comment.h"
 
 @class Post;
 @class CommentViewController;
@@ -16,12 +28,12 @@
 
 @property (strong, nonatomic) Post* selectedPost;
 @property (strong, nonatomic) CommentViewController* commentViewController;
-@property (strong, nonatomic) NSString* tagMessage;
 
-@property (nonatomic) ViewType viewType;
 @property (nonatomic) BOOL hasReachedEndOfList;
 
-- (id)initAsType:(ViewType)type withDataController:(DataController *)controller;
+- (void)setCorrectList;
+- (void)fetchContent;
+- (void)finishedFetchRequest:(NSNotification *)notification;
 
 @end
 

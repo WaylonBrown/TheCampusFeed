@@ -3,7 +3,7 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 7/21/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 #import "TrendingCollegesViewController.h"
@@ -15,41 +15,21 @@
 
 - (id)initWithDataController:(DataController *)controller
 {
-    self = [super initWithDataController:controller];
-    if (self)
-    {
-        [self setList:self.dataController.trendingColleges];
-    }
-    return self;
+    return [super initWithDataController:controller];
 }
-- (void)loadView
-{
-    [super loadView];
-    
-    [self.feedToolbar setHidden:YES];
-    [self.tableView setDataSource:self];
-    [self.tableView setDelegate:self];
-    [self.tableView reloadData];
-}
+
+#pragma mark - View life cycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-- (void)viewWillAppear:(BOOL)animated
-{   // View is about to appear after being inactive
-    [super viewWillAppear:animated];
-}
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    NSLog(@"Setting tableview to be automatic in %@", [self class]);
+    self.tableView.estimatedRowHeight = COLLEGE_CELL_HEIGHT_ESTIMATE;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.list.count;
-}
+#pragma mark - Table View
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
@@ -69,10 +49,7 @@
     // get the college and display in this cell
     College *collegeAtIndex = (College *)[self.list objectAtIndex:row];
     
-    NSString *text = [collegeAtIndex name];
-    float height = [Shared getSmallCellMessageHeight:text WithFont:CF_FONT_LIGHT(18)];
-
-    [cell assignCollege:collegeAtIndex withRankNumber:(row + 1) withMessageHeight:height];
+    [cell assignCollege:collegeAtIndex withRankNumberOrNil:[NSNumber numberWithLong:(row + 1)]];
     
     return cell;
 }
@@ -83,16 +60,30 @@
     [self.dataController switchedToSpecificCollegeOrNil:college];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"SwitchToTopPosts" object:nil];
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+
+#pragma mark - Network Actions
+
+- (void)fetchContent
+{   // Fetches new content for this view
+    [super fetchContent];
+
+    NSLog(@"Fetching Top colleges");
+    [self.dataController fetchTopColleges];
+}
+- (void)finishedFetchRequest:(NSNotification *)notification
 {
-    NSString *text = [[self.list objectAtIndex:indexPath.row] name];
-    return [Shared getSmallCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(18)];
+    if ([[[notification userInfo] valueForKey:@"feedName"] isEqualToString:@"topColleges"])
+    {
+        NSLog(@"Finished fetching Top Colleges");
+        [super finishedFetchRequest:notification];
+    }
 }
 
-- (void)refresh
+#pragma mark - Helper Methods
+
+- (void)setCorrectList
 {
-    [self.tableView reloadData];
-    [self.refreshControl endRefreshing];
+    [self setList:self.dataController.trendingColleges];
 }
 
 @end

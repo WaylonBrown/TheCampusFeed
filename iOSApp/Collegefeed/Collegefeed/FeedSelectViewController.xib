@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FeedSelectViewController">
             <connections>
                 <outlet property="alertView" destination="llI-Ec-hur" id="NLf-tT-nQj"/>
                 <outlet property="dialogVerticalAlignment" destination="Koh-5O-X2L" id="sFE-Tj-lSp"/>
-                <outlet property="mySearchBar" destination="81F-yl-02v" id="92D-aV-UdB"/>
-                <outlet property="tableHeightConstraint" destination="Kn1-rs-kdC" id="tJr-xE-TTz"/>
+                <outlet property="nearYouHeaderView" destination="8MO-uI-G8r" id="ibT-uT-2pr"/>
+                <outlet property="nearYouLabel" destination="a8o-k0-1xD" id="2jP-V0-wq7"/>
+                <outlet property="tableHeightConstraint" destination="ckm-SW-6Dk" id="j0A-zn-UVM"/>
                 <outlet property="tableView" destination="5P2-ay-ia0" id="QE2-N8-PGn"/>
                 <outlet property="titleLabel" destination="SyC-9r-LzP" id="RZ9-AD-aSl"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -31,23 +33,29 @@
                     </connections>
                 </button>
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="llI-Ec-hur">
-                    <rect key="frame" x="20" y="131" width="280" height="305"/>
+                    <rect key="frame" x="8" y="128" width="304" height="312"/>
                     <subviews>
-                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="huS-AO-Bb1">
-                            <rect key="frame" x="5" y="51" width="270" height="2"/>
-                            <color key="backgroundColor" red="0.20000000300000001" green="0.70980393890000004" blue="0.89803922179999995" alpha="1" colorSpace="calibratedRGB"/>
-                        </view>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Choose a Feed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SyC-9r-LzP">
-                            <rect key="frame" x="20" y="13" width="240" height="34"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose a Feed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SyC-9r-LzP" userLabel="Title">
+                            <rect key="frame" x="20" y="13" width="264" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="M5j-k3-4I4"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="25"/>
                             <color key="textColor" red="0.20000000300000001" green="0.70980393890000004" blue="0.89803922179999995" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="huS-AO-Bb1" userLabel="Divider">
+                            <rect key="frame" x="5" y="50" width="294" height="2"/>
+                            <color key="backgroundColor" red="0.20000000300000001" green="0.70980393890000004" blue="0.89803922179999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="2" id="9rl-pg-amA"/>
+                            </constraints>
+                        </view>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="749" bounces="NO" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="5P2-ay-ia0">
-                            <rect key="frame" x="5" y="58" width="270" height="242"/>
+                            <rect key="frame" x="5" y="57" width="294" height="250"/>
                             <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="242" id="Kn1-rs-kdC"/>
+                                <constraint firstAttribute="height" constant="250" id="ckm-SW-6Dk"/>
                             </constraints>
                         </tableView>
                     </subviews>
@@ -56,30 +64,57 @@
                         <constraint firstAttribute="trailing" secondItem="5P2-ay-ia0" secondAttribute="trailing" constant="5" id="7SO-WH-655"/>
                         <constraint firstAttribute="bottom" secondItem="5P2-ay-ia0" secondAttribute="bottom" constant="5" id="H9G-Sj-L56"/>
                         <constraint firstItem="5P2-ay-ia0" firstAttribute="leading" secondItem="llI-Ec-hur" secondAttribute="leading" constant="5" id="IrQ-YV-k4B"/>
-                        <constraint firstItem="5P2-ay-ia0" firstAttribute="top" secondItem="llI-Ec-hur" secondAttribute="top" constant="58" id="KNw-Ji-dQR"/>
-                        <constraint firstAttribute="width" constant="280" id="z4w-kI-mhZ"/>
+                        <constraint firstItem="SyC-9r-LzP" firstAttribute="leading" secondItem="llI-Ec-hur" secondAttribute="leading" constant="20" id="L7d-Pu-5Ok"/>
+                        <constraint firstItem="huS-AO-Bb1" firstAttribute="top" secondItem="SyC-9r-LzP" secondAttribute="bottom" constant="7" id="MSK-af-l8c"/>
+                        <constraint firstAttribute="trailing" secondItem="huS-AO-Bb1" secondAttribute="trailing" constant="5" id="UFU-FM-4eZ"/>
+                        <constraint firstItem="5P2-ay-ia0" firstAttribute="top" secondItem="huS-AO-Bb1" secondAttribute="bottom" constant="5" id="YuG-NU-97y"/>
+                        <constraint firstAttribute="trailing" secondItem="SyC-9r-LzP" secondAttribute="trailing" constant="20" id="cOj-Jq-Lo4"/>
+                        <constraint firstItem="huS-AO-Bb1" firstAttribute="leading" secondItem="llI-Ec-hur" secondAttribute="leading" constant="5" id="e3h-7p-kyb"/>
+                        <constraint firstItem="SyC-9r-LzP" firstAttribute="top" secondItem="llI-Ec-hur" secondAttribute="top" constant="13" id="y1z-zV-1Bc"/>
                     </constraints>
                 </view>
-                <searchBar hidden="YES" contentMode="redraw" searchBarStyle="prominent" translatesAutoresizingMaskIntoConstraints="NO" id="81F-yl-02v">
-                    <rect key="frame" x="15" y="29" width="290" height="44"/>
-                    <color key="barTintColor" red="0.87450987099999999" green="0.87450987099999999" blue="0.87450987099999999" alpha="1" colorSpace="deviceRGB"/>
-                    <textInputTraits key="textInputTraits"/>
-                </searchBar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="81F-yl-02v" firstAttribute="trailing" secondItem="llI-Ec-hur" secondAttribute="trailing" constant="5" id="2Xv-K2-sK1"/>
-                <constraint firstAttribute="centerX" secondItem="llI-Ec-hur" secondAttribute="centerX" id="2gl-ry-VMr"/>
                 <constraint firstItem="5nr-Vv-dnb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3LK-wa-PMv"/>
                 <constraint firstAttribute="trailing" secondItem="5nr-Vv-dnb" secondAttribute="trailing" id="7Ln-n3-wca"/>
                 <constraint firstAttribute="bottom" secondItem="5nr-Vv-dnb" secondAttribute="bottom" id="850-cR-J5o"/>
                 <constraint firstAttribute="centerY" secondItem="llI-Ec-hur" secondAttribute="centerY" id="Koh-5O-X2L"/>
-                <constraint firstItem="81F-yl-02v" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="29" id="fWa-zc-iup"/>
-                <constraint firstItem="81F-yl-02v" firstAttribute="leading" secondItem="llI-Ec-hur" secondAttribute="leading" constant="-5" id="h4g-hO-0AN"/>
+                <constraint firstItem="llI-Ec-hur" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="QYj-Hb-Rpr"/>
+                <constraint firstItem="llI-Ec-hur" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="Wqf-OT-nKl"/>
                 <constraint firstItem="5nr-Vv-dnb" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="xvi-zQ-qAu"/>
             </constraints>
         </view>
+        <view contentMode="scaleToFill" id="8MO-uI-G8r" userLabel="Near You Header View">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Near You" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a8o-k0-1xD">
+                    <rect key="frame" x="125" y="274" width="70" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gps.png" translatesAutoresizingMaskIntoConstraints="NO" id="DRh-Nc-ROx">
+                    <rect key="frame" x="292" y="274" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="gVw-cI-Vdy"/>
+                        <constraint firstAttribute="width" constant="20" id="xar-9w-bHK"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="centerY" secondItem="DRh-Nc-ROx" secondAttribute="centerY" id="BML-qP-xK5"/>
+                <constraint firstAttribute="centerY" secondItem="a8o-k0-1xD" secondAttribute="centerY" id="UDW-St-Bnk"/>
+                <constraint firstItem="DRh-Nc-ROx" firstAttribute="trailing" secondItem="8MO-uI-G8r" secondAttribute="trailingMargin" id="pmv-ko-kgA"/>
+                <constraint firstAttribute="centerX" secondItem="a8o-k0-1xD" secondAttribute="centerX" id="rpm-ji-gtk"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <point key="canvasLocation" x="144" y="328"/>
+        </view>
     </objects>
+    <resources>
+        <image name="gps.png" width="32" height="32"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

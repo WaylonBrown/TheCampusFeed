@@ -3,24 +3,25 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 9/22/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface CF_DialogViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
-
+// TODO: make subclasses instead of using these
 typedef NS_ENUM(NSInteger, DialogType)
 {
     HELP,
     TIME_CRUNCH,
     UPDATE,
     TWITTER,
-    WEBSITE
+    WEBSITE,
+    CUSTOM
 };
 
-@property DialogType dialogType;
+@interface CF_DialogViewController : UIViewController<UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
 
+@property DialogType dialogType;
 
 @property (strong, nonatomic) IBOutlet UIView *dialogView;
 @property (strong, nonatomic) IBOutlet UITextView *titleTextView;
@@ -45,5 +46,6 @@ typedef NS_ENUM(NSInteger, DialogType)
 - (void)setAsWebsiteReminder;
 
 - (IBAction)dismiss:(id)sender;
+- (void)fixHeights;
 
 @end

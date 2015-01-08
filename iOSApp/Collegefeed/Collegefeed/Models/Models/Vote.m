@@ -3,7 +3,7 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/5/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 #import "Vote.h"
@@ -41,6 +41,9 @@
     }
     return nil;
 }
+
+#pragma mark - CFModelProtocol Methods
+
 - (id)initFromJSON:(NSDictionary *)jsonObject
 {   // Initialize this Vote using a JSON object as an NSDictionary
     self = [super init];
@@ -70,6 +73,39 @@
     }
     return nil;
 }
+
+- (id)initFromNetworkData:(NSData *)data
+{
+    NSDictionary *jsonObject = (NSDictionary *)(NSArray *)[NSJSONSerialization JSONObjectWithData:data
+                                                                                          options:0
+                                                                                            error:nil];
+    return [self initFromJSON:jsonObject];
+}
+
++ (NSArray *)getListFromJsonData:(NSData *)jsonData error:(NSError **)error;
+{
+    NSError *localError = nil;
+    NSDictionary *voteList = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                             options:0
+                                                               error:&localError];
+    
+    if (localError != nil)
+    {
+        *error = localError;
+        return nil;
+    }
+    
+    
+    NSMutableArray *votes = [[NSMutableArray alloc] init];
+    
+    for (NSDictionary *voteDict in voteList)
+    {
+        Vote *vote = [[Vote alloc] initFromJSON:voteDict];
+        [votes addObject:vote];
+    }
+    
+    return votes;
+}
 - (NSData*)toJSON
 {   // Returns an NSData representation of this Vote in JSON
     NSString *voteString;
@@ -95,9 +131,9 @@
                                 allowLossyConversion:YES];
     return voteData;
 }
-- (long)getID
+- (NSNumber *)getID
 {
-    return self.voteID;
+    return [NSNumber numberWithLong:self.voteID];
 }
 - (void)validate
 {

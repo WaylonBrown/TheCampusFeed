@@ -7,16 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-#define CONTENT_TYPE    @"application/json;charset=UTF-8"
-#define API_URL         @"http://www.secretcamp.us/api"
-//#define API_URL         @"http://cfeed.herokuapp.com/api"
-#define API_VERSION     @"v1"
-#define PAGINATION_NUM  25
+#import "../../Constants.h"
 
 @interface Networker : NSObject
 
 + (NSData *)getIOSAppVersionFromServer;
+
+// Images
++ (NSNumber *)POSTImage:(UIImage *)image fromFilePath:(NSString *)pathToOurFile;
++ (NSData *)GETImageData:(long)imageID;
 
 // Colleges
 + (NSData *)GETAllColleges;
@@ -33,30 +34,38 @@
 + (NSData *)GETCommentsWithIdArray:(NSArray *)Ids;
 
 // Posts
++ (NSData *)GetTopPostsAtPageNum:(long)pageNum;
++ (NSData *)GetTopPostsAtPageNum:(long)pageNum
+                   WithCollegeId:(long)collegeId;
+
++ (NSData *)GetNewPostsAtPageNum:(long)pageNum;
++ (NSData *)GetNewPostsAtPageNum:(long)pageNum
+                   WithCollegeId:(long)collegeId;
+
++ (NSData *)GetPostsWithTag:(NSString *)tagMessage
+                  AtPageNum:(long)pageNum;
++ (NSData *)GetPostsWithTag:(NSString *)tagMessage
+                  AtPageNum:(long)pageNum
+              WithCollegeId:(long)collegeId;
+
+
+
 + (NSData *)POSTPostData:(NSData *)data WithCollegeId:(long)collegeId;
-
-+ (NSData *)GETAllPostsWithTag:(NSString *)tagName
-                     atPageNum:(long)pageNum;
-
-+ (NSData *)GETPostsWithTagName:(NSString *)tagName
-                  withCollegeId:(long)collegeId;
 
 + (NSData *)GETAllPosts;
 + (NSData *)GETPostsWithCollegeId:(long)collegeId;
 
-+ (NSData *)GETRecentPostsAtPageNum:(long)pageNum;
-+ (NSData *)GETRecentPostsWithCollegeId:(long)collegeId;
-
-+ (NSData *)GETTrendingPostsAtPageNum:(long)pageNum;
-+ (NSData *)GETTrendingPostsWithCollegeId:(long)collegeId;
 + (NSData *)GETPostsWithIdArray:(NSArray *)Ids;
++ (NSData *)GETPostWithId:(long)postId;
+
+
+// Tags
++ (NSData *)GetTrendingTagsAtPageNum:(long)pageNum;
++ (NSData *)GetTrendingTagsAtPageNum:(long)pageNum
+                       WithCollegeId:(long)collegeId;
 
 // Flags
 + (NSData *)POSTFlagPost:(long)postId;
-
-// Tags
-+ (NSData *)GETTagsTrendingAtPageNum:(long)pageNum;
-+ (NSData *)GETTagsWithCollegeId:(long)collegeId AtPageNum:(long)pageNum;
 
 // Votes
 + (NSData *)POSTVoteData:(NSData *)data WithPostId:(long)postId;

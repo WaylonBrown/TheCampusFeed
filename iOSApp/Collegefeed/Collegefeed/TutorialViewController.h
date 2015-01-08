@@ -3,13 +3,12 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 6/18/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-#define TABLE_HEADER_HEIGHT 20
-#define TABLE_CELL_HEIGHT 44
+#import "Constants.h"
 
 @class College;
 @class DataController;

@@ -3,67 +3,70 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/15/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 #import "ChildCellDelegate.h"
-#import "CreatePostCommentViewController.h"
+#import "CreateViewController.h"
 #import "FeedSelectViewController.h"
 #import "DataController.h"
+#import "CreateViewController.h"
+#import "PostingSelectionProtocol.h"
+#import "FeedSelectionProtocol.h"
 
-@class ToastController;
-@protocol FeedSelectionProtocol;
 
-@interface MasterViewController : UIViewController <ChildCellDelegate, CreationViewProtocol, FeedSelectionProtocol, CollegeForPostingSelectionProtocol>
+@interface MasterViewController : UIViewController <ChildCellDelegate, CreationViewProtocol, FeedSelectionProtocol, PostingSelectionProtocol>
 
-@property (strong, nonatomic) ToastController *toastController;
+#pragma mark - Variables
+
+// Member variables
+@property (strong, nonatomic) NSMutableArray *list;
 @property (strong, nonatomic) DataController *dataController;
 
-// outlet properties connected to the view
-@property (weak, nonatomic) IBOutlet UITableView        *tableView;
-@property (strong, nonatomic) UIActivityIndicatorView   *activityIndicator;
-@property (weak, nonatomic) IBOutlet UIView             *feedToolbar;
-@property (strong, nonatomic) IBOutlet UIView           *scoreToolbar;
-@property (strong, nonatomic) IBOutlet UILabel          *scoreLabel;
-@property (strong, nonatomic) UIRefreshControl          *refreshControl;
+// UI outlet properties
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) UIActivityIndicatorView *locationActivityIndicator;
+@property (weak, nonatomic) IBOutlet UIView *feedToolbar;
+@property (strong, nonatomic) IBOutlet UIView *scoreToolbar;
+@property (strong, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
 
-@property (weak, nonatomic) IBOutlet UILabel            *currentFeedLabel;
-@property (weak, nonatomic) IBOutlet UILabel            *showingLabel;
-@property (weak, nonatomic) IBOutlet UIButton           *feedButton;
-@property (strong, nonatomic) IBOutlet UIView           *toolbarSeparator;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *contentLoadingIndicator;
+@property (weak, nonatomic) IBOutlet UILabel *currentFeedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *showingLabel;
+@property (weak, nonatomic) IBOutlet UIButton *feedButton;
+@property (strong, nonatomic) IBOutlet UIView *toolbarSeparator;
 @property (strong, nonatomic) IBOutlet UILabel *chooseLabel;
-
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *toolBarSpaceFromBottom;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *tableViewSpaceFromBottom;
 
-@property (strong, nonatomic) NSMutableArray *list;
-
+// Status variables
 @property (nonatomic) float previousScrollViewYOffset;
 @property (nonatomic) BOOL isLoadingPosts;
 @property (nonatomic) BOOL isShowingTutorial;
+@property (nonatomic) BOOL hasFinishedFetchRequest;
+@property (nonatomic) BOOL hasFetchedAllContent;
+
+#pragma mark - Public Functions
 
 // Initialization
 - (id)initWithDataController:(DataController *)controller;
+- (id)initWithDataController:(DataController *)controller withNibName:(NSString *)nib bundle:(NSBundle *)bundle;
+- (void)setNotificationObservers;
 
-- (void)placeLoadingIndicator;
-- (void)placeCreatePost;
+// Network Actions
+- (void)fetchContent;
+- (void)finishedFetchRequest:(NSNotification *)notification;
 
-// Actions
+// Local Actions
 - (IBAction)changeFeed;
 - (void)create;
-- (void)refresh;
+
+// Helper Methods
+- (void)setCorrectList;
+- (UIBarButtonItem *)blankBackButton;
+- (void)receivedToast:(NSNotification *)notification;
 
 @end
-
-typedef NS_ENUM(NSInteger, ViewType)
-{
-    ALL_VIEW,
-    TOP_VIEW,
-    RECENT_VIEW,
-    USER_VIEW,
-    USER_POSTS,
-    USER_COMMENTS,
-    TAG_VIEW,
-};

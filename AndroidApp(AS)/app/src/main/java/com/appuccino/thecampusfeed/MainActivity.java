@@ -216,15 +216,6 @@ public class MainActivity extends FragmentActivity implements LocationListener
 	@Override
 	public void onConfigurationChanged(Configuration newConfig)
 	{
-        Log.i("cfeed","APPSETUP: orientation change");
-        //setupApp();
-//        if(permissions == null || permissions.size() == 0){
-//            newPostButton.setVisibility(View.GONE);
-//        } else {
-//            newPostButton.setVisibility(View.VISIBLE);
-//        }
-
-        //setupMenuDrawerViews();
 	    super.onConfigurationChanged(newConfig);
 
 	}
@@ -450,7 +441,7 @@ public class MainActivity extends FragmentActivity implements LocationListener
         Uri uri = Uri.parse(uriText);
 
         send.setData(uri);
-        startActivity(Intent.createChooser(send, "Suggest Feedback"));
+        startActivity(Intent.createChooser(send, "Give Feedback"));
     }
 
     /**

@@ -3,7 +3,7 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 7/22/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -12,8 +12,9 @@
 #define MENU_CELL_HEIGHT 60
 #define TOP_POSTS_INDEX 0
 #define NEW_POSTS_INDEX 1
-#define HELP_INDEX 7
-#define FEEDBACK_INDEX 8
+#define ACHIEVEMENT_INDEX 6
+#define HELP_INDEX 8
+#define FEEDBACK_INDEX 9
 
 @interface MenuViewController : UIViewController<UITableViewDataSource, MFMailComposeViewControllerDelegate>
 

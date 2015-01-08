@@ -3,110 +3,72 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/17/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
+#import "Constants.h"
+
+@class Achievement;
 @class Comment;
 @class College;
 @class Post;
+@class Tag;
 @class Vote;
+@class TimeCrunchModel;
 @class ToastController;
-
-#define MILES_FOR_PERMISSION                15
-#define PI_VALUE                            3.14159
-#define EARTH_RADIUS_MILES                  3959
-#define LOCATION_MANAGER_TIMEOUT            10
-#define MINIMUM_POSTING_INTERVAL_MINUTES    5
-#define MINIMUM_COMMENTING_INTERVAL_MINUTES 1
-
-
-#define USER_POST_IDS_FILE          @"UserPostIds.txt"
-#define USER_COMMENT_IDS_FILE       @"UserCommentIds.txt"
-
-#define STATUS_ENTITY           @"Status"
-#define KEY_COMMENT_TIME        @"lastCommentTime"
-#define KEY_POST_TIME           @"lastPostTime"
-#define KEY_IS_BANNED           @"isBanned"
-#define KEY_COLLEGE_LIST_VERSION    @"listVersion"
-#define KEY_LAUNCH_COUNT        @"launchCount"
-#define KEY_CURRENT_COLLEGE_FEED @"currentFeed"
-
-#define POST_ENTITY             @"Post"
-#define KEY_POST_ID             @"postId"
-
-#define COMMENT_ENTITY          @"Comment"
-#define KEY_COMMENT_ID          @"commentId"
-
-#define COLLEGE_ENTITY          @"College"
-#define KEY_COLLEGE_ID          @"collegeId"
-#define KEY_LAT                 @"lat"
-#define KEY_LON                 @"lon"
-#define KEY_NAME                @"name"
-#define KEY_SHORT_NAME          @"shortName"
-
-#define VOTE_ENTITY             @"Vote"
-#define KEY_PARENT_ID           @"parentId"
-#define KEY_VOTE_ID             @"voteId"
-#define KEY_TYPE                @"type"
-#define KEY_UPVOTE              @"upvote"
-#define KEY_UPVOTED_POSTS       @"UpvotedPosts"
-#define KEY_UPVOTED_COMMENTS    @"UpvotedComments"
-#define KEY_DOWNVOTED_POSTS     @"DownvotedPosts"
-#define KEY_DOWNVOTED_COMMENTS  @"DownvotedComments"
-#define VALUE_POST              @"Post"
-#define VALUE_COMMENT           @"Comment"
-
-#pragma mark - Protocol Definitions
-/********************************/
-/***** PROTOCOL DEFINITIONS *****/
-/********************************/
+@class Watchdog;
 
 typedef NS_ENUM(NSInteger, LocationStatus)
 {
-    LOCATION_FOUND,
+    LOCATION_NOT_FOUND,
     LOCATION_SEARCHING,
-    LOCATION_NOT_FOUND
+    LOCATION_FOUND
 };
 
+@interface DataController : NSObject<CLLocationManagerDelegate, UIAlertViewDelegate>
 
-@interface DataController : NSObject<CLLocationManagerDelegate>
-
-
-#pragma mark - Member Variables
-/****************************/
-/***** MEMBER VARIABLES *****/
-/****************************/
+// Core data storage
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (strong, nonatomic) ToastController *toaster;
 
-// Status Information
-@property (strong, nonatomic) College   *collegeInFocus;
-@property (strong, nonatomic) Post      *postInFocus;
-@property (nonatomic) BOOL              showingAllColleges;
-@property (nonatomic) BOOL              showingSingleCollege;
-@property (nonatomic) long              collegeListVersion;
-@property (strong, nonatomic) NSDate    *locationSearchStart;
-@property (nonatomic) BOOL              isFirstLaunch;
-@property (nonatomic) BOOL              needsUpdate;
-@property (nonatomic) NSInteger         launchCount;
-// Location Information
-@property (strong, nonatomic) CLLocationManager *locationManager;
-@property (nonatomic) CLLocationDegrees         lat;
-@property (nonatomic) CLLocationDegrees         lon;
-@property LocationStatus                        locStatus;
-@property (nonatomic) NSInteger     locationUpdateAttempts;
+// Helper objects
+@property (nonatomic, strong) ToastController *toastController;
+@property (nonatomic, strong) Watchdog *watchDog;
+
+// Runtime status information
+@property (nonatomic, strong) CLLocation *lastLocation;
+@property (nonatomic, strong) College *collegeInFocus;
+@property (nonatomic, strong) Post *postInFocus;
+@property (nonatomic, strong) College *homeCollegeForTimeCrunch;
+@property (nonatomic, strong) TimeCrunchModel *timeCrunch;
+@property (nonatomic) BOOL showingAllColleges;
+@property (nonatomic) BOOL showingSingleCollege;
+@property (nonatomic) LocationStatus locationStatus;
+
+// Persistent status information
+@property (nonatomic) BOOL hasViewedAchievements;
+@property (nonatomic) BOOL isBanned;
+@property (nonatomic) long currentCollegeFeedId;
+@property (nonatomic) long homeCollegeId;
+@property (nonatomic) long collegeListVersion;
+@property (nonatomic) long launchCount;
+@property (nonatomic, strong) NSDate *lastCommentTime;
+@property (nonatomic, strong) NSDate *lastPostTime;
+
+// Achievement Arrays
+@property (nonatomic, strong) NSMutableArray *achievementList;
 
 // College Arrays
-@property (strong, nonatomic) NSMutableArray *collegeList;
-@property (strong, nonatomic) NSMutableArray *nearbyColleges;
-@property (strong, nonatomic) NSMutableArray *trendingColleges;
+@property (nonatomic, strong) NSMutableArray *collegeList;
+@property (nonatomic, strong) NSMutableArray *nearbyColleges;
+@property (nonatomic, strong) NSMutableArray *trendingColleges;
 
 // Comment Array
 @property (nonatomic, strong) NSMutableArray *commentList;
@@ -115,98 +77,107 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 // Post Arrays
 @property (nonatomic, strong) NSMutableArray *topPostsAllColleges;
 @property (nonatomic, strong) NSMutableArray *recentPostsAllColleges;
+@property (nonatomic, strong) NSMutableArray *postsWithTagAllColleges;
+@property (nonatomic, strong) NSMutableArray *topPostsSingleCollege;
+@property (nonatomic, strong) NSMutableArray *recentPostsSingleCollege;
+@property (nonatomic, strong) NSMutableArray *postsWithTagSingleCollege;
 @property (nonatomic, strong) NSMutableArray *userPosts;
-@property (nonatomic, strong) NSMutableArray *allPostsWithTag;
-
-@property (nonatomic, strong) NSMutableArray *topPostsInCollege;
-@property (nonatomic, strong) NSMutableArray *recentPostsInCollege;
-@property (nonatomic, strong) NSMutableArray *allPostsWithTagInCollege;
 
 // Tag Arrays
-@property (nonatomic, strong) NSMutableArray *allTags;
-@property (nonatomic, strong) NSMutableArray *allTagsInCollege;
+@property (nonatomic, strong) NSMutableArray *trendingTagsAllColleges;
+@property (nonatomic, strong) NSMutableArray *trendingTagsSingleCollege;
 
 // Vote Arrays
 @property (nonatomic, strong) NSMutableArray *userPostVotes;
 @property (nonatomic, strong) NSMutableArray *userCommentVotes;
 
-// Lazy Loading Counters
-@property (nonatomic) long tagPage;
-@property (nonatomic) long topPostsPage;
-@property (nonatomic) long recentPostsPage;
-@property (nonatomic) long tagPostsPage;
-@property (nonatomic) long trendingCollegesPage;
+// Page counters for lazy loading
+@property (nonatomic) long pageForTopPostsAllColleges;
+@property (nonatomic) long pageForTopPostsSingleCollege;
+@property (nonatomic) long pageForNewPostsAllColleges;
+@property (nonatomic) long pageForNewPostsSingleCollege;
+@property (nonatomic) long pageForTaggedPostsAllColleges;
+@property (nonatomic) long pageForTaggedPostsSingleCollege;
+@property (nonatomic) long pageForTrendingTagsAllColleges;
+@property (nonatomic) long pageForTrendingTagsSingleCollege;
+@property (nonatomic) long pageForTopColleges;
+
+//TODO: Move to CFNavigationController
+- (NSString *)getCurrentFeedName;
+// ^^^
 
 
-#pragma mark - Public Functions
-/****************************/
-/***** PUBLIC FUNCTIONS *****/
-/****************************/
+- (void)restoreAllCoreData;
 
-/****************************/
-/***** Local Data Access ****/
-/****************************/
-- (NSString *)getCollegeNameById:(long)Id;
-- (College *)getCollegeById:(long)Id;
-- (void)getHardCodedCollegeList;
-- (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon;
-
-- (void)switchedToSpecificCollegeOrNil:(College *)college;
-- (BOOL)isNearCollege;
-- (BOOL)isNearCollegeWithId:(long)collegeId;
-
-- (void)retrieveUserData;
-- (long)getUserPostScore;
-- (long)getUserCommentScore;
-- (NSInteger)getLaunchNumber;
-- (BOOL)isAbleToPost:(NSNumber *)minutesRemaining;
-- (BOOL)isAbleToComment;
-- (void)incrementLaunchNumber;
-- (void)saveCurrentFeed;
-- (void)restoreSavedFeed;
-
-- (NSURL *)applicationDocumentsDirectory;
-/*************************/
-/***** Network Access ****/
-/*************************/
-
-- (void)findUserLocation;
+// Achievements
+- (void)didViewAchievements;
 
 // Colleges
-- (void)getNetworkCollegeList;
-- (void)getTrendingCollegeList;
-- (BOOL)needsNewCollegeList;
+- (void)fetchAllColleges;
+- (void)fetchTopColleges;
+- (College *)getCollegeInFocus;
+- (College *)getCollegeById:(long)collegeId;
+
+- (void)setFoundUserLocationWithLat:(float)userLat
+                            withLon:(float)userLon;
+- (void)switchedToSpecificCollegeOrNil:(College *)college;
+- (NSArray *)getNearbyCollegeList;
+- (BOOL)isNearCollege;
+- (BOOL)isNearCollegeWithId:(long)collegeId;
+- (void)finishedFetchingCollegeList;
 
 // Comments
-- (BOOL)createCommentWithMessage:(NSString *)message
-                        withPost:(Post*)post;
+- (Comment *)submitCommentToNetworkWithMessage:(NSString *)message
+                                    withPostId:(long)postId;
 
-- (void)fetchCommentsWithPostId:(long)postId;
-- (void)fetchUserCommentsWithIdArray:(NSArray *)commentIds;
+//- (BOOL)createCommentWithMessage:(NSString *)message
+//                        withPost:(Post*)post;
+- (void)fetchCommentsForPost:(Post *)post;
+- (void)retrieveUserComments;
 
 // Flags
 - (BOOL)flagPost:(long)postId;
 
+// Images
+- (NSString *)getImageUrlFromId:(NSNumber *)imageID;
+- (NSNumber *)postImageToServer:(UIImage *)image fromFilePath:(NSString *)filePath;
+
 // Posts
-- (BOOL)createPostWithMessage:(NSString *)message
-                withCollegeId:(long)collegeId;
+- (Post *)submitPostToNetworkWithMessage:(NSString *)message
+                           withCollegeId:(long)collegeId
+                               withImage:(UIImage *)image;
 
-- (BOOL)fetchTopPosts;
-- (void)fetchTopPostsInCollege;
+- (void)fetchTopPostsForAllColleges;
+- (void)fetchTopPostsForSingleCollege;
 
-- (BOOL)fetchNewPosts;
-- (void)fetchNewPostsInCollege;
+- (void)fetchNewPostsForAllColleges;
+- (void)fetchNewPostsForSingleCollege;
 
-- (void)fetchPostsWithTagMessage:(NSString*)tagMessage;
-- (void)fetchAllPostsInCollegeWithTagMessage:(NSString*)tagMessage;
-- (BOOL)fetchMorePostsWithTagMessage:(NSString*)tagMessage;
+- (void)fetchPostsWithTagForAllColleges:(NSString*)tagMessage;
+- (void)fetchPostsWithTagForSingleCollege:(NSString*)tagMessage;
 
-- (void)fetchUserPostsWithIdArray:(NSArray *)postIds;
 - (Post *)fetchPostWithId:(long)postId;
+- (Post *)fetchParentPostOfComment:(Comment *)comment;
+
+- (void)retrieveUserPosts;
+- (void)didFinishFetchingUserPosts;
 
 // Tags
-- (BOOL)fetchTags;
-- (BOOL)fetchTagsWithCollegeId:(long)collegeId;
+- (void)fetchTrendingTagsForAllColleges;
+- (void)fetchTrendingTagsForSingleCollege;
+
+// Time Crunch
+- (void)attemptActivateTimeCrunch;
+
+// Toasts
+- (void)queueToastWithSelector:(SEL)selector;
+- (ToastController *)getMyToastController;
+
+// User data
+- (long)getUserPostScore;
+- (long)getUserCommentScore;
+- (BOOL)isAbleToPost:(NSNumber *)minutesRemaining;
+- (BOOL)isAbleToComment;
 
 // Votes
 - (BOOL)createVote:(Vote *)vote;

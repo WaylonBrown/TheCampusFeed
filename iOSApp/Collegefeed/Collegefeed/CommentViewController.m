@@ -3,12 +3,13 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/3/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 #import <Social/Social.h>
 
 #import "TableCell.h"
+#import "CFNavigationController.h"
 #import "PostsViewController.h"
 #import "Post.h"
 #import "PostsViewController.h"
@@ -20,10 +21,15 @@
 #import "Vote.h"
 #import "UIView+Toast.h"
 
+#import "TheCampusFeed-Swift.h"
+
+@interface CommentViewController()
+
+@property (strong, nonatomic) CommentCreateViewController *commentCreateController;
+
+@end
 
 @implementation CommentViewController
-
-#pragma mark - Initialization and view loading
 
 - (id)initWithDataController:(DataController *)controller
 {
@@ -31,185 +37,271 @@
     if (self)
     {
         [self setDataController:controller];
-        self.toastController = [[ToastController alloc] init];
     }
     return self;
 }
-- (void)viewWillAppear:(BOOL)animated
-{   // this function called right before the comments view appears
-    [super viewWillAppear:animated];
 
-    if (self.originalPost != nil)
-    {
-        [self.dataController setPostInFocus:self.originalPost];
-        long postID = (long)self.originalPost.postID;
-        [self.dataController fetchCommentsWithPostId:postID];
+#pragma mark - View Loading
 
-        float postCellHeight = [self tableView:self.postTableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-        self.postTableHeightConstraint.constant = postCellHeight;
-        [self.view setNeedsUpdateConstraints];
-        
-        [self.postTableView reloadData];
-        [self.commentTableView reloadData];
-        
-        UIImage *facebookImage = [UIImage imageNamed:@"FacebookLogo"];
-        UIImage *twitterImage = [UIImage imageNamed:@"TwitterLogo"];
-        
-        UIView *dividerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, self.navigationController.navigationBar.frame.size.height - 16)];
-        [dividerView setBackgroundColor:[UIColor whiteColor]];
-        UIBarButtonItem *divider = [[UIBarButtonItem alloc] initWithCustomView:dividerView];
-        
-        
-        UIBarButtonItem *facebook = [[UIBarButtonItem alloc] initWithImage:facebookImage style:UIBarButtonItemStylePlain target:self action:@selector(shareOnFacebook)];
-        UIBarButtonItem *twitter = [[UIBarButtonItem alloc] initWithImage:twitterImage style:UIBarButtonItemStylePlain target:self action:@selector(shareOnTwitter)];
-
-        
-        College *college = [self.dataController getCollegeById:self.originalPost.collegeID];
-        if ([self.dataController.nearbyColleges containsObject:college])
-        {
-            UIBarButtonItem *create = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-                                                                                    target:self
-                                                                                    action:@selector(create)];
-            
-            UIImage *flagImage = [UIImage imageNamed:@"Flag"];
-            UIBarButtonItem *flag = [[UIBarButtonItem alloc] initWithImage:flagImage style:UIBarButtonItemStylePlain target:self action:@selector(flag)];
-            
-            self.navigationItem.rightBarButtonItems = @[create, flag, divider, facebook, twitter];
-        }
-        else
-        {
-            self.navigationItem.rightBarButtonItems = @[facebook, twitter];
-
-        }
-        
-    }
-}
 - (void)viewDidLoad
-{   // called once the comment view has loaded
+{
     [super viewDidLoad];
+    // Do any additional setup after loading the view.
     
-    self.commentTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self.postTableView reloadData];
-    [self.commentTableView reloadData];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+
+    self.postTableView.dataSource = self;
+    self.postTableView.delegate = self;
+    
+    NSLog(@"Setting tableview to be automatic in %@", [self class]);
+    self.tableView.estimatedRowHeight = POST_CELL_HEIGHT_ESTIMATE;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+
+    self.postTableView.estimatedRowHeight = POST_CELL_HEIGHT_ESTIMATE;
+    self.postTableView.rowHeight = UITableViewAutomaticDimension;
+    
 }
 - (void)loadView
 {   // called when the comment view is initially loaded
   
     [super loadView];
 }
+- (void)viewWillAppear:(BOOL)animated
+{   // View is about to appear after being inactive
+    [super viewWillAppear:animated];
 
-#pragma mark - Table view methods
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{   // first section is the original post, second is the post's comments
-    return 1;
-}
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{   // Number of rows in table views
-    if (tableView == self.postTableView) return 1;
-    else if (tableView == self.commentTableView) return [self.dataController.commentList count];
+    [self makeToolbarButtons];
+    [self setCorrectList];
     
-    return 0;
+    [self.postTableView reloadData];
+    [self.tableView reloadData];
+    
+}
+- (void)initializeViewElements
+{    
+    // Back button
+    self.backButton = [super blankBackButton];
+    
+    // Compose button
+    self.composeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                                                                       target:self
+                                                                       action:@selector(create)];
+    // Flag button
+    self.flagButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Flag"]
+                                                       style:UIBarButtonItemStylePlain
+                                                      target:self
+                                                      action:@selector(flag)];
+    // Facebook button
+    self.facebookButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"FacebookLogo"]
+                                                           style:UIBarButtonItemStylePlain
+                                                          target:self
+                                                          action:@selector(shareOnFacebook)];
+    // Twitter button
+    self.twitterButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"TwitterLogo"]
+                                                          style:UIBarButtonItemStylePlain
+                                                         target:self
+                                                         action:@selector(shareOnTwitter)];
+    // Toolbar buttons divider
+    CGRect dividerFrame = CGRectMake(0, 0, 1, self.navigationController.navigationBar.frame.size.height - 16);
+    UIView *dividerView = [[UIView alloc] initWithFrame:dividerFrame];
+    [dividerView setBackgroundColor:[UIColor whiteColor]];
+    self.dividerButton = [[UIBarButtonItem alloc] initWithCustomView:dividerView];
+}
+- (void)makeToolbarButtons
+{   // Assigns correct icons and buttons to the upper toolbar
+    
+    [self initializeViewElements];
+    
+    if (self.parentPost != nil || self.parentPost.college == nil)
+    {
+        if ([self.dataController isNearCollegeWithId:self.parentPost.college.collegeID])
+        {
+            self.navigationItem.rightBarButtonItems = @[self.composeButton,
+                                                        self.flagButton,
+                                                        self.dividerButton,
+                                                        self.facebookButton,
+                                                        self.twitterButton];
+            return;
+        }
+    }
+    
+    self.navigationItem.rightBarButtonItems = @[self.facebookButton,
+                                                self.twitterButton];
+}
+
+#pragma mark - Table View
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView == self.postTableView)
+    {
+        CGFloat postCellHeight = cell.frame.size.height;
+        if (postCellHeight > 0)
+        {
+            NSLog(@"postCellHeight = %f in CommentView.willDisplayCell. Adjusting PostTable height", postCellHeight);
+            
+            self.postTableHeightConstraint.constant = postCellHeight;
+            [self.view setNeedsLayout];
+        }
+    }
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // TODO
+    if (self.postTableView == tableView
+        && self.parentPost != nil
+        && self.parentPost.image != nil)
+    {
+        float width = self.view.frame.size.width;
+        float height = self.view.frame.size.height;
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+        imageView.backgroundColor = [UIColor blackColor];
+        imageView.image = self.parentPost.image;
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        imageView.userInteractionEnabled = YES;
+        
+        [self.view addSubview:imageView];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                       initWithTarget:imageView
+                                       action:@selector(removeFromSuperview)];
+        tap.numberOfTapsRequired = 1;
+        tap.numberOfTouchesRequired = 1;
+        [imageView addGestureRecognizer:tap];
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Get the table view cell for the given row
     // This method handles two table views: one for the post and another for it's comments
     
     static NSString *CellIdentifier = @"TableCell";
-    TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-
+    TableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
     if (cell == nil)
     {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
-        cell = [nib objectAtIndex:0];
+        cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier
+                                              owner:self
+                                            options:nil] objectAtIndex:0];
     }
-    
-    [cell setDelegate: self];
-    [cell.commentCountLabel setHidden:YES];
-    
-    BOOL isNearCollege = [self.dataController.nearbyColleges containsObject:self.originalPost.college];
     
     if (tableView == self.postTableView)
     {   // PostView table; get the original post to display in this table
-        cell.dividerHeight.constant = 0;
-        cell.collegeLabelHeight.constant = 0;
-        
-        float messageHeight = [Shared getLargeCellMessageHeight:self.originalPost.message WithFont:CF_FONT_LIGHT(16)];
-        
-        [cell assignWith:self.originalPost IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
-        cell.gpsIconImageView.hidden = YES;
-        return cell;
+        [cell assignWithPost:self.parentPost withCollegeLabel:NO];
     }
-    else if (tableView == self.commentTableView)
-    {   // CommentView table; get the comment to be displayed in this cell
-        Comment *commentAtIndex = (Comment*)[self.dataController.commentList objectAtIndex:indexPath.row];
-        [commentAtIndex setCollegeID:self.originalPost.collegeID];
-        float messageHeight = [Shared getLargeCellMessageHeight:commentAtIndex.message WithFont:CF_FONT_LIGHT(16)];
+    else
+    {   // CommentView table; get the comments to be displayed
         
-        [cell assignWith:commentAtIndex IsNearCollege:isNearCollege WithMessageHeight:messageHeight];
-        cell.gpsIconImageView.hidden = YES;
-
-        return cell;
+        Comment *comment = [self.list objectAtIndex:indexPath.row];
+        [cell assignWithComment:comment];
+        cell.delegate = self;
     }
     
-    return nil;
+    return cell;
 }
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{   // Return NO if you do not want the item to be re-orderable.
- 
-    return NO;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{   // first section is the original post, second is the post's comments
+    return 1;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *text = @"";
-    float offset = -24; // to omit extra height of college label
-    
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{   // Number of rows in table views
     if (tableView == self.postTableView)
     {
-        text = self.originalPost.message;
-    }
-    else if (tableView == self.commentTableView)
-    {
-        text = [(Comment *)[self.dataController.commentList objectAtIndex:[indexPath row]] getMessage];
+        return 1;
     }
 
-    return [Shared getLargeCellHeightEstimateWithText:text WithFont:CF_FONT_LIGHT(16)] + offset;
+    return [self.list count];
+    
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {   // return the header title for the 'Comments' section
     
-    if (tableView == self.commentTableView && self.dataController.commentList.count > 0)
+    if (tableView != self.postTableView) // self.commentTableView)
     {
         UILabel *commentHeader = [[UILabel alloc] initWithFrame:CGRectZero];
-        [commentHeader setText:@"Comments"];
         [commentHeader setTextAlignment:NSTextAlignmentCenter];
         [commentHeader setFont:CF_FONT_LIGHT(13)];
         [commentHeader setTintColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
         [commentHeader setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
         
+        if (self.hasFinishedFetchRequest)
+        {   // finished network access for comments
+            
+            if (self.dataController.commentList.count > 0)
+            {   // some comments retrieved
+                [commentHeader setText:@"Comments"];
+            }
+            else
+            {   // none found
+                [commentHeader setText:@"No Comments"];
+            }
+        }
+        else // still loading comments
+        {
+            [commentHeader setText:@"Loading Comments..."];
+        }
+        
         return commentHeader;
     }
+    
     return nil;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (tableView == self.commentTableView)
-    {
-        if (self.dataController.commentList.count > 0)
-            return 25.0;
-        else return 0.0;
+    return (tableView == self.tableView) ? 25 : 5;
+}
+
+#pragma mark - Network Actions
+
+- (void)fetchContent
+{   // Fetches new content for this view
+    
+    [super fetchContent];
+    
+    [self.dataController fetchCommentsForPost:self.parentPost];
+}
+- (void)finishedFetchRequest:(NSNotification *)notification
+{   // A fetch request was completed, make necessary updates
+    
+    [super finishedFetchRequest:notification];
+    
+    [self.postTableView reloadData];
+}
+- (void)shareOnFacebook
+{
+    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        
+        [controller setInitialText:@"Check out TheCampusFeed!"];
+        [controller addImage:[UIImage imageNamed:@"icon.png"]];
+        [controller addURL:[NSURL URLWithString:WEBSITE_LINK]];
+        
+        [self presentViewController:controller animated:YES completion:Nil];
     }
-
-    else return 5.0;
+    else
+    {
+        [Shared queueToastWithSelector:@selector(toastFacebookUnavailable)];
+    }
+}
+- (void)shareOnTwitter
+{
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+    {
+        SLComposeViewController *tweetSheet = [SLComposeViewController
+                                               composeViewControllerForServiceType:SLServiceTypeTwitter];
+        [tweetSheet setInitialText:[NSString stringWithFormat:@"Check out TheCampusFeed! %@", WEBSITE_LINK]];
+        [tweetSheet addImage:[UIImage imageNamed:@"icon.png"]];
+        
+        [self presentViewController:tweetSheet animated:YES completion:nil];
+    }
+    else
+    {
+        [Shared queueToastWithSelector:@selector(toastTwitterUnavailable)];
+    }
 }
 
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{   // In a storyboard-based application, you will often want to do a little preparation before navigation
-}
-
-#pragma mark - Actions
+#pragma mark - Local Actions
 
 - (void)cancel
 {
@@ -218,7 +310,9 @@
 - (void)create
 {   // Display popup to let user type a new comment
     
-    CreatePostCommentViewController *alert = [[CreatePostCommentViewController alloc] initWithType:COMMENT withCollege:nil];
+    CreateViewController *alert = [[CreateViewController alloc] initWithType:COMMENT
+                                                                                       withCollege:nil
+                                                                                withDataController:self.dataController];
     [alert setDelegate:self];
     [self presentViewController:alert animated:YES completion:nil];
 }
@@ -230,62 +324,36 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Flag as Inappropriate?" message:message delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
     [alert show];
 }
-- (void)shareOnFacebook
-{
-    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
-        SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-        
-        [controller setInitialText:@"Check out TheCampusFeed!"];
-        [controller addImage:[UIImage imageNamed:@"icon.png"]];
-        [controller addURL:[NSURL URLWithString:WEBSITE_LINK]];
-
-        [self presentViewController:controller animated:YES completion:Nil];
-    }
-    else
-    {
-        [self.toastController toastFacebookUnavailable];
-    }
-}
-- (void)shareOnTwitter
-{
-    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
-    {
-        SLComposeViewController *tweetSheet = [SLComposeViewController
-                                               composeViewControllerForServiceType:SLServiceTypeTwitter];
-        [tweetSheet setInitialText:[NSString stringWithFormat:@"Check out TheCampusFeed! %@", WEBSITE_LINK]];
-        [tweetSheet addImage:[UIImage imageNamed:@"icon.png"]];
-
-        [self presentViewController:tweetSheet animated:YES completion:nil];
-    }
-    else
-    {
-        [self.toastController toastTwitterUnavailable];
-    }
-}
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1)
-    {
-        if ([self.dataController flagPost:self.originalPost.postID])
+    {   // attempt to flag a post as inappropriate
+        if ((self.parentPost != nil) && [self.dataController flagPost:[[self.parentPost getID] longValue]])
         {
-            [self.toastController toastFlagSuccess];
+            [Shared queueToastWithSelector:@selector(toastFlagSuccess)];
         }
         else
         {
-            [self.toastController toastFlagFailed];
+            [Shared queueToastWithSelector:@selector(toastFlagFailed)];
         }
     }
-}
-- (void)refresh
-{
-    [super refresh];
-    
-    [self.postTableView reloadData];
-    [self.commentTableView reloadData];
 }
 
 #pragma mark - Helper Methods
 
+- (CommentCreateViewController *)getMyCommentCreateController
+{
+    if (self.commentCreateController == nil)
+    {
+        self.commentCreateController = [[CommentCreateViewController alloc] initWithDataController:self.dataController];
+    }
+    
+    return self.commentCreateController;
+}
+- (void)setCorrectList
+{
+    [self setList:self.dataController.commentList];
+}
 - (NSString *)getAgeOfCommentAsString:(NSDate *)commentDate
 {   // return string indicating how long ago the comment was created
     int commentAgeSeconds = [[NSDate date] timeIntervalSinceDate:commentDate];
@@ -304,8 +372,14 @@
 }
 - (BOOL)castVote:(Vote *)vote
 {
-    [vote setGrandparentID:self.originalPost.postID];
-    return [super castVote:vote];
+//    Post *parentPost = self.dataController.postInFocus;
+    if (self.parentPost != nil)
+    {
+        [vote setGrandparentID:[[self.parentPost getID] longValue]];
+        return [super castVote:vote];
+    }
+    
+    return NO;
 }
 
 #pragma mark - CreationViewProtocol Delegate Methods
@@ -313,15 +387,22 @@
 - (void)submitPostCommentCreationWithMessage:(NSString *)message
                                withCollegeId:(long)collegeId
                                withUserToken:(NSString *)userToken
+                                   withImage:(UIImage *)image
 {
-    if ([self.dataController isAbleToComment])
+//    if ([self.dataController isAbleToComment])
+    if (true)
     {
-        BOOL success = [self.dataController createCommentWithMessage:message withPost:self.originalPost];
-        if (success)
-        {
-            [self refresh];
+        [self.createController dismiss:self];
 
-            [self.commentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataController.commentList.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//        Post *parentPost = self.dataController.postInFocus;
+        if (self.parentPost != nil)
+        {
+            BOOL success = [self.dataController createCommentWithMessage:message withPost:self.parentPost];
+            if (success)
+            {
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataController.commentList.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//                [self.commentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataController.commentList.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            }
         }
 //        else
 //        {

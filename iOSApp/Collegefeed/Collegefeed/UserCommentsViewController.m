@@ -3,7 +3,7 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 7/21/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 #import "UserCommentsViewController.h"
@@ -19,28 +19,32 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
 
-//    [self.tableView reloadData];
+#pragma mark - Network Actions
+
+- (void)fetchContent
+{   // Fetches new content for this view
+    
+    [super fetchContent];
+    
+    [self.dataController retrieveUserComments];
+}
+- (void)finishedFetchRequest:(NSNotification *)notification
+{
+    [super finishedFetchRequest:notification];
+    
     [self addScoreFooter];
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - Helper Methods
+
+- (void)setCorrectList
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self setList:self.dataController.userComments];
+    
+    [super setCorrectList];
 }
-
-- (void)refresh
-{
-    [self.tableView reloadData];
-    [self.refreshControl endRefreshing];
-}
-
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return [super tableView:tableView heightForRowAtIndexPath:indexPath] - 20;
-//}
-
 - (void)addScoreFooter
 {
     [self.feedToolbar removeFromSuperview];

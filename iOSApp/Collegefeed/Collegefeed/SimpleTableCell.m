@@ -3,13 +3,14 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 6/11/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 #import "SimpleTableCell.h"
 #import "Tag.h"
 #import "College.h"
 #import "Shared.h"
+#import "TheCampusFeed-Swift.h"
 
 @implementation SimpleTableCell
 
@@ -26,7 +27,6 @@
     [self.messageLabel setTintColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
     [self.activityIndicator setHidesWhenStopped:YES];
 }
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
@@ -42,8 +42,6 @@
 
 - (void)assignTag:(Tag *)tag
 {
-    self.labelHeight.constant = 45;
-
     [self.messageLabel setFont:CF_FONT_LIGHT(22)];
     [self.messageLabel setNumberOfLines:1];
     [self.messageLabel setLineBreakMode:NSLineBreakByTruncatingTail];
@@ -56,21 +54,17 @@
     {
         [self.messageLabel setText:@""];
     }
-    
-    [self setNeedsUpdateConstraints];
-
 }
-- (void)assignCollege:(College *)college withRankNumber:(long)rankNo withMessageHeight:(float)height
+- (void)assignCollege:(College *)college withRankNumberOrNil:(NSNumber *)rankNo
 {
-    self.labelHeight.constant = height;
     [self.messageLabel setFont:CF_FONT_LIGHT(18)];
     [self.messageLabel setLineBreakMode:NSLineBreakByWordWrapping];
 
     if (college != nil)
     {
-        if (rankNo > 0)
+        if (rankNo != nil)
         {
-            [self.messageLabel setText:[NSString stringWithFormat:@"%ld. %@", rankNo, college.name]];
+            [self.messageLabel setText:[NSString stringWithFormat:@"%@. %@", rankNo, college.name]];
             [self.messageLabel setTextAlignment:NSTextAlignmentLeft];
         }
         else
@@ -83,8 +77,31 @@
     {
         [self.messageLabel setText:@""];
     }
+}
+- (void)assignAchievement:(Achievement *)achievement
+{
+    [self.messageLabel setFont:CF_FONT_LIGHT(18)];
+    [self.messageLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.messageLabel setNumberOfLines:0];
+    [self.messageLabel setLineBreakMode:NSLineBreakByWordWrapping];
     
-    [self setNeedsUpdateConstraints];
+    if (achievement != nil)
+    {
+        [self.messageLabel setText:[achievement toString]];
+        if (achievement.hasAchieved)
+        {
+            NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:[achievement toString]];
+            [attributeString addAttribute:NSStrikethroughStyleAttributeName
+                                    value:@2
+                                    range:NSMakeRange(0, [attributeString length])];
+            
+            [self.messageLabel setAttributedText:attributeString];
+        }
+    }
+    else
+    {
+        [self.messageLabel setText:@""];
+    }
 
 }
 - (void)showLoadingIndicator
@@ -95,4 +112,5 @@
 {
     [self.activityIndicator stopAnimating];
 }
+
 @end

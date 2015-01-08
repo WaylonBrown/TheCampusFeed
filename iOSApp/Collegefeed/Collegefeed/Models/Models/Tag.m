@@ -3,7 +3,7 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/5/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 #import "Tag.h"
@@ -29,27 +29,9 @@
     }
     return nil;
 }
-- (id)initDummy
-{
-    self = [super init];
-    if (self)
-    {
-        [self setTagID:arc4random() % 999];
-        [self setScore:arc4random() % 99];
-        
-        switch (self.tagID % 3)
-        {
-            case 0: [self setName:@"#FlamingKittens"]; break;
-            case 1: [self setName:@"#drankt"]; break;
-            default: [self setName:@"#america"]; break;
-        }
-        
-        [self validate];
 
-        return self;
-    }
-    return nil;
-}
+#pragma mark - CFModelProtocol Methods
+
 - (id)initFromJSON:(NSDictionary *)jsonObject
 {   // Initialize this Tag using a JSON object as an NSDictionary
     self = [super init];
@@ -74,6 +56,38 @@
     }
     return nil;
 }
+- (id)initFromNetworkData:(NSData *)data
+{
+    NSDictionary *jsonObject = (NSDictionary *)(NSArray *)[NSJSONSerialization JSONObjectWithData:data
+                                                                                          options:0
+                                                                                            error:nil];
+    return [self initFromJSON:jsonObject];
+}
+
++ (NSArray *)getListFromJsonData:(NSData *)jsonData error:(NSError **)error;
+{
+    NSError *localError = nil;
+    NSDictionary *tagList = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                                options:0
+                                                                  error:&localError];
+    
+    if (localError != nil)
+    {
+        *error = localError;
+        return nil;
+    }
+    
+    
+    NSMutableArray *tags = [[NSMutableArray alloc] init];
+    
+    for (NSDictionary *tagDict in tagList)
+    {
+        Tag *tag = [[Tag alloc] initFromJSON:tagDict];
+        [tags addObject:tag];
+    }
+    
+    return tags;
+}
 - (NSData *)toJSON
 {   // Returns an NSData representation of this Tag in JSON
     NSString *tagString = [NSString stringWithFormat:@"{\"id\":%lu, \"text\":\"%@\"}",
@@ -82,9 +96,9 @@
                               allowLossyConversion:YES];
     return tagData;
 }
-- (long)getID
+- (NSNumber *)getID
 {
-    return self.tagID;
+    return [NSNumber numberWithLong:self.tagID];
 }
 - (void)validate
 {

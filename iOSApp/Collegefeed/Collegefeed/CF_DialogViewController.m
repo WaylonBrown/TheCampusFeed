@@ -3,11 +3,12 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 9/22/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 #import "CF_DialogViewController.h"
 #import "Shared.h"
+#import "Constants.h"
 
 @implementation CF_DialogViewController
 
@@ -38,19 +39,23 @@
     self = [super initWithNibName:@"CF_DialogViewController" bundle:nil];
     if (self)
     {
+        [self setDialogType:CUSTOM];
         [self setModalPresentationStyle:UIModalPresentationCustom];
         [self setTransitioningDelegate:self];
         self.buttonCount = 1;
     }
     return self;
 }
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
     [self.contentView scrollRectToVisible:CGRectMake(0,0,1,1) animated:NO];
+    
+    [self.titleTextView setFont:[Shared getFontLight:20]];
+    [self.contentView setFont:[Shared getFontLight:15]];
+    [self.titleTextView setTextColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -76,11 +81,6 @@
         default:
             break;
     }
-    
-    [self.titleTextView setFont:CF_FONT_LIGHT(20)];
-    [self.contentView setFont:CF_FONT_LIGHT(15)];
-    [self.titleTextView setTextColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
-    
 
     [self fixHeights];
 }
@@ -95,6 +95,10 @@
 }
 - (void)fixHeights
 {
+    [self.titleTextView setFont:CF_FONT_LIGHT(20)];
+    [self.contentView setFont:CF_FONT_LIGHT(15)];
+    [self.titleTextView setTextColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
+    
     float currTextHeight    = self.contentView.frame.size.height;
     float currTitleHeight   = self.titleTextView.frame.size.height;
     

@@ -3,14 +3,18 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/13/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "TTTAttributedLabel.h"
+#import "ChildCellDelegate.h"
+
+#define DEFAULT_COLLEGE_LABEL_HEIGHT 33
 
 @class Model;
 @class Post;
+@class Comment;
 @class Vote;
 
 @protocol SubViewDelegate;
@@ -21,10 +25,13 @@
 @interface TableCell : UITableViewCell <TTTAttributedLabelDelegate>
 
 @property (nonatomic, strong) NSObject<PostAndCommentProtocol, CFModelProtocol> *object;
+@property (nonatomic, strong) id<ChildCellDelegate> delegate;
+@property (nonatomic) BOOL isNearCollege;
 
-@property (weak, nonatomic) id<ChildCellDelegate> delegate;
-@property (nonatomic) BOOL userIsNearCollege;
+@property (nonatomic, strong) Post* post;
+@property (nonatomic, strong) Comment* comment;
 
+// UI properties
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
@@ -33,21 +40,25 @@
 @property (weak, nonatomic) IBOutlet UIButton *upVoteButton;
 @property (weak, nonatomic) IBOutlet UIButton *downVoteButton;
 @property (weak, nonatomic) IBOutlet UIImageView *gpsIconImageView;
-@property (strong, nonatomic) IBOutlet UIView *dividerView;
+@property (weak, nonatomic) IBOutlet UIView *dividerView;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *pictureView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *pictureActivityIndicator;
 
+// Constraints
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *pictureHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelViewHeight;
 
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *postMessageHeight;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *collegeLabelHeight;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *dividerHeight;
-
-//- (void)assign:(NSObject<PostAndCommentProtocol> *)obj WithMessageHeight:(float)height;
-
-- (void)assignWith:(NSObject<PostAndCommentProtocol, CFModelProtocol> *)obj IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
-
-//- (void)assignWith:(Post *)post IsNearCollege:(BOOL)isNearby WithMessageHeight:(float)height;
-
+- (NSString *)getCommentLabelString;
+- (NSString *)getAgeLabelString:(NSDate *)creationDate;
+- (void)findHashTags;
+- (void)updateVoteButtons;
 - (IBAction) upVotePressed:(id)sender;
 - (IBAction) downVotePresed:(id)sender;
+- (BOOL)assignWithComment:(Comment *)comment;
+
+- (BOOL)assignWithPost:(Post *)post withCollegeLabel:(BOOL)showLabel;
+- (void)setNearCollege;
+- (void)setWillDisplayCollege:(BOOL)showLabel;
 
 @end

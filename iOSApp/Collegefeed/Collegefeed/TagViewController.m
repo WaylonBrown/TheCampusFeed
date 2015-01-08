@@ -3,247 +3,215 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 5/13/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
-
+#import "CFNavigationController.h"
 #import "College.h"
 #import "Tag.h"
 #import "TagViewController.h"
 #import "PostsViewController.h"
+#import "TagPostsViewController.h"
 #import "Shared.h"
 #import "SimpleTableCell.h"
 #import "ToastController.h"
-#import "LoadingCell.h"
 
 @implementation TagViewController
 
-- (void)loadView
-{
-    [super loadView];
-}
+#pragma mark - View life cycle
 
 - (void)viewDidLoad
 {
     // Do any additional setup after loading the view.
     [super viewDidLoad];
+    
     [self.view setBackgroundColor:[Shared getCustomUIColor:CF_LIGHTGRAY]];
+
+    UITableView *resultsTableView = [[UITableView alloc] initWithFrame:self.tableView.frame];
+    
+    self.searchResultsController = [[UITableViewController alloc] init];
+    self.searchResultsController.tableView = resultsTableView;
+    self.searchResultsController.tableView.dataSource = self;
+    self.searchResultsController.tableView.delegate = self;
+    [self.searchResultsController.tableView setBackgroundColor:[Shared getCustomUIColor:CF_EXTRALIGHTGRAY]];
+    self.searchResultsController.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchResultsController];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.delegate = self;
+    [self.searchController.searchBar setText:@"#"];
+    [self.searchController.searchBar setReturnKeyType:UIReturnKeySearch];
+    [self.searchController.searchBar sizeToFit]; // bar size
+    [self.searchController.searchBar setKeyboardType:UIKeyboardTypeTwitter];
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    self.searchController.searchBar.delegate = self;
+    
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
     
-    self.searchResult = [NSMutableArray arrayWithCapacity:[self.list count]];
-    
-    // Search bar
-    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-    self.tableView.tableHeaderView = searchBar;
-    [searchBar setKeyboardType:UIKeyboardTypeAlphabet];
-    [searchBar setText:@"#"];
-    [searchBar setDelegate:self];
-    self.searchDisplay = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
-    
-    self.searchDisplay.delegate = self;
-    self.searchDisplay.searchResultsDataSource = self;
-    self.searchDisplay.searchResultsDelegate = self;
+    self.definesPresentationContext = YES;
 }
 
+#pragma mark - Table View
 
-#pragma mark - Navigation
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{   // Present a Post view of all posts with the selected tag
-    
-    if (indexPath.row >= self.list.count)
-    {
-        return;
-    }
-    
-    self.selectedTag = nil;
-    if (tableView == self.searchDisplay.searchResultsTableView)
-    {
-        self.selectedTag = (Tag *)[self.searchResult objectAtIndex:indexPath.row];
-    }
-    else
-    {
-        self.selectedTag = (Tag *)[self.dataController.allTags objectAtIndex:indexPath.row];
-    }
-    
-    if (self.selectedTag == nil)
-    {
-        return;
-    }
-    
-    PostsViewController* controller = [[PostsViewController alloc] initAsType:TAG_VIEW
-                                                           withDataController:self.dataController];
-    [controller setTagMessage:self.selectedTag.name];
-    
-    UIBarButtonItem *backButton =
-            [[UIBarButtonItem alloc] initWithTitle:@""
-                                             style:UIBarButtonItemStyleBordered
-                                            target:nil
-                                            action:nil];
-    
-    [[self navigationItem] setBackBarButtonItem:backButton];
-    [self.navigationController pushViewController:controller
-                                         animated:YES];
-}
-- (void)switchToAllColleges
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    self.dataController.tagPage = 0;
-    [self setList:self.dataController.allTags];
+    return 1;
 }
-- (void)switchToSpecificCollege
-{
-    self.dataController.tagPage = 0;
-    [self setList:self.dataController.allTagsInCollege];
-}
-
-#pragma mark - UITableView Functions
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{   // Return the number of posts in the list
-    if (tableView == self.searchDisplay.searchResultsTableView)
-    {
-        return [self.searchResult count];
-    }
-    else if (self.hasReachedEndOfList)
-    {
-        return self.list.count;
-    }
-    else
-    {
-        return self.list.count + 1;
-    }
+{
+    long num = (tableView == self.searchResultsController.tableView)
+        ? self.filteredList.count
+        : self.list.count;
+    
+    NSLog(@"Tag View number of rows in section = %ld", num);
+    return num;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {   // invoked every time a table row needs to be shown.
     
     static NSString *CellIdentifier = @"SimpleTableCell";
     SimpleTableCell *cell = (SimpleTableCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-
+    
     if (cell == nil)
     {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier
                                                      owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
-    if (tableView == self.searchDisplay.searchResultsTableView)
-    {
-        Tag *tagAtIndex = (Tag*)[self.searchResult objectAtIndex:indexPath.row];
-        [cell assignTag:tagAtIndex];
-    }
-    else
-    {
-        if (indexPath.row == self.list.count)
-        {
-            static NSString *LoadingCellIdentifier = @"LoadingCell";
-            LoadingCell *cell = (LoadingCell *)[tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier];
-            
-            if (cell == nil)
-            {
-                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:LoadingCellIdentifier
-                                                             owner:self options:nil];
-                cell = [nib objectAtIndex:0];
-            }
-            [cell showLoadingIndicator];
-            
-            if (!self.hasReachedEndOfList)
-            {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                    NSInteger oldCount = self.list.count;
-                    self.hasReachedEndOfList = ![self loadMoreTags];
-                    NSInteger newCount = self.list.count;
-                    
-                    if (oldCount != newCount)
-                    {
-                        [self addNewRows:oldCount through:newCount];
-                    }
-                });
-            }
-            
-            return cell;
-        }
-        
-        // get the tag and display in this cell
-        Tag *tagAtIndex = (Tag *)[self.list objectAtIndex:indexPath.row];
-        [cell assignTag:tagAtIndex];
-    }
+    
+    Tag *tag = (tableView == self.searchResultsController.tableView) ? [self.filteredList objectAtIndex:indexPath.row] : [self.list objectAtIndex:indexPath.row];
+    
+    NSLog(@"Tag View cell for index path with tag message = %@", tag.name);
+    
+    [cell assignTag:tag];
     return cell;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 56;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{   // Present a Post view of all posts with the selected tag
+    NSLog(@"TagViewController called selected a tag. If valid, will display the TagPostsViewController");
+
+    Tag *tag = (tableView == self.searchResultsController.tableView) ? [self.filteredList objectAtIndex:indexPath.row] : [self.list objectAtIndex:indexPath.row];
+    
+    if (tag != nil)
+    {
+        NSString *tagMessage = tag.name;
+        if ([Tag withMessageIsValid:tagMessage])
+        {
+            NSLog(@"Tag message = %@ is valid", tagMessage);
+            
+            if ([self.navigationController isKindOfClass:[CFNavigationController class]])
+            {
+                [((CFNavigationController *)self.navigationController) didSelectTag:tagMessage];
+            }
+            
+            else
+            {
+                NSLog(@"Could not invoke CFNavController.didSelectTag()");;
+            }
+        }
+        else
+        {
+            NSLog(@"ERROR. Attempted tag search with message = %@ was invalid", tagMessage);
+            [self.dataController.toastController toastInvalidTagSearch];
+        }
+
+    }
 }
 
-#pragma mark - Search Bar 
+#pragma mark - Search Bar
 
+
+- (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    NSString *resultString = [searchBar.text stringByReplacingCharactersInRange:range withString:text];
+
+    return [resultString characterAtIndex:0] == '#' && [Shared onlyContainsAlphaNumberic:[resultString substringFromIndex:1]];
+}
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    NSString *tag  = searchBar.text;
-    if ([Tag withMessageIsValid:tag])
+    if ([Tag withMessageIsValid:searchBar.text])
     {
-        [self.dataController fetchPostsWithTagMessage:tag];
-        PostsViewController *postsView = [[PostsViewController alloc] initAsType:TAG_VIEW withDataController:self.dataController];
-        [postsView setTagMessage:tag];
-        [self.navigationController pushViewController:postsView animated:YES];
+        NSLog(@"TagViewController to perform network tag search with: \"%@\"", searchBar.text);
+        [super didSelectTag:searchBar.text];
     }
     else
     {
-        [self.toastController toastInvalidTagSearch];
+        [Shared queueToastWithSelector:@selector(toastInvalidTagSearch)];
     }
 }
-
-#pragma mark - Actions
-
-- (BOOL)loadMoreTags
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
-    BOOL success = false;
-    if (self.dataController.showingAllColleges)
+    if ([self.searchController.searchBar.text lengthOfBytesUsingEncoding:NSUTF32StringEncoding] > 0)
     {
-        success = [self.dataController fetchTags];
-    }
-    else
-    {
-        success = [self.dataController fetchTagsWithCollegeId:self.dataController.collegeInFocus.collegeID];
-    }
-    return success;
-}
-- (void)addNewRows:(NSInteger)oldCount through:(NSInteger)newCount
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        NSMutableArray* newRows = [NSMutableArray array];
-        
-        for (NSInteger i = oldCount; i < newCount; i++)
+        if (self.filteredList == nil)
         {
-            NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
-            [newRows addObject:newIndexPath];
+            self.filteredList = [[NSMutableArray alloc] initWithCapacity:self.list.count];
+        }
+        else
+        {
+            [self.filteredList removeAllObjects];
         }
         
-        [self.tableView beginUpdates];
-        [self.tableView insertRowsAtIndexPaths:newRows withRowAnimation:UITableViewRowAnimationTop];
-        [self.tableView endUpdates];
-        [self.tableView reloadData];
+        NSString *text = self.searchController.searchBar.text;
         
-    });
+        NSLog(@"Local tag search filtering results for \"%@\"", text);
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", text];
+        NSArray *tempFiltered = [self.list filteredArrayUsingPredicate:predicate];
+        [self.filteredList addObjectsFromArray:tempFiltered];
+        [self.searchResultsController.tableView reloadData];
+    }
 }
 
-- (void)refresh
-{   // refresh this tag view
+#pragma mark - Network Actions
+
+- (void)fetchContent
+{
+    [super fetchContent];
     if (self.dataController.showingAllColleges)
     {
-        [self switchToAllColleges];
-        [self.dataController fetchTags];
+        NSLog(@"Fetching Trending Tags in all colleges");
+        [self.dataController fetchTrendingTagsForAllColleges];
     }
-    else if (self.dataController.showingSingleCollege)
+    else
     {
-        [self switchToSpecificCollege];
-        [self.dataController fetchTagsWithCollegeId:self.dataController.collegeInFocus.collegeID];
+        NSLog(@"Fetching Trending Tags in college ID = %ld", self.dataController.currentCollegeFeedId);
+        [self.dataController fetchTrendingTagsForSingleCollege];
     }
-    [super refresh];
+}
+- (void)finishedFetchRequest:(NSNotification *)notification
+{
+    if ([[[notification userInfo] valueForKey:@"feedName"] isEqualToString:@"trendingTags"])
+    {
+        NSLog(@"Finished fetching Trending Tags");
+        [super finishedFetchRequest:notification];
+    }
 }
 
-#pragma mark - Vanishing Bottom Toolbar
+#pragma mark - Local Actions
 
+- (void)changeFeed
+{
+    [super changeFeed];
+}
+
+#pragma mark - Helper Methods
+
+- (void)setCorrectList
+{
+    if (self.dataController.showingAllColleges)
+    {
+        [self setList:self.dataController.trendingTagsAllColleges];
+    }
+    else
+    {
+        [self setList:self.dataController.trendingTagsSingleCollege];
+    }
+    
+    [super setCorrectList];
+}
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     scrollView.bounces = (scrollView.contentOffset.y < 50);
@@ -272,5 +240,6 @@
     self.toolBarSpaceFromBottom.constant = MIN(self.toolBarSpaceFromBottom.constant, 50);
     [self.feedToolbar updateConstraintsIfNeeded];
 }
+
 
 @end

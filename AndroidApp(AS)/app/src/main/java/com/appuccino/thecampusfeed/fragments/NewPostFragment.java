@@ -308,7 +308,7 @@ public class NewPostFragment extends Fragment implements OnRefreshListener
 	}
 
 	public void updateList()
-	{	
+	{
 		if(listAdapter != null)
 		{
 			listAdapter.setCollegeFeedID(currentFeedID);

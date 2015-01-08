@@ -3,7 +3,7 @@
 //  TheCampusFeed
 //
 //  Created by Patrick Sheehan on 7/22/14.
-//  Copyright (c) 2014 Appuccino. All rights reserved.
+//  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
 #import "MenuViewController.h"
@@ -13,6 +13,10 @@
 #import "TutorialViewController.h"
 #import "CF_DialogViewController.h"
 #import "PostsViewController.h"
+#import "TopPostsViewController.h"
+#import "NewPostsViewController.h"
+
+#import "TheCampusFeed-Swift.h"
 
 @interface MenuViewController ()
 
@@ -28,6 +32,7 @@
         self.viewControllers = viewControllers;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchToNewPosts) name:@"CreatedPost" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchToTopPosts) name:@"SwitchToTopPosts" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchToAchievements) name:@"SwitchToAchievements" object:nil];
         
     }
     return self;
@@ -44,25 +49,38 @@
 {
     [self.tableView reloadData];
 }
+- (void)switchToAchievements
+{
+    AchievementViewController *viewController = self.viewControllers[ACHIEVEMENT_INDEX];
+    
+    [self.viewDeckController closeLeftView];
+    self.selectedIndex = ACHIEVEMENT_INDEX;
+    [self.viewDeckController setCenterController:viewController];
+    
+    [viewController.tableView reloadData];
+    [viewController.tableView scrollRectToVisible:CGRectMake(0,0,1,1) animated:YES];
+}
 - (void)switchToNewPosts
 {
-    PostsViewController *viewController = self.viewControllers[NEW_POSTS_INDEX];
+    NewPostsViewController *viewController = self.viewControllers[NEW_POSTS_INDEX];
     
     [self.viewDeckController closeLeftView];
     
     self.selectedIndex = NEW_POSTS_INDEX;
     [self.viewDeckController setCenterController:viewController];
-    [viewController.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    
+    [viewController.tableView reloadData];
+    [viewController.tableView scrollRectToVisible:CGRectMake(0,0,1,1) animated:YES];
 }
 - (void)switchToTopPosts
 {
-    PostsViewController *viewController = self.viewControllers[TOP_POSTS_INDEX];
+    TopPostsViewController *viewController = self.viewControllers[TOP_POSTS_INDEX];
     
     [self.viewDeckController closeLeftView];
     
     self.selectedIndex = TOP_POSTS_INDEX;
     [self.viewDeckController setCenterController:viewController];
-    [viewController refresh];
+
     [viewController.tableView scrollRectToVisible:CGRectMake(0,0,1,1) animated:YES];
 }
 
@@ -76,9 +94,10 @@
              @"Most Active Colleges",
              @"My Posts",
              @"My Comments",
+             @"Achievements",
              @"Time Crunch",
              @"Help",
-             @"Suggest Feedback"];
+             @"Give Feedback"];
 }
 
 
@@ -97,7 +116,7 @@
     }
     else if (section == 1)
     {
-        return 5;
+        return 6;
     }
     return 0;
 }
@@ -170,23 +189,24 @@
 {
     
     NSUInteger index = (indexPath.section * 4) + indexPath.row;
-    [self.viewDeckController closeLeftView];
+
 
     if (index == FEEDBACK_INDEX)
-    {   // 'Suggest feedback'
+    {   // Show 'Give feedback' email prompt
         [self openMail];
     }
     else if (index < self.viewControllers.count)
     {
         UIViewController *viewController = self.viewControllers[index];
 
-        [self.viewDeckController closeLeftView];
         if (index == HELP_INDEX)
         {   // 'Help' selection just displays dialog over currently selected view
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
             [self.navigationController presentViewController:viewController animated:YES completion:nil];
         }
         else
         {
+            [self.viewDeckController closeLeftView];
             self.selectedIndex = index;
             [self.viewDeckController setCenterController:viewController];
         }
@@ -206,12 +226,12 @@
         
         mailer.mailComposeDelegate = self;
         
-        [mailer setSubject:@"iOS App Feedback"];
+        [mailer setSubject:@"CampusFeed feedback for iOS App"];
         
         NSArray *toRecipients = [NSArray arrayWithObjects:@"feedback@thecampusfeed.com", nil];
         [mailer setToRecipients:toRecipients];
         
-        NSString *emailBody = @"Please enter your feedback here:";
+        NSString *emailBody = @"Thank you for taking the time to contact us. We'll get back to you as soon as possible.\n\n";
         [mailer setMessageBody:emailBody isHTML:NO];
         
         [self.navigationController presentViewController:mailer animated:YES completion:nil];

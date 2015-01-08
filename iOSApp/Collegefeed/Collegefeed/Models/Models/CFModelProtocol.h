@@ -7,10 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-// Constant lengths for validations
-#define MIN_TAG_LENGTH 4
-#define MAX_TAG_LENGTH 140
+#import "../../Constants.h"
 
 typedef NS_ENUM(NSInteger, ModelType)
 {
@@ -23,10 +20,12 @@ typedef NS_ENUM(NSInteger, ModelType)
 
 @protocol CFModelProtocol <NSObject>
 
-- (id)initFromJSON:(NSDictionary *)jsonObject;
++ (NSArray *)getListFromJsonData:(NSData *)jsonData error:(NSError **)error;
+
+- (id)initFromNetworkData:(NSData *)data;
+- (id)initFromJSON:(NSDictionary *)jsonDict;
 - (NSData*)toJSON;
-- (long)getID;
-- (void)validate;
+- (NSNumber *)getID; 
 - (ModelType)getType;
 
 @end
