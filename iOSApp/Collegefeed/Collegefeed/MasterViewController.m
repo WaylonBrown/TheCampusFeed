@@ -289,19 +289,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLocationActivityIndicator) name:@"LocationSearchingDidStart" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideLocationActivityIndicator) name:@"LocationSearchingDidEnd" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showComposeButton) name:@"FoundNearbyColleges" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedToast:) name:@"ToastMessage" object:nil];
-    
-}
-- (void)receivedToast:(NSNotification *)notification
-{
-    NSLog(@"%@ received Toast in a notification observer", [self class]);
-    
-    NSString *selectorString = [[notification userInfo] valueForKey:@"selector"];
-    SEL selector = NSSelectorFromString(selectorString);
-    IMP imp = [[self.dataController getMyToastController] methodForSelector:selector];
-    void (*func)(id, SEL) = (void *)imp;
-    func([self.dataController getMyToastController], selector);
 }
 - (void)refreshFeedLabel
 {
@@ -342,7 +329,7 @@
 
 - (void)displayCannotVote
 {    // users cannot cast downvotes to a distant school
-    [self.dataController.toastController toastInvalidDownvote];
+    [self.dataController queueToastWithSelector:@selector(toastInvalidDownvote)];
 }
 - (BOOL)castVote:(Vote *)vote
 {   // vote was cast in a table cell
@@ -391,7 +378,10 @@
     else
     {
         NSLog(@"ERROR. Attempted tag search with message = %@ was invalid", tagMessage);
-        [self.dataController.toastController toastInvalidTagSearch];
+        [self.dataController queueToastWithSelector:@selector(toastInvalidTagSearch)];
+        
+        
+        
     }
 }
 
@@ -419,7 +409,7 @@
         }
         else
         {
-            [self.dataController.toastController toastPostFailed];
+            [self.dataController queueToastWithSelector:@selector(toastPostFailed)];
         }
     }
     else

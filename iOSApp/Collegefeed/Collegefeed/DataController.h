@@ -62,17 +62,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic, strong) NSDate *lastCommentTime;
 @property (nonatomic, strong) NSDate *lastPostTime;
 
-// Location information
-// TODO: Delete these
-//@property (nonatomic, strong) NSDate *locationSearchStart;
-//@property (nonatomic) CLLocationDegrees lat;
-//@property (nonatomic) CLLocationDegrees lon;
-//@property (nonatomic) LocationStatus locStatus;
-//@property (nonatomic) long locationUpdateAttempts;
-// ^^^
-
-
-
 // Achievement Arrays
 @property (nonatomic, strong) NSMutableArray *achievementList;
 
@@ -135,7 +124,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (NSArray *)getNearbyCollegeList;
 - (BOOL)isNearCollege;
 - (BOOL)isNearCollegeWithId:(long)collegeId;
-//- (void)findNearbyColleges;
 - (void)finishedFetchingCollegeList;
 
 // Comments

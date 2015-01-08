@@ -16,7 +16,6 @@
 #import "Vote.h"
 #import "Networker.h"
 #import "SwitchHomeCollegeDialogView.h"
-#import "ToastController.h"
 #import "Watchdog.h"
 
 #import "TheCampusFeed-Swift.h"
@@ -46,7 +45,6 @@
         // TODO: core data on separate thread
         [self restoreAllCoreData];
         
-        [self getMyToastController];
         [self createWatchdog];
         
         [self saveStatusToCoreData];
@@ -54,15 +52,6 @@
     return self;
 }
 
-- (ToastController *)getMyToastController
-{
-    if (self.toastController == nil)
-    {
-        self.toastController = [[ToastController alloc] init];
-    }
-    
-    return self.toastController;
-}
 - (void)initArrays
 {
     self.achievementList = [[NSMutableArray alloc] init];
@@ -691,7 +680,6 @@
 }
 - (void)finishedFetchingCollegeList
 {
-    [self findNearbyColleges];
     [self writeCollegestoCoreData];
 }
 - (NSArray *)getNearbyCollegeList
@@ -702,17 +690,6 @@
     }
     
     return self.nearbyColleges;
-}
-- (void)findNearbyColleges
-{   // Populate the nearbyColleges array appropriately using current location
-
-//    self.nearbyColleges = [[NSMutableArray alloc] initWithArray:
-//                           [self findNearbyCollegesWithLat:self.lat
-//                                                   withLon:self.lon]];
-    
-    // TODO
-//    [self.toaster toastNearbyColleges:self.nearbyColleges];
-    
 }
 - (NSString *)getCurrentFeedName
 {
@@ -743,6 +720,7 @@
 
         if (![self isAbleToComment])
         {
+            
             // TODO
 //            [self.toaster toastCommentingTooSoon];
             return NO;
@@ -767,7 +745,7 @@
         }
         else
         {
-            [self.toastController toastPostFailed];
+            [self queueToastWithSelector:@selector(toastPostFailed)];
         }
     }
     @catch (NSException *exception)
@@ -1787,6 +1765,7 @@
                                           {
                                               [[NSNotificationCenter defaultCenter] postNotificationName:@"FetchedColleges" object:userInfo];
                                           }
+                                          
                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishedFetching" object:self userInfo:userInfo];
                                       });
                    });

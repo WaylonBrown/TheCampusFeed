@@ -17,6 +17,7 @@
 #import "TagPostsViewController.h"
 #import "TagViewController.h"
 #import "TopPostsViewController.h"
+#import "ToastController.h"
 #import "TrendingCollegesViewController.h"
 #import "TutorialViewController.h"
 #import "UserPostsViewController.h"
@@ -30,6 +31,8 @@
 @property (strong, nonatomic) DataController *dataController;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLLocation *myLocation;
+
+@property (strong, nonatomic) ToastController *toastController;
 
 // View Controllers
 @property (strong, nonatomic) IIViewDeckController *deckController;
@@ -58,7 +61,7 @@
     {
         self.dataController = [[DataController alloc] init];
         [self startMyLocationManager];
-        [self initViewControllersWithDataController:self.dataController];
+        [self buildViewsWithDataController:self.dataController];
         [self setUpMenuBar];
         [self showDialogForLaunchCount:self.dataController.launchCount];
 
@@ -67,44 +70,11 @@
     
     return self;
 }
-- (BOOL)shouldAutorotate
-{
-    id currentViewController = self.topViewController;
-    
-    if ([currentViewController isKindOfClass:[IIViewDeckController class]])
-    {
-        currentViewController = ((IIViewDeckController *)currentViewController).centerController;
-    }
-    
-    if ([currentViewController isKindOfClass:[TimeCrunchViewController class]]
-        || [currentViewController isKindOfClass:[CreatePostCommentViewController class]])
-        
-        return NO;
-    
-    return YES;
-}
-- (void)showDialogForLaunchCount:(long)count
-{
-    if (count == 1)
-    {
-        [[self getMyMenuViewController] showTutorial];
-    }
-    else if (count == 5)
-    {
-        CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:TWITTER];
-        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
-    }
-    else if (count == 10)
-    {
-        CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:WEBSITE];
-        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
-    }
-}
-- (void)initViewControllersWithDataController:(DataController *)data
+- (void)buildViewsWithDataController:(DataController *)data
 {
     if (data == nil)
     {
-        NSLog(@"CFNavigationController received a nil DataController object in initViewControllersWithDataController");
+        NSLog(@"CFNavigationController received a nil DataController object in buildViewControllers");
         return;
     }
     
@@ -115,7 +85,7 @@
     self.trendingTagController = [[TagViewController alloc] initWithDataController:data];
     
     self.trendingCollegesController = [[TrendingCollegesViewController alloc]
-                                           initWithDataController:data];
+                                       initWithDataController:data];
     
     self.userPostsController = [[UserPostsViewController alloc] initWithDataController:data];
     
@@ -133,58 +103,28 @@
     
     self.taggedPostsController = [[TagPostsViewController alloc] initWithDataController:data];
 }
-- (MenuViewController *)getMyMenuViewController
+
+#pragma mark - View configuration
+
+- (void)viewDidLoad
 {
-    if (self.menuViewController == nil)
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedToast:) name:@"ToastMessage" object:nil];
+}
+- (BOOL)shouldAutorotate
+{
+    id currentViewController = self.topViewController;
+    
+    if ([currentViewController isKindOfClass:[IIViewDeckController class]])
     {
-        self.menuViewController = [[MenuViewController alloc] initWithViewControllers:[self getMyViewControllers]];
-        self.menuViewController.view.layer.borderWidth = 0;
-        self.menuViewController.view.layer.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
-        self.menuViewController.view.layer.borderColor = [UIColor colorWithWhite:0.8 alpha:1.0].CGColor;
-        
-        // TODO: play with this thing to fix shadows
-        self.menuViewController.edgesForExtendedLayout = UIRectEdgeTop | UIRectEdgeBottom | UIRectEdgeLeft;
+        currentViewController = ((IIViewDeckController *)currentViewController).centerController;
     }
     
-    return self.menuViewController;
-}
-- (NSArray *)getMyViewControllers
-{
-   return [NSArray arrayWithObjects:
-           self.topPostsController,
-           self.recentPostsController,
-           self.trendingTagController,
-           self.trendingCollegesController,
-           self.userPostsController,
-           self.userCommentsController,
-           self.achievementController,
-           self.timeCrunchController,
-           self.helpController, nil];
-}
-- (IIViewDeckController *)getMyDeckController
-{
-    if (self.deckController == nil)
-    {
-        self.deckController = [[IIViewDeckController alloc] initWithCenterViewController:self.topPostsController leftViewController:[self getMyMenuViewController]];
+    if ([currentViewController isKindOfClass:[TimeCrunchViewController class]]
+        || [currentViewController isKindOfClass:[CreatePostCommentViewController class]])
         
-        self.deckController.openSlideAnimationDuration = 0.25f;
-        self.deckController.closeSlideAnimationDuration = 0.25f;
-        self.deckController.leftSize = 100.0f;
-        self.deckController.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
-    }
+        return NO;
     
-    return self.deckController;
-}
-- (void)openLeftMenu
-{
-    if ([[self getMyDeckController] isSideOpen:IIViewDeckLeftSide])
-    {
-        [[self getMyDeckController] closeLeftView];
-    }
-    else
-    {
-        [[self getMyDeckController] openLeftView];
-    }
+    return YES;
 }
 - (void)setUpMenuBar
 {
@@ -206,7 +146,38 @@
     
     negativeSpacer.width = -16;
     [[self getMyDeckController] navigationItem].leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, menuButton, nil];
+    
+}
 
+#pragma mark - Actions
+
+- (void)showDialogForLaunchCount:(long)count
+{
+    if (count == 1)
+    {
+        [[self getMyMenuViewController] showTutorial];
+    }
+    else if (count == 5)
+    {
+        CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:TWITTER];
+        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
+    }
+    else if (count == 10)
+    {
+        CF_DialogViewController *dialog = [[CF_DialogViewController alloc] initWithDialogType:WEBSITE];
+        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dialog animated:YES completion:nil];
+    }
+}
+- (void)openLeftMenu
+{
+    if ([[self getMyDeckController] isSideOpen:IIViewDeckLeftSide])
+    {
+        [[self getMyDeckController] closeLeftView];
+    }
+    else
+    {
+        [[self getMyDeckController] openLeftView];
+    }
 }
 - (void)didSelectTag:(NSString *)tagMessage
 {
@@ -222,7 +193,20 @@
     }
 }
 
-#pragma mark - Lazy loading elements
+#pragma mark - Toasts
+
+- (void)receivedToast:(NSNotification *)notification
+{
+    NSLog(@"%@ received Toast in a notification observer", [self class]);
+    
+    NSString *selectorString = [[notification userInfo] valueForKey:@"selector"];
+    SEL selector = NSSelectorFromString(selectorString);
+    IMP imp = [[self getMyToastController] methodForSelector:selector];
+    void (*func)(id, SEL) = (void *)imp;
+    func([self getMyToastController], selector);
+}
+
+#pragma mark - Lazy loaded objects
 
 - (UIBarButtonItem *)getBlankBackButton
 {
@@ -244,9 +228,60 @@
     
     return button;
 }
+- (MenuViewController *)getMyMenuViewController
+{
+    if (self.menuViewController == nil)
+    {
+        self.menuViewController = [[MenuViewController alloc] initWithViewControllers:[self getMyViewControllers]];
+        self.menuViewController.view.layer.borderWidth = 0;
+        self.menuViewController.view.layer.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0].CGColor;
+        self.menuViewController.view.layer.borderColor = [UIColor colorWithWhite:0.8 alpha:1.0].CGColor;
+        
+        // TODO: play with this thing to fix shadows
+        self.menuViewController.edgesForExtendedLayout = UIRectEdgeTop | UIRectEdgeBottom | UIRectEdgeLeft;
+    }
+    
+    return self.menuViewController;
+}
+- (NSArray *)getMyViewControllers
+{
+    return [NSArray arrayWithObjects:
+            self.topPostsController,
+            self.recentPostsController,
+            self.trendingTagController,
+            self.trendingCollegesController,
+            self.userPostsController,
+            self.userCommentsController,
+            self.achievementController,
+            self.timeCrunchController,
+            self.helpController, nil];
+}
+- (IIViewDeckController *)getMyDeckController
+{
+    if (self.deckController == nil)
+    {
+        self.deckController = [[IIViewDeckController alloc] initWithCenterViewController:self.topPostsController leftViewController:[self getMyMenuViewController]];
+        
+        self.deckController.openSlideAnimationDuration = 0.25f;
+        self.deckController.closeSlideAnimationDuration = 0.25f;
+        self.deckController.leftSize = 100.0f;
+        self.deckController.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
+    }
+    
+    return self.deckController;
+}
 
 #pragma mark - Location 
 
+- (ToastController *)getMyToastController
+{
+    if (self.toastController == nil)
+    {
+        self.toastController = [[ToastController alloc] init];
+    }
+    
+    return self.toastController;
+}
 - (CLLocationManager *)startMyLocationManager
 {
     NSLog(@"CFNavController.startMyLocationManager() called");
@@ -307,13 +342,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationSearchingDidEnd" object:nil];
 
     [self.dataController queueToastWithSelector:@selector(toastLocationSearchFailed)];
-
-//    NSLog(@"Posting notification to toast location search failed");
-//    NSDictionary *info = [NSDictionary dictionaryWithObject:
-//                          [NSValue valueWithPointer:@selector(toastLocationSearchFailed)]
-//                                                     forKey:@"selector"];
-//    
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"ToastMessage" object:self userInfo:info];
 }
 
 

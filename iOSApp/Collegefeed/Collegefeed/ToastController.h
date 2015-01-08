@@ -22,7 +22,6 @@
 - (void)releaseBlockedToasts;
 - (void)toastCustomMessage:(NSString *)message;
 
-
 // Permissions
 - (void)toastInvalidDownvote;
 - (void)toastCommentingTooSoon:(int)minutesLeft;

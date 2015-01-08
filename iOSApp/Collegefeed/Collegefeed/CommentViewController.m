@@ -275,7 +275,7 @@
     }
     else
     {
-        [self.dataController.toastController toastFacebookUnavailable];
+        [self.dataController queueToastWithSelector:@selector(toastFacebookUnavailable)];
     }
 }
 - (void)shareOnTwitter
@@ -291,7 +291,7 @@
     }
     else
     {
-        [self.dataController.toastController toastTwitterUnavailable];
+        [self.dataController queueToastWithSelector:@selector(toastTwitterUnavailable)];
     }
 }
 
@@ -322,15 +322,13 @@
 {
     if (buttonIndex == 1)
     {   // attempt to flag a post as inappropriate
-//        Post *parentPost = self.dataController.postInFocus;
-
         if ((self.parentPost != nil) && [self.dataController flagPost:[[self.parentPost getID] longValue]])
         {
-            [self.dataController.toastController toastFlagSuccess];
+            [self.dataController queueToastWithSelector:@selector(toastFlagSuccess)];
         }
         else
         {
-            [self.dataController.toastController toastFlagFailed];
+            [self.dataController queueToastWithSelector:@selector(toastFlagFailed)];
         }
     }
 }
