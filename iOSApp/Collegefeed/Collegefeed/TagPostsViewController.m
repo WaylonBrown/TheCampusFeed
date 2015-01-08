@@ -24,15 +24,20 @@
 {
     [super loadView];
 }
-- (void)assignTagMessage:(NSString *)tag
+- (BOOL)assignTagMessage:(NSString *)tag
 {
     if (![self.tagMessage isEqualToString:tag])
     {
         NSLog(@"Assigning new tag = %@ in TagPostsViewController", tag);
+        self.dataController.pageForTaggedPostsAllColleges = 0;
+        self.dataController.pageForTaggedPostsSingleCollege = 0;
         self.tagMessage = tag;
         [self.list removeAllObjects];
-        [self fetchContent];
+//        [self fetchContent];
+        return YES;
     }
+    
+    return NO;
 }
 #pragma mark - Table View
 

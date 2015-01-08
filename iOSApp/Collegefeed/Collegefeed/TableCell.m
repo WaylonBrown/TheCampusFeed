@@ -70,31 +70,29 @@
         NSLog(@"TableCell assigning image to post");
         [self.pictureActivityIndicator startAnimating];
         
-        if (post.image != nil && [post.image isKindOfClass:[UIImage class]])
-        {
-            self.pictureView.image = post.image;
-            [self.pictureActivityIndicator stopAnimating];
-        }
-        else
-        {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                NSString *imgURL = [post getImage_url];
-                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSString *imgURL = [post getImage_url];
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
+            
+            [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
+            
+            // set image on main thread.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (data == nil)
+                {
+                    self.pictureHeight = 0;
+                    [self setNeedsLayout];
+                    [self layoutIfNeeded];
+                }
+                else
+                {
+                    [self.pictureView setImage:[UIImage imageWithData:data]];
+                    post.image = [UIImage imageWithData:data];
+                }
                 
-                [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
-                
-                // set image on main thread.
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (data != nil)
-                    {
-                        [self.pictureView setImage:[UIImage imageWithData:data]];
-                        post.image = [UIImage imageWithData:data];
-                    }
-                    
-                    [self.pictureActivityIndicator stopAnimating];
-                });
+                [self.pictureActivityIndicator stopAnimating];
             });
-        }
+        });
     }
 }
 - (BOOL)assignWithComment:(Comment *)comment

@@ -10,6 +10,6 @@
 
 @interface TagPostsViewController : PostsViewController
 
-- (void)assignTagMessage:(NSString *)tag;
+- (BOOL)assignTagMessage:(NSString *)tag;
 
 @end

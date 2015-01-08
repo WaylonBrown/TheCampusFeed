@@ -211,9 +211,11 @@
         self.taggedPostsController = [[TagPostsViewController alloc] initWithDataController:self.dataController];
     }
     
-    [self.taggedPostsController assignTagMessage:tagMessage];
-    [[self navigationItem] setBackBarButtonItem:[self getBlankBackButton]];
-    [self pushViewController:self.taggedPostsController animated:YES];
+    if ([self.taggedPostsController assignTagMessage:tagMessage])
+    {
+        [[self navigationItem] setBackBarButtonItem:[self getBlankBackButton]];
+        [self pushViewController:self.taggedPostsController animated:YES];
+    }
 }
 - (UIBarButtonItem *)getBlankBackButton
 {
