@@ -37,9 +37,9 @@
     return self;
     
 }
-- (void)viewDidLoad
+- (void)loadView
 {
-    [super viewDidLoad];
+    [super loadView];
     
     // Dim the background view
     [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
@@ -56,6 +56,30 @@
     
     // Set fonts
     [self.titleLabel setFont:CF_FONT_LIGHT(30)];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLocation) name:@"LocationSearchingDidStart" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLocation) name:@"LocationSearchingDidEnd" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLocation) name:@"FoundNearbyColleges" object:nil];
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+//    
+//    // Dim the background view
+//    [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
+//    
+//    // Main alert view
+//    self.alertView.layer.borderWidth = 2;
+//    self.alertView.layer.cornerRadius = 5;
+    
+//    // Table View
+//    [self.tableView setDataSource:self];
+//    [self.tableView setDelegate:self];
+//    self.tableView.estimatedRowHeight = TABLE_CELL_HEIGHT;
+//    self.tableView.rowHeight = UITableViewAutomaticDimension;
+//    
+//    // Set fonts
+//    [self.titleLabel setFont:CF_FONT_LIGHT(30)];
     
 }
 - (void)viewWillAppear:(BOOL)animated

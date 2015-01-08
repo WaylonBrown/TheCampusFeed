@@ -629,7 +629,10 @@
     
     NSLog(@"Found %lu colleges nearby", (unsigned long)self.nearbyColleges.count);
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"FoundNearbyColleges" object:nil];
+    if (self.nearbyColleges.count > 0)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FoundNearbyColleges" object:nil];
+    }
 }
 - (void)switchedToSpecificCollegeOrNil:(College *)college
 {
@@ -1972,7 +1975,7 @@
 //    [self setLocStatus:LOCATION_NOT_FOUND];
 //    [self.locationManager stopUpdatingLocation];
     
-    // TODO: tell CFNavController to remove post create and loading indicator
+
 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationUpdated" object:self];
 
 //}
