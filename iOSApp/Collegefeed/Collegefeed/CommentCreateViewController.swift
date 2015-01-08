@@ -10,6 +10,8 @@ import UIKit
 
 class CommentCreateViewController: CreateViewController {
 
+    var post: Post?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,10 +24,9 @@ class CommentCreateViewController: CreateViewController {
         self.view.layoutIfNeeded()
     }
     
-    func assign(newCollege: College) {
-        if let c = newCollege as College? {
-            self.subtitleLabel.text = "Posting to \(c.name)"
-            self.college = c
+    func assign(newPost: Post) {
+        if let p = newPost as Post? {
+            self.post = p
         }
     }
     
@@ -35,7 +36,7 @@ class CommentCreateViewController: CreateViewController {
             if Comment.withMessageIsValid(message) {
                 println("Comment message is valid")
                 
-                if let postId = self.post!.postId as Int?{
+                if let postId = self.post!.post_id as Int?{
                     println("Comment's postID is valid")
                     self.dataController.submitCommentToNetworkWithMessage(message, withPostId:postId)
                     self.dismiss(self)

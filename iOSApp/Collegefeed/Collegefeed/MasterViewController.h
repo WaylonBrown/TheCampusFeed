@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 #import "ChildCellDelegate.h"
-#import "CreateViewController.h"
 #import "FeedSelectViewController.h"
 #import "DataController.h"
 #import "CreateViewController.h"
@@ -67,6 +66,5 @@
 // Helper Methods
 - (void)setCorrectList;
 - (UIBarButtonItem *)blankBackButton;
-- (void)receivedToast:(NSNotification *)notification;
 
 @end

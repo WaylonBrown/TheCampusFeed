@@ -176,7 +176,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 // User data
 - (long)getUserPostScore;
 - (long)getUserCommentScore;
-- (BOOL)isAbleToPost:(NSNumber *)minutesRemaining;
+//- (BOOL)isAbleToPost:(NSNumber *)minutesRemaining;
 - (BOOL)isAbleToComment;
 
 // Votes

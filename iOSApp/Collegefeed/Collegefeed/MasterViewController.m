@@ -34,7 +34,7 @@
 
 @interface MasterViewController()
 
-@property (weak, nonatomic) PostCreateViewController *postCreateController;
+@property (strong, nonatomic) PostCreateViewController *postCreateController;
 
 @end
 
@@ -266,14 +266,20 @@
 }
 - (void)showCreationDialogForCollege:(College *) college
 {
-    PostCreateViewController *controller = [self getMyPostCreateController];
-    [controller assign:college];
-    
+    if (college != nil)
+    {
+        PostCreateViewController *controller = [self getMyPostCreateController];
+        [controller assign:college];
+        [self presentViewController:controller animated:YES completion:nil];
+    }
+    else
+    {
+        NSLog(@"Could not show post creation dialog for nil college");
+    }
 //    self.createController = [[CreateViewController alloc] initWithType:POST
 //                                                                      withCollege:college
 //                                                               withDataController:self.dataController];
 //    [self.createController setDelegate:self];
-    [self presentViewController:controller animated:YES completion:nil];
 }
 - (void)pullToRefresh
 {

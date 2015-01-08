@@ -17,6 +17,7 @@
 #import "Networker.h"
 #import "SwitchHomeCollegeDialogView.h"
 #import "Watchdog.h"
+#import "ToastController.h"
 
 #import "TheCampusFeed-Swift.h"
 
@@ -632,7 +633,7 @@
     
     if (self.nearbyColleges.count == 0)
     {
-        [self queueToastWithSelector:@selector(toastLocationFoundNotNearCollege)];
+        [Shared queueToastWithSelector:@selector(toastLocationFoundNotNearCollege)];
     }
 
     if (self.nearbyColleges.count > 0)
@@ -751,7 +752,7 @@
         }
         else
         {
-            [self queueToastWithSelector:@selector(toastCommentFailed)];
+            [Shared queueToastWithSelector:@selector(toastCommentFailed)];
         }
     }
     @catch (NSException *exception)
@@ -934,32 +935,28 @@
                            withCollegeId:(long)collegeId
                                withImage:(UIImage *)image
 {
-    @try
+    NSString *udid = [Shared getUniqueDeviceIdentifier];
+    
+    // TODO: race condition for image ID
+    NSNumber *imageID = [self postImageToServer:image fromFilePath:nil];
+    Post *post = [[Post alloc] initWithMessage:message
+                                 withCollegeId:[NSNumber numberWithLong:collegeId]
+                                 withUserToken:udid
+                                   withImageId:imageID];
+    
+    if ([self hasPostingTimeIntervalElapsed] && [self isApprovedByWatchDog:post.text])
     {
-        NSString *udid = [Shared getUniqueDeviceIdentifier];
+        NSData *networkResult = [Networker POSTPostData:[post toJSON] WithCollegeId:[post.college_id longValue]];
         
-        NSNumber *imageID = [self postImageToServer:image fromFilePath:nil];
-        Post *post = [[Post alloc] initWithMessage:message
-                                     withCollegeId:[NSNumber numberWithLong:collegeId]
-                                     withUserToken:udid
-                                       withImageId:imageID];
-        
-        if (![self shouldPostToServer:post])
+        if (networkResult)
         {
-            return NO;
-        }
-        
-        NSData *result = [Networker POSTPostData:[post toJSON] WithCollegeId:[post.college_id longValue]];
-        
-        if (result)
-        {
-            NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
+            NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:networkResult
                                                                        options:0
                                                                          error:nil];
             Post *networkPost = [[Post alloc] initFromJSON:jsonObject];
-
+            
             networkPost.college = [self getCollegeById:collegeId];
-
+            
             NSLog(@"Successfully submitted Post to network. Text = %@. College = %@.", networkPost.text, networkPost.college.name);
             
             self.lastPostTime = [networkPost getCreated_at];
@@ -985,19 +982,61 @@
                 [self saveVote:actualVote];
             }
             
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:@"CreatedPost" object:self];
-            return YES;
-        }
-        else
-        {
-            [self.toastController toastPostFailed];
+            return networkPost;
         }
     }
-    @catch (NSException *exception)
+    else
     {
-        NSLog(@"%@", exception.reason);
+        [Shared queueToastWithSelector:@selector(toastPostFailed)];
     }
-    return NO;
+    
+    return nil;
+    
+//    if (result)
+//    {
+//        NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:result
+//                                                                   options:0
+//                                                                     error:nil];
+//        Post *networkPost = [[Post alloc] initFromJSON:jsonObject];
+//
+//        networkPost.college = [self getCollegeById:collegeId];
+//
+//        NSLog(@"Successfully submitted Post to network. Text = %@. College = %@.", networkPost.text, networkPost.college.name);
+//        
+//        self.lastPostTime = [networkPost getCreated_at];
+//        
+//        [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
+//        [self.recentPostsSingleCollege insertObject:networkPost atIndex:0];
+//        
+//        
+//        long oldCount = self.userPosts.count;
+//        
+//        [self.userPosts insertObject:networkPost atIndex:0];
+//        
+//        long newCount = self.userPosts.count;
+//        
+//        [self savePost:networkPost];
+//        
+//        [self tryAchievementPostCountWithOldCount:oldCount toNewCount:newCount];
+//        
+//        Vote *actualVote = networkPost.vote;
+//        if (actualVote != nil && actualVote.voteID > 0)
+//        {
+//            [self.userPostVotes addObject:actualVote];
+//            [self saveVote:actualVote];
+//        }
+//        
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"CreatedPost" object:self];
+//        
+//    }
+//    else
+//    {
+//        [self.toastController toastPostFailed];
+//    }
+    
+//    return nil;
 }
 - (void)savePost:(Post *)post
 {
@@ -1018,43 +1057,15 @@
 - (BOOL)shouldPostToServer:(Post *)post
 {
     // Check for posting too frequently
-    NSNumber *minutesUntilCanPost = [NSNumber new];
-    if (![self isAbleToPost:minutesUntilCanPost])
+    
+    if ([self hasPostingTimeIntervalElapsed])
     {
-        [self.toastController toastPostingTooSoon:minutesUntilCanPost];
-        return NO;
+        
     }
     
-    NSMutableDictionary* resultDict = [NSMutableDictionary new];
-    
-    BOOL validMessage = [self.watchDog shouldSubmitMessage:post.text WithResults:resultDict];
-    
-    if (!validMessage)
+    if ([self isApprovedByWatchDog:post.text])
     {
-        NSString *errorToastMessage = @"Sorry, your message was rejected. Please try again. Reason:";
         
-        NSMutableArray *errorReasons = [NSMutableArray new];
-        if (![[resultDict valueForKey:@"isValidLength"] boolValue])
-        {
-            [errorReasons addObject:@"Invalid length"];
-            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Invalid length,"];
-        }
-        if ([[resultDict valueForKey:@"shouldBlockForNumber"] boolValue])
-        {
-            [errorReasons addObject:@"Phone numbers not allowed"];
-            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Phone numbers not allowed,"];
-        }
-        if ([[resultDict valueForKey:@"shouldBlockForEmail"] boolValue])
-        {
-            [errorReasons addObject:@"Email addresses not allowed"];
-            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Email addresses not allowed,"];
-        }
-        
-        errorToastMessage = [errorToastMessage substringToIndex:[errorToastMessage length] - 1];
-        
-        [self.toastController toastCustomMessage:errorToastMessage];
-        
-        return NO;
     }
     
     return YES;
@@ -1303,16 +1314,16 @@
 
 #pragma mark - Toasts
 
-- (void)queueToastWithSelector:(SEL)selector
-{
-    NSLog(@"Posting notification with @selector(%@)", NSStringFromSelector(selector));
-    NSDictionary *info = [NSDictionary dictionaryWithObject:NSStringFromSelector(selector)
-                                                     forKey:@"selector"];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ToastMessage"
-                                                        object:self
-                                                      userInfo:info];
-}
+//- (void)queueToastWithSelector:(SEL)selector
+//{
+//    NSLog(@"Posting notification with @selector(%@)", NSStringFromSelector(selector));
+//    NSDictionary *info = [NSDictionary dictionaryWithObject:NSStringFromSelector(selector)
+//                                                     forKey:@"selector"];
+//    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"ToastMessage"
+//                                                        object:self
+//                                                      userInfo:info];
+//}
 
 #pragma mark - Time Crunch
 
@@ -1357,7 +1368,7 @@
     if (self.timeCrunch == nil || self.timeCrunch.collegeId == 0)
     {
         NSLog(@"Activating Time Crunch failed");
-        [self queueToastWithSelector:@selector(toastErrorFindingTimeCrunchCollege)];
+        [Shared queueToastWithSelector:@selector(toastErrorFindingTimeCrunchCollege)];
     }
     else if (self.timeCrunch.timeWasActivatedAt == nil)
     {
@@ -1740,6 +1751,40 @@
     self.watchDog = [[Watchdog alloc] initWithOptions:options];
     NSLog(@"Finished creating Watchdog");
 }
+- (BOOL)isApprovedByWatchDog:(NSString *)message
+{
+    NSMutableDictionary* resultDict = [NSMutableDictionary new];
+
+    if ([self.watchDog shouldSubmitMessage:message
+                               WithResults:resultDict])
+    {
+        NSString *errorToastMessage = @"Sorry, your message was rejected. Please try again. Reason:";
+        
+        NSMutableArray *errorReasons = [NSMutableArray new];
+        if (![[resultDict valueForKey:@"isValidLength"] boolValue])
+        {
+            [errorReasons addObject:@"Invalid length"];
+            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Invalid length,"];
+        }
+        if ([[resultDict valueForKey:@"shouldBlockForNumber"] boolValue])
+        {
+            [errorReasons addObject:@"Phone numbers not allowed"];
+            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Phone numbers not allowed,"];
+        }
+        if ([[resultDict valueForKey:@"shouldBlockForEmail"] boolValue])
+        {
+            [errorReasons addObject:@"Email addresses not allowed"];
+            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Email addresses not allowed,"];
+        }
+        
+        errorToastMessage = [errorToastMessage substringToIndex:[errorToastMessage length] - 1];
+        
+        [self.toastController toastCustomMessage:errorToastMessage];
+        
+        return NO;
+    }
+
+}
 
 #pragma mark - Helper Methods
 
@@ -1902,19 +1947,19 @@
 {   // Helper method for milesAway
     return value * PI_VALUE / 180;
 }
-- (BOOL)isAbleToPost:(NSNumber *)minutesRemaining
+- (BOOL)hasPostingTimeIntervalElapsed
 {
     if (self.lastPostTime != nil)
     {
         NSTimeInterval diff = [self.lastPostTime timeIntervalSinceNow];
-        minutesRemaining = [NSNumber numberWithInt:(abs(diff) / 60)];
-        float minSeconds = MINIMUM_POSTING_INTERVAL_MINUTES * 60;
-        if (abs(diff) < minSeconds)
+        float secondsElapsed = abs(diff);
+        if (secondsElapsed < MINIMUM_POSTING_INTERVAL_MINUTES * 60)
         {
+            [Shared queueToastWithSelector:@selector(toastPostingTooSoon)];
             return NO;
         }
     }
-    minutesRemaining = [NSNumber numberWithInt:0];
+    
     return YES;
 }
 - (BOOL)isAbleToComment
@@ -1922,8 +1967,8 @@
     if (self.lastCommentTime != nil)
     {
         NSTimeInterval diff = [self.lastCommentTime timeIntervalSinceNow];
-        float minSeconds = MINIMUM_COMMENTING_INTERVAL_MINUTES * 60;
-        if (abs(diff) < minSeconds)
+        float secondsElapsed = abs(diff);
+        if (secondsElapsed < MINIMUM_COMMENTING_INTERVAL_MINUTES * 60)
         {
             return NO;
         }

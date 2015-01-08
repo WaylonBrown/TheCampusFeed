@@ -310,11 +310,21 @@
 - (void)create
 {   // Display popup to let user type a new comment
     
-    CreateViewController *alert = [[CreateViewController alloc] initWithType:COMMENT
-                                                                                       withCollege:nil
-                                                                                withDataController:self.dataController];
-    [alert setDelegate:self];
-    [self presentViewController:alert animated:YES completion:nil];
+    if (self.parentPost != nil)
+    {
+        CommentCreateViewController *controller = [self getMyCommentCreateController];
+        [controller assign:self.parentPost];
+        [self presentViewController:controller animated:YES completion:nil];
+    }
+    else
+    {
+        NSLog(@"Could not show comment creation dialog for nil parent post");
+    }
+//    CreateViewController *alert = [[CreateViewController alloc] initWithType:COMMENT
+//                                                                                       withCollege:nil
+//                                                                                withDataController:self.dataController];
+//    [alert setDelegate:self];
+//    [self presentViewController:alert animated:YES completion:nil];
 }
 - (void)flag
 {   // Display popup to let user type a new comment
@@ -384,36 +394,36 @@
 
 #pragma mark - CreationViewProtocol Delegate Methods
 
-- (void)submitPostCommentCreationWithMessage:(NSString *)message
-                               withCollegeId:(long)collegeId
-                               withUserToken:(NSString *)userToken
-                                   withImage:(UIImage *)image
-{
-//    if ([self.dataController isAbleToComment])
-    if (true)
-    {
-        [self.createController dismiss:self];
-
-//        Post *parentPost = self.dataController.postInFocus;
-        if (self.parentPost != nil)
-        {
-            BOOL success = [self.dataController createCommentWithMessage:message withPost:self.parentPost];
-            if (success)
-            {
-                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataController.commentList.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-//                [self.commentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataController.commentList.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-            }
-        }
-//        else
-//        {
-//            [self.toastController toastPostFailed];
-//        }
-    }
-//    else
+//- (void)submitPostCommentCreationWithMessage:(NSString *)message
+//                               withCollegeId:(long)collegeId
+//                               withUserToken:(NSString *)userToken
+//                                   withImage:(UIImage *)image
+//{
+////    if ([self.dataController isAbleToComment])
+//    if (true)
 //    {
-//        [self.toastController toastCommentingTooSoon];
+//        [self.createController dismiss:self];
+//
+////        Post *parentPost = self.dataController.postInFocus;
+//        if (self.parentPost != nil)
+//        {
+//            BOOL success = [self.dataController createCommentWithMessage:message withPost:self.parentPost];
+//            if (success)
+//            {
+//                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataController.commentList.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+////                [self.commentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataController.commentList.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//            }
+//        }
+////        else
+////        {
+////            [self.toastController toastPostFailed];
+////        }
 //    }
-    
-}
+////    else
+////    {
+////        [self.toastController toastCommentingTooSoon];
+////    }
+//    
+//}
 
 @end
