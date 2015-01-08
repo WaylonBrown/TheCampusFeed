@@ -297,15 +297,21 @@
 {
     NSLog(@"%@ received Toast in a notification observer", [self class]);
     
-    id selectorId = [[notification userInfo] valueForKey:@"toastSelector"];
-    if (selectorId != nil)
-    {
-        SEL selector = [selectorValueAsValue pointerValue];
-        if ([self.toastController respondsToSelector:selector])
-        {
-            [self.toastController performSelector:selector];
-        }
-    }
+    NSString *selectorString = [[notification userInfo] valueForKey:@"selector"];
+    SEL selector = NSSelectorFromString(selectorString);
+    IMP imp = [self.toastController methodForSelector:selector];
+    void (*func)(id, SEL) = (void *)imp;
+    func(self.toastController, selector);
+    
+    
+//    if (selectorId != nil)
+//    {
+//        SEL selector = [selectorId pointerValue];
+//        if ([self.toastController respondsToSelector:selector])
+//        {
+//            [self.toastController performSelector:selector];
+//        }
+//    }
 }
 - (void)refreshFeedLabel
 {
@@ -433,7 +439,8 @@
 }
 - (void)commentingTooFrequently
 {
-    [self.toastController toastCommentingTooSoon];
+    // TODO
+//    [self.toastController toastCommentingTooSoon];
 }
 
 #pragma mark - FeedSelectionProtocolDelegate

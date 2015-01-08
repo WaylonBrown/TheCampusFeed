@@ -306,13 +306,14 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationSearchingDidEnd" object:nil];
 
-    
-    NSLog(@"Posting notification to toast location search failed");
-    NSDictionary *info = [N//SDictionary dictionaryWithObject:
-                          [NSValue valueWithPointer:@selector(toastLocationSearchFailed)]
-                                                     forKey:@"selector"];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ToastMessage" object:self userInfo:info];
+    [self.dataController queueToastWithSelector:@selector(toastLocationSearchFailed)];
+
+//    NSLog(@"Posting notification to toast location search failed");
+//    NSDictionary *info = [NSDictionary dictionaryWithObject:
+//                          [NSValue valueWithPointer:@selector(toastLocationSearchFailed)]
+//                                                     forKey:@"selector"];
+//    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"ToastMessage" object:self userInfo:info];
 }
 
 

@@ -1310,8 +1310,7 @@
 - (void)queueToastWithSelector:(SEL)selector
 {
     NSLog(@"Posting notification with @selector(%@)", NSStringFromSelector(selector));
-    NSDictionary *info = [NSDictionary dictionaryWithObject:
-                          [NSValue valueWithPointer:selector]
+    NSDictionary *info = [NSDictionary dictionaryWithObject:NSStringFromSelector(selector)
                                                      forKey:@"selector"];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ToastMessage"

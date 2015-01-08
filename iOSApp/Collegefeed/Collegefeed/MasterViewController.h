@@ -72,5 +72,6 @@
 // Helper Methods
 - (void)setCorrectList;
 - (UIBarButtonItem *)blankBackButton;
+- (void)receivedToast:(NSNotification *)notification;
 
 @end

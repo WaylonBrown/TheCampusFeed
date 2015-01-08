@@ -178,6 +178,9 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 // Time Crunch
 - (void)attemptActivateTimeCrunch;
 
+// Toasts
+- (void)queueToastWithSelector:(SEL)selector;
+
 // User data
 - (long)getUserPostScore;
 - (long)getUserCommentScore;
