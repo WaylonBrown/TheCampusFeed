@@ -31,6 +31,9 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'json'
 
+gem 'capistrano-rails'
+gem 'capistrano-rbenv', '~> 2.0', require: false
+
 # rspec api json doc
 gem 'rspec-rails'
 gem 'rspec_api_documentation'
