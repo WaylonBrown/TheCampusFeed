@@ -449,11 +449,13 @@
 		53B090B9192DA21600E3D996 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				53F8789819133F60002A578B /* Collegefeed-Info.plist */,
 				53F8789719133F60002A578B /* Supporting Files */,
 				53AB57C0194AAFFF001D1B7B /* Fonts */,
 				5390A9131914B76800ACD082 /* Images */,
 			);
 			name = Resources;
+			path = Collegefeed;
 			sourceTree = "<group>";
 		};
 		53B1FE0119254EB900905E49 /* MasterView */ = {
@@ -493,7 +495,8 @@
 			children = (
 				5358CE69196E5D7F00FF4E45 /* Models.xcodeproj */,
 				53CF3303194E53B6008BB733 /* Networker.xcodeproj */,
-				53F8789619133F60002A578B /* TheCampusFeed */,
+				53F8789619133F60002A578B /* Source Code */,
+				53B090B9192DA21600E3D996 /* Resources */,
 				53F8788F19133F60002A578B /* Frameworks */,
 				53F8788E19133F60002A578B /* Products */,
 			);
@@ -523,10 +526,9 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		53F8789619133F60002A578B /* TheCampusFeed */ = {
+		53F8789619133F60002A578B /* Source Code */ = {
 			isa = PBXGroup;
 			children = (
-				53F8789819133F60002A578B /* Collegefeed-Info.plist */,
 				53F8789F19133F60002A578B /* AppDelegate.h */,
 				53F878A019133F60002A578B /* AppDelegate.m */,
 				53F8789E19133F60002A578B /* Collegefeed-Prefix.pch */,
@@ -537,9 +539,8 @@
 				CD4CCF451A5E50DF00377050 /* Business Logic */,
 				CD4CCF461A5E510800377050 /* Models */,
 				CD4CCF411A5E503F00377050 /* Utility */,
-				53B090B9192DA21600E3D996 /* Resources */,
 			);
-			name = TheCampusFeed;
+			name = "Source Code";
 			path = Collegefeed;
 			sourceTree = "<group>";
 		};

@@ -26,8 +26,12 @@
 
 @interface CFNavigationController ()
 
+// Data
 @property (strong, nonatomic) DataController *dataController;
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) CLLocation *myLocation;
 
+// View Controllers
 @property (strong, nonatomic) IIViewDeckController *deckController;
 @property (strong, nonatomic) MenuViewController *menuViewController;
 @property (strong, nonatomic) TopPostsViewController *topPostsController;
@@ -53,6 +57,7 @@
     if (self)
     {
         self.dataController = [[DataController alloc] init];
+        [self startMyLocationManager];
         [self initViewControllersWithDataController:self.dataController];
         [self setUpMenuBar];
         [self showDialogForLaunchCount:self.dataController.launchCount];
@@ -202,7 +207,6 @@
     negativeSpacer.width = -16;
     [[self getMyDeckController] navigationItem].leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, menuButton, nil];
 
-//    self.deckController.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, menuButton, nil];
 }
 - (void)didSelectTag:(NSString *)tagMessage
 {
@@ -217,6 +221,9 @@
         [self pushViewController:self.taggedPostsController animated:YES];
     }
 }
+
+#pragma mark - Lazy loading elements
+
 - (UIBarButtonItem *)getBlankBackButton
 {
     return [[UIBarButtonItem alloc]
@@ -224,6 +231,76 @@
             style:UIBarButtonItemStylePlain
             target:nil
             action:nil];
+}
+- (UIBarButtonItem *)getLoadingBarButtonItem
+{
+    if (self.locationActivityIndicator == nil)
+    {
+        self.locationActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    }
+    
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.locationActivityIndicator];
+    [self.locationActivityIndicator startAnimating];
+    
+    return button;
+}
+
+#pragma mark - Location 
+
+- (CLLocationManager *)startMyLocationManager
+{
+    self.dataController.locationStatus = LOCATION_SEARCHING;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationSearchingDidStart" object:nil];
+    
+    if (self.locationManager == nil)
+    {
+        self.locationManager = [[CLLocationManager alloc] init];
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
+        self.locationManager.delegate = self;
+        
+        if ([[UIDevice currentDevice] systemVersion].floatValue >= 8.0)
+        {
+            [self.locationManager requestWhenInUseAuthorization];
+        }
+    }
+    
+    [self.locationManager startUpdatingLocation];
+    
+    return self.locationManager;
+}
+- (void)locationManager:(CLLocationManager *)manager
+    didUpdateToLocation:(CLLocation *)newLocation
+           fromLocation:(CLLocation *)oldLocation
+{
+    self.dataController.locationStatus = LOCATION_FOUND;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationSearchingDidEnd" object:nil];
+    
+    if (!self.myLocation)
+    {
+        self.myLocation = newLocation;
+    }
+    
+    if (newLocation.coordinate.latitude != self.myLocation.coordinate.latitude &&
+        newLocation.coordinate.longitude != self.myLocation.coordinate.longitude)
+    {
+        self.myLocation = newLocation;
+        NSLog(@"New location found: %f, %f",
+              self.myLocation.coordinate.latitude,
+              self.myLocation.coordinate.longitude);
+        
+        [self.dataController setFoundUserLocationWithLat:self.myLocation.coordinate.latitude
+                                              withLon:self.myLocation.coordinate.longitude];
+    }
+}
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationSearchingDidEnd" object:nil];
+    
+    NSLog(@"Failed Location Finding: %@", [error localizedDescription]);
+    self.dataController.locationStatus = LOCATION_NOT_FOUND;
+
+//    postNotificationName:@"LocationUpdated" object:self];
+    //    [self.toaster toastLocationConnectionError];
 }
 
 @end

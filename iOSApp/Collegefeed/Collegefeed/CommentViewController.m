@@ -30,7 +30,7 @@
     if (self)
     {
         [self setDataController:controller];
-        [self initializeViewElements];
+//        [self initializeViewElements];
     }
     return self;
 }
@@ -104,14 +104,11 @@
 - (void)makeToolbarButtons
 {   // Assigns correct icons and buttons to the upper toolbar
     
-//    Post* parentPost = self.dataController.postInFocus;
-    
     [self initializeViewElements];
     
     if (self.parentPost != nil || self.parentPost.college == nil)
     {
         if ([self.dataController isNearCollegeWithId:self.parentPost.college.collegeID])
-//        if ([self.dataController.nearbyColleges containsObject:self.parentPost.college])
         {
             self.navigationItem.rightBarButtonItems = @[self.composeButton,
                                                         self.flagButton,
@@ -144,6 +141,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // TODO
     if (self.postTableView == tableView
         && self.parentPost != nil
         && self.parentPost.image != nil)

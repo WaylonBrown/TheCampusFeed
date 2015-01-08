@@ -29,11 +29,12 @@
 
 // UI outlet properties
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) UIActivityIndicatorView *locationSearchingIndicator;
+@property (strong, nonatomic) UIActivityIndicatorView *locationActivityIndicator;
 @property (weak, nonatomic) IBOutlet UIView *feedToolbar;
 @property (strong, nonatomic) IBOutlet UIView *scoreToolbar;
 @property (strong, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
+
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *contentLoadingIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *currentFeedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *showingLabel;
@@ -61,11 +62,11 @@
 - (void)setNotificationObservers;
 
 // View Loading
-- (void)initializeViewElements;
+//- (void)initializeViewElements;
 - (void)makeToolbarButtons;
 
 // Network Actions
-- (void)locationWasUpdated;
+//- (void)locationWasUpdated;
 - (void)fetchContent;
 - (void)finishedFetchRequest:(NSNotification *)notification;
 

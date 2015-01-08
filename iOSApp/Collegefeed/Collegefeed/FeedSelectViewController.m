@@ -132,19 +132,9 @@
     NSInteger row = indexPath.row;
     NSInteger section = indexPath.section;
     
-    if (section == 1)
+    if (section == 0)
     {
-        [cell assignSimpleText:@"All Colleges"];
-    }
-    else if (section == 2)
-    {
-        [cell assignSimpleText:@"Search for a College"];
-    }
-    else if (section == 0)
-    {
-        [cell assignSimpleText:@"(None)"];
-
-        LocationStatus status = self.dataController.locStatus;
+        LocationStatus status = self.dataController.locationStatus;
         if (status == LOCATION_FOUND)
         {
             NSInteger numCollegesNearby = self.dataController.nearbyColleges.count;
@@ -164,6 +154,18 @@
             [cell assignSimpleText:@"Loading"];
             [cell showLoadingIndicator];
         }
+        else
+        {
+            [cell assignSimpleText:@"(None)"];
+        }
+    }
+    else if (section == 1)
+    {
+        [cell assignSimpleText:@"All Colleges"];
+    }
+    else if (section == 2)
+    {
+        [cell assignSimpleText:@"Search for a College"];
     }
     
     return cell;
@@ -171,7 +173,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LocationStatus status = self.dataController.locStatus;
+    LocationStatus status = self.dataController.locationStatus;
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
 

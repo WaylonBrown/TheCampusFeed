@@ -7,9 +7,10 @@
 //
 
 #import "DataController.h"
+#import "CF_DialogViewController.h"
+#import "CFModelProtocol.h"
 #import "College.h"
 #import "Comment.h"
-#import "CFModelProtocol.h"
 #import "Post.h"
 #import "Tag.h"
 #import "Vote.h"
@@ -44,13 +45,8 @@
         
         self.toaster = [ToastController new];
         
-        // For restricting phone numbers and email addresses
         [self createWatchdog];
         
-        NSLog(@"Updating launch count from %ld to %ld", self.launchCount++, self.launchCount);
-        
-        // Get the user's location
-        [self createLocationManager];
         
         [self saveStatusToCoreData];
     }
@@ -607,10 +603,15 @@
     NSLog(@"Called getCollegeById with ID = %ld. An error occurred while trying to find it", collegeId);
     return nil;
 }
-- (NSMutableArray *)findNearbyCollegesWithLat:(float)lat withLon:(float)lon
+- (void)setFoundUserLocationWithLat:(float)lat
+                            withLon:(float)lon
 {
-    NSMutableArray *colleges = [[NSMutableArray alloc] init];
-    NSLog(@"Finding colleges near (lat = %f.3, lon = %f.3) from self.collegeList with %lud schools", lat, lon, (unsigned long)[self.collegeList count]);
+    if (self.nearbyColleges == nil)
+    {
+        self.nearbyColleges = [[NSMutableArray alloc] init];
+    }
+
+    NSLog(@"Finding colleges near (lat = %f.3, lon = %f.3) from self.collegeList with %lu schools", lat, lon, (unsigned long)[self.collegeList count]);
     
     for (College *college in self.collegeList)
     {
@@ -619,15 +620,16 @@
                                                   AtLat:college.lat
                                                   atLon:college.lon];
         
-        if (milesAway <= MILES_FOR_PERMISSION && ![colleges containsObject:college])
+        if (milesAway <= MILES_FOR_PERMISSION
+            && ![self.nearbyColleges containsObject:college])
         {
-            [colleges addObject:college];
+            [self.nearbyColleges addObject:college];
         }
     }
     
-    NSLog(@"Found %lud colleges nearby", (unsigned long)[colleges count]);
-    
-    return colleges;
+    NSLog(@"Found %lu colleges nearby", (unsigned long)self.nearbyColleges.count);
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FoundNearbyColleges" object:nil];
 }
 - (void)switchedToSpecificCollegeOrNil:(College *)college
 {
@@ -678,12 +680,21 @@
     [self findNearbyColleges];
     [self writeCollegestoCoreData];
 }
+- (NSArray *)getNearbyCollegeList
+{
+    if (self.nearbyColleges == nil)
+    {
+        // TODO: tell CFNavigationController to act!
+    }
+    
+    return self.nearbyColleges;
+}
 - (void)findNearbyColleges
 {   // Populate the nearbyColleges array appropriately using current location
 
-    self.nearbyColleges = [[NSMutableArray alloc] initWithArray:
-                           [self findNearbyCollegesWithLat:self.lat
-                                                   withLon:self.lon]];
+//    self.nearbyColleges = [[NSMutableArray alloc] initWithArray:
+//                           [self findNearbyCollegesWithLat:self.lat
+//                                                   withLon:self.lon]];
     
     [self.toaster toastNearbyColleges:self.nearbyColleges];
     
@@ -1241,9 +1252,7 @@
     [status setValue:feedNumber forKey:KEY_CURRENT_COLLEGE_FEED];
     
     // Achievements
-    [status setValue:[NSNumber numberWithBool:self.hasViewedAchievements] forKey:KEY_HAS_VIEWED_ACHIEVEMENTS];
-//    [status setValue:[NSNumber numberWithLong:self.numPosts] forKey:KEY_NUM_POSTS];
-//    [status setValue:[NSNumber numberWithLong:self.numPoints] forKey:KEY_NUM_POINTS];
+//    [status setValue:[NSNumber numberWithBool:self.hasViewedAchievements] forKey:KEY_HAS_VIEWED_ACHIEVEMENTS];
     
     // Restrictions
     [status setValue:self.lastPostTime forKey:KEY_POST_TIME];
@@ -1251,8 +1260,9 @@
     [status setValue:[NSNumber numberWithBool:self.isBanned] forKey:KEY_IS_BANNED];
     
     // Other
-    [status setValue:[NSNumber numberWithLong:self.collegeListVersion] forKey:KEY_COLLEGE_LIST_VERSION];
+    NSLog(@"Updating launch count from %ld to %ld", self.launchCount++, self.launchCount);
     [status setValue:[NSNumber numberWithLong:self.launchCount] forKey:KEY_LAUNCH_COUNT];
+    [status setValue:[NSNumber numberWithLong:self.collegeListVersion] forKey:KEY_COLLEGE_LIST_VERSION];
     [status setValue:[NSNumber numberWithLong:self.homeCollegeId] forKey:KEY_HOME_COLLEGE];
     
     if (![_managedObjectContext save:&error])
@@ -1907,38 +1917,17 @@
     return YES;
 }
 
-#pragma mark - Locations
+//#pragma mark - Locations
 
-- (void)getNewLocation
-{
-    [self.locationManager startUpdatingLocation];
-    NSLog(@"Old location was: %f, %f",
-          self.lastLocation.coordinate.latitude,
-          self.lastLocation.coordinate.longitude);
-}
+//- (void)getNewLocation
+//{
+//    [self.locationManager startUpdatingLocation];
+//    NSLog(@"Old location was: %f, %f",
+//          self.lastLocation.coordinate.latitude,
+//          self.lastLocation.coordinate.longitude);
+//}
 
-- (void)locationManager:(CLLocationManager *)manager
-    didUpdateToLocation:(CLLocation *)newLocation
-           fromLocation:(CLLocation *)oldLocation
-{
-    if (!self.lastLocation)
-    {
-        self.lastLocation = newLocation;
-    }
-    
-    if (newLocation.coordinate.latitude != self.lastLocation.coordinate.latitude &&
-        newLocation.coordinate.longitude != self.lastLocation.coordinate.longitude)
-    {
-        self.lastLocation = newLocation;
-        NSLog(@"New location found: %f, %f",
-              self.lastLocation.coordinate.latitude,
-              self.lastLocation.coordinate.longitude);
-        
-        [self findNearbyCollegesWithLat:self.lastLocation.coordinate.latitude
-                                withLon:self.lastLocation.coordinate.longitude];
-    }
-}
-    
+
 //    if (self.locStatus == LOCATION_FOUND)
 //        return;
 //    
@@ -1977,27 +1966,20 @@
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationUpdated" object:self];
 //    }
 //}
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    NSLog(@"Failed Location Finding");
+//- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+//{
+//    NSLog(@"Failed Location Finding");
 //    [self setLocStatus:LOCATION_NOT_FOUND];
 //    [self.locationManager stopUpdatingLocation];
     
     // TODO: tell CFNavController to remove post create and loading indicator
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationUpdated" object:self];
-    [self.toaster toastLocationConnectionError];
-}
-- (void)createLocationManager
-{
-    self.locationManager = [[CLLocationManager alloc] init];
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
-    self.locationManager.delegate = self;
-    
-    if ([[UIDevice currentDevice] systemVersion].floatValue >= 8.0)
-    {
-        [self.locationManager requestWhenInUseAuthorization];
-    }
-}
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationUpdated" object:self];
+
+//}
+//- (void)createLocationManager
+//{
+
+//}
 
 
 

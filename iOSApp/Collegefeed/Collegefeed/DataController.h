@@ -13,7 +13,6 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 
 #import "Constants.h"
-#import "CF_DialogViewController.h"
 
 @class Achievement;
 @class Comment;
@@ -27,9 +26,9 @@
 
 typedef NS_ENUM(NSInteger, LocationStatus)
 {
-    LOCATION_FOUND,
+    LOCATION_NOT_FOUND,
     LOCATION_SEARCHING,
-    LOCATION_NOT_FOUND
+    LOCATION_FOUND
 };
 
 @interface DataController : NSObject<CLLocationManagerDelegate, UIAlertViewDelegate>
@@ -42,7 +41,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 // Helper objects
 @property (nonatomic, strong) ToastController *toaster;
 @property (nonatomic, strong) Watchdog *watchDog;
-@property (nonatomic, strong) CLLocationManager *locationManager;
 
 // Runtime status information
 @property (nonatomic, strong) CLLocation *lastLocation;
@@ -52,6 +50,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic, strong) TimeCrunchModel *timeCrunch;
 @property (nonatomic) BOOL showingAllColleges;
 @property (nonatomic) BOOL showingSingleCollege;
+@property (nonatomic) LocationStatus locationStatus;
 
 // Persistent status information
 @property (nonatomic) BOOL hasViewedAchievements;
@@ -65,11 +64,11 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 
 // Location information
 // TODO: Delete these
-@property (nonatomic, strong) NSDate *locationSearchStart;
-@property (nonatomic) CLLocationDegrees lat;
-@property (nonatomic) CLLocationDegrees lon;
-@property (nonatomic) LocationStatus locStatus;
-@property (nonatomic) long locationUpdateAttempts;
+//@property (nonatomic, strong) NSDate *locationSearchStart;
+//@property (nonatomic) CLLocationDegrees lat;
+//@property (nonatomic) CLLocationDegrees lon;
+//@property (nonatomic) LocationStatus locStatus;
+//@property (nonatomic) long locationUpdateAttempts;
 // ^^^
 
 
@@ -114,6 +113,10 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic) long pageForTrendingTagsSingleCollege;
 @property (nonatomic) long pageForTopColleges;
 
+//TODO: Move to CFNavigationController
+- (NSString *)getCurrentFeedName;
+// ^^^
+
 
 - (void)restoreAllCoreData;
 
@@ -121,16 +124,18 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (void)didViewAchievements;
 
 // Colleges
+- (void)fetchAllColleges;
+- (void)fetchTopColleges;
 - (College *)getCollegeInFocus;
 - (College *)getCollegeById:(long)collegeId;
-- (void)fetchTopColleges;
-- (void)fetchAllColleges;
-- (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon;
+
+- (void)setFoundUserLocationWithLat:(float)userLat
+                            withLon:(float)userLon;
 - (void)switchedToSpecificCollegeOrNil:(College *)college;
+- (NSArray *)getNearbyCollegeList;
 - (BOOL)isNearCollege;
 - (BOOL)isNearCollegeWithId:(long)collegeId;
-- (void)findNearbyColleges;
-- (NSString *)getCurrentFeedName;
+//- (void)findNearbyColleges;
 - (void)finishedFetchingCollegeList;
 
 // Comments
@@ -178,7 +183,6 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (long)getUserCommentScore;
 - (BOOL)isAbleToPost:(NSNumber *)minutesRemaining;
 - (BOOL)isAbleToComment;
-- (void)createLocationManager;
 
 // Votes
 - (BOOL)createVote:(Vote *)vote;

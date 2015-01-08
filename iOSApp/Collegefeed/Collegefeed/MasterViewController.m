@@ -43,7 +43,7 @@
     {
         [self setDataController:controller];
         [self setCorrectList];
-        self.locationSearchingIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+//        self.locationSearchingIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     }
     return self;
 }
@@ -54,7 +54,7 @@
     {
         [self setDataController:controller];
         [self setCorrectList];
-        self.locationSearchingIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+//        self.locationSearchingIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     }
     return self;
 }
@@ -62,29 +62,68 @@
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialFinished) name:@"TutorialFinished" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialStarted) name:@"TutorialStarted" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationWasUpdated) name:@"LocationUpdated" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationWasUpdated) name:@"LocationUpdated" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishedFetchRequest:) name:@"FinishedFetching" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchedCollegeList) name:@"FetchedColleges" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(create) name:@"CreatePost" object:nil];
+
+    // Location updates, changes rightBarButtonItem
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLocationActivityIndicator) name:@"LocationSearchingDidStart" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideLocationActivityIndicator) name:@"LocationSearchingDidEnd" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showComposeButton) name:@"FoundNearbyColleges" object:nil];
+
 }
 
 #pragma mark - View Loading
 
-- (void)initializeViewElements
+- (void)showLocationActivityIndicator
 {
+    NSLog(@"Showing location activity indicator");
+    if (self.locationActivityIndicator == nil)
+    {
+        self.locationActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        self.locationActivityIndicator.hidesWhenStopped = YES;
+    }
     
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.locationActivityIndicator];
+    
+    [self.locationActivityIndicator startAnimating];
+    
+    [self.navigationItem setRightBarButtonItem:button];
 }
+- (void)hideLocationActivityIndicator
+{
+    NSLog(@"Hiding location activity indicator");
+    [self.locationActivityIndicator stopAnimating];
+}
+- (void)showComposeButton
+{
+    NSLog(@"Showing compose button");
+
+    [self.locationActivityIndicator stopAnimating];
+    UIBarButtonItem *createButton = [[UIBarButtonItem alloc]
+                                     initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                                     target:self
+                                     action:@selector(create)];
+    
+    [self.navigationItem setRightBarButtonItem:createButton];
+
+}
+//- (void)initializeViewElements
+//{
+//    
+//}
 - (void)makeToolbarButtons
 {   // Assigns correct icons and buttons to the upper toolbar
     
-    if ([self.dataController isNearCollege])
-    {
-        [self placeCreatePost];
-    }
-    else
-    {
-        [self placeLoadingIndicatorInToolbar];
-    }
+//    if ([self.dataController isNearCollege])
+//    {
+//        [self placeCreatePost];
+//    }
+//    else
+//    {
+//        [self placeLoadingIndicatorInToolbar];
+//    }
 }
 - (void)loadView
 {   // called when this view is initially loaded
@@ -102,6 +141,8 @@
     
     tableViewController.refreshControl = self.refreshControl;
     
+    
+    // TODO: put these in TableView for Header/Footer
     CGRect frame = CGRectMake(0, 0, self.tableView.frame.size.width, 5);
     UIView *view = [[UIView alloc] initWithFrame:frame];
     [view setBackgroundColor:[Shared getCustomUIColor:CF_EXTRALIGHTGRAY]];
@@ -137,21 +178,21 @@
     [self makeToolbarButtons];
     [self.tableView reloadData];
 }
-- (void)placeLoadingIndicatorInToolbar
-{   // Place the loading indicator in the navigation bar (instead of create post button)
-
-    [self.locationSearchingIndicator startAnimating];
-    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.locationSearchingIndicator];
-    [self.navigationItem setRightBarButtonItem:button];
-}
-- (void)placeCreatePost
-{   // Place the create post button in the navigation bar (instead of loading indicator)
-    [self.locationSearchingIndicator stopAnimating];
-    UIBarButtonItem *createButton = [[UIBarButtonItem alloc]
-                                     initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-                                     target:self action:@selector(create)];
-    [self.navigationItem setRightBarButtonItem:createButton];
-}
+//- (void)placeLoadingIndicatorInToolbar
+//{   // Place the loading indicator in the navigation bar (instead of create post button)
+//
+//    [self.locationSearchingIndicator startAnimating];
+//    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.locationSearchingIndicator];
+//    [self.navigationItem setRightBarButtonItem:button];
+//}
+//- (void)placeCreatePost
+//{   // Place the create post button in the navigation bar (instead of loading indicator)
+//    [self.locationSearchingIndicator stopAnimating];
+//    UIBarButtonItem *createButton = [[UIBarButtonItem alloc]
+//                                     initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+//                                     target:self action:@selector(create)];
+//    [self.navigationItem setRightBarButtonItem:createButton];
+//}
 
 #pragma mark - Table View
 
@@ -195,28 +236,28 @@
 }
 #pragma mark - Network Actions
 
-- (void)locationWasUpdated
-{
-    if ([self.dataController isNearCollege])
-    {
-        [self placeCreatePost];
-        [self.tableView reloadData];
-    }
-    else
-    {
-        [self.locationSearchingIndicator stopAnimating];
-    }
-    
-    UIViewController *presented = [self presentedViewController];
-    if (presented)
-    {
-        if ([presented class] == [FeedSelectViewController class])
-        {
-            [((FeedSelectViewController *)presented) updateLocation];
-        }
-    }
-    
-}
+//- (void)locationWasUpdated
+//{
+//    if ([self.dataController isNearCollege])
+//    {
+//        [self placeCreatePost];
+//        [self.tableView reloadData];
+//    }
+//    else
+//    {
+//        [self.locationActivityIndicator stopAnimating];
+//    }
+//    
+//    // TODO ***
+//    UIViewController *presented = [self presentedViewController];
+//    if (presented)
+//    {
+//        if ([presented class] == [FeedSelectViewController class])
+//        {
+//            [((FeedSelectViewController *)presented) updateLocation];
+//        }
+//    }
+//}
 - (void)fetchContent
 {   // Fetches new content for this view
     
@@ -227,7 +268,7 @@
 - (void)fetchedCollegeList
 {
     [self.dataController finishedFetchingCollegeList];
-    [self locationWasUpdated];
+//    [self locationWasUpdated];
     [self.tableView reloadData];
 }
 - (void)finishedFetchRequest:(NSNotification *)notification
@@ -265,7 +306,7 @@
 }
 - (void)create
 {   // Display popup to let user type a new post
-    NSArray *nearbyColleges = self.dataController.nearbyColleges;
+    NSArray *nearbyColleges = [self.dataController getNearbyCollegeList];
     if (nearbyColleges.count == 0)
     {   // None nearby
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
@@ -294,10 +335,15 @@
 }
 - (void)pullToRefresh
 {
-    if (self.dataController.locStatus != LOCATION_FOUND)
+    if ([self.navigationController respondsToSelector:@selector(startMyLocationManager)])
     {
-        [self.dataController createLocationManager];
+        [self.navigationController performSelector:@selector(startMyLocationManager)];
     }
+    
+//    if (self.dataController.locStatus == LOCATION_NOT_FOUND)
+//    {
+//        [self.dataController createLocationManager];
+//    }
 
     [self fetchContent];
 }
@@ -338,6 +384,18 @@
             target:nil
             action:nil];
 }
+//- (UIBarButtonItem *)loadingBarButtonItem
+//{
+//    if (self.locationActivityIndicator == nil)
+//    {
+//        self.locationActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+//    }
+//    
+//    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.locationActivityIndicator];
+//    [self.locationActivityIndicator startAnimating];
+//    
+//    return button;
+//}
 
 #pragma mark - ChildCellDelegate
 
@@ -433,7 +491,7 @@
     [self.toastController toastCommentingTooSoon];
 }
 
-/* FeedSelectionProtocolDelegate */
+#pragma mark - FeedSelectionProtocolDelegate
 
 - (void)switchToFeedForCollegeOrNil:(College *)college
 {
@@ -476,7 +534,7 @@
                                          animated:YES];
 }
 
-/* PostingSelectionProtocolDelegate */
+#pragma mark - PostingSelectionProtocolDelegate
 
 - (void)submitSelectionForPostWithCollege:(College *)college
 {

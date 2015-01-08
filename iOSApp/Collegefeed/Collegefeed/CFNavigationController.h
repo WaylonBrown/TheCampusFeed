@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface CFNavigationController : UINavigationController
+@interface CFNavigationController : UINavigationController<CLLocationManagerDelegate>
+
+@property (strong, nonatomic) UIBarButtonItem *composeButton;
+@property (strong, nonatomic) UIActivityIndicatorView *locationActivityIndicator;
 
 - (void)didSelectTag:(NSString *)tagMessage;
+- (CLLocationManager *)startMyLocationManager;
 
 @end
