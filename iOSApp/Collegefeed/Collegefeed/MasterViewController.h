@@ -24,7 +24,7 @@
 
 // Member variables
 @property (strong, nonatomic) NSMutableArray *list;
-@property (strong, nonatomic) ToastController *toastController;
+//@property (strong, nonatomic) ToastController *toastController;
 @property (strong, nonatomic) DataController *dataController;
 
 // UI outlet properties

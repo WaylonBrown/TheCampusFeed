@@ -299,19 +299,9 @@
     
     NSString *selectorString = [[notification userInfo] valueForKey:@"selector"];
     SEL selector = NSSelectorFromString(selectorString);
-    IMP imp = [self.toastController methodForSelector:selector];
+    IMP imp = [[self.dataController getMyToastController] methodForSelector:selector];
     void (*func)(id, SEL) = (void *)imp;
-    func(self.toastController, selector);
-    
-    
-//    if (selectorId != nil)
-//    {
-//        SEL selector = [selectorId pointerValue];
-//        if ([self.toastController respondsToSelector:selector])
-//        {
-//            [self.toastController performSelector:selector];
-//        }
-//    }
+    func([self.dataController getMyToastController], selector);
 }
 - (void)refreshFeedLabel
 {
@@ -330,13 +320,13 @@
 - (void)tutorialFinished
 {
     self.isShowingTutorial = NO;
-    [self.dataController.toaster releaseBlockedToasts];
+    [self.dataController.toastController releaseBlockedToasts];
     [self pullToRefresh];
     [self changeFeed];
 }
 - (void)tutorialStarted
 {
-    self.dataController.toaster.holdingNotifications = YES;
+    self.dataController.toastController.holdingNotifications = YES;
     self.isShowingTutorial = YES;
 }
 - (UIBarButtonItem *)blankBackButton
@@ -352,7 +342,7 @@
 
 - (void)displayCannotVote
 {    // users cannot cast downvotes to a distant school
-    [self.dataController.toaster toastInvalidDownvote];
+    [self.dataController.toastController toastInvalidDownvote];
 }
 - (BOOL)castVote:(Vote *)vote
 {   // vote was cast in a table cell
@@ -401,7 +391,7 @@
     else
     {
         NSLog(@"ERROR. Attempted tag search with message = %@ was invalid", tagMessage);
-        [self.dataController.toaster toastInvalidTagSearch];
+        [self.dataController.toastController toastInvalidTagSearch];
     }
 }
 
@@ -429,12 +419,12 @@
         }
         else
         {
-            [self.toastController toastPostFailed];
+            [self.dataController.toastController toastPostFailed];
         }
     }
     else
     {
-        [self.toastController toastPostingTooSoon:minutesUntilCanPost];
+        [self.dataController.toastController toastPostingTooSoon:minutesUntilCanPost];
     }
 }
 - (void)commentingTooFrequently

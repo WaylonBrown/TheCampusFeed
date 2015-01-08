@@ -38,19 +38,30 @@
     self = [super init];
     if (self)
     {
+        // TODO: app version check
         [self checkAppVersionNumber];
+        
         [self initArrays];
         
+        // TODO: core data on separate thread
         [self restoreAllCoreData];
         
-        self.toaster = [ToastController new];
-        
+        [self getMyToastController];
         [self createWatchdog];
-        
         
         [self saveStatusToCoreData];
     }
     return self;
+}
+
+- (ToastController *)getMyToastController
+{
+    if (self.toastController == nil)
+    {
+        self.toastController = [[ToastController alloc] init];
+    }
+    
+    return self.toastController;
 }
 - (void)initArrays
 {
@@ -756,7 +767,7 @@
         }
         else
         {
-            [self.toaster toastPostFailed];
+            [self.toastController toastPostFailed];
         }
     }
     @catch (NSException *exception)
@@ -994,7 +1005,7 @@
         }
         else
         {
-            [self.toaster toastPostFailed];
+            [self.toastController toastPostFailed];
         }
     }
     @catch (NSException *exception)
@@ -1025,7 +1036,7 @@
     NSNumber *minutesUntilCanPost = [NSNumber new];
     if (![self isAbleToPost:minutesUntilCanPost])
     {
-        [self.toaster toastPostingTooSoon:minutesUntilCanPost];
+        [self.toastController toastPostingTooSoon:minutesUntilCanPost];
         return NO;
     }
     
@@ -1056,7 +1067,7 @@
         
         errorToastMessage = [errorToastMessage substringToIndex:[errorToastMessage length] - 1];
         
-        [self.toaster toastCustomMessage:errorToastMessage];
+        [self.toastController toastCustomMessage:errorToastMessage];
         
         return NO;
     }
@@ -1361,7 +1372,7 @@
     if (self.timeCrunch == nil || self.timeCrunch.collegeId == 0)
     {
         NSLog(@"Activating Time Crunch failed");
-        [self.toaster toastErrorFindingTimeCrunchCollege];
+        [self.toastController toastErrorFindingTimeCrunchCollege];
     }
     else if (self.timeCrunch.timeWasActivatedAt == nil)
     {
@@ -1980,7 +1991,7 @@
 //        
 //        [self findNearbyColleges];
 //        [self setLocStatus:LOCATION_FOUND];
-//        [self.toaster toastNearbyColleges:self.nearbyColleges];
+//        [self.toastController toastNearbyColleges:self.nearbyColleges];
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationUpdated" object:self];
 //    }
 //}

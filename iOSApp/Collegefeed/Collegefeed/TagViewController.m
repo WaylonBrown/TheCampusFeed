@@ -114,7 +114,7 @@
         else
         {
             NSLog(@"ERROR. Attempted tag search with message = %@ was invalid", tagMessage);
-            [self.dataController.toaster toastInvalidTagSearch];
+            [self.dataController.toastController toastInvalidTagSearch];
         }
 
     }

@@ -275,7 +275,7 @@
     }
     else
     {
-        [self.dataController.toaster toastFacebookUnavailable];
+        [self.dataController.toastController toastFacebookUnavailable];
     }
 }
 - (void)shareOnTwitter
@@ -291,7 +291,7 @@
     }
     else
     {
-        [self.dataController.toaster toastTwitterUnavailable];
+        [self.dataController.toastController toastTwitterUnavailable];
     }
 }
 
@@ -326,11 +326,11 @@
 
         if ((self.parentPost != nil) && [self.dataController flagPost:[[self.parentPost getID] longValue]])
         {
-            [self.dataController.toaster toastFlagSuccess];
+            [self.dataController.toastController toastFlagSuccess];
         }
         else
         {
-            [self.dataController.toaster toastFlagFailed];
+            [self.dataController.toastController toastFlagFailed];
         }
     }
 }

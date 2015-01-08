@@ -39,7 +39,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 // Helper objects
-@property (nonatomic, strong) ToastController *toaster;
+@property (nonatomic, strong) ToastController *toastController;
 @property (nonatomic, strong) Watchdog *watchDog;
 
 // Runtime status information
@@ -180,6 +180,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 
 // Toasts
 - (void)queueToastWithSelector:(SEL)selector;
+- (ToastController *)getMyToastController;
 
 // User data
 - (long)getUserPostScore;
