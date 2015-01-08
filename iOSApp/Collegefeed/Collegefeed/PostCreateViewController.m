@@ -21,12 +21,32 @@
 
 @implementation PostCreateViewController
 
-- (void)viewDidLoad {
+#pragma mark - View life cycle
+
+- (id)initWithDataController:(DataController *)controller
+{
+    self = [super initWithNibName:@"CreateViewController" bundle:nil];
+    if (self)
+    {
+        self.dataController = controller;
+        [self setModalPresentationStyle:UIModalPresentationCustom];
+        [self setTransitioningDelegate:self];
+        return self;
+    }
+    return nil;
+}
+- (void)loadView
+{
+    [super loadView];
+}
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
-
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     if (self.college != nil && self.college.name != nil)
     {
@@ -39,6 +59,10 @@
     [self.view setNeedsLayout];
     [self.view layoutIfNeeded];
 }
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -50,6 +74,7 @@
     if (newCollege != nil)
     {
         self.college = newCollege;
+        [self.view setNeedsLayout];
         return YES;
     }
     
