@@ -61,10 +61,6 @@
 - (id)initWithDataController:(DataController *)controller withNibName:(NSString *)nib bundle:(NSBundle *)bundle;
 - (void)setNotificationObservers;
 
-// View Loading
-//- (void)initializeViewElements;
-- (void)makeToolbarButtons;
-
 // Network Actions
 //- (void)locationWasUpdated;
 - (void)fetchContent;

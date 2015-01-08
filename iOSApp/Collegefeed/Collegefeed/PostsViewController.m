@@ -39,21 +39,6 @@
 {
     [self.tableView reloadData];
 }
-//- (void)makeToolbarButtons
-//{   // Assigns correct icons and buttons to the upper toolbar
-//    
-//    // Show loading indicator until a nearby college is found,
-//    // then replace it with a compose button
-//
-//    if ([self.dataController isNearCollege])
-//    {
-//        [self placeCreatePost];
-//    }
-//    else
-//    {
-//        [self placeLoadingIndicatorInToolbar];
-//    }
-//}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

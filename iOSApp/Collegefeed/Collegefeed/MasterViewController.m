@@ -43,7 +43,6 @@
     {
         [self setDataController:controller];
         [self setCorrectList];
-//        self.locationSearchingIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     }
     return self;
 }
@@ -54,7 +53,6 @@
     {
         [self setDataController:controller];
         [self setCorrectList];
-//        self.locationSearchingIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     }
     return self;
 }
@@ -62,7 +60,6 @@
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialFinished) name:@"TutorialFinished" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialStarted) name:@"TutorialStarted" object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationWasUpdated) name:@"LocationUpdated" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishedFetchRequest:) name:@"FinishedFetching" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchedCollegeList) name:@"FetchedColleges" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(create) name:@"CreatePost" object:nil];
@@ -95,6 +92,10 @@
 {
     NSLog(@"Hiding location activity indicator");
     [self.locationActivityIndicator stopAnimating];
+    if (self.dataController.nearbyColleges.count > 0)
+    {
+        [self showComposeButton];
+    }
 }
 - (void)showComposeButton
 {
@@ -108,22 +109,6 @@
     
     [self.navigationItem setRightBarButtonItem:createButton];
 
-}
-//- (void)initializeViewElements
-//{
-//    
-//}
-- (void)makeToolbarButtons
-{   // Assigns correct icons and buttons to the upper toolbar
-    
-//    if ([self.dataController isNearCollege])
-//    {
-//        [self placeCreatePost];
-//    }
-//    else
-//    {
-//        [self placeLoadingIndicatorInToolbar];
-//    }
 }
 - (void)loadView
 {   // called when this view is initially loaded
@@ -175,24 +160,8 @@
     
     [self refreshFeedLabel];
     
-    [self makeToolbarButtons];
     [self.tableView reloadData];
 }
-//- (void)placeLoadingIndicatorInToolbar
-//{   // Place the loading indicator in the navigation bar (instead of create post button)
-//
-//    [self.locationSearchingIndicator startAnimating];
-//    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.locationSearchingIndicator];
-//    [self.navigationItem setRightBarButtonItem:button];
-//}
-//- (void)placeCreatePost
-//{   // Place the create post button in the navigation bar (instead of loading indicator)
-//    [self.locationSearchingIndicator stopAnimating];
-//    UIBarButtonItem *createButton = [[UIBarButtonItem alloc]
-//                                     initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-//                                     target:self action:@selector(create)];
-//    [self.navigationItem setRightBarButtonItem:createButton];
-//}
 
 #pragma mark - Table View
 
@@ -236,28 +205,6 @@
 }
 #pragma mark - Network Actions
 
-//- (void)locationWasUpdated
-//{
-//    if ([self.dataController isNearCollege])
-//    {
-//        [self placeCreatePost];
-//        [self.tableView reloadData];
-//    }
-//    else
-//    {
-//        [self.locationActivityIndicator stopAnimating];
-//    }
-//    
-//    // TODO ***
-//    UIViewController *presented = [self presentedViewController];
-//    if (presented)
-//    {
-//        if ([presented class] == [FeedSelectViewController class])
-//        {
-//            [((FeedSelectViewController *)presented) updateLocation];
-//        }
-//    }
-//}
 - (void)fetchContent
 {   // Fetches new content for this view
     
@@ -339,11 +286,6 @@
     {
         [self.navigationController performSelector:@selector(startMyLocationManager)];
     }
-    
-//    if (self.dataController.locStatus == LOCATION_NOT_FOUND)
-//    {
-//        [self.dataController createLocationManager];
-//    }
 
     [self fetchContent];
 }
@@ -384,18 +326,6 @@
             target:nil
             action:nil];
 }
-//- (UIBarButtonItem *)loadingBarButtonItem
-//{
-//    if (self.locationActivityIndicator == nil)
-//    {
-//        self.locationActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-//    }
-//    
-//    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.locationActivityIndicator];
-//    [self.locationActivityIndicator startAnimating];
-//    
-//    return button;
-//}
 
 #pragma mark - ChildCellDelegate
 

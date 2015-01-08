@@ -65,6 +65,7 @@
 {   // View is about to appear after being inactive
     [super viewWillAppear:animated];
 
+    [self makeToolbarButtons];
     [self setCorrectList];
     
     [self.postTableView reloadData];

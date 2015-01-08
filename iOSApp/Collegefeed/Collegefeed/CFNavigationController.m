@@ -251,7 +251,6 @@
 {
     NSLog(@"CFNavController.startMyLocationManager() called");
     self.dataController.locationStatus = LOCATION_SEARCHING;
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationSearchingDidStart" object:nil];
     
     if (self.locationManager == nil)
     {
@@ -266,6 +265,7 @@
     }
     
     [self.locationManager startUpdatingLocation];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationSearchingDidStart" object:nil];
     
     return self.locationManager;
 }
@@ -293,19 +293,20 @@
                                               withLon:self.myLocation.coordinate.longitude];
     }
     
+    [self.locationManager stopUpdatingLocation];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationSearchingDidEnd" object:nil];
 
 }
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    
     NSLog(@"Failed Location Finding: %@", [error localizedDescription]);
     self.dataController.locationStatus = LOCATION_NOT_FOUND;
     [self.locationManager stopUpdatingLocation];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationSearchingDidEnd" object:nil];
 
-//    postNotificationName:@"LocationUpdated" object:self];
+    // TODO: toastController in this class
     //    [self.toaster toastLocationConnectionError];
 }
 
