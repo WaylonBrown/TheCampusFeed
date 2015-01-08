@@ -275,7 +275,7 @@
     }
     else
     {
-        [self.dataController queueToastWithSelector:@selector(toastFacebookUnavailable)];
+        [Shared queueToastWithSelector:@selector(toastFacebookUnavailable)];
     }
 }
 - (void)shareOnTwitter
@@ -291,7 +291,7 @@
     }
     else
     {
-        [self.dataController queueToastWithSelector:@selector(toastTwitterUnavailable)];
+        [Shared queueToastWithSelector:@selector(toastTwitterUnavailable)];
     }
 }
 
@@ -324,11 +324,11 @@
     {   // attempt to flag a post as inappropriate
         if ((self.parentPost != nil) && [self.dataController flagPost:[[self.parentPost getID] longValue]])
         {
-            [self.dataController queueToastWithSelector:@selector(toastFlagSuccess)];
+            [Shared queueToastWithSelector:@selector(toastFlagSuccess)];
         }
         else
         {
-            [self.dataController queueToastWithSelector:@selector(toastFlagFailed)];
+            [Shared queueToastWithSelector:@selector(toastFlagFailed)];
         }
     }
 }

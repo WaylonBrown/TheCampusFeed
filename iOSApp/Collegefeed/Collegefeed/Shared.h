@@ -15,5 +15,6 @@
 + (UIFont*)getFontBold:(float)size;
 + (UIFont*)getFontItalic:(float)size;
 + (UIColor*)getCustomUIColor:(int)hexValue;
++ (void)queueToastWithSelector:(SEL)selector;
 
 @end

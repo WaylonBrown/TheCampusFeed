@@ -629,6 +629,12 @@
     
     NSLog(@"Found %lu colleges nearby", (unsigned long)self.nearbyColleges.count);
 
+    
+    if (self.nearbyColleges.count == 0)
+    {
+        [self queueToastWithSelector:@selector(toastLocationFoundNotNearCollege)];
+    }
+
     if (self.nearbyColleges.count > 0)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"FoundNearbyColleges" object:nil];
@@ -1350,7 +1356,7 @@
     if (self.timeCrunch == nil || self.timeCrunch.collegeId == 0)
     {
         NSLog(@"Activating Time Crunch failed");
-        [self.toastController toastErrorFindingTimeCrunchCollege];
+        [self queueToastWithSelector:@selector(toastErrorFindingTimeCrunchCollege)];
     }
     else if (self.timeCrunch.timeWasActivatedAt == nil)
     {

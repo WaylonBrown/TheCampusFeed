@@ -100,12 +100,12 @@
 }
 - (void)toastTwitterUnavailable
 {
-    NSString *message = @"You need to have the Twitter app installed to tweet this post.";
+    NSString *message = @"Sorry, there was an error opening the Twitter app";
     [self addToQueue:message];
 }
 - (void)toastFacebookUnavailable
 {
-    NSString *message = @"You need to have the Facebook app installed to share on Facebook.";
+    NSString *message = @"Sorry, there was an error opening the Facebook app";
     [self addToQueue:message];
 }
 
@@ -118,7 +118,7 @@
 }
 - (void)toastLocationFoundNotNearCollege
 {
-    NSString *message = @"No colleges were found near you but you can still upvote";
+    NSString *message = @"No colleges were found nearby, you can still upvote";
     [self addToQueue:message];
 }
 
@@ -126,17 +126,17 @@
 
 - (void)toastCommentTooShort
 {
-    NSString *message = [NSString stringWithFormat:@"Comment must be at least %d characters long.", MIN_COMMENT_LENGTH];
+    NSString *message = [NSString stringWithFormat:@"Comment must be at least %d characters long", MIN_COMMENT_LENGTH];
     [self addToQueue:message];
 }
 - (void)toastPostTooShort
 {
-    NSString *message = [NSString stringWithFormat:@"Post must be at least %d characters long.", MIN_POST_LENGTH];
+    NSString *message = [NSString stringWithFormat:@"Post must be at least %d characters long", MIN_POST_LENGTH];
     [self addToQueue:message];
 }
 - (void)toastTagTooShort
 {
-    NSString *message = [NSString stringWithFormat:@"Must be at least %d characters long.", MIN_TAG_LENGTH];
+    NSString *message = [NSString stringWithFormat:@"Must be at least %d characters long", MIN_TAG_LENGTH];
     [self addToQueue:message];
 }
 
@@ -144,29 +144,29 @@
 
 - (void)toastNoInternetConnection
 {
-    NSString *message = @"A connection error occurred. Pull down to refresh and try again.";
+    NSString *message = @"A connection error occurred. Pull down to refresh and try again";
     [self addToQueue:message];
 }
 - (void)toastPostFailed
 {
     // Network failure when submitting post
-    NSString *message = @"Failed to post, please try again later.";
+    NSString *message = @"Failed to post, please try again later";
     [self addToQueue:message];
 }
 - (void)toastCommentFailed
 {
     // Network failure when submitting comment
-    NSString *message = @"Failed to comment, please try again later.";
+    NSString *message = @"Failed to comment, please try again later";
     [self addToQueue:message];
 }
 - (void)toastFlagFailed
 {
-    NSString *message = @"Failed to flag post, please try again later.";
+    NSString *message = @"Failed to flag post, please try again later";
     [self addToQueue:message];
 }
 - (void)toastErrorFetchingCollegeList
 {
-    NSString *message = @"Error fetching college list.";
+    NSString *message = @"Error fetching college list";
     [self addToQueue:message];
 }
 
@@ -174,7 +174,7 @@
 
 - (void)toastFlagSuccess
 {
-    NSString *message = @"Post has been flagged, thank you :)";
+    NSString *message = @"Post has been flagged, thank you";
     [self addToQueue:message];
 }
 - (void)toastFoundNearbyColleges:(NSArray *)colleges

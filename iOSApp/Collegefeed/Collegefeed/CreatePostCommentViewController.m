@@ -104,11 +104,18 @@ withDataController:(DataController *)controller
     NSString *message = self.messageTextView.text;
     message = [message stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
-    [self.delegate submitPostCommentCreationWithMessage:message
-                                          withCollegeId:self.collegeForPost.collegeID
-                                          withUserToken:@"EMPTY_TOKEN"
-                                              withImage:self.imageView.image];
-    
+    if ([message length] < MIN_POST_LENGTH)
+    {
+        NSLog(@"Blocking post submission attempt. Too short");
+        [Shared queueToastWithSelector:@selector(toastPostTooShort)];
+    }
+    else
+    {
+        [self.delegate submitPostCommentCreationWithMessage:message
+                                              withCollegeId:self.collegeForPost.collegeID
+                                              withUserToken:@"EMPTY_TOKEN"
+                                                  withImage:self.imageView.image];
+    }
 }
 - (IBAction)dismiss:(id)sender
 {

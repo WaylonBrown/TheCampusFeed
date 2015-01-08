@@ -31,5 +31,15 @@
 {
     return [UIFont fontWithName:@"Roboto-LightItalic" size:size];
 }
++ (void)queueToastWithSelector:(SEL)selector
+{
+    NSLog(@"Posting notification with @selector(%@)", NSStringFromSelector(selector));
+    NSDictionary *info = [NSDictionary dictionaryWithObject:NSStringFromSelector(selector)
+                                                     forKey:@"selector"];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ToastMessage"
+                                                        object:self
+                                                      userInfo:info];
+}
 
 @end

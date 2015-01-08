@@ -35,7 +35,7 @@
 - (void)toastLocationSearchFailed;
 
 // Formatting
-- (void)toastCommentTooShort;
+- (void)toastCommentTooShort; // TODO: uses toastPostTooShort
 - (void)toastPostTooShort;
 - (void)toastTagTooShort;
 

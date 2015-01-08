@@ -329,7 +329,7 @@
 
 - (void)displayCannotVote
 {    // users cannot cast downvotes to a distant school
-    [self.dataController queueToastWithSelector:@selector(toastInvalidDownvote)];
+    [Shared queueToastWithSelector:@selector(toastInvalidDownvote)];
 }
 - (BOOL)castVote:(Vote *)vote
 {   // vote was cast in a table cell
@@ -378,7 +378,7 @@
     else
     {
         NSLog(@"ERROR. Attempted tag search with message = %@ was invalid", tagMessage);
-        [self.dataController queueToastWithSelector:@selector(toastInvalidTagSearch)];
+        [Shared queueToastWithSelector:@selector(toastInvalidTagSearch)];
         
         
         
@@ -409,7 +409,7 @@
         }
         else
         {
-            [self.dataController queueToastWithSelector:@selector(toastPostFailed)];
+            [Shared queueToastWithSelector:@selector(toastPostFailed)];
         }
     }
     else

@@ -341,7 +341,7 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationSearchingDidEnd" object:nil];
 
-    [self.dataController queueToastWithSelector:@selector(toastLocationSearchFailed)];
+    [Shared queueToastWithSelector:@selector(toastLocationSearchFailed)];
 }
 
 
