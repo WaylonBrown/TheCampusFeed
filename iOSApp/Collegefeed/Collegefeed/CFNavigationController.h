@@ -10,4 +10,6 @@
 
 @interface CFNavigationController : UINavigationController
 
+- (void)didSelectTag:(NSString *)tagMessage;
+
 @end

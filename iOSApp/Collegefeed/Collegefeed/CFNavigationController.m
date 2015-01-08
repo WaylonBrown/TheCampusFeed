@@ -14,6 +14,7 @@
 #import "IIViewDeckController.h"
 #import "MenuViewController.h"
 #import "NewPostsViewController.h"
+#import "TagPostsViewController.h"
 #import "TagViewController.h"
 #import "TopPostsViewController.h"
 #import "TrendingCollegesViewController.h"
@@ -31,7 +32,8 @@
 @property (strong, nonatomic) MenuViewController *menuViewController;
 @property (strong, nonatomic) TopPostsViewController *topPostsController;
 @property (strong, nonatomic) NewPostsViewController *recentPostsController;
-@property (strong, nonatomic) TagViewController *tagController;
+@property (strong, nonatomic) TagViewController *trendingTagController;
+@property (strong, nonatomic) TagPostsViewController *taggedPostsController;
 @property (strong, nonatomic) CollegePickerViewController *collegeController;
 @property (strong, nonatomic) UserPostsViewController* userPostsController;
 @property (strong, nonatomic) UserCommentsViewController *userCommentsController;
@@ -105,7 +107,7 @@
     
     self.recentPostsController = [[NewPostsViewController alloc] initWithDataController:data];
     
-    self.tagController = [[TagViewController alloc] initWithDataController:data];
+    self.trendingTagController = [[TagViewController alloc] initWithDataController:data];
     
     self.trendingCollegesController = [[TrendingCollegesViewController alloc]
                                            initWithDataController:data];
@@ -123,6 +125,8 @@
     self.timeCrunchController = [[TimeCrunchViewController alloc] initWithDataController:data];
     
     self.achievementController = [[AchievementViewController alloc] initWithDataController:data];
+    
+    self.taggedPostsController = [[TagPostsViewController alloc] initWithDataController:data];
 }
 - (MenuViewController *)getMyMenuViewController
 {
@@ -144,7 +148,7 @@
    return [NSArray arrayWithObjects:
            self.topPostsController,
            self.recentPostsController,
-           self.tagController,
+           self.trendingTagController,
            self.trendingCollegesController,
            self.userPostsController,
            self.userCommentsController,
@@ -200,6 +204,24 @@
 
 //    self.deckController.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, menuButton, nil];
 }
-
+- (void)didSelectTag:(NSString *)tagMessage
+{
+    if (self.taggedPostsController == nil)
+    {
+        self.taggedPostsController = [[TagPostsViewController alloc] initWithDataController:self.dataController];
+    }
+    
+    [self.taggedPostsController assignTagMessage:tagMessage];
+    [[self navigationItem] setBackBarButtonItem:[self getBlankBackButton]];
+    [self pushViewController:self.taggedPostsController animated:YES];
+}
+- (UIBarButtonItem *)getBlankBackButton
+{
+    return [[UIBarButtonItem alloc]
+            initWithTitle:@""
+            style:UIBarButtonItemStylePlain
+            target:nil
+            action:nil];
+}
 
 @end

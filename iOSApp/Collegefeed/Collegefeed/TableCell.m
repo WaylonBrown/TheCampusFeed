@@ -16,6 +16,115 @@
 
 @implementation TableCell
 
+#pragma mark - Assignments
+
+- (BOOL)assignWithPost:(Post *)post withCollegeLabel:(BOOL)showLabel
+{
+    if (post != nil)
+    {
+        [self setObject:post];
+        
+        self.isNearCollege = post.isNearCollege;
+        [self.gpsIconImageView setHidden:post.isNearCollege];
+        
+        // assign cell's plain text labels
+        self.messageLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentTop;
+        [self.messageLabel      setText:[post getText]];
+        [self.collegeLabel      setText:[post getCollegeName]];
+        [self.commentCountLabel setText:[self getCommentLabelString]];
+        [self.ageLabel          setText:[self getAgeLabelString:[post getCreated_at]]];
+        
+        [self findHashTags];
+        [self updateVoteButtons];
+        
+//        if ([post hasImage])
+//        {
+            [self populateImageForPost:post];
+//            self.pictureHeight.constant = POST_CELL_PICTURE_HEIGHT_CROPPED;
+//        }
+//        else
+//        {
+//            self.pictureHeight.constant = 0;
+//        }
+//        
+        [self setWillDisplayCollege:showLabel];
+        
+        [self setNeedsLayout];
+        [self layoutIfNeeded];
+        
+        return YES;
+    }
+    
+    return NO;
+}
+- (void)populateImageForPost:(Post *)post
+{
+    self.pictureHeight.constant = [post hasImage] ? POST_CELL_PICTURE_HEIGHT_CROPPED : 0;
+    self.pictureView.image = nil;
+    [self.pictureActivityIndicator stopAnimating];
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
+    
+    if ([post hasImage])
+    {
+        NSLog(@"TableCell assigning image to post");
+        [self.pictureActivityIndicator startAnimating];
+        
+        if (post.image != nil && [post.image isKindOfClass:[UIImage class]])
+        {
+            self.pictureView.image = post.image;
+            [self.pictureActivityIndicator stopAnimating];
+        }
+        else
+        {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSString *imgURL = [post getImage_url];
+                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
+                
+                [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
+                
+                // set image on main thread.
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (data != nil)
+                    {
+                        [self.pictureView setImage:[UIImage imageWithData:data]];
+                        post.image = [UIImage imageWithData:data];
+                    }
+                    
+                    [self.pictureActivityIndicator stopAnimating];
+                });
+            });
+        }
+    }
+}
+- (BOOL)assignWithComment:(Comment *)comment
+{
+    if (comment != nil)
+    {
+        [self setObject:comment];
+        self.isNearCollege = comment.isNearCollege;
+        
+        [self setWillDisplayCollege:NO];
+        [self.commentCountLabel setHidden:YES];
+        
+        self.pictureHeight.constant = 0;
+        
+        self.messageLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentTop;
+        [self.messageLabel setText:[comment getText]];
+        
+        [self.ageLabel setText:[self getAgeLabelString:[comment getCreated_at]]];
+        
+        [self findHashTags];
+        [self updateVoteButtons];
+        
+        [self setNeedsDisplay];
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
 #pragma mark - Actions
 
 - (IBAction)upVotePressed:(id)sender
@@ -108,102 +217,9 @@
     NSString *tagMessage = [url absoluteString];
     [self.delegate didSelectTag:tagMessage];
 }
-- (BOOL)assignWithPost:(Post *)post withCollegeLabel:(BOOL)showLabel
-{
-    if (post != nil)
-    {
-        [self setObject:post];
-        
-        self.isNearCollege = post.isNearCollege;
-        [self.gpsIconImageView setHidden:post.isNearCollege];
-        
-        // assign cell's plain text labels
-        self.messageLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentTop;
-        [self.messageLabel      setText:[post getText]];
-        [self.collegeLabel      setText:[post getCollegeName]];
-        [self.commentCountLabel setText:[self getCommentLabelString]];
-        [self.ageLabel          setText:[self getAgeLabelString:[post getCreated_at]]];
-        
-        [self findHashTags];
-        [self updateVoteButtons];
-        
-        if ([post hasImage])
-        {
-            [self populateImageForPost:post];
-            self.pictureHeight.constant = POST_CELL_PICTURE_HEIGHT_CROPPED;
-        }
-        else
-        {
-            self.pictureHeight.constant = 0;
-        }
-        
-        [self setWillDisplayCollege:showLabel];
-        
-        [self setNeedsLayout];
-        [self layoutIfNeeded];
-        
-        return YES;
-    }
-    
-    return NO;
-}
 - (void)setNearCollege
 {
     [self setIsNearCollege:YES];
-}
-- (void)populateImageForPost:(Post *)post
-{
-    if (post.image != nil && [post.image isKindOfClass:[UIImage class]])
-    {
-        self.pictureView.image = post.image;
-        
-        return;
-    }
-    
-    self.pictureView.image = nil;
-    [self.pictureActivityIndicator startAnimating];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *imgURL = [post getImage_url];
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
-        
-        [NSThread sleepForTimeInterval:DELAY_FOR_SLOW_NETWORK];
-        
-        // set image on main thread.
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.pictureView setImage:[UIImage imageWithData:data]];
-            post.image = self.pictureView.image;
-            [self.pictureActivityIndicator stopAnimating];
-        });
-    });
-    
-}
-- (BOOL)assignWithComment:(Comment *)comment
-{
-    if (comment != nil)
-    {
-        [self setObject:comment];
-        self.isNearCollege = comment.isNearCollege;
-        
-        [self setWillDisplayCollege:NO];
-        [self.commentCountLabel setHidden:YES];
-        
-        self.pictureHeight.constant = 0;
-        
-        self.messageLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentTop;
-        [self.messageLabel setText:[comment getText]];
-        
-        [self.ageLabel setText:[self getAgeLabelString:[comment getCreated_at]]];
-        
-        [self findHashTags];
-        [self updateVoteButtons];
-        
-        [self setNeedsDisplay];
-        
-        return YES;
-    }
-    
-    return NO;
 }
 
 #pragma mark - Helper Methods

@@ -93,11 +93,12 @@
     
     Tag *tag = (tableView == self.searchResultsController.tableView) ? [self.filteredList objectAtIndex:indexPath.row] : [self.list objectAtIndex:indexPath.row];
     
-    TagPostsViewController *controller = [[TagPostsViewController alloc] initWithDataController:self.dataController WithTagMessage:tag.name];
-    
-    [[self navigationItem] setBackBarButtonItem:[super blankBackButton]];
-    [self.navigationController pushViewController:controller
-                                         animated:YES];
+    // TODO: just like in MasterView.didSelectTag()
+//    TagPostsViewController *controller = [[TagPostsViewController alloc] initWithDataController:self.dataController WithTagMessage:tag.name];
+//    
+//    [[self navigationItem] setBackBarButtonItem:[super blankBackButton]];
+//    [self.navigationController pushViewController:controller
+//                                         animated:YES];
 }
 
 #pragma mark - Search Bar

@@ -10,26 +10,29 @@
 #import "College.h"
 #import "Shared.h"
 
+@interface TagPostsViewController()
+
+@property (strong, nonatomic) NSString *tagMessage;
+
+@end
+
 @implementation TagPostsViewController
 
 #pragma mark - Initialization
-
-- (id)initWithDataController:(DataController *)controller WithTagMessage:(NSString *)text
-{
-    self = [super initWithDataController:controller];
-    if (self)
-    {
-        self.tagMessage = (text == nil) ? @"" : text;
-    }
-    
-    return self;
-}
 
 - (void)loadView
 {
     [super loadView];
 }
-
+- (void)assignTagMessage:(NSString *)tag
+{
+    if (![self.tagMessage isEqualToString:tag])
+    {
+        NSLog(@"Assigning new tag = %@ in TagPostsViewController", tag);
+        self.tagMessage = tag;
+        [self.list removeAllObjects];
+    }
+}
 #pragma mark - Table View
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

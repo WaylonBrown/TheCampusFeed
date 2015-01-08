@@ -373,17 +373,24 @@
 }
 - (void)didSelectTag:(NSString *)tagMessage
 {
-    NSLog(@"Calling MasterViewController's didSelectTag(). If valid, will display a TagPostsViewController");
+    NSLog(@"MasterViewController called didSelectTag(). If valid, will display a TagPostsViewController");
     
     if ([Tag withMessageIsValid:tagMessage])
     {
-        NSLog(@"Tag message is valid. Initializing TagPostsViewController with tagMessage = %@", tagMessage);
-        TagPostsViewController *controller = [[TagPostsViewController alloc]
-                                              initWithDataController:self.dataController
-                                              WithTagMessage:tagMessage];
-        [[self navigationItem] setBackBarButtonItem:[self blankBackButton]];
-        [self.navigationController pushViewController:controller
-                                             animated:YES];
+        NSLog(@"Tag message = %@ is valid", tagMessage);
+        
+        if ([self.navigationController isKindOfClass:[CFNavigationController class]])
+        {
+            [((CFNavigationController *)self.navigationController) didSelectTag:tagMessage];
+        }
+        
+        else
+        {
+            NSLog(@"Could not invoke CFNavController.didSelectTag()");;
+        }
+//        [[self navigationItem] setBackBarButtonItem:[self blankBackButton]];
+//        [self.navigationController pushViewController:controller
+//                                             animated:YES];
     }
     else
     {

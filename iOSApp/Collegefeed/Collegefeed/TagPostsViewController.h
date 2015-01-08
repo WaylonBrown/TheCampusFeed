@@ -10,9 +10,6 @@
 
 @interface TagPostsViewController : PostsViewController
 
-@property (strong, nonatomic) NSString* tagMessage;
-
-- (id)initWithDataController:(DataController *)controller
-              WithTagMessage:(NSString *)text;
+- (void)assignTagMessage:(NSString *)tag;
 
 @end
