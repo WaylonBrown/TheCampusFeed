@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
-#import "College.h"
 #import "Shared.h"
 
 @implementation Shared

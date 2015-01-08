@@ -187,7 +187,7 @@
         if (words.count <= WORDS_FOR_SHORT_AND_SWEET_ACHIEVEMENT
             && [post.score longValue] >= POINTS_FOR_SHORT_AND_SWEET_ACHIEVEMENT)
         {
-            NSLog(@"Found Post = \"%@\". Score = %@ and only %ld words!", post.text, post.score, words.count);
+            NSLog(@"Found Post = \"%@\". Score = %@ and only %ld words!", post.text, post.score, (unsigned long)words.count);
             
             for (Achievement *achievement in self.achievementList)
             {
@@ -283,7 +283,7 @@
         
         [self sortAchievementList];
         
-        NSLog(@"Finished restoring achievements from core data. Achievement List now has a total size of %ld. User has completed %d", self.achievementList.count, numCompleted);
+        NSLog(@"Finished restoring achievements from core data. Achievement List now has a total size of %ld. User has completed %d", (unsigned long)self.achievementList.count, numCompleted);
     }
 }
 - (void)saveAchievementsToCoreData
@@ -460,7 +460,7 @@
     {
         NSLog(@"Not enough Colleges found in core data. Getting network college list");
         [self getNetworkCollegeList];
-        NSLog(@"Finished fetching network colleges, list count is now %ld.", self.collegeList.count);
+        NSLog(@"Finished fetching network colleges, list count is now %ld.", (unsigned long)self.collegeList.count);
     }
     else
     {
@@ -484,7 +484,7 @@
             }
         }
         
-        NSLog(@"Finished restoring colleges from core data. College List now has a total size of %ld.", self.collegeList.count);
+        NSLog(@"Finished restoring colleges from core data. College List now has a total size of %ld.", (unsigned long)self.collegeList.count);
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"FetchedColleges" object:self userInfo:nil];
@@ -556,7 +556,7 @@
 }
 - (void)writeCollegestoCoreData
 {
-    NSLog(@"Writing colleges to core data. Total of %ld in list", self.collegeList.count);
+    NSLog(@"Writing colleges to core data. Total of %ld in list", (unsigned long)self.collegeList.count);
     NSManagedObjectContext *context = [self managedObjectContext];
     NSError *error;
     
@@ -1307,9 +1307,9 @@
         self.timeCrunch = [[TimeCrunchModel alloc] initWithCollegeId:0 hours:0 activationTime:nil];
     }
     
-    NSLog(@"TimeCrunchModel.hours *before* = %ld", self.timeCrunch.hoursEarned);
+    NSLog(@"TimeCrunchModel.hours *before* = %ld", (long)self.timeCrunch.hoursEarned);
     [self.timeCrunch addHours:hours];
-    NSLog(@"TimeCrunchModel.hours *after*  = %ld", self.timeCrunch.hoursEarned);
+    NSLog(@"TimeCrunchModel.hours *after*  = %ld", (long)self.timeCrunch.hoursEarned);
     
     NSLog(@"Checking if newly added time crunch hours earn the 'many hours' achievement");
     

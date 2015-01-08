@@ -19,8 +19,6 @@
 		5334758C1922D9B700E84CC8 /* TagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5334758B1922D9B700E84CC8 /* TagViewController.m */; };
 		533475A41923344100E84CC8 /* TableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533475A21923344100E84CC8 /* TableCell.m */; };
 		533475A51923344100E84CC8 /* TableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 533475A31923344100E84CC8 /* TableCell.xib */; };
-		533FCA4D193EDE3B00754C07 /* aggieland.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 533FCA4C193EDE3B00754C07 /* aggieland.gpx */; };
-		533FCA4F193FCD8200754C07 /* austin.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 533FCA4E193FCD8200754C07 /* austin.gpx */; };
 		5347EE9D197DC7CC001B2214 /* UserPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5347EE9B197DC7CC001B2214 /* UserPostsViewController.m */; };
 		5347EEA6197DCE9F001B2214 /* UserCommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5347EEA5197DCE9F001B2214 /* UserCommentsViewController.m */; };
 		5347EEAA197DD407001B2214 /* TrendingCollegesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5347EEA9197DD407001B2214 /* TrendingCollegesViewController.m */; };
@@ -155,8 +153,6 @@
 		533475A11923344100E84CC8 /* TableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableCell.h; path = Collegefeed/TableCell.h; sourceTree = "<group>"; };
 		533475A21923344100E84CC8 /* TableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TableCell.m; path = Collegefeed/TableCell.m; sourceTree = "<group>"; };
 		533475A31923344100E84CC8 /* TableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TableCell.xib; path = Collegefeed/TableCell.xib; sourceTree = "<group>"; };
-		533FCA4C193EDE3B00754C07 /* aggieland.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = aggieland.gpx; sourceTree = "<group>"; };
-		533FCA4E193FCD8200754C07 /* austin.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = austin.gpx; sourceTree = "<group>"; };
 		5347EE9A197DC7CC001B2214 /* UserPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPostsViewController.h; sourceTree = "<group>"; };
 		5347EE9B197DC7CC001B2214 /* UserPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPostsViewController.m; sourceTree = "<group>"; };
 		5347EEA4197DCE9F001B2214 /* UserCommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCommentsViewController.h; sourceTree = "<group>"; };
@@ -231,7 +227,6 @@
 		53F8789F19133F60002A578B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		53F878A019133F60002A578B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		53F878AE19133F60002A578B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Collegefeed/Images.xcassets; sourceTree = SOURCE_ROOT; };
-		53F878B519133F60002A578B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		53FA791219381A4F00EF246E /* ChildCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChildCellDelegate.h; path = Collegefeed/ChildCellDelegate.h; sourceTree = "<group>"; };
 		CD04FE751A58AC120016C107 /* NearbyFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyFeedViewController.swift; sourceTree = "<group>"; };
 		CD04FE791A58C3BF0016C107 /* FeedSelectionProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedSelectionProtocol.h; sourceTree = "<group>"; };
@@ -418,26 +413,6 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
-		53AB57B7194AAFB3001D1B7B /* Other */ = {
-			isa = PBXGroup;
-			children = (
-				CD539DDD1A2CF54C004A794E /* Constants.h */,
-				CD6991311A5D0A8900C7E099 /* CFNavigationController.h */,
-				CD6991321A5D0A8900C7E099 /* CFNavigationController.m */,
-				533475871922B88300E84CC8 /* TTTAttributedLabel.h */,
-				533475881922B88300E84CC8 /* TTTAttributedLabel.m */,
-				CDF0D7F91A518BC600FBA892 /* Watchdog.h */,
-				CDF0D7FA1A518BC600FBA892 /* Watchdog.m */,
-				5352B5A0195F5C3100FEB2BF /* UIView+Toast.h */,
-				5352B5A1195F5C3100FEB2BF /* UIView+Toast.m */,
-				5312942C196504CD00CF13DB /* ToastController.h */,
-				5312942D196504CD00CF13DB /* ToastController.m */,
-				5308D2BB193552C600D70C1A /* Shared.h */,
-				53CF339F194E7A7A008BB733 /* Shared.m */,
-			);
-			name = Other;
-			sourceTree = "<group>";
-		};
 		53AB57C0194AAFFF001D1B7B /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -449,18 +424,10 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
-		53AB57C1194AB029001D1B7B /* GPX Locations */ = {
+		53B090B5192DA13100E3D996 /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
-				533FCA4C193EDE3B00754C07 /* aggieland.gpx */,
-				533FCA4E193FCD8200754C07 /* austin.gpx */,
-			);
-			name = "GPX Locations";
-			sourceTree = "<group>";
-		};
-		53B090B5192DA13100E3D996 /* Views */ = {
-			isa = PBXGroup;
-			children = (
+				CD4CCF471A5E519000377050 /* CFNavigationController */,
 				CDDB14321A533A4C005813AF /* Achievement View */,
 				53B1FE0119254EB900905E49 /* MasterView */,
 				535055881953B067009C1911 /* Post View */,
@@ -473,21 +440,10 @@
 				5350557B1951458B009C1911 /* Create Post/Comment */,
 				533475A019232A4A00E84CC8 /* TableCell */,
 				538E7C9619D030C400AD5719 /* CF_DialogView */,
+				CD4CCF481A5E51A800377050 /* Toast View */,
+				CD4CCF491A5E51BE00377050 /* TTTAttributedLabel */,
 			);
-			name = Views;
-			sourceTree = "<group>";
-		};
-		53B090B8192DA1FA00E3D996 /* Source Code */ = {
-			isa = PBXGroup;
-			children = (
-				531EAB411988533500C1E1AA /* UserData.xcdatamodeld */,
-				53AE73BC1927ED6600BE6B02 /* DataController.h */,
-				53AE73C61928354F00BE6B02 /* DataController.m */,
-				53F8789F19133F60002A578B /* AppDelegate.h */,
-				53F878A019133F60002A578B /* AppDelegate.m */,
-				53AB57B7194AAFB3001D1B7B /* Other */,
-			);
-			name = "Source Code";
+			name = "User Interface";
 			sourceTree = "<group>";
 		};
 		53B090B9192DA21600E3D996 /* Resources */ = {
@@ -495,7 +451,6 @@
 			children = (
 				53F8789719133F60002A578B /* Supporting Files */,
 				53AB57C0194AAFFF001D1B7B /* Fonts */,
-				53AB57C1194AB029001D1B7B /* GPX Locations */,
 				5390A9131914B76800ACD082 /* Images */,
 			);
 			name = Resources;
@@ -538,7 +493,7 @@
 			children = (
 				5358CE69196E5D7F00FF4E45 /* Models.xcodeproj */,
 				53CF3303194E53B6008BB733 /* Networker.xcodeproj */,
-				53F8789619133F60002A578B /* Collegefeed */,
+				53F8789619133F60002A578B /* TheCampusFeed */,
 				53F8788F19133F60002A578B /* Frameworks */,
 				53F8788E19133F60002A578B /* Products */,
 			);
@@ -564,19 +519,27 @@
 				53F8789019133F60002A578B /* Foundation.framework */,
 				53F8789219133F60002A578B /* CoreGraphics.framework */,
 				53F8789419133F60002A578B /* UIKit.framework */,
-				53F878B519133F60002A578B /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		53F8789619133F60002A578B /* Collegefeed */ = {
+		53F8789619133F60002A578B /* TheCampusFeed */ = {
 			isa = PBXGroup;
 			children = (
-				CD4CCF411A5E503F00377050 /* Swift */,
-				53B090B8192DA1FA00E3D996 /* Source Code */,
-				53B090B5192DA13100E3D996 /* Views */,
+				53F8789819133F60002A578B /* Collegefeed-Info.plist */,
+				53F8789F19133F60002A578B /* AppDelegate.h */,
+				53F878A019133F60002A578B /* AppDelegate.m */,
+				53F8789E19133F60002A578B /* Collegefeed-Prefix.pch */,
+				CD539DDD1A2CF54C004A794E /* Constants.h */,
+				53C343B519E26D3900C26745 /* TheCampusFeed-Bridging-Header.h */,
+				53F8789C19133F60002A578B /* main.m */,
+				53B090B5192DA13100E3D996 /* User Interface */,
+				CD4CCF451A5E50DF00377050 /* Business Logic */,
+				CD4CCF461A5E510800377050 /* Models */,
+				CD4CCF411A5E503F00377050 /* Utility */,
 				53B090B9192DA21600E3D996 /* Resources */,
 			);
+			name = TheCampusFeed;
 			path = Collegefeed;
 			sourceTree = "<group>";
 		};
@@ -584,10 +547,7 @@
 			isa = PBXGroup;
 			children = (
 				CDF66BEA1A36CEBD008C62DD /* bad_words.txt */,
-				53F8789819133F60002A578B /* Collegefeed-Info.plist */,
 				53F8789919133F60002A578B /* InfoPlist.strings */,
-				53F8789C19133F60002A578B /* main.m */,
-				53F8789E19133F60002A578B /* Collegefeed-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -617,15 +577,64 @@
 			name = "Feed Selection View";
 			sourceTree = "<group>";
 		};
-		CD4CCF411A5E503F00377050 /* Swift */ = {
+		CD4CCF411A5E503F00377050 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				53C343B519E26D3900C26745 /* TheCampusFeed-Bridging-Header.h */,
-				CDF6B9C11A51DB58005F4555 /* Achievement.swift */,
+				5308D2BB193552C600D70C1A /* Shared.h */,
+				53CF339F194E7A7A008BB733 /* Shared.m */,
 				CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+		CD4CCF451A5E50DF00377050 /* Business Logic */ = {
+			isa = PBXGroup;
+			children = (
+				53AE73BC1927ED6600BE6B02 /* DataController.h */,
+				53AE73C61928354F00BE6B02 /* DataController.m */,
+				5312942C196504CD00CF13DB /* ToastController.h */,
+				5312942D196504CD00CF13DB /* ToastController.m */,
+				CDF0D7F91A518BC600FBA892 /* Watchdog.h */,
+				CDF0D7FA1A518BC600FBA892 /* Watchdog.m */,
+			);
+			name = "Business Logic";
+			sourceTree = "<group>";
+		};
+		CD4CCF461A5E510800377050 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				531EAB411988533500C1E1AA /* UserData.xcdatamodeld */,
+				CDF6B9C11A51DB58005F4555 /* Achievement.swift */,
 				CD04FE7E1A59D0FF0016C107 /* TimeCrunchModel.swift */,
 			);
-			name = Swift;
+			name = Models;
+			sourceTree = "<group>";
+		};
+		CD4CCF471A5E519000377050 /* CFNavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				CD6991311A5D0A8900C7E099 /* CFNavigationController.h */,
+				CD6991321A5D0A8900C7E099 /* CFNavigationController.m */,
+			);
+			name = CFNavigationController;
+			sourceTree = "<group>";
+		};
+		CD4CCF481A5E51A800377050 /* Toast View */ = {
+			isa = PBXGroup;
+			children = (
+				5352B5A0195F5C3100FEB2BF /* UIView+Toast.h */,
+				5352B5A1195F5C3100FEB2BF /* UIView+Toast.m */,
+			);
+			name = "Toast View";
+			sourceTree = "<group>";
+		};
+		CD4CCF491A5E51BE00377050 /* TTTAttributedLabel */ = {
+			isa = PBXGroup;
+			children = (
+				533475871922B88300E84CC8 /* TTTAttributedLabel.h */,
+				533475881922B88300E84CC8 /* TTTAttributedLabel.m */,
+			);
+			name = TTTAttributedLabel;
 			sourceTree = "<group>";
 		};
 		CD539DD61A2CDE5D004A794E /* Comment View */ = {
@@ -768,8 +777,6 @@
 				5311F86219C961250053D3CC /* first_small.png in Resources */,
 				53DE348419AD517C004CB5A0 /* card_without_9patch.png in Resources */,
 				538E7C9319D030C000AD5719 /* CF_DialogViewController.xib in Resources */,
-				533FCA4D193EDE3B00754C07 /* aggieland.gpx in Resources */,
-				533FCA4F193FCD8200754C07 /* austin.gpx in Resources */,
 				5350558F1953C75C009C1911 /* gps.png in Resources */,
 				5350557819514587009C1911 /* CreatePostCommentViewController.xib in Resources */,
 				5390A9241914B76800ACD082 /* postbuttonclick.xml in Resources */,

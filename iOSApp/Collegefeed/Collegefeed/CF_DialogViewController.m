@@ -8,6 +8,7 @@
 
 #import "CF_DialogViewController.h"
 #import "Shared.h"
+#import "Constants.h"
 
 @implementation CF_DialogViewController
 
@@ -52,8 +53,8 @@
     [self.view setBackgroundColor:[UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:0.75]];
     [self.contentView scrollRectToVisible:CGRectMake(0,0,1,1) animated:NO];
     
-    [self.titleTextView setFont:CF_FONT_LIGHT(20)];
-    [self.contentView setFont:CF_FONT_LIGHT(15)];
+    [self.titleTextView setFont:[Shared getFontLight:20]];
+    [self.contentView setFont:[Shared getFontLight:15]];
     [self.titleTextView setTextColor:[Shared getCustomUIColor:CF_LIGHTBLUE]];
 }
 

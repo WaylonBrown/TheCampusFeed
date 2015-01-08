@@ -9,12 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "Constants.h"
-
-#define MESSAGE_HEIGHT_CUSHION 17
-
-@class College;
-
 @interface Shared : NSObject
 
 + (UIFont*)getFontLight:(float)size;
