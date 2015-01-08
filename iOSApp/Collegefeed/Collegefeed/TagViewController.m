@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 TheCampusFeed. All rights reserved.
 //
 
-
+#import "CFNavigationController.h"
 #import "College.h"
 #import "Tag.h"
 #import "TagViewController.h"
@@ -90,15 +90,34 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {   // Present a Post view of all posts with the selected tag
-    
+    NSLog(@"TagViewController called selected a tag. If valid, will display the TagPostsViewController");
+
     Tag *tag = (tableView == self.searchResultsController.tableView) ? [self.filteredList objectAtIndex:indexPath.row] : [self.list objectAtIndex:indexPath.row];
     
-    // TODO: just like in MasterView.didSelectTag()
-//    TagPostsViewController *controller = [[TagPostsViewController alloc] initWithDataController:self.dataController WithTagMessage:tag.name];
-//    
-//    [[self navigationItem] setBackBarButtonItem:[super blankBackButton]];
-//    [self.navigationController pushViewController:controller
-//                                         animated:YES];
+    if (tag != nil)
+    {
+        NSString *tagMessage = tag.name;
+        if ([Tag withMessageIsValid:tagMessage])
+        {
+            NSLog(@"Tag message = %@ is valid", tagMessage);
+            
+            if ([self.navigationController isKindOfClass:[CFNavigationController class]])
+            {
+                [((CFNavigationController *)self.navigationController) didSelectTag:tagMessage];
+            }
+            
+            else
+            {
+                NSLog(@"Could not invoke CFNavController.didSelectTag()");;
+            }
+        }
+        else
+        {
+            NSLog(@"ERROR. Attempted tag search with message = %@ was invalid", tagMessage);
+            [self.dataController.toaster toastInvalidTagSearch];
+        }
+
+    }
 }
 
 #pragma mark - Search Bar

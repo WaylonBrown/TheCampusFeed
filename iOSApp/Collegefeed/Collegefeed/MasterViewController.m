@@ -296,7 +296,7 @@
 {
     if (self.dataController.locStatus != LOCATION_FOUND)
     {
-        [self.dataController findUserLocation];
+        [self.dataController createLocationManager];
     }
 
     [self fetchContent];
@@ -388,28 +388,12 @@
         {
             NSLog(@"Could not invoke CFNavController.didSelectTag()");;
         }
-//        [[self navigationItem] setBackBarButtonItem:[self blankBackButton]];
-//        [self.navigationController pushViewController:controller
-//                                             animated:YES];
     }
     else
     {
         NSLog(@"ERROR. Attempted tag search with message = %@ was invalid", tagMessage);
         [self.dataController.toaster toastInvalidTagSearch];
     }
-
-//    TagPostsViewController *controller = [[TagPostsViewController alloc] initWithDataController:self.dataController WithTagMessage:tagMessage];
-//    
-//    [[self navigationItem] setBackBarButtonItem:[self blankBackButton]];
-//    [self.navigationController pushViewController:controller
-//                                         animated:YES];
-    
-    
-    
-//    TagPostsViewController *controller = [[TagPostsViewController alloc] initWithDataController:self.dataController WithTagMessage:tagMessage];
-//    [self.navigationController pushViewController:controller
-//                                         animated:YES];
-//    [[self navigationItem] setBackBarButtonItem:controller.backButton];
 }
 
 #pragma mark - CreationViewProtocolDelegate

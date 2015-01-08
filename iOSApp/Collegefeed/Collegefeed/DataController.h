@@ -42,11 +42,12 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 // Helper objects
 @property (nonatomic, strong) ToastController *toaster;
 @property (nonatomic, strong) Watchdog *watchDog;
+@property (nonatomic, strong) CLLocationManager *locationManager;
 
 // Runtime status information
+@property (nonatomic, strong) CLLocation *lastLocation;
 @property (nonatomic, strong) College *collegeInFocus;
 @property (nonatomic, strong) Post *postInFocus;
-//@property (nonatomic, strong) Tag *tagInFocus;
 @property (nonatomic, strong) College *homeCollegeForTimeCrunch;
 @property (nonatomic, strong) TimeCrunchModel *timeCrunch;
 @property (nonatomic) BOOL showingAllColleges;
@@ -63,12 +64,15 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 @property (nonatomic, strong) NSDate *lastPostTime;
 
 // Location information
-@property (nonatomic, strong) CLLocationManager *locationManager;
+// TODO: Delete these
 @property (nonatomic, strong) NSDate *locationSearchStart;
 @property (nonatomic) CLLocationDegrees lat;
 @property (nonatomic) CLLocationDegrees lon;
 @property (nonatomic) LocationStatus locStatus;
 @property (nonatomic) long locationUpdateAttempts;
+// ^^^
+
+
 
 // Achievement Arrays
 @property (nonatomic, strong) NSMutableArray *achievementList;
@@ -174,7 +178,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (long)getUserCommentScore;
 - (BOOL)isAbleToPost:(NSNumber *)minutesRemaining;
 - (BOOL)isAbleToComment;
-- (void)findUserLocation;
+- (void)createLocationManager;
 
 // Votes
 - (BOOL)createVote:(Vote *)vote;

@@ -9,22 +9,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Collegefeed/DataController.m"
-            timestampString = "442371163.210555"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1722"
-            endingLineNumber = "1722"
-            landmarkName = "-fetchObjectsOfType:IntoArray:WithFeedIdentifier:WithFetchFunction:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Collegefeed/MasterViewController.m"
             timestampString = "442367222.856496"
             startingColumnNumber = "9223372036854775807"

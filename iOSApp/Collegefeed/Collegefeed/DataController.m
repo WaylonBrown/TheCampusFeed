@@ -50,7 +50,7 @@
         NSLog(@"Updating launch count from %ld to %ld", self.launchCount++, self.launchCount);
         
         // Get the user's location
-        [self findUserLocation];
+        [self createLocationManager];
         
         [self saveStatusToCoreData];
     }
@@ -607,19 +607,26 @@
     NSLog(@"Called getCollegeById with ID = %ld. An error occurred while trying to find it", collegeId);
     return nil;
 }
-- (NSMutableArray *)findNearbyCollegesWithLat:(float)userLat withLon:(float)userLon
+- (NSMutableArray *)findNearbyCollegesWithLat:(float)lat withLon:(float)lon
 {
     NSMutableArray *colleges = [[NSMutableArray alloc] init];
+    NSLog(@"Finding colleges near (lat = %f.3, lon = %f.3) from self.collegeList with %lud schools", lat, lon, (unsigned long)[self.collegeList count]);
     
     for (College *college in self.collegeList)
     {
-        double milesAway = [self numberMilesAwayFromLat:userLat fromLon:userLon AtLat:college.lat atLon:college.lon];
+        double milesAway = [self numberMilesAwayFromLat:lat
+                                                fromLon:lon
+                                                  AtLat:college.lat
+                                                  atLon:college.lon];
         
         if (milesAway <= MILES_FOR_PERMISSION && ![colleges containsObject:college])
         {
             [colleges addObject:college];
         }
     }
+    
+    NSLog(@"Found %lud colleges nearby", (unsigned long)[colleges count]);
+    
     return colleges;
 }
 - (void)switchedToSpecificCollegeOrNil:(College *)college
@@ -677,6 +684,8 @@
     self.nearbyColleges = [[NSMutableArray alloc] initWithArray:
                            [self findNearbyCollegesWithLat:self.lat
                                                    withLon:self.lon]];
+    
+    [self.toaster toastNearbyColleges:self.nearbyColleges];
     
 }
 - (NSString *)getCurrentFeedName
@@ -1898,82 +1907,95 @@
     return YES;
 }
 
-#pragma mark - CLLocationManager Functions
+#pragma mark - Locations
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+- (void)getNewLocation
 {
-    if (self.locStatus == LOCATION_FOUND)
-        return;
-    
-    NSDate *currentTime = [NSDate date];
-    NSTimeInterval secs = [currentTime timeIntervalSinceDate:self.locationSearchStart];
-    
-    
-    NSLog(@"DidUpdateToLocation attempt number: %ld", (long)++self.locationUpdateAttempts);
-    
-    if (![CLLocationManager locationServicesEnabled])
+    [self.locationManager startUpdatingLocation];
+    NSLog(@"Old location was: %f, %f",
+          self.lastLocation.coordinate.latitude,
+          self.lastLocation.coordinate.longitude);
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+    didUpdateToLocation:(CLLocation *)newLocation
+           fromLocation:(CLLocation *)oldLocation
+{
+    if (!self.lastLocation)
     {
-        NSLog(@"Location Services not enabled");
-        [self failedLocationFinding];
-    }
-    else if (self.locationUpdateAttempts >= 4)
-    {
-        NSLog(@"Reached limit of location update attempts");
-        [self failedLocationFinding];
+        self.lastLocation = newLocation;
     }
     
-    else if (secs >= 30)
+    if (newLocation.coordinate.latitude != self.lastLocation.coordinate.latitude &&
+        newLocation.coordinate.longitude != self.lastLocation.coordinate.longitude)
     {
-        NSLog(@"Location update timeout expired");
-        [self failedLocationFinding];
-    }
-    else
-    {
-        NSLog(@"Successfully found location");
-        [self setLat:newLocation.coordinate.latitude];
-        [self setLon:newLocation.coordinate.longitude];
-        [self.locationManager stopUpdatingLocation];
+        self.lastLocation = newLocation;
+        NSLog(@"New location found: %f, %f",
+              self.lastLocation.coordinate.latitude,
+              self.lastLocation.coordinate.longitude);
         
-        [self findNearbyColleges];
-        [self setLocStatus:LOCATION_FOUND];
-        [self.toaster toastNearbyColleges:self.nearbyColleges];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationUpdated" object:self];
+        [self findNearbyCollegesWithLat:self.lastLocation.coordinate.latitude
+                                withLon:self.lastLocation.coordinate.longitude];
     }
 }
+    
+//    if (self.locStatus == LOCATION_FOUND)
+//        return;
+//    
+//    NSDate *currentTime = [NSDate date];
+//    NSTimeInterval secs = [currentTime timeIntervalSinceDate:self.locationSearchStart];
+//    
+//    
+//    NSLog(@"DidUpdateToLocation attempt number: %ld", (long)++self.locationUpdateAttempts);
+    
+//    if (![CLLocationManager locationServicesEnabled])
+//    {
+//        NSLog(@"Location Services not enabled");
+//        [self failedLocationFinding];
+//    }
+//    else if (self.locationUpdateAttempts >= 4)
+//    {
+//        NSLog(@"Reached limit of location update attempts");
+//        [self failedLocationFinding];
+//    }
+//    
+//    else if (false) // (secs >= 30)
+//    {
+//        NSLog(@"Location update timeout expired");
+//        [self failedLocationFinding];
+//    }
+//    else
+//    {
+//        NSLog(@"Successfully found location");
+//        [self setLat:newLocation.coordinate.latitude];
+//        [self setLon:newLocation.coordinate.longitude];
+//        [self.locationManager stopUpdatingLocation];
+//        
+//        [self findNearbyColleges];
+//        [self setLocStatus:LOCATION_FOUND];
+//        [self.toaster toastNearbyColleges:self.nearbyColleges];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationUpdated" object:self];
+//    }
+//}
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    [self failedLocationFinding];
-}
-- (void)failedLocationFinding
-{
     NSLog(@"Failed Location Finding");
-    [self setLocStatus:LOCATION_NOT_FOUND];
-    [self.locationManager stopUpdatingLocation];
+//    [self setLocStatus:LOCATION_NOT_FOUND];
+//    [self.locationManager stopUpdatingLocation];
+    
+    // TODO: tell CFNavController to remove post create and loading indicator
     [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationUpdated" object:self];
     [self.toaster toastLocationConnectionError];
 }
-- (void)findUserLocation
+- (void)createLocationManager
 {
-    [self setLocStatus:LOCATION_SEARCHING];
-    [self setLocationManager:[[CLLocationManager alloc] init]];
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
+    self.locationManager.delegate = self;
     
     if ([[UIDevice currentDevice] systemVersion].floatValue >= 8.0)
     {
         [self.locationManager requestWhenInUseAuthorization];
-    }
-    
-    [self.locationManager setDelegate:self];
-    if ([CLLocationManager locationServicesEnabled])
-    {
-        self.locationUpdateAttempts = 0;
-        self.locationSearchStart = [NSDate date];
-        [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
-        self.locStatus = LOCATION_SEARCHING;
-        [self.locationManager startUpdatingLocation];
-    }
-    else
-    {
-        [self failedLocationFinding];
     }
 }
 
