@@ -699,7 +699,8 @@
 //                           [self findNearbyCollegesWithLat:self.lat
 //                                                   withLon:self.lon]];
     
-    [self.toaster toastNearbyColleges:self.nearbyColleges];
+    // TODO
+//    [self.toaster toastNearbyColleges:self.nearbyColleges];
     
 }
 - (NSString *)getCurrentFeedName
@@ -731,7 +732,8 @@
 
         if (![self isAbleToComment])
         {
-            [self.toaster toastCommentingTooSoon];
+            // TODO
+//            [self.toaster toastCommentingTooSoon];
             return NO;
         }
         Comment *comment = [[Comment alloc] initWithMessage:message withCollegeId:post.college_id withUserToken:@"EMPTY_TOKEN" withImageId:nil];
@@ -1301,6 +1303,20 @@
                return [Networker GetTrendingTagsAtPageNum:self.pageForTrendingTagsSingleCollege
                                             WithCollegeId:self.currentCollegeFeedId];
            }];
+}
+
+#pragma mark - Toasts
+
+- (void)queueToastWithSelector:(SEL)selector
+{
+    NSLog(@"Posting notification with @selector(%@)", NSStringFromSelector(selector));
+    NSDictionary *info = [NSDictionary dictionaryWithObject:
+                          [NSValue valueWithPointer:selector]
+                                                     forKey:@"selector"];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ToastMessage"
+                                                        object:self
+                                                      userInfo:info];
 }
 
 #pragma mark - Time Crunch

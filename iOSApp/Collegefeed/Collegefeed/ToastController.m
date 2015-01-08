@@ -111,7 +111,7 @@
 
 #pragma mark - Location
 
-- (void)toastLocationServicesDisabled
+- (void)toastLocationSearchFailed
 {
     NSString *message = @"Could not get location. Please check Settings to make sure location services for TheCampusFeed are enabled";
     [self addToQueue:message];

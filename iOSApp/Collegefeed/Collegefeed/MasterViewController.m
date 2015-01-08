@@ -56,20 +56,6 @@
     }
     return self;
 }
-- (void)setNotificationObservers
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialFinished) name:@"TutorialFinished" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialStarted) name:@"TutorialStarted" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishedFetchRequest:) name:@"FinishedFetching" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchedCollegeList) name:@"FetchedColleges" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(create) name:@"CreatePost" object:nil];
-
-    // Location updates, changes rightBarButtonItem
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLocationActivityIndicator) name:@"LocationSearchingDidStart" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideLocationActivityIndicator) name:@"LocationSearchingDidEnd" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showComposeButton) name:@"FoundNearbyColleges" object:nil];
-
-}
 
 #pragma mark - View Loading
 
@@ -292,6 +278,35 @@
 
 #pragma mark - Helper Methods
 
+- (void)setNotificationObservers
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialFinished) name:@"TutorialFinished" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialStarted) name:@"TutorialStarted" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishedFetchRequest:) name:@"FinishedFetching" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchedCollegeList) name:@"FetchedColleges" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(create) name:@"CreatePost" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLocationActivityIndicator) name:@"LocationSearchingDidStart" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideLocationActivityIndicator) name:@"LocationSearchingDidEnd" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showComposeButton) name:@"FoundNearbyColleges" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedToast:) name:@"ToastMessage" object:nil];
+    
+}
+- (void)receivedToast:(NSNotification *)notification
+{
+    NSLog(@"%@ received Toast in a notification observer", [self class]);
+    
+    id selectorId = [[notification userInfo] valueForKey:@"toastSelector"];
+    if (selectorId != nil)
+    {
+        SEL selector = [selectorValueAsValue pointerValue];
+        if ([self.toastController respondsToSelector:selector])
+        {
+            [self.toastController performSelector:selector];
+        }
+    }
+}
 - (void)refreshFeedLabel
 {
    [self.currentFeedLabel setText:[self.dataController getCurrentFeedName]];

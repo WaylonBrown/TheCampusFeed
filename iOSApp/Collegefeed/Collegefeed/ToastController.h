@@ -33,7 +33,7 @@
 
 // Location
 - (void)toastLocationFoundNotNearCollege;
-- (void)toastLocationServicesDisabled;
+- (void)toastLocationSearchFailed;
 
 // Formatting
 - (void)toastCommentTooShort;
