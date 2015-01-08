@@ -897,10 +897,15 @@
 - (NSString *)getImageUrlFromId:(NSNumber *)imageID
 {
     NSData *data = [Networker GETImageData:[imageID longValue]];
-    NSDictionary *jsonObject = (NSDictionary *)(NSArray *)[NSJSONSerialization JSONObjectWithData:data
-                                                                                          options:0
-                                                                                            error:nil];
-    return [jsonObject valueForKey:@"uri"];
+    if (data != nil)
+    {
+        NSDictionary *jsonObject = (NSDictionary *)(NSArray *)[NSJSONSerialization JSONObjectWithData:data
+                                                                                              options:0
+                                                                                                error:nil];
+        return [jsonObject valueForKey:@"uri"];
+    }
+    
+    return nil;
 }
 
 #pragma mark - Posts

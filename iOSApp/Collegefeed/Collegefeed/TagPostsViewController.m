@@ -31,6 +31,7 @@
         NSLog(@"Assigning new tag = %@ in TagPostsViewController", tag);
         self.tagMessage = tag;
         [self.list removeAllObjects];
+        [self fetchContent];
     }
 }
 #pragma mark - Table View
