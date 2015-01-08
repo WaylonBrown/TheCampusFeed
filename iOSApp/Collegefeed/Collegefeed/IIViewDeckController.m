@@ -1222,11 +1222,8 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
         if (_controllers[side] == controller) return side;
     }
     
-    return NSNotFound;
+    return (IIViewDeckSide)NSNotFound;
 }
-
-
-
 
 - (BOOL)checkCanOpenSide:(IIViewDeckSide)viewDeckSide {
     return ![self isSideOpen:viewDeckSide] && [self checkDelegate:@selector(viewDeckController:shouldOpenViewSide:) side:viewDeckSide];

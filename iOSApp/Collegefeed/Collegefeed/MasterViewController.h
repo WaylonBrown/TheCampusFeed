@@ -62,7 +62,6 @@
 - (void)setNotificationObservers;
 
 // Network Actions
-//- (void)locationWasUpdated;
 - (void)fetchContent;
 - (void)finishedFetchRequest:(NSNotification *)notification;
 
@@ -72,19 +71,6 @@
 
 // Helper Methods
 - (void)setCorrectList;
-- (void)placeLoadingIndicatorInToolbar;
-- (void)placeCreatePost;
 - (UIBarButtonItem *)blankBackButton;
 
 @end
-
-typedef NS_ENUM(NSInteger, ViewType)
-{
-    ALL_VIEW,
-    TOP_VIEW,
-    RECENT_VIEW,
-    USER_VIEW,
-    USER_POSTS,
-    USER_COMMENTS,
-    TAG_VIEW,
-};
