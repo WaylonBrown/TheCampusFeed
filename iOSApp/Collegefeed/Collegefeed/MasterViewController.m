@@ -146,6 +146,10 @@
 {   // View is about to appear after being inactive
     [super viewWillAppear:animated];
     
+    if (self.dataController.locationStatus == LOCATION_FOUND)
+    {
+        [self showComposeButton];
+    }
     if (self.list.count == 0)
     {
         [self fetchContent];
@@ -269,19 +273,15 @@
 {
     if (college != nil)
     {
-//        PostCreateViewController *controller = [self getMyPostCreateController];
         PostCreateViewController *controller = [[PostCreateViewController alloc] initWithDataController:self.dataController];
         [controller assign:college];
+        
         [self presentViewController:controller animated:YES completion:nil];
     }
     else
     {
         NSLog(@"Could not show post creation dialog for nil college");
     }
-//    self.createController = [[CreateViewController alloc] initWithType:POST
-//                                                                      withCollege:college
-//                                                               withDataController:self.dataController];
-//    [self.createController setDelegate:self];
 }
 - (void)pullToRefresh
 {

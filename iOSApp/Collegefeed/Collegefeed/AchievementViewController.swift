@@ -28,8 +28,11 @@ class AchievementViewController: MasterViewController, UITableViewDataSource, UI
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = nil
+        
+        feedToolbar.removeFromSuperview()
     }
-
+    override func viewWillAppear(animated: Bool) {
+    }
     override func viewDidAppear(animated: Bool) {
         self.dataController.didViewAchievements()
         tableView.reloadData()

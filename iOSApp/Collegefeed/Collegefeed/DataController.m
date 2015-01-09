@@ -958,7 +958,6 @@
             [self.recentPostsAllColleges insertObject:networkPost atIndex:0];
             [self.recentPostsSingleCollege insertObject:networkPost atIndex:0];
             
-            
             long oldCount = self.userPosts.count;
             
             [self.userPosts insertObject:networkPost atIndex:0];
@@ -980,10 +979,11 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"CreatedPost" object:self];
             return networkPost;
         }
-    }
-    else
-    {
-        [Shared queueToastWithSelector:@selector(toastPostFailed)];
+        else
+        {
+            NSLog(@"Network post submission failure");
+            [Shared queueToastWithSelector:@selector(toastPostFailed)];
+        }
     }
     
     return nil;
@@ -1674,40 +1674,43 @@
 }
 - (BOOL)isApprovedByWatchDog:(NSString *)message
 {
-    NSMutableDictionary* resultDict = [NSMutableDictionary new];
-
-    if ([self.watchDog shouldSubmitMessage:message
-                               WithResults:resultDict])
-    {
-        NSString *errorToastMessage = @"Sorry, your message was rejected. Please try again. Reason:";
-        
-        NSMutableArray *errorReasons = [NSMutableArray new];
-        if (![[resultDict valueForKey:@"isValidLength"] boolValue])
-        {
-            [errorReasons addObject:@"Invalid length"];
-            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Invalid length,"];
-        }
-        if ([[resultDict valueForKey:@"shouldBlockForNumber"] boolValue])
-        {
-            [errorReasons addObject:@"Phone numbers not allowed"];
-            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Phone numbers not allowed,"];
-        }
-        if ([[resultDict valueForKey:@"shouldBlockForEmail"] boolValue])
-        {
-            [errorReasons addObject:@"Email addresses not allowed"];
-            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Email addresses not allowed,"];
-        }
-        
-        errorToastMessage = [errorToastMessage substringToIndex:[errorToastMessage length] - 1];
-        
-        [self.toastController toastCustomMessage:errorToastMessage];
-        
-        NSLog(@"Message NOT approved by watchdog");
-        return NO;
-    }
-    
-    NSLog(@"Message approved by watchdog");
     return YES;
+    
+    // TODO: Come back to Watchdog
+//    NSMutableDictionary* resultDict = [NSMutableDictionary new];
+//
+//    if ([self.watchDog shouldSubmitMessage:message
+//                               WithResults:resultDict])
+//    {
+//        NSString *errorToastMessage = @"Sorry, your message was rejected. Please try again. Reason:";
+//        
+//        NSMutableArray *errorReasons = [NSMutableArray new];
+//        if (![[resultDict valueForKey:@"isValidLength"] boolValue])
+//        {
+//            [errorReasons addObject:@"Invalid length"];
+//            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Invalid length,"];
+//        }
+//        if ([[resultDict valueForKey:@"shouldBlockForNumber"] boolValue])
+//        {
+//            [errorReasons addObject:@"Phone numbers not allowed"];
+//            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Phone numbers not allowed,"];
+//        }
+//        if ([[resultDict valueForKey:@"shouldBlockForEmail"] boolValue])
+//        {
+//            [errorReasons addObject:@"Email addresses not allowed"];
+//            errorToastMessage = [NSString stringWithFormat:@"%@%@", errorToastMessage, @" Email addresses not allowed,"];
+//        }
+//        
+//        errorToastMessage = [errorToastMessage substringToIndex:[errorToastMessage length] - 1];
+//        
+//        [self.toastController toastCustomMessage:errorToastMessage];
+//        
+//        NSLog(@"Message NOT approved by watchdog");
+//        return NO;
+//    }
+//    
+//    NSLog(@"Message approved by watchdog");
+//    return YES;
 }
 
 #pragma mark - Helper Methods
@@ -1885,7 +1888,7 @@
         }
     }
     
-    NSLog(@"Posting time interval: IS allowed to post");
+    NSLog(@"Posting time interval; IS allowed to post");
     
     return YES;
 }
