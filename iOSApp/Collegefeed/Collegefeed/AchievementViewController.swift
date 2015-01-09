@@ -41,12 +41,14 @@ class AchievementViewController: MasterViewController, UITableViewDataSource, UI
     // MARK: Network Actions
     
     override func fetchContent() {
-        super.fetchContent()
+        self.refreshControl!.endRefreshing()
+        self.hasFinishedFetchRequest = true;
+        self.contentLoadingIndicator.stopAnimating()
     }
     
     override func finishedFetchRequest(notification: NSNotification!) {
-            
-        super.finishedFetchRequest(notification)
+        self.refreshControl!.endRefreshing()
+        self.contentLoadingIndicator.stopAnimating()
     }
     
     // MARK: Table View

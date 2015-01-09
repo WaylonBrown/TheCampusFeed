@@ -181,8 +181,10 @@
     for (Post *post in self.userPosts)
     {
         NSArray *words = [post.text componentsSeparatedByString:@" "];
-        if (words.count <= WORDS_FOR_SHORT_AND_SWEET_ACHIEVEMENT
-            && [post.score longValue] >= POINTS_FOR_SHORT_AND_SWEET_ACHIEVEMENT)
+        
+        if (post.score != nil
+            && [post.score longValue] >= POINTS_FOR_SHORT_AND_SWEET_ACHIEVEMENT
+            && words.count <= WORDS_FOR_SHORT_AND_SWEET_ACHIEVEMENT)
         {
             NSLog(@"Found Post = \"%@\". Score = %@ and only %ld words!", post.text, post.score, (unsigned long)words.count);
             
