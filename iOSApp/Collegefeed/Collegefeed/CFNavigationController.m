@@ -112,17 +112,20 @@
 }
 - (BOOL)shouldAutorotate
 {
-    id currentViewController = self.topViewController;
-    
+    UIViewController *currentViewController = self.topViewController;
+
     if ([currentViewController isKindOfClass:[IIViewDeckController class]])
     {
         currentViewController = ((IIViewDeckController *)currentViewController).centerController;
     }
     
     if ([currentViewController isKindOfClass:[TimeCrunchViewController class]]
+        || [currentViewController isKindOfClass:[CreateViewController class]]
         || [currentViewController isKindOfClass:[CreateViewController class]])
-        
+    {
+        NSLog(@"CFNavigationController shouldAutorotate returning false for class = %@", [currentViewController class]);
         return NO;
+    }
     
     return YES;
 }

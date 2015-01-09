@@ -82,6 +82,10 @@ class TimeCrunchViewController: MasterViewController {
     
     // MARK: - Helper Methods
     
+    override func shouldAutorotate() -> Bool {
+        println("TimeCrunchViewController should not autorotate")
+        return false
+    }
     func updateViewOutlets() {
         
         // default values

@@ -113,6 +113,11 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (BOOL)shouldAutorotate
+{
+    NSLog(@"CreateViewController should not autorotate");
+    return NO;
+}
 
 #pragma mark - Actions
 

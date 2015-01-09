@@ -903,6 +903,10 @@
 
 - (NSNumber *)postImageToServer:(UIImage *)image fromFilePath:(NSString *)filePath
 {
+    if (image == nil)
+        return nil;
+    
+    // TODO separate thread in here
     return [Networker POSTImage:image fromFilePath:nil];
 }
 - (NSString *)getImageUrlFromId:(NSNumber *)imageID
@@ -1698,9 +1702,11 @@
         
         [self.toastController toastCustomMessage:errorToastMessage];
         
+        NSLog(@"Message NOT approved by watchdog");
         return NO;
     }
     
+    NSLog(@"Message approved by watchdog");
     return YES;
 }
 
@@ -1873,10 +1879,13 @@
         float secondsElapsed = abs(diff);
         if (secondsElapsed < MINIMUM_POSTING_INTERVAL_MINUTES * 60)
         {
+            NSLog(@"Posting time interval has not elapsed yet");
             [Shared queueToastWithSelector:@selector(toastPostingTooSoon)];
             return NO;
         }
     }
+    
+    NSLog(@"Posting time interval: IS allowed to post");
     
     return YES;
 }
