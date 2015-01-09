@@ -15,7 +15,7 @@
 
 @interface PostCreateViewController ()
 
-@property (strong, nonatomic) College* college;
+@property (strong, nonatomic) College *college;
 
 @end
 

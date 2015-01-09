@@ -20,7 +20,17 @@
 
 - (BOOL)assignWithPost:(Post *)post withCollegeLabel:(BOOL)showLabel
 {
-    if (post != nil)
+    if (post == nil)
+    {
+        [self setObject:nil];
+        self.isNearCollege = NO;
+        self.gpsIconImageView.hidden = YES;
+        self.messageLabel.text = @"Post not found";
+        self.collegeLabel.text = @"";
+        self.commentCountLabel.text = @"0 comments";
+        self.ageLabel.text = @"";
+    }
+    else
     {
         [self setObject:post];
         

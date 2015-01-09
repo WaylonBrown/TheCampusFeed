@@ -74,12 +74,12 @@
 		CD04FE7F1A59D0FF0016C107 /* TimeCrunchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04FE7E1A59D0FF0016C107 /* TimeCrunchModel.swift */; };
 		CD3614131A4B3951006AE87E /* CollegeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3614121A4B3951006AE87E /* CollegeSearchViewController.swift */; };
 		CD4CCF511A5E857000377050 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CD4CCF501A5E857000377050 /* Default-568h@2x.png */; };
-		CD4CCF551A5EC63100377050 /* CommentCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4CCF541A5EC63100377050 /* CommentCreateViewController.swift */; };
 		CD539DD31A2CCE7D004A794E /* TopPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD21A2CCE7D004A794E /* TopPostsViewController.m */; };
 		CD539DD91A2CDE99004A794E /* NewPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DD81A2CDE99004A794E /* NewPostsViewController.m */; };
 		CD539DDC1A2CE488004A794E /* TagPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD539DDB1A2CE488004A794E /* TagPostsViewController.m */; };
 		CD5887591A21501100D864FD /* NSMutableArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */; };
 		CD5D8A081A5F406200B1819D /* PostCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5D8A071A5F406200B1819D /* PostCreateViewController.m */; };
+		CD5D8A0D1A5FACC700B1819D /* CommentCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5D8A0C1A5FACC700B1819D /* CommentCreateViewController.m */; };
 		CD6991331A5D0A8900C7E099 /* CFNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD6991321A5D0A8900C7E099 /* CFNavigationController.m */; };
 		CD6991351A5DE15A00C7E099 /* trophy_small.png in Resources */ = {isa = PBXBuildFile; fileRef = CD6991341A5DE15A00C7E099 /* trophy_small.png */; };
 		CDDB142F1A5337FF005813AF /* AchievementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDB142E1A5337FF005813AF /* AchievementViewController.swift */; };
@@ -234,7 +234,6 @@
 		CD04FE7E1A59D0FF0016C107 /* TimeCrunchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeCrunchModel.swift; sourceTree = "<group>"; };
 		CD3614121A4B3951006AE87E /* CollegeSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollegeSearchViewController.swift; sourceTree = "<group>"; };
 		CD4CCF501A5E857000377050 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../Default-568h@2x.png"; sourceTree = "<group>"; };
-		CD4CCF541A5EC63100377050 /* CommentCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCreateViewController.swift; sourceTree = "<group>"; };
 		CD539DD11A2CCE7D004A794E /* TopPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPostsViewController.h; sourceTree = "<group>"; };
 		CD539DD21A2CCE7D004A794E /* TopPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPostsViewController.m; sourceTree = "<group>"; };
 		CD539DD71A2CDE99004A794E /* NewPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPostsViewController.h; sourceTree = "<group>"; };
@@ -245,6 +244,8 @@
 		CD5887581A21501100D864FD /* NSMutableArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMutableArrayExtensions.swift; sourceTree = "<group>"; };
 		CD5D8A061A5F406200B1819D /* PostCreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostCreateViewController.h; sourceTree = "<group>"; };
 		CD5D8A071A5F406200B1819D /* PostCreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostCreateViewController.m; sourceTree = "<group>"; };
+		CD5D8A0B1A5FACC700B1819D /* CommentCreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentCreateViewController.h; sourceTree = "<group>"; };
+		CD5D8A0C1A5FACC700B1819D /* CommentCreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentCreateViewController.m; sourceTree = "<group>"; };
 		CD6991311A5D0A8900C7E099 /* CFNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFNavigationController.h; sourceTree = "<group>"; };
 		CD6991321A5D0A8900C7E099 /* CFNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFNavigationController.m; sourceTree = "<group>"; };
 		CD6991341A5DE15A00C7E099 /* trophy_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trophy_small.png; sourceTree = "<group>"; };
@@ -334,9 +335,10 @@
 				5350557419514587009C1911 /* CreateViewController.h */,
 				5350557519514587009C1911 /* CreateViewController.m */,
 				5350557619514587009C1911 /* CreateViewController.xib */,
-				CD4CCF541A5EC63100377050 /* CommentCreateViewController.swift */,
 				CD5D8A061A5F406200B1819D /* PostCreateViewController.h */,
 				CD5D8A071A5F406200B1819D /* PostCreateViewController.m */,
+				CD5D8A0B1A5FACC700B1819D /* CommentCreateViewController.h */,
+				CD5D8A0C1A5FACC700B1819D /* CommentCreateViewController.m */,
 			);
 			name = "Create View";
 			sourceTree = "<group>";
@@ -822,6 +824,7 @@
 				5347EEB5197E9EC7001B2214 /* MenuViewController.m in Sources */,
 				53F878A119133F60002A578B /* AppDelegate.m in Sources */,
 				53DE347F19AD01FF004CB5A0 /* IISideController.m in Sources */,
+				CD5D8A0D1A5FACC700B1819D /* CommentCreateViewController.m in Sources */,
 				5352B5A2195F5C3100FEB2BF /* UIView+Toast.m in Sources */,
 				CD539DDC1A2CE488004A794E /* TagPostsViewController.m in Sources */,
 				CDF6B9C21A51DB58005F4555 /* Achievement.swift in Sources */,
@@ -844,7 +847,6 @@
 				CDDB142F1A5337FF005813AF /* AchievementViewController.swift in Sources */,
 				5312942E196504CD00CF13DB /* ToastController.m in Sources */,
 				533475891922B88300E84CC8 /* TTTAttributedLabel.m in Sources */,
-				CD4CCF551A5EC63100377050 /* CommentCreateViewController.swift in Sources */,
 				5347EEA6197DCE9F001B2214 /* UserCommentsViewController.m in Sources */,
 				CD5887591A21501100D864FD /* NSMutableArrayExtensions.swift in Sources */,
 			);

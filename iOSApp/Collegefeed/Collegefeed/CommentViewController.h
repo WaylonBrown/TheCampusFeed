@@ -28,4 +28,7 @@
 @property (strong, nonatomic) UIBarButtonItem *dividerButton;
 @property (strong, nonatomic) UIBarButtonItem *backButton;
 
+- (void)assignWithPost:(Post *)post
+         isNearCollege:(BOOL)nearCollege;
+
 @end

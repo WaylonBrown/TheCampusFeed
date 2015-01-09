@@ -83,7 +83,7 @@
     // Get the post and display in this cell
     Post *post = [self.list objectAtIndex:indexPath.row];
     
-    if([self.dataController.nearbyColleges containsObject:post.college])
+    if([self.dataController isNearCollegeWithId:post.college.collegeID])
     {
         post.isNearCollege = YES;
     }
@@ -104,9 +104,20 @@
         return;
     }
     
+    BOOL isNearCollege = NO;
     Post *post = [self.list objectAtIndex:indexPath.row];
-    [self.dataController setPostInFocus:post];
-    self.commentViewController.parentPost = post;
+    if([self.dataController isNearCollegeWithId:post.college.collegeID])
+    {
+        isNearCollege = YES;
+    }
+//    [self.dataController setPostInFocus:post];
+//    self.commentViewController.parentPost = post;
+    
+    [self.commentViewController assignWithPost:post
+//                                   withPostImage:mage
+                                   isNearCollege:isNearCollege];
+
+//    [self.commentViewController assignPostId:[post.post_id longValue]];
     [self.navigationController pushViewController:self.commentViewController
                                          animated:YES];
     [[self navigationItem] setBackBarButtonItem:self.commentViewController.backButton];

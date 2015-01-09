@@ -743,6 +743,8 @@
             [self saveComment:networkComment];
             [self saveStatusToCoreData];
 
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CreatedComment" object:self];
+
             return networkComment;
         }
     }
@@ -753,7 +755,7 @@
     
     return nil;
 }
-- (void)fetchCommentsForPost:(Post *)post
+- (void)fetchCommentsForPostId:(long)postId
 {
     
     [self fetchObjectsOfType:COMMENT
@@ -761,7 +763,7 @@
           WithFeedIdentifier:@"commentsForPost"
            WithFetchFunction:^{
                
-               return [Networker GETCommentsWithPostId:[post.id longValue]];
+               return [Networker GETCommentsWithPostId:postId];
            }];
 }
 - (void)saveComment:(Comment *)comment

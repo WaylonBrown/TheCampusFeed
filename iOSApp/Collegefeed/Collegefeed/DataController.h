@@ -130,7 +130,7 @@ typedef NS_ENUM(NSInteger, LocationStatus)
 - (Comment *)submitCommentToNetworkWithMessage:(NSString *)message
                                     withPostId:(long)postId;
 
-- (void)fetchCommentsForPost:(Post *)post;
+- (void)fetchCommentsForPostId:(long)postId;
 - (void)retrieveUserComments;
 
 // Flags

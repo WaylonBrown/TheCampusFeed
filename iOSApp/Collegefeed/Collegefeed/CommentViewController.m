@@ -9,6 +9,7 @@
 #import <Social/Social.h>
 
 #import "TableCell.h"
+#import "CommentCreateViewController.h"
 #import "CFNavigationController.h"
 #import "PostsViewController.h"
 #import "Post.h"
@@ -27,6 +28,10 @@
 
 @property (strong, nonatomic) CommentCreateViewController *commentCreateController;
 
+@property long postId;
+@property BOOL nearCollege;
+@property UIImage *postImage;
+
 @end
 
 @implementation CommentViewController
@@ -39,6 +44,14 @@
         [self setDataController:controller];
     }
     return self;
+}
+- (void)assignWithPost:(Post *)post
+         isNearCollege:(BOOL)nearCollege
+{
+    self.parentPost = post;
+    self.postImage = post.image;
+    self.postId = [post.post_id longValue];
+    self.nearCollege = nearCollege;
 }
 
 #pragma mark - View Loading
@@ -60,6 +73,8 @@
 
     self.postTableView.estimatedRowHeight = POST_CELL_HEIGHT_ESTIMATE;
     self.postTableView.rowHeight = UITableViewAutomaticDimension;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(createdComment) name:@"CreatedComment" object:nil];
     
 }
 - (void)loadView
@@ -113,21 +128,23 @@
     
     [self initializeViewElements];
     
-    if (self.parentPost != nil || self.parentPost.college == nil)
+//    if (self.parentPost != nil || self.parentPost.college == nil)
+    if (self.nearCollege)
     {
-        if ([self.dataController isNearCollegeWithId:self.parentPost.college.collegeID])
-        {
+//        if ([self.dataController isNearCollegeWithId:self.parentPost.college.collegeID])
+//        {
             self.navigationItem.rightBarButtonItems = @[self.composeButton,
                                                         self.flagButton,
                                                         self.dividerButton,
                                                         self.facebookButton,
                                                         self.twitterButton];
-            return;
-        }
+//        }
     }
-    
-    self.navigationItem.rightBarButtonItems = @[self.facebookButton,
-                                                self.twitterButton];
+    else
+    {
+        self.navigationItem.rightBarButtonItems = @[self.facebookButton,
+                                                    self.twitterButton];
+    }
 }
 
 #pragma mark - Table View
@@ -150,15 +167,16 @@
 {
     // TODO full size image
     if (self.postTableView == tableView
-        && self.parentPost != nil
-        && self.parentPost.image != nil)
+        && self.postImage != nil)
+//        && self.parentPost != nil
+//        && self.parentPost.image != nil)
     {
         float width = self.view.frame.size.width;
         float height = self.view.frame.size.height;
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
         imageView.backgroundColor = [UIColor blackColor];
-        imageView.image = self.parentPost.image;
+        imageView.image = self.postImage;
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         imageView.userInteractionEnabled = YES;
         
@@ -259,7 +277,7 @@
     
     [super fetchContent];
     
-    [self.dataController fetchCommentsForPost:self.parentPost];
+    [self.dataController fetchCommentsForPostId:self.postId];
 }
 - (void)finishedFetchRequest:(NSNotification *)notification
 {   // A fetch request was completed, make necessary updates
@@ -303,6 +321,10 @@
 
 #pragma mark - Local Actions
 
+- (void)createdComment
+{
+    [self.tableView reloadData];
+}
 - (void)cancel
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -310,16 +332,17 @@
 - (void)create
 {   // Display popup to let user type a new comment
     
-    if (self.parentPost != nil)
-    {
+//    if (self.parentPost != nil)
+//    {
+//        long postId = [self.parentPost.post_id longValue];
         CommentCreateViewController *controller = [self getMyCommentCreateController];
-        [controller assign:self.parentPost];
+        [controller assignWithPostId:[[self.parentPost getID] longValue]];
         [self presentViewController:controller animated:YES completion:nil];
-    }
-    else
-    {
-        NSLog(@"Could not show comment creation dialog for nil parent post");
-    }
+//    }
+//    else
+//    {
+//        NSLog(@"Could not show comment creation dialog for nil parent post");
+//    }
 //    CreateViewController *alert = [[CreateViewController alloc] initWithType:COMMENT
 //                                                                                       withCollege:nil
 //                                                                                withDataController:self.dataController];
@@ -338,7 +361,7 @@
 {
     if (buttonIndex == 1)
     {   // attempt to flag a post as inappropriate
-        if ((self.parentPost != nil) && [self.dataController flagPost:[[self.parentPost getID] longValue]])
+        if ([self.dataController flagPost:[self.parentPost.post_id longValue]])
         {
             [Shared queueToastWithSelector:@selector(toastFlagSuccess)];
         }
@@ -382,48 +405,8 @@
 }
 - (BOOL)castVote:(Vote *)vote
 {
-//    Post *parentPost = self.dataController.postInFocus;
-    if (self.parentPost != nil)
-    {
-        [vote setGrandparentID:[[self.parentPost getID] longValue]];
-        return [super castVote:vote];
-    }
-    
-    return NO;
+    [vote setGrandparentID:self.postId];
+    return [super castVote:vote];
 }
-
-#pragma mark - CreationViewProtocol Delegate Methods
-
-//- (void)submitPostCommentCreationWithMessage:(NSString *)message
-//                               withCollegeId:(long)collegeId
-//                               withUserToken:(NSString *)userToken
-//                                   withImage:(UIImage *)image
-//{
-////    if ([self.dataController isAbleToComment])
-//    if (true)
-//    {
-//        [self.createController dismiss:self];
-//
-////        Post *parentPost = self.dataController.postInFocus;
-//        if (self.parentPost != nil)
-//        {
-//            BOOL success = [self.dataController createCommentWithMessage:message withPost:self.parentPost];
-//            if (success)
-//            {
-//                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataController.commentList.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-////                [self.commentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataController.commentList.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-//            }
-//        }
-////        else
-////        {
-////            [self.toastController toastPostFailed];
-////        }
-//    }
-////    else
-////    {
-////        [self.toastController toastCommentingTooSoon];
-////    }
-//    
-//}
 
 @end
