@@ -269,6 +269,8 @@
         self.deckController.closeSlideAnimationDuration = 0.25f;
         self.deckController.leftSize = 100.0f;
         self.deckController.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
+        // TODO: SHADOW HERE!!
+        [self.deckController setShadowEnabled:NO];
     }
     
     return self.deckController;
