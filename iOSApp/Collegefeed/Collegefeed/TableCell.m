@@ -52,7 +52,6 @@
         [self setWillDisplayCollege:showLabel];
         
         [self setNeedsLayout];
-        [self layoutIfNeeded];
         
         return YES;
     }
@@ -65,7 +64,6 @@
     self.pictureView.image = nil;
     [self.pictureActivityIndicator stopAnimating];
     [self setNeedsLayout];
-    [self layoutIfNeeded];
     
     if ([post hasImage])
     {
@@ -95,9 +93,13 @@
                 }
                 
                 [self.pictureActivityIndicator stopAnimating];
+                [self setNeedsLayout];
+
             });
         });
     }
+    
+    [self layoutIfNeeded];
 }
 - (BOOL)assignWithComment:(Comment *)comment
 {
