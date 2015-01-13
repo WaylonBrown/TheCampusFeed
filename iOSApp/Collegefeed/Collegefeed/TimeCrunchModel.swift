@@ -28,6 +28,15 @@ class TimeCrunchModel: NSObject {
         return hoursEarned
     }
     
+    func getSecondsRemaining() -> Int {
+        var secondsUsed = 0
+        if let oldTime = self.timeWasActivatedAt {
+            var now: NSDate = NSDate()
+            secondsUsed = Int(now.timeIntervalSinceDate(oldTime))
+        }
+        return (hoursEarned * 60 * 60) - secondsUsed
+    }
+    
     func getHoursRemaining() -> Int {
         if let oldTime = self.timeWasActivatedAt {
             

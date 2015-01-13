@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Roboto-Light.ttf">
-            <string>Roboto-Light</string>
-        </mutableArray>
         <mutableArray key="Roboto-LightItalic.ttf">
             <string>Roboto-LightItalic</string>
             <string>Roboto-LightItalic</string>
+        </mutableArray>
+        <mutableArray key="mplus-2c-bold.ttf">
+            <string>mplus-2c-bold</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -112,18 +113,18 @@
                         <outletCollection property="gestureRecognizers" destination="yMn-kJ-5Se" appends="YES" id="jGT-eP-AsI"/>
                     </connections>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNg-tx-u6p">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNg-tx-u6p">
                     <fontDescription key="fontDescription" name="Roboto-LightItalic" family="Roboto" pointSize="14"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24 hrs" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SL5-t1-DkM">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="24 hrs" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SL5-t1-DkM">
                     <rect key="frame" x="111" y="177" width="99" height="43"/>
-                    <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="36"/>
+                    <fontDescription key="fontDescription" name="mplus-2c-bold" family="M+ 2c" pointSize="40"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start posting to get time!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4wF-61-r4F">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Start posting to get time!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4wF-61-r4F">
                     <rect key="frame" x="86" y="236" width="149" height="17"/>
                     <fontDescription key="fontDescription" name="Roboto-LightItalic" family="Roboto" pointSize="14"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>

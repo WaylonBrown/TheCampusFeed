@@ -21,6 +21,8 @@ class TimeCrunchViewController: MasterViewController {
     @IBOutlet var activateButtonLabel: UILabel!
     @IBOutlet var onOffLabel: UILabel!
     
+    var masterTimer: NSTimer? = nil
+    
     required init(coder aDecoder: NSCoder){
         super.init(coder: aDecoder)
     }
@@ -40,6 +42,8 @@ class TimeCrunchViewController: MasterViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+         self.masterTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateViewOutlets", userInfo: nil, repeats: true) //start timer that calls countDown every second 
+        
         aboutButton.layer.shadowColor = UIColor.blackColor().CGColor
         aboutButton.layer.shadowOpacity = 0.8
         aboutButton.layer.shadowRadius = 2.0
@@ -52,7 +56,7 @@ class TimeCrunchViewController: MasterViewController {
         activateButton.layer.shadowOffset = CGSizeMake(2.0, 2.0)
         activateButtonLabel.font = Shared.getFontLight(22)
         
-        hoursLabel.font = Shared.getFontItalic(40)
+        hoursLabel.font = Shared.getFontBold(34)
         daysLabel.font = Shared.getFontItalic(18)
         schoolLabel.font = Shared.getFontItalic(18)
         onOffLabel.font = Shared.getFontLight(20)
@@ -98,37 +102,42 @@ class TimeCrunchViewController: MasterViewController {
         
         if let model = dataController!.timeCrunch {
             
-            var hours: Int = model.getHoursRemaining() as Int
-            var timeRunning = false
-            
-            hoursLabel.text = NSString(format: "%d hrs", hours)
-            if hours > 0 {
-                // Has some hours in the bank
-                daysLabel.text = NSString(format: "(%.1f days)", Double(hours) / 24.0)
-                
-                if model.timeWasActivatedAt != nil {
-                    timeRunning = true
-                }
-            } else {
-                // Hasn't any hours at all
-                schoolLabel.text = "Start posting to get time!"
-            }
+            var secondsRemaining: Int = model.getSecondsRemaining() as Int
+            var timeRunning = (secondsRemaining > 0 && model.timeWasActivatedAt != nil)
             
             if let mySchool = dataController!.getCollegeById(model.collegeId) {
                 schoolLabel.text = mySchool.name!
-                
+
+                var days = (((Double(secondsRemaining) / 60) / 60) / 24) as Double
+                daysLabel.text = NSString(format: "(%.1f days)", days)
+
                 if timeRunning {
                     // Time is running right now!
-                    hoursLabel.tintColor = UIColor.redColor()
-                    onOffLabel.text = "Time is Crunching!"
                     activateButton.hidden = true
                     activateButtonLabel.hidden = true
+                    onOffLabel.text = "Time is Crunching!"
+                    
+                    var seconds = secondsRemaining % 60 as Int
+                    var minutes = (secondsRemaining / 60) % 60 as Int
+                    var hours = ((secondsRemaining / 60) / 60) % 24 as Int
+                    var days = (((secondsRemaining / 60) / 60) / 24) as Int
+                    
+                    hoursLabel.text = NSString(format: "%d:%02d:%02d:%02d", days, hours, minutes, seconds)
+                    
+                    daysLabel.textColor = UIColor.redColor()
+                    hoursLabel.textColor = UIColor.redColor()
                 }
                 else {
                     activateButton.hidden = false
                     activateButtonLabel.hidden = false
+                    
+                    var hours = ((secondsRemaining / 60) / 60) as Int
+                    hoursLabel.text = NSString(format: "%d hrs", hours)
                 }
             }
         }
+        self.view.setNeedsDisplay()
+        self.view.layoutIfNeeded()
+        
     }
 }
