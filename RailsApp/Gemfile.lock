@@ -53,6 +53,9 @@ GEM
     capistrano-rbenv (2.0.2)
       capistrano (~> 3.1)
       sshkit (~> 1.3)
+    capistrano-rvm (0.1.2)
+      capistrano (~> 3.0)
+      sshkit (~> 1.2)
     capistrano-stats (1.1.1)
     celluloid (0.15.2)
       timers (~> 1.1.0)
@@ -304,6 +307,7 @@ DEPENDENCIES
   bootstrap-sass
   capistrano-rails
   capistrano-rbenv (~> 2.0)
+  capistrano-rvm
   chunky_png
   coffee-rails (~> 4.0.0)
   font-awesome-rails

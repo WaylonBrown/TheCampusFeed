@@ -38,14 +38,22 @@ set :repo_tree, 'RailsApp/'
 # set :keep_releases, 5
 
 namespace :deploy do
+  after :publishing, :restart do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      within release_path do
+        #execute '/usr/local/rvm/bin/rvm', 'default do nohup bundle exec rails s -e production &'
+        #execute '/usr/local/rvm/bin/rvm', 'default do RAILS_ENV=production nohup bundle exec sidekiq &'
+      end
+    end
+  end
 
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
       within release_path do
         #execute :rake, 'cache:clear'
-        execute 'bundle exec rails s -e production &'
-        execute 'RAILS_ENV=production bundle exec sidekiq &'
+        #execute 'bundle exec rails s -e production &'
+        #execute 'RAILS_ENV=production bundle exec sidekiq &'
       end
     end
   end
