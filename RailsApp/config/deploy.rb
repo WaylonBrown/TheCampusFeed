@@ -46,7 +46,7 @@ namespace :deploy do
       within release_path do
         #execute '/usr/local/rvm/bin/rvm', 'default do nohup bundle exec rails s -e production &'
         #execute '/usr/local/rvm/bin/rvm', 'default do RAILS_ENV=production nohup bundle exec sidekiq &'
-
+        execute 'service', 'thin restart'
       end
     end
   end
