@@ -1,4 +1,4 @@
-CollegeFeed::Application.routes.draw do
+TheCampusFeed::Application.routes.draw do
 
 
 

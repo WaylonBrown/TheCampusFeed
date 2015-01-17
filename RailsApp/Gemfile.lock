@@ -74,6 +74,7 @@ GEM
     diff-lcs (1.2.5)
     erubis (2.7.0)
     eventmachine (1.0.3)
+    eventmachine (1.0.3-x86-mingw32)
     excon (0.39.5)
     execjs (2.2.0)
     faraday (0.9.0)
@@ -215,6 +216,8 @@ GEM
     redis (3.1.0)
     redis-namespace (1.5.1)
       redis (~> 3.0, >= 3.0.4)
+    rename (1.0.2)
+      rails (>= 3.0.0)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -327,6 +330,7 @@ DEPENDENCIES
   oauth-plugin
   pg_search
   rails (= 4.0.2)
+  rename
   rspec-rails
   rspec_api_documentation
   sass-rails (~> 4.0.0)

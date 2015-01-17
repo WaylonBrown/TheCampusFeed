@@ -1,3 +1,3 @@
 # Be sure to restart your server when you modify this file.
 
-CollegeFeed::Application.config.session_store :cookie_store, key: '_collegefeed_session'
+TheCampusFeed::Application.config.session_store :cookie_store, key: '_thecampusfeed_session'
