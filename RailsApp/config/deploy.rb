@@ -52,6 +52,11 @@ task :symlink_config_files do
   end
 end
 
+desc "reload the database with seed data"
+task :seed do
+  run "cd #{current_path}; bundle exec rake db:seed RAILS_ENV=#{rails_env}"
+end
+
 namespace :deploy do
   after :publishing, :restart do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
