@@ -4,6 +4,7 @@ lock '3.3.5'
 set :application, 'cfeed'
 set :repo_url, 'git@github.com:AggieDev/TheCampusFeed.git'
 set :repo_tree, 'RailsApp/'
+set :rvm_ruby_version, '2.0.0-p598'
 
 #set :rbenv_ruby, '2.0.0'
 
