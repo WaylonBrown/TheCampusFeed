@@ -6,6 +6,8 @@ set :repo_url, 'git@github.com:AggieDev/TheCampusFeed.git'
 set :repo_tree, 'RailsApp/'
 set :rvm_ruby_version, '2.0.0-p598'
 
+set :deploy_via, :remote_cache
+
 #set :rbenv_ruby, '2.0.0'
 
 # Default branch is :master
@@ -44,6 +46,7 @@ namespace :deploy do
       within release_path do
         #execute '/usr/local/rvm/bin/rvm', 'default do nohup bundle exec rails s -e production &'
         #execute '/usr/local/rvm/bin/rvm', 'default do RAILS_ENV=production nohup bundle exec sidekiq &'
+
       end
     end
   end
