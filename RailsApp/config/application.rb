@@ -22,6 +22,8 @@ module CollegeFeed
     config.versioncake.supported_version_numbers = [1]
     config.versioncake.extraction_strategy = [:path_parameter, :request_parameter]
     config.versioncake.default_version = 1
-    config.force_ssl = true
+    if Rails.env.production?
+      config.force_ssl = true
+    end
   end
 end
