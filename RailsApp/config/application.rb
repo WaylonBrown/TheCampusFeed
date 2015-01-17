@@ -24,6 +24,8 @@ module CollegeFeed
     config.versioncake.default_version = 1
     if false
       config.force_ssl = true
+    else
+      config.force_ssl = false
     end
   end
 end
