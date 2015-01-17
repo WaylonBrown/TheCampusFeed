@@ -1,4 +1,4 @@
 Apitome Documentation
 =====================
 
-Welcome to the CollegeFeed API Documentation website.
+Welcome to PI Documentation for TheCampusFeed.
