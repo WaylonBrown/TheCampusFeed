@@ -8,6 +8,16 @@ production:
   password: <%= ENV['DB_PASSWORD'] %>
   reconnect: true
 
+staging:
+  adapter: mysql2
+  encoding: utf8
+  database: cf_production
+  pool: 20
+  host: 10.183.248.28
+  username: james
+  password: <%= ENV['DB_PASSWORD'] %>
+  reconnect: true
+
 test: &TEST
   adapter: mysql2
   encoding: utf8
