@@ -4,6 +4,7 @@ lock '3.3.5'
 set :application, 'cfeed'
 set :repo_url, 'git@github.com:AggieDev/TheCampusFeed.git'
 set :repo_tree, 'RailsApp/'
+set :ssh_options, { :forward_agent => true }
 set :rvm_ruby_version, '2.0.0-p598'
 
 set :deploy_via, :remote_cache
