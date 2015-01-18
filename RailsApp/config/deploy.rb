@@ -68,7 +68,13 @@ namespace :deploy do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       within release_path do
         execute 'service', 'thin restart'
-        execute 'service', 'sidekiq restart'
+        begin
+          execute 'service', 'sidekiq stop'
+        rescue SSHKit::Command::Failed => e 
+          puts "Sidekiq wasn't running. Continuing."
+        end
+        sleep(10)
+        execute 'service', 'sidekiq start'
       end
     end
   end
