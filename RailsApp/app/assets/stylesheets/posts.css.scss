@@ -3,7 +3,13 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .card {
+  display: none; //<3 masonry
+  &.loaded{
+    display: block;
+  }
   position: relative;
+  width: 400px;
+  margin-bottom: 75px;
   .card-background {
     background-image: image-url('congruent_pentagon_gray.png');
     z-index: 1;
@@ -41,7 +47,7 @@
     position: relative;
     z-index: 100;
     margin-left: 30px;
-    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.6);
     padding: 20px;
     .card-arrows {
       position: relative;
@@ -60,7 +66,6 @@
     .comments-string {
       margin-left: 6px;
     }
-    margin-bottom: 15px;
     word-wrap: break-word;
   }
 }

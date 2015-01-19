@@ -4,8 +4,8 @@ angular.module("cfeed").directive "converttagstolinks", ->
     element.context.onloadeddata = ->
       console.log('it loaded')
       return
-    console.log(element)
-    console.log(element.context)
-    console.log(element.context.textContent)
+    #console.log(element)
+    #console.log(element.context)
+    #console.log(element.context.textContent)
     return
 

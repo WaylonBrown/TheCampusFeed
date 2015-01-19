@@ -24,7 +24,7 @@ test: &TEST
   database: cf_test
   pool: 20
   username: root
-  password: F4flkgj43LWB#$LW#E$GFsrdknmfgn#$
+  password: thisiscfeedpassword
   reconnect: true
 
 development:
@@ -33,5 +33,5 @@ development:
   database: cf_development
   pool: 20
   username: root
-  password: F4flkgj43LWB#$LW#E$GFsrdknmfgn#$
+  password: thisiscfeedpassword
   reconnect: true

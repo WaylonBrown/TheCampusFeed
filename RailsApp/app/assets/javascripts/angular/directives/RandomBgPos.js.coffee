@@ -6,5 +6,5 @@ angular.module("cfeed").directive "randombgpos", ->
     element.css('background-position-y',
         Math.floor((Math.random() * 600) + 1) - 300)
     element.css('background-size',
-        Math.floor((Math.random() * 800) + 1) + 300)
+        Math.floor((Math.random() * 500) + 1) + 100)
     return

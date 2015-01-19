@@ -20,6 +20,10 @@
 //= require bootstrap
 //= require angular-ui-bootstrap-tpls
 //
+//= require imagesloaded/imagesloaded.pkgd.js
+//= require masonry/dist/masonry.pkgd.js
+//= require angular-masonry/angular-masonry.js
+//
 //= require ./angular/main
 //= require_tree ./angular/
 //

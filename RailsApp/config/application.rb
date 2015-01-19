@@ -35,5 +35,8 @@ module TheCampusFeed
         ENV[key.to_s] = value
       end if File.exists?(env_file)
     end
+
+
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
   end
 end

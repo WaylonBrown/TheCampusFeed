@@ -1,4 +1,4 @@
-angular.module "cfeed", ["ui.bootstrap", "ngAnimate", "ngResource", "infinite-scroll"]
+angular.module "cfeed", ["ui.bootstrap", "ngAnimate", "ngResource", "infinite-scroll", "wu.masonry"]
 angular.element(document).ready ->
 
 angular.module("cfeed").run ["$rootScope", "$resource", ($rootScope, $resource) ->
@@ -13,4 +13,3 @@ angular.module("cfeed").run ["$rootScope", "$resource", ($rootScope, $resource) 
     trending: {method: 'GET', url: '/api/v1/tags/trending/', isArray: true}
   })
 ]
-#$("i.tip").tooltip();

@@ -34,7 +34,7 @@
   <!-- /.container-fluid -->
 </nav>
 <div class="container-fluid" ng-controller="WebappCtrl">
-  <div class="modal fade" id="getAppModal" tabindex="-1" role="dialog" aria-labelledby="GetApp" aria-hidden="true">
+  <div class="modal fade" id="getAppModal" tabindex="-1" role="dialog" aria-labelledby="Ge\tApp" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -71,10 +71,8 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-4" id="posts" infinite-scroll="atBottom()">
-      <div class="card slide pointer" ng-repeat="post in posts.recentPosts" >
+    <div class="col-md-10" id="posts" infinite-scroll="atBottom()" masonry="{gutter:20, isFitWidth:false, isAnimatedFromBottom:true}" >
+      <div class="card slide pointer masonry-brick" ng-repeat="post in posts.recentPosts" >
         <div class="card-background absoluteFull" randombgpos>
         </div>
         <div class="card-controls">
@@ -99,13 +97,15 @@
             <span class="comments-string">Comments</span></div>
 
           <div class="clearfix"></div>
+          <img ng-src="{{post.image_uri}}" />
+          <div class="clearfix"></div>
           <hr/>
-          <div postcomments="5" postcollege="{{post.college_id}}" postid="{{post.id}}">
-          </div>
+          <!--<div postcomments="5" postcollege="{{post.college_id}}" postid="{{post.id}}">
+        </div>-->
         </div>
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="sidebar">
       <div data-spy="affix" data-offset-top="0" data-offset-bottom="0">
         <div class="well">
           <h4>

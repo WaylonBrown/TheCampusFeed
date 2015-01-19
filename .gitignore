@@ -101,6 +101,7 @@ AndroidApp/gen/com/appuccino/collegefeed/R.java
 
 
 RailsApp/config/local_env.yml
+RailsApp/vendor/assets/bower_components/
 #############
 ## RubyMine
 #############

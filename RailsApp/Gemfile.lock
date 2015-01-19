@@ -38,6 +38,7 @@ GEM
       unf
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
+    bower-rails (0.9.2)
     builder (3.1.4)
     capistrano (3.3.5)
       capistrano-stats (~> 1.1.0)
@@ -314,6 +315,7 @@ DEPENDENCIES
   apitome
   asset_sync
   bootstrap-sass
+  bower-rails
   capistrano-rails
   capistrano-rbenv (~> 2.0)
   capistrano-rvm

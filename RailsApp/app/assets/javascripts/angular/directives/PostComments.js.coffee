@@ -7,6 +7,7 @@ angular.module("cfeed").directive "postcomments", ["$rootScope", ($rootScope)->
       truncatedComments.forEach (comment)->
         element.append("<div class=\"comment\">#{comment.text}</div>")
         return
+      $rootScope.$broadcast('masonry.reload');
     )
     return
 
