@@ -64,6 +64,15 @@ namespace :deploy do
     end
   end
 
+  before :compile_assets, :bower_install do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      within release_path do
+        execute :rake, "bower:install['--allow-root']"
+      end
+    end
+  end
+
+
   after :publishing, :restart do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       within release_path do
